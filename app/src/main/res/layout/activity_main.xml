@@ -319,12 +319,13 @@
                 />
 
 
-            <Spinner
+            <EditText
 
                 android:id="@+id/inpNilaiAsetSAP"
                 android:layout_marginBottom="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="41dp"
+                android:paddingLeft="10dp"
                 android:background="@drawable/currency_background"
                 android:spinnerMode="dropdown"
                 />
