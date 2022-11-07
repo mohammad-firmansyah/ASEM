@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">ASEM</string>
+    <string-array name="inp_tipe_asset">
+        <item>ASET LAMA</item>
+        <item>ASET BARU</item>
+    </string-array>
+</resources>
