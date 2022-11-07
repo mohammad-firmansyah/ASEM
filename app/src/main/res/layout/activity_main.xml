@@ -21,17 +21,314 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="TIPE ASSET"
+                android:text="TIPE ASSET :"
                 android:textSize="14sp"
                 android:textStyle="bold"
-                android:textColor="@color/black"
+                android:layout_marginBottom="10dp"
+                android:textColor="@color/main_grey"
                 />
+
+
+
             <Spinner
-                android:id="@+id/inp_tipe_asset"
+                android:id="@+id/inpTipeAset"
+                android:layout_marginBottom="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="41dp"
+                android:background="@drawable/rounded_spinner"
+                android:spinnerMode="dropdown" />
+
+            <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:text="JENIS ASSET :"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:textColor="@color/main_grey"
+                android:layout_marginBottom="10dp"
+
 
                 />
+
+
+            <Spinner
+
+                android:id="@+id/inpJenisAset"
+                android:layout_marginBottom="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="41dp"
+                android:background="@drawable/rounded_spinner"
+                android:spinnerMode="dropdown" />
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="KONDISI ASET:"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:textColor="@color/main_grey"
+                android:layout_marginBottom="10dp"
+
+
+                />
+
+
+            <Spinner
+
+                android:id="@+id/inpKndsAset"
+                android:layout_marginBottom="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="41dp"
+                android:background="@drawable/rounded_spinner"
+                android:spinnerMode="dropdown" />
+
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="TANGGAL INPUT :"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:textColor="@color/main_grey"
+                android:layout_marginBottom="10dp"
+                />
+
+
+            <EditText
+
+                android:id="@+id/inpTglInput"
+                android:layout_width="match_parent"
+                android:layout_height="41dp"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/tgl_spinner"
+                android:inputType="datetime"
+                />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="KODE ASET :"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:textColor="@color/main_grey"
+                android:layout_marginBottom="10dp"
+
+
+                />
+
+            <Spinner
+
+                android:id="@+id/inpKodeAset"
+                android:layout_marginBottom="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="41dp"
+                android:background="@drawable/rounded_spinner"
+                android:spinnerMode="dropdown" />
+
+
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="NAMA ASET :"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:textColor="@color/main_grey"
+                android:layout_marginBottom="10dp"
+                />
+
+
+            <EditText
+
+                android:id="@+id/inpNamaAset"
+                android:layout_marginBottom="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="41dp"
+                android:background="@drawable/edit_text_spiner"
+                android:spinnerMode="dropdown"
+                />
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="NOMOR ASET SAP :"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:textColor="@color/main_grey"
+                android:layout_marginBottom="10dp"
+                />
+
+
+            <EditText
+
+                android:id="@+id/inpNmrSAP"
+                android:layout_marginBottom="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="41dp"
+                android:background="@drawable/edit_text_spiner"
+                android:spinnerMode="dropdown"
+                android:inputType="numberDecimal"
+                />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="FOTO ASET :"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:textColor="@color/main_grey"
+                android:layout_marginBottom="10dp"
+
+
+                />
+
+
+
+            <HorizontalScrollView
+                android:id="@+id/scrollPartition"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:scrollbars="none">
+
+                <LinearLayout
+                    android:id="@+id/lytPartition"
+                    android:layout_gravity="right"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingLeft="4dp"
+                    android:paddingRight="4dp"
+                    android:scrollbars="none">
+                    <RelativeLayout
+                        android:layout_width="91dp"
+                        android:layout_height="99dp"
+                        android:background="@drawable/edit_text_spiner"
+                        android:layout_marginRight="7dp"
+                        >
+
+                        <ImageView
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:src="@drawable/ic_outline_image_24"
+                            android:layout_centerVertical="true"
+                            android:layout_centerHorizontal="true"
+                            />
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="91dp"
+                        android:layout_height="99dp"
+                        android:layout_marginRight="7dp"
+                        android:background="@drawable/edit_text_spiner"
+
+                        >
+
+                        <ImageView
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:src="@drawable/ic_outline_image_24"
+                            android:layout_centerVertical="true"
+                            android:layout_centerHorizontal="true"
+                            />
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="91dp"
+                        android:layout_height="99dp"
+                        android:background="@drawable/edit_text_spiner"
+                        android:layout_marginRight="7dp"
+                        >
+
+                        <ImageView
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:src="@drawable/ic_outline_image_24"
+                            android:layout_centerVertical="true"
+                            android:layout_centerHorizontal="true"
+                            />
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="91dp"
+                        android:layout_height="99dp"
+                        android:background="@drawable/edit_text_spiner"
+                        android:layout_marginRight="7dp"
+                        >
+
+                        <ImageView
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:src="@drawable/ic_outline_image_24"
+                            android:layout_centerVertical="true"
+                            android:layout_centerHorizontal="true"
+                            />
+                    </RelativeLayout>
+
+                </LinearLayout>
+            </HorizontalScrollView>
+
+            <Button
+                android:id="@+id/outlinedButton"
+                android:layout_marginTop="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Map"
+                android:background="@drawable/button_background"
+                />
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="LUAS AREAL/KAPASITAS \n /LUAS BANGUNAN  :"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:textColor="@color/main_grey"
+                android:layout_marginVertical="10dp"
+
+                />
+
+
+            <EditText
+
+                android:id="@+id/inpLuasAset"
+                android:layout_marginBottom="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="41dp"
+                android:background="@drawable/edit_text_spiner"
+                android:spinnerMode="dropdown"
+                android:inputType="numberDecimal"
+
+                />
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="NILAI ASET SAP"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:textColor="@color/main_grey"
+                android:layout_marginVertical="10dp"
+
+                />
+
+
+            <Spinner
+
+                android:id="@+id/inpNilaiAsetSAP"
+                android:layout_marginBottom="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="41dp"
+                android:background="@drawable/currency_background"
+                android:spinnerMode="dropdown"
+                />
+
         </LinearLayout>
     </ScrollView>
 
