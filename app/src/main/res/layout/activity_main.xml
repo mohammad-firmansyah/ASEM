@@ -155,13 +155,11 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="NOMOR ASET SAP :"
-                android:textSize="14sp"
-                android:textStyle="bold"
-                android:textColor="@color/main_grey"
                 android:layout_marginBottom="10dp"
-                />
-
+                android:text="NOMOR ASET SAP :"
+                android:textColor="@color/main_grey"
+                android:textSize="14sp"
+                android:textStyle="bold" />
 
             <EditText
 
@@ -174,19 +172,18 @@
                 android:inputType="numberDecimal"
                 />
 
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
                 android:text="FOTO ASET :"
+                android:textColor="@color/main_grey"
                 android:textSize="14sp"
                 android:textStyle="bold"
-                android:textColor="@color/main_grey"
-                android:layout_marginBottom="10dp"
 
 
                 />
-
-
 
             <HorizontalScrollView
                 android:id="@+id/scrollPartition"
@@ -256,17 +253,15 @@
                     <RelativeLayout
                         android:layout_width="91dp"
                         android:layout_height="99dp"
-                        android:background="@drawable/edit_text_spiner"
                         android:layout_marginRight="7dp"
-                        >
+                        android:background="@drawable/edit_text_spiner">
 
                         <ImageView
                             android:layout_width="30dp"
                             android:layout_height="30dp"
-                            android:src="@drawable/ic_outline_image_24"
-                            android:layout_centerVertical="true"
                             android:layout_centerHorizontal="true"
-                            />
+                            android:layout_centerVertical="true"
+                            android:src="@drawable/ic_outline_image_24" />
                     </RelativeLayout>
 
                 </LinearLayout>
@@ -303,6 +298,7 @@
                 android:background="@drawable/edit_text_spiner"
                 android:spinnerMode="dropdown"
                 android:inputType="numberDecimal"
+                android:paddingTop="10dp"
 
                 />
 
@@ -320,15 +316,148 @@
 
 
             <EditText
-
                 android:id="@+id/inpNilaiAsetSAP"
                 android:layout_marginBottom="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="41dp"
-                android:paddingLeft="10dp"
+                android:paddingStart="35dp"
+                android:paddingVertical="10dp"
+                android:lines="1"
+                android:inputType="numberDecimal"
                 android:background="@drawable/currency_background"
-                android:spinnerMode="dropdown"
                 />
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="TANGGAL PEROLEHAN:"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:textColor="@color/main_grey"
+                android:layout_marginVertical="10dp"
+
+                />
+
+
+            <EditText
+                android:layout_width="match_parent"
+                android:id="@+id/inpTglMasukAset"
+                android:clickable="false"
+                android:cursorVisible="false"
+                android:focusable="false"
+                android:focusableInTouchMode="false"
+                android:background="@drawable/pickdate_background"
+                android:hint="Pickdate"
+                android:layout_height="41dp"
+                android:paddingVertical="10dp"/>
+
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="MASA PENYUSUTAN :"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:textColor="@color/main_grey"
+                android:layout_marginVertical="10dp"
+
+                />
+
+
+            <EditText
+                android:layout_width="match_parent"
+                android:id="@+id/inpMasaPenyusutan"
+                android:layout_marginBottom="10dp"
+                android:layout_height="41dp"
+                android:paddingStart="35dp"
+                android:paddingVertical="10dp"
+                android:lines="1"
+                android:inputType="numberDecimal"
+                android:background="@drawable/tahun_background"
+                />
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="NOMOR BAST :"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:textColor="@color/main_grey"
+                android:layout_marginVertical="10dp"
+
+                />
+
+
+            <EditText
+                android:layout_width="match_parent"
+                android:id="@+id/inpNmrBAST"
+                android:layout_marginBottom="10dp"
+                android:layout_height="41dp"
+                android:paddingStart="35dp"
+                android:paddingVertical="10dp"
+                android:lines="1"
+                android:inputType="numberDecimal"
+                android:background="@drawable/edit_text_spiner"
+                />
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="NILAI RESIDU :"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:textColor="@color/main_grey"
+                android:layout_marginVertical="10dp"
+
+                />
+
+
+            <EditText
+                android:layout_width="match_parent"
+                android:id="@+id/inpNmrResidu"
+                android:layout_marginBottom="10dp"
+                android:layout_height="41dp"
+                android:paddingStart="35dp"
+                android:paddingVertical="10dp"
+                android:lines="1"
+                android:inputType="numberDecimal"
+                android:background="@drawable/edit_text_spiner"
+                />
+
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="KETERANGAN :"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:textColor="@color/main_grey"
+                android:layout_marginVertical="10dp"
+
+                />
+
+
+            <EditText
+                android:layout_width="match_parent"
+                android:id="@+id/InpKeterangan"
+                android:layout_height="128dp"
+                android:background="@drawable/edit_text_spiner"
+                />
+
+            <Button
+                android:id="@+id/btnSubmit"
+                android:layout_marginTop="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="SIMPAN DATA"
+                android:background="@drawable/button_background"
+                />
+
 
         </LinearLayout>
     </ScrollView>
