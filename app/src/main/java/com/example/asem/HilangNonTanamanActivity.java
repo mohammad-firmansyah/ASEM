@@ -22,7 +22,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Locale;
 
-public class MainActivity extends AppCompatActivity {
+public class HilangNonTanamanActivity extends AppCompatActivity {
     final Calendar myCalendar= Calendar.getInstance();
     EditText editText;
     TextView tvUploudBA;
@@ -34,14 +34,14 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         editText = findViewById(R.id.inpTglMasukAset);
         tvUploudBA = findViewById(R.id.tvUploudBA);
-//        initCalender();
+        initCalender();
 
-       Button btnFile = findViewById(R.id.inpUploudBA);
+        Button btnFile = findViewById(R.id.inpUploudBA);
 
         btnFile.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, FilePickerActivity.class);
+                Intent intent = new Intent(HilangNonTanamanActivity.this, FilePickerActivity.class);
 
                 intent.putExtra(FilePickerActivity.CONFIGS, new Configurations.Builder().setCheckPermission(true).setShowFiles(true).setShowImages(false).setShowVideos(false).setMaxSelection(1).setSuffixes("txt","pdf","doc","docx").setSkipZeroSizeFiles(true).build());
                 startActivityForResult(intent,102);
@@ -72,7 +72,7 @@ public class MainActivity extends AppCompatActivity {
         editText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                new DatePickerDialog(MainActivity.this,date,myCalendar.get(Calendar.YEAR),myCalendar.get(Calendar.MONTH),myCalendar.get(Calendar.DAY_OF_MONTH)).show();
+                new DatePickerDialog(HilangNonTanamanActivity.this,date,myCalendar.get(Calendar.YEAR),myCalendar.get(Calendar.MONTH),myCalendar.get(Calendar.DAY_OF_MONTH)).show();
             }
         });
     }
