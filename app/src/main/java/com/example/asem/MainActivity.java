@@ -16,6 +16,7 @@ import android.widget.Toast;
 
 import com.example.asem.api.AsetInterface;
 import com.example.asem.api.model.Aset;
+import com.example.asem.api.model.AsetModel;
 import com.jaiselrahman.filepicker.activity.FilePickerActivity;
 import com.jaiselrahman.filepicker.config.Configurations;
 import com.jaiselrahman.filepicker.model.MediaFile;
@@ -48,19 +49,21 @@ public class MainActivity extends AppCompatActivity {
 //        initCalender();
 
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("https://90cf-112-215-173-37.ap.ngrok.io")
+                .baseUrl("https://90cf-112-215-173-37.ap.ngrok.io/api/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
         asetInterface = retrofit.create(AsetInterface.class);
 
-        getAset();
-
        Button btnFile = findViewById(R.id.inpUploudBA);
+
 
         btnFile.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
+
+                getAset();
+
                 Intent intent = new Intent(MainActivity.this, FilePickerActivity.class);
 
                 intent.putExtra(FilePickerActivity.CONFIGS, new Configurations.Builder().setCheckPermission(true).setShowFiles(true).setShowImages(false).setShowVideos(false).setMaxSelection(1).setSuffixes("txt","pdf","doc","docx").setSkipZeroSizeFiles(true).build());
@@ -119,17 +122,17 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void getAset(){
-        Call<List<Aset>> call = asetInterface.getAset(1);
-        call.enqueue(new Callback<List<Aset>>() {
+        Call<AsetModel> call = asetInterface.getAset(1);
+        call.enqueue(new Callback<AsetModel>() {
 
             @Override
-            public void onResponse(Call<List<Aset>> call, Response<List<Aset>> response) {
-                Log.d("api",response.body().toString());
-                Toast.makeText(getApplicationContext(),response.body().toString(),Toast.LENGTH_SHORT);
+            public void onResponse(Call<AsetModel> call, Response<AsetModel> response) {
+//                Log.d("api",response.body().toString());
+                Toast.makeText(getApplicationContext(),"bisa",Toast.LENGTH_SHORT);
             }
 
             @Override
-            public void onFailure(Call<List<Aset>> call, Throwable t) {
+            public void onFailure(Call<AsetModel> call, Throwable t) {
                 Toast.makeText(getApplicationContext(),t.getMessage(),Toast.LENGTH_LONG).show();
             }
         });

@@ -1,5 +1,7 @@
 package com.example.asem.api.model;
 
+import com.google.gson.annotations.SerializedName;
+
 public class Aset {
 
     public Aset(String aset_name, int aset_tipe, int aset_jenis, int aset_kondisi, int aset_sub_unit, int aset_kode, int nomor_sap, String foto_aset1, String foto_aset2, String foto_aset3, String foto_aset4, String geo_tag1, String geo_tag2, String geo_tag3, String geo_tag4, int aset_luas, int tgl_input, int tgl_oleh, int nilai_residu, int nilai_oleh, int nomor_bast, int masa_susut, String keterangan, String foto_qr, String no_inv, String foto_aset_qr, String status_posisi, int unit_id, int afdelling_id, int user_input_id) {
@@ -36,32 +38,54 @@ public class Aset {
     }
 
 
-
+    @SerializedName("aset_name")
     private String aset_name;
+    @SerializedName("aset_tipe")
     private int aset_tipe;
+    @SerializedName("aset_jenis")
     private int aset_jenis;
+    @SerializedName("aset_kondisi")
     private int aset_kondisi;
+    @SerializedName("aset_sub_unit")
     private int aset_sub_unit;
+    @SerializedName("aset_kode")
     private int aset_kode;
+    @SerializedName("nomor_sap")
     private int nomor_sap;
+    @SerializedName("foto_aset1")
     private String foto_aset1;
+    @SerializedName("foto_aset2")
     private String foto_aset2;
+    @SerializedName("foto_aset3")
     private String foto_aset3;
+    @SerializedName("foto_aset4")
     private String foto_aset4;
 
-
+    @SerializedName("geo_tag1")
     private String geo_tag1;
+    @SerializedName("geo_tag2")
     private String geo_tag2;
+    @SerializedName("geo_tag3")
     private String geo_tag3;
+    @SerializedName("geo_tag4")
     private String geo_tag4;
+    @SerializedName("aset_luas")
     private int aset_luas;
+    @SerializedName("tgl_input")
     private int tgl_input;
+    @SerializedName("tgl_oleh")
     private int tgl_oleh;
+    @SerializedName("nilai_residu")
     private int nilai_residu;
+    @SerializedName("nilai_oleh")
     private int nilai_oleh;
+    @SerializedName("nomor_bast")
     private int nomor_bast;
+    @SerializedName("masa_susut")
     private int masa_susut;
+    @SerializedName("keterangan")
     private String keterangan;
+    @SerializedName("foto_qr")
     private String foto_qr;
 
     public String getAset_name() {

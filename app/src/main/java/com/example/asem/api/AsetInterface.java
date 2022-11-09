@@ -1,6 +1,7 @@
 package com.example.asem.api;
 
 import com.example.asem.api.model.Aset;
+import com.example.asem.api.model.AsetModel;
 
 import java.util.List;
 
@@ -12,5 +13,5 @@ public interface AsetInterface {
 
 
     @GET("aset/{id}/")
-    Call<List<Aset>> getAset(@Path("id") int asetId);
+    Call<AsetModel> getAset(@Path("id") int asetId);
 }
