@@ -2,13 +2,14 @@ package com.example.asem.api.model;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class AsetModel {
     @SerializedName("status")
     private String status;
     @SerializedName("data")
-    private List<Aset> data;
+    public Aset data;
     @SerializedName("code")
     private int code;
 
@@ -28,15 +29,16 @@ public class AsetModel {
         this.code = code;
     }
 
-    public List<Aset> getData() {
+
+    public Aset getData() {
         return data;
     }
 
-    public void setData(List<Aset> data) {
+    public void setData(Aset data) {
         this.data = data;
     }
 
-    public AsetModel(String status, int code, List<Aset> data) {
+    public AsetModel(String status, int code, Aset data) {
         this.status =status;
         this.code = code;
 

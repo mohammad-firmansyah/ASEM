@@ -37,6 +37,7 @@ public class MainActivity extends AppCompatActivity {
     final Calendar myCalendar= Calendar.getInstance();
     EditText editText;
     TextView tvUploudBA;
+    AsetModel asetModel;
     private AsetInterface asetInterface;
 
 
@@ -127,8 +128,15 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onResponse(Call<AsetModel> call, Response<AsetModel> response) {
-//                Log.d("api",response.body().toString());
-                Toast.makeText(getApplicationContext(),"bisa",Toast.LENGTH_SHORT);
+
+                if (!response.isSuccessful()){
+//                    tvResult.setText("Code: "+response.code());
+                    Toast.makeText(getApplicationContext(),"ga bisa",Toast.LENGTH_SHORT);
+                    return;
+                }
+                AsetModel m = response.body();
+                Log.d("apiaset", m.getData().getTgl_input());
+                asetModel = m;
             }
 
             @Override

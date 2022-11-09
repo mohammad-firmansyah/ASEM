@@ -4,7 +4,7 @@ import com.google.gson.annotations.SerializedName;
 
 public class Aset {
 
-    public Aset(String aset_name, int aset_tipe, int aset_jenis, int aset_kondisi, int aset_sub_unit, int aset_kode, int nomor_sap, String foto_aset1, String foto_aset2, String foto_aset3, String foto_aset4, String geo_tag1, String geo_tag2, String geo_tag3, String geo_tag4, int aset_luas, int tgl_input, int tgl_oleh, int nilai_residu, int nilai_oleh, int nomor_bast, int masa_susut, String keterangan, String foto_qr, String no_inv, String foto_aset_qr, String status_posisi, int unit_id, int afdelling_id, int user_input_id) {
+    public Aset(String aset_name, int aset_tipe, int aset_jenis, int aset_kondisi, int aset_sub_unit, int aset_kode, int nomor_sap, String foto_aset1, String foto_aset2, String foto_aset3, String foto_aset4, String geo_tag1, String geo_tag2, String geo_tag3, String geo_tag4, int aset_luas, String tgl_input, String tgl_oleh, int nilai_residu, int nilai_oleh, int nomor_bast, int masa_susut, String keterangan, String foto_qr, String no_inv, String foto_aset_qr, String status_posisi, int unit_id, int afdelling_id, int user_input_id) {
         this.aset_name = aset_name;
         this.aset_tipe = aset_tipe;
         this.aset_jenis = aset_jenis;
@@ -72,9 +72,9 @@ public class Aset {
     @SerializedName("aset_luas")
     private int aset_luas;
     @SerializedName("tgl_input")
-    private int tgl_input;
+    private String tgl_input;
     @SerializedName("tgl_oleh")
-    private int tgl_oleh;
+    private String tgl_oleh;
     @SerializedName("nilai_residu")
     private int nilai_residu;
     @SerializedName("nilai_oleh")
@@ -216,19 +216,19 @@ public class Aset {
         this.aset_luas = aset_luas;
     }
 
-    public int getTgl_input() {
+    public String getTgl_input() {
         return tgl_input;
     }
 
-    public void setTgl_input(int tgl_input) {
+    public void setTgl_input(String tgl_input) {
         this.tgl_input = tgl_input;
     }
 
-    public int getTgl_oleh() {
+    public String getTgl_oleh() {
         return tgl_oleh;
     }
 
-    public void setTgl_oleh(int tgl_oleh) {
+    public void setTgl_oleh(String tgl_oleh) {
         this.tgl_oleh = tgl_oleh;
     }
 
