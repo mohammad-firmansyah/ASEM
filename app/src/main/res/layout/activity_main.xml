@@ -36,7 +36,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="41dp"
                 android:background="@drawable/rounded_spinner"
-                android:spinnerMode="dropdown" />
+                android:spinnerMode="dropdown"
+
+                />
 
             <TextView
                 android:layout_width="match_parent"
@@ -103,7 +105,7 @@
                 android:layout_height="41dp"
                 android:layout_marginBottom="10dp"
                 android:background="@drawable/tgl_spinner"
-                android:inputType="datetime"
+
                 />
 
             <TextView
@@ -148,7 +150,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="41dp"
                 android:background="@drawable/edit_text_spiner"
-                android:spinnerMode="dropdown"
                 />
 
 
@@ -168,7 +169,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="41dp"
                 android:background="@drawable/edit_text_spiner"
-                android:spinnerMode="dropdown"
                 android:inputType="numberDecimal"
                 />
             <TextView
@@ -343,7 +343,6 @@
                 android:background="@drawable/edit_text_spiner"
                 android:spinnerMode="dropdown"
                 android:inputType="numberDecimal"
-                android:paddingTop="10dp"
 
                 />
 
@@ -365,11 +364,10 @@
                 android:layout_marginBottom="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="41dp"
-                android:paddingStart="35dp"
                 android:paddingVertical="10dp"
                 android:lines="1"
                 android:inputType="numberDecimal"
-                android:background="@drawable/currency_background"
+                android:background="@drawable/edit_text_spiner"
                 />
 
 
@@ -392,7 +390,7 @@
                 android:cursorVisible="false"
                 android:focusable="false"
                 android:focusableInTouchMode="false"
-                android:background="@drawable/pickdate_background"
+                android:background= "@drawable/pickdate_background"
                 android:hint="Pickdate"
                 android:layout_height="41dp"
                 android:paddingVertical="10dp"/>
@@ -416,7 +414,6 @@
                 android:id="@+id/inpMasaPenyusutan"
                 android:layout_marginBottom="10dp"
                 android:layout_height="41dp"
-                android:paddingStart="35dp"
                 android:paddingVertical="10dp"
                 android:lines="1"
                 android:inputType="numberDecimal"
@@ -441,7 +438,6 @@
                 android:id="@+id/inpNmrBAST"
                 android:layout_marginBottom="10dp"
                 android:layout_height="41dp"
-                android:paddingStart="35dp"
                 android:paddingVertical="10dp"
                 android:lines="1"
                 android:inputType="numberDecimal"
@@ -466,7 +462,30 @@
                 android:id="@+id/inpNmrResidu"
                 android:layout_marginBottom="10dp"
                 android:layout_height="41dp"
-                android:paddingStart="35dp"
+                android:paddingVertical="10dp"
+                android:lines="1"
+                android:inputType="numberDecimal"
+                android:background="@drawable/edit_text_spiner"
+                />
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="UMUR EKONOMIS :"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:textColor="@color/main_grey"
+                android:layout_marginVertical="10dp"
+
+                />
+
+
+            <EditText
+                android:layout_width="match_parent"
+                android:id="@+id/inpUmrEkonomis"
+                android:layout_marginBottom="10dp"
+                android:layout_height="41dp"
                 android:paddingVertical="10dp"
                 android:lines="1"
                 android:inputType="numberDecimal"
@@ -488,9 +507,14 @@
 
 
             <EditText
+                android:id="@+id/inpKeterangan"
                 android:layout_width="match_parent"
-                android:id="@+id/InpKeterangan"
                 android:layout_height="128dp"
+                android:layout_weight="1"
+                android:inputType="textCapSentences|textMultiLine"
+                android:text="keterangan"
+                android:gravity="top"
+                android:paddingTop="10dp"
                 android:background="@drawable/edit_text_spiner"
                 />
 

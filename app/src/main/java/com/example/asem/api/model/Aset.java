@@ -4,7 +4,7 @@ import com.google.gson.annotations.SerializedName;
 
 public class Aset {
 
-    public Aset(String aset_name, int aset_tipe, int aset_jenis, int aset_kondisi, int aset_sub_unit, int aset_kode, int nomor_sap, String foto_aset1, String foto_aset2, String foto_aset3, String foto_aset4, String geo_tag1, String geo_tag2, String geo_tag3, String geo_tag4, int aset_luas, String tgl_input, String tgl_oleh, int nilai_residu, int nilai_oleh, int nomor_bast, int masa_susut, String keterangan, String foto_qr, String no_inv, String foto_aset_qr, String status_posisi, int unit_id, int afdelling_id, int user_input_id) {
+    public Aset(String aset_name, int aset_tipe, int aset_jenis, int aset_kondisi, int aset_sub_unit, int aset_kode, int nomor_sap, String foto_aset1, String foto_aset2, String foto_aset3, String foto_aset4, String geo_tag1, String geo_tag2, String geo_tag3, String geo_tag4, int aset_luas, String tgl_input, String tgl_oleh, int nilai_residu, int nilai_sap, int nomor_bast, int masa_susut, String keterangan, String foto_qr, String no_inv, String foto_aset_qr, String status_posisi, int unit_id, int afdelling_id, int user_input_id, int umur_ekonomis) {
         this.aset_name = aset_name;
         this.aset_tipe = aset_tipe;
         this.aset_jenis = aset_jenis;
@@ -24,7 +24,7 @@ public class Aset {
         this.tgl_input = tgl_input;
         this.tgl_oleh = tgl_oleh;
         this.nilai_residu = nilai_residu;
-        this.nilai_oleh = nilai_oleh;
+        this.nilai_sap = nilai_sap;
         this.nomor_bast = nomor_bast;
         this.masa_susut = masa_susut;
         this.keterangan = keterangan;
@@ -35,8 +35,8 @@ public class Aset {
         this.unit_id = unit_id;
         this.afdelling_id = afdelling_id;
         this.user_input_id = user_input_id;
+        this.umur_ekonomis_in_month = umur_ekonomis;
     }
-
 
     @SerializedName("aset_name")
     private String aset_name;
@@ -77,8 +77,8 @@ public class Aset {
     private String tgl_oleh;
     @SerializedName("nilai_residu")
     private int nilai_residu;
-    @SerializedName("nilai_oleh")
-    private int nilai_oleh;
+    @SerializedName("nilai_sap")
+    private int nilai_sap;
     @SerializedName("nomor_bast")
     private int nomor_bast;
     @SerializedName("masa_susut")
@@ -87,6 +87,37 @@ public class Aset {
     private String keterangan;
     @SerializedName("foto_qr")
     private String foto_qr;
+
+    @SerializedName("no_inv")
+    private String no_inv;
+    @SerializedName("foto_aset_qr")
+    private String foto_aset_qr;
+    @SerializedName("status_posisi")
+    private String status_posisi;
+    @SerializedName("unit_id")
+    private int unit_id;
+    @SerializedName("afdelling_id")
+    private int afdelling_id;
+    @SerializedName("user_input_id")
+    private int user_input_id;
+    @SerializedName("umur_ekonomis_in_month")
+    private int umur_ekonomis_in_month;
+
+    public int getNilai_sap() {
+        return nilai_sap;
+    }
+
+    public void setNilai_sap(int nilai_sap) {
+        this.nilai_sap = nilai_sap;
+    }
+
+    public int getUmur_ekonomis_in_month() {
+        return umur_ekonomis_in_month;
+    }
+
+    public void setUmur_ekonomis_in_month(int umur_ekonomis) {
+        this.umur_ekonomis_in_month = umur_ekonomis;
+    }
 
     public String getAset_name() {
         return aset_name;
@@ -240,13 +271,6 @@ public class Aset {
         this.nilai_residu = nilai_residu;
     }
 
-    public int getNilai_oleh() {
-        return nilai_oleh;
-    }
-
-    public void setNilai_oleh(int nilai_oleh) {
-        this.nilai_oleh = nilai_oleh;
-    }
 
     public int getNomor_bast() {
         return nomor_bast;
@@ -327,12 +351,5 @@ public class Aset {
     public void setUser_input_id(int user_input_id) {
         this.user_input_id = user_input_id;
     }
-
-    private String no_inv;
-    private String foto_aset_qr;
-    private String status_posisi;
-    private int unit_id;
-    private int afdelling_id;
-    private int user_input_id;
 
 }
