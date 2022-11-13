@@ -4,7 +4,7 @@ import com.google.gson.annotations.SerializedName;
 
 public class Aset {
 
-    public Aset(String aset_name, int aset_tipe, int aset_jenis, int aset_kondisi, int aset_sub_unit, int aset_kode, int nomor_sap, String foto_aset1, String foto_aset2, String foto_aset3, String foto_aset4, String geo_tag1, String geo_tag2, String geo_tag3, String geo_tag4, int aset_luas, String tgl_input, String tgl_oleh, int nilai_residu, int nilai_sap, int nomor_bast, int masa_susut, String keterangan, String foto_qr, String no_inv, String foto_aset_qr, String status_posisi, int unit_id, int afdelling_id, int user_input_id, int umur_ekonomis) {
+    public Aset(String aset_name, int aset_tipe, int aset_jenis, int aset_kondisi, int aset_sub_unit, int aset_kode, int nomor_sap, String foto_aset1, String foto_aset2, String foto_aset3, String foto_aset4, String geo_tag1, String geo_tag2, String geo_tag3, String geo_tag4, int aset_luas, String tgl_input, String tgl_oleh, int nilai_residu, int nilai_sap, int nomor_bast, int masa_susut, String keterangan, String foto_qr, String no_inv, String foto_aset_qr, String status_posisi, int unit_id, int afdelling_id, int user_input_id, int umur_ekonomis, String ba_file) {
         this.aset_name = aset_name;
         this.aset_tipe = aset_tipe;
         this.aset_jenis = aset_jenis;
@@ -36,6 +36,7 @@ public class Aset {
         this.afdelling_id = afdelling_id;
         this.user_input_id = user_input_id;
         this.umur_ekonomis_in_month = umur_ekonomis;
+        this.ba_file = ba_file;
     }
 
     @SerializedName("aset_name")
@@ -102,6 +103,16 @@ public class Aset {
     private int user_input_id;
     @SerializedName("umur_ekonomis_in_month")
     private int umur_ekonomis_in_month;
+    @SerializedName("ba_file")
+    private String ba_file;
+
+    public String getBa_file() {
+        return ba_file;
+    }
+
+    public void setBa_file(String ba_file) {
+        this.ba_file = ba_file;
+    }
 
     public int getNilai_sap() {
         return nilai_sap;

@@ -251,9 +251,11 @@
                         android:layout_height="99dp"
                         android:background="@drawable/edit_text_spiner"
                         android:layout_marginRight="7dp"
+                        android:id="@+id/foto1"
                         >
 
                         <ImageView
+                            android:id="@+id/fotoimg1"
                             android:layout_width="30dp"
                             android:layout_height="30dp"
                             android:src="@drawable/ic_outline_image_24"
@@ -263,6 +265,7 @@
                     </RelativeLayout>
 
                     <RelativeLayout
+                        android:id="@+id/foto2"
                         android:layout_width="91dp"
                         android:layout_height="99dp"
                         android:layout_marginRight="7dp"
@@ -271,6 +274,7 @@
                         >
 
                         <ImageView
+                            android:id="@+id/fotoimg2"
                             android:layout_width="30dp"
                             android:layout_height="30dp"
                             android:src="@drawable/ic_outline_image_24"
@@ -280,6 +284,7 @@
                     </RelativeLayout>
 
                     <RelativeLayout
+                        android:id="@+id/foto3"
                         android:layout_width="91dp"
                         android:layout_height="99dp"
                         android:background="@drawable/edit_text_spiner"
@@ -287,6 +292,7 @@
                         >
 
                         <ImageView
+                            android:id="@+id/fotoimg3"
                             android:layout_width="30dp"
                             android:layout_height="30dp"
                             android:src="@drawable/ic_outline_image_24"
@@ -296,12 +302,14 @@
                     </RelativeLayout>
 
                     <RelativeLayout
+                        android:id="@+id/foto4"
                         android:layout_width="91dp"
                         android:layout_height="99dp"
                         android:layout_marginRight="7dp"
                         android:background="@drawable/edit_text_spiner">
 
                         <ImageView
+                            android:id="@+id/fotoimg4"
                             android:layout_width="30dp"
                             android:layout_height="30dp"
                             android:layout_centerHorizontal="true"
@@ -313,7 +321,7 @@
             </HorizontalScrollView>
 
             <Button
-                android:id="@+id/outlinedButton"
+                android:id="@+id/inpBtnMap"
                 android:layout_marginTop="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
