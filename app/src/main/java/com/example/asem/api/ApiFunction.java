@@ -41,7 +41,7 @@ public class ApiFunction {
                     return;
                 }
                 AsetModel m = response.body();
-                Log.d("apiaset", m.getData().getTgl_input());
+//                Log.d("apiaset", m.getData().getTgl_input());
 //                data = m;
 //                return m;
             }

@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 
 import java.io.File;
+import java.util.ArrayList;
 
 import id.zelory.compressor.Compressor;
 
@@ -218,5 +219,28 @@ public class utils {
         }
     }
 
+    public static int CurrencyToNumber(String curr){
+        String s= "";
+        String[] splited = curr.split(" ");
+        s=splited[1];
+//        ArrayList<String> splitedTwc = new ArrayList<String>();
+        if (curr.contains(".")){
+            String[] splitedTwc = s.split("[.]");
 
+            String result = "";
+            for (String split : splitedTwc){
+                result+=split;
+                System.out.println(split);
+            }
+
+            return Integer.parseInt(result);
+        } else{
+            return Integer.parseInt(s);
+        }
+
+        // System.out.println(splitedTwc.length);
+    }
 }
+
+
+
