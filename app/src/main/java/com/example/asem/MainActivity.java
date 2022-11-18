@@ -724,7 +724,7 @@ public class MainActivity extends AppCompatActivity {
                 spinnerAsetKondisi.setSelection(response.body().getData().getAsetKondisi()-1);
                 spinnerKodeAset.setSelection(response.body().getData().getAsetKode()-1);
 
-                Log.d("asetapix",spinnerJenisAset.getSelectedItem().toString());
+//                Log.d("asetapix", spinnerJenisAset.getSelectedItem().toString());
                 if (spinnerJenisAset.getSelectedItem().toString() == "tanaman" && spinnerAsetKondisi.getSelectedItem().toString() == "normal") {
                     listBtnMap.setVisibility(View.VISIBLE);
                     inpJumlahPohon.setVisibility(View.VISIBLE);
