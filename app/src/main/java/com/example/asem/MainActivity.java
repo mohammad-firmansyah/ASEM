@@ -106,6 +106,10 @@ public class MainActivity extends AppCompatActivity {
     Button inpBtnMap;
     Button btnFile;
     Button btnSubmit;
+    Button map1;
+    Button map2;
+    Button map3;
+    Button map4;
     double longitudeValue = 0;
     double latitudeValue = 0;
 
@@ -232,7 +236,7 @@ public class MainActivity extends AppCompatActivity {
                                 img1 = utils.savePictureResult(
                                         MainActivity.this, photoname1, fotoimg1, true
                                 );
-                                setExifLocation(img1);
+                                setExifLocation(img1,1);
                             } else if (resultCode == Activity.RESULT_CANCELED){
                                 android.widget.Toast.makeText(MainActivity.this, "Cancelled", Toast.LENGTH_SHORT).show();
                             }
@@ -252,7 +256,7 @@ public class MainActivity extends AppCompatActivity {
                                 img2 = utils.savePictureResult(
                                         MainActivity.this, photoname2, fotoimg2, true
                                 );
-                                setExifLocation(img2);
+                                setExifLocation(img2,2);
                             } else if (resultCode == Activity.RESULT_CANCELED){
                                 android.widget.Toast.makeText(MainActivity.this, "Cancelled", Toast.LENGTH_SHORT).show();
                             }
@@ -272,7 +276,7 @@ public class MainActivity extends AppCompatActivity {
                                 img3 = utils.savePictureResult(
                                         MainActivity.this, photoname3, fotoimg3, true
                                 );
-                                setExifLocation(img3);
+                                setExifLocation(img3,3);
                             } else if (resultCode == Activity.RESULT_CANCELED){
                                 android.widget.Toast.makeText(MainActivity.this, "Cancelled", Toast.LENGTH_SHORT).show();
                             }
@@ -292,7 +296,7 @@ public class MainActivity extends AppCompatActivity {
                                 img4 = utils.savePictureResult(
                                         MainActivity.this, photoname4, fotoimg4, true
                                 );
-                                setExifLocation(img4);
+                                setExifLocation(img4,4);
                             } else if (resultCode == Activity.RESULT_CANCELED){
                                 android.widget.Toast.makeText(MainActivity.this, "Cancelled", Toast.LENGTH_SHORT).show();
                             }
@@ -355,7 +359,6 @@ public class MainActivity extends AppCompatActivity {
         inpBtnMap = findViewById(R.id.inpBtnMap);
         btnSubmit = findViewById(R.id.btnSubmit);
 
-
         btnSubmit.setOnClickListener(v -> editAset());
         inpBtnMap.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -374,7 +377,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 spinnerIdTipeAsset = String.valueOf(position+1);
-                editVisibilityDynamic();
+
             }
 
             @Override
@@ -387,7 +390,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                  spinnerIdJenisAset = String.valueOf(position+1);
-                editVisibilityDynamic();
+
+                 editVisibilityDynamic();
             }
 
             @Override
@@ -400,7 +404,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                  spinnerIdKodeAset = String.valueOf(position+1);
-                editVisibilityDynamic();
+//                editVisibilityDynamic();
 
             }
 
@@ -723,101 +727,101 @@ public class MainActivity extends AppCompatActivity {
                 spinnerJenisAset.setSelection(response.body().getData().getAsetTipe()-1);
                 spinnerAsetKondisi.setSelection(response.body().getData().getAsetKondisi()-1);
                 spinnerKodeAset.setSelection(response.body().getData().getAsetKode()-1);
-
+                editVisibilityDynamic();
 //                Log.d("asetapix", spinnerJenisAset.getSelectedItem().toString());
-                if (spinnerJenisAset.getSelectedItem().toString() == "tanaman" && spinnerAsetKondisi.getSelectedItem().toString() == "normal") {
-                    listBtnMap.setVisibility(View.VISIBLE);
-                    inpJumlahPohon.setVisibility(View.VISIBLE);
-
-                    tvUploudBA.setVisibility(View.GONE);
-                    inpBtnMap.setVisibility(View.GONE);
-                    btnFile.setVisibility(View.GONE);
-
-                }
-
-                if (spinnerJenisAset.getSelectedItem().toString() == "tanaman" && spinnerAsetKondisi.getSelectedItem().toString() == "rusak") {
-                    listBtnMap.setVisibility(View.VISIBLE);
-                    inpJumlahPohon.setVisibility(View.VISIBLE);
-                    tvUploudBA.setVisibility(View.VISIBLE);
-                    btnFile.setVisibility(View.VISIBLE);
-
-                    inpBtnMap.setVisibility(View.GONE);
-
-                }
-
-
-                if (spinnerJenisAset.getSelectedItem().toString() == "tanaman" && spinnerAsetKondisi.getSelectedItem().toString() == "hilang") {
-                    tvUploudBA.setVisibility(View.VISIBLE);
-                    btnFile.setVisibility(View.VISIBLE);
-
-                    inpJumlahPohon.setVisibility(View.GONE);
-                    listBtnMap.setVisibility(View.GONE);
-                    inpJumlahPohon.setVisibility(View.GONE);
-                    inpBtnMap.setVisibility(View.GONE);
-
-                }
-
-                if (spinnerJenisAset.getSelectedItem().toString() == "kayu" && spinnerAsetKondisi.getSelectedItem().toString() == "normal") {
-                    listBtnMap.setVisibility(View.VISIBLE);
-                    inpJumlahPohon.setVisibility(View.VISIBLE);
-
-                    tvUploudBA.setVisibility(View.GONE);
-                    inpBtnMap.setVisibility(View.GONE);
-                    btnFile.setVisibility(View.GONE);
-
-                }
-
-                if (spinnerJenisAset.getSelectedItem().toString() == "kayu" && spinnerAsetKondisi.getSelectedItem().toString() == "rusak") {
-                    listBtnMap.setVisibility(View.VISIBLE);
-                    inpJumlahPohon.setVisibility(View.VISIBLE);
-                    tvUploudBA.setVisibility(View.VISIBLE);
-                    btnFile.setVisibility(View.VISIBLE);
-
-                    inpBtnMap.setVisibility(View.GONE);
-
-                }
-
-                if (spinnerJenisAset.getSelectedItem().toString() == "kayu" && spinnerAsetKondisi.getSelectedItem().toString() == "hilang") {
-                    tvUploudBA.setVisibility(View.VISIBLE);
-                    btnFile.setVisibility(View.VISIBLE);
-
-                    inpJumlahPohon.setVisibility(View.GONE);
-                    listBtnMap.setVisibility(View.GONE);
-                    inpJumlahPohon.setVisibility(View.GONE);
-                    inpBtnMap.setVisibility(View.GONE);
-
-                }
-
-                if (spinnerJenisAset.getSelectedItem().toString() == "non-tanaman" && spinnerAsetKondisi.getSelectedItem().toString() == "normal") {
-                    inpBtnMap.setVisibility(View.VISIBLE);
-
-                    listBtnMap.setVisibility(View.GONE);
-                    inpJumlahPohon.setVisibility(View.GONE);
-                    tvUploudBA.setVisibility(View.GONE);
-                    btnFile.setVisibility(View.GONE);
-
-                }
-
-                if (spinnerJenisAset.getSelectedItem().toString() == "non-tanaman" && spinnerAsetKondisi.getSelectedItem().toString() == "rusak") {
-                    listBtnMap.setVisibility(View.VISIBLE);
-                    tvUploudBA.setVisibility(View.VISIBLE);
-                    btnFile.setVisibility(View.VISIBLE);
-
-                    inpJumlahPohon.setVisibility(View.GONE);
-                    inpBtnMap.setVisibility(View.GONE);
-
-                }
-
-                if (spinnerJenisAset.getSelectedItem().toString() == "non-tanaman" && spinnerAsetKondisi.getSelectedItem().toString() == "hilang") {
-                    tvUploudBA.setVisibility(View.VISIBLE);
-                    btnFile.setVisibility(View.VISIBLE);
-
-                    inpJumlahPohon.setVisibility(View.GONE);
-                    listBtnMap.setVisibility(View.GONE);
-                    inpJumlahPohon.setVisibility(View.GONE);
-                    inpBtnMap.setVisibility(View.GONE);
-
-                }
+//                if (spinnerJenisAset.getSelectedItem().toString() == "tanaman" && spinnerAsetKondisi.getSelectedItem().toString() == "normal") {
+//                    listBtnMap.setVisibility(View.VISIBLE);
+//                    inpJumlahPohon.setVisibility(View.VISIBLE);
+//
+//                    tvUploudBA.setVisibility(View.GONE);
+//                    inpBtnMap.setVisibility(View.GONE);
+//                    btnFile.setVisibility(View.GONE);
+//
+//                }
+//
+//                if (spinnerJenisAset.getSelectedItem().toString() == "tanaman" && spinnerAsetKondisi.getSelectedItem().toString() == "rusak") {
+//                    listBtnMap.setVisibility(View.VISIBLE);
+//                    inpJumlahPohon.setVisibility(View.VISIBLE);
+//                    tvUploudBA.setVisibility(View.VISIBLE);
+//                    btnFile.setVisibility(View.VISIBLE);
+//
+//                    inpBtnMap.setVisibility(View.GONE);
+//
+//                }
+//
+//
+//                if (spinnerJenisAset.getSelectedItem().toString() == "tanaman" && spinnerAsetKondisi.getSelectedItem().toString() == "hilang") {
+//                    tvUploudBA.setVisibility(View.VISIBLE);
+//                    btnFile.setVisibility(View.VISIBLE);
+//
+//                    inpJumlahPohon.setVisibility(View.GONE);
+//                    listBtnMap.setVisibility(View.GONE);
+//                    inpJumlahPohon.setVisibility(View.GONE);
+//                    inpBtnMap.setVisibility(View.GONE);
+//
+//                }
+//
+//                if (spinnerJenisAset.getSelectedItem().toString() == "kayu" && spinnerAsetKondisi.getSelectedItem().toString() == "normal") {
+//                    listBtnMap.setVisibility(View.VISIBLE);
+//                    inpJumlahPohon.setVisibility(View.VISIBLE);
+//
+//                    tvUploudBA.setVisibility(View.GONE);
+//                    inpBtnMap.setVisibility(View.GONE);
+//                    btnFile.setVisibility(View.GONE);
+//
+//                }
+//
+//                if (spinnerJenisAset.getSelectedItem().toString() == "kayu" && spinnerAsetKondisi.getSelectedItem().toString() == "rusak") {
+//                    listBtnMap.setVisibility(View.VISIBLE);
+//                    inpJumlahPohon.setVisibility(View.VISIBLE);
+//                    tvUploudBA.setVisibility(View.VISIBLE);
+//                    btnFile.setVisibility(View.VISIBLE);
+//
+//                    inpBtnMap.setVisibility(View.GONE);
+//
+//                }
+//
+//                if (spinnerJenisAset.getSelectedItem().toString() == "kayu" && spinnerAsetKondisi.getSelectedItem().toString() == "hilang") {
+//                    tvUploudBA.setVisibility(View.VISIBLE);
+//                    btnFile.setVisibility(View.VISIBLE);
+//
+//                    inpJumlahPohon.setVisibility(View.GONE);
+//                    listBtnMap.setVisibility(View.GONE);
+//                    inpJumlahPohon.setVisibility(View.GONE);
+//                    inpBtnMap.setVisibility(View.GONE);
+//
+//                }
+//
+//                if (spinnerJenisAset.getSelectedItem().toString() == "non-tanaman" && spinnerAsetKondisi.getSelectedItem().toString() == "normal") {
+//                    inpBtnMap.setVisibility(View.VISIBLE);
+//
+//                    listBtnMap.setVisibility(View.GONE);
+//                    inpJumlahPohon.setVisibility(View.GONE);
+//                    tvUploudBA.setVisibility(View.GONE);
+//                    btnFile.setVisibility(View.GONE);
+//
+//                }
+//
+//                if (spinnerJenisAset.getSelectedItem().toString() == "non-tanaman" && spinnerAsetKondisi.getSelectedItem().toString() == "rusak") {
+//                    listBtnMap.setVisibility(View.VISIBLE);
+//                    tvUploudBA.setVisibility(View.VISIBLE);
+//                    btnFile.setVisibility(View.VISIBLE);
+//
+//                    inpJumlahPohon.setVisibility(View.GONE);
+//                    inpBtnMap.setVisibility(View.GONE);
+//
+//                }
+//
+//                if (spinnerJenisAset.getSelectedItem().toString() == "non-tanaman" && spinnerAsetKondisi.getSelectedItem().toString() == "hilang") {
+//                    tvUploudBA.setVisibility(View.VISIBLE);
+//                    btnFile.setVisibility(View.VISIBLE);
+//
+//                    inpJumlahPohon.setVisibility(View.GONE);
+//                    listBtnMap.setVisibility(View.GONE);
+//                    inpJumlahPohon.setVisibility(View.GONE);
+//                    inpBtnMap.setVisibility(View.GONE);
+//
+//                }
 
 
             }
@@ -982,7 +986,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    private void setExifLocation(File fileImage){
+    private void setExifLocation(File fileImage,int list){
         try {
             getLastLocation(MainActivity.this,getApplicationContext());
             ExifInterface exif = new ExifInterface(fileImage.getAbsoluteFile().getAbsolutePath());
@@ -992,8 +996,41 @@ public class MainActivity extends AppCompatActivity {
             exif.setAttribute(ExifInterface.TAG_GPS_LONGITUDE_REF, GpsConverter.latitudeRef(longitudeValue));
             exif.saveAttributes();
             String url = "https://www.google.com/maps/search/?api=1&query="+String.valueOf(latitudeValue)+"%2C"+String.valueOf(longitudeValue);
-            geotag1 = url;
-            Log.d("exifcek",String.valueOf(latitudeValue) + String.valueOf(utils.latitudeValue));
+            if ("tanaman".equals(String.valueOf(spinnerJenisAset.getSelectedItem()))) {
+                if (list == 1) {
+
+                    geotag1 = url;
+                } else if (list == 2) {
+
+                    geotag2 = url;
+                } else if (list == 3) {
+
+                    geotag3 = url;
+                } else if (list == 4) {
+
+                    geotag4 = url;
+                }
+
+            }else if("kayu".equals(String.valueOf(spinnerJenisAset.getSelectedItem()))) {
+                if (list == 1) {
+
+                    geotag1 = url;
+                } else if (list == 2) {
+
+                    geotag2 = url;
+                } else if (list == 3) {
+
+                    geotag3 = url;
+                } else if (list == 4) {
+
+                    geotag4 = url;
+                }
+            }
+
+            else {
+                geotag1 = url;
+            }
+
         } catch (Exception e){
             Toast.makeText(this, "Error when set Exif Location", Toast.LENGTH_LONG).show();
             e.printStackTrace();
@@ -1001,7 +1038,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void editVisibilityDynamic(){
-        if (spinnerJenisAset.getSelectedItem().toString() == "tanaman" && spinnerAsetKondisi.getSelectedItem().toString() == "normal") {
+        if ("tanaman".equals(String.valueOf(spinnerJenisAset.getSelectedItem())) && "normal".equals(String.valueOf(spinnerAsetKondisi.getSelectedItem()))) {
             listBtnMap.setVisibility(View.VISIBLE);
             inpJumlahPohon.setVisibility(View.VISIBLE);
 
@@ -1009,9 +1046,11 @@ public class MainActivity extends AppCompatActivity {
             inpBtnMap.setVisibility(View.GONE);
             btnFile.setVisibility(View.GONE);
 
+            Toast.makeText(this, "tanaman", Toast.LENGTH_SHORT).show();
+
         }
 
-        if (spinnerJenisAset.getSelectedItem().toString() == "tanaman" && spinnerAsetKondisi.getSelectedItem().toString() == "rusak") {
+        else if ("tanaman".equals(String.valueOf(spinnerJenisAset.getSelectedItem()))  && "rusak".equals(String.valueOf(spinnerAsetKondisi.getSelectedItem())) ) {
             listBtnMap.setVisibility(View.VISIBLE);
             inpJumlahPohon.setVisibility(View.VISIBLE);
             tvUploudBA.setVisibility(View.VISIBLE);
@@ -1022,7 +1061,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
 
-        else if (spinnerJenisAset.getSelectedItem().toString() == "tanaman" && spinnerAsetKondisi.getSelectedItem().toString() == "hilang") {
+        else if ("tanaman".equals(String.valueOf(spinnerJenisAset.getSelectedItem()))  && "hilang".equals(String.valueOf(spinnerAsetKondisi.getSelectedItem()))) {
             tvUploudBA.setVisibility(View.VISIBLE);
             btnFile.setVisibility(View.VISIBLE);
 
@@ -1033,7 +1072,7 @@ public class MainActivity extends AppCompatActivity {
 
         }
 
-        else if (spinnerJenisAset.getSelectedItem().toString() == "kayu" && spinnerAsetKondisi.getSelectedItem().toString() == "normal") {
+        else if ("kayu".equals(String.valueOf(spinnerJenisAset.getSelectedItem()))  && "normal".equals(String.valueOf(spinnerAsetKondisi.getSelectedItem())) ) {
             listBtnMap.setVisibility(View.VISIBLE);
             inpJumlahPohon.setVisibility(View.VISIBLE);
 
@@ -1043,7 +1082,7 @@ public class MainActivity extends AppCompatActivity {
 
         }
 
-        else if (spinnerJenisAset.getSelectedItem().toString() == "kayu" && spinnerAsetKondisi.getSelectedItem().toString() == "rusak") {
+        else if ("kayu".equals(String.valueOf(spinnerJenisAset.getSelectedItem()))  && "rusak".equals(String.valueOf(spinnerAsetKondisi.getSelectedItem())) ) {
             listBtnMap.setVisibility(View.VISIBLE);
             inpJumlahPohon.setVisibility(View.VISIBLE);
             tvUploudBA.setVisibility(View.VISIBLE);
@@ -1053,7 +1092,7 @@ public class MainActivity extends AppCompatActivity {
 
         }
 
-        else if (spinnerJenisAset.getSelectedItem().toString() == "kayu" && spinnerAsetKondisi.getSelectedItem().toString() == "hilang") {
+        else if ("kayu".equals(String.valueOf(spinnerJenisAset.getSelectedItem())) && "hilang".equals(String.valueOf(spinnerAsetKondisi.getSelectedItem()))) {
             tvUploudBA.setVisibility(View.VISIBLE);
             btnFile.setVisibility(View.VISIBLE);
 
@@ -1064,7 +1103,7 @@ public class MainActivity extends AppCompatActivity {
 
         }
 
-        else if (spinnerJenisAset.getSelectedItem().toString() == "non-tanaman" && spinnerAsetKondisi.getSelectedItem().toString() == "normal") {
+        else if ("non tanaman".equals(String.valueOf(spinnerJenisAset.getSelectedItem())) && "normal".equals(String.valueOf(spinnerAsetKondisi.getSelectedItem()))) {
             inpBtnMap.setVisibility(View.VISIBLE);
 
             listBtnMap.setVisibility(View.GONE);
@@ -1074,7 +1113,7 @@ public class MainActivity extends AppCompatActivity {
 
         }
 
-        else if (spinnerJenisAset.getSelectedItem().toString() == "non-tanaman" && spinnerAsetKondisi.getSelectedItem().toString() == "rusak") {
+        else if ("non tanaman".equals(String.valueOf(spinnerJenisAset.getSelectedItem())) &&"rusak".equals(String.valueOf(spinnerAsetKondisi.getSelectedItem()))) {
             listBtnMap.setVisibility(View.VISIBLE);
             tvUploudBA.setVisibility(View.VISIBLE);
             btnFile.setVisibility(View.VISIBLE);
@@ -1084,7 +1123,7 @@ public class MainActivity extends AppCompatActivity {
 
         }
 
-        else if (spinnerJenisAset.getSelectedItem().toString() == "non-tanaman" && spinnerAsetKondisi.getSelectedItem().toString() == "hilang") {
+        else if ("non tanaman".equals(String.valueOf(spinnerJenisAset.getSelectedItem())) && "hilang".equals(String.valueOf(spinnerAsetKondisi.getSelectedItem()))) {
             tvUploudBA.setVisibility(View.VISIBLE);
             btnFile.setVisibility(View.VISIBLE);
 
@@ -1093,18 +1132,10 @@ public class MainActivity extends AppCompatActivity {
             inpJumlahPohon.setVisibility(View.GONE);
             inpBtnMap.setVisibility(View.GONE);
 
-        } else{
-            tvUploudBA.setVisibility(View.GONE);
-            btnFile.setVisibility(View.GONE);
-
-            inpJumlahPohon.setVisibility(View.GONE);
-            listBtnMap.setVisibility(View.GONE);
-            inpJumlahPohon.setVisibility(View.GONE);
-            inpBtnMap.setVisibility(View.GONE);
         }
     }
     public void editAset(){
-
+            dialog.show();
             Log.d("halo",String.valueOf(spinnerIdTipeAsset));
             String tgl_input = inpTglInput.getText().toString().trim() + " 00:00:00";
 

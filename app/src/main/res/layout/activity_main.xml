@@ -83,7 +83,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="41dp"
                 android:background="@drawable/rounded_spinner"
-                android:spinnerMode="dropdown" />
+                android:spinnerMode="dropdown"
+
+                />
 
 
 
@@ -165,12 +167,12 @@
             <EditText
 
                 android:id="@+id/inpNmrSAP"
-                android:layout_marginBottom="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="41dp"
+                android:layout_marginBottom="10dp"
                 android:background="@drawable/edit_text_spiner"
-                android:inputType="numberDecimal"
-                />
+                android:inputType="numberDecimal" />
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -349,7 +351,7 @@
 
                 <Button
                     android:id="@+id/map2"
-                    android:layout_width="77dp"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="5dp"
                     android:layout_marginTop="10dp"
