@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -17,7 +18,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
-
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -36,7 +36,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="41dp"
                 android:background="@drawable/rounded_spinner"
-                android:spinnerMode="dropdown" />
+                android:spinnerMode="dropdown"
+
+                />
 
             <TextView
                 android:layout_width="match_parent"
@@ -81,7 +83,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="41dp"
                 android:background="@drawable/rounded_spinner"
-                android:spinnerMode="dropdown" />
+                android:spinnerMode="dropdown"
+
+                />
 
 
 
@@ -103,7 +107,7 @@
                 android:layout_height="41dp"
                 android:layout_marginBottom="10dp"
                 android:background="@drawable/tgl_spinner"
-                android:inputType="datetime"
+
                 />
 
             <TextView
@@ -148,7 +152,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="41dp"
                 android:background="@drawable/edit_text_spiner"
-                android:spinnerMode="dropdown"
                 />
 
 
@@ -164,13 +167,57 @@
             <EditText
 
                 android:id="@+id/inpNmrSAP"
-                android:layout_marginBottom="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="41dp"
+                android:layout_marginBottom="10dp"
                 android:background="@drawable/edit_text_spiner"
-                android:spinnerMode="dropdown"
-                android:inputType="numberDecimal"
-                />
+                android:inputType="numberDecimal" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:text="UPLOUD BA :"
+                android:textColor="@color/main_grey"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                >
+
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="41dp"
+                    android:layout_weight=".70"
+                    android:background="@drawable/edit_text_spiner"
+                    android:text="Tidak Ada File"
+                    android:id="@+id/tvUploudBA"
+                    android:gravity="center_vertical"
+                    android:textColor="@color/main_grey"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+                <Button
+
+                    android:id="@+id/inpUploudBA"
+                    android:layout_width="0dp"
+                    android:layout_height="41dp"
+                    android:layout_weight="0.3"
+                    android:layout_marginBottom="10dp"
+                    android:background="@drawable/edit_text_spiner"
+                    android:spinnerMode="dropdown"
+                    android:text="UPLOUD"
+                    android:onClick="uploadImage"
+                    android:layout_marginStart="5dp"
+                    android:textSize="10sp"
+                    android:layout_toEndOf="@+id/tvUploudBA"
+                    />
+            </LinearLayout>
+
+
+
 
 
             <TextView
@@ -206,9 +253,11 @@
                         android:layout_height="99dp"
                         android:background="@drawable/edit_text_spiner"
                         android:layout_marginRight="7dp"
+                        android:id="@+id/foto1"
                         >
 
                         <ImageView
+                            android:id="@+id/fotoimg1"
                             android:layout_width="30dp"
                             android:layout_height="30dp"
                             android:src="@drawable/ic_outline_image_24"
@@ -218,6 +267,7 @@
                     </RelativeLayout>
 
                     <RelativeLayout
+                        android:id="@+id/foto2"
                         android:layout_width="91dp"
                         android:layout_height="99dp"
                         android:layout_marginRight="7dp"
@@ -226,6 +276,7 @@
                         >
 
                         <ImageView
+                            android:id="@+id/fotoimg2"
                             android:layout_width="30dp"
                             android:layout_height="30dp"
                             android:src="@drawable/ic_outline_image_24"
@@ -235,6 +286,7 @@
                     </RelativeLayout>
 
                     <RelativeLayout
+                        android:id="@+id/foto3"
                         android:layout_width="91dp"
                         android:layout_height="99dp"
                         android:background="@drawable/edit_text_spiner"
@@ -242,6 +294,7 @@
                         >
 
                         <ImageView
+                            android:id="@+id/fotoimg3"
                             android:layout_width="30dp"
                             android:layout_height="30dp"
                             android:src="@drawable/ic_outline_image_24"
@@ -251,12 +304,14 @@
                     </RelativeLayout>
 
                     <RelativeLayout
+                        android:id="@+id/foto4"
                         android:layout_width="91dp"
                         android:layout_height="99dp"
                         android:layout_marginRight="7dp"
                         android:background="@drawable/edit_text_spiner">
 
                         <ImageView
+                            android:id="@+id/fotoimg4"
                             android:layout_width="30dp"
                             android:layout_height="30dp"
                             android:layout_centerHorizontal="true"
@@ -268,13 +323,65 @@
             </HorizontalScrollView>
 
             <Button
-                android:id="@+id/outlinedButton"
+                android:id="@+id/inpBtnMap"
                 android:layout_marginTop="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Map"
                 android:background="@drawable/button_background"
                 />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:id="@+id/listMapButton"
+                android:layout_marginBottom="10dp"
+                >
+
+                <Button
+                    android:id="@+id/map1"
+                    android:layout_marginTop="10dp"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="Map"
+                    android:background="@drawable/button_background"
+                    android:layout_weight="0.3"
+                    />
+
+                <Button
+                    android:id="@+id/map2"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_weight="0.3"
+                    android:background="@drawable/button_background"
+                    android:text="Map" />
+
+                <Button
+                    android:id="@+id/map3"
+                    android:layout_marginTop="10dp"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="Map"
+                    android:background="@drawable/button_background"
+                    android:layout_weight="0.3"
+                    android:layout_marginStart="5dp"
+                    />
+
+                <Button
+                    android:id="@+id/map4"
+                    android:layout_marginTop="10dp"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="Map"
+                    android:background="@drawable/button_background"
+                    android:layout_weight="0.3"
+                    android:layout_marginStart="5dp"
+                    />
+            </LinearLayout>
+
 
 
             <TextView
@@ -298,7 +405,6 @@
                 android:background="@drawable/edit_text_spiner"
                 android:spinnerMode="dropdown"
                 android:inputType="numberDecimal"
-                android:paddingTop="10dp"
 
                 />
 
@@ -320,11 +426,10 @@
                 android:layout_marginBottom="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="41dp"
-                android:paddingStart="35dp"
                 android:paddingVertical="10dp"
                 android:lines="1"
                 android:inputType="numberDecimal"
-                android:background="@drawable/currency_background"
+                android:background="@drawable/edit_text_spiner"
                 />
 
 
@@ -347,8 +452,8 @@
                 android:cursorVisible="false"
                 android:focusable="false"
                 android:focusableInTouchMode="false"
-                android:background="@drawable/pickdate_background"
-                android:hint="Pickdate"
+                android:background= "@drawable/pickdate_background"
+                android:hint="tanggal perolehan"
                 android:layout_height="41dp"
                 android:paddingVertical="10dp"/>
 
@@ -371,7 +476,6 @@
                 android:id="@+id/inpMasaPenyusutan"
                 android:layout_marginBottom="10dp"
                 android:layout_height="41dp"
-                android:paddingStart="35dp"
                 android:paddingVertical="10dp"
                 android:lines="1"
                 android:inputType="numberDecimal"
@@ -396,7 +500,6 @@
                 android:id="@+id/inpNmrBAST"
                 android:layout_marginBottom="10dp"
                 android:layout_height="41dp"
-                android:paddingStart="35dp"
                 android:paddingVertical="10dp"
                 android:lines="1"
                 android:inputType="numberDecimal"
@@ -421,9 +524,56 @@
                 android:id="@+id/inpNmrResidu"
                 android:layout_marginBottom="10dp"
                 android:layout_height="41dp"
-                android:paddingStart="35dp"
                 android:paddingVertical="10dp"
                 android:lines="1"
+                android:inputType="numberDecimal"
+                android:background="@drawable/edit_text_spiner"
+                />
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="UMUR EKONOMIS :"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:textColor="@color/main_grey"
+                android:layout_marginVertical="10dp"
+
+                />
+
+
+            <EditText
+                android:layout_width="match_parent"
+                android:id="@+id/inpUmrEkonomis"
+                android:layout_marginBottom="10dp"
+                android:layout_height="41dp"
+                android:paddingVertical="10dp"
+                android:lines="1"
+                android:inputType="numberDecimal"
+                android:background="@drawable/edit_text_spiner"
+                />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="JUMLAH POHON :"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:textColor="@color/main_grey"
+                android:layout_marginVertical="10dp"
+
+                />
+
+
+            <EditText
+                android:layout_width="match_parent"
+                android:id="@+id/inpJmlhPohon"
+                android:layout_marginBottom="10dp"
+                android:layout_height="41dp"
+                android:paddingVertical="10dp"
+                android:lines="1"
+                android:hint="jumlah pohon"
                 android:inputType="numberDecimal"
                 android:background="@drawable/edit_text_spiner"
                 />
@@ -443,9 +593,14 @@
 
 
             <EditText
+                android:id="@+id/inpKeterangan"
                 android:layout_width="match_parent"
-                android:id="@+id/InpKeterangan"
                 android:layout_height="128dp"
+                android:layout_weight="1"
+                android:inputType="textCapSentences|textMultiLine"
+                android:text="keterangan"
+                android:gravity="top"
+                android:paddingTop="10dp"
                 android:background="@drawable/edit_text_spiner"
                 />
 

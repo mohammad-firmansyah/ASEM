@@ -100,6 +100,10 @@ public interface AsetInterface {
             @Header("Content-Type") String contentType, @Body MultipartBody body
             );
 
+    @POST("aset/")
+    Call<AsetModel> addAset(
+            @Header("Content-Type") String contentType, @Body MultipartBody body
+    );
         //    @Multipart
         //    @POST("aset/{id}")
         //    Call<AsetModel> editAset(int i, RequestBody requestNamaAset, RequestBody requestTipeAset, RequestBody requestJenisAset, RequestBody requestKondisiAset, RequestBody requestKodeAset, RequestBody requestNomorAsetSAP, MultipartBody.Part img1Part, MultipartBody.Part img2Part, MultipartBody.Part img3Part, MultipartBody.Part img4Part, RequestBody requestGeoTag1, RequestBody requestGeoTag2, RequestBody requestGeoTag3, RequestBody requestGeoTag4, RequestBody requestGeoTag41, RequestBody requestLuasAset, RequestBody requestTglOleh, RequestBody requestNilaiResidu, RequestBody requestNilaiAsetSAP, RequestBody requestNomorBAST, RequestBody requestMasaSusut, RequestBody requestKeterangan, String ba_file);
