@@ -15,9 +15,11 @@ import androidx.exifinterface.media.ExifInterface;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.drawable.ColorDrawable;
@@ -80,7 +82,6 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class AddAsetActivity extends AppCompatActivity {
-    Data aset = new Data();
     Button inpBtnMap;
     Button btnFile;
     Button btnSubmit;
@@ -641,7 +642,6 @@ public class AddAsetActivity extends AppCompatActivity {
 
 
 
-                aset = response.body().getData();
                 tvUploudBA.setText(response.body().getData().getBaFile());
                 inpTglInput.setText(response.body().getData().getTglInput().split(" ")[0]);
                 inpTglOleh.setText(response.body().getData().getTglInput().split(" ")[0]);
@@ -1097,6 +1097,74 @@ public class AddAsetActivity extends AppCompatActivity {
     public void addAset(){
         dialog.show();
 
+        if (inpNamaAset == null) {
+            inpNamaAset.setError("nama harus diisi");
+            inpNamaAset.requestFocus();
+            return;
+        }
+
+        if (inpNoSAP == null) {
+            inpNamaAset.setError("nomor SAP harus diisi");
+            inpNamaAset.requestFocus();
+            return;
+        }
+
+        if (img1 == null || img2 == null || img3 == null || img4 == null) {
+            new AlertDialog.Builder(getApplicationContext())
+                    .setTitle("Erorr")
+                    .setMessage("Gambar Harus Diisi")
+
+                    // Specifying a listener allows you to take an action before dismissing the dialog.
+                    // The dialog is automatically dismissed when a dialog button is clicked.
+                    .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            // Continue with delete operation
+                        }
+                    })
+
+                    // A null listener allows the button to dismiss the dialog and take no further action.
+                    .setNegativeButton(android.R.string.no, null)
+                    .setIcon(android.R.drawable.ic_dialog_alert)
+                    .show();
+        }
+
+        if (inpLuasAset == null) {
+            inpNamaAset.setError("Luas Aset harus diisi");
+            inpNamaAset.requestFocus();
+            return;
+        }
+
+        if (inpNilaiAsetSAP == null) {
+            inpNamaAset.setError("Nilai Aset harus diisi");
+            inpNamaAset.requestFocus();
+            return;
+        }
+
+        if (inpTglOleh == null) {
+            inpNamaAset.setError("Tanggal Perolehan harus diisi");
+            inpNamaAset.requestFocus();
+            return;
+        }
+
+        if (inpMasaPenyusutan == null) {
+            inpNamaAset.setError("Masa Penyusutan harus diisi");
+            inpNamaAset.requestFocus();
+            return;
+        }
+
+        if (inpNomorBAST == null) {
+            inpNamaAset.setError("nomor BAST harus diisi");
+            inpNamaAset.requestFocus();
+            return;
+        }
+
+        if ("tanaman".equals(String.valueOf(spinnerJenisAset.getSelectedItem()))  || "kayu".equals(String.valueOf(spinnerJenisAset.getSelectedItem()))) {
+            inpJumlahPohon.setError("Jumlah POhon harus diisi");
+            inpNamaAset.requestFocus();
+            return;
+        }
+
+
         String tgl_input = inpTglInput.getText().toString().trim() + " 00:00:00";
 
         String nama_aset = inpNamaAset.getText().toString().trim();
@@ -1111,7 +1179,6 @@ public class AddAsetActivity extends AppCompatActivity {
         String nomor_bast = String.valueOf(inpMasaPenyusutan.getText().toString().trim());
         String nilai_residu = String.valueOf(CurrencyToNumber(inpNilaiResidu.getText().toString().trim()));
         String keterangan = String.valueOf(inpKeterangan.getText().toString().trim());
-        String asetId = String.valueOf(aset.getAsetId());
 
 
         MultipartBody.Part img1Part = null,img2Part = null,img3Part=null,img4Part=null,partBaFile=null;
@@ -1120,7 +1187,6 @@ public class AddAsetActivity extends AppCompatActivity {
 
         try{
 
-            RequestBody requestAsetId = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(asetId));
             RequestBody requestTipeAset = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(spinnerIdTipeAsset));
             RequestBody requestJenisAset = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(spinnerIdJenisAset));
             RequestBody requestKondisiAset = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(spinnerIdAsetKondisi));
@@ -1146,7 +1212,6 @@ public class AddAsetActivity extends AppCompatActivity {
 
 
             MultipartBody.Builder builder = new MultipartBody.Builder();
-            builder.addPart(MultipartBody.Part.createFormData("aset_id",null,requestAsetId));
             builder.addPart(MultipartBody.Part.createFormData("aset_name",null,requestNamaAset));
             builder.addPart(MultipartBody.Part.createFormData("aset_tipe",null,requestTipeAset));
             builder.addPart(MultipartBody.Part.createFormData("aset_jenis",null,requestJenisAset));
@@ -1165,31 +1230,16 @@ public class AddAsetActivity extends AppCompatActivity {
             builder.addPart(MultipartBody.Part.createFormData("nomor_bast",null,requestNomorBAST));
             builder.addPart(MultipartBody.Part.createFormData("masa_susut",null,requestMasaSusut));
             builder.addPart(MultipartBody.Part.createFormData("keterangan",null,requestKeterangan));
-
-
+            builder.addPart(MultipartBody.Part.createFormData("foto_aset1", img1.getName(), RequestBody.create(MediaType.parse("image/*"), img1)));
+            builder.addPart(MultipartBody.Part.createFormData("foto_aset2",img2.getName(),RequestBody.create(MediaType.parse("image/*"),img2)));
+            builder.addPart(MultipartBody.Part.createFormData("foto_aset3",img3.getName(),RequestBody.create(MediaType.parse("image/*"),img3)));
+            builder.addPart(MultipartBody.Part.createFormData("foto_aset4",img4.getName(),RequestBody.create(MediaType.parse("image/*"),img4)));
 
 
             if (bafile_file != null){
-
                 RequestBody requestBaFile = RequestBody.create(MediaType.parse("multipart/form-file"), bafile_file);
                 partBaFile = MultipartBody.Part.createFormData("ba_file", bafile_file.getName(), requestBaFile);
-
-            }
-
-            if (img1 != null) {
-                builder.addPart(MultipartBody.Part.createFormData("foto_aset1", img1.getName(), RequestBody.create(MediaType.parse("image/*"), img1)));
-            }
-
-            if (img2 != null) {
-                builder.addPart(MultipartBody.Part.createFormData("foto_aset2",img2.getName(),RequestBody.create(MediaType.parse("image/*"),img2)));
-            }
-
-            if (img3 != null) {
-                builder.addPart(MultipartBody.Part.createFormData("foto_aset3",img3.getName(),RequestBody.create(MediaType.parse("image/*"),img3)));
-            }
-
-            if (img4 != null) {
-                builder.addPart(MultipartBody.Part.createFormData("foto_aset4",img4.getName(),RequestBody.create(MediaType.parse("image/*"),img4)));
+                builder.addPart(partBaFile);
             }
 
 

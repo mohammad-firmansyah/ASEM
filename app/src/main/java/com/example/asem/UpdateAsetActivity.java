@@ -102,7 +102,7 @@ import org.jetbrains.annotations.NotNull;
 import org.json.JSONObject;
 
 public class UpdateAsetActivity extends AppCompatActivity {
-    Data aset = new Data();
+    Data aset;
     Button inpBtnMap;
     Button btnFile;
     Button btnSubmit;
@@ -185,6 +185,7 @@ public class UpdateAsetActivity extends AppCompatActivity {
     String spinnerIdKodeAset;
 
 
+    Integer id;
     public void onActivityResult(int requestCode,int resultCode,@Nullable Intent data){
         super.onActivityResult(requestCode,resultCode,data);
 
@@ -310,7 +311,7 @@ public class UpdateAsetActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_update_aset);
 
         dialog = new Dialog(UpdateAsetActivity.this,R.style.MyAlertDialogTheme);
         dialog.setContentView(R.layout.loading);
@@ -325,6 +326,7 @@ public class UpdateAsetActivity extends AppCompatActivity {
 
         getLastLocation(UpdateAsetActivity.this,getApplicationContext());
 
+        id = getIntent().getIntExtra("id",0);
         listBtnMap = findViewById(R.id.listMapButton);
         inpTglOleh = findViewById(R.id.inpTglMasukAset);
         tvUploudBA = findViewById(R.id.tvUploudBA);
@@ -668,7 +670,7 @@ public class UpdateAsetActivity extends AppCompatActivity {
         });
     }
     private void setValueInput(){
-        Call<AsetModel> call = asetInterface.getAset(1);
+        Call<AsetModel> call = asetInterface.getAset(id);
         call.enqueue(new Callback<AsetModel>() {
 
             @Override
@@ -676,6 +678,7 @@ public class UpdateAsetActivity extends AppCompatActivity {
                 dialog.hide();
                 if (!response.isSuccessful()){
                     Toast.makeText(getApplicationContext(),String.valueOf(response.code()),Toast.LENGTH_LONG).show();
+                    finish();
                     return;
                 }
 
@@ -830,6 +833,7 @@ public class UpdateAsetActivity extends AppCompatActivity {
             public void onFailure(Call<AsetModel> call, Throwable t) {
                 dialog.hide();
                 Log.d("asetapix",t.getMessage());
+                finish();
             }
         });
     }

@@ -102,7 +102,7 @@ import org.jetbrains.annotations.NotNull;
 import org.json.JSONObject;
 
 public class DetailAsetActivity extends AppCompatActivity {
-    Data aset = new Data();
+//    Data aset = new Data();
     Button inpBtnMap;
     Button btnFile;
     Button btnSubmit;
@@ -110,6 +110,8 @@ public class DetailAsetActivity extends AppCompatActivity {
     Button map2;
     Button map3;
     Button map4;
+
+    Integer id;
     double longitudeValue = 0;
     double latitudeValue = 0;
 
@@ -194,6 +196,9 @@ public class DetailAsetActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail_aset);
 
+        Intent intent = getIntent();
+
+        id = intent.getIntExtra("id",0);
         dialog = new Dialog(DetailAsetActivity.this,R.style.MyAlertDialogTheme);
         dialog.setContentView(R.layout.loading);
         dialog.setCanceledOnTouchOutside(false);
@@ -451,7 +456,7 @@ public class DetailAsetActivity extends AppCompatActivity {
         });
     }
     private void setValueInput(){
-        Call<AsetModel> call = asetInterface.getAset(1);
+        Call<AsetModel> call = asetInterface.getAset(id);
         call.enqueue(new Callback<AsetModel>() {
 
             @Override
@@ -459,13 +464,15 @@ public class DetailAsetActivity extends AppCompatActivity {
                 dialog.hide();
                 if (!response.isSuccessful()){
                     Toast.makeText(getApplicationContext(),String.valueOf(response.code()),Toast.LENGTH_LONG).show();
+                    finish();
                     return;
                 }
 
 
 
-                aset = response.body().getData();
+//                aset = response.body().getData();
                 tvUploudBA.setText(response.body().getData().getBaFile());
+
                 inpTglInput.setText(response.body().getData().getTglInput().split(" ")[0]);
                 inpTglOleh.setText(response.body().getData().getTglInput().split(" ")[0]);
                 inpNoSAP.setText(String.valueOf(response.body().getData().getNomorSap()));
@@ -613,6 +620,7 @@ public class DetailAsetActivity extends AppCompatActivity {
             public void onFailure(Call<AsetModel> call, Throwable t) {
                 dialog.hide();
                 Log.d("asetapix",t.getMessage());
+                finish();
             }
         });
     }

@@ -111,6 +111,7 @@ public class Data {
     @Expose
     private Integer umurEkonomisInMonth;
 
+
     public Integer getAsetId() {
         return asetId;
     }
@@ -391,4 +392,41 @@ public class Data {
         this.umurEkonomisInMonth = umurEkonomisInMonth;
     }
 
+    public Data(Integer asetId, String asetName, Integer asetTipe, Integer asetJenis, Integer asetKondisi, Integer asetSubUnit, Integer asetKode, Integer nomorSap, String fotoAset1, String fotoAset2, String fotoAset3, String fotoAset4, String geoTag1, String geoTag2, String geoTag3, String geoTag4, Integer asetLuas, String tglInput, String tglOleh, Integer nilaiResidu, Integer nilaiOleh, String nomorBast, String masaSusut, String keterangan, String fotoQr, String noInv, String fotoAsetQr, Integer statusPosisi, Integer unitId, Integer afdelingId, Integer userInputId, String createdAt, String updatedAt, String baFile, Integer umurEkonomisInMonth) {
+        this.asetId = asetId;
+        this.asetName = asetName;
+        this.asetTipe = asetTipe;
+        this.asetJenis = asetJenis;
+        this.asetKondisi = asetKondisi;
+        this.asetSubUnit = asetSubUnit;
+        this.asetKode = asetKode;
+        this.nomorSap = nomorSap;
+        this.fotoAset1 = fotoAset1;
+        this.fotoAset2 = fotoAset2;
+        this.fotoAset3 = fotoAset3;
+        this.fotoAset4 = fotoAset4;
+        this.geoTag1 = geoTag1;
+        this.geoTag2 = geoTag2;
+        this.geoTag3 = geoTag3;
+        this.geoTag4 = geoTag4;
+        this.asetLuas = asetLuas;
+        this.tglInput = tglInput;
+        this.tglOleh = tglOleh;
+        this.nilaiResidu = nilaiResidu;
+        this.nilaiOleh = nilaiOleh;
+        this.nomorBast = nomorBast;
+        this.masaSusut = masaSusut;
+        this.keterangan = keterangan;
+        this.fotoQr = fotoQr;
+        this.noInv = noInv;
+        this.fotoAsetQr = fotoAsetQr;
+        this.statusPosisi = statusPosisi;
+        this.unitId = unitId;
+        this.afdelingId = afdelingId;
+        this.userInputId = userInputId;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
+        this.baFile = baFile;
+        this.umurEkonomisInMonth = umurEkonomisInMonth;
+    }
 }
