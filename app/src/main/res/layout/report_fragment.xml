@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/background_grey"
+    android:padding="18dp"
+    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:text="TIPE ASSET :"
+        android:textColor="@color/main_grey"
+        android:textSize="14sp"
+        android:textStyle="bold" />
+
+
+    <Spinner
+        android:id="@+id/inpTipeAset"
+        android:layout_width="match_parent"
+        android:layout_height="41dp"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/rounded_spinner"
+        android:spinnerMode="dropdown"
+
+        />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:text="JENIS ASSET :"
+        android:textColor="@color/main_grey"
+        android:textSize="14sp"
+        android:textStyle="bold"
+
+
+        />
+
+
+    <Spinner
+
+        android:id="@+id/inpJenisAset"
+        android:layout_width="match_parent"
+        android:layout_height="41dp"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/rounded_spinner"
+        android:spinnerMode="dropdown" />
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:text="KONDISI ASET:"
+        android:textColor="@color/main_grey"
+        android:textSize="14sp"
+        android:textStyle="bold"
+
+
+        />
+
+
+    <Spinner
+
+        android:id="@+id/inpKndsAset"
+        android:layout_width="match_parent"
+        android:layout_height="41dp"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/rounded_spinner"
+        android:spinnerMode="dropdown"
+
+        />
+
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:text="KODE ASET :"
+        android:textColor="@color/main_grey"
+        android:textSize="14sp"
+        android:textStyle="bold"
+
+
+        />
+
+    <Spinner
+
+        android:id="@+id/inpKodeAset"
+        android:layout_width="match_parent"
+        android:layout_height="41dp"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/rounded_spinner"
+        android:spinnerMode="dropdown" />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:text="TANGGAL INPUT :"
+        android:textColor="@color/main_grey"
+        android:textSize="14sp"
+        android:textStyle="bold" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingTop="10dp"
+        >
+
+
+    <EditText
+        android:layout_weight="0.4"
+        android:id="@+id/inpTglInput"
+        android:layout_width="0dp"
+        android:layout_height="41dp"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/edit_text_spiner"
+
+        />
+    <RelativeLayout
+        android:layout_width="0dp"
+        android:layout_weight="0.1"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        >
+
+        <View
+            android:id="@+id/note"
+            android:layout_width="match_parent"
+            android:layout_height="3dp"
+            android:layout_marginHorizontal="10dp"
+            android:background="@color/main_grey" />
+    </RelativeLayout>
+
+        <EditText
+        android:layout_weight="0.4"
+        android:id="@+id/inpTglInput2"
+        android:layout_width="0dp"
+        android:layout_height="41dp"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/edit_text_spiner"
+
+        />
+
+
+
+    </LinearLayout>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="JENIS REPORT"
+        android:textColor="@color/main_grey"
+        android:textSize="14sp"
+        android:textStyle="bold" />
+    <Spinner
+        android:layout_width="match_parent"
+        android:layout_height="41dp"
+        android:layout_marginVertical="10dp"
+        android:background="@drawable/rounded_spinner"
+        android:spinnerMode="dropdown"
+        android:id="@+id/spinnerExport"
+        />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="10dp"
+        android:text="QR CODE"
+        android:textColor="@color/main_grey"
+        android:textSize="14sp"
+        android:textStyle="bold" />
+
+    <RadioGroup
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        >
+
+
+    <RadioButton android:id="@+id/qrYes"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Iya"
+        android:onClick="onRadioButtonClicked"
+        android:layout_marginRight="10dp"
+        />
+
+
+    <RadioButton android:id="@+id/qrNo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Tidak"
+        android:onClick="onRadioButtonClicked"/>
+
+    </RadioGroup>
+
+
+    <Button
+        android:layout_width="match_parent"
+        android:text="UNDUH EXPORT"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="10dp"
+        android:background="@drawable/edit_text_spiner"
+        />
+
+</LinearLayout>

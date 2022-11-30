@@ -5,14 +5,13 @@
     android:id="@+id/appbar"
     android:layout_width="match_parent"
     android:layout_height="?attr/actionBarSize"
-    android:background="@color/BlueDark">
+    android:background="@color/main_grey">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center_vertical"
         android:paddingEnd="16dp"
-        android:background="@color/BlueDark"
         tools:ignore="RtlSymmetry">
 
         <ImageView
@@ -22,7 +21,6 @@
             android:paddingEnd="16dp"
             android:src="@drawable/ic_baseline_arrow_back_24"
             app:tint="@color/white"
-            android:visibility="gone"
             tools:ignore="ContentDescription,RtlSymmetry" />
 
         <TextView
@@ -31,9 +29,9 @@
             android:layout_height="wrap_content"
             android:layout_toEndOf="@id/imgBack"
             android:fontFamily="sans-serif-black"
-            android:text="Aplikasi Aset Management"
+            android:text="APLIKASI ASET MANAJEMEN"
             android:textColor="@color/white"
-            android:textSize="17sp" />
+            android:textSize="20sp" />
 
         <ImageView
             android:id="@+id/imgSetting"
