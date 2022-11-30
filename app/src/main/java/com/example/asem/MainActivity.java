@@ -112,6 +112,8 @@ import org.json.JSONObject;
 public class MainActivity extends AppCompatActivity {
 
     Button btnReport;
+    Button btnFilter;
+    FloatingActionButton fab;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -122,7 +124,7 @@ public class MainActivity extends AppCompatActivity {
         RecyclerView rcAset = findViewById(R.id.asetAll);
         rcAset.setHasFixedSize(true);
         rcAset.setLayoutManager(new LinearLayoutManager(this));
-        FloatingActionButton fab = findViewById(R.id.addAset);
+        fab = findViewById(R.id.addAset);
         fab.setBackgroundTintList(ColorStateList.valueOf(Color.rgb(255, 50, 50)));
         Data[] allData = new Data[]{
         new Data(1,"dsa",1,1,1,1,1,21212,"fotoaset1","fotoaset2","fotoaset3","foto4","geo2","geo3","geo4","geotag4",12000,"12/12/12 00:00:00","12/12/12 00:00:00",120000,210000,"212212","2","keterangan","foorqr","112121","asdasd",1,1,1,21, "12/12/12 00:00:00","12/12/12 00:00:00","dssdja",22),
@@ -134,6 +136,14 @@ public class MainActivity extends AppCompatActivity {
         };
 
         btnReport = findViewById(R.id.btnReport);
+        btnFilter = findViewById(R.id.btnFilter);
+
+        btnFilter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(MainActivity.this, "masuk filter", Toast.LENGTH_SHORT).show();
+            }
+        });
 
         btnReport.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -143,6 +153,12 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, AddAsetActivity.class));
+            }
+        });
 
         AsetAdapter adapter = new AsetAdapter(allData,MainActivity.this);
         Log.d("barusantag",String.valueOf(adapter.getItemCount()));

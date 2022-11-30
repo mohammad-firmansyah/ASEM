@@ -13,7 +13,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ApiFunction {
 
-    public static String BASE_URL = "https://90cf-112-215-173-37.ap.ngrok.io/api/";
+    public static String BASE_URL = "http://202.148.9.226:9910/aset_mnj_repo/public/api/aset/1/";
 
     public Object initAPi(Object apiData){
         Object apiInterface;
