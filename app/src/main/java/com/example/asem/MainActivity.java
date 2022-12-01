@@ -111,16 +111,58 @@ import org.json.JSONObject;
 
 public class MainActivity extends AppCompatActivity {
 
-    Button btnReport;
-    Button btnFilter;
-    FloatingActionButton fab;
+    //AlertDialog loading;
+    //GlobalFunction global = new GlobalFunction();
+
+    Button btnLogin;
+    EditText etNIP;
+    EditText etPass;
+    //AlertDialog loading;
+
+    String nip, password;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        etNIP = findViewById(R.id.etNIP);
+        etPass = findViewById(R.id.etPassword);
+
+
+        btnLogin = findViewById(R.id.btnLogin);
+        btnLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, LonglistAsetActivity.class));
+            }
+        });
+
+    }
+
+    /**
+    public void loginProses(){
+        nip = etNIP.getText().toString();
+        password = etPass.getText().toString();
+
+        if(nip.isEmpty()){
+            etNIP.setError("NIP wajib diisi!");
+            etNIP.requestFocus();
+        }
+        if(password.isEmpty()){
+            etPass.setError("Password wajib diisi!");
+            etPass.requestFocus();
+        }else{
+            loading.show();
+
+            //bawah ini fungsi login, getAPI,
+        }
+    }
+     */
+
+
+
+        /**
         RecyclerView rcAset = findViewById(R.id.asetAll);
         rcAset.setHasFixedSize(true);
         rcAset.setLayoutManager(new LinearLayoutManager(this));
@@ -163,5 +205,7 @@ public class MainActivity extends AppCompatActivity {
         AsetAdapter adapter = new AsetAdapter(allData,MainActivity.this);
         Log.d("barusantag",String.valueOf(adapter.getItemCount()));
         rcAset.setAdapter(adapter);
-    }
+    }*/
+
+
 }
