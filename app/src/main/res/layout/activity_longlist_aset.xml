@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/background_grey"
+    tools:context=".LonglistAsetActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_horizontal"
+        android:padding="10dp"
+        >
+
+        <EditText
+            android:layout_weight="0.7"
+            android:id="@+id/etSearchBar"
+            android:layout_width="0dp"
+            android:layout_height="47dp"
+            android:background="@drawable/bg_searchbar"
+            android:hint="Cari Data Aset"
+            android:textColorHint="@color/grey3"
+            />
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnFilter"
+            android:layout_marginHorizontal="5dp"
+            android:layout_width="0dp"
+            android:layout_weight="0.3"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:background="@drawable/bg_rounded_btn_sc"
+            android:text="FILTER"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:textColor="@color/white"
+            android:textSize="15sp"
+            android:paddingVertical="10dp"
+            />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.3"
+            android:paddingVertical="10dp"
+            android:layout_gravity="center"
+            android:id="@+id/btnReport"
+            android:gravity="center"
+            android:text="REPORT"
+            android:textStyle="bold"
+            android:textColor="@color/main_grey"
+            android:textSize="14sp"
+            android:background="@drawable/bg_rounded_btn_main"
+            />
+
+
+    </LinearLayout>
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:gravity="center"
+        tools:context=".MainActivity">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:context=".MainActivity"
+            android:orientation="vertical"
+            android:id="@+id/asetGroup"
+            >
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/asetAll"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="2dp">
+
+
+            </androidx.recyclerview.widget.RecyclerView>
+        </LinearLayout>
+
+        <!-- ini action floating button -->
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/addAset"
+            app:fabSize="normal"
+            android:contentDescription="add new data"
+            android:src="@drawable/ic_baseline_add_24"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|right"
+            android:layout_margin="16dp"
+            android:backgroundTint="@color/grey"
+            app:layout_anchor="@id/asetAll"
+            app:layout_anchorGravity="bottom|right|end"
+            />
+
+
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+</LinearLayout>

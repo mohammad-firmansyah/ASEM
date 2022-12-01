@@ -14,6 +14,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.asem.DetailAsetActivity;
+import com.example.asem.LonglistAsetActivity;
 import com.example.asem.MainActivity;
 import com.example.asem.R;
 import com.example.asem.UpdateAsetActivity;
@@ -29,9 +30,9 @@ public class AsetAdapter extends RecyclerView.Adapter<AsetAdapter.ViewHolder> {
     Data[] myAsetData;
     Context context;
 
-    public AsetAdapter(Data[] data, MainActivity mainActivity){
+    public AsetAdapter(Data[] data, LonglistAsetActivity longlistAsetActivity){
         this.myAsetData =data;
-        this.context = mainActivity;
+        this.context = longlistAsetActivity;
     }
 
 
