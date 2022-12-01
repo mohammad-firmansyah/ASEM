@@ -354,6 +354,11 @@ public class UpdateAsetActivity extends AppCompatActivity {
         foto3rl = findViewById(R.id.foto3);
         foto4rl = findViewById(R.id.foto4);
 
+        map1 = findViewById(R.id.map1);
+        map2 = findViewById(R.id.map2);
+        map3 = findViewById(R.id.map3);
+        map4 = findViewById(R.id.map4);
+
         fotoimg1 = findViewById(R.id.fotoimg1);
         fotoimg2 = findViewById(R.id.fotoimg2);
         fotoimg3 = findViewById(R.id.fotoimg3);
@@ -374,6 +379,50 @@ public class UpdateAsetActivity extends AppCompatActivity {
         });
 
 //        listener spinner
+
+        map1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getLastLocation(UpdateAsetActivity.this,getApplicationContext());
+                Log.d("asetapix",String.valueOf(latitudeValue) + " " + String.valueOf(longitudeValue));
+                Intent intent = new Intent(android.content.Intent.ACTION_VIEW,
+                        Uri.parse(geotag1));
+                startActivity(intent);
+            }
+        });
+
+        map2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getLastLocation(UpdateAsetActivity.this,getApplicationContext());
+                Log.d("asetapix",String.valueOf(latitudeValue) + " " + String.valueOf(longitudeValue));
+                Intent intent = new Intent(android.content.Intent.ACTION_VIEW,
+                        Uri.parse(geotag2));
+                startActivity(intent);
+            }
+        });
+
+        map3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getLastLocation(UpdateAsetActivity.this,getApplicationContext());
+                Log.d("asetapix",String.valueOf(latitudeValue) + " " + String.valueOf(longitudeValue));
+                Intent intent = new Intent(android.content.Intent.ACTION_VIEW,
+                        Uri.parse(geotag3));
+                startActivity(intent);
+            }
+        });
+
+        map4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getLastLocation(UpdateAsetActivity.this,getApplicationContext());
+                Log.d("asetapix",String.valueOf(latitudeValue) + " " + String.valueOf(longitudeValue));
+                Intent intent = new Intent(android.content.Intent.ACTION_VIEW,
+                        Uri.parse(geotag4));
+                startActivity(intent);
+            }
+        });
 
         spinnerTipeAset.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -435,6 +484,8 @@ public class UpdateAsetActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 captureFotoQcLoses(photoname1,activityCaptureFoto1);
+                fotoimg1.getLayoutParams().width = 200;
+                fotoimg1.getLayoutParams().height = 200;
 
             }
         });
@@ -1007,6 +1058,7 @@ public class UpdateAsetActivity extends AppCompatActivity {
                 } else if (list == 2) {
 
                     geotag2 = url;
+
                 } else if (list == 3) {
 
                     geotag3 = url;
@@ -1042,21 +1094,25 @@ public class UpdateAsetActivity extends AppCompatActivity {
     }
 
     public void editVisibilityDynamic(){
+        TextView tvBa = findViewById(R.id.tvBa);
+        TextView tvPohon = findViewById(R.id.tvPohon);
+
         if ("tanaman".equals(String.valueOf(spinnerJenisAset.getSelectedItem())) && "normal".equals(String.valueOf(spinnerAsetKondisi.getSelectedItem()))) {
             listBtnMap.setVisibility(View.VISIBLE);
             inpJumlahPohon.setVisibility(View.VISIBLE);
 
             tvUploudBA.setVisibility(View.GONE);
+            tvBa.setVisibility(View.GONE);
             inpBtnMap.setVisibility(View.GONE);
             btnFile.setVisibility(View.GONE);
 
-            Toast.makeText(this, "tanaman", Toast.LENGTH_SHORT).show();
 
         }
 
         else if ("tanaman".equals(String.valueOf(spinnerJenisAset.getSelectedItem()))  && "rusak".equals(String.valueOf(spinnerAsetKondisi.getSelectedItem())) ) {
             listBtnMap.setVisibility(View.VISIBLE);
             inpJumlahPohon.setVisibility(View.VISIBLE);
+            tvBa.setVisibility(View.VISIBLE);
             tvUploudBA.setVisibility(View.VISIBLE);
             btnFile.setVisibility(View.VISIBLE);
 
@@ -1069,6 +1125,8 @@ public class UpdateAsetActivity extends AppCompatActivity {
             tvUploudBA.setVisibility(View.VISIBLE);
             btnFile.setVisibility(View.VISIBLE);
 
+            tvBa.setVisibility(View.GONE);
+            tvPohon.setVisibility(View.GONE);
             inpJumlahPohon.setVisibility(View.GONE);
             listBtnMap.setVisibility(View.GONE);
             inpJumlahPohon.setVisibility(View.GONE);
@@ -1080,6 +1138,7 @@ public class UpdateAsetActivity extends AppCompatActivity {
             listBtnMap.setVisibility(View.VISIBLE);
             inpJumlahPohon.setVisibility(View.VISIBLE);
 
+            tvBa.setVisibility(View.GONE);
             tvUploudBA.setVisibility(View.GONE);
             inpBtnMap.setVisibility(View.GONE);
             btnFile.setVisibility(View.GONE);
@@ -1089,6 +1148,7 @@ public class UpdateAsetActivity extends AppCompatActivity {
         else if ("kayu".equals(String.valueOf(spinnerJenisAset.getSelectedItem()))  && "rusak".equals(String.valueOf(spinnerAsetKondisi.getSelectedItem())) ) {
             listBtnMap.setVisibility(View.VISIBLE);
             inpJumlahPohon.setVisibility(View.VISIBLE);
+            tvBa.setVisibility(View.VISIBLE);
             tvUploudBA.setVisibility(View.VISIBLE);
             btnFile.setVisibility(View.VISIBLE);
 
@@ -1097,9 +1157,11 @@ public class UpdateAsetActivity extends AppCompatActivity {
         }
 
         else if ("kayu".equals(String.valueOf(spinnerJenisAset.getSelectedItem())) && "hilang".equals(String.valueOf(spinnerAsetKondisi.getSelectedItem()))) {
-            tvUploudBA.setVisibility(View.VISIBLE);
+            tvBa.setVisibility(View.VISIBLE);
             btnFile.setVisibility(View.VISIBLE);
+            tvUploudBA.setVisibility(View.VISIBLE);
 
+            tvPohon.setVisibility(View.GONE);
             inpJumlahPohon.setVisibility(View.GONE);
             listBtnMap.setVisibility(View.GONE);
             inpJumlahPohon.setVisibility(View.GONE);
@@ -1110,27 +1172,33 @@ public class UpdateAsetActivity extends AppCompatActivity {
         else if ("non tanaman".equals(String.valueOf(spinnerJenisAset.getSelectedItem())) && "normal".equals(String.valueOf(spinnerAsetKondisi.getSelectedItem()))) {
             inpBtnMap.setVisibility(View.VISIBLE);
 
+            tvUploudBA.setVisibility(View.GONE);
             listBtnMap.setVisibility(View.GONE);
             inpJumlahPohon.setVisibility(View.GONE);
-            tvUploudBA.setVisibility(View.GONE);
+            tvBa.setVisibility(View.GONE);
+            tvPohon.setVisibility(View.GONE);
             btnFile.setVisibility(View.GONE);
 
         }
 
         else if ("non tanaman".equals(String.valueOf(spinnerJenisAset.getSelectedItem())) &&"rusak".equals(String.valueOf(spinnerAsetKondisi.getSelectedItem()))) {
             listBtnMap.setVisibility(View.VISIBLE);
-            tvUploudBA.setVisibility(View.VISIBLE);
+            tvBa.setVisibility(View.VISIBLE);
             btnFile.setVisibility(View.VISIBLE);
 
+            tvUploudBA.setVisibility(View.GONE);
+            tvPohon.setVisibility(View.GONE);
             inpJumlahPohon.setVisibility(View.GONE);
             inpBtnMap.setVisibility(View.GONE);
 
         }
 
         else if ("non tanaman".equals(String.valueOf(spinnerJenisAset.getSelectedItem())) && "hilang".equals(String.valueOf(spinnerAsetKondisi.getSelectedItem()))) {
-            tvUploudBA.setVisibility(View.VISIBLE);
+            tvBa.setVisibility(View.VISIBLE);
             btnFile.setVisibility(View.VISIBLE);
 
+            tvUploudBA.setVisibility(View.GONE);
+            tvPohon.setVisibility(View.GONE);
             inpJumlahPohon.setVisibility(View.GONE);
             listBtnMap.setVisibility(View.GONE);
             inpJumlahPohon.setVisibility(View.GONE);
@@ -1343,28 +1411,13 @@ public class UpdateAsetActivity extends AppCompatActivity {
                 @Override
                 public void onResponse(Call<AsetModel> call, Response<AsetModel> response) {
                     if (response.isSuccessful() && response.body() != null){
-                        Log.d("asetapix", "onResponse aset tipe: "+ response.body().getData().getAsetTipe());
-                        Log.d("asetapix", "onResponse aset jenis: "+ response.body().getData().getAsetJenis());
-                        Log.d("asetapix", "onResponse aset kondisi: "+ response.body().getData().getAsetKondisi());
-                        Log.d("asetapix", "onResponse tgl input: "+ response.body().getData().getTglInput());
-                        Log.d("asetapix", "onResponse tgl oleh: "+ response.body().getData().getTglOleh());
-                        Log.d("asetapix", "onResponse asetKode: "+ response.body().getData().getAsetKode());
-                        Log.d("asetapix", "onResponse aset Nma: "+ response.body().getData().getAsetName());
-                        Log.d("asetapix", "onResponse nomor sap: "+ response.body().getData().getNomorSap());
-                        Log.d("asetapix", "onResponse ba file: "+ response.body().getData().getBaFile());
-//                                Log.d("asetapix", "onResponse foto aset 1: "+ response.body().getData().getFotoAset1());
-//                                Log.d("asetapix", "onResponse foto aset 2: "+ response.body().getData().getFotoAset2());
-//                                Log.d("asetapix", "onResponse foto aset 3: "+ response.body().getData().getFotoAset3());
-//                                Log.d("asetapix", "onResponse foto aset 4: "+ response.body().getData().getFotoAset4());
-                        Log.d("asetapix", "onResponse aset luas: "+ response.body().getData().getAsetLuas());
-                        Log.d("asetapix", "onResponse nilai oleh: "+ response.body().getData().getNilaiOleh());
-                        Log.d("asetapix", "onResponse masa susut: "+ response.body().getData().getMasaSusut());
-                        Log.d("asetapix", "onResponse bast : "+ response.body().getData().getNomorBast());
-                        Log.d("asetapix", "onResponse residu: "+ response.body().getData().getNilaiResidu());
-                        Log.d("asetapix", "onResponse kterangan: "+ response.body().getData().getKeterangan());
+                        dialog.hide();
+                        Toast.makeText(getApplicationContext(),"succeed edit aset",Toast.LENGTH_LONG).show();
+                        setValueInput();
+                        return;
                     }
 
-
+                    dialog.hide();
                     Log.d("asetapix",String.valueOf(response.errorBody()));
                     Log.d("asetapix",String.valueOf(call.request().body()));
                     Log.d("asetapix",String.valueOf(call.request().url()));
@@ -1374,16 +1427,13 @@ public class UpdateAsetActivity extends AppCompatActivity {
 
                 @Override
                 public void onFailure(Call<AsetModel> call, Throwable t) {
-                    Log.d("asetapix", "onError : "+t.getMessage());
-                    Log.d("asetapix",String.valueOf(call.request().body()));
-                    Log.d("asetapix",String.valueOf(call.request().url()));
-                    Log.d("asetapix",String.valueOf(call.request().method()));
+                    dialog.hide();
+                    Toast.makeText(getApplicationContext(),"edit aset" + t.getMessage(),Toast.LENGTH_LONG).show();
                 }
             });
         }
         catch (Exception e ){
-
-            Log.d("errorapi", "edit aset: "+e.getMessage());
+            Toast.makeText(getApplicationContext(),"gagal edit aset "+e.getMessage(),Toast.LENGTH_LONG).show();
             e.printStackTrace();
         }
 

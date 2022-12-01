@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -44,6 +45,7 @@ public class ReportActivity extends AppCompatActivity {
     Spinner spinnerKodeAset;
     Spinner spinnerJenisReport;
 
+    RadioGroup radioGroup;
     EditText inpTglInput1;
     EditText inpTglInput2;
     @Override
@@ -58,6 +60,10 @@ public class ReportActivity extends AppCompatActivity {
         spinnerKodeAset = findViewById(R.id.inpKodeAset);
         inpTglInput1 = findViewById(R.id.inpTglInput);
         inpTglInput2 = findViewById(R.id.inpTglInput2);
+
+        radioGroup = findViewById(R.id.qrcode);
+
+
 
         ActionBar actionBar = getSupportActionBar();
         actionBar.hide();
@@ -259,6 +265,11 @@ public class ReportActivity extends AppCompatActivity {
                 android.R.layout.simple_spinner_item, listSpinner);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerJenisReport.setAdapter(adapter);
+
+    }
+
+
+    private void downloadReport(){
 
     }
 

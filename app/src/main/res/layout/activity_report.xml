@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background_grey"
@@ -10,6 +11,12 @@
     <include
         android:id="@+id/appbar"
         layout="@layout/appbar" />
+
+<ScrollView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -131,7 +138,7 @@
             android:layout_width="0dp"
             android:layout_height="41dp"
             android:layout_marginBottom="10dp"
-            android:hint="masukan tanggal"
+            android:hint="Tanggal"
             android:clickable="false"
             android:cursorVisible="false"
             android:focusable="false"
@@ -159,7 +166,7 @@
             android:id="@+id/inpTglInput2"
             android:layout_width="0dp"
             android:layout_height="41dp"
-            android:hint="masukan tanggal"
+            android:hint="Tanggal"
             android:clickable="false"
             android:cursorVisible="false"
             android:focusable="false"
@@ -201,6 +208,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
+        android:id="@+id/qrcode"
         >
 
 
@@ -208,26 +216,30 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Iya"
-            android:onClick="onRadioButtonClicked"
+            android:backgroundTint="@color/main_grey"
             android:layout_marginRight="10dp"
+            android:buttonTint="@color/main_grey"
             />
 
 
-        <RadioButton android:id="@+id/qrNo"
+        <RadioButton
+            android:id="@+id/qrNo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Tidak"
-            android:onClick="onRadioButtonClicked"/>
+            android:buttonTint="@color/main_grey"
+            />
 
     </RadioGroup>
 
 
     <Button
         android:layout_width="match_parent"
-        android:text="UNDUH EXPORT"
+        android:text="UNDUH REPORT"
         android:layout_height="wrap_content"
         android:layout_marginVertical="10dp"
         android:background="@drawable/edit_text_spiner"
         />
     </LinearLayout>
+</ScrollView>
 </LinearLayout>
