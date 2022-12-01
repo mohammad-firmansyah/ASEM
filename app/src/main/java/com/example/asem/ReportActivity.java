@@ -3,6 +3,7 @@ package com.example.asem;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.accounts.NetworkErrorException;
 import android.app.DatePickerDialog;
 import android.os.Bundle;
 import android.util.Log;
@@ -51,6 +52,10 @@ public class ReportActivity extends AppCompatActivity {
         setContentView(R.layout.activity_report);
 
         spinnerJenisReport = findViewById(R.id.spinnerReport);
+        spinnerTipeAset = findViewById(R.id.inpTipeAset);
+        spinnerJenisAset = findViewById(R.id.inpJenisAset);
+        spinnerAsetKondisi = findViewById(R.id.inpKndsAset);
+        spinnerKodeAset = findViewById(R.id.inpKodeAset);
         inpTglInput1 = findViewById(R.id.inpTglInput);
         inpTglInput2 = findViewById(R.id.inpTglInput2);
 
@@ -110,17 +115,24 @@ public class ReportActivity extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(),String.valueOf(response.code()),Toast.LENGTH_LONG).show();
                     return;
                 }
-
                 List<String> listSpinner = new ArrayList<>();
                 for (int i=0;i<response.body().size();i++){
+                    Log.d("asetapi2",response.body().get(i).getAset_kondisi_desc());
                     listSpinner.add(response.body().get(i).getAset_kondisi_desc());
                 }
 
                 // Set hasil result json ke dalam adapter spinner
-                ArrayAdapter<String> adapter = new ArrayAdapter<String>(getApplicationContext(),
-                        android.R.layout.simple_spinner_item, listSpinner);
-                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                spinnerAsetKondisi.setAdapter(adapter);
+
+                try{
+
+                    ArrayAdapter<String> adapter = new ArrayAdapter<String>(getApplicationContext(),
+                            android.R.layout.simple_spinner_item, listSpinner);
+                    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    spinnerAsetKondisi.setAdapter(adapter);
+                }
+                catch(Exception e ) {
+                    e.printStackTrace();
+                }
             }
 
             @Override
