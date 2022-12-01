@@ -170,4 +170,10 @@
     <color name="Black">#000000</color>
     <color name="blue4">#0a3d62</color>
     <color name="yellow2">#FFEE59</color>
+
+    <!-- masmoy -->
+    <color name="origin_blue">#2C3E50</color>
+    <color name="second_blue">#1F2B37</color>
+    <color name="canvas_grey">#D5D5D5</color>
+    <color name="origin_red">#c0392b</color>
 </resources>

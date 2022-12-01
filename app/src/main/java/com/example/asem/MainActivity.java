@@ -140,6 +140,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    /**
     public void loginProses(){
         nip = etNIP.getText().toString();
         password = etPass.getText().toString();
@@ -157,6 +158,7 @@ public class MainActivity extends AppCompatActivity {
             //bawah ini fungsi login, getAPI,
         }
     }
+     */
 
 
 
