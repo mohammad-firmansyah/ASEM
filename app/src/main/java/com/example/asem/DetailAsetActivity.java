@@ -213,25 +213,39 @@ public class DetailAsetActivity extends AppCompatActivity {
 
         listBtnMap = findViewById(R.id.listMapButton);
         inpTglOleh = findViewById(R.id.inpTglMasukAset);
+        inpTglOleh.setEnabled(false);
         tvUploudBA = findViewById(R.id.tvUploudBA);
         spinnerTipeAset = findViewById(R.id.inpTipeAset);
+        spinnerTipeAset.setEnabled(false);
         spinnerJenisAset = findViewById(R.id.inpJenisAset);
+        spinnerJenisAset.setEnabled(false);
         spinnerAsetKondisi = findViewById(R.id.inpKndsAset);
+        spinnerAsetKondisi.setEnabled(false);
         spinnerKodeAset = findViewById(R.id.inpKodeAset);
+        spinnerKodeAset.setEnabled(false);
 
         inpTglInput = findViewById(R.id.inpTglInput);
         inpTglInput.setEnabled(false);
         inpUmrEkonomis = findViewById(R.id.inpUmrEkonomis);
         inpUmrEkonomis.setEnabled(false);
         inpNamaAset = findViewById(R.id.inpNamaAset);
+        inpNamaAset.setEnabled(false);
         inpNoSAP = findViewById(R.id.inpNmrSAP);
+        inpNoSAP.setEnabled(false);
         inpLuasAset = findViewById(R.id.inpLuasAset);
+        inpLuasAset.setEnabled(false);
         inpNilaiAsetSAP = findViewById(R.id.inpNilaiAsetSAP);
+        inpNilaiAsetSAP.setEnabled(false);
         inpMasaPenyusutan = findViewById(R.id.inpMasaPenyusutan);
+        inpMasaPenyusutan.setEnabled(false);
         inpNomorBAST = findViewById(R.id.inpNmrBAST);
+        inpNomorBAST.setEnabled(false);
         inpNilaiResidu = findViewById(R.id.inpNmrResidu);
+        inpNilaiResidu.setEnabled(false);
         inpKeterangan = findViewById(R.id.inpKeterangan);
+        inpKeterangan.setEnabled(false);
         inpJumlahPohon = findViewById(R.id.inpJmlhPohon);
+        inpJumlahPohon.setEnabled(false);
 
         foto1rl = findViewById(R.id.foto1);
         foto2rl = findViewById(R.id.foto2);

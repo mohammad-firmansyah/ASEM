@@ -19,6 +19,7 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
             <TextView
+
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="TIPE ASSET :"
@@ -35,7 +36,7 @@
                 android:layout_marginBottom="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="41dp"
-                android:background="@drawable/edit_text_spiner"
+                android:background="@drawable/rounded_spinner"
                 android:spinnerMode="dropdown"
 
                 />
@@ -59,7 +60,7 @@
                 android:layout_marginBottom="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="41dp"
-                android:background="@drawable/edit_text_spiner"
+                android:background="@drawable/rounded_spinner"
                 android:spinnerMode="dropdown" />
 
 
@@ -82,7 +83,7 @@
                 android:layout_marginBottom="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="41dp"
-                android:background="@drawable/edit_text_spiner"
+                android:background="@drawable/rounded_spinner"
                 android:spinnerMode="dropdown"
 
                 />
@@ -128,7 +129,7 @@
                 android:layout_marginBottom="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="41dp"
-                android:background="@drawable/edit_text_spiner"
+                android:background="@drawable/rounded_spinner"
                 android:spinnerMode="dropdown" />
 
 
@@ -180,6 +181,7 @@
                 android:text="UPLOUD BA :"
                 android:textColor="@color/main_grey"
                 android:textSize="14sp"
+                android:id="@+id/tvBa"
                 android:textStyle="bold" />
             <LinearLayout
                 android:layout_width="match_parent"
@@ -558,6 +560,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="JUMLAH POHON :"
+                android:id="@+id/tvPohon"
                 android:textSize="14sp"
                 android:textStyle="bold"
                 android:textColor="@color/main_grey"

@@ -169,6 +169,7 @@ public class AddAsetActivity extends AppCompatActivity {
 
         if (requestCode == 1 && resultCode == RESULT_OK && data != null ) {
 
+
             Uri uri = data.getData();
             String path =  uri.getPath();
             bafile_file = new File(path);
@@ -279,6 +280,11 @@ public class AddAsetActivity extends AppCompatActivity {
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(0));
         dialog.show();
 
+        map1 = findViewById(R.id.map1);
+        map2 = findViewById(R.id.map2);
+        map3 = findViewById(R.id.map3);
+        map4 = findViewById(R.id.map4);
+
         getLastLocation(AddAsetActivity.this,getApplicationContext());
 
         listBtnMap = findViewById(R.id.listMapButton);
@@ -317,6 +323,50 @@ public class AddAsetActivity extends AppCompatActivity {
         btnFile = findViewById(R.id.inpUploudBA);
 
 //        handler
+
+        map1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getLastLocation(AddAsetActivity.this,getApplicationContext());
+                Log.d("asetapix",String.valueOf(latitudeValue) + " " + String.valueOf(longitudeValue));
+                Intent intent = new Intent(android.content.Intent.ACTION_VIEW,
+                        Uri.parse(geotag1));
+                startActivity(intent);
+            }
+        });
+
+        map2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getLastLocation(AddAsetActivity.this,getApplicationContext());
+                Log.d("asetapix",String.valueOf(latitudeValue) + " " + String.valueOf(longitudeValue));
+                Intent intent = new Intent(android.content.Intent.ACTION_VIEW,
+                        Uri.parse(geotag2));
+                startActivity(intent);
+            }
+        });
+
+        map3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getLastLocation(AddAsetActivity.this,getApplicationContext());
+                Log.d("asetapix",String.valueOf(latitudeValue) + " " + String.valueOf(longitudeValue));
+                Intent intent = new Intent(android.content.Intent.ACTION_VIEW,
+                        Uri.parse(geotag3));
+                startActivity(intent);
+            }
+        });
+
+        map4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getLastLocation(AddAsetActivity.this,getApplicationContext());
+                Log.d("asetapix",String.valueOf(latitudeValue) + " " + String.valueOf(longitudeValue));
+                Intent intent = new Intent(android.content.Intent.ACTION_VIEW,
+                        Uri.parse(geotag4));
+                startActivity(intent);
+            }
+        });
 
         btnSubmit.setOnClickListener(v -> addAset());
         inpBtnMap.setOnClickListener(new View.OnClickListener() {
@@ -509,7 +559,7 @@ public class AddAsetActivity extends AppCompatActivity {
 
         initCalender();
         getSpinnerData();
-        setValueInput();
+//        setValueInput();
 
     }
 
@@ -604,6 +654,7 @@ public class AddAsetActivity extends AppCompatActivity {
         call.enqueue(new Callback<List<AsetKondisi>>() {
             @Override
             public void onResponse(Call<List<AsetKondisi>> call, Response<List<AsetKondisi>> response) {
+                dialog.hide();
                 if (!response.isSuccessful()){
                     Toast.makeText(getApplicationContext(),String.valueOf(response.code()),Toast.LENGTH_LONG).show();
                     return;
@@ -623,6 +674,7 @@ public class AddAsetActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<List<AsetKondisi>> call, Throwable t) {
+                dialog.hide();
                 Toast.makeText(getApplicationContext(),t.getMessage(),Toast.LENGTH_LONG).show();
                 return;
             }
@@ -997,22 +1049,27 @@ public class AddAsetActivity extends AppCompatActivity {
         }
     }
 
+
     public void editVisibilityDynamic(){
+        TextView tvBa = findViewById(R.id.tvBa);
+        TextView tvPohon = findViewById(R.id.tvPohon);
+
         if ("tanaman".equals(String.valueOf(spinnerJenisAset.getSelectedItem())) && "normal".equals(String.valueOf(spinnerAsetKondisi.getSelectedItem()))) {
             listBtnMap.setVisibility(View.VISIBLE);
             inpJumlahPohon.setVisibility(View.VISIBLE);
 
             tvUploudBA.setVisibility(View.GONE);
+            tvBa.setVisibility(View.GONE);
             inpBtnMap.setVisibility(View.GONE);
             btnFile.setVisibility(View.GONE);
 
-            Toast.makeText(this, "tanaman", Toast.LENGTH_SHORT).show();
 
         }
 
         else if ("tanaman".equals(String.valueOf(spinnerJenisAset.getSelectedItem()))  && "rusak".equals(String.valueOf(spinnerAsetKondisi.getSelectedItem())) ) {
             listBtnMap.setVisibility(View.VISIBLE);
             inpJumlahPohon.setVisibility(View.VISIBLE);
+            tvBa.setVisibility(View.VISIBLE);
             tvUploudBA.setVisibility(View.VISIBLE);
             btnFile.setVisibility(View.VISIBLE);
 
@@ -1025,6 +1082,8 @@ public class AddAsetActivity extends AppCompatActivity {
             tvUploudBA.setVisibility(View.VISIBLE);
             btnFile.setVisibility(View.VISIBLE);
 
+            tvBa.setVisibility(View.GONE);
+            tvPohon.setVisibility(View.GONE);
             inpJumlahPohon.setVisibility(View.GONE);
             listBtnMap.setVisibility(View.GONE);
             inpJumlahPohon.setVisibility(View.GONE);
@@ -1036,6 +1095,7 @@ public class AddAsetActivity extends AppCompatActivity {
             listBtnMap.setVisibility(View.VISIBLE);
             inpJumlahPohon.setVisibility(View.VISIBLE);
 
+            tvBa.setVisibility(View.GONE);
             tvUploudBA.setVisibility(View.GONE);
             inpBtnMap.setVisibility(View.GONE);
             btnFile.setVisibility(View.GONE);
@@ -1045,6 +1105,7 @@ public class AddAsetActivity extends AppCompatActivity {
         else if ("kayu".equals(String.valueOf(spinnerJenisAset.getSelectedItem()))  && "rusak".equals(String.valueOf(spinnerAsetKondisi.getSelectedItem())) ) {
             listBtnMap.setVisibility(View.VISIBLE);
             inpJumlahPohon.setVisibility(View.VISIBLE);
+            tvBa.setVisibility(View.VISIBLE);
             tvUploudBA.setVisibility(View.VISIBLE);
             btnFile.setVisibility(View.VISIBLE);
 
@@ -1053,9 +1114,11 @@ public class AddAsetActivity extends AppCompatActivity {
         }
 
         else if ("kayu".equals(String.valueOf(spinnerJenisAset.getSelectedItem())) && "hilang".equals(String.valueOf(spinnerAsetKondisi.getSelectedItem()))) {
-            tvUploudBA.setVisibility(View.VISIBLE);
+            tvBa.setVisibility(View.VISIBLE);
             btnFile.setVisibility(View.VISIBLE);
+            tvUploudBA.setVisibility(View.VISIBLE);
 
+            tvPohon.setVisibility(View.GONE);
             inpJumlahPohon.setVisibility(View.GONE);
             listBtnMap.setVisibility(View.GONE);
             inpJumlahPohon.setVisibility(View.GONE);
@@ -1066,27 +1129,33 @@ public class AddAsetActivity extends AppCompatActivity {
         else if ("non tanaman".equals(String.valueOf(spinnerJenisAset.getSelectedItem())) && "normal".equals(String.valueOf(spinnerAsetKondisi.getSelectedItem()))) {
             inpBtnMap.setVisibility(View.VISIBLE);
 
+            tvUploudBA.setVisibility(View.GONE);
             listBtnMap.setVisibility(View.GONE);
             inpJumlahPohon.setVisibility(View.GONE);
-            tvUploudBA.setVisibility(View.GONE);
+            tvBa.setVisibility(View.GONE);
+            tvPohon.setVisibility(View.GONE);
             btnFile.setVisibility(View.GONE);
 
         }
 
         else if ("non tanaman".equals(String.valueOf(spinnerJenisAset.getSelectedItem())) &&"rusak".equals(String.valueOf(spinnerAsetKondisi.getSelectedItem()))) {
             listBtnMap.setVisibility(View.VISIBLE);
-            tvUploudBA.setVisibility(View.VISIBLE);
+            tvBa.setVisibility(View.VISIBLE);
             btnFile.setVisibility(View.VISIBLE);
 
+            tvUploudBA.setVisibility(View.GONE);
+            tvPohon.setVisibility(View.GONE);
             inpJumlahPohon.setVisibility(View.GONE);
             inpBtnMap.setVisibility(View.GONE);
 
         }
 
         else if ("non tanaman".equals(String.valueOf(spinnerJenisAset.getSelectedItem())) && "hilang".equals(String.valueOf(spinnerAsetKondisi.getSelectedItem()))) {
-            tvUploudBA.setVisibility(View.VISIBLE);
+            tvBa.setVisibility(View.VISIBLE);
             btnFile.setVisibility(View.VISIBLE);
 
+            tvUploudBA.setVisibility(View.GONE);
+            tvPohon.setVisibility(View.GONE);
             inpJumlahPohon.setVisibility(View.GONE);
             listBtnMap.setVisibility(View.GONE);
             inpJumlahPohon.setVisibility(View.GONE);
