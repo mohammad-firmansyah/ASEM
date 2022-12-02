@@ -1,14 +1,9 @@
 package com.example.asem.api.model;
 
-import com.google.gson.annotations.SerializedName;
-
-import java.util.ArrayList;
-import java.util.List;
-
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class AsetModel {
+public class AsetModel2 {
 
     @SerializedName("status")
     @Expose
@@ -18,7 +13,7 @@ public class AsetModel {
     private String message;
     @SerializedName("data")
     @Expose
-    private Data data;
+    private Data2 data;
 
     public Boolean getStatus() {
         return status;
@@ -36,13 +31,12 @@ public class AsetModel {
         this.message = message;
     }
 
-    public Data getData() {
+    public Data2 getData() {
         return data;
     }
 
-    public void setData(Data data) {
+    public void setData(Data2 data) {
         this.data = data;
     }
 
 }
-

@@ -4,32 +4,32 @@ import com.google.gson.annotations.SerializedName;
 
 public class Afdelling {
     @SerializedName("afdelling_id")
-    private int afdelling_id;
-    @SerializedName("afdelling_desc")
-    private String afdelling_desc;
+    private int afdeling_id;
+    @SerializedName("afdeling_desc")
+    private String afdeling_desc;
     @SerializedName("unit_id")
     private int unit_id;
 
     public Afdelling(int afdelling_id, String afdelling_desc, int unit_id) {
-        this.afdelling_id = afdelling_id;
-        this.afdelling_desc = afdelling_desc;
+        this.afdeling_id = afdelling_id;
+        this.afdeling_desc = afdelling_desc;
         this.unit_id = unit_id;
     }
 
     public int getAfdelling_id() {
-        return afdelling_id;
+        return afdeling_id;
     }
 
     public void setAfdelling_id(int afdelling_id) {
-        this.afdelling_id = afdelling_id;
+        this.afdeling_id = afdelling_id;
     }
 
     public String getAfdelling_desc() {
-        return afdelling_desc;
+        return afdeling_desc;
     }
 
     public void setAfdelling_desc(String afdelling_desc) {
-        this.afdelling_desc = afdelling_desc;
+        this.afdeling_desc = afdelling_desc;
     }
 
     public int getUnit_id() {

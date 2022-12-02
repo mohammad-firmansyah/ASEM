@@ -1,14 +1,17 @@
 package com.example.asem.api;
 
 import com.example.asem.MainActivity;
+import com.example.asem.api.model.Afdelling;
 import com.example.asem.api.model.AfdellingModel;
 import com.example.asem.api.model.Aset;
 import com.example.asem.api.model.AsetJenisModel;
 import com.example.asem.api.model.AsetKodeModel;
 import com.example.asem.api.model.AsetKondisi;
 import com.example.asem.api.model.AsetModel;
+import com.example.asem.api.model.AsetModel2;
 import com.example.asem.api.model.AsetTipe;
 import com.example.asem.api.model.Data;
+import com.example.asem.api.model.Data2;
 import com.example.asem.api.model.SubUnitModel;
 import com.example.asem.api.model.UnitModel;
 
@@ -35,9 +38,6 @@ public interface AsetInterface {
     @GET("aset/{id}/")
     Call<AsetModel> getAset(@Path("id") int asetId);
 
-    @GET("afdelling/")
-    Call<AfdellingModel> getAfdelling();
-
     @GET("aset-jenis/")
     Call<AsetJenisModel> getAsetJenis();
 
@@ -55,6 +55,11 @@ public interface AsetInterface {
 
     @GET("aset-kondisi/")
     Call<List<AsetKondisi>> getAsetKondisi();
+
+    @GET("afdelling/")
+    Call<AfdellingModel> getAfdeling();
+
+
 
 
 //    @Multipart
@@ -101,7 +106,7 @@ public interface AsetInterface {
             );
 
     @POST("aset/")
-    Call<AsetModel> addAset(
+    Call<List<Data2>> addAset(
             @Header("Content-Type") String contentType, @Body MultipartBody body
     );
         //    @Multipart

@@ -47,13 +47,21 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.asem.api.AsetInterface;
+import com.example.asem.api.model.Afdelling;
+import com.example.asem.api.model.AfdellingModel;
 import com.example.asem.api.model.AsetJenisModel;
 import com.example.asem.api.model.AsetKode;
 import com.example.asem.api.model.AsetKodeModel;
 import com.example.asem.api.model.AsetKondisi;
 import com.example.asem.api.model.AsetModel;
+import com.example.asem.api.model.AsetModel2;
 import com.example.asem.api.model.AsetTipe;
 import com.example.asem.api.model.Data;
+import com.example.asem.api.model.Data2;
+import com.example.asem.api.model.SubUnit;
+import com.example.asem.api.model.SubUnitModel;
+import com.example.asem.api.model.Unit;
+import com.example.asem.api.model.UnitModel;
 import com.example.asem.utils.GpsConverter;
 import com.example.asem.utils.utils;
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -102,8 +110,8 @@ public class AddAsetActivity extends AppCompatActivity {
     };
     private static final int LOCATION_PERMISSION_AND_STORAGE = 33;
 
-    public static String baseUrl = "http://ec2-108-136-42-233.ap-southeast-3.compute.amazonaws.com/api/";
-    public String baseUrlImg = "http://ec2-108-136-42-233.ap-southeast-3.compute.amazonaws.com";
+    public static String baseUrl = "http://202.148.9.226:7710/mnj_aset_repo/public/api/";
+    public String baseUrlImg = "http://202.148.9.226:7710/mnj_aset_repo/public";
     final Calendar myCalendar= Calendar.getInstance();
     EditText editText;
     EditText inpJumlahPohon;
@@ -115,6 +123,9 @@ public class AddAsetActivity extends AppCompatActivity {
     Spinner spinnerJenisAset;
     Spinner spinnerAsetKondisi;
     Spinner spinnerKodeAset;
+    Spinner spinnerAfdeling;
+    Spinner spinnerSubUnit;
+    Spinner spinnerUnit;
 
     EditText inpNamaAset;
     EditText inpNoSAP;
@@ -161,6 +172,9 @@ public class AddAsetActivity extends AppCompatActivity {
     String spinnerIdJenisAset;
     String spinnerIdAsetKondisi;
     String spinnerIdKodeAset;
+    String spinnerIdAfdeling;
+    String spinnerIdSubUnit;
+    String spinnerIdUnit;
 
 
     public void onActivityResult(int requestCode,int resultCode,@Nullable Intent data){
@@ -293,6 +307,9 @@ public class AddAsetActivity extends AppCompatActivity {
         spinnerJenisAset = findViewById(R.id.inpJenisAset);
         spinnerAsetKondisi = findViewById(R.id.inpKndsAset);
         spinnerKodeAset = findViewById(R.id.inpKodeAset);
+        spinnerAfdeling = findViewById(R.id.inpAfdeling);
+        spinnerSubUnit = findViewById(R.id.inpSubUnit);
+        spinnerUnit = findViewById(R.id.inpUnit);
 
         inpNamaAset = findViewById(R.id.inpNamaAset);
         inpNoSAP = findViewById(R.id.inpNmrSAP);
@@ -421,6 +438,42 @@ public class AddAsetActivity extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 spinnerIdAsetKondisi = String.valueOf(position+1);
                 editVisibilityDynamic();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> arg0) {
+
+            }
+        });
+
+        spinnerAfdeling.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                spinnerIdAfdeling = String.valueOf(position+1);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> arg0) {
+
+            }
+        });
+
+        spinnerSubUnit.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                spinnerIdSubUnit = String.valueOf(position+1);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> arg0) {
+
+            }
+        });
+
+        spinnerUnit.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                spinnerIdUnit = String.valueOf(position+1);
             }
 
             @Override
@@ -872,6 +925,102 @@ public class AddAsetActivity extends AppCompatActivity {
         });
     }
 
+    private void getAfdeling(){
+        Call<AfdellingModel> call = asetInterface.getAfdeling();
+        call.enqueue(new Callback<AfdellingModel>() {
+            @Override
+            public void onResponse(Call<AfdellingModel> call, Response<AfdellingModel> response) {
+
+                if (!response.isSuccessful()){
+                    Toast.makeText(getApplicationContext(),String.valueOf(response.code()),Toast.LENGTH_LONG).show();
+//                    utils.Ngetoast(getApplicationContext(),);
+                    return;
+                }
+                List<String> listSpinner = new ArrayList<>();
+
+                for (int i=0;i<response.body().getData().size();i++){
+                    listSpinner.add(response.body().getData().get(i).getAfdelling_desc());
+                }
+
+                // Set hasil result json ke dalam adapter spinner
+                ArrayAdapter<String> adapter = new ArrayAdapter<String>(getApplicationContext(),
+                        android.R.layout.simple_spinner_item, listSpinner);
+                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                spinnerAfdeling.setAdapter(adapter);
+            }
+
+            @Override
+            public void onFailure(Call<AfdellingModel> call, Throwable t) {
+                Toast.makeText(getApplicationContext(),t.getMessage(),Toast.LENGTH_LONG).show();
+                return;
+            }
+        });
+    }
+
+    private void getSubUnit(){
+        Call<SubUnitModel> call = asetInterface.getSubUnit();
+        call.enqueue(new Callback<SubUnitModel>() {
+            @Override
+            public void onResponse(Call<SubUnitModel> call, Response<SubUnitModel> response) {
+                if (!response.isSuccessful()){
+                    Toast.makeText(getApplicationContext(),String.valueOf(response.code()),Toast.LENGTH_LONG).show();
+                    return;
+                }
+
+                List<SubUnit> subUnit = response.body().getData();
+                List<String> listSpinner = new ArrayList<>();
+
+
+                for ( SubUnit a : subUnit ){
+                    listSpinner.add(a.getSub_unit_desc());
+                }
+
+                ArrayAdapter<String> adapter = new ArrayAdapter<String>(getApplicationContext(),
+                        android.R.layout.simple_spinner_item, listSpinner);
+                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                spinnerSubUnit.setAdapter(adapter);
+            }
+
+            @Override
+            public void onFailure(Call<SubUnitModel> call, Throwable t) {
+                Toast.makeText(getApplicationContext(),t.getMessage(),Toast.LENGTH_LONG).show();
+                return;
+            }
+        });
+    }
+
+    private void getUnit(){
+        Call<UnitModel> call = asetInterface.getUnit();
+        call.enqueue(new Callback<UnitModel>() {
+            @Override
+            public void onResponse(Call<UnitModel> call, Response<UnitModel> response) {
+                if (!response.isSuccessful()){
+                    Toast.makeText(getApplicationContext(),String.valueOf(response.code()),Toast.LENGTH_LONG).show();
+                    return;
+                }
+
+                List<Unit> unit = response.body().getData();
+                List<String> listSpinner = new ArrayList<>();
+
+
+                for ( Unit a : unit ){
+                    listSpinner.add(a.getUnit_desc());
+                }
+
+                ArrayAdapter<String> adapter = new ArrayAdapter<String>(getApplicationContext(),
+                        android.R.layout.simple_spinner_item, listSpinner);
+                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                spinnerUnit.setAdapter(adapter);
+            }
+
+            @Override
+            public void onFailure(Call<UnitModel> call, Throwable t) {
+                Toast.makeText(getApplicationContext(),t.getMessage(),Toast.LENGTH_LONG).show();
+                return;
+            }
+        });
+    }
+
 
     public String formatrupiah(Double number){
         Locale localeID = new Locale("IND","ID");
@@ -1158,7 +1307,7 @@ public class AddAsetActivity extends AppCompatActivity {
         }
     }
     public void addAset(){
-//        dialog.show();
+        dialog.show();
         if (inpNamaAset.getText().toString().matches("")) {
             inpNamaAset.setError("nama harus diisi");
             inpNamaAset.requestFocus();
@@ -1279,6 +1428,9 @@ public class AddAsetActivity extends AppCompatActivity {
             RequestBody requestNomorBAST = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(nomor_bast));
             RequestBody requestNilaiResidu = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(nilai_residu));
             RequestBody requestKeterangan = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(keterangan));
+            RequestBody requestSubUnit = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(spinnerIdSubUnit));
+            RequestBody requestUnit = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(spinnerIdUnit));
+            RequestBody requestAfdeling = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(spinnerIdAfdeling));
 
 
 
@@ -1305,6 +1457,9 @@ public class AddAsetActivity extends AppCompatActivity {
             builder.addPart(MultipartBody.Part.createFormData("foto_aset2",img2.getName(),RequestBody.create(MediaType.parse("image/*"),img2)));
             builder.addPart(MultipartBody.Part.createFormData("foto_aset3",img3.getName(),RequestBody.create(MediaType.parse("image/*"),img3)));
             builder.addPart(MultipartBody.Part.createFormData("foto_aset4",img4.getName(),RequestBody.create(MediaType.parse("image/*"),img4)));
+            builder.addPart(MultipartBody.Part.createFormData("aset_sub_unit",null,requestSubUnit));
+            builder.addPart(MultipartBody.Part.createFormData("unit_id",null,requestUnit));
+            builder.addPart(MultipartBody.Part.createFormData("afdeling_id",null,requestAfdeling));
 
 
             if (bafile_file != null){
@@ -1320,15 +1475,20 @@ public class AddAsetActivity extends AppCompatActivity {
 
 
 
-            Call<AsetModel> call = asetInterface.addAset(contentType,multipartBody);
+            Call<List<Data2>> call = asetInterface.addAset(contentType,multipartBody);
 
-            call.enqueue(new Callback<AsetModel>(){
+            call.enqueue(new Callback<List<Data2>>(){
 
                 @Override
-                public void onResponse(Call<AsetModel> call, Response<AsetModel> response) {
+                public void onResponse(Call<List<Data2>> call, Response<List<Data2>> response) {
                     if (response.isSuccessful() && response.body() != null){
+                        dialog.hide();
+                        Log.d("asetapix","aset name :"+ response.body().get(0).getAsetName());
+                        Toast.makeText(getApplicationContext(),String.valueOf(response.code()),Toast.LENGTH_LONG).show();
+                        return;
                     }
 
+                    dialog.hide();
 
                     Log.d("asetapix",String.valueOf(response.errorBody()));
                     Log.d("asetapix",String.valueOf(call.request().body()));
@@ -1338,7 +1498,8 @@ public class AddAsetActivity extends AppCompatActivity {
                 }
 
                 @Override
-                public void onFailure(Call<AsetModel> call, Throwable t) {
+                public void onFailure(Call<List<Data2>> call, Throwable t) {
+                    dialog.hide();
                     Log.d("asetapix", "onError : "+t.getMessage());
                     Log.d("asetapix",String.valueOf(call.request().body()));
                     Log.d("asetapix",String.valueOf(call.request().url()));
@@ -1347,8 +1508,8 @@ public class AddAsetActivity extends AppCompatActivity {
             });
         }
         catch (Exception e ){
-
-            Log.d("errorapi", "edit aset: "+e.getMessage());
+            dialog.hide();
+            Log.d("errorapi", "add aset: "+e.getMessage());
             e.printStackTrace();
         }
 
@@ -1366,6 +1527,9 @@ public class AddAsetActivity extends AppCompatActivity {
         getKodeAset();
         getAsetJenis();
         getAsetKondisi();
+        getAfdeling();
+        getSubUnit();
+        getUnit();
 
     }
 
