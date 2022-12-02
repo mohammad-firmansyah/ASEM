@@ -102,8 +102,8 @@ public class AddAsetActivity extends AppCompatActivity {
     };
     private static final int LOCATION_PERMISSION_AND_STORAGE = 33;
 
-    public static String baseUrl = "http://202.148.9.226:9910/aset_mnj_repo/public/api/";
-    public String baseUrlImg = "http://202.148.9.226:9910/aset_mnj_repo/public";
+    public static String baseUrl = "http://ec2-108-136-42-233.ap-southeast-3.compute.amazonaws.com/api/";
+    public String baseUrlImg = "http://ec2-108-136-42-233.ap-southeast-3.compute.amazonaws.com";
     final Calendar myCalendar= Calendar.getInstance();
     EditText editText;
     EditText inpJumlahPohon;
@@ -116,7 +116,6 @@ public class AddAsetActivity extends AppCompatActivity {
     Spinner spinnerAsetKondisi;
     Spinner spinnerKodeAset;
 
-    EditText inpTglInput;
     EditText inpNamaAset;
     EditText inpNoSAP;
     EditText inpLuasAset;
@@ -295,10 +294,6 @@ public class AddAsetActivity extends AppCompatActivity {
         spinnerAsetKondisi = findViewById(R.id.inpKndsAset);
         spinnerKodeAset = findViewById(R.id.inpKodeAset);
 
-        inpTglInput = findViewById(R.id.inpTglInput);
-        inpTglInput.setEnabled(false);
-        inpUmrEkonomis = findViewById(R.id.inpUmrEkonomis);
-        inpUmrEkonomis.setEnabled(false);
         inpNamaAset = findViewById(R.id.inpNamaAset);
         inpNoSAP = findViewById(R.id.inpNmrSAP);
         inpLuasAset = findViewById(R.id.inpLuasAset);
@@ -695,7 +690,6 @@ public class AddAsetActivity extends AppCompatActivity {
 
 
                 tvUploudBA.setText(response.body().getData().getBaFile());
-                inpTglInput.setText(response.body().getData().getTglInput().split(" ")[0]);
                 inpTglOleh.setText(response.body().getData().getTglInput().split(" ")[0]);
                 inpNoSAP.setText(String.valueOf(response.body().getData().getNomorSap()));
                 inpNamaAset.setText(response.body().getData().getAsetName());
@@ -1082,7 +1076,7 @@ public class AddAsetActivity extends AppCompatActivity {
             tvUploudBA.setVisibility(View.VISIBLE);
             btnFile.setVisibility(View.VISIBLE);
 
-            tvBa.setVisibility(View.GONE);
+            tvBa.setVisibility(View.VISIBLE);
             tvPohon.setVisibility(View.GONE);
             inpJumlahPohon.setVisibility(View.GONE);
             listBtnMap.setVisibility(View.GONE);
@@ -1164,77 +1158,87 @@ public class AddAsetActivity extends AppCompatActivity {
         }
     }
     public void addAset(){
-        dialog.show();
-
-        if (inpNamaAset == null) {
+//        dialog.show();
+        if (inpNamaAset.getText().toString().matches("")) {
             inpNamaAset.setError("nama harus diisi");
             inpNamaAset.requestFocus();
             return;
         }
 
-        if (inpNoSAP == null) {
-            inpNamaAset.setError("nomor SAP harus diisi");
-            inpNamaAset.requestFocus();
+        if (inpNoSAP.getText().toString().matches("")) {
+            inpNoSAP.setError("nomor SAP harus diisi");
+            inpNoSAP.requestFocus();
             return;
         }
 
         if (img1 == null || img2 == null || img3 == null || img4 == null) {
-            new AlertDialog.Builder(getApplicationContext())
-                    .setTitle("Erorr")
-                    .setMessage("Gambar Harus Diisi")
+            AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
+                    this);
 
-                    // Specifying a listener allows you to take an action before dismissing the dialog.
-                    // The dialog is automatically dismissed when a dialog button is clicked.
-                    .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int which) {
-                            // Continue with delete operation
+            // set title dialog
+            alertDialogBuilder.setTitle("Error!");
+
+            // set pesan dari dialog
+            alertDialogBuilder
+                    .setMessage("Semua Gambar harus di isi!")
+                    .setCancelable(false)
+                    .setPositiveButton("Ok",new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog,int id) {
+                            // jika tombol diklik, maka akan menutup activity ini
+                            dialog.cancel();
                         }
-                    })
+                    });
 
-                    // A null listener allows the button to dismiss the dialog and take no further action.
-                    .setNegativeButton(android.R.string.no, null)
-                    .setIcon(android.R.drawable.ic_dialog_alert)
-                    .show();
+
+            // membuat alert dialog dari builder
+            AlertDialog alertDialog = alertDialogBuilder.create();
+
+            // menampilkan alert dialog
+            alertDialog.show();
+
+            return;
+
         }
 
-        if (inpLuasAset == null) {
-            inpNamaAset.setError("Luas Aset harus diisi");
-            inpNamaAset.requestFocus();
+        if (inpNomorBAST.getText().toString().matches("")) {
+            inpNomorBAST.setError("Luas Aset harus diisi");
+            inpNomorBAST.requestFocus();
             return;
         }
 
-        if (inpNilaiAsetSAP == null) {
+        if (inpNilaiAsetSAP.getText().toString().matches("")) {
             inpNamaAset.setError("Nilai Aset harus diisi");
             inpNamaAset.requestFocus();
             return;
         }
 
-        if (inpTglOleh == null) {
-            inpNamaAset.setError("Tanggal Perolehan harus diisi");
-            inpNamaAset.requestFocus();
+        if (inpTglOleh.getText().toString().matches("")) {
+            inpTglOleh.setError("Tanggal Perolehan harus diisi");
+            inpTglOleh.requestFocus();
             return;
         }
 
-        if (inpMasaPenyusutan == null) {
-            inpNamaAset.setError("Masa Penyusutan harus diisi");
-            inpNamaAset.requestFocus();
+        if (inpMasaPenyusutan.getText().toString().matches("")) {
+            inpMasaPenyusutan.setError("Masa Penyusutan harus diisi");
+            inpMasaPenyusutan.requestFocus();
             return;
         }
 
-        if (inpNomorBAST == null) {
-            inpNamaAset.setError("nomor BAST harus diisi");
-            inpNamaAset.requestFocus();
-            return;
-        }
-
-        if ("tanaman".equals(String.valueOf(spinnerJenisAset.getSelectedItem()))  || "kayu".equals(String.valueOf(spinnerJenisAset.getSelectedItem()))) {
-            inpJumlahPohon.setError("Jumlah POhon harus diisi");
-            inpNamaAset.requestFocus();
+        if (inpNilaiResidu.getText().toString().matches("")) {
+            inpNilaiResidu.setError("Masa Penyusutan harus diisi");
+            inpNilaiResidu.requestFocus();
             return;
         }
 
 
-        String tgl_input = inpTglInput.getText().toString().trim() + " 00:00:00";
+
+        if (inpJumlahPohon.getText().toString().matches("")) {
+            inpJumlahPohon.setError("Jumlah Pohon harus diisi");
+            inpJumlahPohon.requestFocus();
+            return;
+        }
+
+
 
         String nama_aset = inpNamaAset.getText().toString().trim();
         String nomor_aset_sap = inpNoSAP.getText().toString().trim();
@@ -1271,7 +1275,6 @@ public class AddAsetActivity extends AppCompatActivity {
             RequestBody requestLuasAset = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(luas_aset));
             RequestBody requestNilaiAsetSAP = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(nilai_aset));
             RequestBody requestTglOleh = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(tgl_oleh));
-            RequestBody requestTglInput = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(tgl_input));
             RequestBody requestMasaSusut = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(masa_susut));
             RequestBody requestNomorBAST = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(nomor_bast));
             RequestBody requestNilaiResidu = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(nilai_residu));
@@ -1293,7 +1296,6 @@ public class AddAsetActivity extends AppCompatActivity {
             builder.addPart(MultipartBody.Part.createFormData("geo_tag4",null,requestGeoTag4));
             builder.addPart(MultipartBody.Part.createFormData("aset_luas",null,requestLuasAset));
             builder.addPart(MultipartBody.Part.createFormData("tgl_oleh",null,requestTglOleh));
-            builder.addPart(MultipartBody.Part.createFormData("tgl_input",null,requestTglInput));
             builder.addPart(MultipartBody.Part.createFormData("nilai_residu",null,requestNilaiResidu));
             builder.addPart(MultipartBody.Part.createFormData("nilai_oleh",null,requestNilaiAsetSAP));
             builder.addPart(MultipartBody.Part.createFormData("nomor_bast",null,requestNomorBAST));
@@ -1364,6 +1366,7 @@ public class AddAsetActivity extends AppCompatActivity {
         getKodeAset();
         getAsetJenis();
         getAsetKondisi();
+
     }
 
 
