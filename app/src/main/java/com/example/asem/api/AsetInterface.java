@@ -50,6 +50,9 @@ public interface AsetInterface {
     @GET("unit/")
     Call<UnitModel> getUnit();
 
+    @GET("aset/")
+    Call<List<Data2>> getAllAset();
+
     @GET("aset-tipe/")
     Call<List<AsetTipe>> getAsetTipe();
 
@@ -105,8 +108,8 @@ public interface AsetInterface {
             @Header("Content-Type") String contentType, @Body MultipartBody body
             );
 
-    @POST("aset/")
-    Call<List<Data2>> addAset(
+    @POST("aset/create")
+    Call<AsetModel> addAset(
             @Header("Content-Type") String contentType, @Body MultipartBody body
     );
         //    @Multipart

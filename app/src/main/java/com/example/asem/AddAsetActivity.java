@@ -1200,6 +1200,7 @@ public class AddAsetActivity extends AppCompatActivity {
         if ("tanaman".equals(String.valueOf(spinnerJenisAset.getSelectedItem())) && "normal".equals(String.valueOf(spinnerAsetKondisi.getSelectedItem()))) {
             listBtnMap.setVisibility(View.VISIBLE);
             inpJumlahPohon.setVisibility(View.VISIBLE);
+            tvPohon.setVisibility(View.VISIBLE);
 
             tvUploudBA.setVisibility(View.GONE);
             tvBa.setVisibility(View.GONE);
@@ -1213,6 +1214,8 @@ public class AddAsetActivity extends AppCompatActivity {
             listBtnMap.setVisibility(View.VISIBLE);
             inpJumlahPohon.setVisibility(View.VISIBLE);
             tvBa.setVisibility(View.VISIBLE);
+            tvPohon.setVisibility(View.VISIBLE);
+
             tvUploudBA.setVisibility(View.VISIBLE);
             btnFile.setVisibility(View.VISIBLE);
 
@@ -1224,10 +1227,10 @@ public class AddAsetActivity extends AppCompatActivity {
         else if ("tanaman".equals(String.valueOf(spinnerJenisAset.getSelectedItem()))  && "hilang".equals(String.valueOf(spinnerAsetKondisi.getSelectedItem()))) {
             tvUploudBA.setVisibility(View.VISIBLE);
             btnFile.setVisibility(View.VISIBLE);
-
             tvBa.setVisibility(View.VISIBLE);
+            inpJumlahPohon.setVisibility(View.VISIBLE);
+
             tvPohon.setVisibility(View.GONE);
-            inpJumlahPohon.setVisibility(View.GONE);
             listBtnMap.setVisibility(View.GONE);
             inpJumlahPohon.setVisibility(View.GONE);
             inpBtnMap.setVisibility(View.GONE);
@@ -1309,12 +1312,14 @@ public class AddAsetActivity extends AppCompatActivity {
     public void addAset(){
         dialog.show();
         if (inpNamaAset.getText().toString().matches("")) {
+            dialog.hide();
             inpNamaAset.setError("nama harus diisi");
             inpNamaAset.requestFocus();
             return;
         }
 
         if (inpNoSAP.getText().toString().matches("")) {
+            dialog.hide();
             inpNoSAP.setError("nomor SAP harus diisi");
             inpNoSAP.requestFocus();
             return;
@@ -1344,7 +1349,7 @@ public class AddAsetActivity extends AppCompatActivity {
 
             // menampilkan alert dialog
             alertDialog.show();
-
+            dialog.hide();
             return;
 
         }
@@ -1352,30 +1357,35 @@ public class AddAsetActivity extends AppCompatActivity {
         if (inpNomorBAST.getText().toString().matches("")) {
             inpNomorBAST.setError("Luas Aset harus diisi");
             inpNomorBAST.requestFocus();
+            dialog.hide();
             return;
         }
 
         if (inpNilaiAsetSAP.getText().toString().matches("")) {
             inpNamaAset.setError("Nilai Aset harus diisi");
             inpNamaAset.requestFocus();
+            dialog.hide();
             return;
         }
 
         if (inpTglOleh.getText().toString().matches("")) {
             inpTglOleh.setError("Tanggal Perolehan harus diisi");
             inpTglOleh.requestFocus();
+            dialog.hide();
             return;
         }
 
         if (inpMasaPenyusutan.getText().toString().matches("")) {
             inpMasaPenyusutan.setError("Masa Penyusutan harus diisi");
             inpMasaPenyusutan.requestFocus();
+            dialog.hide();
             return;
         }
 
         if (inpNilaiResidu.getText().toString().matches("")) {
             inpNilaiResidu.setError("Masa Penyusutan harus diisi");
             inpNilaiResidu.requestFocus();
+            dialog.hide();
             return;
         }
 
@@ -1384,6 +1394,7 @@ public class AddAsetActivity extends AppCompatActivity {
         if (inpJumlahPohon.getText().toString().matches("")) {
             inpJumlahPohon.setError("Jumlah Pohon harus diisi");
             inpJumlahPohon.requestFocus();
+            dialog.hide();
             return;
         }
 
@@ -1475,16 +1486,15 @@ public class AddAsetActivity extends AppCompatActivity {
 
 
 
-            Call<List<Data2>> call = asetInterface.addAset(contentType,multipartBody);
+            Call<AsetModel> call = asetInterface.addAset(contentType,multipartBody);
 
-            call.enqueue(new Callback<List<Data2>>(){
+            call.enqueue(new Callback<AsetModel>(){
 
                 @Override
-                public void onResponse(Call<List<Data2>> call, Response<List<Data2>> response) {
+                public void onResponse(Call<AsetModel> call, Response<AsetModel> response) {
                     if (response.isSuccessful() && response.body() != null){
                         dialog.hide();
-                        Log.d("asetapix","aset name :"+ response.body().get(0).getAsetName());
-                        Toast.makeText(getApplicationContext(),String.valueOf(response.code()),Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(),"success",Toast.LENGTH_LONG).show();
                         return;
                     }
 
@@ -1494,22 +1504,24 @@ public class AddAsetActivity extends AppCompatActivity {
                     Log.d("asetapix",String.valueOf(call.request().body()));
                     Log.d("asetapix",String.valueOf(call.request().url()));
                     Log.d("asetapix",String.valueOf(response.code()));
+                    Toast.makeText(getApplicationContext(),"success",Toast.LENGTH_LONG).show();
 
                 }
 
                 @Override
-                public void onFailure(Call<List<Data2>> call, Throwable t) {
+                public void onFailure(Call<AsetModel> call, Throwable t) {
                     dialog.hide();
                     Log.d("asetapix", "onError : "+t.getMessage());
                     Log.d("asetapix",String.valueOf(call.request().body()));
                     Log.d("asetapix",String.valueOf(call.request().url()));
                     Log.d("asetapix",String.valueOf(call.request().method()));
+                    Toast.makeText(getApplicationContext(),"error " + t.getMessage(),Toast.LENGTH_LONG).show();
                 }
             });
         }
         catch (Exception e ){
             dialog.hide();
-            Log.d("errorapi", "add aset: "+e.getMessage());
+            Toast.makeText(getApplicationContext(),"error " + e.getMessage(),Toast.LENGTH_LONG).show();
             e.printStackTrace();
         }
 

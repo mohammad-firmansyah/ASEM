@@ -123,8 +123,8 @@ public class UpdateAsetActivity extends AppCompatActivity {
     };
     private static final int LOCATION_PERMISSION_AND_STORAGE = 33;
 
-    public static String baseUrl = "http://202.148.9.226:9910/aset_mnj_repo/public/api/";
-    public String baseUrlImg = "http://202.148.9.226:9910/aset_mnj_repo/public";
+    public static String baseUrl = "http://202.148.9.226:7710/mnj_aset_repo/public/api/";
+    public String baseUrlImg = "http://202.148.9.226:7710/mnj_aset_repo/public";
     final Calendar myCalendar= Calendar.getInstance();
     EditText editText;
     EditText inpJumlahPohon;
@@ -753,6 +753,9 @@ public class UpdateAsetActivity extends AppCompatActivity {
                 String url2 = baseUrlImg+response.body().getData().getFotoAset2();
                 String url3 = baseUrlImg+response.body().getData().getFotoAset3();
                 String url4 = baseUrlImg+response.body().getData().getFotoAset4();
+
+                Log.d("asetapix",url4 + " " + url1+ " " + url2+ " " + url3);
+
                 fotoimg1.getLayoutParams().width = 200;
                 fotoimg1.getLayoutParams().height = 200;
                 Picasso.get().load(url1).resize(200,200).centerCrop().into(fotoimg1);
@@ -1100,6 +1103,7 @@ public class UpdateAsetActivity extends AppCompatActivity {
         if ("tanaman".equals(String.valueOf(spinnerJenisAset.getSelectedItem())) && "normal".equals(String.valueOf(spinnerAsetKondisi.getSelectedItem()))) {
             listBtnMap.setVisibility(View.VISIBLE);
             inpJumlahPohon.setVisibility(View.VISIBLE);
+            tvPohon.setVisibility(View.VISIBLE);
 
             tvUploudBA.setVisibility(View.GONE);
             tvBa.setVisibility(View.GONE);
@@ -1113,6 +1117,8 @@ public class UpdateAsetActivity extends AppCompatActivity {
             listBtnMap.setVisibility(View.VISIBLE);
             inpJumlahPohon.setVisibility(View.VISIBLE);
             tvBa.setVisibility(View.VISIBLE);
+            tvPohon.setVisibility(View.VISIBLE);
+
             tvUploudBA.setVisibility(View.VISIBLE);
             btnFile.setVisibility(View.VISIBLE);
 
@@ -1124,10 +1130,10 @@ public class UpdateAsetActivity extends AppCompatActivity {
         else if ("tanaman".equals(String.valueOf(spinnerJenisAset.getSelectedItem()))  && "hilang".equals(String.valueOf(spinnerAsetKondisi.getSelectedItem()))) {
             tvUploudBA.setVisibility(View.VISIBLE);
             btnFile.setVisibility(View.VISIBLE);
+            tvBa.setVisibility(View.VISIBLE);
+            inpJumlahPohon.setVisibility(View.VISIBLE);
 
-            tvBa.setVisibility(View.GONE);
             tvPohon.setVisibility(View.GONE);
-            inpJumlahPohon.setVisibility(View.GONE);
             listBtnMap.setVisibility(View.GONE);
             inpJumlahPohon.setVisibility(View.GONE);
             inpBtnMap.setVisibility(View.GONE);

@@ -125,8 +125,8 @@ public class DetailAsetActivity extends AppCompatActivity {
     };
     private static final int LOCATION_PERMISSION_AND_STORAGE = 33;
 
-    public static String baseUrl = "http://202.148.9.226:9910/aset_mnj_repo/public/api/";
-    public String baseUrlImg = "http://202.148.9.226:9910/aset_mnj_repo/public";
+    public static String baseUrl = "http://202.148.9.226:7710/mnj_aset_repo/public/api/";
+    public String baseUrlImg = "http://202.148.9.226:7710/mnj_aset_repo/public";
     final Calendar myCalendar= Calendar.getInstance();
     EditText editText;
     EditText inpJumlahPohon;
@@ -685,21 +685,28 @@ public class DetailAsetActivity extends AppCompatActivity {
 
 
     public void editVisibilityDynamic(){
+        TextView tvBa = findViewById(R.id.tvBa);
+        TextView tvPohon = findViewById(R.id.tvPohon);
+
         if ("tanaman".equals(String.valueOf(spinnerJenisAset.getSelectedItem())) && "normal".equals(String.valueOf(spinnerAsetKondisi.getSelectedItem()))) {
             listBtnMap.setVisibility(View.VISIBLE);
             inpJumlahPohon.setVisibility(View.VISIBLE);
+            tvPohon.setVisibility(View.VISIBLE);
 
             tvUploudBA.setVisibility(View.GONE);
+            tvBa.setVisibility(View.GONE);
             inpBtnMap.setVisibility(View.GONE);
             btnFile.setVisibility(View.GONE);
 
-            Toast.makeText(this, "tanaman", Toast.LENGTH_SHORT).show();
 
         }
 
         else if ("tanaman".equals(String.valueOf(spinnerJenisAset.getSelectedItem()))  && "rusak".equals(String.valueOf(spinnerAsetKondisi.getSelectedItem())) ) {
             listBtnMap.setVisibility(View.VISIBLE);
             inpJumlahPohon.setVisibility(View.VISIBLE);
+            tvBa.setVisibility(View.VISIBLE);
+            tvPohon.setVisibility(View.VISIBLE);
+
             tvUploudBA.setVisibility(View.VISIBLE);
             btnFile.setVisibility(View.VISIBLE);
 
@@ -711,8 +718,10 @@ public class DetailAsetActivity extends AppCompatActivity {
         else if ("tanaman".equals(String.valueOf(spinnerJenisAset.getSelectedItem()))  && "hilang".equals(String.valueOf(spinnerAsetKondisi.getSelectedItem()))) {
             tvUploudBA.setVisibility(View.VISIBLE);
             btnFile.setVisibility(View.VISIBLE);
+            tvBa.setVisibility(View.VISIBLE);
+            inpJumlahPohon.setVisibility(View.VISIBLE);
 
-            inpJumlahPohon.setVisibility(View.GONE);
+            tvPohon.setVisibility(View.GONE);
             listBtnMap.setVisibility(View.GONE);
             inpJumlahPohon.setVisibility(View.GONE);
             inpBtnMap.setVisibility(View.GONE);
@@ -723,6 +732,7 @@ public class DetailAsetActivity extends AppCompatActivity {
             listBtnMap.setVisibility(View.VISIBLE);
             inpJumlahPohon.setVisibility(View.VISIBLE);
 
+            tvBa.setVisibility(View.GONE);
             tvUploudBA.setVisibility(View.GONE);
             inpBtnMap.setVisibility(View.GONE);
             btnFile.setVisibility(View.GONE);
@@ -732,6 +742,7 @@ public class DetailAsetActivity extends AppCompatActivity {
         else if ("kayu".equals(String.valueOf(spinnerJenisAset.getSelectedItem()))  && "rusak".equals(String.valueOf(spinnerAsetKondisi.getSelectedItem())) ) {
             listBtnMap.setVisibility(View.VISIBLE);
             inpJumlahPohon.setVisibility(View.VISIBLE);
+            tvBa.setVisibility(View.VISIBLE);
             tvUploudBA.setVisibility(View.VISIBLE);
             btnFile.setVisibility(View.VISIBLE);
 
@@ -740,9 +751,11 @@ public class DetailAsetActivity extends AppCompatActivity {
         }
 
         else if ("kayu".equals(String.valueOf(spinnerJenisAset.getSelectedItem())) && "hilang".equals(String.valueOf(spinnerAsetKondisi.getSelectedItem()))) {
-            tvUploudBA.setVisibility(View.VISIBLE);
+            tvBa.setVisibility(View.VISIBLE);
             btnFile.setVisibility(View.VISIBLE);
+            tvUploudBA.setVisibility(View.VISIBLE);
 
+            tvPohon.setVisibility(View.GONE);
             inpJumlahPohon.setVisibility(View.GONE);
             listBtnMap.setVisibility(View.GONE);
             inpJumlahPohon.setVisibility(View.GONE);
@@ -753,27 +766,33 @@ public class DetailAsetActivity extends AppCompatActivity {
         else if ("non tanaman".equals(String.valueOf(spinnerJenisAset.getSelectedItem())) && "normal".equals(String.valueOf(spinnerAsetKondisi.getSelectedItem()))) {
             inpBtnMap.setVisibility(View.VISIBLE);
 
+            tvUploudBA.setVisibility(View.GONE);
             listBtnMap.setVisibility(View.GONE);
             inpJumlahPohon.setVisibility(View.GONE);
-            tvUploudBA.setVisibility(View.GONE);
+            tvBa.setVisibility(View.GONE);
+            tvPohon.setVisibility(View.GONE);
             btnFile.setVisibility(View.GONE);
 
         }
 
         else if ("non tanaman".equals(String.valueOf(spinnerJenisAset.getSelectedItem())) &&"rusak".equals(String.valueOf(spinnerAsetKondisi.getSelectedItem()))) {
             listBtnMap.setVisibility(View.VISIBLE);
-            tvUploudBA.setVisibility(View.VISIBLE);
+            tvBa.setVisibility(View.VISIBLE);
             btnFile.setVisibility(View.VISIBLE);
 
+            tvUploudBA.setVisibility(View.GONE);
+            tvPohon.setVisibility(View.GONE);
             inpJumlahPohon.setVisibility(View.GONE);
             inpBtnMap.setVisibility(View.GONE);
 
         }
 
         else if ("non tanaman".equals(String.valueOf(spinnerJenisAset.getSelectedItem())) && "hilang".equals(String.valueOf(spinnerAsetKondisi.getSelectedItem()))) {
-            tvUploudBA.setVisibility(View.VISIBLE);
+            tvBa.setVisibility(View.VISIBLE);
             btnFile.setVisibility(View.VISIBLE);
 
+            tvUploudBA.setVisibility(View.GONE);
+            tvPohon.setVisibility(View.GONE);
             inpJumlahPohon.setVisibility(View.GONE);
             listBtnMap.setVisibility(View.GONE);
             inpJumlahPohon.setVisibility(View.GONE);

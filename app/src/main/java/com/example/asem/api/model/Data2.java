@@ -3,7 +3,12 @@ package com.example.asem.api.model;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+
 public class Data2 {
+
+    @SerializedName("aset_id")
+    @Expose
+    private Integer asetId;
     @SerializedName("aset_name")
     @Expose
     private String asetName;
@@ -16,12 +21,27 @@ public class Data2 {
     @SerializedName("aset_kondisi")
     @Expose
     private String asetKondisi;
+    @SerializedName("aset_sub_unit")
+    @Expose
+    private String asetSubUnit;
     @SerializedName("aset_kode")
     @Expose
     private String asetKode;
     @SerializedName("nomor_sap")
     @Expose
-    private String nomorSap;
+    private Integer nomorSap;
+    @SerializedName("foto_aset1")
+    @Expose
+    private String fotoAset1;
+    @SerializedName("foto_aset2")
+    @Expose
+    private String fotoAset2;
+    @SerializedName("foto_aset3")
+    @Expose
+    private String fotoAset3;
+    @SerializedName("foto_aset4")
+    @Expose
+    private String fotoAset4;
     @SerializedName("geo_tag1")
     @Expose
     private String geoTag1;
@@ -36,7 +56,7 @@ public class Data2 {
     private String geoTag4;
     @SerializedName("aset_luas")
     @Expose
-    private String asetLuas;
+    private Integer asetLuas;
     @SerializedName("tgl_input")
     @Expose
     private String tglInput;
@@ -45,10 +65,10 @@ public class Data2 {
     private String tglOleh;
     @SerializedName("nilai_residu")
     @Expose
-    private String nilaiResidu;
+    private Integer nilaiResidu;
     @SerializedName("nilai_oleh")
     @Expose
-    private String nilaiOleh;
+    private Integer nilaiOleh;
     @SerializedName("nomor_bast")
     @Expose
     private String nomorBast;
@@ -58,30 +78,47 @@ public class Data2 {
     @SerializedName("keterangan")
     @Expose
     private String keterangan;
+    @SerializedName("foto_qr")
+    @Expose
+    private Object fotoQr;
+    @SerializedName("no_inv")
+    @Expose
+    private Object noInv;
+    @SerializedName("foto_aset_qr")
+    @Expose
+    private Object fotoAsetQr;
+    @SerializedName("status_posisi")
+    @Expose
+    private String statusPosisi;
     @SerializedName("unit_id")
     @Expose
     private String unitId;
     @SerializedName("afdeling_id")
     @Expose
     private String afdelingId;
-    @SerializedName("aset_sub_unit")
+    @SerializedName("user_input_id")
     @Expose
-    private String asetSubUnit;
-    @SerializedName("status_posisi")
+    private Object userInputId;
+    @SerializedName("created_at")
     @Expose
-    private String statusPosisi;
-    @SerializedName("foto_aset1")
+    private String createdAt;
+    @SerializedName("updated_at")
     @Expose
-    private String fotoAset1;
-    @SerializedName("foto_aset2")
+    private String updatedAt;
+    @SerializedName("jumlah_pohon")
     @Expose
-    private String fotoAset2;
-    @SerializedName("foto_aset3")
+    private Object jumlahPohon;
+    @SerializedName("umur_ekonomis_in_month")
     @Expose
-    private String fotoAset3;
-    @SerializedName("foto_aset4")
-    @Expose
-    private String fotoAset4;
+    private Integer umurEkonomisInMonth;
+
+    public Integer getAsetId() {
+        return asetId;
+    }
+
+    public void setAsetId(Integer asetId) {
+        this.asetId = asetId;
+    }
 
     public String getAsetName() {
         return asetName;
@@ -115,6 +152,14 @@ public class Data2 {
         this.asetKondisi = asetKondisi;
     }
 
+    public String getAsetSubUnit() {
+        return asetSubUnit;
+    }
+
+    public void setAsetSubUnit(String asetSubUnit) {
+        this.asetSubUnit = asetSubUnit;
+    }
+
     public String getAsetKode() {
         return asetKode;
     }
@@ -123,12 +168,44 @@ public class Data2 {
         this.asetKode = asetKode;
     }
 
-    public String getNomorSap() {
+    public Integer getNomorSap() {
         return nomorSap;
     }
 
-    public void setNomorSap(String nomorSap) {
+    public void setNomorSap(Integer nomorSap) {
         this.nomorSap = nomorSap;
+    }
+
+    public String getFotoAset1() {
+        return fotoAset1;
+    }
+
+    public void setFotoAset1(String fotoAset1) {
+        this.fotoAset1 = fotoAset1;
+    }
+
+    public String getFotoAset2() {
+        return fotoAset2;
+    }
+
+    public void setFotoAset2(String fotoAset2) {
+        this.fotoAset2 = fotoAset2;
+    }
+
+    public String getFotoAset3() {
+        return fotoAset3;
+    }
+
+    public void setFotoAset3(String fotoAset3) {
+        this.fotoAset3 = fotoAset3;
+    }
+
+    public String getFotoAset4() {
+        return fotoAset4;
+    }
+
+    public void setFotoAset4(String fotoAset4) {
+        this.fotoAset4 = fotoAset4;
     }
 
     public String getGeoTag1() {
@@ -163,11 +240,11 @@ public class Data2 {
         this.geoTag4 = geoTag4;
     }
 
-    public String getAsetLuas() {
+    public Integer getAsetLuas() {
         return asetLuas;
     }
 
-    public void setAsetLuas(String asetLuas) {
+    public void setAsetLuas(Integer asetLuas) {
         this.asetLuas = asetLuas;
     }
 
@@ -187,19 +264,19 @@ public class Data2 {
         this.tglOleh = tglOleh;
     }
 
-    public String getNilaiResidu() {
+    public Integer getNilaiResidu() {
         return nilaiResidu;
     }
 
-    public void setNilaiResidu(String nilaiResidu) {
+    public void setNilaiResidu(Integer nilaiResidu) {
         this.nilaiResidu = nilaiResidu;
     }
 
-    public String getNilaiOleh() {
+    public Integer getNilaiOleh() {
         return nilaiOleh;
     }
 
-    public void setNilaiOleh(String nilaiOleh) {
+    public void setNilaiOleh(Integer nilaiOleh) {
         this.nilaiOleh = nilaiOleh;
     }
 
@@ -227,6 +304,38 @@ public class Data2 {
         this.keterangan = keterangan;
     }
 
+    public Object getFotoQr() {
+        return fotoQr;
+    }
+
+    public void setFotoQr(Object fotoQr) {
+        this.fotoQr = fotoQr;
+    }
+
+    public Object getNoInv() {
+        return noInv;
+    }
+
+    public void setNoInv(Object noInv) {
+        this.noInv = noInv;
+    }
+
+    public Object getFotoAsetQr() {
+        return fotoAsetQr;
+    }
+
+    public void setFotoAsetQr(Object fotoAsetQr) {
+        this.fotoAsetQr = fotoAsetQr;
+    }
+
+    public String getStatusPosisi() {
+        return statusPosisi;
+    }
+
+    public void setStatusPosisi(String statusPosisi) {
+        this.statusPosisi = statusPosisi;
+    }
+
     public String getUnitId() {
         return unitId;
     }
@@ -243,51 +352,44 @@ public class Data2 {
         this.afdelingId = afdelingId;
     }
 
-    public String getAsetSubUnit() {
-        return asetSubUnit;
+    public Object getUserInputId() {
+        return userInputId;
     }
 
-    public void setAsetSubUnit(String asetSubUnit) {
-        this.asetSubUnit = asetSubUnit;
+    public void setUserInputId(Object userInputId) {
+        this.userInputId = userInputId;
     }
 
-    public String getStatusPosisi() {
-        return statusPosisi;
+    public String getCreatedAt() {
+        return createdAt;
     }
 
-    public void setStatusPosisi(String statusPosisi) {
-        this.statusPosisi = statusPosisi;
+    public void setCreatedAt(String createdAt) {
+        this.createdAt = createdAt;
     }
 
-    public String getFotoAset1() {
-        return fotoAset1;
+    public String getUpdatedAt() {
+        return updatedAt;
     }
 
-    public void setFotoAset1(String fotoAset1) {
-        this.fotoAset1 = fotoAset1;
+    public void setUpdatedAt(String updatedAt) {
+        this.updatedAt = updatedAt;
     }
 
-    public String getFotoAset2() {
-        return fotoAset2;
+    public Object getJumlahPohon() {
+        return jumlahPohon;
     }
 
-    public void setFotoAset2(String fotoAset2) {
-        this.fotoAset2 = fotoAset2;
+    public void setJumlahPohon(Object jumlahPohon) {
+        this.jumlahPohon = jumlahPohon;
     }
 
-    public String getFotoAset3() {
-        return fotoAset3;
+    public Integer getUmurEkonomisInMonth() {
+        return umurEkonomisInMonth;
     }
 
-    public void setFotoAset3(String fotoAset3) {
-        this.fotoAset3 = fotoAset3;
+    public void setUmurEkonomisInMonth(Integer umurEkonomisInMonth) {
+        this.umurEkonomisInMonth = umurEkonomisInMonth;
     }
 
-    public String getFotoAset4() {
-        return fotoAset4;
-    }
-
-    public void setFotoAset4(String fotoAset4) {
-        this.fotoAset4 = fotoAset4;
-    }
 }

@@ -8,6 +8,19 @@ public class Data {
     @SerializedName("aset_id")
     @Expose
     private Integer asetId;
+
+    @SerializedName("jumlah_pohon")
+    @Expose
+    private Integer jumlahPohon;
+
+    public Integer getJumlahPohon() {
+        return jumlahPohon;
+    }
+
+    public void setJumlahPohon(Integer jumlahPohon) {
+        this.jumlahPohon = jumlahPohon;
+    }
+
     @SerializedName("aset_name")
     @Expose
     private String asetName;
@@ -392,7 +405,8 @@ public class Data {
         this.umurEkonomisInMonth = umurEkonomisInMonth;
     }
 
-    public Data(Integer asetId, String asetName, Integer asetTipe, Integer asetJenis, Integer asetKondisi, Integer asetSubUnit, Integer asetKode, Integer nomorSap, String fotoAset1, String fotoAset2, String fotoAset3, String fotoAset4, String geoTag1, String geoTag2, String geoTag3, String geoTag4, Integer asetLuas, String tglInput, String tglOleh, Integer nilaiResidu, Integer nilaiOleh, String nomorBast, String masaSusut, String keterangan, String fotoQr, String noInv, String fotoAsetQr, Integer statusPosisi, Integer unitId, Integer afdelingId, Integer userInputId, String createdAt, String updatedAt, String baFile, Integer umurEkonomisInMonth) {
+    public Data(Integer jumlahPohon,Integer asetId, String asetName, Integer asetTipe, Integer asetJenis, Integer asetKondisi, Integer asetSubUnit, Integer asetKode, Integer nomorSap, String fotoAset1, String fotoAset2, String fotoAset3, String fotoAset4, String geoTag1, String geoTag2, String geoTag3, String geoTag4, Integer asetLuas, String tglInput, String tglOleh, Integer nilaiResidu, Integer nilaiOleh, String nomorBast, String masaSusut, String keterangan, String fotoQr, String noInv, String fotoAsetQr, Integer statusPosisi, Integer unitId, Integer afdelingId, Integer userInputId, String createdAt, String updatedAt, String baFile, Integer umurEkonomisInMonth) {
+        this.jumlahPohon = jumlahPohon;
         this.asetId = asetId;
         this.asetName = asetName;
         this.asetTipe = asetTipe;
