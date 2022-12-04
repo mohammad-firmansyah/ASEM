@@ -57,7 +57,9 @@ import com.example.asem.api.model.Aset;
 import com.example.asem.api.model.AsetJenis;
 import com.example.asem.api.model.AsetJenisModel;
 import com.example.asem.api.model.AsetKode;
+import com.example.asem.api.model.AsetKode2;
 import com.example.asem.api.model.AsetKodeModel;
+import com.example.asem.api.model.AsetKodeModel2;
 import com.example.asem.api.model.AsetKondisi;
 import com.example.asem.api.model.AsetModel;
 import com.example.asem.api.model.AsetTipe;
@@ -347,6 +349,7 @@ public class DetailAsetActivity extends AppCompatActivity {
 
         btnFile = findViewById(R.id.inpUploudBA);
 
+
         initCalender();
         getSpinnerData();
         setValueInput();
@@ -531,7 +534,6 @@ public class DetailAsetActivity extends AppCompatActivity {
                 spinnerJenisAset.setSelection(response.body().getData().getAsetTipe()-1);
                 spinnerAsetKondisi.setSelection(response.body().getData().getAsetKondisi()-1);
                 spinnerKodeAset.setSelection(response.body().getData().getAsetKode()-1);
-                editVisibilityDynamic();
 //                Log.d("asetapix", spinnerJenisAset.getSelectedItem().toString());
 //                if (spinnerJenisAset.getSelectedItem().toString() == "tanaman" && spinnerAsetKondisi.getSelectedItem().toString() == "normal") {
 //                    listBtnMap.setVisibility(View.VISIBLE);
@@ -626,6 +628,7 @@ public class DetailAsetActivity extends AppCompatActivity {
 //                    inpBtnMap.setVisibility(View.GONE);
 //
 //                }
+                editVisibilityDynamic();
 
 
             }
@@ -640,21 +643,30 @@ public class DetailAsetActivity extends AppCompatActivity {
     }
 
     private void getKodeAset(){
-        Call<AsetKodeModel> call = asetInterface.getAsetKode();
-        call.enqueue(new Callback<AsetKodeModel>() {
+        Call<AsetKodeModel2> call = asetInterface.getAsetKode();
+        call.enqueue(new Callback<AsetKodeModel2>() {
             @Override
-            public void onResponse(Call<AsetKodeModel> call, Response<AsetKodeModel> response) {
+            public void onResponse(Call<AsetKodeModel2> call, Response<AsetKodeModel2> response) {
                 if (!response.isSuccessful()){
                     Toast.makeText(getApplicationContext(),String.valueOf(response.code()),Toast.LENGTH_LONG).show();
                     return;
                 }
 
-                List<AsetKode> asetKode = response.body().getData();
+                List<AsetKode2> asetKode = response.body().getData();
                 List<String> listSpinner = new ArrayList<>();
 
 
-                for ( AsetKode a : asetKode ){
-                    listSpinner.add(a.getAset_kode_desc());
+                for ( AsetKode2 a : asetKode ){
+
+                    String aset_kode_temp = "";
+                    if (a.getAsetJenis() == 1 ) {
+                        aset_kode_temp = a.getAsetClass() + "/" + a.getAsetDesc();
+                    } else if (a.getAsetJenis() == 2) {
+                        aset_kode_temp = a.getAsetClass() + "/" + a.getAsetGroup() + "/" + a.getAsetDesc();
+                    } else {
+                        aset_kode_temp = a.getAsetClass() + "/" + a.getAsetGroup() + "/" + a.getAsetDesc();
+                    }
+                    listSpinner.add(aset_kode_temp);
                 }
 
                 ArrayAdapter<String> adapter = new ArrayAdapter<String>(getApplicationContext(),
@@ -664,7 +676,7 @@ public class DetailAsetActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<AsetKodeModel> call, Throwable t) {
+            public void onFailure(Call<AsetKodeModel2> call, Throwable t) {
                 Toast.makeText(getApplicationContext(),t.getMessage(),Toast.LENGTH_LONG).show();
                 return;
             }

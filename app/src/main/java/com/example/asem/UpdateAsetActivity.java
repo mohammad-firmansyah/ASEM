@@ -57,7 +57,9 @@ import com.example.asem.api.model.Aset;
 import com.example.asem.api.model.AsetJenis;
 import com.example.asem.api.model.AsetJenisModel;
 import com.example.asem.api.model.AsetKode;
+import com.example.asem.api.model.AsetKode2;
 import com.example.asem.api.model.AsetKodeModel;
+import com.example.asem.api.model.AsetKodeModel2;
 import com.example.asem.api.model.AsetKondisi;
 import com.example.asem.api.model.AsetModel;
 import com.example.asem.api.model.AsetTipe;
@@ -893,21 +895,30 @@ public class UpdateAsetActivity extends AppCompatActivity {
     }
 
     private void getKodeAset(){
-        Call<AsetKodeModel> call = asetInterface.getAsetKode();
-        call.enqueue(new Callback<AsetKodeModel>() {
+        Call<AsetKodeModel2> call = asetInterface.getAsetKode();
+        call.enqueue(new Callback<AsetKodeModel2>() {
             @Override
-            public void onResponse(Call<AsetKodeModel> call, Response<AsetKodeModel> response) {
+            public void onResponse(Call<AsetKodeModel2> call, Response<AsetKodeModel2> response) {
                 if (!response.isSuccessful()){
                     Toast.makeText(getApplicationContext(),String.valueOf(response.code()),Toast.LENGTH_LONG).show();
                     return;
                 }
 
-                List<AsetKode> asetKode = response.body().getData();
+                List<AsetKode2> asetKode = response.body().getData();
                 List<String> listSpinner = new ArrayList<>();
 
 
-                for ( AsetKode a : asetKode ){
-                    listSpinner.add(a.getAset_kode_desc());
+                for ( AsetKode2 a : asetKode ){
+
+                    String aset_kode_temp = "";
+                    if (a.getAsetJenis() == 2 ) {
+                        aset_kode_temp = a.getAsetClass() + "/" + a.getAsetDesc();
+                    } else if (a.getAsetJenis() == 1) {
+                        aset_kode_temp = a.getAsetClass() + "/" + a.getAsetGroup() + "/" + a.getAsetDesc();
+                    } else {
+                        aset_kode_temp = a.getAsetClass() + "/" + a.getAsetGroup() + "/" + a.getAsetDesc();
+                    }
+                    listSpinner.add(aset_kode_temp);
                 }
 
                 ArrayAdapter<String> adapter = new ArrayAdapter<String>(getApplicationContext(),
@@ -917,7 +928,7 @@ public class UpdateAsetActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<AsetKodeModel> call, Throwable t) {
+            public void onFailure(Call<AsetKodeModel2> call, Throwable t) {
                 Toast.makeText(getApplicationContext(),t.getMessage(),Toast.LENGTH_LONG).show();
                 return;
             }
@@ -1099,12 +1110,16 @@ public class UpdateAsetActivity extends AppCompatActivity {
     public void editVisibilityDynamic(){
         TextView tvBa = findViewById(R.id.tvBa);
         TextView tvPohon = findViewById(R.id.tvPohon);
+        TextView tvBast = findViewById(R.id.tvBast);
 
         if ("tanaman".equals(String.valueOf(spinnerJenisAset.getSelectedItem())) && "normal".equals(String.valueOf(spinnerAsetKondisi.getSelectedItem()))) {
             listBtnMap.setVisibility(View.VISIBLE);
             inpJumlahPohon.setVisibility(View.VISIBLE);
             tvPohon.setVisibility(View.VISIBLE);
+//            inpKomoditi.setVisibility(View.VISIBLE);
 
+            inpNomorBAST.setVisibility(View.VISIBLE);
+            tvBast.setVisibility(View.VISIBLE);
             tvUploudBA.setVisibility(View.GONE);
             tvBa.setVisibility(View.GONE);
             inpBtnMap.setVisibility(View.GONE);
@@ -1119,6 +1134,9 @@ public class UpdateAsetActivity extends AppCompatActivity {
             tvBa.setVisibility(View.VISIBLE);
             tvPohon.setVisibility(View.VISIBLE);
 
+//            inpKomoditi.setVisibility(View.VISIBLE);
+            inpNomorBAST.setVisibility(View.GONE);
+            tvBast.setVisibility(View.GONE);
             tvUploudBA.setVisibility(View.VISIBLE);
             btnFile.setVisibility(View.VISIBLE);
 
@@ -1132,7 +1150,10 @@ public class UpdateAsetActivity extends AppCompatActivity {
             btnFile.setVisibility(View.VISIBLE);
             tvBa.setVisibility(View.VISIBLE);
             inpJumlahPohon.setVisibility(View.VISIBLE);
+//            inpKomoditi.setVisibility(View.VISIBLE);
 
+            inpNomorBAST.setVisibility(View.GONE);
+            tvBast.setVisibility(View.GONE);
             tvPohon.setVisibility(View.GONE);
             listBtnMap.setVisibility(View.GONE);
             inpJumlahPohon.setVisibility(View.GONE);
@@ -1143,6 +1164,9 @@ public class UpdateAsetActivity extends AppCompatActivity {
         else if ("kayu".equals(String.valueOf(spinnerJenisAset.getSelectedItem()))  && "normal".equals(String.valueOf(spinnerAsetKondisi.getSelectedItem())) ) {
             listBtnMap.setVisibility(View.VISIBLE);
             inpJumlahPohon.setVisibility(View.VISIBLE);
+//            inpKomoditi.setVisibility(View.VISIBLE);
+            inpNomorBAST.setVisibility(View.VISIBLE);
+            tvBast.setVisibility(View.VISIBLE);
 
             tvBa.setVisibility(View.GONE);
             tvUploudBA.setVisibility(View.GONE);
@@ -1153,11 +1177,15 @@ public class UpdateAsetActivity extends AppCompatActivity {
 
         else if ("kayu".equals(String.valueOf(spinnerJenisAset.getSelectedItem()))  && "rusak".equals(String.valueOf(spinnerAsetKondisi.getSelectedItem())) ) {
             listBtnMap.setVisibility(View.VISIBLE);
+            tvPohon.setVisibility(View.VISIBLE);
             inpJumlahPohon.setVisibility(View.VISIBLE);
             tvBa.setVisibility(View.VISIBLE);
             tvUploudBA.setVisibility(View.VISIBLE);
             btnFile.setVisibility(View.VISIBLE);
+//            inpKomoditi.setVisibility(View.VISIBLE);
 
+            inpNomorBAST.setVisibility(View.GONE);
+            tvBast.setVisibility(View.GONE);
             inpBtnMap.setVisibility(View.GONE);
 
         }
@@ -1166,7 +1194,10 @@ public class UpdateAsetActivity extends AppCompatActivity {
             tvBa.setVisibility(View.VISIBLE);
             btnFile.setVisibility(View.VISIBLE);
             tvUploudBA.setVisibility(View.VISIBLE);
+//            inpKomoditi.setVisibility(View.VISIBLE);
 
+            inpNomorBAST.setVisibility(View.GONE);
+            tvBast.setVisibility(View.GONE);
             tvPohon.setVisibility(View.GONE);
             inpJumlahPohon.setVisibility(View.GONE);
             listBtnMap.setVisibility(View.GONE);
@@ -1177,7 +1208,10 @@ public class UpdateAsetActivity extends AppCompatActivity {
 
         else if ("non tanaman".equals(String.valueOf(spinnerJenisAset.getSelectedItem())) && "normal".equals(String.valueOf(spinnerAsetKondisi.getSelectedItem()))) {
             inpBtnMap.setVisibility(View.VISIBLE);
+            inpNomorBAST.setVisibility(View.VISIBLE);
+            tvBast.setVisibility(View.VISIBLE);
 
+//            inpKomoditi.setVisibility(View.GONE);
             tvUploudBA.setVisibility(View.GONE);
             listBtnMap.setVisibility(View.GONE);
             inpJumlahPohon.setVisibility(View.GONE);
@@ -1191,24 +1225,30 @@ public class UpdateAsetActivity extends AppCompatActivity {
             listBtnMap.setVisibility(View.VISIBLE);
             tvBa.setVisibility(View.VISIBLE);
             btnFile.setVisibility(View.VISIBLE);
+            tvUploudBA.setVisibility(View.VISIBLE);
 
-            tvUploudBA.setVisibility(View.GONE);
+//            inpKomoditi.setVisibility(View.GONE);
             tvPohon.setVisibility(View.GONE);
             inpJumlahPohon.setVisibility(View.GONE);
             inpBtnMap.setVisibility(View.GONE);
+            inpNomorBAST.setVisibility(View.GONE);
+            tvBast.setVisibility(View.GONE);
 
         }
 
         else if ("non tanaman".equals(String.valueOf(spinnerJenisAset.getSelectedItem())) && "hilang".equals(String.valueOf(spinnerAsetKondisi.getSelectedItem()))) {
             tvBa.setVisibility(View.VISIBLE);
             btnFile.setVisibility(View.VISIBLE);
+            tvUploudBA.setVisibility(View.VISIBLE);
 
-            tvUploudBA.setVisibility(View.GONE);
+//            inpKomoditi.setVisibility(View.GONE);
             tvPohon.setVisibility(View.GONE);
             inpJumlahPohon.setVisibility(View.GONE);
             listBtnMap.setVisibility(View.GONE);
             inpJumlahPohon.setVisibility(View.GONE);
             inpBtnMap.setVisibility(View.GONE);
+            inpNomorBAST.setVisibility(View.GONE);
+            tvBast.setVisibility(View.GONE);
 
         }
     }

@@ -212,10 +212,10 @@
         >
 
 
-        <RadioButton android:id="@+id/qrYes"
+        <RadioButton android:id="@+id/yes"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Iya"
+            android:text="ya"
             android:backgroundTint="@color/main_grey"
             android:layout_marginRight="10dp"
             android:buttonTint="@color/main_grey"
@@ -223,17 +223,19 @@
 
 
         <RadioButton
-            android:id="@+id/qrNo"
+            android:id="@+id/no"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Tidak"
+            android:text="tidak"
             android:buttonTint="@color/main_grey"
+            android:checked="true"
             />
 
     </RadioGroup>
 
 
     <Button
+        android:id="@+id/btnSubmit"
         android:layout_width="match_parent"
         android:text="UNDUH REPORT"
         android:layout_height="wrap_content"

@@ -61,6 +61,28 @@
                 android:background="@drawable/rounded_spinner"
                 android:spinnerMode="dropdown" />
 
+<!--            <TextView-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginBottom="10dp"-->
+<!--                android:text="KOMODITI :"-->
+<!--                android:textColor="@color/main_grey"-->
+<!--                android:textSize="14sp"-->
+<!--                android:textStyle="bold"-->
+
+
+<!--                />-->
+
+
+<!--            <Spinner-->
+
+<!--                android:id="@+id/inpKomoditi"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="41dp"-->
+<!--                android:layout_marginBottom="10dp"-->
+<!--                android:background="@drawable/rounded_spinner"-->
+<!--                android:spinnerMode="dropdown" />-->
+
 
             <TextView
                 android:layout_width="match_parent"
@@ -110,28 +132,6 @@
                 android:background="@drawable/rounded_spinner"
                 android:spinnerMode="dropdown" />
 
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
-                android:text="AFDELING :"
-                android:textColor="@color/main_grey"
-                android:textSize="14sp"
-                android:textStyle="bold"
-
-
-                />
-
-            <Spinner
-
-                android:id="@+id/inpAfdeling"
-                android:layout_width="match_parent"
-                android:layout_height="41dp"
-                android:layout_marginBottom="10dp"
-                android:background="@drawable/rounded_spinner"
-                android:spinnerMode="dropdown" />
-
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -150,8 +150,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="41dp"
                 android:layout_marginBottom="10dp"
-                android:background="@drawable/rounded_spinner"
+                android:background="@drawable/tgl_spinner"
                 android:spinnerMode="dropdown" />
+
+
+
 
             <TextView
                 android:layout_width="match_parent"
@@ -168,6 +171,27 @@
             <Spinner
 
                 android:id="@+id/inpSubUnit"
+                android:layout_width="match_parent"
+                android:layout_height="41dp"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/rounded_spinner"
+                android:spinnerMode="dropdown" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:text="AFDELING :"
+                android:textColor="@color/main_grey"
+                android:textSize="14sp"
+                android:textStyle="bold"
+
+
+                />
+
+            <Spinner
+
+                android:id="@+id/inpAfdeling"
                 android:layout_width="match_parent"
                 android:layout_height="41dp"
                 android:layout_marginBottom="10dp"
@@ -516,6 +540,7 @@
                 android:textColor="@color/main_grey"
                 android:textSize="14sp"
                 android:textStyle="bold"
+                android:id="@+id/tvBast"
 
                 />
 

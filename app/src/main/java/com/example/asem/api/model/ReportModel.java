@@ -1,37 +1,48 @@
 package com.example.asem.api.model;
 
+
+
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
 public class ReportModel {
-    private boolean status;
-    private String message;
-    private Report url;
 
-    public ReportModel(boolean status, String message, Report url) {
+        @SerializedName("status")
+        @Expose
+        private Boolean status;
+        @SerializedName("message")
+        @Expose
+        private String message;
+        @SerializedName("data")
+        @Expose
+        private String data;
+
+        public Boolean getStatus() {
+            return status;
+        }
+
+        public void setStatus(Boolean status) {
+            this.status = status;
+        }
+
+        public String getMessage() {
+            return message;
+        }
+
+        public void setMessage(String message) {
+            this.message = message;
+        }
+
+        public String getData() {
+            return data;
+        }
+
+        public void setData(String data) {
+            this.data = data;
+        }
+
+    public ReportModel(Boolean status, String message, String data) {
         this.status = status;
         this.message = message;
-        this.url = url;
-    }
-
-    public boolean isStatus() {
-        return status;
-    }
-
-    public void setStatus(boolean status) {
-        this.status = status;
-    }
-
-    public String getMessage() {
-        return message;
-    }
-
-    public void setMessage(String message) {
-        this.message = message;
-    }
-
-    public Report getUrl() {
-        return url;
-    }
-
-    public void setUrl(Report url) {
-        this.url = url;
+        this.data = data;
     }
 }

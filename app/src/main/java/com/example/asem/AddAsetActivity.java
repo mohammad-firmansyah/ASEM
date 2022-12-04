@@ -51,7 +51,9 @@ import com.example.asem.api.model.Afdelling;
 import com.example.asem.api.model.AfdellingModel;
 import com.example.asem.api.model.AsetJenisModel;
 import com.example.asem.api.model.AsetKode;
+import com.example.asem.api.model.AsetKode2;
 import com.example.asem.api.model.AsetKodeModel;
+import com.example.asem.api.model.AsetKodeModel2;
 import com.example.asem.api.model.AsetKondisi;
 import com.example.asem.api.model.AsetModel;
 import com.example.asem.api.model.AsetModel2;
@@ -126,6 +128,7 @@ public class AddAsetActivity extends AppCompatActivity {
     Spinner spinnerAfdeling;
     Spinner spinnerSubUnit;
     Spinner spinnerUnit;
+    Spinner spinnerKomoditi;
 
     EditText inpNamaAset;
     EditText inpNoSAP;
@@ -310,7 +313,7 @@ public class AddAsetActivity extends AppCompatActivity {
         spinnerAfdeling = findViewById(R.id.inpAfdeling);
         spinnerSubUnit = findViewById(R.id.inpSubUnit);
         spinnerUnit = findViewById(R.id.inpUnit);
-
+        spinnerUnit.setEnabled(false);
         inpNamaAset = findViewById(R.id.inpNamaAset);
         inpNoSAP = findViewById(R.id.inpNmrSAP);
         inpLuasAset = findViewById(R.id.inpLuasAset);
@@ -320,6 +323,16 @@ public class AddAsetActivity extends AppCompatActivity {
         inpNilaiResidu = findViewById(R.id.inpNmrResidu);
         inpKeterangan = findViewById(R.id.inpKeterangan);
         inpJumlahPohon = findViewById(R.id.inpJmlhPohon);
+//        spinnerKomoditi = findViewById(R.id.inpKomoditi);
+
+//        List<String> listSpinner = new ArrayList<>();
+//        listSpinner.add("excel");
+//        listSpinner.add("pdf");
+//        // Set hasil result json ke dalam adapter spinner
+//        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getApplicationContext(),
+//                android.R.layout.simple_spinner_item, listSpinner);
+//        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+//        spinnerKomoditi.setAdapter(adapter);
 
         foto1rl = findViewById(R.id.foto1);
         foto2rl = findViewById(R.id.foto2);
@@ -393,11 +406,11 @@ public class AddAsetActivity extends AppCompatActivity {
         });
 
         spinnerTipeAset.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                spinnerIdTipeAsset = String.valueOf(position+1);
+                @Override
+                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                    spinnerIdTipeAsset = String.valueOf(position+1);
 
-            }
+                }
 
             @Override
             public void onNothingSelected(AdapterView<?> arg0) {
@@ -648,7 +661,7 @@ public class AddAsetActivity extends AppCompatActivity {
                 }
 
                 List<String> listSpinner = new ArrayList<>();
-
+                listSpinner.add("Pilih Jenis Aset");
                 for (int i = 0; i < response.body().getData().size();i++){
                     listSpinner.add(response.body().getData().get(i).getAset_jenis_desc());
                 }
@@ -677,7 +690,7 @@ public class AddAsetActivity extends AppCompatActivity {
                     return;
                 }
                 List<String> listSpinner = new ArrayList<>();
-
+                listSpinner.add("Pilih Tipe Aset");
                 for (int i=0;i<response.body().size();i++){
                     listSpinner.add(response.body().get(i).getAset_tipe_desc());
                 }
@@ -709,6 +722,7 @@ public class AddAsetActivity extends AppCompatActivity {
                 }
 
                 List<String> listSpinner = new ArrayList<>();
+                listSpinner.add("Pilih Kondisi Aset");
                 for (int i=0;i<response.body().size();i++){
                     listSpinner.add(response.body().get(i).getAset_kondisi_desc());
                 }
@@ -894,21 +908,31 @@ public class AddAsetActivity extends AppCompatActivity {
     }
 
     private void getKodeAset(){
-        Call<AsetKodeModel> call = asetInterface.getAsetKode();
-        call.enqueue(new Callback<AsetKodeModel>() {
+        Call<AsetKodeModel2> call = asetInterface.getAsetKode();
+        call.enqueue(new Callback<AsetKodeModel2>() {
             @Override
-            public void onResponse(Call<AsetKodeModel> call, Response<AsetKodeModel> response) {
+            public void onResponse(Call<AsetKodeModel2> call, Response<AsetKodeModel2> response) {
                 if (!response.isSuccessful()){
                     Toast.makeText(getApplicationContext(),String.valueOf(response.code()),Toast.LENGTH_LONG).show();
                     return;
                 }
 
-                List<AsetKode> asetKode = response.body().getData();
+                List<AsetKode2> asetKode = response.body().getData();
                 List<String> listSpinner = new ArrayList<>();
+                listSpinner.add("Pilih Kode Aset");
 
 
-                for ( AsetKode a : asetKode ){
-                    listSpinner.add(a.getAset_kode_desc());
+                for ( AsetKode2 a : asetKode ){
+
+                     String aset_kode_temp = "";
+                     if (a.getAsetJenis() == 2 ) {
+                         aset_kode_temp = a.getAsetClass() + "/" + a.getAsetDesc();
+                     } else if (a.getAsetJenis() == 1) {
+                         aset_kode_temp = a.getAsetClass() + "/" + a.getAsetGroup() + "/" + a.getAsetDesc();
+                     } else {
+                         aset_kode_temp = a.getAsetClass() + "/" + a.getAsetGroup() + "/" + a.getAsetDesc();
+                     }
+                    listSpinner.add(aset_kode_temp);
                 }
 
                 ArrayAdapter<String> adapter = new ArrayAdapter<String>(getApplicationContext(),
@@ -918,7 +942,7 @@ public class AddAsetActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<AsetKodeModel> call, Throwable t) {
+            public void onFailure(Call<AsetKodeModel2> call, Throwable t) {
                 Toast.makeText(getApplicationContext(),t.getMessage(),Toast.LENGTH_LONG).show();
                 return;
             }
@@ -937,7 +961,7 @@ public class AddAsetActivity extends AppCompatActivity {
                     return;
                 }
                 List<String> listSpinner = new ArrayList<>();
-
+                listSpinner.add("Pilih Afdeling");
                 for (int i=0;i<response.body().getData().size();i++){
                     listSpinner.add(response.body().getData().get(i).getAfdelling_desc());
                 }
@@ -969,6 +993,7 @@ public class AddAsetActivity extends AppCompatActivity {
 
                 List<SubUnit> subUnit = response.body().getData();
                 List<String> listSpinner = new ArrayList<>();
+                listSpinner.add("Pilih Sub Unit");
 
 
                 for ( SubUnit a : subUnit ){
@@ -1196,12 +1221,16 @@ public class AddAsetActivity extends AppCompatActivity {
     public void editVisibilityDynamic(){
         TextView tvBa = findViewById(R.id.tvBa);
         TextView tvPohon = findViewById(R.id.tvPohon);
+        TextView tvBast = findViewById(R.id.tvBast);
 
         if ("tanaman".equals(String.valueOf(spinnerJenisAset.getSelectedItem())) && "normal".equals(String.valueOf(spinnerAsetKondisi.getSelectedItem()))) {
             listBtnMap.setVisibility(View.VISIBLE);
             inpJumlahPohon.setVisibility(View.VISIBLE);
             tvPohon.setVisibility(View.VISIBLE);
+//            inpKomoditi.setVisibility(View.VISIBLE);
 
+            inpNomorBAST.setVisibility(View.VISIBLE);
+            tvBast.setVisibility(View.VISIBLE);
             tvUploudBA.setVisibility(View.GONE);
             tvBa.setVisibility(View.GONE);
             inpBtnMap.setVisibility(View.GONE);
@@ -1216,6 +1245,9 @@ public class AddAsetActivity extends AppCompatActivity {
             tvBa.setVisibility(View.VISIBLE);
             tvPohon.setVisibility(View.VISIBLE);
 
+//            inpKomoditi.setVisibility(View.VISIBLE);
+            inpNomorBAST.setVisibility(View.GONE);
+            tvBast.setVisibility(View.GONE);
             tvUploudBA.setVisibility(View.VISIBLE);
             btnFile.setVisibility(View.VISIBLE);
 
@@ -1229,7 +1261,10 @@ public class AddAsetActivity extends AppCompatActivity {
             btnFile.setVisibility(View.VISIBLE);
             tvBa.setVisibility(View.VISIBLE);
             inpJumlahPohon.setVisibility(View.VISIBLE);
+//            inpKomoditi.setVisibility(View.VISIBLE);
 
+            inpNomorBAST.setVisibility(View.GONE);
+            tvBast.setVisibility(View.GONE);
             tvPohon.setVisibility(View.GONE);
             listBtnMap.setVisibility(View.GONE);
             inpJumlahPohon.setVisibility(View.GONE);
@@ -1240,6 +1275,9 @@ public class AddAsetActivity extends AppCompatActivity {
         else if ("kayu".equals(String.valueOf(spinnerJenisAset.getSelectedItem()))  && "normal".equals(String.valueOf(spinnerAsetKondisi.getSelectedItem())) ) {
             listBtnMap.setVisibility(View.VISIBLE);
             inpJumlahPohon.setVisibility(View.VISIBLE);
+//            inpKomoditi.setVisibility(View.VISIBLE);
+            inpNomorBAST.setVisibility(View.VISIBLE);
+            tvBast.setVisibility(View.VISIBLE);
 
             tvBa.setVisibility(View.GONE);
             tvUploudBA.setVisibility(View.GONE);
@@ -1250,11 +1288,15 @@ public class AddAsetActivity extends AppCompatActivity {
 
         else if ("kayu".equals(String.valueOf(spinnerJenisAset.getSelectedItem()))  && "rusak".equals(String.valueOf(spinnerAsetKondisi.getSelectedItem())) ) {
             listBtnMap.setVisibility(View.VISIBLE);
+            tvPohon.setVisibility(View.VISIBLE);
             inpJumlahPohon.setVisibility(View.VISIBLE);
             tvBa.setVisibility(View.VISIBLE);
             tvUploudBA.setVisibility(View.VISIBLE);
             btnFile.setVisibility(View.VISIBLE);
+//            inpKomoditi.setVisibility(View.VISIBLE);
 
+            inpNomorBAST.setVisibility(View.GONE);
+            tvBast.setVisibility(View.GONE);
             inpBtnMap.setVisibility(View.GONE);
 
         }
@@ -1263,7 +1305,10 @@ public class AddAsetActivity extends AppCompatActivity {
             tvBa.setVisibility(View.VISIBLE);
             btnFile.setVisibility(View.VISIBLE);
             tvUploudBA.setVisibility(View.VISIBLE);
+//            inpKomoditi.setVisibility(View.VISIBLE);
 
+            inpNomorBAST.setVisibility(View.GONE);
+            tvBast.setVisibility(View.GONE);
             tvPohon.setVisibility(View.GONE);
             inpJumlahPohon.setVisibility(View.GONE);
             listBtnMap.setVisibility(View.GONE);
@@ -1274,7 +1319,10 @@ public class AddAsetActivity extends AppCompatActivity {
 
         else if ("non tanaman".equals(String.valueOf(spinnerJenisAset.getSelectedItem())) && "normal".equals(String.valueOf(spinnerAsetKondisi.getSelectedItem()))) {
             inpBtnMap.setVisibility(View.VISIBLE);
+            inpNomorBAST.setVisibility(View.VISIBLE);
+            tvBast.setVisibility(View.VISIBLE);
 
+//            inpKomoditi.setVisibility(View.GONE);
             tvUploudBA.setVisibility(View.GONE);
             listBtnMap.setVisibility(View.GONE);
             inpJumlahPohon.setVisibility(View.GONE);
@@ -1288,24 +1336,30 @@ public class AddAsetActivity extends AppCompatActivity {
             listBtnMap.setVisibility(View.VISIBLE);
             tvBa.setVisibility(View.VISIBLE);
             btnFile.setVisibility(View.VISIBLE);
+            tvUploudBA.setVisibility(View.VISIBLE);
 
-            tvUploudBA.setVisibility(View.GONE);
+//            inpKomoditi.setVisibility(View.GONE);
             tvPohon.setVisibility(View.GONE);
             inpJumlahPohon.setVisibility(View.GONE);
             inpBtnMap.setVisibility(View.GONE);
+            inpNomorBAST.setVisibility(View.GONE);
+            tvBast.setVisibility(View.GONE);
 
         }
 
         else if ("non tanaman".equals(String.valueOf(spinnerJenisAset.getSelectedItem())) && "hilang".equals(String.valueOf(spinnerAsetKondisi.getSelectedItem()))) {
             tvBa.setVisibility(View.VISIBLE);
             btnFile.setVisibility(View.VISIBLE);
+            tvUploudBA.setVisibility(View.VISIBLE);
 
-            tvUploudBA.setVisibility(View.GONE);
+//            inpKomoditi.setVisibility(View.GONE);
             tvPohon.setVisibility(View.GONE);
             inpJumlahPohon.setVisibility(View.GONE);
             listBtnMap.setVisibility(View.GONE);
             inpJumlahPohon.setVisibility(View.GONE);
             inpBtnMap.setVisibility(View.GONE);
+            inpNomorBAST.setVisibility(View.GONE);
+            tvBast.setVisibility(View.GONE);
 
         }
     }
