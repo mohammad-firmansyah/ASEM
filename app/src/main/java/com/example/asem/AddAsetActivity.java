@@ -199,9 +199,17 @@ public class AddAsetActivity extends AppCompatActivity {
 
     public void openfilechoser(){
         Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-        intent.setType(".pdf -> application/pdf");
+//        intent.setType(".pdf -> application/pdf");
+//        intent.addCategory(Intent.CATEGORY_OPENABLE);
+//        startActivityForResult(intent,1);
+
+        intent.setType("*/*");
+        // Only return URIs that can be opened with ContentResolver
         intent.addCategory(Intent.CATEGORY_OPENABLE);
-        startActivityForResult(intent,1);
+
+        intent = Intent.createChooser(intent, "Choose a file");
+        startActivityForResult(intent, 1);
+
     }
 
 
@@ -1218,6 +1226,149 @@ public class AddAsetActivity extends AppCompatActivity {
     }
 
 
+    public void spinnerValidation(){
+
+        if (spinnerTipeAset.getSelectedItemId()== 0) {
+            AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
+                    this);
+
+            // set title dialog
+            alertDialogBuilder.setTitle("Error!");
+
+            // set pesan dari dialog
+            alertDialogBuilder
+                    .setMessage("Tipet Aset Harus Dipilih")
+                    .setCancelable(false)
+                    .setPositiveButton("Ok",new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog,int id) {
+                            // jika tombol diklik, maka akan menutup activity ini
+                            dialog.cancel();
+                        }
+                    });
+
+
+            // membuat alert dialog dari builder
+            AlertDialog alertDialog = alertDialogBuilder.create();
+
+            // menampilkan alert dialog
+            alertDialog.show();
+            dialog.hide();
+            return;
+        }
+
+
+        if (spinnerJenisAset.getSelectedItemId()== 0) {
+            AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
+                    this);
+
+            // set title dialog
+            alertDialogBuilder.setTitle("Error!");
+
+            // set pesan dari dialog
+            alertDialogBuilder
+                    .setMessage("Jenis Aset Harus Dipilih")
+                    .setCancelable(false)
+                    .setPositiveButton("Ok",new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog,int id) {
+                            // jika tombol diklik, maka akan menutup activity ini
+                            dialog.cancel();
+                        }
+                    });
+
+
+            // membuat alert dialog dari builder
+            AlertDialog alertDialog = alertDialogBuilder.create();
+
+            // menampilkan alert dialog
+            alertDialog.show();
+            dialog.hide();
+            return;
+        }
+        if (spinnerAsetKondisi.getSelectedItemId()== 0) {
+            AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
+                    this);
+
+            // set title dialog
+            alertDialogBuilder.setTitle("Error!");
+
+            // set pesan dari dialog
+            alertDialogBuilder
+                    .setMessage("Kondisi Aset Harus Dipilih")
+                    .setCancelable(false)
+                    .setPositiveButton("Ok",new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog,int id) {
+                            // jika tombol diklik, maka akan menutup activity ini
+                            dialog.cancel();
+                        }
+                    });
+
+
+            // membuat alert dialog dari builder
+            AlertDialog alertDialog = alertDialogBuilder.create();
+
+            // menampilkan alert dialog
+            alertDialog.show();
+            dialog.hide();
+            return;
+        }
+        if (spinnerKodeAset.getSelectedItemId()== 0) {
+            AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
+                    this);
+
+            // set title dialog
+            alertDialogBuilder.setTitle("Error!");
+
+            // set pesan dari dialog
+            alertDialogBuilder
+                    .setMessage("Kode Aset Harus Dipilih")
+                    .setCancelable(false)
+                    .setPositiveButton("Ok",new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog,int id) {
+                            // jika tombol diklik, maka akan menutup activity ini
+                            dialog.cancel();
+                        }
+                    });
+
+
+            // membuat alert dialog dari builder
+            AlertDialog alertDialog = alertDialogBuilder.create();
+
+            // menampilkan alert dialog
+            alertDialog.show();
+            dialog.hide();
+            return;
+        }
+        if (spinnerSubUnit.getSelectedItemId()== 0) {
+            AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
+                    this);
+
+            // set title dialog
+            alertDialogBuilder.setTitle("Error!");
+
+            // set pesan dari dialog
+            alertDialogBuilder
+                    .setMessage("Sub Unit Harus Dipilih")
+                    .setCancelable(false)
+                    .setPositiveButton("Ok",new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog,int id) {
+                            // jika tombol diklik, maka akan menutup activity ini
+                            dialog.cancel();
+                        }
+                    });
+
+
+            // membuat alert dialog dari builder
+            AlertDialog alertDialog = alertDialogBuilder.create();
+
+            // menampilkan alert dialog
+            alertDialog.show();
+            dialog.hide();
+            return;
+        }
+
+
+    }
+
     public void editVisibilityDynamic(){
         TextView tvBa = findViewById(R.id.tvBa);
         TextView tvPohon = findViewById(R.id.tvPohon);
@@ -1364,6 +1515,7 @@ public class AddAsetActivity extends AppCompatActivity {
         }
     }
     public void addAset(){
+        spinnerValidation();
         dialog.show();
         if (inpNamaAset.getText().toString().matches("")) {
             dialog.hide();

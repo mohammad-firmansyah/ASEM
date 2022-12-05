@@ -8,6 +8,20 @@
     app:cardElevation="6dp"
     app:cardUseCompatPadding="true"
     android:backgroundTint="@color/white">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="end"
+        android:layout_marginEnd="5dp"
+        android:layout_marginTop="3dp"
+        >
+
+        <View
+            android:id="@+id/removeData"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:background="@drawable/ic_outline_close_24" />
+    </LinearLayout>
 
     <LinearLayout
         android:id="@+id/baris1"
@@ -141,7 +155,7 @@
         <TextView
             android:id="@+id/status_posisi"
             android:layout_width="0dp"
-            android:layout_height="40dp"
+            android:layout_height="30dp"
             android:layout_weight=".30"
             android:text="status_posisi"
             android:textColor="@color/DarkSlateGray"
@@ -153,7 +167,7 @@
             android:layout_marginRight="10dp"
             android:layout_marginTop="120dp"
             android:gravity="center"
-            android:background="@drawable/bg_border">
+            android:background="@drawable/edit_text_spiner">
         </TextView>
 
         <Button
@@ -172,5 +186,6 @@
         </Button>
 
     </LinearLayout>
+
 
 </androidx.cardview.widget.CardView>
