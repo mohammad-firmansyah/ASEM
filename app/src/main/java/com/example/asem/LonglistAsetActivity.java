@@ -159,4 +159,6 @@ public class LonglistAsetActivity extends AppCompatActivity {
             }
         });
     }
+
+    //getdata sorting list trhdp status posisi masing-masing
 }

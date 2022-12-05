@@ -7,6 +7,7 @@ import android.accounts.NetworkErrorException;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.DownloadManager;
+import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
@@ -19,6 +20,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
@@ -70,6 +72,7 @@ public class ReportActivity extends AppCompatActivity {
 
 
     Button btnSubmit;
+    ImageView imgBack;
 
     RadioGroup radioGroup;
     EditText inpTglInput1;
@@ -95,6 +98,7 @@ public class ReportActivity extends AppCompatActivity {
         inpTglInput2 = findViewById(R.id.inpTglInput2);
         btnSubmit = findViewById(R.id.btnSubmit);
         radioGroup = findViewById(R.id.qrcode);
+        imgBack = findViewById(R.id.imgBack);
 
         inpTglInput1 = findViewById(R.id.inpTglInput);
         inpTglInput2 = findViewById(R.id.inpTglInput2);
@@ -105,6 +109,7 @@ public class ReportActivity extends AppCompatActivity {
 
         ActionBar actionBar = getSupportActionBar();
         actionBar.hide();
+        imgBack.setVisibility(View.GONE);
 
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(baseUrl)
