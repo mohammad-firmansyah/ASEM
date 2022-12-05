@@ -51,7 +51,7 @@ public class Aset2Adapter  extends RecyclerView.Adapter<Aset2Adapter.ViewHolder>
         holder.tvNilaiAset.setText(String.valueOf(myPostData2.getNilaiOleh()));
         holder.tvUmurEkonomis.setText(String.valueOf(myPostData2.getUmurEkonomisInMonth()));
         holder.tvStatusPosisi.setText(String.valueOf(myPostData2.getStatusPosisi()));
-        if (!"".equals(String.valueOf(myPostData2.getNoInv()))) {
+        if (myPostData2.getNoInv() != null) {
             holder.tvNoinv.setText(String.valueOf(myPostData2.getNoInv()));
         } else {
             holder.tvNoinv.setText("-");
