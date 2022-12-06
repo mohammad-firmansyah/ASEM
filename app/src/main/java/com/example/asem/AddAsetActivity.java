@@ -41,6 +41,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -417,6 +418,7 @@ public class AddAsetActivity extends AppCompatActivity {
                 @Override
                 public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                     spinnerIdTipeAsset = String.valueOf(position+1);
+                    editVisibilityDynamic();
 
                 }
 
@@ -483,6 +485,7 @@ public class AddAsetActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 spinnerIdSubUnit = String.valueOf(position+1);
+                editVisibilityDynamic();
             }
 
             @Override
@@ -1373,8 +1376,24 @@ public class AddAsetActivity extends AppCompatActivity {
         TextView tvBa = findViewById(R.id.tvBa);
         TextView tvPohon = findViewById(R.id.tvPohon);
         TextView tvBast = findViewById(R.id.tvBast);
+        TextView tvFoto = findViewById(R.id.tvFoto);
+        TextView tvAfdeling = findViewById(R.id.tvAfdeling);
+        Spinner inpAfdeling = findViewById(R.id.inpAfdeling);
 
-        if ("tanaman".equals(String.valueOf(spinnerJenisAset.getSelectedItem())) && "normal".equals(String.valueOf(spinnerAsetKondisi.getSelectedItem()))) {
+        HorizontalScrollView scrollPartition = findViewById(R.id.scrollPartition);
+        Toast.makeText(getApplicationContext(),String.valueOf(spinnerSubUnit.getSelectedItemId()),Toast.LENGTH_LONG).show();
+        if (spinnerTipeAset.getSelectedItemId() != 0) {
+            inpNomorBAST.setVisibility(View.VISIBLE);
+            tvBast.setVisibility(View.VISIBLE);
+            Toast.makeText(getApplicationContext(),"bast tampil",Toast.LENGTH_LONG).show();
+        }
+
+        else if (spinnerSubUnit.getSelectedItemId() == 2){
+            inpAfdeling.setVisibility(View.VISIBLE);
+            tvAfdeling.setVisibility(View.VISIBLE);
+            Toast.makeText(getApplicationContext(),String.valueOf(spinnerSubUnit.getSelectedItemId()),Toast.LENGTH_LONG).show();
+        }
+        else if ("tanaman".equals(String.valueOf(spinnerJenisAset.getSelectedItem())) && "normal".equals(String.valueOf(spinnerAsetKondisi.getSelectedItem()))) {
             listBtnMap.setVisibility(View.VISIBLE);
             inpJumlahPohon.setVisibility(View.VISIBLE);
             tvPohon.setVisibility(View.VISIBLE);
@@ -1387,6 +1406,8 @@ public class AddAsetActivity extends AppCompatActivity {
             inpBtnMap.setVisibility(View.GONE);
             btnFile.setVisibility(View.GONE);
 
+            tvFoto.setVisibility(View.VISIBLE);
+            scrollPartition.setVisibility(View.VISIBLE);
 
         }
 
@@ -1403,6 +1424,9 @@ public class AddAsetActivity extends AppCompatActivity {
             btnFile.setVisibility(View.VISIBLE);
 
             inpBtnMap.setVisibility(View.GONE);
+
+            tvFoto.setVisibility(View.VISIBLE);
+            scrollPartition.setVisibility(View.VISIBLE);
 
         }
 
@@ -1421,6 +1445,9 @@ public class AddAsetActivity extends AppCompatActivity {
             inpJumlahPohon.setVisibility(View.GONE);
             inpBtnMap.setVisibility(View.GONE);
 
+            tvFoto.setVisibility(View.GONE);
+            scrollPartition.setVisibility(View.GONE);
+
         }
 
         else if ("kayu".equals(String.valueOf(spinnerJenisAset.getSelectedItem()))  && "normal".equals(String.valueOf(spinnerAsetKondisi.getSelectedItem())) ) {
@@ -1434,6 +1461,9 @@ public class AddAsetActivity extends AppCompatActivity {
             tvUploudBA.setVisibility(View.GONE);
             inpBtnMap.setVisibility(View.GONE);
             btnFile.setVisibility(View.GONE);
+
+            tvFoto.setVisibility(View.VISIBLE);
+            scrollPartition.setVisibility(View.VISIBLE);
 
         }
 
@@ -1449,6 +1479,9 @@ public class AddAsetActivity extends AppCompatActivity {
             inpNomorBAST.setVisibility(View.GONE);
             tvBast.setVisibility(View.GONE);
             inpBtnMap.setVisibility(View.GONE);
+
+            tvFoto.setVisibility(View.VISIBLE);
+            scrollPartition.setVisibility(View.VISIBLE);
 
         }
 
@@ -1466,6 +1499,9 @@ public class AddAsetActivity extends AppCompatActivity {
             inpJumlahPohon.setVisibility(View.GONE);
             inpBtnMap.setVisibility(View.GONE);
 
+            tvFoto.setVisibility(View.GONE);
+            scrollPartition.setVisibility(View.GONE);
+
         }
 
         else if ("non tanaman".equals(String.valueOf(spinnerJenisAset.getSelectedItem())) && "normal".equals(String.valueOf(spinnerAsetKondisi.getSelectedItem()))) {
@@ -1481,6 +1517,8 @@ public class AddAsetActivity extends AppCompatActivity {
             tvPohon.setVisibility(View.GONE);
             btnFile.setVisibility(View.GONE);
 
+            tvFoto.setVisibility(View.VISIBLE);
+            scrollPartition.setVisibility(View.VISIBLE);
         }
 
         else if ("non tanaman".equals(String.valueOf(spinnerJenisAset.getSelectedItem())) &&"rusak".equals(String.valueOf(spinnerAsetKondisi.getSelectedItem()))) {
@@ -1488,13 +1526,14 @@ public class AddAsetActivity extends AppCompatActivity {
             tvBa.setVisibility(View.VISIBLE);
             btnFile.setVisibility(View.VISIBLE);
             tvUploudBA.setVisibility(View.VISIBLE);
-
-//            inpKomoditi.setVisibility(View.GONE);
             tvPohon.setVisibility(View.GONE);
             inpJumlahPohon.setVisibility(View.GONE);
             inpBtnMap.setVisibility(View.GONE);
             inpNomorBAST.setVisibility(View.GONE);
             tvBast.setVisibility(View.GONE);
+
+            tvFoto.setVisibility(View.VISIBLE);
+            scrollPartition.setVisibility(View.VISIBLE);
 
         }
 
@@ -1512,6 +1551,24 @@ public class AddAsetActivity extends AppCompatActivity {
             inpNomorBAST.setVisibility(View.GONE);
             tvBast.setVisibility(View.GONE);
 
+            tvFoto.setVisibility(View.GONE);
+            scrollPartition.setVisibility(View.GONE);
+
+        } else {
+            listBtnMap.setVisibility(View.GONE);
+            inpJumlahPohon.setVisibility(View.GONE);
+            tvFoto.setVisibility(View.GONE);
+            scrollPartition.setVisibility(View.GONE);
+            inpNomorBAST.setVisibility(View.GONE);
+            tvBast.setVisibility(View.GONE);
+            tvPohon.setVisibility(View.GONE);
+            tvBa.setVisibility(View.GONE);
+            tvUploudBA.setVisibility(View.GONE);
+            inpBtnMap.setVisibility(View.GONE);
+            btnFile.setVisibility(View.GONE);
+
+            tvAfdeling.setVisibility(View.GONE);
+            inpAfdeling.setVisibility(View.GONE);
         }
     }
     public void addAset(){
