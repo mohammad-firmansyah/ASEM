@@ -127,7 +127,7 @@ public class ReportActivity extends AppCompatActivity {
         spinnerTipeAset.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                spinnerIdTipeAsset = String.valueOf(position+1);
+                spinnerIdTipeAsset = String.valueOf(position);
 
             }
 
@@ -140,7 +140,7 @@ public class ReportActivity extends AppCompatActivity {
         spinnerJenisAset.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                spinnerIdJenisAset = String.valueOf(position+1);
+                spinnerIdJenisAset = String.valueOf(position);
 
             }
 
@@ -153,7 +153,7 @@ public class ReportActivity extends AppCompatActivity {
         spinnerAsetKondisi.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                spinnerIdAsetKondisi = String.valueOf(position+1);
+                spinnerIdAsetKondisi = String.valueOf(position);
 
             }
 
@@ -166,7 +166,7 @@ public class ReportActivity extends AppCompatActivity {
         spinnerKodeAset.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                spinnerIdKodeAset = String.valueOf(position+1);
+                spinnerIdKodeAset = String.valueOf(position);
 
             }
 
@@ -179,7 +179,7 @@ public class ReportActivity extends AppCompatActivity {
         spinnerJenisReport.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                getSpinnerIdJenisReport = String.valueOf(position+1);
+                getSpinnerIdJenisReport = String.valueOf(position);
 
             }
 
@@ -202,6 +202,7 @@ public class ReportActivity extends AppCompatActivity {
                     return;
                 }
                 List<String> listSpinner = new ArrayList<>();
+                listSpinner.add("Semua");
 
                 for (int i=0;i<response.body().size();i++){
                     listSpinner.add(response.body().get(i).getAset_tipe_desc());
@@ -232,6 +233,7 @@ public class ReportActivity extends AppCompatActivity {
                     return;
                 }
                 List<String> listSpinner = new ArrayList<>();
+                listSpinner.add("Semua");
                 for (int i=0;i<response.body().size();i++){
                     Log.d("asetapi2",response.body().get(i).getAset_kondisi_desc());
                     listSpinner.add(response.body().get(i).getAset_kondisi_desc());
@@ -309,7 +311,7 @@ public class ReportActivity extends AppCompatActivity {
                 }
 
                 List<String> listSpinner = new ArrayList<>();
-
+                listSpinner.add("Semua");
                 for (int i = 0; i < response.body().getData().size();i++){
                     listSpinner.add(response.body().getData().get(i).getAset_jenis_desc());
                 }
@@ -339,6 +341,7 @@ public class ReportActivity extends AppCompatActivity {
 
                 List<AsetKode2> asetKode = response.body().getData();
                 List<String> listSpinner = new ArrayList<>();
+                listSpinner.add("Semua");
 
 
                 for ( AsetKode2 a : asetKode ){
@@ -479,6 +482,7 @@ public class ReportActivity extends AppCompatActivity {
                         } else {
                             downloadReport(baseUrl+String.valueOf(response.body().getData()));
                         }
+                        Log.d("asetdua",baseUrlAset + "/" + String.valueOf(response.body().getData()));
                         Toast.makeText(getApplicationContext(),"success",Toast.LENGTH_LONG).show();
                         return;
                     }
@@ -508,4 +512,6 @@ public class ReportActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
-}}
+}
+
+}

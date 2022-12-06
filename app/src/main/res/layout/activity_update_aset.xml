@@ -556,6 +556,7 @@
                 android:text="NOMOR BAST :"
                 android:textSize="14sp"
                 android:textStyle="bold"
+                android:id="@+id/tvBast"
                 android:textColor="@color/main_grey"
                 android:layout_marginVertical="10dp"
 

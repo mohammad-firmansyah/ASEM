@@ -29,7 +29,7 @@ public class Data2 {
     private String asetKode;
     @SerializedName("nomor_sap")
     @Expose
-    private Integer nomorSap;
+    private String nomorSap;
     @SerializedName("foto_aset1")
     @Expose
     private String fotoAset1;
@@ -111,6 +111,17 @@ public class Data2 {
     @SerializedName("umur_ekonomis_in_month")
     @Expose
     private Integer umurEkonomisInMonth;
+    @SerializedName("persen_kondisi")
+    @Expose
+    private double persenKondisi;
+
+    public double getPersenKondisi() {
+        return persenKondisi;
+    }
+
+    public void setPersenKondisi(double persenKondisi) {
+        this.persenKondisi = persenKondisi;
+    }
 
     public Integer getAsetId() {
         return asetId;
@@ -168,11 +179,11 @@ public class Data2 {
         this.asetKode = asetKode;
     }
 
-    public Integer getNomorSap() {
+    public String getNomorSap() {
         return nomorSap;
     }
 
-    public void setNomorSap(Integer nomorSap) {
+    public void setNomorSap(String nomorSap) {
         this.nomorSap = nomorSap;
     }
 

@@ -417,7 +417,7 @@ public class AddAsetActivity extends AppCompatActivity {
         spinnerTipeAset.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                 @Override
                 public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                    spinnerIdTipeAsset = String.valueOf(position+1);
+                    spinnerIdTipeAsset = String.valueOf(position);
                     editVisibilityDynamic();
 
                 }
@@ -431,7 +431,7 @@ public class AddAsetActivity extends AppCompatActivity {
         spinnerJenisAset.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                spinnerIdJenisAset = String.valueOf(position+1);
+                spinnerIdJenisAset = String.valueOf(position);
 
                 editVisibilityDynamic();
             }
@@ -445,7 +445,7 @@ public class AddAsetActivity extends AppCompatActivity {
         spinnerKodeAset.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                spinnerIdKodeAset = String.valueOf(position+1);
+                spinnerIdKodeAset = String.valueOf(position);
 //                editVisibilityDynamic();
 
             }
@@ -459,7 +459,7 @@ public class AddAsetActivity extends AppCompatActivity {
         spinnerAsetKondisi.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                spinnerIdAsetKondisi = String.valueOf(position+1);
+                spinnerIdAsetKondisi = String.valueOf(position);
                 editVisibilityDynamic();
             }
 
@@ -472,7 +472,7 @@ public class AddAsetActivity extends AppCompatActivity {
         spinnerAfdeling.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                spinnerIdAfdeling = String.valueOf(position+1);
+                spinnerIdAfdeling = String.valueOf(position);
             }
 
             @Override
@@ -484,7 +484,7 @@ public class AddAsetActivity extends AppCompatActivity {
         spinnerSubUnit.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                spinnerIdSubUnit = String.valueOf(position+1);
+                spinnerIdSubUnit = String.valueOf(position);
                 editVisibilityDynamic();
             }
 
@@ -497,7 +497,7 @@ public class AddAsetActivity extends AppCompatActivity {
         spinnerUnit.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                spinnerIdUnit = String.valueOf(position+1);
+                spinnerIdUnit = String.valueOf(position);
             }
 
             @Override
@@ -1387,7 +1387,6 @@ public class AddAsetActivity extends AppCompatActivity {
         if (spinnerTipeAset.getSelectedItemId() != 0) {
             inpNomorBAST.setVisibility(View.VISIBLE);
             tvBast.setVisibility(View.VISIBLE);
-            Toast.makeText(getApplicationContext(),"bast tampil",Toast.LENGTH_LONG).show();
         } else {
             inpNomorBAST.setVisibility(View.GONE);
             tvBast.setVisibility(View.GONE);
@@ -1603,8 +1602,6 @@ public class AddAsetActivity extends AppCompatActivity {
             inpJumlahPohon.setVisibility(View.GONE);
             tvFoto.setVisibility(View.GONE);
             scrollPartition.setVisibility(View.GONE);
-            inpNomorBAST.setVisibility(View.GONE);
-            tvBast.setVisibility(View.GONE);
             tvPohon.setVisibility(View.GONE);
             tvBa.setVisibility(View.GONE);
             tvUploudBA.setVisibility(View.GONE);
@@ -1619,6 +1616,7 @@ public class AddAsetActivity extends AppCompatActivity {
     public void addAset(){
         spinnerValidation();
         dialog.show();
+        Toast.makeText(getApplicationContext(), "hello im clicked", Toast.LENGTH_SHORT).show();
         if (inpNamaAset.getText().toString().matches("")) {
             dialog.hide();
             inpNamaAset.setError("nama harus diisi");
@@ -1633,14 +1631,17 @@ public class AddAsetActivity extends AppCompatActivity {
             return;
         }
 
-        if (img1 == null || img2 == null || img3 == null || img4 == null) {
-            AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
-                    this);
+        if (spinnerAsetKondisi.getSelectedItemId() != 3) {
 
-            // set title dialog
-            alertDialogBuilder.setTitle("Error!");
+            if (img1 == null || img2 == null || img3 == null || img4 == null) {
+                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
+                        this);
 
-            // set pesan dari dialog
+                // set title dialog
+                alertDialogBuilder.setTitle("Error!");
+
+                // set pesan dari dialog
+
             alertDialogBuilder
                     .setMessage("Semua Gambar harus di isi!")
                     .setCancelable(false)
@@ -1661,13 +1662,18 @@ public class AddAsetActivity extends AppCompatActivity {
             return;
 
         }
-
-        if (inpNomorBAST.getText().toString().matches("")) {
-            inpNomorBAST.setError("Luas Aset harus diisi");
-            inpNomorBAST.requestFocus();
-            dialog.hide();
-            return;
         }
+
+        if(spinnerTipeAset.getSelectedItemId() != 0 || spinnerAsetKondisi.getSelectedItemId() != 2 || spinnerAsetKondisi.getSelectedItemId() != 3) {
+
+            if (inpNomorBAST.getText().toString().matches("")) {
+                inpNomorBAST.setError("Nomor Bast harus diisi");
+                inpNomorBAST.requestFocus();
+                dialog.hide();
+                return;
+            }
+        }
+
 
         if (inpNilaiAsetSAP.getText().toString().matches("")) {
             inpNamaAset.setError("Nilai Aset harus diisi");
