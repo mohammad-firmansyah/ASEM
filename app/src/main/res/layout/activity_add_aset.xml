@@ -37,6 +37,7 @@
                 android:background="@drawable/rounded_spinner"
                 android:spinnerMode="dropdown"
 
+
                 />
 
             <TextView
@@ -275,10 +276,13 @@
                     android:layout_toEndOf="@+id/tvUploudBA"
                     android:layout_weight="0.3"
                     android:background="@drawable/edit_text_spiner"
+                    android:backgroundTint="@color/BlueDark"
                     android:onClick="uploadImage"
                     android:spinnerMode="dropdown"
                     android:text="UPLOUD"
-                    android:textSize="10sp" />
+                    android:textColor="@color/white"
+                    android:textSize="10sp"
+                    tools:ignore="HardcodedText"/>
             </LinearLayout>
 
 
