@@ -189,8 +189,10 @@ public class AddAsetActivity extends AppCompatActivity {
 
             Uri uri = data.getData();
             String path =  uri.getPath();
+            Log.d("asetapix2",String.valueOf(path));
             bafile_file = new File(path);
             Toast.makeText(getApplicationContext(),"sukses unggah berita acara",Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(),bafile_file.getName(),Toast.LENGTH_LONG).show();
             tvUploudBA.setText(bafile_file.getName());
         } else {
             Toast.makeText(AddAsetActivity.this,"gagal unggah file",Toast.LENGTH_LONG).show();
@@ -200,17 +202,10 @@ public class AddAsetActivity extends AppCompatActivity {
 
     public void openfilechoser(){
         Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-//        intent.setType(".pdf -> application/pdf");
-//        intent.addCategory(Intent.CATEGORY_OPENABLE);
-//        startActivityForResult(intent,1);
-
-        intent.setType("*/*");
-        // Only return URIs that can be opened with ContentResolver
+        intent.setType("application/pdf");
         intent.addCategory(Intent.CATEGORY_OPENABLE);
-
-        intent = Intent.createChooser(intent, "Choose a file");
-        startActivityForResult(intent, 1);
-
+        Intent chooseFileIntent = Intent.createChooser(intent, "Choose a file");
+        startActivityForResult(chooseFileIntent,1);
     }
 
 
@@ -1557,19 +1552,19 @@ public class AddAsetActivity extends AppCompatActivity {
         }
 
         else if ("non tanaman".equals(String.valueOf(spinnerJenisAset.getSelectedItem())) &&"rusak".equals(String.valueOf(spinnerAsetKondisi.getSelectedItem()))) {
-            listBtnMap.setVisibility(View.VISIBLE);
             tvBa.setVisibility(View.VISIBLE);
             btnFile.setVisibility(View.VISIBLE);
             tvUploudBA.setVisibility(View.VISIBLE);
             tvPohon.setVisibility(View.GONE);
             inpJumlahPohon.setVisibility(View.GONE);
-            inpBtnMap.setVisibility(View.GONE);
+            inpBtnMap.setVisibility(View.VISIBLE);
             inpNomorBAST.setVisibility(View.GONE);
             tvBast.setVisibility(View.GONE);
 
             tvFoto.setVisibility(View.VISIBLE);
             scrollPartition.setVisibility(View.VISIBLE);
 
+            listBtnMap.setVisibility(View.GONE);
             tvLuasTanaman.setVisibility(View.GONE);
             tvLuasNonTanaman.setVisibility(View.VISIBLE);
             inpLuasAset.setVisibility(View.VISIBLE);
@@ -1614,103 +1609,105 @@ public class AddAsetActivity extends AppCompatActivity {
         }
     }
     public void addAset(){
-        spinnerValidation();
+//        spinnerValidation();
         dialog.show();
-        Toast.makeText(getApplicationContext(), "hello im clicked", Toast.LENGTH_SHORT).show();
-        if (inpNamaAset.getText().toString().matches("")) {
-            dialog.hide();
-            inpNamaAset.setError("nama harus diisi");
-            inpNamaAset.requestFocus();
-            return;
-        }
-
-        if (inpNoSAP.getText().toString().matches("")) {
-            dialog.hide();
-            inpNoSAP.setError("nomor SAP harus diisi");
-            inpNoSAP.requestFocus();
-            return;
-        }
-
-        if (spinnerAsetKondisi.getSelectedItemId() != 3) {
-
-            if (img1 == null || img2 == null || img3 == null || img4 == null) {
-                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
-                        this);
-
-                // set title dialog
-                alertDialogBuilder.setTitle("Error!");
-
-                // set pesan dari dialog
-
-            alertDialogBuilder
-                    .setMessage("Semua Gambar harus di isi!")
-                    .setCancelable(false)
-                    .setPositiveButton("Ok",new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog,int id) {
-                            // jika tombol diklik, maka akan menutup activity ini
-                            dialog.cancel();
-                        }
-                    });
-
-
-            // membuat alert dialog dari builder
-            AlertDialog alertDialog = alertDialogBuilder.create();
-
-            // menampilkan alert dialog
-            alertDialog.show();
-            dialog.hide();
-            return;
-
-        }
-        }
-
-        if(spinnerTipeAset.getSelectedItemId() != 0 || spinnerAsetKondisi.getSelectedItemId() != 2 || spinnerAsetKondisi.getSelectedItemId() != 3) {
-
-            if (inpNomorBAST.getText().toString().matches("")) {
-                inpNomorBAST.setError("Nomor Bast harus diisi");
-                inpNomorBAST.requestFocus();
-                dialog.hide();
-                return;
-            }
-        }
-
-
-        if (inpNilaiAsetSAP.getText().toString().matches("")) {
-            inpNamaAset.setError("Nilai Aset harus diisi");
-            inpNamaAset.requestFocus();
-            dialog.hide();
-            return;
-        }
-
-        if (inpTglOleh.getText().toString().matches("")) {
-            inpTglOleh.setError("Tanggal Perolehan harus diisi");
-            inpTglOleh.requestFocus();
-            dialog.hide();
-            return;
-        }
-
-        if (inpMasaPenyusutan.getText().toString().matches("")) {
-            inpMasaPenyusutan.setError("Masa Penyusutan harus diisi");
-            inpMasaPenyusutan.requestFocus();
-            dialog.hide();
-            return;
-        }
-
-        if (inpNilaiResidu.getText().toString().matches("")) {
-            inpNilaiResidu.setError("Masa Penyusutan harus diisi");
-            inpNilaiResidu.requestFocus();
-            dialog.hide();
-            return;
-        }
-
-
-
-        if (inpJumlahPohon.getText().toString().matches("")) {
-            inpJumlahPohon.setError("Jumlah Pohon harus diisi");
-            inpJumlahPohon.requestFocus();
-            dialog.hide();
-            return;
-        }
+//        Toast.makeText(getApplicationContext(), "hello im clicked", Toast.LENGTH_SHORT).show();
+//        if (inpNamaAset.getText().toString().matches("")) {
+//            dialog.hide();
+//            inpNamaAset.setError("nama harus diisi");
+//            inpNamaAset.requestFocus();
+//            return;
+//        }
+//
+//        if (inpNoSAP.getText().toString().matches("")) {
+//            dialog.hide();
+//            inpNoSAP.setError("nomor SAP harus diisi");
+//            inpNoSAP.requestFocus();
+//            return;
+//        }
+//
+//        if (spinnerAsetKondisi.getSelectedItemId() != 3) {
+//
+//            if (img1 == null || img2 == null || img3 == null || img4 == null) {
+//                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
+//                        this);
+//
+//                // set title dialog
+//                alertDialogBuilder.setTitle("Error!");
+//
+//                // set pesan dari dialog
+//
+//            alertDialogBuilder
+//                    .setMessage("Semua Gambar harus di isi!")
+//                    .setCancelable(false)
+//                    .setPositiveButton("Ok",new DialogInterface.OnClickListener() {
+//                        public void onClick(DialogInterface dialog,int id) {
+//                            // jika tombol diklik, maka akan menutup activity ini
+//                            dialog.cancel();
+//                        }
+//                    });
+//
+//
+//            // membuat alert dialog dari builder
+//            AlertDialog alertDialog = alertDialogBuilder.create();
+//
+//            // menampilkan alert dialog
+//            alertDialog.show();
+//            dialog.hide();
+//            return;
+//
+//        }
+//        }
+//
+//        if(spinnerTipeAset.getSelectedItemId() != 0 || spinnerAsetKondisi.getSelectedItemId() != 2 || spinnerAsetKondisi.getSelectedItemId() != 3) {
+//
+//            if (inpNomorBAST.getText().toString().matches("")) {
+//                inpNomorBAST.setError("Nomor Bast harus diisi");
+//                inpNomorBAST.requestFocus();
+//                dialog.hide();
+//                return;
+//            }
+//        }
+//
+//
+//        if (inpNilaiAsetSAP.getText().toString().matches("")) {
+//            inpNamaAset.setError("Nilai Aset harus diisi");
+//            inpNamaAset.requestFocus();
+//            dialog.hide();
+//            return;
+//        }
+//
+//        if (inpTglOleh.getText().toString().matches("")) {
+//            inpTglOleh.setError("Tanggal Perolehan harus diisi");
+//            inpTglOleh.requestFocus();
+//            dialog.hide();
+//            return;
+//        }
+//
+//        if (inpMasaPenyusutan.getText().toString().matches("")) {
+//            inpMasaPenyusutan.setError("Masa Penyusutan harus diisi");
+//            inpMasaPenyusutan.requestFocus();
+//            dialog.hide();
+//            return;
+//        }
+//
+//        if (inpNilaiResidu.getText().toString().matches("")) {
+//            inpNilaiResidu.setError("Masa Penyusutan harus diisi");
+//            inpNilaiResidu.requestFocus();
+//            dialog.hide();
+//            return;
+//        }
+//
+//
+//        if (spinnerJenisAset.getSelectedItemId() == 1 ) {
+//
+//            if (inpJumlahPohon.getText().toString().matches("")) {
+//                inpJumlahPohon.setError("Jumlah Pohon harus diisi");
+//                inpJumlahPohon.requestFocus();
+//                dialog.hide();
+//                return;
+//            }
+//        }
 
 
 
@@ -1754,9 +1751,9 @@ public class AddAsetActivity extends AppCompatActivity {
             RequestBody requestNilaiResidu = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(nilai_residu));
             RequestBody requestKeterangan = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(keterangan));
             RequestBody requestSubUnit = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(spinnerIdSubUnit));
-            RequestBody requestUnit = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(spinnerIdUnit));
+            RequestBody requestUnit = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(spinnerIdUnit+1));
             RequestBody requestAfdeling = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(spinnerIdAfdeling));
-
+            Log.d("asetapic",String.valueOf(spinnerIdUnit));
 
 
 
@@ -1778,13 +1775,33 @@ public class AddAsetActivity extends AppCompatActivity {
             builder.addPart(MultipartBody.Part.createFormData("nomor_bast",null,requestNomorBAST));
             builder.addPart(MultipartBody.Part.createFormData("masa_susut",null,requestMasaSusut));
             builder.addPart(MultipartBody.Part.createFormData("keterangan",null,requestKeterangan));
-            builder.addPart(MultipartBody.Part.createFormData("foto_aset1", img1.getName(), RequestBody.create(MediaType.parse("image/*"), img1)));
-            builder.addPart(MultipartBody.Part.createFormData("foto_aset2",img2.getName(),RequestBody.create(MediaType.parse("image/*"),img2)));
-            builder.addPart(MultipartBody.Part.createFormData("foto_aset3",img3.getName(),RequestBody.create(MediaType.parse("image/*"),img3)));
-            builder.addPart(MultipartBody.Part.createFormData("foto_aset4",img4.getName(),RequestBody.create(MediaType.parse("image/*"),img4)));
+//            builder.addPart(MultipartBody.Part.createFormData("foto_aset1", img1.getName(), RequestBody.create(MediaType.parse("image/*"), img1)));
+//            builder.addPart(MultipartBody.Part.createFormData("foto_aset2",img2.getName(),RequestBody.create(MediaType.parse("image/*"),img2)));
+//            builder.addPart(MultipartBody.Part.createFormData("foto_aset3",img3.getName(),RequestBody.create(MediaType.parse("image/*"),img3)));
+//            builder.addPart(MultipartBody.Part.createFormData("foto_aset4",img4.getName(),RequestBody.create(MediaType.parse("image/*"),img4)));
             builder.addPart(MultipartBody.Part.createFormData("aset_sub_unit",null,requestSubUnit));
             builder.addPart(MultipartBody.Part.createFormData("unit_id",null,requestUnit));
             builder.addPart(MultipartBody.Part.createFormData("afdeling_id",null,requestAfdeling));
+
+            if (img1 != null) {
+                builder.addPart(MultipartBody.Part.createFormData("foto_aset1", img1.getName(), RequestBody.create(MediaType.parse("image/*"), img1)));
+                builder.addPart(MultipartBody.Part.createFormData("geo_tag1",null,requestGeoTag1));
+                builder.addPart(MultipartBody.Part.createFormData("geo_tag2",null,requestGeoTag2));
+                builder.addPart(MultipartBody.Part.createFormData("geo_tag3",null,requestGeoTag3));
+                builder.addPart(MultipartBody.Part.createFormData("geo_tag4",null,requestGeoTag4));
+            }
+
+            if (img2 != null) {
+                builder.addPart(MultipartBody.Part.createFormData("foto_aset2",img2.getName(),RequestBody.create(MediaType.parse("image/*"),img2)));
+            }
+
+            if (img3 != null) {
+                builder.addPart(MultipartBody.Part.createFormData("foto_aset3",img3.getName(),RequestBody.create(MediaType.parse("image/*"),img3)));
+            }
+
+            if (img4 != null) {
+                builder.addPart(MultipartBody.Part.createFormData("foto_aset4",img4.getName(),RequestBody.create(MediaType.parse("image/*"),img4)));
+            }
 
 
             if (bafile_file != null){
