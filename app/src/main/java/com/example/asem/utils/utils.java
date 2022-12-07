@@ -13,7 +13,9 @@ import android.widget.Toast;
 
 
 import java.io.File;
+import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.Locale;
 
 import id.zelory.compressor.Compressor;
 
@@ -218,6 +220,15 @@ public class utils {
         }
     }
 
+    public static String Formatrupiah(Double number){
+        Locale localeID = new Locale("IND","ID");
+        NumberFormat numberFormat = NumberFormat.getCurrencyInstance(localeID);
+        String formatRupiah =  numberFormat.format(number);
+        String[] split = formatRupiah.split(",");
+        int length = split[0].length();
+        return split[0].substring(0,2)+". "+split[0].substring(2,length);
+    }
+
     public static int CurrencyToNumber(String curr){
         String s= "";
         String[] splited = curr.split(" ");
@@ -239,6 +250,8 @@ public class utils {
 
         // System.out.println(splitedTwc.length);
     }
+
+
 }
 
 

@@ -17,7 +17,7 @@
         >
 
         <View
-            android:id="@+id/removeData"
+            android:id="@+id/btn_delete"
             android:layout_width="25dp"
             android:layout_height="25dp"
             android:background="@drawable/ic_outline_close_24" />

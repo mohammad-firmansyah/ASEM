@@ -41,7 +41,7 @@ public class Data {
     private Integer asetKode;
     @SerializedName("nomor_sap")
     @Expose
-    private Integer nomorSap;
+    private String nomorSap;
     @SerializedName("foto_aset1")
     @Expose
     private String fotoAset1;
@@ -181,11 +181,11 @@ public class Data {
         this.asetKode = asetKode;
     }
 
-    public Integer getNomorSap() {
+    public String getNomorSap() {
         return nomorSap;
     }
 
-    public void setNomorSap(Integer nomorSap) {
+    public void setNomorSap(String nomorSap) {
         this.nomorSap = nomorSap;
     }
 
@@ -405,7 +405,7 @@ public class Data {
         this.umurEkonomisInMonth = umurEkonomisInMonth;
     }
 
-    public Data(Integer jumlahPohon,Integer asetId, String asetName, Integer asetTipe, Integer asetJenis, Integer asetKondisi, Integer asetSubUnit, Integer asetKode, Integer nomorSap, String fotoAset1, String fotoAset2, String fotoAset3, String fotoAset4, String geoTag1, String geoTag2, String geoTag3, String geoTag4, Integer asetLuas, String tglInput, String tglOleh, Integer nilaiResidu, Integer nilaiOleh, String nomorBast, String masaSusut, String keterangan, String fotoQr, String noInv, String fotoAsetQr, Integer statusPosisi, Integer unitId, Integer afdelingId, Integer userInputId, String createdAt, String updatedAt, String baFile, Integer umurEkonomisInMonth) {
+    public Data(Integer jumlahPohon,Integer asetId, String asetName, Integer asetTipe, Integer asetJenis, Integer asetKondisi, Integer asetSubUnit, Integer asetKode, String nomorSap, String fotoAset1, String fotoAset2, String fotoAset3, String fotoAset4, String geoTag1, String geoTag2, String geoTag3, String geoTag4, Integer asetLuas, String tglInput, String tglOleh, Integer nilaiResidu, Integer nilaiOleh, String nomorBast, String masaSusut, String keterangan, String fotoQr, String noInv, String fotoAsetQr, Integer statusPosisi, Integer unitId, Integer afdelingId, Integer userInputId, String createdAt, String updatedAt, String baFile, Integer umurEkonomisInMonth) {
         this.jumlahPohon = jumlahPohon;
         this.asetId = asetId;
         this.asetName = asetName;

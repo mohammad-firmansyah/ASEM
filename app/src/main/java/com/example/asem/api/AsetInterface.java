@@ -13,7 +13,7 @@ import com.example.asem.api.model.AsetModel2;
 import com.example.asem.api.model.AsetTipe;
 import com.example.asem.api.model.Data;
 import com.example.asem.api.model.Data2;
-import com.example.asem.api.model.LoginModel;
+import com.example.asem.api.model.DeleteModel;
 import com.example.asem.api.model.ReportModel;
 import com.example.asem.api.model.SubUnitModel;
 import com.example.asem.api.model.UnitModel;
@@ -25,8 +25,6 @@ import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;
-import retrofit2.http.Field;
-import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.Headers;
@@ -73,7 +71,7 @@ public interface AsetInterface {
             );
 
     @POST("aset/create")
-    Call<AsetModel> addAset(
+    Call<AsetModel2> addAset(
             @Header("Content-Type") String contentType, @Body MultipartBody body
     );
 
@@ -82,26 +80,7 @@ public interface AsetInterface {
             @Header("Content-Type") String contentType, @Body MultipartBody body
     );
 
-    @POST("login")
-    static Call<LoginModel> login(@Field("username") String username,
-                                  @Field("user_pass") String user_pass
-    ) {
-        return null;
-    }
-
-
-    // api function POST
-    // kirim data
-    // pending asisten = 2
-    // asisten = 3
-    // pending astu = 4
-    // pending asaku = 5
-    // asaku kirim = 6 ???
-    // pending astep = 7
-    // astep = 8
-    // pending mnj = 9
-    // mnj = 10
-    // pending kasi = 11
-    // kasi = 12
+    @DELETE("aset/{id}")
+    Call<DeleteModel> deleteReport(@Path("id") int asetId);
 
 }
