@@ -1,23 +1,41 @@
 package com.example.asem.adapter;
 
+
+import static androidx.core.content.ContextCompat.startActivity;
+
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.asem.AddAsetActivity;
 import com.example.asem.DetailAsetActivity;
 import com.example.asem.LonglistAsetActivity;
 import com.example.asem.R;
 import com.example.asem.UpdateAsetActivity;
+import com.example.asem.api.AsetInterface;
+import com.example.asem.api.model.AsetModel2;
 import com.example.asem.api.model.Data2;
+import com.example.asem.api.model.DeleteModel;
+import com.example.asem.utils.utils;
 
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class Aset2Adapter  extends RecyclerView.Adapter<Aset2Adapter.ViewHolder>{
 
@@ -48,8 +66,9 @@ public class Aset2Adapter  extends RecyclerView.Adapter<Aset2Adapter.ViewHolder>
         holder.tvAsetJenis.setText(String.valueOf(myPostData2.getAsetJenis()));
         holder.tvAfdeling.setText(String.valueOf(myPostData2.getAfdelingId()));
         holder.tvAsetName.setText(String.valueOf(myPostData2.getAsetName()));
-        holder.tvNilaiAset.setText(String.valueOf(myPostData2.getNilaiOleh()));
-        holder.tvUmurEkonomis.setText(String.valueOf(myPostData2.getUmurEkonomisInMonth()));
+
+        holder.tvNilaiAset.setText(utils.Formatrupiah(Double.parseDouble(String.valueOf(myPostData2.getNilaiOleh()))));
+        holder.tvUmurEkonomis.setText(String.valueOf(utils.MonthToYear(myPostData2.getUmurEkonomisInMonth())));
         holder.tvStatusPosisi.setText(String.valueOf(myPostData2.getStatusPosisi()));
         if (myPostData2.getNoInv() != null) {
             holder.tvNoinv.setText(String.valueOf(myPostData2.getNoInv()));
@@ -58,6 +77,71 @@ public class Aset2Adapter  extends RecyclerView.Adapter<Aset2Adapter.ViewHolder>
         }
 
 
+        holder.btnHapus.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AsetInterface asetInterface;
+                Retrofit retrofit = new Retrofit.Builder()
+                        .baseUrl("http://202.148.9.226:7710/mnj_aset_repo/public/api/")
+                        .addConverterFactory(GsonConverterFactory.create())
+                        .build();
+
+                asetInterface = retrofit.create(AsetInterface.class);
+
+                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
+                        context.getApplicationContext());
+
+                // set title dialog
+                alertDialogBuilder.setTitle("Anda Yakin Menghapus Aset?");
+
+                // set pesan dari dialog
+
+                alertDialogBuilder
+                        .setMessage("Aset akan dihapus")
+                        .setCancelable(true)
+                        .setPositiveButton("Hapus",new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog,int id) {
+                                // jika tombol diklik, maka akan menutup activity ini
+                                Call<DeleteModel> call = asetInterface.deleteReport(myPostData2.getAsetId());
+
+                                call.enqueue(new Callback<DeleteModel>(){
+
+                                    @Override
+                                    public void onResponse(Call<DeleteModel> call, Response<DeleteModel> response) {
+                                        if (response.isSuccessful() && response.body() != null){
+                                            Toast.makeText(context.getApplicationContext(),"aset deleted",Toast.LENGTH_LONG).show();
+//                                            startActivity(new Intent(context.getApplicationContext(),LonglistAsetActivity.class));
+                                            return;
+                                        }
+
+                                        Toast.makeText(context.getApplicationContext(),"error data tidak dapat dimasukan",Toast.LENGTH_LONG).show();
+                                    }
+
+                                    @Override
+                                    public void onFailure(Call<DeleteModel> call, Throwable t) {
+                                        Log.d("asetapix", "onError : "+t.getMessage());
+                                        Log.d("asetapix",String.valueOf(call.request().body()));
+                                        Log.d("asetapix",String.valueOf(call.request().url()));
+                                        Log.d("asetapix",String.valueOf(call.request().method()));
+                                        Toast.makeText(context.getApplicationContext(),"error " + t.getMessage(),Toast.LENGTH_LONG).show();
+                                    }
+                                });
+                            }
+                        }).setNegativeButton("Tidak", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+
+                            }
+                        });
+
+
+                // membuat alert dialog dari builder
+                AlertDialog alertDialog = alertDialogBuilder.create();
+
+                // menampilkan alert dialog
+                alertDialog.show();
+            }
+        });
         holder.btnDetail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -98,6 +182,7 @@ public class Aset2Adapter  extends RecyclerView.Adapter<Aset2Adapter.ViewHolder>
         Button btnDetail;
         Button btnEdit;
         Button btnKirim;
+        View btnHapus;
 
         public ViewHolder (@NonNull View v) {
             super(v);
@@ -115,6 +200,7 @@ public class Aset2Adapter  extends RecyclerView.Adapter<Aset2Adapter.ViewHolder>
             btnDetail = v.findViewById(R.id.btn_detail);
             btnEdit = v.findViewById(R.id.btn_edit);
             btnKirim = v.findViewById(R.id.btn_kirim);
+            btnHapus = v.findViewById(R.id.btn_delete);
 
 
 

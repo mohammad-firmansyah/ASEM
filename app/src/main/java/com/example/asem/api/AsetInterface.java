@@ -13,6 +13,7 @@ import com.example.asem.api.model.AsetModel2;
 import com.example.asem.api.model.AsetTipe;
 import com.example.asem.api.model.Data;
 import com.example.asem.api.model.Data2;
+import com.example.asem.api.model.DeleteModel;
 import com.example.asem.api.model.ReportModel;
 import com.example.asem.api.model.SubUnitModel;
 import com.example.asem.api.model.UnitModel;
@@ -70,7 +71,7 @@ public interface AsetInterface {
             );
 
     @POST("aset/create")
-    Call<AsetModel> addAset(
+    Call<AsetModel2> addAset(
             @Header("Content-Type") String contentType, @Body MultipartBody body
     );
 
@@ -78,5 +79,8 @@ public interface AsetInterface {
     Call<ReportModel> downloadReport(
             @Header("Content-Type") String contentType, @Body MultipartBody body
     );
+
+    @DELETE("aset/{id}")
+    Call<DeleteModel> deleteReport(@Path("id") int asetId);
 
 }
