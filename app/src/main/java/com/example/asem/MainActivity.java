@@ -55,6 +55,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.asem.adapter.AsetAdapter;
+import com.example.asem.api.ApiFunction;
 import com.example.asem.api.AsetInterface;
 import com.example.asem.api.MyErrorMessage;
 import com.example.asem.api.model.Afdelling;
@@ -69,6 +70,7 @@ import com.example.asem.api.model.AsetModel;
 import com.example.asem.api.model.AsetTipe;
 import com.example.asem.api.model.Data;
 import com.example.asem.api.model.ListAsetModel;
+import com.example.asem.api.model.LoginModel;
 import com.example.asem.utils.GpsConverter;
 import com.example.asem.utils.utils;
 import com.google.android.gms.location.LocationCallback;
@@ -76,6 +78,7 @@ import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import com.jaiselrahman.filepicker.activity.FilePickerActivity;
 import com.jaiselrahman.filepicker.config.Configurations;
 import com.jaiselrahman.filepicker.model.MediaFile;
@@ -117,9 +120,9 @@ public class MainActivity extends AppCompatActivity {
     Button btnLogin;
     EditText etNIP;
     EditText etPass;
-    //AlertDialog loading;
+    AlertDialog loading;
 
-    String nip, password;
+    String username, user_pass;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -131,34 +134,70 @@ public class MainActivity extends AppCompatActivity {
 
 
         btnLogin = findViewById(R.id.btnLogin);
+/*
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(MainActivity.this, LonglistAsetActivity.class));
             }
         });
+*/
+        btnLogin.setOnClickListener(v -> loginProses());
 
     }
 
-    /**
-    public void loginProses(){
-        nip = etNIP.getText().toString();
-        password = etPass.getText().toString();
 
-        if(nip.isEmpty()){
+    public void loginProses(){
+        username = etNIP.getText().toString();
+        user_pass = etPass.getText().toString();
+
+        if(username.isEmpty()){
             etNIP.setError("NIP wajib diisi!");
             etNIP.requestFocus();
         }
-        if(password.isEmpty()){
+        if(user_pass.isEmpty()){
             etPass.setError("Password wajib diisi!");
             etPass.requestFocus();
         }else{
             loading.show();
 
             //bawah ini fungsi login, getAPI,
+            Call<LoginModel> call = AsetInterface.login(username,user_pass);//get data login dari api dan model
+            call.enqueue(new Callback<LoginModel>() {
+                @Override
+                public void onResponse(Call<LoginModel> call, Response<LoginModel> response) {
+                    if (response.isSuccessful() && response.body() != null){
+                        if (response.body().getStatus()){
+                            JsonObject jsonObject = response.body().getData();
+                            //Log.d() //butuh userpreferences
+
+                        }
+                    }
+
+                }
+
+                @Override
+                public void onFailure(Call<LoginModel> call, Throwable t) {
+                    Log.d("fail", "onFailure: "+t);
+                    Toast.makeText(MainActivity.this, "Gagal Terhubung ke Server", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MainActivity.this, "Login Error : "+t.getMessage(), Toast.LENGTH_SHORT).show();
+                    loading.dismiss();
+                }
+            });
         }
     }
-     */
+
+    public void onBackPressed(){
+        AlertDialog.Builder builder =new AlertDialog.Builder(this);
+        builder.setTitle("Keluar");
+        builder.setMessage("Apakah Anda Yakin Ingin Keluar?")
+                .setPositiveButton("Iya", (dialog, id) -> finishAffinity() )
+                .setNegativeButton("Tidak",(dialog, id) -> dialog.cancel());
+        AlertDialog alertDialog = builder.create();
+        alertDialog.setCanceledOnTouchOutside(true);
+        alertDialog.show();
+    }
+
 
 
 
@@ -206,6 +245,5 @@ public class MainActivity extends AppCompatActivity {
         Log.d("barusantag",String.valueOf(adapter.getItemCount()));
         rcAset.setAdapter(adapter);
     }*/
-
 
 }
