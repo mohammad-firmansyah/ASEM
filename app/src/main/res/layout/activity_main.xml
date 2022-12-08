@@ -87,6 +87,7 @@
                 android:inputType="text"
                 android:textColor="@color/black2"
                 android:textSize="14sp"
+                android:password="true"
                 tools:ignore="Autofill, HardcodedText"/>
 
             <Button
