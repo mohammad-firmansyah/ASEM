@@ -677,7 +677,7 @@ ActivityResultLauncher<Intent> resultLauncher;
             @Override
             public void onClick(View view) {
                 openfilechoser();
-                Toast.makeText(getApplicationContext(),"hello from hell",Toast.LENGTH_LONG).show();
+//                Toast.makeText(getApplicationContext(),"hello from hell",Toast.LENGTH_LONG).show();
             }
         });
 
@@ -758,7 +758,7 @@ ActivityResultLauncher<Intent> resultLauncher;
             public void onResponse(Call<AsetJenisModel> call, Response<AsetJenisModel> response) {
 
                 if (!response.isSuccessful()){
-                    Toast.makeText(getApplicationContext(),String.valueOf(response.code()),Toast.LENGTH_LONG).show();
+//                    Toast.makeText(getApplicationContext(),String.valueOf(response.code()),Toast.LENGTH_LONG).show();
                     return;
                 }
 
@@ -787,7 +787,7 @@ ActivityResultLauncher<Intent> resultLauncher;
             @Override
             public void onResponse(Call<List<AsetTipe>> call, Response<List<AsetTipe>> response) {
                 if (!response.isSuccessful()){
-                    Toast.makeText(getApplicationContext(),String.valueOf(response.code()),Toast.LENGTH_LONG).show();
+//                    Toast.makeText(getApplicationContext(),String.valueOf(response.code()),Toast.LENGTH_LONG).show();
 //                    utils.Ngetoast(getApplicationContext(),);
                     return;
                 }
@@ -796,7 +796,7 @@ ActivityResultLauncher<Intent> resultLauncher;
                 for (int i=0;i<response.body().size();i++){
                     listSpinner.add(response.body().get(i).getAset_tipe_desc());
                 }
-                Log.d("asetapi", listSpinner.get(0));
+//                Log.d("asetapi", listSpinner.get(0));
 
                 // Set hasil result json ke dalam adapter spinner
                 ArrayAdapter<String> adapter = new ArrayAdapter<String>(getApplicationContext(),
@@ -819,7 +819,7 @@ ActivityResultLauncher<Intent> resultLauncher;
             public void onResponse(Call<List<AsetKondisi>> call, Response<List<AsetKondisi>> response) {
                 dialog.hide();
                 if (!response.isSuccessful()){
-                    Toast.makeText(getApplicationContext(),String.valueOf(response.code()),Toast.LENGTH_LONG).show();
+//                    Toast.makeText(getApplicationContext(),String.valueOf(response.code()),Toast.LENGTH_LONG).show();
                     return;
                 }
 
@@ -852,7 +852,7 @@ ActivityResultLauncher<Intent> resultLauncher;
             public void onResponse(Call<AsetModel> call, Response<AsetModel> response) {
                 dialog.hide();
                 if (!response.isSuccessful()){
-                    Toast.makeText(getApplicationContext(),String.valueOf(response.code()),Toast.LENGTH_LONG).show();
+//                    Toast.makeText(getApplicationContext(),String.valueOf(response.code()),Toast.LENGTH_LONG).show();
                     return;
                 }
 
@@ -1015,7 +1015,7 @@ ActivityResultLauncher<Intent> resultLauncher;
             @Override
             public void onResponse(Call<AsetKodeModel2> call, Response<AsetKodeModel2> response) {
                 if (!response.isSuccessful()){
-                    Toast.makeText(getApplicationContext(),String.valueOf(response.code()),Toast.LENGTH_LONG).show();
+//                    Toast.makeText(getApplicationContext(),String.valueOf(response.code()),Toast.LENGTH_LONG).show();
                     return;
                 }
 
@@ -1058,7 +1058,7 @@ ActivityResultLauncher<Intent> resultLauncher;
             public void onResponse(Call<AfdellingModel> call, Response<AfdellingModel> response) {
 
                 if (!response.isSuccessful()){
-                    Toast.makeText(getApplicationContext(),String.valueOf(response.code()),Toast.LENGTH_LONG).show();
+//                    Toast.makeText(getApplicationContext(),String.valueOf(response.code()),Toast.LENGTH_LONG).show();
 //                    utils.Ngetoast(getApplicationContext(),);
                     return;
                 }
@@ -1089,7 +1089,7 @@ ActivityResultLauncher<Intent> resultLauncher;
             @Override
             public void onResponse(Call<SubUnitModel> call, Response<SubUnitModel> response) {
                 if (!response.isSuccessful()){
-                    Toast.makeText(getApplicationContext(),String.valueOf(response.code()),Toast.LENGTH_LONG).show();
+//                    Toast.makeText(getApplicationContext(),String.valueOf(response.code()),Toast.LENGTH_LONG).show();
                     return;
                 }
 
@@ -1122,7 +1122,7 @@ ActivityResultLauncher<Intent> resultLauncher;
             @Override
             public void onResponse(Call<UnitModel> call, Response<UnitModel> response) {
                 if (!response.isSuccessful()){
-                    Toast.makeText(getApplicationContext(),String.valueOf(response.code()),Toast.LENGTH_LONG).show();
+//                    Toast.makeText(getApplicationContext(),String.valueOf(response.code()),Toast.LENGTH_LONG).show();
                     return;
                 }
 
@@ -1475,7 +1475,7 @@ ActivityResultLauncher<Intent> resultLauncher;
         TextView tvPersenKondisi = findViewById(R.id.tvPersenKondisi);
 
         HorizontalScrollView scrollPartition = findViewById(R.id.scrollPartition);
-        Toast.makeText(getApplicationContext(),String.valueOf(spinnerSubUnit.getSelectedItemId()),Toast.LENGTH_LONG).show();
+//        Toast.makeText(getApplicationContext(),String.valueOf(spinnerSubUnit.getSelectedItemId()),Toast.LENGTH_LONG).show();
         if (spinnerTipeAset.getSelectedItemId() != 0) {
             inpNomorBAST.setVisibility(View.VISIBLE);
             tvBast.setVisibility(View.VISIBLE);
@@ -1487,7 +1487,7 @@ ActivityResultLauncher<Intent> resultLauncher;
         if (spinnerSubUnit.getSelectedItemId() == 2){
             inpAfdeling.setVisibility(View.VISIBLE);
             tvAfdeling.setVisibility(View.VISIBLE);
-            Toast.makeText(getApplicationContext(),String.valueOf(spinnerSubUnit.getSelectedItemId()),Toast.LENGTH_LONG).show();
+//            Toast.makeText(getApplicationContext(),String.valueOf(spinnerSubUnit.getSelectedItemId()),Toast.LENGTH_LONG).show();
         } else {
             inpAfdeling.setVisibility(View.GONE);
             tvAfdeling.setVisibility(View.GONE);
@@ -1739,105 +1739,105 @@ ActivityResultLauncher<Intent> resultLauncher;
         }
     }
     public void addAset(){
-//        spinnerValidation();
+        spinnerValidation();
         dialog.show();
-////        Toast.makeText(getApplicationContext(), "hello im clicked", Toast.LENGTH_SHORT).show();
-//        if (inpNamaAset.getText().toString().matches("")) {
-//            dialog.hide();
-//            inpNamaAset.setError("nama harus diisi");
-//            inpNamaAset.requestFocus();
-//            return;
-//        }
-//
-//        if (inpNoSAP.getText().toString().matches("")) {
-//            dialog.hide();
-//            inpNoSAP.setError("nomor SAP harus diisi");
-//            inpNoSAP.requestFocus();
-//            return;
-//        }
-//
-//        if (spinnerAsetKondisi.getSelectedItemId() != 3) {
-//
-//            if (img1 == null || img2 == null || img3 == null || img4 == null) {
-//                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
-//                        this);
-//
-//                // set title dialog
-//                alertDialogBuilder.setTitle("Error!");
-//
-//                // set pesan dari dialog
-//
-//            alertDialogBuilder
-//                    .setMessage("Semua Gambar harus di isi!")
-//                    .setCancelable(false)
-//                    .setPositiveButton("Ok",new DialogInterface.OnClickListener() {
-//                        public void onClick(DialogInterface dialog,int id) {
-//                            // jika tombol diklik, maka akan menutup activity ini
-//                            dialog.cancel();
-//                        }
-//                    });
-//
-//
-//            // membuat alert dialog dari builder
-//            AlertDialog alertDialog = alertDialogBuilder.create();
-//
-//            // menampilkan alert dialog
-//            alertDialog.show();
-//            dialog.hide();
-//            return;
-//
-//        }
-//        }
+//        Toast.makeText(getApplicationContext(), "hello im clicked", Toast.LENGTH_SHORT).show();
+        if (inpNamaAset.getText().toString().matches("")) {
+            dialog.hide();
+            inpNamaAset.setError("nama harus diisi");
+            inpNamaAset.requestFocus();
+            return;
+        }
 
-//        if(spinnerTipeAset.getSelectedItemId() != 0 || spinnerAsetKondisi.getSelectedItemId() != 2 || spinnerAsetKondisi.getSelectedItemId() != 3) {
-//
-//            if (inpNomorBAST.getText().toString().matches("")) {
-//                inpNomorBAST.setError("Nomor Bast harus diisi");
-//                inpNomorBAST.requestFocus();
-//                dialog.hide();
-//                return;
-//            }
-//        }
-//
-//
-//        if (inpNilaiAsetSAP.getText().toString().matches("")) {
-//            inpNamaAset.setError("Nilai Aset harus diisi");
-//            inpNamaAset.requestFocus();
-//            dialog.hide();
-//            return;
-//        }
-//
-//        if (inpTglOleh.getText().toString().matches("")) {
-//            inpTglOleh.setError("Tanggal Perolehan harus diisi");
-//            inpTglOleh.requestFocus();
-//            dialog.hide();
-//            return;
-//        }
-//
-//        if (inpMasaPenyusutan.getText().toString().matches("")) {
-//            inpMasaPenyusutan.setError("Masa Penyusutan harus diisi");
-//            inpMasaPenyusutan.requestFocus();
-//            dialog.hide();
-//            return;
-//        }
-//
-//        if (inpNilaiResidu.getText().toString().matches("")) {
-//            inpNilaiResidu.setError("Nilai Residu harus diisi");
-//            inpNilaiResidu.requestFocus();
-//            dialog.hide();
-//            return;
-//        }
-//
-//
-//        if (spinnerJenisAset.getSelectedItemId() == 1 ) {
-//
-//            if (inpJumlahPohon.getText().toString().matches("")) {
-//                inpJumlahPohon.setError("Jumlah Pohon harus diisi");
-//                inpJumlahPohon.requestFocus();
-//                dialog.hide();
-//                return;
-//            }
-//        }
+        if (inpNoSAP.getText().toString().matches("")) {
+            dialog.hide();
+            inpNoSAP.setError("nomor SAP harus diisi");
+            inpNoSAP.requestFocus();
+            return;
+        }
+
+        if (spinnerAsetKondisi.getSelectedItemId() != 3) {
+
+            if (img1 == null || img2 == null || img3 == null || img4 == null) {
+                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
+                        this);
+
+                // set title dialog
+                alertDialogBuilder.setTitle("Error!");
+
+                // set pesan dari dialog
+
+            alertDialogBuilder
+                    .setMessage("Semua Gambar harus di isi!")
+                    .setCancelable(false)
+                    .setPositiveButton("Ok",new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog,int id) {
+                            // jika tombol diklik, maka akan menutup activity ini
+                            dialog.cancel();
+                        }
+                    });
+
+
+            // membuat alert dialog dari builder
+            AlertDialog alertDialog = alertDialogBuilder.create();
+
+            // menampilkan alert dialog
+            alertDialog.show();
+            dialog.hide();
+            return;
+
+        }
+        }
+
+        if(spinnerTipeAset.getSelectedItemId() != 0 || spinnerAsetKondisi.getSelectedItemId() != 2 || spinnerAsetKondisi.getSelectedItemId() != 3) {
+
+            if (inpNomorBAST.getText().toString().matches("")) {
+                inpNomorBAST.setError("Nomor Bast harus diisi");
+                inpNomorBAST.requestFocus();
+                dialog.hide();
+                return;
+            }
+        }
+
+
+        if (inpNilaiAsetSAP.getText().toString().matches("")) {
+            inpNamaAset.setError("Nilai Aset harus diisi");
+            inpNamaAset.requestFocus();
+            dialog.hide();
+            return;
+        }
+
+        if (inpTglOleh.getText().toString().matches("")) {
+            inpTglOleh.setError("Tanggal Perolehan harus diisi");
+            inpTglOleh.requestFocus();
+            dialog.hide();
+            return;
+        }
+
+        if (inpMasaPenyusutan.getText().toString().matches("")) {
+            inpMasaPenyusutan.setError("Masa Penyusutan harus diisi");
+            inpMasaPenyusutan.requestFocus();
+            dialog.hide();
+            return;
+        }
+
+        if (inpNilaiResidu.getText().toString().matches("")) {
+            inpNilaiResidu.setError("Nilai Residu harus diisi");
+            inpNilaiResidu.requestFocus();
+            dialog.hide();
+            return;
+        }
+
+
+        if (spinnerJenisAset.getSelectedItemId() == 1 ) {
+
+            if (inpJumlahPohon.getText().toString().matches("")) {
+                inpJumlahPohon.setError("Jumlah Pohon harus diisi");
+                inpJumlahPohon.requestFocus();
+                dialog.hide();
+                return;
+            }
+        }
 
 
 
@@ -1876,7 +1876,7 @@ ActivityResultLauncher<Intent> resultLauncher;
             RequestBody requestMasaSusut = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(masa_susut));
             RequestBody requestNomorBAST = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(nomor_bast));
             RequestBody requestNilaiResidu = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(nilai_residu));
-            RequestBody requestKeterangan = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(keterangan));
+
             RequestBody requestSubUnit = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(spinnerIdSubUnit));
             RequestBody requestUnit = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(spinnerIdUnit+1));
             RequestBody requestAfdeling = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(spinnerIdAfdeling));
@@ -1898,7 +1898,7 @@ ActivityResultLauncher<Intent> resultLauncher;
             builder.addPart(MultipartBody.Part.createFormData("nilai_oleh",null,requestNilaiAsetSAP));
             builder.addPart(MultipartBody.Part.createFormData("nomor_bast",null,requestNomorBAST));
             builder.addPart(MultipartBody.Part.createFormData("masa_susut",null,requestMasaSusut));
-            builder.addPart(MultipartBody.Part.createFormData("keterangan",null,requestKeterangan));
+
 //            builder.addPart(MultipartBody.Part.createFormData("foto_aset1", img1.getName(), RequestBody.create(MediaType.parse("image/*"), img1)));
 //            builder.addPart(MultipartBody.Part.createFormData("foto_aset2",img2.getName(),RequestBody.create(MediaType.parse("image/*"),img2)));
 //            builder.addPart(MultipartBody.Part.createFormData("foto_aset3",img3.getName(),RequestBody.create(MediaType.parse("image/*"),img3)));
@@ -1951,6 +1951,11 @@ ActivityResultLauncher<Intent> resultLauncher;
                 builder.addPart(partBaFile);
             }
 
+            if (inpKeterangan != null){
+                RequestBody requestKeterangan = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(keterangan));
+                builder.addPart(MultipartBody.Part.createFormData("keterangan",null,requestKeterangan));
+            }
+
 
             MultipartBody multipartBody = builder
                     .build();
@@ -1967,7 +1972,7 @@ ActivityResultLauncher<Intent> resultLauncher;
                     if (response.isSuccessful() && response.body() != null){
                         dialog.hide();
                         Toast.makeText(getApplicationContext(),"success",Toast.LENGTH_LONG).show();
-//                        startActivity(new Intent(AddAsetActivity.this,LonglistAsetActivity.class));
+                        startActivity(new Intent(AddAsetActivity.this,LonglistAsetActivity.class));
                         return;
                     }
 
@@ -1977,7 +1982,7 @@ ActivityResultLauncher<Intent> resultLauncher;
                     Log.d("asetapix",String.valueOf(call.request().body()));
                     Log.d("asetapix",String.valueOf(call.request().url()));
                     Log.d("asetapix",String.valueOf(response.code()));
-                    Toast.makeText(getApplicationContext(),"error data tidak dapat dimasukan",Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(),"tolong ulangi submit data",Toast.LENGTH_LONG).show();
 //                    startActivity(new Intent(AddAsetActivity.this,LonglistAsetActivity.class));
                 }
 

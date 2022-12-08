@@ -664,7 +664,7 @@
                 android:gravity="top"
                 android:inputType="textCapSentences|textMultiLine"
                 android:paddingTop="10dp"
-                android:text="keterangan" />
+                android:text="-" />
 
             <Button
                 android:id="@+id/btnSubmit"

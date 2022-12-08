@@ -199,23 +199,34 @@ public class utils {
     public static String MonthToYear(int month) {
         int year = 0;
 
+        if (month <= 0 && year <= 0) {
+            String result = "0";
+            return result;
+        }
+
         while (true) {
 
 
+
             if (year == 0 && month < 12) {
+
+
                 String result = String.valueOf(year) + " Tahun " + String.valueOf(month) +" Bulan";
                 return result;
 
             }
 
+
+
             month -= 12;
             year++;
 
-            if (month < 12) {
+
+
+            if (month < 12 ) {
                 String result = String.valueOf(year) + " Tahun " + String.valueOf(month) +" Bulan";
                 return  result;
             }
-
 
         }
     }

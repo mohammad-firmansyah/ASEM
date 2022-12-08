@@ -123,7 +123,17 @@ public class Data {
     @SerializedName("umur_ekonomis_in_month")
     @Expose
     private Integer umurEkonomisInMonth;
+    @SerializedName("persen_kondisi")
+    @Expose
+    private double persenKondisi;
 
+    public Double getPersenKondisi() {
+        return persenKondisi;
+    }
+
+    public void setPersenKondisi(Double persenKondisi) {
+        this.persenKondisi = persenKondisi;
+    }
 
     public Integer getAsetId() {
         return asetId;
@@ -405,7 +415,7 @@ public class Data {
         this.umurEkonomisInMonth = umurEkonomisInMonth;
     }
 
-    public Data(Integer jumlahPohon,Integer asetId, String asetName, Integer asetTipe, Integer asetJenis, Integer asetKondisi, Integer asetSubUnit, Integer asetKode, String nomorSap, String fotoAset1, String fotoAset2, String fotoAset3, String fotoAset4, String geoTag1, String geoTag2, String geoTag3, String geoTag4, Integer asetLuas, String tglInput, String tglOleh, Integer nilaiResidu, Integer nilaiOleh, String nomorBast, String masaSusut, String keterangan, String fotoQr, String noInv, String fotoAsetQr, Integer statusPosisi, Integer unitId, Integer afdelingId, Integer userInputId, String createdAt, String updatedAt, String baFile, Integer umurEkonomisInMonth) {
+    public Data(Integer jumlahPohon,Integer asetId, String asetName, Integer asetTipe, Integer asetJenis, Integer asetKondisi, Integer asetSubUnit, Integer asetKode, String nomorSap, String fotoAset1, String fotoAset2, String fotoAset3, String fotoAset4, String geoTag1, String geoTag2, String geoTag3, String geoTag4, Integer asetLuas, String tglInput, String tglOleh, Integer nilaiResidu, Integer nilaiOleh, String nomorBast, String masaSusut, String keterangan, String fotoQr, String noInv, String fotoAsetQr, Integer statusPosisi, Integer unitId, Integer afdelingId, Integer userInputId, String createdAt, String updatedAt, String baFile, Integer umurEkonomisInMonth, double persenKondisi) {
         this.jumlahPohon = jumlahPohon;
         this.asetId = asetId;
         this.asetName = asetName;
@@ -442,5 +452,6 @@ public class Data {
         this.updatedAt = updatedAt;
         this.baFile = baFile;
         this.umurEkonomisInMonth = umurEkonomisInMonth;
+        this.persenKondisi = persenKondisi;
     }
 }
