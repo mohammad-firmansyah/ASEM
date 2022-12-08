@@ -1,5 +1,6 @@
 package com.example.asem;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -149,4 +150,15 @@ public class LonglistAsetActivity extends AppCompatActivity {
     }
 
     //getdata sorting list trhdp status posisi masing-masing
+
+    public void onBackPressed() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Keluar");
+        builder.setMessage("Apa anda yakin keluar aplikasi?")
+                .setPositiveButton("Iya", (dialog, id) -> finishAffinity())
+                .setNegativeButton("Tidak", (dialog, id) -> dialog.cancel());
+        AlertDialog alert = builder.create();
+        alert.setCanceledOnTouchOutside(true);
+        alert.show();
+    }
 }
