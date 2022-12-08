@@ -3,25 +3,29 @@ package com.example.asem.api.model;
 import com.google.gson.JsonObject;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
+
 
 public class LoginModel {
 
-    @SerializedName("status")
+    @SerializedName("success")
     @Expose
-    private Boolean status;
+    private Boolean success;
     @SerializedName("message")
     @Expose
     private String message;
     @SerializedName("data")
     @Expose
-    private JsonObject data;
+    private Login data;
 
-    public Boolean getStatus() {
-        return status;
+    public Boolean getSuccess() {
+        return success;
     }
 
-    public void setStatus(Boolean status) {
-        this.status = status;
+    public void setSuccess(Boolean success) {
+        this.success = success;
     }
 
     public String getMessage() {
@@ -32,11 +36,12 @@ public class LoginModel {
         this.message = message;
     }
 
-    public JsonObject getData() {
+    public Login getData() {
         return data;
     }
 
-    public void setData(JsonObject data) {
+    public void setData(Login data) {
         this.data = data;
     }
+
 }
