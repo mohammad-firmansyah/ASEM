@@ -14,6 +14,7 @@ import com.example.asem.api.model.AsetTipe;
 import com.example.asem.api.model.Data;
 import com.example.asem.api.model.Data2;
 import com.example.asem.api.model.DeleteModel;
+import com.example.asem.api.model.LoginModel;
 import com.example.asem.api.model.ReportModel;
 import com.example.asem.api.model.SubUnitModel;
 import com.example.asem.api.model.UnitModel;
@@ -25,6 +26,7 @@ import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;
+import retrofit2.http.Field;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.Headers;
@@ -82,5 +84,13 @@ public interface AsetInterface {
 
     @DELETE("aset/{id}")
     Call<DeleteModel> deleteReport(@Path("id") int asetId);
+
+    @POST("login")
+    static Call<LoginModel> login(
+            @Field("username") String username,
+            @Field("user_pass") String user_pass
+    ) {
+        return null;
+    }
 
 }
