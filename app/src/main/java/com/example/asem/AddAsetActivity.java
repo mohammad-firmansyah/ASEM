@@ -105,6 +105,13 @@ public class AddAsetActivity extends AppCompatActivity {
     Button map2;
     Button map3;
     Button map4;
+
+    List<String> asetKodeTanaman = new ArrayList<>();
+    List<String> asetKodeNonTanaman = new ArrayList<>();
+    List<String> asetKodeKayu = new ArrayList<>();
+    List<Afdelling> afdeling = new ArrayList<>();
+
+
     double longitudeValue = 0;
     double latitudeValue = 0;
 
@@ -289,6 +296,7 @@ ActivityResultLauncher<Intent> resultLauncher;
                                 img1 = utils.savePictureResult(
                                         AddAsetActivity.this, photoname1, fotoimg1, true
                                 );
+                                Log.d("asetapix", String.valueOf(img1));
                                 setExifLocation(img1,1);
                             } else if (resultCode == Activity.RESULT_CANCELED){
                                 android.widget.Toast.makeText(AddAsetActivity.this, "Cancelled", Toast.LENGTH_SHORT).show();
@@ -369,14 +377,9 @@ ActivityResultLauncher<Intent> resultLauncher;
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(0));
         dialog.show();
 
-        map1 = findViewById(R.id.map1);
-        map2 = findViewById(R.id.map2);
-        map3 = findViewById(R.id.map3);
-        map4 = findViewById(R.id.map4);
 
         getLastLocation(AddAsetActivity.this,getApplicationContext());
 
-        listBtnMap = findViewById(R.id.listMapButton);
         inpTglOleh = findViewById(R.id.inpTglMasukAset);
         tvUploudBA = findViewById(R.id.tvUploudBA);
         spinnerTipeAset = findViewById(R.id.inpTipeAset);
@@ -417,67 +420,14 @@ ActivityResultLauncher<Intent> resultLauncher;
         fotoimg2 = findViewById(R.id.fotoimg2);
         fotoimg3 = findViewById(R.id.fotoimg3);
         fotoimg4 = findViewById(R.id.fotoimg4);
-        inpBtnMap = findViewById(R.id.inpBtnMap);
+//        inpBtnMap = findViewById(R.id.inpBtnMap);
         btnSubmit = findViewById(R.id.btnSubmit);
         btnFile = findViewById(R.id.inpUploudBA);
 
 //        handler
 
-        map1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                getLastLocation(AddAsetActivity.this,getApplicationContext());
-                Log.d("asetapix",String.valueOf(latitudeValue) + " " + String.valueOf(longitudeValue));
-                Intent intent = new Intent(android.content.Intent.ACTION_VIEW,
-                        Uri.parse(geotag1));
-                startActivity(intent);
-            }
-        });
-
-        map2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                getLastLocation(AddAsetActivity.this,getApplicationContext());
-                Log.d("asetapix",String.valueOf(latitudeValue) + " " + String.valueOf(longitudeValue));
-                Intent intent = new Intent(android.content.Intent.ACTION_VIEW,
-                        Uri.parse(geotag2));
-                startActivity(intent);
-            }
-        });
-
-        map3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                getLastLocation(AddAsetActivity.this,getApplicationContext());
-                Log.d("asetapix",String.valueOf(latitudeValue) + " " + String.valueOf(longitudeValue));
-                Intent intent = new Intent(android.content.Intent.ACTION_VIEW,
-                        Uri.parse(geotag3));
-                startActivity(intent);
-            }
-        });
-
-        map4.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                getLastLocation(AddAsetActivity.this,getApplicationContext());
-                Log.d("asetapix",String.valueOf(latitudeValue) + " " + String.valueOf(longitudeValue));
-                Intent intent = new Intent(android.content.Intent.ACTION_VIEW,
-                        Uri.parse(geotag4));
-                startActivity(intent);
-            }
-        });
 
         btnSubmit.setOnClickListener(v -> addAset());
-        inpBtnMap.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                getLastLocation(AddAsetActivity.this,getApplicationContext());
-                Log.d("asetapix",String.valueOf(latitudeValue) + " " + String.valueOf(longitudeValue));
-                Intent intent = new Intent(android.content.Intent.ACTION_VIEW,
-                        Uri.parse(geotag1));
-                startActivity(intent);
-            }
-        });
 
         spinnerTipeAset.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                 @Override
@@ -499,6 +449,7 @@ ActivityResultLauncher<Intent> resultLauncher;
                 spinnerIdJenisAset = String.valueOf(position);
 
                 editVisibilityDynamic();
+                setAdapterInput();
             }
 
             @Override
@@ -551,6 +502,7 @@ ActivityResultLauncher<Intent> resultLauncher;
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 spinnerIdSubUnit = String.valueOf(position);
                 editVisibilityDynamic();
+                setAfdelingAdapter();
             }
 
             @Override
@@ -817,7 +769,7 @@ ActivityResultLauncher<Intent> resultLauncher;
         call.enqueue(new Callback<List<AsetKondisi>>() {
             @Override
             public void onResponse(Call<List<AsetKondisi>> call, Response<List<AsetKondisi>> response) {
-                dialog.hide();
+                dialog.dismiss();
                 if (!response.isSuccessful()){
 //                    Toast.makeText(getApplicationContext(),String.valueOf(response.code()),Toast.LENGTH_LONG).show();
                     return;
@@ -838,7 +790,7 @@ ActivityResultLauncher<Intent> resultLauncher;
 
             @Override
             public void onFailure(Call<List<AsetKondisi>> call, Throwable t) {
-                dialog.hide();
+                dialog.dismiss();
                 Toast.makeText(getApplicationContext(),t.getMessage(),Toast.LENGTH_LONG).show();
                 return;
             }
@@ -850,7 +802,7 @@ ActivityResultLauncher<Intent> resultLauncher;
 
             @Override
             public void onResponse(Call<AsetModel> call, Response<AsetModel> response) {
-                dialog.hide();
+                dialog.dismiss();
                 if (!response.isSuccessful()){
 //                    Toast.makeText(getApplicationContext(),String.valueOf(response.code()),Toast.LENGTH_LONG).show();
                     return;
@@ -1003,7 +955,7 @@ ActivityResultLauncher<Intent> resultLauncher;
 
             @Override
             public void onFailure(Call<AsetModel> call, Throwable t) {
-                dialog.hide();
+                dialog.dismiss();
                 Log.d("asetapix",t.getMessage());
             }
         });
@@ -1026,15 +978,29 @@ ActivityResultLauncher<Intent> resultLauncher;
 
                 for ( AsetKode2 a : asetKode ){
 
-                     String aset_kode_temp = "";
-                     if (a.getAsetJenis() == 2 ) {
-                         aset_kode_temp = a.getAsetClass() + "/" + a.getAsetDesc();
-                     } else if (a.getAsetJenis() == 1) {
-                         aset_kode_temp = a.getAsetClass() + "/" + a.getAsetGroup() + "/" + a.getAsetDesc();
-                     } else {
-                         aset_kode_temp = a.getAsetClass() + "/" + a.getAsetGroup() + "/" + a.getAsetDesc();
-                     }
-                    listSpinner.add(aset_kode_temp);
+                        String aset_kode_temp = "";
+                        if (a.getAsetJenis() == 2 ) {
+                            aset_kode_temp = a.getAsetClass() + "/" + a.getAsetDesc();
+                        } else if (a.getAsetJenis() == 1) {
+                            aset_kode_temp = a.getAsetClass() + "/" + a.getAsetGroup() + "/" + a.getAsetDesc();
+                        } else {
+                            aset_kode_temp = a.getAsetClass() + "/" + a.getAsetGroup() + "/" + a.getAsetDesc();
+                        }
+                        if (a.getAsetJenis() == 1) {
+
+                            asetKodeTanaman.add("Pilih Kode Aset");
+                            asetKodeTanaman.add(aset_kode_temp);
+                        } else if (a.getAsetJenis() == 2) {
+                            asetKodeNonTanaman.add("Pilih Kode Aset");
+                            asetKodeNonTanaman.add(aset_kode_temp);
+
+                        } else if (a.getAsetJenis() == 3) {
+                            asetKodeKayu.add("Pilih Kode Aset");
+                            asetKodeKayu.add(aset_kode_temp);
+
+                        } else {
+
+                        }
                 }
 
                 ArrayAdapter<String> adapter = new ArrayAdapter<String>(getApplicationContext(),
@@ -1064,8 +1030,12 @@ ActivityResultLauncher<Intent> resultLauncher;
                 }
                 List<String> listSpinner = new ArrayList<>();
                 listSpinner.add("Pilih Afdeling");
+                afdeling = response.body().getData();
+
                 for (int i=0;i<response.body().getData().size();i++){
+//                    if (response.body().getData())
                     listSpinner.add(response.body().getData().get(i).getAfdelling_desc());
+
                 }
 
                 // Set hasil result json ke dalam adapter spinner
@@ -1168,7 +1138,6 @@ ActivityResultLauncher<Intent> resultLauncher;
         }
         Uri uriFile = FileProvider.getUriForFile(Objects.requireNonNull(getApplicationContext()),
                 BuildConfig.APPLICATION_ID + ".provider", fileImage);
-        Log.d("captimg",String.valueOf(uriFile));
 //
         takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, uriFile);
         activityLauncherName.launch(takePictureIntent);
@@ -1346,7 +1315,7 @@ ActivityResultLauncher<Intent> resultLauncher;
 
             // menampilkan alert dialog
             alertDialog.show();
-            dialog.hide();
+            dialog.dismiss();
             return;
         }
 
@@ -1375,7 +1344,7 @@ ActivityResultLauncher<Intent> resultLauncher;
 
             // menampilkan alert dialog
             alertDialog.show();
-            dialog.hide();
+            dialog.dismiss();
             return;
         }
         if (spinnerAsetKondisi.getSelectedItemId()== 0) {
@@ -1402,7 +1371,7 @@ ActivityResultLauncher<Intent> resultLauncher;
 
             // menampilkan alert dialog
             alertDialog.show();
-            dialog.hide();
+            dialog.dismiss();
             return;
         }
         if (spinnerKodeAset.getSelectedItemId()== 0) {
@@ -1429,7 +1398,7 @@ ActivityResultLauncher<Intent> resultLauncher;
 
             // menampilkan alert dialog
             alertDialog.show();
-            dialog.hide();
+            dialog.dismiss();
             return;
         }
         if (spinnerSubUnit.getSelectedItemId()== 0) {
@@ -1456,7 +1425,7 @@ ActivityResultLauncher<Intent> resultLauncher;
 
             // menampilkan alert dialog
             alertDialog.show();
-            dialog.hide();
+            dialog.dismiss();
             return;
         }
 
@@ -1494,7 +1463,7 @@ ActivityResultLauncher<Intent> resultLauncher;
         }
 
         if ("tanaman".equals(String.valueOf(spinnerJenisAset.getSelectedItem())) && "normal".equals(String.valueOf(spinnerAsetKondisi.getSelectedItem()))) {
-            listBtnMap.setVisibility(View.VISIBLE);
+//            listBtnMap.setVisibility(View.VISIBLE);
             inpJumlahPohon.setVisibility(View.VISIBLE);
             tvPohon.setVisibility(View.VISIBLE);
 //            inpKomoditi.setVisibility(View.VISIBLE);
@@ -1503,7 +1472,7 @@ ActivityResultLauncher<Intent> resultLauncher;
             tvBast.setVisibility(View.VISIBLE);
             tvUploudBA.setVisibility(View.GONE);
             tvBa.setVisibility(View.GONE);
-            inpBtnMap.setVisibility(View.GONE);
+//            inpBtnMap.setVisibility(View.GONE);
             btnFile.setVisibility(View.GONE);
 
             tvFoto.setVisibility(View.VISIBLE);
@@ -1519,7 +1488,7 @@ ActivityResultLauncher<Intent> resultLauncher;
         }
 
         else if ("tanaman".equals(String.valueOf(spinnerJenisAset.getSelectedItem()))  && "rusak".equals(String.valueOf(spinnerAsetKondisi.getSelectedItem())) ) {
-            listBtnMap.setVisibility(View.VISIBLE);
+//            listBtnMap.setVisibility(View.VISIBLE);
             inpJumlahPohon.setVisibility(View.VISIBLE);
             tvBa.setVisibility(View.VISIBLE);
             tvPohon.setVisibility(View.VISIBLE);
@@ -1530,7 +1499,7 @@ ActivityResultLauncher<Intent> resultLauncher;
             tvUploudBA.setVisibility(View.VISIBLE);
             btnFile.setVisibility(View.VISIBLE);
 
-            inpBtnMap.setVisibility(View.GONE);
+//            inpBtnMap.setVisibility(View.GONE);
 
             tvFoto.setVisibility(View.VISIBLE);
             scrollPartition.setVisibility(View.VISIBLE);
@@ -1555,9 +1524,9 @@ ActivityResultLauncher<Intent> resultLauncher;
             inpNomorBAST.setVisibility(View.GONE);
             tvBast.setVisibility(View.GONE);
             tvPohon.setVisibility(View.GONE);
-            listBtnMap.setVisibility(View.GONE);
+//            listBtnMap.setVisibility(View.GONE);
             inpJumlahPohon.setVisibility(View.GONE);
-            inpBtnMap.setVisibility(View.GONE);
+//            inpBtnMap.setVisibility(View.GONE);
 
             tvFoto.setVisibility(View.GONE);
             scrollPartition.setVisibility(View.GONE);
@@ -1571,7 +1540,7 @@ ActivityResultLauncher<Intent> resultLauncher;
         }
 
         else if ("kayu".equals(String.valueOf(spinnerJenisAset.getSelectedItem()))  && "normal".equals(String.valueOf(spinnerAsetKondisi.getSelectedItem())) ) {
-            listBtnMap.setVisibility(View.VISIBLE);
+//            listBtnMap.setVisibility(View.VISIBLE);
             inpJumlahPohon.setVisibility(View.VISIBLE);
 //            inpKomoditi.setVisibility(View.VISIBLE);
             inpNomorBAST.setVisibility(View.VISIBLE);
@@ -1580,7 +1549,7 @@ ActivityResultLauncher<Intent> resultLauncher;
 
             tvBa.setVisibility(View.GONE);
             tvUploudBA.setVisibility(View.GONE);
-            inpBtnMap.setVisibility(View.GONE);
+//            inpBtnMap.setVisibility(View.GONE);
             btnFile.setVisibility(View.GONE);
 
             tvFoto.setVisibility(View.VISIBLE);
@@ -1596,7 +1565,7 @@ ActivityResultLauncher<Intent> resultLauncher;
         }
 
         else if ("kayu".equals(String.valueOf(spinnerJenisAset.getSelectedItem()))  && "rusak".equals(String.valueOf(spinnerAsetKondisi.getSelectedItem())) ) {
-            listBtnMap.setVisibility(View.VISIBLE);
+//            listBtnMap.setVisibility(View.VISIBLE);
             tvPohon.setVisibility(View.VISIBLE);
             inpJumlahPohon.setVisibility(View.VISIBLE);
             tvBa.setVisibility(View.VISIBLE);
@@ -1608,7 +1577,7 @@ ActivityResultLauncher<Intent> resultLauncher;
 
             inpNomorBAST.setVisibility(View.GONE);
             tvBast.setVisibility(View.GONE);
-            inpBtnMap.setVisibility(View.GONE);
+//            inpBtnMap.setVisibility(View.GONE);
 
             tvFoto.setVisibility(View.VISIBLE);
             scrollPartition.setVisibility(View.VISIBLE);
@@ -1632,9 +1601,9 @@ ActivityResultLauncher<Intent> resultLauncher;
             tvBast.setVisibility(View.GONE);
             tvPohon.setVisibility(View.GONE);
             inpJumlahPohon.setVisibility(View.GONE);
-            listBtnMap.setVisibility(View.GONE);
+//            listBtnMap.setVisibility(View.GONE);
             inpJumlahPohon.setVisibility(View.GONE);
-            inpBtnMap.setVisibility(View.GONE);
+//            inpBtnMap.setVisibility(View.GONE);
 
             tvFoto.setVisibility(View.GONE);
             scrollPartition.setVisibility(View.GONE);
@@ -1649,13 +1618,13 @@ ActivityResultLauncher<Intent> resultLauncher;
         }
 
         else if ("non tanaman".equals(String.valueOf(spinnerJenisAset.getSelectedItem())) && "normal".equals(String.valueOf(spinnerAsetKondisi.getSelectedItem()))) {
-            inpBtnMap.setVisibility(View.VISIBLE);
+//            inpBtnMap.setVisibility(View.VISIBLE);
             inpNomorBAST.setVisibility(View.VISIBLE);
             tvBast.setVisibility(View.VISIBLE);
 
 //            inpKomoditi.setVisibility(View.GONE);
             tvUploudBA.setVisibility(View.GONE);
-            listBtnMap.setVisibility(View.GONE);
+//            listBtnMap.setVisibility(View.GONE);
             inpJumlahPohon.setVisibility(View.GONE);
             tvBa.setVisibility(View.GONE);
             tvPohon.setVisibility(View.GONE);
@@ -1678,14 +1647,14 @@ ActivityResultLauncher<Intent> resultLauncher;
             tvUploudBA.setVisibility(View.VISIBLE);
             tvPohon.setVisibility(View.GONE);
             inpJumlahPohon.setVisibility(View.GONE);
-            inpBtnMap.setVisibility(View.VISIBLE);
+//            inpBtnMap.setVisibility(View.VISIBLE);
             inpNomorBAST.setVisibility(View.GONE);
             tvBast.setVisibility(View.GONE);
 
             tvFoto.setVisibility(View.VISIBLE);
             scrollPartition.setVisibility(View.VISIBLE);
 
-            listBtnMap.setVisibility(View.GONE);
+//            listBtnMap.setVisibility(View.GONE);
             tvLuasTanaman.setVisibility(View.GONE);
             tvLuasNonTanaman.setVisibility(View.VISIBLE);
             inpLuasAset.setVisibility(View.VISIBLE);
@@ -1703,9 +1672,9 @@ ActivityResultLauncher<Intent> resultLauncher;
 //            inpKomoditi.setVisibility(View.GONE);
             tvPohon.setVisibility(View.GONE);
             inpJumlahPohon.setVisibility(View.GONE);
-            listBtnMap.setVisibility(View.GONE);
+//            listBtnMap.setVisibility(View.GONE);
             inpJumlahPohon.setVisibility(View.GONE);
-            inpBtnMap.setVisibility(View.GONE);
+//            inpBtnMap.setVisibility(View.GONE);
             inpNomorBAST.setVisibility(View.GONE);
             tvBast.setVisibility(View.GONE);
 
@@ -1720,14 +1689,14 @@ ActivityResultLauncher<Intent> resultLauncher;
             tvPersenKondisi.setVisibility(View.VISIBLE);
 
         } else {
-            listBtnMap.setVisibility(View.GONE);
+//            listBtnMap.setVisibility(View.GONE);
             inpJumlahPohon.setVisibility(View.GONE);
             tvFoto.setVisibility(View.GONE);
             scrollPartition.setVisibility(View.GONE);
             tvPohon.setVisibility(View.GONE);
             tvBa.setVisibility(View.GONE);
             tvUploudBA.setVisibility(View.GONE);
-            inpBtnMap.setVisibility(View.GONE);
+//            inpBtnMap.setVisibility(View.GONE);
             btnFile.setVisibility(View.GONE);
 
             tvLuasTanaman.setVisibility(View.GONE);
@@ -1743,14 +1712,14 @@ ActivityResultLauncher<Intent> resultLauncher;
         dialog.show();
 //        Toast.makeText(getApplicationContext(), "hello im clicked", Toast.LENGTH_SHORT).show();
         if (inpNamaAset.getText().toString().matches("")) {
-            dialog.hide();
+            dialog.dismiss();
             inpNamaAset.setError("nama harus diisi");
             inpNamaAset.requestFocus();
             return;
         }
 
         if (inpNoSAP.getText().toString().matches("")) {
-            dialog.hide();
+            dialog.dismiss();
             inpNoSAP.setError("nomor SAP harus diisi");
             inpNoSAP.requestFocus();
             return;
@@ -1783,7 +1752,7 @@ ActivityResultLauncher<Intent> resultLauncher;
 
             // menampilkan alert dialog
             alertDialog.show();
-            dialog.hide();
+            dialog.dismiss();
             return;
 
         }
@@ -1794,7 +1763,7 @@ ActivityResultLauncher<Intent> resultLauncher;
             if (inpNomorBAST.getText().toString().matches("")) {
                 inpNomorBAST.setError("Nomor Bast harus diisi");
                 inpNomorBAST.requestFocus();
-                dialog.hide();
+                dialog.dismiss();
                 return;
             }
         }
@@ -1803,28 +1772,28 @@ ActivityResultLauncher<Intent> resultLauncher;
         if (inpNilaiAsetSAP.getText().toString().matches("")) {
             inpNamaAset.setError("Nilai Aset harus diisi");
             inpNamaAset.requestFocus();
-            dialog.hide();
+            dialog.dismiss();
             return;
         }
 
         if (inpTglOleh.getText().toString().matches("")) {
             inpTglOleh.setError("Tanggal Perolehan harus diisi");
             inpTglOleh.requestFocus();
-            dialog.hide();
+            dialog.dismiss();
             return;
         }
 
         if (inpMasaPenyusutan.getText().toString().matches("")) {
             inpMasaPenyusutan.setError("Masa Penyusutan harus diisi");
             inpMasaPenyusutan.requestFocus();
-            dialog.hide();
+            dialog.dismiss();
             return;
         }
 
         if (inpNilaiResidu.getText().toString().matches("")) {
             inpNilaiResidu.setError("Nilai Residu harus diisi");
             inpNilaiResidu.requestFocus();
-            dialog.hide();
+            dialog.dismiss();
             return;
         }
 
@@ -1834,7 +1803,7 @@ ActivityResultLauncher<Intent> resultLauncher;
             if (inpJumlahPohon.getText().toString().matches("")) {
                 inpJumlahPohon.setError("Jumlah Pohon harus diisi");
                 inpJumlahPohon.requestFocus();
-                dialog.hide();
+                dialog.dismiss();
                 return;
             }
         }
@@ -1970,13 +1939,13 @@ ActivityResultLauncher<Intent> resultLauncher;
                 @Override
                 public void onResponse(Call<AsetModel2> call, Response<AsetModel2> response) {
                     if (response.isSuccessful() && response.body() != null){
-                        dialog.hide();
+                        dialog.dismiss();
                         Toast.makeText(getApplicationContext(),"success",Toast.LENGTH_LONG).show();
                         startActivity(new Intent(AddAsetActivity.this,LonglistAsetActivity.class));
                         return;
                     }
 
-                    dialog.hide();
+                    dialog.dismiss();
 
                     Log.d("asetapix",String.valueOf(response.errorBody()));
                     Log.d("asetapix",String.valueOf(call.request().body()));
@@ -1992,14 +1961,14 @@ ActivityResultLauncher<Intent> resultLauncher;
                     Log.d("asetapix",String.valueOf(call.request().body()));
                     Log.d("asetapix",String.valueOf(call.request().url()));
                     Log.d("asetapix",String.valueOf(call.request().method()));
-                    dialog.hide();
+                    dialog.dismiss();
                     Toast.makeText(getApplicationContext(),"error " + t.getMessage(),Toast.LENGTH_LONG).show();
 //                    startActivity(new Intent(AddAsetActivity.this,LonglistAsetActivity.class));
                 }
             });
         }
         catch (Exception e ){
-            dialog.hide();
+            dialog.dismiss();
             Toast.makeText(getApplicationContext(),"error " + e.getMessage(),Toast.LENGTH_LONG).show();
             e.printStackTrace();
 //            startActivity(new Intent(AddAsetActivity.this,LonglistAsetActivity.class));
@@ -2027,4 +1996,40 @@ ActivityResultLauncher<Intent> resultLauncher;
 
 
 
+    public void setAdapterInput(){
+        if (spinnerJenisAset.getSelectedItemId() == 1) {
+            spinnerKodeAset.setAdapter(null);
+            ArrayAdapter<String> adapter = new ArrayAdapter<String>(getApplicationContext(),
+                    android.R.layout.simple_spinner_item, asetKodeTanaman);
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            spinnerKodeAset.setAdapter(adapter);
+        } else if (spinnerJenisAset.getSelectedItemId() == 2) {
+            spinnerKodeAset.setAdapter(null);
+            ArrayAdapter<String> adapter = new ArrayAdapter<String>(getApplicationContext(),
+                    android.R.layout.simple_spinner_item, asetKodeNonTanaman);
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            spinnerKodeAset.setAdapter(adapter);
+        } else {
+            spinnerKodeAset.setAdapter(null);
+            ArrayAdapter<String> adapter = new ArrayAdapter<String>(getApplicationContext(),
+                    android.R.layout.simple_spinner_item, asetKodeKayu);
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            spinnerKodeAset.setAdapter(adapter);
+        }
+    }
+
+    public void setAfdelingAdapter(){
+        List<String> afdelings = new ArrayList<>();
+        afdelings.add("pilih afdeling");
+        for (Afdelling a:afdeling) {
+            if (a.getUnit_id() == (spinnerUnit.getSelectedItemId()+1)) {
+                afdelings.add(a.getAfdelling_desc());
+            }
+        }
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getApplicationContext(),
+                android.R.layout.simple_spinner_item, afdelings);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerAfdeling.setAdapter(adapter);
+    }
 }

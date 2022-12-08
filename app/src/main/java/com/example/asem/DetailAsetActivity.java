@@ -274,6 +274,11 @@ public class DetailAsetActivity extends AppCompatActivity {
         inpPersenKondisi = findViewById(R.id.inpPersenKondisi);
         inpPersenKondisi.setEnabled(false);
 
+        map1 = findViewById(R.id.map1);
+        map2 = findViewById(R.id.map2);
+        map3 = findViewById(R.id.map3);
+        map4 = findViewById(R.id.map4);
+
         foto1rl = findViewById(R.id.foto1);
         foto2rl = findViewById(R.id.foto2);
         foto3rl = findViewById(R.id.foto3);
@@ -289,7 +294,6 @@ public class DetailAsetActivity extends AppCompatActivity {
         inpBtnMap.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.d("asetapix",String.valueOf(latitudeValue) + " " + String.valueOf(longitudeValue));
                 Intent intent = new Intent(android.content.Intent.ACTION_VIEW,
                         Uri.parse(geotag1));
                 startActivity(intent);
@@ -374,6 +378,41 @@ public class DetailAsetActivity extends AppCompatActivity {
 
         btnFile = findViewById(R.id.inpUploudBA);
 
+        map1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(android.content.Intent.ACTION_VIEW,
+                        Uri.parse(geotag1));
+                startActivity(intent);
+            }
+        });
+
+        map2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(android.content.Intent.ACTION_VIEW,
+                        Uri.parse(geotag2));
+                startActivity(intent);
+            }
+        });
+
+        map3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(android.content.Intent.ACTION_VIEW,
+                        Uri.parse(geotag3));
+                startActivity(intent);
+            }
+        });
+
+        map4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(android.content.Intent.ACTION_VIEW,
+                        Uri.parse(geotag4));
+                startActivity(intent);
+            }
+        });
 
         initCalender();
         getSpinnerData();
@@ -569,6 +608,7 @@ public class DetailAsetActivity extends AppCompatActivity {
                 if (response.body().getData().getAfdelingId() != null) {
                     spinnerAfdeling.setSelection(response.body().getData().getAfdelingId()-1);
                 }
+
 
                 checkApproved();
 //                Log.d("asetapix", spinnerJenisAset.getSelectedItem().toString());
