@@ -87,59 +87,32 @@ public class Aset2Adapter  extends RecyclerView.Adapter<Aset2Adapter.ViewHolder>
                         .build();
 
                 asetInterface = retrofit.create(AsetInterface.class);
+                Call<DeleteModel> call = asetInterface.deleteReport(myPostData2.getAsetId());
 
-                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
-                        context.getApplicationContext());
+                call.enqueue(new Callback<DeleteModel>(){
 
-                // set title dialog
-                alertDialogBuilder.setTitle("Anda Yakin Menghapus Aset?");
-
-                // set pesan dari dialog
-
-                alertDialogBuilder
-                        .setMessage("Aset akan dihapus")
-                        .setCancelable(true)
-                        .setPositiveButton("Hapus",new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog,int id) {
-                                // jika tombol diklik, maka akan menutup activity ini
-                                Call<DeleteModel> call = asetInterface.deleteReport(myPostData2.getAsetId());
-
-                                call.enqueue(new Callback<DeleteModel>(){
-
-                                    @Override
-                                    public void onResponse(Call<DeleteModel> call, Response<DeleteModel> response) {
-                                        if (response.isSuccessful() && response.body() != null){
-                                            Toast.makeText(context.getApplicationContext(),"aset deleted",Toast.LENGTH_LONG).show();
+                    @Override
+                    public void onResponse(Call<DeleteModel> call, Response<DeleteModel> response) {
+                        if (response.isSuccessful() && response.body() != null){
+                            Toast.makeText(context.getApplicationContext(),"aset deleted",Toast.LENGTH_LONG).show();
 //                                            startActivity(new Intent(context.getApplicationContext(),LonglistAsetActivity.class));
-                                            return;
-                                        }
+                            return;
+                        }
 
-                                        Toast.makeText(context.getApplicationContext(),"error data tidak dapat dimasukan",Toast.LENGTH_LONG).show();
-                                    }
+                        Toast.makeText(context.getApplicationContext(),"error data tidak dapat dimasukan",Toast.LENGTH_LONG).show();
+                    }
 
-                                    @Override
-                                    public void onFailure(Call<DeleteModel> call, Throwable t) {
-                                        Log.d("asetapix", "onError : "+t.getMessage());
-                                        Log.d("asetapix",String.valueOf(call.request().body()));
-                                        Log.d("asetapix",String.valueOf(call.request().url()));
-                                        Log.d("asetapix",String.valueOf(call.request().method()));
-                                        Toast.makeText(context.getApplicationContext(),"error " + t.getMessage(),Toast.LENGTH_LONG).show();
-                                    }
-                                });
-                            }
-                        }).setNegativeButton("Tidak", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-
-                            }
-                        });
+                    @Override
+                    public void onFailure(Call<DeleteModel> call, Throwable t) {
+                        Log.d("asetapix", "onError : "+t.getMessage());
+                        Log.d("asetapix",String.valueOf(call.request().body()));
+                        Log.d("asetapix",String.valueOf(call.request().url()));
+                        Log.d("asetapix",String.valueOf(call.request().method()));
+                        Toast.makeText(context.getApplicationContext(),"error " + t.getMessage(),Toast.LENGTH_LONG).show();
+                    }
+                });
 
 
-                // membuat alert dialog dari builder
-                AlertDialog alertDialog = alertDialogBuilder.create();
-
-                // menampilkan alert dialog
-                alertDialog.show();
             }
         });
         holder.btnDetail.setOnClickListener(new View.OnClickListener() {
