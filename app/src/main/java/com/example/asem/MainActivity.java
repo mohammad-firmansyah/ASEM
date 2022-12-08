@@ -16,6 +16,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.asem.api.AsetInterface;
+import com.example.asem.api.model.Login;
 import com.example.asem.api.model.LoginModel;
 import com.google.gson.JsonObject;
 
@@ -98,9 +99,9 @@ public class MainActivity extends AppCompatActivity {
                 @Override
                 public void onResponse(Call<LoginModel> call, Response<LoginModel> response) {
                     if (response.isSuccessful() && response.body() != null){
-                        if (response.body().getStatus()){
-                            JsonObject jsonObject = response.body().getData();
-                            Log.d(TAG, "onResponse: teslog : "+jsonObject.get("user").getAsString());
+                        if (response.body().getSuccess()){
+                            Login login = response.body().getData();
+                            Log.d(TAG, "onResponse: teslog : "+login.getUsername());
                             startActivity(new Intent(MainActivity.this, LonglistAsetActivity.class));
                         }else{
                             dialog.dismiss();
