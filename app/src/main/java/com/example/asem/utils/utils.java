@@ -198,7 +198,6 @@ public class utils {
 
     public static String MonthToYear(int month) {
         int year = 0;
-
         if (month <= 0 && year <= 0) {
             String result = "0";
             return result;
