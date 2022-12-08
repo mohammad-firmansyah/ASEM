@@ -113,7 +113,7 @@ public class LonglistAsetActivity extends AppCompatActivity {
         call.enqueue(new Callback<List<Data2>>() {
             @Override
             public void onResponse(Call<List<Data2>> call, Response<List<Data2>> response) {
-                dialog.hide();
+                dialog.dismiss();
                 if (!response.isSuccessful() && response.body() == null){
                     Toast.makeText(getApplicationContext(),String.valueOf(response.code()),Toast.LENGTH_LONG).show();
                     return;
@@ -142,7 +142,7 @@ public class LonglistAsetActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<List<Data2>> call, Throwable t) {
-                dialog.hide();
+                dialog.dismiss();
                 Toast.makeText(getApplicationContext(),t.getMessage(),Toast.LENGTH_LONG).show();
                 return;
             }

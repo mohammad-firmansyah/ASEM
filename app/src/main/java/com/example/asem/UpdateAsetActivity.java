@@ -43,6 +43,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
@@ -64,6 +65,10 @@ import com.example.asem.api.model.AsetKondisi;
 import com.example.asem.api.model.AsetModel;
 import com.example.asem.api.model.AsetTipe;
 import com.example.asem.api.model.Data;
+import com.example.asem.api.model.SubUnit;
+import com.example.asem.api.model.SubUnitModel;
+import com.example.asem.api.model.Unit;
+import com.example.asem.api.model.UnitModel;
 import com.example.asem.utils.GpsConverter;
 import com.example.asem.utils.utils;
 import com.google.android.gms.location.LocationCallback;
@@ -114,6 +119,8 @@ public class UpdateAsetActivity extends AppCompatActivity {
     Button map4;
     double longitudeValue = 0;
     double latitudeValue = 0;
+    List<AsetKode2> asetKode2 = new ArrayList<>();
+    List<Afdelling> afdeling = new ArrayList<>();
 
     FusedLocationProviderClient mFusedLocationClient;
 
@@ -138,6 +145,9 @@ public class UpdateAsetActivity extends AppCompatActivity {
     Spinner spinnerJenisAset;
     Spinner spinnerAsetKondisi;
     Spinner spinnerKodeAset;
+    Spinner spinnerSubUnit;
+    Spinner spinnerUnit;
+    Spinner spinnerAfdeling;
 
     EditText inpTglInput;
     EditText inpNamaAset;
@@ -150,6 +160,7 @@ public class UpdateAsetActivity extends AppCompatActivity {
     EditText inpNilaiResidu;
     EditText inpKeterangan;
     EditText inpUmrEkonomis;
+    EditText inpPersenKondisi;
 
     ViewGroup foto1rl;
     ViewGroup foto2rl;
@@ -336,7 +347,10 @@ public class UpdateAsetActivity extends AppCompatActivity {
         spinnerJenisAset = findViewById(R.id.inpJenisAset);
         spinnerAsetKondisi = findViewById(R.id.inpKndsAset);
         spinnerKodeAset = findViewById(R.id.inpKodeAset);
-
+        spinnerUnit = findViewById(R.id.inpUnit);
+        spinnerUnit.setEnabled(false);
+        spinnerSubUnit = findViewById(R.id.inpSubUnit);
+        spinnerAfdeling = findViewById(R.id.inpAfdeling);
         inpTglInput = findViewById(R.id.inpTglInput);
         inpTglInput.setEnabled(false);
         inpUmrEkonomis = findViewById(R.id.inpUmrEkonomis);
@@ -350,6 +364,7 @@ public class UpdateAsetActivity extends AppCompatActivity {
         inpNilaiResidu = findViewById(R.id.inpNmrResidu);
         inpKeterangan = findViewById(R.id.inpKeterangan);
         inpJumlahPohon = findViewById(R.id.inpJmlhPohon);
+        inpPersenKondisi = findViewById(R.id.inpPersenKondisi);
 
         foto1rl = findViewById(R.id.foto1);
         foto2rl = findViewById(R.id.foto2);
@@ -728,7 +743,7 @@ public class UpdateAsetActivity extends AppCompatActivity {
 
             @Override
             public void onResponse(Call<AsetModel> call, Response<AsetModel> response) {
-                dialog.hide();
+                dialog.dismiss();
                 if (!response.isSuccessful()){
                     Toast.makeText(getApplicationContext(),String.valueOf(response.code()),Toast.LENGTH_LONG).show();
                     finish();
@@ -738,7 +753,7 @@ public class UpdateAsetActivity extends AppCompatActivity {
 
 
                 aset = response.body().getData();
-                tvUploudBA.setText(response.body().getData().getBaFile());
+                tvUploudBA.setText(response.body().getData().getBeritaAcara());
                 inpTglInput.setText(response.body().getData().getTglInput().split(" ")[0]);
                 inpTglOleh.setText(response.body().getData().getTglInput().split(" ")[0]);
                 inpNoSAP.setText(String.valueOf(response.body().getData().getNomorSap()));
@@ -756,7 +771,7 @@ public class UpdateAsetActivity extends AppCompatActivity {
                 String url3 = baseUrlImg+response.body().getData().getFotoAset3();
                 String url4 = baseUrlImg+response.body().getData().getFotoAset4();
 
-                Log.d("asetapix",url4 + " " + url1+ " " + url2+ " " + url3);
+//                Log.d("asetapix",url4 + " " + url1+ " " + url2+ " " + url3);
 
                 fotoimg1.getLayoutParams().width = 200;
                 fotoimg1.getLayoutParams().height = 200;
@@ -786,6 +801,12 @@ public class UpdateAsetActivity extends AppCompatActivity {
                 spinnerJenisAset.setSelection(response.body().getData().getAsetTipe()-1);
                 spinnerAsetKondisi.setSelection(response.body().getData().getAsetKondisi()-1);
                 spinnerKodeAset.setSelection(response.body().getData().getAsetKode()-1);
+                spinnerUnit.setSelection(response.body().getData().getUnitId()-1);
+                spinnerSubUnit.setSelection(response.body().getData().getAsetSubUnit()-1);
+
+                if (response.body().getData().getAfdelingId() != null) {
+                    spinnerAfdeling.setSelection(response.body().getData().getAfdelingId()-1);
+                }
                 editVisibilityDynamic();
 //                Log.d("asetapix", spinnerJenisAset.getSelectedItem().toString());
 //                if (spinnerJenisAset.getSelectedItem().toString() == "tanaman" && spinnerAsetKondisi.getSelectedItem().toString() == "normal") {
@@ -887,7 +908,7 @@ public class UpdateAsetActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<AsetModel> call, Throwable t) {
-                dialog.hide();
+                dialog.dismiss();
                 Log.d("asetapix",t.getMessage());
                 finish();
             }
@@ -1054,6 +1075,100 @@ public class UpdateAsetActivity extends AppCompatActivity {
         }
     }
 
+    private void getAfdeling(){
+        Call<AfdellingModel> call = asetInterface.getAfdeling();
+        call.enqueue(new Callback<AfdellingModel>() {
+            @Override
+            public void onResponse(Call<AfdellingModel> call, Response<AfdellingModel> response) {
+
+                if (!response.isSuccessful()){
+//                    Toast.makeText(getApplicationContext(),String.valueOf(response.code()),Toast.LENGTH_LONG).show();
+//                    utils.Ngetoast(getApplicationContext(),);
+                    return;
+                }
+                List<String> listSpinner = new ArrayList<>();
+                for (int i=0;i<response.body().getData().size();i++){
+                    listSpinner.add(response.body().getData().get(i).getAfdelling_desc());
+                }
+
+                // Set hasil result json ke dalam adapter spinner
+                ArrayAdapter<String> adapter = new ArrayAdapter<String>(getApplicationContext(),
+                        android.R.layout.simple_spinner_item, listSpinner);
+                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                spinnerAfdeling.setAdapter(adapter);
+            }
+
+            @Override
+            public void onFailure(Call<AfdellingModel> call, Throwable t) {
+                Toast.makeText(getApplicationContext(),t.getMessage(),Toast.LENGTH_LONG).show();
+                return;
+            }
+        });
+    }
+
+    private void getSubUnit(){
+        Call<SubUnitModel> call = asetInterface.getSubUnit();
+        call.enqueue(new Callback<SubUnitModel>() {
+            @Override
+            public void onResponse(Call<SubUnitModel> call, Response<SubUnitModel> response) {
+                if (!response.isSuccessful()){
+//                    Toast.makeText(getApplicationContext(),String.valueOf(response.code()),Toast.LENGTH_LONG).show();
+                    return;
+                }
+
+                List<SubUnit> subUnit = response.body().getData();
+                List<String> listSpinner = new ArrayList<>();
+
+                for ( SubUnit a : subUnit ){
+                    listSpinner.add(a.getSub_unit_desc());
+                }
+
+                ArrayAdapter<String> adapter = new ArrayAdapter<String>(getApplicationContext(),
+                        android.R.layout.simple_spinner_item, listSpinner);
+                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                spinnerSubUnit.setAdapter(adapter);
+            }
+
+            @Override
+            public void onFailure(Call<SubUnitModel> call, Throwable t) {
+                Toast.makeText(getApplicationContext(),t.getMessage(),Toast.LENGTH_LONG).show();
+                return;
+            }
+        });
+    }
+
+    private void getUnit(){
+        Call<UnitModel> call = asetInterface.getUnit();
+        call.enqueue(new Callback<UnitModel>() {
+            @Override
+            public void onResponse(Call<UnitModel> call, Response<UnitModel> response) {
+                if (!response.isSuccessful()){
+//                    Toast.makeText(getApplicationContext(),String.valueOf(response.code()),Toast.LENGTH_LONG).show();
+                    return;
+                }
+
+                List<Unit> unit = response.body().getData();
+                List<String> listSpinner = new ArrayList<>();
+
+
+                for ( Unit a : unit ){
+                    listSpinner.add(a.getUnit_desc());
+                }
+
+                ArrayAdapter<String> adapter = new ArrayAdapter<String>(getApplicationContext(),
+                        android.R.layout.simple_spinner_item, listSpinner);
+                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                spinnerUnit.setAdapter(adapter);
+            }
+
+            @Override
+            public void onFailure(Call<UnitModel> call, Throwable t) {
+                Toast.makeText(getApplicationContext(),t.getMessage(),Toast.LENGTH_LONG).show();
+                return;
+            }
+        });
+    }
+
 
     private void setExifLocation(File fileImage,int list){
         try {
@@ -1111,6 +1226,25 @@ public class UpdateAsetActivity extends AppCompatActivity {
         TextView tvBa = findViewById(R.id.tvBa);
         TextView tvPohon = findViewById(R.id.tvPohon);
         TextView tvBast = findViewById(R.id.tvBast);
+        TextView tvFoto = findViewById(R.id.tvFoto);
+        TextView tvAfdeling = findViewById(R.id.tvAfdeling);
+        Spinner inpAfdeling = findViewById(R.id.inpAfdeling);
+        TextView tvLuasTanaman = findViewById(R.id.luasTanaman);
+        TextView tvLuasNonTanaman = findViewById(R.id.luasNonTanaman);
+        TextView tvPersenKondisi = findViewById(R.id.tvPersenKondisi);
+
+        HorizontalScrollView scrollPartition = findViewById(R.id.scrollPartition);
+//        Toast.makeText(getApplicationContext(),String.valueOf(spinnerSubUnit.getSelectedItemId()),Toast.LENGTH_LONG).show();
+
+
+        if (spinnerSubUnit.getSelectedItemId() == 1){
+            inpAfdeling.setVisibility(View.VISIBLE);
+            tvAfdeling.setVisibility(View.VISIBLE);
+//            Toast.makeText(getApplicationContext(),String.valueOf(spinnerSubUnit.getSelectedItemId()),Toast.LENGTH_LONG).show();
+        } else {
+            inpAfdeling.setVisibility(View.GONE);
+            tvAfdeling.setVisibility(View.GONE);
+        }
 
         if ("tanaman".equals(String.valueOf(spinnerJenisAset.getSelectedItem())) && "normal".equals(String.valueOf(spinnerAsetKondisi.getSelectedItem()))) {
             listBtnMap.setVisibility(View.VISIBLE);
@@ -1125,6 +1259,15 @@ public class UpdateAsetActivity extends AppCompatActivity {
             inpBtnMap.setVisibility(View.GONE);
             btnFile.setVisibility(View.GONE);
 
+            tvFoto.setVisibility(View.VISIBLE);
+            scrollPartition.setVisibility(View.VISIBLE);
+
+            tvLuasTanaman.setVisibility(View.VISIBLE);
+            tvLuasNonTanaman.setVisibility(View.GONE);
+            inpLuasAset.setVisibility(View.VISIBLE);
+
+            inpPersenKondisi.setVisibility(View.GONE);
+            tvPersenKondisi.setVisibility(View.GONE);
 
         }
 
@@ -1141,6 +1284,16 @@ public class UpdateAsetActivity extends AppCompatActivity {
             btnFile.setVisibility(View.VISIBLE);
 
             inpBtnMap.setVisibility(View.GONE);
+
+            tvFoto.setVisibility(View.VISIBLE);
+            scrollPartition.setVisibility(View.VISIBLE);
+
+            tvLuasTanaman.setVisibility(View.VISIBLE);
+            tvLuasNonTanaman.setVisibility(View.GONE);
+            inpLuasAset.setVisibility(View.VISIBLE);
+
+            inpPersenKondisi.setVisibility(View.GONE);
+            tvPersenKondisi.setVisibility(View.GONE);
 
         }
 
@@ -1159,6 +1312,15 @@ public class UpdateAsetActivity extends AppCompatActivity {
             inpJumlahPohon.setVisibility(View.GONE);
             inpBtnMap.setVisibility(View.GONE);
 
+            tvFoto.setVisibility(View.GONE);
+            scrollPartition.setVisibility(View.GONE);
+
+            tvLuasTanaman.setVisibility(View.VISIBLE);
+            tvLuasNonTanaman.setVisibility(View.GONE);
+            inpLuasAset.setVisibility(View.VISIBLE);
+
+            inpPersenKondisi.setVisibility(View.GONE);
+            tvPersenKondisi.setVisibility(View.GONE);
         }
 
         else if ("kayu".equals(String.valueOf(spinnerJenisAset.getSelectedItem()))  && "normal".equals(String.valueOf(spinnerAsetKondisi.getSelectedItem())) ) {
@@ -1167,11 +1329,22 @@ public class UpdateAsetActivity extends AppCompatActivity {
 //            inpKomoditi.setVisibility(View.VISIBLE);
             inpNomorBAST.setVisibility(View.VISIBLE);
             tvBast.setVisibility(View.VISIBLE);
+            tvPohon.setVisibility(View.VISIBLE);
 
             tvBa.setVisibility(View.GONE);
             tvUploudBA.setVisibility(View.GONE);
             inpBtnMap.setVisibility(View.GONE);
             btnFile.setVisibility(View.GONE);
+
+            tvFoto.setVisibility(View.VISIBLE);
+            scrollPartition.setVisibility(View.VISIBLE);
+
+            tvLuasTanaman.setVisibility(View.VISIBLE);
+            tvLuasNonTanaman.setVisibility(View.GONE);
+            inpLuasAset.setVisibility(View.VISIBLE);
+
+            inpPersenKondisi.setVisibility(View.GONE);
+            tvPersenKondisi.setVisibility(View.GONE);
 
         }
 
@@ -1183,10 +1356,22 @@ public class UpdateAsetActivity extends AppCompatActivity {
             tvUploudBA.setVisibility(View.VISIBLE);
             btnFile.setVisibility(View.VISIBLE);
 //            inpKomoditi.setVisibility(View.VISIBLE);
+            tvPohon.setVisibility(View.VISIBLE);
+
 
             inpNomorBAST.setVisibility(View.GONE);
             tvBast.setVisibility(View.GONE);
             inpBtnMap.setVisibility(View.GONE);
+
+            tvFoto.setVisibility(View.VISIBLE);
+            scrollPartition.setVisibility(View.VISIBLE);
+
+            tvLuasTanaman.setVisibility(View.VISIBLE);
+            tvLuasNonTanaman.setVisibility(View.GONE);
+            inpLuasAset.setVisibility(View.VISIBLE);
+
+            inpPersenKondisi.setVisibility(View.GONE);
+            tvPersenKondisi.setVisibility(View.GONE);
 
         }
 
@@ -1204,6 +1389,16 @@ public class UpdateAsetActivity extends AppCompatActivity {
             inpJumlahPohon.setVisibility(View.GONE);
             inpBtnMap.setVisibility(View.GONE);
 
+            tvFoto.setVisibility(View.GONE);
+            scrollPartition.setVisibility(View.GONE);
+
+            tvLuasTanaman.setVisibility(View.VISIBLE);
+            tvLuasNonTanaman.setVisibility(View.GONE);
+            inpLuasAset.setVisibility(View.VISIBLE);
+
+            inpPersenKondisi.setVisibility(View.GONE);
+            tvPersenKondisi.setVisibility(View.GONE);
+
         }
 
         else if ("non tanaman".equals(String.valueOf(spinnerJenisAset.getSelectedItem())) && "normal".equals(String.valueOf(spinnerAsetKondisi.getSelectedItem()))) {
@@ -1219,20 +1414,37 @@ public class UpdateAsetActivity extends AppCompatActivity {
             tvPohon.setVisibility(View.GONE);
             btnFile.setVisibility(View.GONE);
 
+            tvFoto.setVisibility(View.VISIBLE);
+            scrollPartition.setVisibility(View.VISIBLE);
+
+            tvLuasTanaman.setVisibility(View.GONE);
+            tvLuasNonTanaman.setVisibility(View.VISIBLE);
+            inpLuasAset.setVisibility(View.VISIBLE);
+
+            inpPersenKondisi.setVisibility(View.VISIBLE);
+            tvPersenKondisi.setVisibility(View.VISIBLE);
         }
 
         else if ("non tanaman".equals(String.valueOf(spinnerJenisAset.getSelectedItem())) &&"rusak".equals(String.valueOf(spinnerAsetKondisi.getSelectedItem()))) {
-            listBtnMap.setVisibility(View.VISIBLE);
             tvBa.setVisibility(View.VISIBLE);
             btnFile.setVisibility(View.VISIBLE);
             tvUploudBA.setVisibility(View.VISIBLE);
-
-//            inpKomoditi.setVisibility(View.GONE);
             tvPohon.setVisibility(View.GONE);
             inpJumlahPohon.setVisibility(View.GONE);
-            inpBtnMap.setVisibility(View.GONE);
+            inpBtnMap.setVisibility(View.VISIBLE);
             inpNomorBAST.setVisibility(View.GONE);
             tvBast.setVisibility(View.GONE);
+
+            tvFoto.setVisibility(View.VISIBLE);
+            scrollPartition.setVisibility(View.VISIBLE);
+
+            listBtnMap.setVisibility(View.GONE);
+            tvLuasTanaman.setVisibility(View.GONE);
+            tvLuasNonTanaman.setVisibility(View.VISIBLE);
+            inpLuasAset.setVisibility(View.VISIBLE);
+
+            inpPersenKondisi.setVisibility(View.VISIBLE);
+            tvPersenKondisi.setVisibility(View.VISIBLE);
 
         }
 
@@ -1250,6 +1462,33 @@ public class UpdateAsetActivity extends AppCompatActivity {
             inpNomorBAST.setVisibility(View.GONE);
             tvBast.setVisibility(View.GONE);
 
+            tvFoto.setVisibility(View.GONE);
+            scrollPartition.setVisibility(View.GONE);
+
+            tvLuasTanaman.setVisibility(View.GONE);
+            tvLuasNonTanaman.setVisibility(View.VISIBLE);
+            inpLuasAset.setVisibility(View.VISIBLE);
+
+            inpPersenKondisi.setVisibility(View.VISIBLE);
+            tvPersenKondisi.setVisibility(View.VISIBLE);
+
+        } else {
+            listBtnMap.setVisibility(View.GONE);
+            inpJumlahPohon.setVisibility(View.GONE);
+            tvFoto.setVisibility(View.GONE);
+            scrollPartition.setVisibility(View.GONE);
+            tvPohon.setVisibility(View.GONE);
+            tvBa.setVisibility(View.GONE);
+            tvUploudBA.setVisibility(View.GONE);
+            inpBtnMap.setVisibility(View.GONE);
+            btnFile.setVisibility(View.GONE);
+
+            tvLuasTanaman.setVisibility(View.GONE);
+            tvLuasNonTanaman.setVisibility(View.GONE);
+            inpLuasAset.setVisibility(View.GONE);
+
+            inpPersenKondisi.setVisibility(View.GONE);
+            tvPersenKondisi.setVisibility(View.GONE);
         }
     }
     public void editAset(){
@@ -1457,13 +1696,13 @@ public class UpdateAsetActivity extends AppCompatActivity {
                 @Override
                 public void onResponse(Call<AsetModel> call, Response<AsetModel> response) {
                     if (response.isSuccessful() && response.body() != null){
-                        dialog.hide();
+                        dialog.dismiss();
                         Toast.makeText(getApplicationContext(),"succeed edit aset",Toast.LENGTH_LONG).show();
                         setValueInput();
                         return;
                     }
 
-                    dialog.hide();
+                    dialog.dismiss();
                     Log.d("asetapix",String.valueOf(response.errorBody()));
                     Log.d("asetapix",String.valueOf(call.request().body()));
                     Log.d("asetapix",String.valueOf(call.request().url()));
@@ -1473,7 +1712,7 @@ public class UpdateAsetActivity extends AppCompatActivity {
 
                 @Override
                 public void onFailure(Call<AsetModel> call, Throwable t) {
-                    dialog.hide();
+                    dialog.dismiss();
                     Toast.makeText(getApplicationContext(),"edit aset" + t.getMessage(),Toast.LENGTH_LONG).show();
                 }
             });
@@ -1491,11 +1730,54 @@ public class UpdateAsetActivity extends AppCompatActivity {
 //            }
 
     }
+    public void setAdapterAsetKode(){
+        List<String> asetKode = new ArrayList<>();
+        String aset_kode_temp = "";
 
+        asetKode.add("Pilih Aset Kode");
+        for (AsetKode2 a : asetKode2) {
+
+
+            if (a.getAsetJenis() == spinnerJenisAset.getSelectedItemId()) {
+
+                if (a.getAsetJenis() == 2 ) {
+                    aset_kode_temp = a.getAsetClass() + "/" + a.getAsetDesc();
+                } else if (a.getAsetJenis() == 1) {
+                    aset_kode_temp = a.getAsetClass() + "/" + a.getAsetGroup() + "/" + a.getAsetDesc();
+                } else {
+                    aset_kode_temp = a.getAsetClass() + "/" + a.getAsetGroup() + "/" + a.getAsetDesc();
+                }
+
+                asetKode.add(aset_kode_temp);
+            }
+        }
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getApplicationContext(),
+                android.R.layout.simple_spinner_item, asetKode);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerKodeAset.setAdapter(adapter);
+    }
+
+    public void setAfdelingAdapter(){
+        List<String> afdelings = new ArrayList<>();
+        afdelings.add("pilih afdeling");
+        for (Afdelling a:afdeling) {
+            if (a.getUnit_id() == (spinnerUnit.getSelectedItemId()+1)) {
+                afdelings.add(a.getAfdelling_desc());
+            }
+        }
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getApplicationContext(),
+                android.R.layout.simple_spinner_item, afdelings);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerAfdeling.setAdapter(adapter);
+    }
     public void getSpinnerData(){
         getTipeAset();
         getKodeAset();
         getAsetJenis();
         getAsetKondisi();
+        getAfdeling();
+        getSubUnit();
+        getUnit();
     }
 }

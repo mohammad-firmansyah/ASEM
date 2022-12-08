@@ -552,7 +552,10 @@ public class DetailAsetActivity extends AppCompatActivity {
 
 
 //                aset = response.body().getData();
-                tvUploudBA.setText(response.body().getData().getBaFile());
+                if (response.body().getData().getBeritaAcara() != null ) {
+
+                    tvUploudBA.setText(response.body().getData().getBeritaAcara());
+                }
 
                 inpTglInput.setText(response.body().getData().getTglInput().split(" ")[0]);
                 inpTglOleh.setText(response.body().getData().getTglInput().split(" ")[0]);

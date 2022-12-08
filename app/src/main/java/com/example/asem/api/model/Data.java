@@ -117,9 +117,9 @@ public class Data {
     @SerializedName("updated_at")
     @Expose
     private String updatedAt;
-    @SerializedName("ba_file")
+    @SerializedName("berita_acara")
     @Expose
-    private String baFile;
+    private String beritaAcara;
     @SerializedName("umur_ekonomis_in_month")
     @Expose
     private Integer umurEkonomisInMonth;
@@ -399,12 +399,12 @@ public class Data {
         this.updatedAt = updatedAt;
     }
 
-    public String getBaFile() {
-        return baFile;
+    public String getBeritaAcara() {
+        return beritaAcara;
     }
 
-    public void setBaFile(String baFile) {
-        this.baFile = baFile;
+    public void setBeritaAcara(String baFile) {
+        this.beritaAcara = baFile;
     }
 
     public Integer getUmurEkonomisInMonth() {
@@ -450,7 +450,7 @@ public class Data {
         this.userInputId = userInputId;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
-        this.baFile = baFile;
+        this.beritaAcara = baFile;
         this.umurEkonomisInMonth = umurEkonomisInMonth;
         this.persenKondisi = persenKondisi;
     }

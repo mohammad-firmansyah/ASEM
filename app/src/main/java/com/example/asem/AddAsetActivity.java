@@ -5,6 +5,7 @@ import static com.example.asem.utils.utils.CurrencyToNumber;
 import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContract;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -22,6 +23,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
 import android.graphics.drawable.ColorDrawable;
 import android.location.Location;
 import android.location.LocationManager;
@@ -32,6 +34,7 @@ import android.os.FileUtils;
 import android.os.Looper;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
+import android.provider.OpenableColumns;
 import android.provider.Settings;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -80,6 +83,11 @@ import com.jaiselrahman.filepicker.model.MediaFile;
 import com.squareup.picasso.Picasso;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -105,6 +113,8 @@ public class AddAsetActivity extends AppCompatActivity {
     Button map2;
     Button map3;
     Button map4;
+
+    Uri docUri;
 
     List<AsetKode2> asetKode2 = new ArrayList<>();
     List<Afdelling> afdeling = new ArrayList<>();
@@ -192,93 +202,186 @@ public class AddAsetActivity extends AppCompatActivity {
     String spinnerIdUnit;
 
 
-    public void onActivityResult(int requestCode,int resultCode,@Nullable Intent data){
-        super.onActivityResult(requestCode,resultCode,data);
+    /**
+     * Kode diambil dari jawaban irshad sheikh di stackoverflow
+     * https://stackoverflow.com/a/65447195/18983047
+     * @param context contect activity
+     * @param uri uri file yang di pilih
+     * @return file pada directory aplikasi yang bisa dipakai
+     * @throws IOException ketika tidak dapat memuat file
+     */
+    public File getFile(Context context, Uri uri) throws IOException {
+        // save file to directory Documents di package aplikasi
+        File destinationFilename = new File(context.getExternalFilesDir(Environment.DIRECTORY_PICTURES).getPath() + File.separatorChar + queryName(context, uri));
+        try (InputStream ins = context.getContentResolver().openInputStream(uri)) {
+            createFileFromStream(ins, destinationFilename);
+        } catch (Exception ex) {
+            Toast.makeText(AddAsetActivity.this, "File tidak dapat dimuat", Toast.LENGTH_LONG).show();
+            Log.e("Save File", ex.getMessage());
+            ex.printStackTrace();
+        }
+        return destinationFilename;
+    }
 
-        if (resultCode == RESULT_OK && data != null ) {
-
-            if (requestCode == 1 ){
-
-
-            try {
-//
-                Uri uri = data.getData();
-                String path =  uri.toString();
-//                Log.d("asetapix",String.valueOf(path));
-
-                bafile_file = new File(path);
-                bafile_file.mkdirs();
-//                Toast.makeText(getApplicationContext(),"sukses unggah berita acara",Toast.LENGTH_LONG).show();
-//                Toast.makeText(getApplicationContext(),bafile_file.getName(),Toast.LENGTH_LONG).show();
-//                    Intent intent = new Intent();
-//                    intent.putExtra(extra_PDF_FILE_URI,String.valueOf(data))
-                tvUploudBA.setText(bafile_file.getAbsolutePath());
-                // Make sure the Pictures directory exists.
-                } catch (Exception e) {
-                e.printStackTrace();
+    // file yang dipilih akan di copy ke directory aplikasi
+    public void createFileFromStream(InputStream ins, File destination) {
+        try (OutputStream os = new FileOutputStream(destination)) {
+            byte[] buffer = new byte[4096];
+            int length;
+            while ((length = ins.read(buffer)) > 0) {
+                os.write(buffer, 0, length);
             }
-            }
-        } else {
-            Toast.makeText(AddAsetActivity.this,"gagal unggah file",Toast.LENGTH_LONG).show();
-            return;
+            os.flush();
+        } catch (Exception ex) {
+            Log.e("Save File", ex.getMessage());
+            ex.printStackTrace();
         }
     }
 
-//    public void onActivityResult(int requestCode,int resultCode,@Nullable Intent data){
-//        super.onActivityResult(requestCode,resultCode,data);
+    private String queryName(Context context, Uri uri) {
+        Cursor returnCursor =
+                context.getContentResolver().query(uri, null, null, null, null);
+        assert returnCursor != null;
+        int nameIndex = returnCursor.getColumnIndex(OpenableColumns.DISPLAY_NAME);
+        returnCursor.moveToFirst();
+        String name = returnCursor.getString(nameIndex);
+        returnCursor.close();
+        return name;
+    }
+
+    public void onActivityResult(int requestCode,int resultCode,@Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 1 && resultCode == Activity.RESULT_OK){
+            assert data != null;
+            Uri urifile = data.getData();
+            try {
+                bafile_file = getFile(this, urifile);
+                String docPath = bafile_file.getAbsolutePath();
+                Log.d("asetapix", "onActivityResult: path doc : "+docPath);
+                Log.d("asetapix", "onActivityResult: masterpath : "+data.getData().getPath());
+//                ExifInterface ei = new ExifInterface(bafile_file.getAbsolutePath());
+                tvUploudBA.setText(bafile_file.getAbsolutePath());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            Log.d("asetapix", "onActivityResult: "+ data.getData());
+        }
+    }
+
+//        if (resultCode == RESULT_OK && data != null ) {
 //
-//        if (requestCode == 1 && resultCode == RESULT_OK && data != null ) {
-//            ArrayList<MediaFile> mediaFiles = data.getParcelableArrayListExtra(
-//                    FilePickerActivity.MEDIA_FILES
-//            );
+//            if (requestCode == 1 ){
+//
+//
 //            try {
-//                String path =  mediaFiles.get(0).getPath();
-//
+////
+//                Uri uri = data.getData();
+//                String path =  uri.toString();
+////                Log.d("asetapix",String.valueOf(path));
 //
 //                bafile_file = new File(path);
-//                Log.d("asetapix",String.valueOf(mediaFiles.size()) + " " + String.valueOf(path));
-//                tvUploudBA.setText(path);
-//            } catch (Exception e) {
+//                bafile_file.mkdirs();
+////                Toast.makeText(getApplicationContext(),"sukses unggah berita acara",Toast.LENGTH_LONG).show();
+////                Toast.makeText(getApplicationContext(),bafile_file.getName(),Toast.LENGTH_LONG).show();
+////                    Intent intent = new Intent();
+////                    intent.putExtra(extra_PDF_FILE_URI,String.valueOf(data))
+//                tvUploudBA.setText(bafile_file.getAbsolutePath());
+//                // Make sure the Pictures directory exists.
+//                } catch (Exception e) {
 //                e.printStackTrace();
 //            }
-//
-//
+//            }
+//        } else {
+//            Toast.makeText(AddAsetActivity.this,"gagal unggah file",Toast.LENGTH_LONG).show();
+//            return;
 //        }
 //    }
-ActivityResultLauncher<Intent> resultLauncher;
-
-
-    public void openfilechoser(){
-//        Intent intent = null;
-//        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.Q) {
-//            intent = new Intent(Intent.ACTION_VIEW, MediaStore.Downloads.EXTERNAL_CONTENT_URI);
-//        }
-//        intent.addCategory(Intent.CATEGORY_OPENABLE);
-//        intent.setType("*/*");
-
-//        intent.addCategory(Intent.CATEGORY_OPENABLE);
-//        intent.putExtra(DocumentsContract.EXTRA_INITIAL_URI, uriToLoad);
-//        Intent chooseFileIntent = Intent.createChooser(intent, "Choose a file");
-
-//        startActivity(intent);
-//        Intent intent = new Intent(AddAsetActivity.this, FilePickerActivity.class);
 //
-//        intent.putExtra(FilePickerActivity.CONFIGS, new Configurations.Builder().setCheckPermission(true).setShowFiles(true).setShowImages(false).setShowVideos(false).setMaxSelection(1).setSuffixes("txt","pdf","doc","docx").setSkipZeroSizeFiles(true).build());
-//        startActivityForResult(intent,1);
-//    Intent target = FileUtils.createGetContentIntent()
+////    public void onActivityResult(int requestCode,int resultCode,@Nullable Intent data){
+////        super.onActivityResult(requestCode,resultCode,data);
+////
+////        if (requestCode == 1 && resultCode == RESULT_OK && data != null ) {
+////            ArrayList<MediaFile> mediaFiles = data.getParcelableArrayListExtra(
+////                    FilePickerActivity.MEDIA_FILES
+////            );
+////            try {
+////                String path =  mediaFiles.get(0).getPath();
+////
+////
+////                bafile_file = new File(path);
+////                Log.d("asetapix",String.valueOf(mediaFiles.size()) + " " + String.valueOf(path));
+////                tvUploudBA.setText(path);
+////            } catch (Exception e) {
+////                e.printStackTrace();
+////            }
+////
+////
+////        }
+////    }
+//ActivityResultLauncher<Intent> resultLauncher;
 
-//        Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
-//
-//        intent.addCategory(Intent.CATEGORY_OPENABLE);
-//
-//        intent.setType("application/pdf");
-//
-//        startActivityForResult(intent,1);
-        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-        intent.setType("application/pdf");
-        resultLauncher.launch(intent);
+    ActivityResultLauncher<Intent> sActivityResultLauncher = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(),
+            new ActivityResultCallback<ActivityResult>() {
+                @Override
+                public void onActivityResult(ActivityResult result) {
+                    if (result.getResultCode() == Activity.RESULT_OK) {
+                        Intent data = result.getData();
+                        Uri uri = data.getData();
+                        try {
+                            InputStream inputStream = getContentResolver().openInputStream(uri);
+                        } catch (FileNotFoundException e) {
+                            e.printStackTrace();
+                        }
 
+                        String path =  uri.getPath();
+                        bafile_file = new File(Environment.getExternalStorageDirectory().getPath() + path);
+                        Log.d("asetapix",Environment.getExternalStorageDirectory().getPath() + path);
+                        tvUploudBA.setText(bafile_file.getAbsolutePath());
+                    }
+                }
+            });
+
+    public void openFileDialog() {
+        Intent data = new Intent(Intent.ACTION_OPEN_DOCUMENT);
+        data.addCategory(Intent.CATEGORY_OPENABLE);
+        data.setType("*/*");
+//        String[] mimetype = {"pdf/*"};
+//        data.putExtra(Intent.EXTRA_MIME_TYPES,mimetype);
+        data = Intent.createChooser(data,"Pilih Berita Acara");
+        sActivityResultLauncher.launch(data);
     }
+//    public void openfilechoser(){
+////        Intent intent = null;
+////        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.Q) {
+////            intent = new Intent(Intent.ACTION_VIEW, MediaStore.Downloads.EXTERNAL_CONTENT_URI);
+////        }
+////        intent.addCategory(Intent.CATEGORY_OPENABLE);
+////        intent.setType("*/*");
+//
+////        intent.addCategory(Intent.CATEGORY_OPENABLE);
+////        intent.putExtra(DocumentsContract.EXTRA_INITIAL_URI, uriToLoad);
+////        Intent chooseFileIntent = Intent.createChooser(intent, "Choose a file");
+//
+////        startActivity(intent);
+////        Intent intent = new Intent(AddAsetActivity.this, FilePickerActivity.class);
+////
+////        intent.putExtra(FilePickerActivity.CONFIGS, new Configurations.Builder().setCheckPermission(true).setShowFiles(true).setShowImages(false).setShowVideos(false).setMaxSelection(1).setSuffixes("txt","pdf","doc","docx").setSkipZeroSizeFiles(true).build());
+////        startActivityForResult(intent,1);
+////    Intent target = FileUtils.createGetContentIntent()
+//
+////        Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
+////
+////        intent.addCategory(Intent.CATEGORY_OPENABLE);
+////
+////        intent.setType("application/pdf");
+////
+////        startActivityForResult(intent,1);
+//        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+//        intent.setType("application/pdf");
+//        resultLauncher.launch(intent);
+//
+//    }
 
 
 
@@ -294,7 +397,6 @@ ActivityResultLauncher<Intent> resultLauncher;
                                 img1 = utils.savePictureResult(
                                         AddAsetActivity.this, photoname1, fotoimg1, true
                                 );
-                                Log.d("asetapix", String.valueOf(img1));
                                 setExifLocation(img1,1);
                             } else if (resultCode == Activity.RESULT_CANCELED){
                                 android.widget.Toast.makeText(AddAsetActivity.this, "Cancelled", Toast.LENGTH_SHORT).show();
@@ -447,7 +549,7 @@ ActivityResultLauncher<Intent> resultLauncher;
                 spinnerIdJenisAset = String.valueOf(position);
 
                 editVisibilityDynamic();
-                setAdapterInput();
+                setAdapterAsetKode();
             }
 
             @Override
@@ -626,8 +728,18 @@ ActivityResultLauncher<Intent> resultLauncher;
         btnFile.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
-                openfilechoser();
+//                openfilechoser();
+//                openFileDialog();
 //                Toast.makeText(getApplicationContext(),"hello from hell",Toast.LENGTH_LONG).show();
+
+                Intent pickFile = new Intent(Intent.ACTION_GET_CONTENT);
+                pickFile.addCategory(Intent.CATEGORY_OPENABLE);
+                pickFile.setType("*/*");
+                // Optionally, specify a URI for the file that should appear in the
+                // system file picker when it loads.
+
+                pickFile.putExtra(DocumentsContract.EXTRA_INITIAL_URI, docUri);
+                startActivityForResult(pickFile, 1);
             }
         });
 
@@ -643,31 +755,7 @@ ActivityResultLauncher<Intent> resultLauncher;
         asetInterface = retrofit.create(AsetInterface.class);
 
 
-        // Initialize result launcher
-        resultLauncher = registerForActivityResult(
-                new ActivityResultContracts
-                        .StartActivityForResult(),
-                new ActivityResultCallback<ActivityResult>() {
-                    @Override
-                    public void onActivityResult(ActivityResult result)
-                    {
-                        // Initialize result data
-                        Intent data = result.getData();
-                        // check condition
-                        if (data != null) {
-                            // When data is not equal to empty
-                            // Get PDf uri
-                            Uri sUri = data.getData();
-                            // set Uri on text view
-                            // Get PDF path
-                            String sPath = sUri.getPath();
 
-                            Log.d("asetapix",sUri + " " + sPath);
-
-
-                        }
-                    }
-                });
 
 
         initCalender();
@@ -808,7 +896,7 @@ ActivityResultLauncher<Intent> resultLauncher;
 
 
 
-                tvUploudBA.setText(response.body().getData().getBaFile());
+                tvUploudBA.setText(response.body().getData().getBeritaAcara());
                 inpTglOleh.setText(response.body().getData().getTglInput().split(" ")[0]);
                 inpNoSAP.setText(String.valueOf(response.body().getData().getNomorSap()));
                 inpNamaAset.setText(response.body().getData().getAsetName());
@@ -1691,21 +1779,19 @@ ActivityResultLauncher<Intent> resultLauncher;
         }
     }
     public void addAset(){
-        spinnerValidation();
         dialog.show();
+        spinnerValidation();
 //        Toast.makeText(getApplicationContext(), "hello im clicked", Toast.LENGTH_SHORT).show();
         if (inpNamaAset.getText().toString().matches("")) {
             dialog.dismiss();
             inpNamaAset.setError("nama harus diisi");
             inpNamaAset.requestFocus();
-            return;
         }
 
         if (inpNoSAP.getText().toString().matches("")) {
             dialog.dismiss();
             inpNoSAP.setError("nomor SAP harus diisi");
             inpNoSAP.requestFocus();
-            return;
         }
 
         if (spinnerAsetKondisi.getSelectedItemId() != 3) {
@@ -1736,7 +1822,6 @@ ActivityResultLauncher<Intent> resultLauncher;
             // menampilkan alert dialog
             alertDialog.show();
             dialog.dismiss();
-            return;
 
         }
         }
@@ -1747,7 +1832,6 @@ ActivityResultLauncher<Intent> resultLauncher;
                 inpNomorBAST.setError("Nomor Bast harus diisi");
                 inpNomorBAST.requestFocus();
                 dialog.dismiss();
-                return;
             }
         }
 
@@ -1756,28 +1840,24 @@ ActivityResultLauncher<Intent> resultLauncher;
             inpNamaAset.setError("Nilai Aset harus diisi");
             inpNamaAset.requestFocus();
             dialog.dismiss();
-            return;
         }
 
         if (inpTglOleh.getText().toString().matches("")) {
             inpTglOleh.setError("Tanggal Perolehan harus diisi");
             inpTglOleh.requestFocus();
             dialog.dismiss();
-            return;
         }
 
         if (inpMasaPenyusutan.getText().toString().matches("")) {
             inpMasaPenyusutan.setError("Masa Penyusutan harus diisi");
             inpMasaPenyusutan.requestFocus();
             dialog.dismiss();
-            return;
         }
 
         if (inpNilaiResidu.getText().toString().matches("")) {
             inpNilaiResidu.setError("Nilai Residu harus diisi");
             inpNilaiResidu.requestFocus();
             dialog.dismiss();
-            return;
         }
 
 
@@ -1787,7 +1867,6 @@ ActivityResultLauncher<Intent> resultLauncher;
                 inpJumlahPohon.setError("Jumlah Pohon harus diisi");
                 inpJumlahPohon.requestFocus();
                 dialog.dismiss();
-                return;
             }
         }
 
@@ -1979,9 +2058,11 @@ ActivityResultLauncher<Intent> resultLauncher;
 
 
 
-    public void setAdapterInput(){
+    public void setAdapterAsetKode(){
         List<String> asetKode = new ArrayList<>();
         String aset_kode_temp = "";
+
+        asetKode.add("Pilih Aset Kode");
         for (AsetKode2 a : asetKode2) {
 
 
