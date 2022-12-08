@@ -367,7 +367,7 @@ ActivityResultLauncher<Intent> resultLauncher;
         dialog.setContentView(R.layout.loading);
         dialog.setCanceledOnTouchOutside(false);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(0));
-        dialog. show();
+        dialog.show();
 
         map1 = findViewById(R.id.map1);
         map2 = findViewById(R.id.map2);
