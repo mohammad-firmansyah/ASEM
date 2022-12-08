@@ -116,6 +116,7 @@ public class MainActivity extends AppCompatActivity {
 
     //AlertDialog loading;
     //GlobalFunction global = new GlobalFunction();
+    private static final String TAG = "LoginTAG";
 
     Button btnLogin;
     EditText etNIP;
@@ -152,38 +153,48 @@ public class MainActivity extends AppCompatActivity {
         user_pass = etPass.getText().toString();
 
         if(username.isEmpty()){
-            etNIP.setError("NIP wajib diisi!");
+            etNIP.setError("Username wajib diisi!");
             etNIP.requestFocus();
         }
         if(user_pass.isEmpty()){
             etPass.setError("Password wajib diisi!");
             etPass.requestFocus();
         }else{
-            loading.show();
-
-            //bawah ini fungsi login, getAPI,
-            Call<LoginModel> call = AsetInterface.login(username,user_pass);//get data login dari api dan model
-            call.enqueue(new Callback<LoginModel>() {
-                @Override
-                public void onResponse(Call<LoginModel> call, Response<LoginModel> response) {
-                    if (response.isSuccessful() && response.body() != null){
-                        if (response.body().getStatus()){
-                            JsonObject jsonObject = response.body().getData();
-                            //Log.d() //butuh userpreferences
-
-                        }
-                    }
-
-                }
-
-                @Override
-                public void onFailure(Call<LoginModel> call, Throwable t) {
-                    Log.d("fail", "onFailure: "+t);
-                    Toast.makeText(MainActivity.this, "Gagal Terhubung ke Server", Toast.LENGTH_SHORT).show();
-                    Toast.makeText(MainActivity.this, "Login Error : "+t.getMessage(), Toast.LENGTH_SHORT).show();
-                    loading.dismiss();
-                }
-            });
+            startActivity(new Intent(MainActivity.this,LonglistAsetActivity.class));
+//            loading.show();
+//
+//            //fungsi login, getdata
+//            Call<LoginModel> call = AsetInterface.login(username,user_pass);//get data login dari api dan model
+//            call.enqueue(new Callback<LoginModel>() {
+//                @Override
+//                public void onResponse(Call<LoginModel> call, Response<LoginModel> response) {
+//                    if (response.isSuccessful() && response.body() != null){
+//                        if (response.body().getStatus()){
+//                            JsonObject jsonObject = response.body().getData();
+//                            Log.d(TAG, "onResponse: teslog : "+jsonObject.get("user").getAsString());
+//                            startActivity(new Intent(MainActivity.this, LonglistAsetActivity.class));
+//                        }else{
+//                            loading.dismiss();
+//                            Log.d("taglogin", "onResponse: Login bre");
+//                            Toast.makeText(MainActivity.this, response.body().getMessage(), Toast.LENGTH_LONG).show();}
+//                    }else{
+//                        loading.dismiss();
+//                    if (response.toString().contains("code=500")){
+//                        Toast.makeText(MainActivity.this,"Username atau Password anda salah", Toast.LENGTH_SHORT).show();
+//                    }else {
+//                        Toast.makeText(MainActivity.this,response.toString(), Toast.LENGTH_SHORT).show();
+//                    }}
+//
+//                }
+//
+//                @Override
+//                public void onFailure(Call<LoginModel> call, Throwable t) {
+//                    Log.d("fail", "onFailure: "+t);
+//                    Toast.makeText(MainActivity.this, "Gagal Terhubung ke Server", Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(MainActivity.this, "Login Error : "+t.getMessage(), Toast.LENGTH_SHORT).show();
+//                    loading.dismiss();
+//                }
+//            });
         }
     }
 
