@@ -106,9 +106,7 @@ public class AddAsetActivity extends AppCompatActivity {
     Button map3;
     Button map4;
 
-    List<String> asetKodeTanaman = new ArrayList<>();
-    List<String> asetKodeNonTanaman = new ArrayList<>();
-    List<String> asetKodeKayu = new ArrayList<>();
+    List<AsetKode2> asetKode2 = new ArrayList<>();
     List<Afdelling> afdeling = new ArrayList<>();
 
 
@@ -975,7 +973,7 @@ ActivityResultLauncher<Intent> resultLauncher;
                 List<String> listSpinner = new ArrayList<>();
                 listSpinner.add("Pilih Kode Aset");
 
-
+                asetKode2 = asetKode;
                 for ( AsetKode2 a : asetKode ){
 
                         String aset_kode_temp = "";
@@ -985,21 +983,6 @@ ActivityResultLauncher<Intent> resultLauncher;
                             aset_kode_temp = a.getAsetClass() + "/" + a.getAsetGroup() + "/" + a.getAsetDesc();
                         } else {
                             aset_kode_temp = a.getAsetClass() + "/" + a.getAsetGroup() + "/" + a.getAsetDesc();
-                        }
-                        if (a.getAsetJenis() == 1) {
-
-                            asetKodeTanaman.add("Pilih Kode Aset");
-                            asetKodeTanaman.add(aset_kode_temp);
-                        } else if (a.getAsetJenis() == 2) {
-                            asetKodeNonTanaman.add("Pilih Kode Aset");
-                            asetKodeNonTanaman.add(aset_kode_temp);
-
-                        } else if (a.getAsetJenis() == 3) {
-                            asetKodeKayu.add("Pilih Kode Aset");
-                            asetKodeKayu.add(aset_kode_temp);
-
-                        } else {
-
                         }
                 }
 
@@ -1997,25 +1980,28 @@ ActivityResultLauncher<Intent> resultLauncher;
 
 
     public void setAdapterInput(){
-        if (spinnerJenisAset.getSelectedItemId() == 1) {
-            spinnerKodeAset.setAdapter(null);
-            ArrayAdapter<String> adapter = new ArrayAdapter<String>(getApplicationContext(),
-                    android.R.layout.simple_spinner_item, asetKodeTanaman);
-            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-            spinnerKodeAset.setAdapter(adapter);
-        } else if (spinnerJenisAset.getSelectedItemId() == 2) {
-            spinnerKodeAset.setAdapter(null);
-            ArrayAdapter<String> adapter = new ArrayAdapter<String>(getApplicationContext(),
-                    android.R.layout.simple_spinner_item, asetKodeNonTanaman);
-            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-            spinnerKodeAset.setAdapter(adapter);
-        } else {
-            spinnerKodeAset.setAdapter(null);
-            ArrayAdapter<String> adapter = new ArrayAdapter<String>(getApplicationContext(),
-                    android.R.layout.simple_spinner_item, asetKodeKayu);
-            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-            spinnerKodeAset.setAdapter(adapter);
+        List<String> asetKode = new ArrayList<>();
+        String aset_kode_temp = "";
+        for (AsetKode2 a : asetKode2) {
+
+
+            if (a.getAsetJenis() == spinnerJenisAset.getSelectedItemId()) {
+
+                if (a.getAsetJenis() == 2 ) {
+                    aset_kode_temp = a.getAsetClass() + "/" + a.getAsetDesc();
+                } else if (a.getAsetJenis() == 1) {
+                    aset_kode_temp = a.getAsetClass() + "/" + a.getAsetGroup() + "/" + a.getAsetDesc();
+                } else {
+                    aset_kode_temp = a.getAsetClass() + "/" + a.getAsetGroup() + "/" + a.getAsetDesc();
+                }
+
+                asetKode.add(aset_kode_temp);
+            }
         }
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getApplicationContext(),
+                android.R.layout.simple_spinner_item, asetKode);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerKodeAset.setAdapter(adapter);
     }
 
     public void setAfdelingAdapter(){
