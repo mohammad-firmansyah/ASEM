@@ -23,10 +23,12 @@ import java.util.List;
 
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;
 import retrofit2.http.Field;
+import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.Headers;
@@ -85,12 +87,15 @@ public interface AsetInterface {
     @DELETE("aset/{id}")
     Call<DeleteModel> deleteReport(@Path("id") int asetId);
 
-    @POST("login")
-    static Call<LoginModel> login(
+    @FormUrlEncoded
+    @POST("login")Call<LoginModel> login(
             @Field("username") String username,
             @Field("user_pass") String user_pass
-    ) {
-        return null;
-    }
+    );
+//    @POST("login")
+//    Call<LoginModel> login(
+//            @Field("username") String username,
+//            @Field("user_pass") String user_pass
+//    );
 
 }
