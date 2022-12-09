@@ -61,7 +61,7 @@ public class LonglistAsetActivity extends AppCompatActivity {
         rcAset.setHasFixedSize(true);
         rcAset.setLayoutManager(new LinearLayoutManager(this));
         fab = findViewById(R.id.addAset);
-        fab.setBackgroundTintList(ColorStateList.valueOf(Color.rgb(10, 50, 50)));
+        //fab.setBackgroundTintList(ColorStateList.valueOf(Color.rgb(10, 50, 50)));
 
 
 
