@@ -125,66 +125,6 @@ public class MainActivity extends AppCompatActivity {
                     }
             });
 
-
-            //fungsi login, getdata
-//            Call<LoginModel> call = AsetInterface.login(username,user_pass);//get data login dari api dan model
-//            call.enqueue(new Callback<LoginModel>() {
-//                @Override
-//                public void onResponse(Call<LoginModel> call, Response<LoginModel> response) {
-//                    if (response.isSuccessful() && response.body() != null){
-//                        if (response.body().getStatus()){
-//                            JsonObject jsonObject = response.body().getData();
-//                            Log.d(TAG, "onResponse: teslog : "+jsonObject.get("user").getAsString());
-//                            startActivity(new Intent(MainActivity.this, LonglistAsetActivity.class));
-//                        }else{
-//                            loading.dismiss();
-//                            Log.d("taglogin", "onResponse: Login bre");
-//                            Toast.makeText(MainActivity.this, response.body().getMessage(), Toast.LENGTH_LONG).show();}
-//                    }else{
-//                        loading.dismiss();
-//                    if (response.toString().contains("code=500")){
-//                        Toast.makeText(MainActivity.this,"Username atau Password anda salah", Toast.LENGTH_SHORT).show();
-//                    }else {
-//                        Toast.makeText(MainActivity.this,response.toString(), Toast.LENGTH_SHORT).show();
-//                    }}
-
-            //dari farizdotid
-//                    if (response.isSuccessful()){
-//                        loading.dismiss();
-//                        try {
-//                            JSONObject jsonRESULTS = new JSONObject(response.body().string());
-//                            if (jsonRESULTS.getString("error").equals("false")){
-//                                // Jika login berhasil maka data nama yang ada di response API
-//                                // akan diparsing ke activity selanjutnya.
-//                                Toast.makeText(mContext, "BERHASIL LOGIN", Toast.LENGTH_SHORT).show();
-//                                String nama = jsonRESULTS.getJSONObject("user").getString("nama");
-//                                Intent intent = new Intent(mContext, MainActivity.class);
-//                                intent.putExtra("result_nama", nama);
-//                                startActivity(intent);
-//                            } else {
-//                                // Jika login gagal
-//                                String error_message = jsonRESULTS.getString("error_msg");
-//                                Toast.makeText(mContext, error_message, Toast.LENGTH_SHORT).show();
-//                            }
-//                        } catch (JSONException e) {
-//                            e.printStackTrace();
-//                        } catch (IOException e) {
-//                            e.printStackTrace();
-//                        }
-//                    } else {
-//                        loading.dismiss();
-//                    }
-//
-//                }
-//
-//                @Override
-//                public void onFailure(Call<LoginModel> call, Throwable t) {
-//                    Log.d("fail", "onFailure: "+t);
-//                    Toast.makeText(MainActivity.this, "Gagal Terhubung ke Server", Toast.LENGTH_SHORT).show();
-//                    Toast.makeText(MainActivity.this, "Login Error : "+t.getMessage(), Toast.LENGTH_SHORT).show();
-//                    loading.dismiss();
-//                }
-//            });
         } dialog.dismiss();
     }
 

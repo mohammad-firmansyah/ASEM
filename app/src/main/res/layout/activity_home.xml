@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Home">
+    
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="230dp"
+            android:layout_margin="20dp"
+            android:backgroundTint="@color/origin_blue"
+            app:cardCornerRadius="20dp"
+            app:contentPadding="20dp">
+            
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/tvWelcome"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="3dp"
+                    android:fontFamily="sans-serif"
+                    android:text="Selamat Datang, "
+                    android:textColor="@color/white"
+                    android:textSize="14sp"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_above="@+id/tvUser"
+                    android:layout_below="@id/tvWelcome"
+                    android:fontFamily="sans-serif-black"
+                    android:text="Nama"
+                    android:textColor="@color/white"
+                    android:textSize="19sp"/>
+                
+                <TextView
+                    android:id="@+id/tvUser"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_above="@id/tvBagian"
+                    android:layout_marginBottom="3dp"
+                    android:fontFamily="sans-serif-black"
+                    android:text="Posisi"
+                    android:textColor="@color/white"
+                    android:textSize="19sp"/>
+                
+                <TextView
+                    android:id="@+id/tvBagian"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:fontFamily="sans-serif"
+                    android:text="Bagian"
+                    android:textColor="@color/white"
+                    android:textSize="14sp"/>
+
+
+            </RelativeLayout>
+
+        </androidx.cardview.widget.CardView>
+
+    </LinearLayout>
+    
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:layout_alignParentBottom="true"
+        app:menu="@menu/bottom_nav"/>
+
+</RelativeLayout>
