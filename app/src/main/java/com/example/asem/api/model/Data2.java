@@ -113,6 +113,11 @@ public class Data2 {
     private Integer umurEkonomisInMonth;
     @SerializedName("persen_kondisi")
     @Expose
+
+    private String statusPosisiID;
+    @SerializedName("status_posisi_id")
+    @Expose
+
     private double persenKondisi;
 
     public double getPersenKondisi() {
@@ -121,6 +126,14 @@ public class Data2 {
 
     public void setPersenKondisi(double persenKondisi) {
         this.persenKondisi = persenKondisi;
+    }
+
+    public String getStatusPosisiID() {
+        return statusPosisiID;
+    }
+
+    public void setStatusPosisiID(String statusPosisiID) {
+        this.statusPosisiID = statusPosisiID;
     }
 
     public Integer getAsetId() {

@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
@@ -11,8 +12,12 @@ import android.widget.Toast;
 
 public class ProfilActivity extends AppCompatActivity {
 
+    private static final String PREF_LOGIN = "LOGIN_PREF";
+
     TextView tvNIP,tvNama,tvUser,tvJabatan,tvBagian,tvEmail;
     CardView resetPass, logOut;
+
+    SharedPreferences sharedPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +51,12 @@ public class ProfilActivity extends AppCompatActivity {
 
     private void getUser(){
         //fungsi retrofit getdata user
+        sharedPreferences = getSharedPreferences(PREF_LOGIN, MODE_PRIVATE);
+        String username = sharedPreferences.getString("username", "-");
+        String user_pass = sharedPreferences.getString("user_pass", "-");
+
+        //tvNama.setText(getString("username"));
+
     }
 
     private void logout(){

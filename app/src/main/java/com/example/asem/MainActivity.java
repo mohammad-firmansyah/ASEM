@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Dialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
@@ -34,7 +35,10 @@ public class MainActivity extends AppCompatActivity {
 
     //AlertDialog loading;
     //GlobalFunction global = new GlobalFunction();
+    private static final String PREF_LOGIN = "LOGIN_PREF";
+    private static final String LOGIN_CREDENTIALS = "LOGIN_CREDENTIALS";
     private static final String TAG = "LoginTAG";
+    SharedPreferences sharedPreferences;
     private Dialog dialog;
     private AsetInterface asetInterface;
 
@@ -102,7 +106,23 @@ public class MainActivity extends AppCompatActivity {
                         if (response.body().getSuccess()){
                             Login login = response.body().getData();
                             Log.d(TAG, "onResponse: teslog : "+login.getUsername());
-                            startActivity(new Intent(MainActivity.this, LonglistAsetActivity.class));
+                            //SharedPreferences.Editor editor = getSharedPreferences(PREF_LOGIN, MODE_PRIVATE).edit();
+                            //editor.putString(LOGIN_CREDENTIALS, response.body().getToken());
+                            sharedPreferences = getSharedPreferences(PREF_LOGIN, MODE_PRIVATE);
+                            String username = sharedPreferences.getString("username", "-");
+                            String user_pass = sharedPreferences.getString("user_pass", "-");
+
+
+//                            editor.putString("nip", nip);
+//                            editor.putInt("userID", jsonObject.get("user_id").getAsInt());
+//                            editor.putString("nama", jsonObject.get("nama").getAsString());
+//                            editor.putString("jabatan", jsonObject.get("jabatan").getAsString());
+//                            editor.putString("user_keterangan", jsonObject.get("keterangan").getAsString());
+//                            editor.putString("unit", jsonObject.get("unit").getAsString());
+//                            editor.putString("kebunID", jsonObject.get("unit_id").getAsString());
+//                            editor.putBoolean("onSyncDone", false); // saat login awal dia kondisi belum sync
+//                            editor.apply();
+                            startActivity(new Intent(MainActivity.this, ProfilActivity.class));
                         }else{
                             dialog.dismiss();
                             Log.d("taglogin", "onResponse: Login bre");
