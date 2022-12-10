@@ -1782,16 +1782,18 @@ public class AddAsetActivity extends AppCompatActivity {
         dialog.show();
         spinnerValidation();
 //        Toast.makeText(getApplicationContext(), "hello im clicked", Toast.LENGTH_SHORT).show();
-        if (inpNamaAset.getText().toString().matches("")) {
+        if (inpNamaAset.getText().toString().equals("")) {
             dialog.dismiss();
             inpNamaAset.setError("nama harus diisi");
             inpNamaAset.requestFocus();
+            return;
         }
 
-        if (inpNoSAP.getText().toString().matches("")) {
+        if (inpNoSAP.getText().toString().equals("")) {
             dialog.dismiss();
             inpNoSAP.setError("nomor SAP harus diisi");
             inpNoSAP.requestFocus();
+            return;
         }
 
         if (spinnerAsetKondisi.getSelectedItemId() != 3) {
@@ -1822,51 +1824,58 @@ public class AddAsetActivity extends AppCompatActivity {
             // menampilkan alert dialog
             alertDialog.show();
             dialog.dismiss();
+                return;
 
         }
         }
 
         if(spinnerTipeAset.getSelectedItemId() != 0 || spinnerAsetKondisi.getSelectedItemId() != 2 || spinnerAsetKondisi.getSelectedItemId() != 3) {
 
-            if (inpNomorBAST.getText().toString().matches("")) {
+            if (inpNomorBAST.getText().toString().equals("")) {
                 inpNomorBAST.setError("Nomor Bast harus diisi");
                 inpNomorBAST.requestFocus();
                 dialog.dismiss();
+                return;
             }
         }
 
 
-        if (inpNilaiAsetSAP.getText().toString().matches("")) {
+        if (inpNilaiAsetSAP.getText().toString().equals("")) {
             inpNamaAset.setError("Nilai Aset harus diisi");
             inpNamaAset.requestFocus();
             dialog.dismiss();
+            return;
         }
 
-        if (inpTglOleh.getText().toString().matches("")) {
+        if (inpTglOleh.getText().toString().equals("")) {
             inpTglOleh.setError("Tanggal Perolehan harus diisi");
             inpTglOleh.requestFocus();
             dialog.dismiss();
+            return;
         }
 
-        if (inpMasaPenyusutan.getText().toString().matches("")) {
+        if (inpMasaPenyusutan.getText().toString().equals("")) {
             inpMasaPenyusutan.setError("Masa Penyusutan harus diisi");
             inpMasaPenyusutan.requestFocus();
             dialog.dismiss();
+            return;
         }
 
-        if (inpNilaiResidu.getText().toString().matches("")) {
+        if (inpNilaiResidu.getText().toString().equals("")) {
             inpNilaiResidu.setError("Nilai Residu harus diisi");
             inpNilaiResidu.requestFocus();
             dialog.dismiss();
+            return;
         }
 
 
         if (spinnerJenisAset.getSelectedItemId() == 1 ) {
 
-            if (inpJumlahPohon.getText().toString().matches("")) {
+            if (inpJumlahPohon.getText().toString().equals("")) {
                 inpJumlahPohon.setError("Jumlah Pohon harus diisi");
                 inpJumlahPohon.requestFocus();
                 dialog.dismiss();
+                return;
             }
         }
 

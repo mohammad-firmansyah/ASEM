@@ -392,6 +392,8 @@ public class ReportActivity extends AppCompatActivity {
 
 
     private void downloadReport(String url){
+
+        Log.d("asetapix",url);
         DownloadManager.Request request = new DownloadManager.Request(Uri.parse(url));
         String title = URLUtil.guessFileName(url,null,null);
         request.setTitle(title);
@@ -480,7 +482,7 @@ public class ReportActivity extends AppCompatActivity {
 
                             Log.d("asetdua",baseUrlAset + "/" + String.valueOf(response.body().getData()));
                         } else {
-                            downloadReport(baseUrl+String.valueOf(response.body().getData()));
+                            downloadReport(baseUrlAset+String.valueOf(response.body().getData()));
                         }
                         Log.d("asetdua",baseUrlAset + "/" + String.valueOf(response.body().getData()));
                         Toast.makeText(getApplicationContext(),"success",Toast.LENGTH_LONG).show();

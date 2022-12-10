@@ -601,7 +601,7 @@ public class DetailAsetActivity extends AppCompatActivity {
 
 //                set selection spinners
                 spinnerTipeAset.setSelection(response.body().getData().getAsetTipe()-1);
-                spinnerJenisAset.setSelection(response.body().getData().getAsetTipe()-1);
+                spinnerJenisAset.setSelection(response.body().getData().getAsetTipe());
                 spinnerAsetKondisi.setSelection(response.body().getData().getAsetKondisi()-1);
                 spinnerKodeAset.setSelection(response.body().getData().getAsetKode()-1);
                 spinnerUnit.setSelection(response.body().getData().getUnitId()-1);
@@ -739,6 +739,9 @@ public class DetailAsetActivity extends AppCompatActivity {
                 for ( AsetKode2 a : asetKode ){
 
                     String aset_kode_temp = "";
+
+
+//                    aset_kode_temp = a.getAsetClass() + "/" + a.getAsetGroup() + "/" + a.getAsetDesc();
                     if (a.getAsetJenis() == 1 ) {
                         aset_kode_temp = a.getAsetClass() + "/" + a.getAsetDesc();
                     } else if (a.getAsetJenis() == 2) {
@@ -746,6 +749,8 @@ public class DetailAsetActivity extends AppCompatActivity {
                     } else {
                         aset_kode_temp = a.getAsetClass() + "/" + a.getAsetGroup() + "/" + a.getAsetDesc();
                     }
+
+
                     listSpinner.add(aset_kode_temp);
                 }
 

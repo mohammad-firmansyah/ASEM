@@ -460,6 +460,7 @@
                 android:inputType="numberDecimal"
                 android:spinnerMode="dropdown"
 
+
                 />
 
             <TextView

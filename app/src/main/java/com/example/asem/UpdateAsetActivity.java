@@ -196,6 +196,9 @@ public class UpdateAsetActivity extends AppCompatActivity {
     String spinnerIdJenisAset;
     String spinnerIdAsetKondisi;
     String spinnerIdKodeAset;
+    String spinnerIdSubUnit;
+    String spinnerIdUnit;
+    String spinnerIdAfdeling;
 
 
     Integer id;
@@ -441,6 +444,20 @@ public class UpdateAsetActivity extends AppCompatActivity {
             }
         });
 
+        spinnerSubUnit.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                spinnerIdSubUnit = String.valueOf(position);
+                editVisibilityDynamic();
+                setAfdelingAdapter();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> arg0) {
+
+            }
+        });
+
         spinnerTipeAset.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -458,8 +475,8 @@ public class UpdateAsetActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 spinnerIdJenisAset = String.valueOf(position+1);
-
                 editVisibilityDynamic();
+                setAdapterAsetKode();
             }
 
             @Override
@@ -659,7 +676,7 @@ public class UpdateAsetActivity extends AppCompatActivity {
                 }
 
                 List<String> listSpinner = new ArrayList<>();
-
+//                listSpinner.add("pilih aset jenis");
                 for (int i = 0; i < response.body().getData().size();i++){
                     listSpinner.add(response.body().getData().get(i).getAset_jenis_desc());
                 }
@@ -798,7 +815,7 @@ public class UpdateAsetActivity extends AppCompatActivity {
 
 //                set selection spinners
                 spinnerTipeAset.setSelection(response.body().getData().getAsetTipe()-1);
-                spinnerJenisAset.setSelection(response.body().getData().getAsetTipe()-1);
+                spinnerJenisAset.setSelection(response.body().getData().getAsetTipe());
                 spinnerAsetKondisi.setSelection(response.body().getData().getAsetKondisi()-1);
                 spinnerKodeAset.setSelection(response.body().getData().getAsetKode()-1);
                 spinnerUnit.setSelection(response.body().getData().getUnitId()-1);
@@ -928,18 +945,22 @@ public class UpdateAsetActivity extends AppCompatActivity {
                 List<AsetKode2> asetKode = response.body().getData();
                 List<String> listSpinner = new ArrayList<>();
 
+                asetKode2 = asetKode;
 
                 for ( AsetKode2 a : asetKode ){
 
                     String aset_kode_temp = "";
-                    if (a.getAsetJenis() == 2 ) {
-                        aset_kode_temp = a.getAsetClass() + "/" + a.getAsetDesc();
-                    } else if (a.getAsetJenis() == 1) {
-                        aset_kode_temp = a.getAsetClass() + "/" + a.getAsetGroup() + "/" + a.getAsetDesc();
-                    } else {
-                        aset_kode_temp = a.getAsetClass() + "/" + a.getAsetGroup() + "/" + a.getAsetDesc();
-                    }
+
+                    aset_kode_temp = a.getAsetClass() + "/" + a.getAsetGroup() + "/" + a.getAsetDesc();
+//                    if ((a.getAsetJenis()+1) == 1 ) {
+//                    } else if ((a.getAsetJenis()+1)  == 2) {
+//                        aset_kode_temp = a.getAsetClass() + "/" + a.getAsetDesc();
+//                    } else {
+//                        aset_kode_temp = a.getAsetClass() + "/" + a.getAsetGroup() + "/" + a.getAsetDesc();
+//                    }
+
                     listSpinner.add(aset_kode_temp);
+
                 }
 
                 ArrayAdapter<String> adapter = new ArrayAdapter<String>(getApplicationContext(),
@@ -1493,7 +1514,6 @@ public class UpdateAsetActivity extends AppCompatActivity {
     }
     public void editAset(){
         dialog.show();
-        Log.d("halo",String.valueOf(spinnerIdTipeAsset));
         String tgl_input = inpTglInput.getText().toString().trim() + " 00:00:00";
 
         String nama_aset = inpNamaAset.getText().toString().trim();
@@ -1568,74 +1588,6 @@ public class UpdateAsetActivity extends AppCompatActivity {
             RequestBody requestKeterangan = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(keterangan));
 
 
-
-            if (bafile_file != null){
-                RequestBody requestBaFile = RequestBody.create(MediaType.parse("multipart/form-file"), bafile_file);
-                partBaFile = MultipartBody.Part.createFormData("ba_file", bafile_file.getName(), requestBaFile);
-            }
-
-            if (img1 != null) {
-                img1Part = MultipartBody.Part.createFormData("foto_aset1",img1.getName(),RequestBody.create(MediaType.parse("image/*"),img1));
-            }
-
-            if (img2 != null) {
-                img2Part = MultipartBody.Part.createFormData("foto_aset2",img2.getName(),RequestBody.create(MediaType.parse("image/*"),img2));
-            }
-
-            if (img3 != null) {
-                img3Part = MultipartBody.Part.createFormData("foto_aset3",img3.getName(),RequestBody.create(MediaType.parse("image/*"),img3));
-            }
-
-            if (img4 != null) {
-                img4Part = MultipartBody.Part.createFormData("foto_aset4",img4.getName(),RequestBody.create(MediaType.parse("image/*"),img4));
-            }
-
-
-//                Call<AsetModel> call = asetInterface.editAset(
-//                        1,
-//                        requestNamaAset,
-//                        requestTipeAset,
-//                        requestJenisAset,
-//                        requestKondisiAset,
-//                        requestKodeAset,
-//                        requestNomorAsetSAP,
-//                        img1Part,
-//                        img2Part,
-//                        img3Part,
-//                        img4Part,
-//                        requestGeoTag1,
-//                        requestGeoTag2,
-//                        requestGeoTag3,
-//                        requestGeoTag4,
-//                        requestGeoTag4,
-//                        requestLuasAset,
-//                        requestTglOleh,
-//                        requestNilaiResidu,
-//                        requestNilaiAsetSAP,
-//                        requestNomorBAST,
-//                        requestMasaSusut,
-//                        requestKeterangan,
-//                        ba_file
-//                );
-
-//            Data data = new Data();
-//            data.setAsetId(1);
-//            data.setAsetName("asetnama");
-//            data.setAsetTipe(1);
-//            data.setAsetKondisi(1);
-//            data.setTglInput("08-09-22");
-//            data.setTglOleh("08-09-22");
-//            data.setAsetKode(1);
-//            data.setNomorSap(111);
-//            data.setAsetLuas(111);
-//            data.setNilaiOleh(1111);
-//            data.setMasaSusut("11");
-//            data.setNomorBast("11");
-//            data.setNilaiResidu(11000);
-//            data.setKeterangan("ini dia");
-//
-//            Gson mGson = new Gson();
-//            RequestBody dataBody = RequestBody.create(MultipartBody.FORM, mGson.toJson(data));
             MultipartBody.Builder builder = new MultipartBody.Builder();
             builder.addPart(MultipartBody.Part.createFormData("aset_id",null,requestAsetId));
             builder.addPart(MultipartBody.Part.createFormData("aset_name",null,requestNamaAset));
@@ -1732,17 +1684,15 @@ public class UpdateAsetActivity extends AppCompatActivity {
     }
     public void setAdapterAsetKode(){
         List<String> asetKode = new ArrayList<>();
-        String aset_kode_temp = "";
+        String aset_kode_temp;
 
-        asetKode.add("Pilih Aset Kode");
         for (AsetKode2 a : asetKode2) {
+            if (a.getAsetJenis()-1 == spinnerJenisAset.getSelectedItemId()) {
+                Log.d("asetapix22",  "aset jenis dari spinner "+ String.valueOf(spinnerJenisAset.getSelectedItemId()));
 
-
-            if (a.getAsetJenis() == spinnerJenisAset.getSelectedItemId()) {
-
-                if (a.getAsetJenis() == 2 ) {
+                if ((a.getAsetJenis()) == 1 ) {
                     aset_kode_temp = a.getAsetClass() + "/" + a.getAsetDesc();
-                } else if (a.getAsetJenis() == 1) {
+                } else if ((a.getAsetJenis()) == 2) {
                     aset_kode_temp = a.getAsetClass() + "/" + a.getAsetGroup() + "/" + a.getAsetDesc();
                 } else {
                     aset_kode_temp = a.getAsetClass() + "/" + a.getAsetGroup() + "/" + a.getAsetDesc();
