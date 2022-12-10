@@ -1,12 +1,14 @@
 package com.example.asem.adapter;
 
 
+import static android.content.Context.MODE_PRIVATE;
 import static androidx.core.content.ContextCompat.startActivity;
 
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -42,6 +44,8 @@ public class Aset2Adapter  extends RecyclerView.Adapter<Aset2Adapter.ViewHolder>
 
     List<Data2> myAsetData;
     Context context;
+    SharedPreferences sharedPreferences;
+    private static final String PREF_LOGIN = "LOGIN_PREF";
 
     public Aset2Adapter(List<Data2> data, LonglistAsetActivity longlistAsetActivity){
         this.myAsetData =data;
@@ -61,6 +65,7 @@ public class Aset2Adapter  extends RecyclerView.Adapter<Aset2Adapter.ViewHolder>
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         final Data2 myPostData2 = myAsetData.get(position);
+
         holder.tvTglInput.setText(myPostData2.getTglInput());
         holder.tvNoSAP.setText(String.valueOf(String.valueOf(myPostData2.getNomorSap())));
         holder.tvAsetJenis.setText(String.valueOf(myPostData2.getAsetJenis()));
@@ -132,6 +137,103 @@ public class Aset2Adapter  extends RecyclerView.Adapter<Aset2Adapter.ViewHolder>
                 context.startActivity(intent);
             }
         });
+
+        sharedPreferences = context.getSharedPreferences(PREF_LOGIN, MODE_PRIVATE);
+        String hak_akses_id = sharedPreferences.getString("hak_akses_id", "-");
+
+        if(hak_akses_id == "1"){ //operator
+            if(myPostData2.getStatusPosisiID().equals("1")){
+                holder.btnEdit.setVisibility(View.VISIBLE);
+                holder.btnKirim.setVisibility(View.VISIBLE);
+            } else if(myPostData2.getStatusPosisiID().equals("5")){
+                holder.btnEdit.setVisibility(View.VISIBLE);
+                holder.btnKirim.setVisibility(View.VISIBLE);
+            } else {
+                holder.btnEdit.setVisibility(View.GONE);
+                holder.btnKirim.setVisibility(View.GONE);
+            }
+        } else if(hak_akses_id=="2"){ //pending asisten
+            if(myPostData2.getStatusPosisiID().equals("2")){
+                holder.btnEdit.setVisibility(View.VISIBLE);
+                holder.btnKirim.setVisibility(View.VISIBLE);
+            } else {
+                holder.btnEdit.setVisibility(View.GONE);
+                holder.btnKirim.setVisibility(View.GONE);
+            }
+        } else if (hak_akses_id == "3"){ //asisten
+            if(myPostData2.getStatusPosisiID().equals("3")){
+                holder.btnEdit.setVisibility(View.VISIBLE);
+                holder.btnKirim.setVisibility(View.VISIBLE);
+            } else {
+                holder.btnEdit.setVisibility(View.GONE);
+                holder.btnKirim.setVisibility(View.GONE);
+            }
+        }else if (hak_akses_id == "4"){ //pending astu
+            if(myPostData2.getStatusPosisiID().equals("4")){
+                holder.btnEdit.setVisibility(View.VISIBLE);
+                holder.btnKirim.setVisibility(View.VISIBLE);
+            } else {
+                holder.btnEdit.setVisibility(View.GONE);
+                holder.btnKirim.setVisibility(View.GONE);
+            }
+        } else if (hak_akses_id == "5"){ //astu
+            if(myPostData2.getStatusPosisiID().equals("5")){
+                holder.btnEdit.setVisibility(View.VISIBLE);
+                holder.btnKirim.setVisibility(View.VISIBLE);
+            } else {
+                holder.btnEdit.setVisibility(View.GONE);
+                holder.btnKirim.setVisibility(View.GONE);
+            }
+        } else if (hak_akses_id == "6"){ //pending askep
+            if(myPostData2.getStatusPosisiID().equals("6")){
+                holder.btnEdit.setVisibility(View.VISIBLE);
+                holder.btnKirim.setVisibility(View.VISIBLE);
+            } else {
+                holder.btnEdit.setVisibility(View.GONE);
+                holder.btnKirim.setVisibility(View.GONE);
+            }
+        } else if (hak_akses_id ==  "7"){ //askep
+            if(myPostData2.getStatusPosisiID().equals("7")){
+                holder.btnEdit.setVisibility(View.VISIBLE);
+                holder.btnKirim.setVisibility(View.VISIBLE);
+            } else {
+                holder.btnEdit.setVisibility(View.GONE);
+                holder.btnKirim.setVisibility(View.GONE);
+            }
+        } else if (hak_akses_id == "8"){ //pending manajer
+            if(myPostData2.getStatusPosisiID().equals("7")){
+                holder.btnEdit.setVisibility(View.VISIBLE);
+                holder.btnKirim.setVisibility(View.VISIBLE);
+            } else {
+                holder.btnEdit.setVisibility(View.GONE);
+                holder.btnKirim.setVisibility(View.GONE);
+            }
+        } else if (hak_akses_id == "9"){ //manajer
+            if(myPostData2.getStatusPosisiID().equals("9")){
+                holder.btnEdit.setVisibility(View.VISIBLE);
+                holder.btnKirim.setVisibility(View.VISIBLE);
+            } else {
+                holder.btnEdit.setVisibility(View.GONE);
+                holder.btnKirim.setVisibility(View.GONE);
+            }
+        } else if (hak_akses_id == "10"){ //pending kasi
+            if(myPostData2.getStatusPosisiID().equals("10")){
+                holder.btnEdit.setVisibility(View.VISIBLE);
+                holder.btnKirim.setVisibility(View.VISIBLE);
+            } else {
+                holder.btnEdit.setVisibility(View.GONE);
+                holder.btnKirim.setVisibility(View.GONE);
+            }
+        } else if(hak_akses_id == "11"){ //kasi
+            if(myPostData2.getStatusPosisiID().equals("11")){
+                holder.btnEdit.setVisibility(View.VISIBLE);
+                holder.btnKirim.setVisibility(View.VISIBLE);
+            } else {
+                holder.btnEdit.setVisibility(View.GONE);
+                holder.btnKirim.setVisibility(View.GONE);
+            }
+        }
+
     }
 
     @Override
