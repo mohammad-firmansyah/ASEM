@@ -18,6 +18,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextClock;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -158,12 +159,18 @@ public class Aset2Adapter  extends RecyclerView.Adapter<Aset2Adapter.ViewHolder>
             }
         });
 
-//        holder.btnKirim.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                if(myPostData2.get)
-//            }
-//        });
+        int id = myPostData2.getAsetId();
+//        String subunit = myPostData2.getAsetSubUnit();
+//        String stat_posisi_id = myPostData2.getStatusPosisiID();
+
+        holder.btnKirim.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showDialogKirim("Yakin Kirim Data?",
+                        asetInterface.kirimDataAset(id, "kirim")
+                        );
+            }
+        });
 
         sharedPreferences = context.getSharedPreferences(PREF_LOGIN, MODE_PRIVATE);
         String hak_akses_id = sharedPreferences.getString("hak_akses_id", "-");
@@ -172,6 +179,7 @@ public class Aset2Adapter  extends RecyclerView.Adapter<Aset2Adapter.ViewHolder>
             if(myPostData2.getStatusPosisiID().equals("1")){
                 holder.btnEdit.setVisibility(View.VISIBLE);
                 holder.btnKirim.setVisibility(View.VISIBLE);
+                //hapus statusreject, dan keterangan reject
             } else if(myPostData2.getStatusPosisiID().equals("5")){
                 holder.btnEdit.setVisibility(View.VISIBLE);
                 holder.btnKirim.setVisibility(View.VISIBLE);
@@ -267,6 +275,22 @@ public class Aset2Adapter  extends RecyclerView.Adapter<Aset2Adapter.ViewHolder>
             }
         }
 
+        // jika data 13 atau 12 maka bikin bg jadi merah
+        // selain posisi tersebut bg normal
+//        switch (myPostData2.getStatusPosisiID()){
+//            case 12:
+//            case 13:
+//                holder.cvAset.setBackgroundResource(R.drawable.bg_border_cancel);
+//                break;
+//            default:
+//                holder.cvAset.setBackgroundResource(R.drawable.bg_border);
+//                // bikin bg cardview longlist aset reject
+//                if (!myPostData2.getStatusReject().equals("0")){
+//                    holder.cvAset.setBackgroundResource(R.color.Khaki);
+//                }
+//                break;
+//        }
+
     }
 
     void showDialogKirim(String customtext,Call<AsetModel2> call) {
@@ -281,19 +305,19 @@ public class Aset2Adapter  extends RecyclerView.Adapter<Aset2Adapter.ViewHolder>
         Button kirim = dialog.findViewById(R.id.btnYaKirim);
 
         textdialog.setText(customtext);
+        texttanya.setText(customtext);
 
         cancel.setOnClickListener(view -> {
             dialog.dismiss();
         });
 
         kirim.setOnClickListener(view -> {
-            asetInterface = retrofit.create(AsetInterface.class);
             call.enqueue(new Callback<AsetModel2>() {
                 @Override
                 public void onResponse(@NotNull Call<AsetModel2> call, @NotNull Response<AsetModel2> response) {
                     if (response.isSuccessful() && response.body() != null) {
                         if (response.body().getStatus()) {
-                            //Log.d(TAG, "onResponse: teskirim : "+kirim.);
+                            //Log.d("posisidata", "onBindViewHolder: "+myAsetData.);
                             Toast.makeText(context.getApplicationContext(), "berhasil mengirim data", Toast.LENGTH_LONG).show();
                         }else {Toast.makeText(context.getApplicationContext(), response.body().getMessage(), Toast.LENGTH_SHORT).show();}
                     }else {
@@ -302,6 +326,7 @@ public class Aset2Adapter  extends RecyclerView.Adapter<Aset2Adapter.ViewHolder>
                 }
                 @Override
                 public void onFailure(@NotNull Call<AsetModel2> call, @NotNull Throwable t) {
+                    Log.d(TAG, "onResponse: teskirim : "+t.getMessage());
                     Toast.makeText(context.getApplicationContext(), "Gagal Terhubung ke Server", Toast.LENGTH_SHORT).show();
                 }
             });
@@ -334,6 +359,8 @@ public class Aset2Adapter  extends RecyclerView.Adapter<Aset2Adapter.ViewHolder>
         Button btnEdit;
         Button btnKirim;
         View btnHapus;
+        LinearLayout cvAset;
+
 
         public ViewHolder (@NonNull View v) {
             super(v);
@@ -353,7 +380,7 @@ public class Aset2Adapter  extends RecyclerView.Adapter<Aset2Adapter.ViewHolder>
             btnKirim = v.findViewById(R.id.btn_kirim);
             btnHapus = v.findViewById(R.id.btn_delete);
 
-
+            cvAset = v.findViewById(R.id.cvAset);
 
         }
     }
