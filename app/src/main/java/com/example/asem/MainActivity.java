@@ -106,22 +106,29 @@ public class MainActivity extends AppCompatActivity {
                         if (response.body().getSuccess()){
                             Login login = response.body().getData();
                             Log.d(TAG, "onResponse: teslog : "+login.getUsername());
-                            //SharedPreferences.Editor editor = getSharedPreferences(PREF_LOGIN, MODE_PRIVATE).edit();
+                            SharedPreferences.Editor editor = getSharedPreferences(PREF_LOGIN, MODE_PRIVATE).edit();
                             //editor.putString(LOGIN_CREDENTIALS, response.body().getToken());
                             sharedPreferences = getSharedPreferences(PREF_LOGIN, MODE_PRIVATE);
                             String username = sharedPreferences.getString("username", "-");
                             String user_pass = sharedPreferences.getString("user_pass", "-");
+                            String user_email = sharedPreferences.getString("user_email", "-");
+                            String user_nip = sharedPreferences.getString("user_nip", "-");
+                            String user_fullname = sharedPreferences.getString("user_fullname", "-");
+                            String user_jabatan = sharedPreferences.getString("user_jabatan", "-");
+                            String user_id = sharedPreferences.getString("user_id", "-");
+                            String hak_akses_id = sharedPreferences.getString("hak_akses_id", "-");
+                            String unit_id = sharedPreferences.getString("unit_id", "-");
 
-
-//                            editor.putString("nip", nip);
-//                            editor.putInt("userID", jsonObject.get("user_id").getAsInt());
-//                            editor.putString("nama", jsonObject.get("nama").getAsString());
-//                            editor.putString("jabatan", jsonObject.get("jabatan").getAsString());
-//                            editor.putString("user_keterangan", jsonObject.get("keterangan").getAsString());
-//                            editor.putString("unit", jsonObject.get("unit").getAsString());
-//                            editor.putString("kebunID", jsonObject.get("unit_id").getAsString());
-//                            editor.putBoolean("onSyncDone", false); // saat login awal dia kondisi belum sync
-//                            editor.apply();
+                            editor.putString("username", username);
+                            editor.putString("user_nip", user_nip);
+                            editor.putString("user_id", user_id);
+                            editor.putString("user_email", user_email);
+                            editor.putString("nama", user_fullname);
+                            editor.putString("user_jabatan", user_jabatan);
+                            editor.putString("unit_id", unit_id);
+                            editor.putString("hak_akses_id", hak_akses_id);
+                            editor.putBoolean("onSyncDone", false); // saat login awal dia kondisi belum sync
+                            editor.apply();
                             startActivity(new Intent(MainActivity.this, ProfilActivity.class));
                         }else{
                             dialog.dismiss();

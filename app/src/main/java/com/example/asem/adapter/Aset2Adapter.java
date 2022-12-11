@@ -57,6 +57,7 @@ public class Aset2Adapter  extends RecyclerView.Adapter<Aset2Adapter.ViewHolder>
     Context context;
     SharedPreferences sharedPreferences;
     private static final String PREF_LOGIN = "LOGIN_PREF";
+    private static final String TAG = "KirimTAG";
 
 
     public Aset2Adapter(List<Data2> data, LonglistAsetActivity longlistAsetActivity){
@@ -292,6 +293,7 @@ public class Aset2Adapter  extends RecyclerView.Adapter<Aset2Adapter.ViewHolder>
                 public void onResponse(@NotNull Call<AsetModel2> call, @NotNull Response<AsetModel2> response) {
                     if (response.isSuccessful() && response.body() != null) {
                         if (response.body().getStatus()) {
+                            //Log.d(TAG, "onResponse: teskirim : "+kirim.);
                             Toast.makeText(context.getApplicationContext(), "berhasil mengirim data", Toast.LENGTH_LONG).show();
                         }else {Toast.makeText(context.getApplicationContext(), response.body().getMessage(), Toast.LENGTH_SHORT).show();}
                     }else {
