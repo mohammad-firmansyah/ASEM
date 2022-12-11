@@ -92,10 +92,10 @@ public interface AsetInterface {
             @Field("username") String username,
             @Field("user_pass") String user_pass
     );
-//    @POST("login")
-//    Call<LoginModel> login(
-//            @Field("username") String username,
-//            @Field("user_pass") String user_pass
-//    );
+
+    @POST("kirimDataAset") Call<Data2> kirimDataAset(
+            @Field("aset_sub_unit") String aset_sub_unit,
+            @Field("status_posisi_id") String status_posisi_id
+    );
 
 }
