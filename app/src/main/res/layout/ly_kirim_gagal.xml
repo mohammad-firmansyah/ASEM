@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/cvKirimGagal"
+    app:cardCornerRadius="10dp"
+    app:cardUseCompatPadding="true"
+    android:layout_gravity="center"
+    app:cardBackgroundColor="@color/background_grey"
+    android:orientation="vertical"
+    >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="30dp"
+        android:paddingBottom="30dp">
+
+        <TextView
+            android:id="@+id/tvTidak"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:fontFamily="sans-serif-black"
+            android:text="TIDAK BISA KIRIM"
+            android:textColor="@color/Red2"
+            android:textSize="28sp">
+        </TextView>
+
+        <TextView
+            android:id="@+id/tvInventaris"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:fontFamily="sans-serif-black"
+            android:textSize="20sp"
+            android:text="FOTO ASET DENGAN QR CODE\nBELUM DIISI OLEH OPERATOR"
+            android:layout_below="@+id/tvTidak"
+            android:layout_marginTop="10dp">
+        </TextView>
+
+    </RelativeLayout>
+
+</androidx.cardview.widget.CardView>
