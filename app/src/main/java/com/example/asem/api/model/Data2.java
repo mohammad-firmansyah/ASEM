@@ -117,8 +117,15 @@ public class Data2 {
     private String statusPosisiID;
     @SerializedName("status_posisi_id")
     @Expose
-
     private double persenKondisi;
+
+//    private String kirimDataAset;
+//    @SerializedName("kirimDataAset")
+//    @Expose
+//
+//    public String getKirimDataAset() { return kirimDataAset; }
+//
+//    public void setKirimDataAset(String kirimDataAset) { this.kirimDataAset = kirimDataAset; }
 
     public double getPersenKondisi() {
         return persenKondisi;

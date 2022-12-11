@@ -4,7 +4,10 @@ package com.example.asem.adapter;
 import static android.content.Context.MODE_PRIVATE;
 import static androidx.core.content.ContextCompat.startActivity;
 
+import static com.example.asem.LonglistAsetActivity.baseUrl;
+
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -13,7 +16,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.Button;
+import android.widget.TextClock;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -25,11 +30,15 @@ import com.example.asem.DetailAsetActivity;
 import com.example.asem.LonglistAsetActivity;
 import com.example.asem.R;
 import com.example.asem.UpdateAsetActivity;
+import com.example.asem.api.ApiFunction;
 import com.example.asem.api.AsetInterface;
+import com.example.asem.api.model.Aset;
 import com.example.asem.api.model.AsetModel2;
 import com.example.asem.api.model.Data2;
 import com.example.asem.api.model.DeleteModel;
 import com.example.asem.utils.utils;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
@@ -41,11 +50,14 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class Aset2Adapter  extends RecyclerView.Adapter<Aset2Adapter.ViewHolder>{
 
+    private AsetInterface asetInterface;
 
+    Retrofit retrofit;
     List<Data2> myAsetData;
     Context context;
     SharedPreferences sharedPreferences;
     private static final String PREF_LOGIN = "LOGIN_PREF";
+
 
     public Aset2Adapter(List<Data2> data, LonglistAsetActivity longlistAsetActivity){
         this.myAsetData =data;
@@ -80,6 +92,13 @@ public class Aset2Adapter  extends RecyclerView.Adapter<Aset2Adapter.ViewHolder>
         } else {
             holder.tvNoinv.setText("-");
         }
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(baseUrl)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        asetInterface = retrofit.create(AsetInterface.class);
 
 
         holder.btnHapus.setOnClickListener(new View.OnClickListener() {
@@ -138,6 +157,13 @@ public class Aset2Adapter  extends RecyclerView.Adapter<Aset2Adapter.ViewHolder>
             }
         });
 
+//        holder.btnKirim.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                if(myPostData2.get)
+//            }
+//        });
+
         sharedPreferences = context.getSharedPreferences(PREF_LOGIN, MODE_PRIVATE);
         String hak_akses_id = sharedPreferences.getString("hak_akses_id", "-");
 
@@ -180,6 +206,12 @@ public class Aset2Adapter  extends RecyclerView.Adapter<Aset2Adapter.ViewHolder>
             if(myPostData2.getStatusPosisiID().equals("5")){
                 holder.btnEdit.setVisibility(View.VISIBLE);
                 holder.btnKirim.setVisibility(View.VISIBLE);
+                holder.btnKirim.setOnClickListener(v -> {
+                    if(myPostData2.getFotoAsetQr() == null){
+                        Toast.makeText(context.getApplicationContext(), "Mohon QRCODE Dilengkapi", Toast.LENGTH_SHORT).show();
+                    } else{
+                    }
+                });
             } else {
                 holder.btnEdit.setVisibility(View.GONE);
                 holder.btnKirim.setVisibility(View.GONE);
@@ -234,6 +266,48 @@ public class Aset2Adapter  extends RecyclerView.Adapter<Aset2Adapter.ViewHolder>
             }
         }
 
+    }
+
+    void showDialogKirim(String customtext,Call<AsetModel2> call) {
+
+        final Dialog dialog =new Dialog(context);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.ly_kirim_sukses);
+        dialog.show();
+        TextView textdialog = dialog.findViewById(R.id.tvKirim);
+        TextView texttanya = dialog.findViewById(R.id.tvTanyaKirim);
+        Button cancel = dialog.findViewById(R.id.btnTidakKirim);
+        Button kirim = dialog.findViewById(R.id.btnYaKirim);
+
+        textdialog.setText(customtext);
+
+        cancel.setOnClickListener(view -> {
+            dialog.dismiss();
+        });
+
+        kirim.setOnClickListener(view -> {
+            asetInterface = retrofit.create(AsetInterface.class);
+            call.enqueue(new Callback<AsetModel2>() {
+                @Override
+                public void onResponse(@NotNull Call<AsetModel2> call, @NotNull Response<AsetModel2> response) {
+                    if (response.isSuccessful() && response.body() != null) {
+                        if (response.body().getStatus()) {
+                            Toast.makeText(context.getApplicationContext(), "berhasil mengirim data", Toast.LENGTH_LONG).show();
+                        }else {Toast.makeText(context.getApplicationContext(), response.body().getMessage(), Toast.LENGTH_SHORT).show();}
+                    }else {
+                        Toast.makeText(context.getApplicationContext(), response.toString(), Toast.LENGTH_SHORT).show();
+                    }
+                }
+                @Override
+                public void onFailure(@NotNull Call<AsetModel2> call, @NotNull Throwable t) {
+                    Toast.makeText(context.getApplicationContext(), "Gagal Terhubung ke Server", Toast.LENGTH_SHORT).show();
+                }
+            });
+            dialog.dismiss();
+            notifyDataSetChanged();
+            Intent gas = new Intent(context, LonglistAsetActivity.class);
+            context.startActivity(gas);
+        });
     }
 
     @Override

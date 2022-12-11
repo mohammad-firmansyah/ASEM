@@ -15,7 +15,7 @@ public class ApiFunction {
 
     public static String BASE_URL = "http://202.148.9.226:9910/aset_mnj_repo/public/api/aset/1/";
 
-    public Object initAPi(Object apiData){
+    public Object initAPI(Object apiData){
         Object apiInterface;
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(BASE_URL)
