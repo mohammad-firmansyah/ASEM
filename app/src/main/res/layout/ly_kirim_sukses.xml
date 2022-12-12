@@ -4,10 +4,10 @@
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/cvKirimSukses"
-    app:cardCornerRadius="10dp"
+    app:cardCornerRadius="20dp"
     app:cardUseCompatPadding="true"
     android:layout_gravity="center"
-    app:cardBackgroundColor="@color/background_grey"
+    app:cardBackgroundColor="@color/grey3"
     android:orientation="vertical">
 
     <RelativeLayout
@@ -41,33 +41,44 @@
             android:text="DATA AKAN DIKIRIM KE POSISI\nSELANJUTNYA,\nYAKIN MENGIRIM DATA?">
         </TextView>
 
-
-        <Button
-            android:id="@+id/btnTidakKirim"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/tvTanyaKirim"
-            android:layout_marginLeft="55dp"
-            android:minWidth="120dp"
-            android:text="TIDAK"
-            android:backgroundTint="@color/IndianRed">
-        </Button>
+            android:layout_below="@+id/tvTanyaKirim">
 
-        <Button
-            android:id="@+id/btnYaKirim"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/tvTanyaKirim"
-            android:layout_toRightOf="@id/btnTidakKirim"
-            android:layout_marginLeft="60dp"
-            android:text="KIRIM"
-            android:fontFamily="sans-serif-black"
-            android:textColor="@color/yellow"
-            android:backgroundTint="@color/white"
-            android:minWidth="120dp"
-            >
+            <Button
+                android:id="@+id/btnTidakKirim"
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:layout_weight="0.5"
+                android:layout_below="@+id/tvTanyaKirim"
+                android:layout_marginLeft="55dp"
+                android:layout_marginRight="20dp"
+                android:minWidth="120dp"
+                android:text="TIDAK"
+                android:textSize="11sp"
+                android:backgroundTint="@color/IndianRed">
+            </Button>
 
-        </Button>
+            <Button
+                android:id="@+id/btnYaKirim"
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:layout_weight="0.5"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="40dp"
+                android:layout_below="@+id/tvTanyaKirim"
+                android:layout_toRightOf="@id/btnTidakKirim"
+                android:text="KIRIM"
+                android:textSize="11sp"
+                android:fontFamily="sans-serif-black"
+                android:textColor="@color/yellow"
+                android:backgroundTint="@color/white"
+                android:minWidth="120dp">
+
+            </Button>
+
+        </LinearLayout>
 
     </RelativeLayout>
 
