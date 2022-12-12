@@ -129,7 +129,7 @@ public class MainActivity extends AppCompatActivity {
                             editor.putString("hak_akses_id", hak_akses_id);
                             editor.putBoolean("onSyncDone", false); // saat login awal dia kondisi belum sync
                             editor.apply();
-                            startActivity(new Intent(MainActivity.this, ProfilActivity.class));
+                            startActivity(new Intent(MainActivity.this, LonglistAsetActivity.class));
                         }else{
                             dialog.dismiss();
                             Log.d("taglogin", "onResponse: Login bre");

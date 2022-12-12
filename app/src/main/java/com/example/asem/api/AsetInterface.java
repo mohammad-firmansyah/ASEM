@@ -1,17 +1,12 @@
 package com.example.asem.api;
 
-import com.example.asem.MainActivity;
-import com.example.asem.api.model.Afdelling;
 import com.example.asem.api.model.AfdellingModel;
-import com.example.asem.api.model.Aset;
 import com.example.asem.api.model.AsetJenisModel;
-import com.example.asem.api.model.AsetKodeModel;
 import com.example.asem.api.model.AsetKodeModel2;
 import com.example.asem.api.model.AsetKondisi;
 import com.example.asem.api.model.AsetModel;
 import com.example.asem.api.model.AsetModel2;
 import com.example.asem.api.model.AsetTipe;
-import com.example.asem.api.model.Data;
 import com.example.asem.api.model.Data2;
 import com.example.asem.api.model.DeleteModel;
 import com.example.asem.api.model.LoginModel;
@@ -22,8 +17,6 @@ import com.example.asem.api.model.UnitModel;
 import java.util.List;
 
 import okhttp3.MultipartBody;
-import okhttp3.RequestBody;
-import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;
@@ -31,12 +24,7 @@ import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
-import retrofit2.http.Headers;
-import retrofit2.http.Multipart;
-import retrofit2.http.PATCH;
 import retrofit2.http.POST;
-import retrofit2.http.PUT;
-import retrofit2.http.Part;
 import retrofit2.http.Path;
 
 public interface AsetInterface {
@@ -93,9 +81,13 @@ public interface AsetInterface {
             @Field("user_pass") String user_pass
     );
 
-    @POST("kirimDataAset") Call<Data2> kirimDataAset(
-            @Field("aset_sub_unit") String aset_sub_unit,
-            @Field("status_posisi_id") String status_posisi_id
-    );
+    @FormUrlEncoded
+    @POST("kirimDataAset")
+    Call<AsetModel2> kirimDataAset(
+//            @Field("aset_sub_unit") String aset_sub_unit,
+//            @Field("status_posisi_id") String status_posisi_id,
+            @Field("id") int id,
+            @Field("message") String kirim);
+
 
 }
