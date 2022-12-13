@@ -23,6 +23,7 @@ import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.drawable.ColorDrawable;
 import android.location.Location;
@@ -123,6 +124,12 @@ public class DetailAsetActivity extends AppCompatActivity {
     Integer id;
     double longitudeValue = 0;
     double latitudeValue = 0;
+
+    SharedPreferences sharedPreferences;
+    private static final String PREF_LOGIN = "LOGIN_PREF";
+
+    List<AsetKode2> asetKode2 = new ArrayList<>();
+    List<Afdelling> afdeling = new ArrayList<>();
 
     FusedLocationProviderClient mFusedLocationClient;
 
@@ -601,13 +608,15 @@ public class DetailAsetActivity extends AppCompatActivity {
 
 //                set selection spinners
                 spinnerTipeAset.setSelection(response.body().getData().getAsetTipe()-1);
-                spinnerJenisAset.setSelection(response.body().getData().getAsetTipe());
+                spinnerJenisAset.setSelection(response.body().getData().getAsetJenis()-1);
                 spinnerAsetKondisi.setSelection(response.body().getData().getAsetKondisi()-1);
-                spinnerKodeAset.setSelection(response.body().getData().getAsetKode()-1);
+
                 spinnerUnit.setSelection(response.body().getData().getUnitId()-1);
                 spinnerSubUnit.setSelection(response.body().getData().getAsetSubUnit()-1);
                 Log.d("asetapix",String.valueOf(response.body().getData().getAsetSubUnit()));
 
+                setAdapterAsetKode();
+                spinnerKodeAset.setSelection(response.body().getData().getAsetKode()-1);
                 if (response.body().getData().getAfdelingId() != null) {
                     spinnerAfdeling.setSelection(response.body().getData().getAfdelingId()-1);
                 }
@@ -735,6 +744,7 @@ public class DetailAsetActivity extends AppCompatActivity {
                 List<AsetKode2> asetKode = response.body().getData();
                 List<String> listSpinner = new ArrayList<>();
 
+                asetKode2 = asetKode;
 
                 for ( AsetKode2 a : asetKode ){
 
@@ -1143,10 +1153,35 @@ public class DetailAsetActivity extends AppCompatActivity {
         }
     }
 
+    public void setAdapterAsetKode(){
+        List<String> asetKode = new ArrayList<>();
+        String aset_kode_temp;
+
+        for (AsetKode2 a : asetKode2) {
+            if (a.getAsetJenis()-1 == spinnerJenisAset.getSelectedItemId()) {
+                Log.d("asetapix22",  "aset jenis dari spinner "+ String.valueOf(spinnerJenisAset.getSelectedItemId()));
+
+                if ((a.getAsetJenis()) == 1 ) {
+                    aset_kode_temp = a.getAsetClass() + "/" + a.getAsetDesc();
+                } else if ((a.getAsetJenis()) == 2) {
+                    aset_kode_temp = a.getAsetClass() + "/" + a.getAsetGroup() + "/" + a.getAsetDesc();
+                } else {
+                    aset_kode_temp = a.getAsetClass() + "/" + a.getAsetGroup() + "/" + a.getAsetDesc();
+                }
+
+                asetKode.add(aset_kode_temp);
+            }
+        }
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getApplicationContext(),
+                android.R.layout.simple_spinner_item, asetKode);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerKodeAset.setAdapter(adapter);
+    }
     public void checkApproved(){
         ViewGroup ln = findViewById(R.id.approveGroup);
-
-        if (Integer.parseInt(statusPosisi) > 4) {
+        sharedPreferences = DetailAsetActivity.this.getSharedPreferences(PREF_LOGIN, MODE_PRIVATE);
+        Integer hak_akses_id = Integer.valueOf(sharedPreferences.getString("hak_akses_id", "0"));
+        if (Integer.parseInt(statusPosisi) == 4) {
             ln.setVisibility(View.VISIBLE);
         } else {
             ln.setVisibility(View.GONE);

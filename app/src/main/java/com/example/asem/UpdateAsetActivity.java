@@ -23,6 +23,7 @@ import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.drawable.ColorDrawable;
 import android.location.Location;
@@ -119,6 +120,9 @@ public class UpdateAsetActivity extends AppCompatActivity {
     Button map4;
     double longitudeValue = 0;
     double latitudeValue = 0;
+    SharedPreferences sharedPreferences;
+    private static final String PREF_LOGIN = "LOGIN_PREF";
+
     List<AsetKode2> asetKode2 = new ArrayList<>();
     List<Afdelling> afdeling = new ArrayList<>();
 
@@ -783,6 +787,7 @@ public class UpdateAsetActivity extends AppCompatActivity {
                 inpKeterangan.setText(response.body().getData().getKeterangan());
                 inpUmrEkonomis.setText(utils.MonthToYear(response.body().getData().getUmurEkonomisInMonth()));
                 inpNilaiAsetSAP.setText(formatrupiah(Double.parseDouble(String.valueOf(response.body().getData().getUmurEkonomisInMonth()))));
+                inpPersenKondisi.setText(String.valueOf(response.body().getData().getPersenKondisi()));
                 String url1 = baseUrlImg+response.body().getData().getFotoAset1();
                 String url2 = baseUrlImg+response.body().getData().getFotoAset2();
                 String url3 = baseUrlImg+response.body().getData().getFotoAset3();
@@ -815,7 +820,7 @@ public class UpdateAsetActivity extends AppCompatActivity {
 
 //                set selection spinners
                 spinnerTipeAset.setSelection(response.body().getData().getAsetTipe()-1);
-                spinnerJenisAset.setSelection(response.body().getData().getAsetTipe());
+                spinnerJenisAset.setSelection(response.body().getData().getAsetJenis()-1);
                 spinnerAsetKondisi.setSelection(response.body().getData().getAsetKondisi()-1);
                 spinnerKodeAset.setSelection(response.body().getData().getAsetKode()-1);
                 spinnerUnit.setSelection(response.body().getData().getUnitId()-1);
@@ -1108,8 +1113,13 @@ public class UpdateAsetActivity extends AppCompatActivity {
                     return;
                 }
                 List<String> listSpinner = new ArrayList<>();
+                listSpinner.add("Pilih Afdeling");
+                afdeling = response.body().getData();
+
                 for (int i=0;i<response.body().getData().size();i++){
+//                    if (response.body().getData())
                     listSpinner.add(response.body().getData().get(i).getAfdelling_desc());
+
                 }
 
                 // Set hasil result json ke dalam adapter spinner
@@ -1586,7 +1596,9 @@ public class UpdateAsetActivity extends AppCompatActivity {
             RequestBody requestNomorBAST = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(nomor_bast));
             RequestBody requestNilaiResidu = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(nilai_residu));
             RequestBody requestKeterangan = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(keterangan));
-
+            RequestBody requestSubUnit = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(spinnerIdSubUnit));
+            RequestBody requestUnit = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(spinnerIdUnit+1));
+            RequestBody requestAfdeling = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(spinnerIdAfdeling));
 
             MultipartBody.Builder builder = new MultipartBody.Builder();
             builder.addPart(MultipartBody.Part.createFormData("aset_id",null,requestAsetId));
@@ -1605,6 +1617,14 @@ public class UpdateAsetActivity extends AppCompatActivity {
             builder.addPart(MultipartBody.Part.createFormData("nomor_bast",null,requestNomorBAST));
             builder.addPart(MultipartBody.Part.createFormData("masa_susut",null,requestMasaSusut));
             builder.addPart(MultipartBody.Part.createFormData("keterangan",null,requestKeterangan));
+            builder.addPart(MultipartBody.Part.createFormData("aset_sub_unit",null,requestSubUnit));
+            builder.addPart(MultipartBody.Part.createFormData("unit_id",null,requestUnit));
+
+            if (spinnerSubUnit.getSelectedItemId() == 1) {
+                builder.addPart(MultipartBody.Part.createFormData("afdeling_id",null,requestAfdeling));
+            }
+
+
 
             if (bafile_file != null){
                 RequestBody requestBaFile = RequestBody.create(MediaType.parse("multipart/form-file"), bafile_file);
@@ -1651,6 +1671,9 @@ public class UpdateAsetActivity extends AppCompatActivity {
                         dialog.dismiss();
                         Toast.makeText(getApplicationContext(),"succeed edit aset",Toast.LENGTH_LONG).show();
                         setValueInput();
+                        startActivity(new Intent(UpdateAsetActivity.this,LonglistAsetActivity.class));
+                        finish();
+
                         return;
                     }
 

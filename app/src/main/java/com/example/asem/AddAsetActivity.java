@@ -22,6 +22,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.drawable.ColorDrawable;
@@ -114,6 +115,9 @@ public class AddAsetActivity extends AppCompatActivity {
     Button map3;
     Button map4;
 
+    Context context;
+    SharedPreferences sharedPreferences;
+    private static final String PREF_LOGIN = "LOGIN_PREF";
     Uri docUri;
 
     List<AsetKode2> asetKode2 = new ArrayList<>();
@@ -1175,10 +1179,15 @@ public class AddAsetActivity extends AppCompatActivity {
                     listSpinner.add(a.getUnit_desc());
                 }
 
+
                 ArrayAdapter<String> adapter = new ArrayAdapter<String>(getApplicationContext(),
                         android.R.layout.simple_spinner_item, listSpinner);
                 adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 spinnerUnit.setAdapter(adapter);
+                sharedPreferences = AddAsetActivity.this.getSharedPreferences(PREF_LOGIN, MODE_PRIVATE);
+                Integer unit_id = Integer.valueOf(sharedPreferences.getString("unit_id", "0"));
+
+                spinnerUnit.setSelection(unit_id);
             }
 
             @Override
@@ -1560,8 +1569,8 @@ public class AddAsetActivity extends AppCompatActivity {
 
         else if ("tanaman".equals(String.valueOf(spinnerJenisAset.getSelectedItem()))  && "rusak".equals(String.valueOf(spinnerAsetKondisi.getSelectedItem())) ) {
 //            listBtnMap.setVisibility(View.VISIBLE);
-            inpJumlahPohon.setVisibility(View.VISIBLE);
             tvBa.setVisibility(View.VISIBLE);
+            inpJumlahPohon.setVisibility(View.VISIBLE);
             tvPohon.setVisibility(View.VISIBLE);
 
 //            inpKomoditi.setVisibility(View.VISIBLE);
@@ -1590,13 +1599,12 @@ public class AddAsetActivity extends AppCompatActivity {
             btnFile.setVisibility(View.VISIBLE);
             tvBa.setVisibility(View.VISIBLE);
             inpJumlahPohon.setVisibility(View.VISIBLE);
+            tvPohon.setVisibility(View.VISIBLE);
 //            inpKomoditi.setVisibility(View.VISIBLE);
 
             inpNomorBAST.setVisibility(View.GONE);
             tvBast.setVisibility(View.GONE);
-            tvPohon.setVisibility(View.GONE);
 //            listBtnMap.setVisibility(View.GONE);
-            inpJumlahPohon.setVisibility(View.GONE);
 //            inpBtnMap.setVisibility(View.GONE);
 
             tvFoto.setVisibility(View.GONE);
@@ -1795,7 +1803,7 @@ public class AddAsetActivity extends AppCompatActivity {
             inpNoSAP.requestFocus();
             return;
         }
-
+//
         if (spinnerAsetKondisi.getSelectedItemId() != 3) {
 
             if (img1 == null || img2 == null || img3 == null || img4 == null) {
@@ -1828,21 +1836,21 @@ public class AddAsetActivity extends AppCompatActivity {
 
         }
         }
-
-        if(spinnerTipeAset.getSelectedItemId() != 0 || spinnerAsetKondisi.getSelectedItemId() != 2 || spinnerAsetKondisi.getSelectedItemId() != 3) {
-
-            if (inpNomorBAST.getText().toString().equals("")) {
-                inpNomorBAST.setError("Nomor Bast harus diisi");
-                inpNomorBAST.requestFocus();
-                dialog.dismiss();
-                return;
-            }
-        }
-
-
+//
+//        if(spinnerTipeAset.getSelectedItemId() != 0 || spinnerAsetKondisi.getSelectedItemId() != 2 || spinnerAsetKondisi.getSelectedItemId() != 3) {
+//
+//            if (inpNomorBAST.getText().toString().equals("")) {
+//                inpNomorBAST.setError("Nomor Bast harus diisi");
+//                inpNomorBAST.requestFocus();
+//                dialog.dismiss();
+//                return;
+//            }
+//        }
+////
+//
         if (inpNilaiAsetSAP.getText().toString().equals("")) {
-            inpNamaAset.setError("Nilai Aset harus diisi");
-            inpNamaAset.requestFocus();
+            inpNilaiAsetSAP.setError("Nilai Aset harus diisi");
+            inpNilaiAsetSAP.requestFocus();
             dialog.dismiss();
             return;
         }
@@ -1869,15 +1877,15 @@ public class AddAsetActivity extends AppCompatActivity {
         }
 
 
-        if (spinnerJenisAset.getSelectedItemId() == 1 ) {
-
-            if (inpJumlahPohon.getText().toString().equals("")) {
-                inpJumlahPohon.setError("Jumlah Pohon harus diisi");
-                inpJumlahPohon.requestFocus();
-                dialog.dismiss();
-                return;
-            }
-        }
+//        if (spinnerJenisAset.getSelectedItemId() == 1 ) {
+//
+//            if (inpJumlahPohon.getText().toString().equals("")) {
+//                inpJumlahPohon.setError("Jumlah Pohon harus diisi");
+//                inpJumlahPohon.requestFocus();
+//                dialog.dismiss();
+//                return;
+//            }
+//        }
 
 
 
