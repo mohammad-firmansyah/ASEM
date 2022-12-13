@@ -168,7 +168,7 @@ public class Aset2Adapter  extends RecyclerView.Adapter<Aset2Adapter.ViewHolder>
             public void onClick(View v) {
                 showDialogKirim("Yakin Kirim Data?",
                         asetInterface.kirimDataAset(id, "kirim")
-                        );
+                );
             }
         });
 
@@ -299,13 +299,13 @@ public class Aset2Adapter  extends RecyclerView.Adapter<Aset2Adapter.ViewHolder>
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.ly_kirim_sukses);
         dialog.show();
-        TextView textdialog = dialog.findViewById(R.id.tvKirim);
-        TextView texttanya = dialog.findViewById(R.id.tvTanyaKirim);
+        //TextView textdialog = dialog.findViewById(R.id.tvKirim);
+        //TextView texttanya = dialog.findViewById(R.id.tvTanyaKirim);
         Button cancel = dialog.findViewById(R.id.btnTidakKirim);
         Button kirim = dialog.findViewById(R.id.btnYaKirim);
 
-        textdialog.setText(customtext);
-        texttanya.setText(customtext);
+        //textdialog.setText(customtext);
+        //texttanya.setText(customtext);
 
         cancel.setOnClickListener(view -> {
             dialog.dismiss();
@@ -317,7 +317,8 @@ public class Aset2Adapter  extends RecyclerView.Adapter<Aset2Adapter.ViewHolder>
                 public void onResponse(@NotNull Call<AsetModel2> call, @NotNull Response<AsetModel2> response) {
                     if (response.isSuccessful() && response.body() != null) {
                         if (response.body().getStatus()) {
-                            //Log.d("posisidata", "onBindViewHolder: "+myAsetData.);
+                            Log.d("posisidata", "data op terkirim");
+                            //Log.d("posisidata", "onBindViewHolder: "+);
                             Toast.makeText(context.getApplicationContext(), "berhasil mengirim data", Toast.LENGTH_LONG).show();
                         }else {Toast.makeText(context.getApplicationContext(), response.body().getMessage(), Toast.LENGTH_SHORT).show();}
                     }else {
@@ -360,6 +361,7 @@ public class Aset2Adapter  extends RecyclerView.Adapter<Aset2Adapter.ViewHolder>
         Button btnKirim;
         View btnHapus;
         LinearLayout cvAset;
+        Data2 myPostData2;
 
 
         public ViewHolder (@NonNull View v) {
