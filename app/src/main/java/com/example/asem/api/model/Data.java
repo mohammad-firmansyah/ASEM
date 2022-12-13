@@ -126,7 +126,22 @@ public class Data {
     @SerializedName("persen_kondisi")
     @Expose
     private double persenKondisi;
+    @SerializedName("status_posisi_id")
+    @Expose
+    private Integer statusPosisiID;
 
+
+
+    public Integer getStatusPosisiID() {
+        return statusPosisiID;
+    }
+
+    public void setStatusPosisiID(Integer statusPosisiID) {
+        this.statusPosisiID = statusPosisiID;
+    }
+    public void setPersenKondisi(double persenKondisi) {
+        this.persenKondisi = persenKondisi;
+    }
     public Double getPersenKondisi() {
         return persenKondisi;
     }

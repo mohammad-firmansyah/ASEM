@@ -114,18 +114,12 @@ public class Data2 {
     @SerializedName("persen_kondisi")
     @Expose
 
-    private String statusPosisiID;
-    @SerializedName("status_posisi_id")
-    @Expose
     private double persenKondisi;
 
-//    private String kirimDataAset;
-//    @SerializedName("kirimDataAset")
-//    @Expose
-//
-//    public String getKirimDataAset() { return kirimDataAset; }
-//
-//    public void setKirimDataAset(String kirimDataAset) { this.kirimDataAset = kirimDataAset; }
+    @SerializedName("status_posisi_id")
+    @Expose
+    private Integer statusPosisiID;
+
 
     public double getPersenKondisi() {
         return persenKondisi;
@@ -135,11 +129,11 @@ public class Data2 {
         this.persenKondisi = persenKondisi;
     }
 
-    public String getStatusPosisiID() {
+    public Integer getStatusPosisiID() {
         return statusPosisiID;
     }
 
-    public void setStatusPosisiID(String statusPosisiID) {
+    public void setStatusPosisiID(Integer statusPosisiID) {
         this.statusPosisiID = statusPosisiID;
     }
 

@@ -112,12 +112,12 @@ public class MainActivity extends AppCompatActivity {
                             String username = sharedPreferences.getString("username", "-");
                             String user_pass = sharedPreferences.getString("user_pass", "-");
                             String user_email = sharedPreferences.getString("user_email", "-");
-                            String user_nip = sharedPreferences.getString("user_nip", "0");
+                            String user_nip = sharedPreferences.getString("user_nip", "-");
                             String user_fullname = sharedPreferences.getString("user_fullname", "-");
-                            String user_jabatan = sharedPreferences.getString("user_jabatan", "0");
+                            String user_jabatan = sharedPreferences.getString("user_jabatan", "-");
                             String user_id = sharedPreferences.getString("user_id", "0");
-                            String hak_akses_id = sharedPreferences.getString("hak_akses_id", "0");
-                            String unit_id = sharedPreferences.getString("unit_id", "0");
+                            String hak_akses_id = sharedPreferences.getString("hak_akses_id", "-");
+                            String unit_id = sharedPreferences.getString("unit_id", "-");
 
 //                            Log.d("asetapix",unit_id);
                             editor.putString("username", username);
@@ -126,8 +126,8 @@ public class MainActivity extends AppCompatActivity {
                             editor.putString("user_email", user_email);
                             editor.putString("nama", user_fullname);
                             editor.putString("user_jabatan", user_jabatan);
-                                editor.putString("unit_id", unit_id);
-                            editor.putString("hak_akses_id", hak_akses_id);
+                            editor.putString("unit_id", String.valueOf(login.getUnitId()));
+                            editor.putString("hak_akses_id", String.valueOf(login.getHakAksesId()));
                             editor.putBoolean("onSyncDone", false); // saat login awal dia kondisi belum sync
                             editor.apply();
                             startActivity(new Intent(MainActivity.this, LonglistAsetActivity.class));

@@ -710,7 +710,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:id="@+id/approveGroup"
+            android:id="@+id/qrGroup"
            >
 
             <TextView
@@ -773,9 +773,11 @@
                 android:hint="12323/sdadsa/1ccs"
                 android:background="@drawable/tgl_spinner"
                 />
+        </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:id="@+id/approveGroup"
 
                 >
 
@@ -800,9 +802,33 @@
                     android:layout_weight="0.5"
                     />
             </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="128dp"
+                android:id="@+id/addNewFotoAsetAndQr"
+                android:orientation="horizontal"
+                android:background="@color/white"
+                android:gravity="center"
+                android:layout_marginVertical="10dp"
+                >
+
+                <ImageView
+                    android:layout_width="72dp"
+                    android:layout_height="72dp"
+                    android:src="@drawable/ic_outline_image_24"
+                    />
+            </LinearLayout>
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingVertical="10dp"
+                android:text="SIMPAN DATA"
+                android:backgroundTint="@color/main_grey"
+                android:textColor="@color/white"
+                />
 
 
-        </LinearLayout>
         </LinearLayout>
     </ScrollView>
 

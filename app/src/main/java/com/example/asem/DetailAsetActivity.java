@@ -39,6 +39,7 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -56,6 +57,7 @@ import com.example.asem.api.MyErrorMessage;
 import com.example.asem.api.model.Afdelling;
 import com.example.asem.api.model.AfdellingModel;
 import com.example.asem.api.model.Aset;
+import com.example.asem.api.model.AsetApproveModel;
 import com.example.asem.api.model.AsetJenis;
 import com.example.asem.api.model.AsetJenisModel;
 import com.example.asem.api.model.AsetKode;
@@ -111,6 +113,7 @@ import org.json.JSONObject;
 
 public class DetailAsetActivity extends AppCompatActivity {
 //    Data aset = new Data();
+    Dialog customDialog;
     Button inpBtnMap;
     Button btnFile;
     Button btnSubmit;
@@ -118,8 +121,10 @@ public class DetailAsetActivity extends AppCompatActivity {
     Button map2;
     Button map3;
     Button map4;
+    Button btnApprove;
+    Button btnReject;
 
-    String statusPosisi;
+    Integer statusPosisi;
 
     Integer id;
     double longitudeValue = 0;
@@ -127,6 +132,7 @@ public class DetailAsetActivity extends AppCompatActivity {
 
     SharedPreferences sharedPreferences;
     private static final String PREF_LOGIN = "LOGIN_PREF";
+
 
     List<AsetKode2> asetKode2 = new ArrayList<>();
     List<Afdelling> afdeling = new ArrayList<>();
@@ -223,6 +229,8 @@ public class DetailAsetActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
 
+        sharedPreferences = DetailAsetActivity.this.getSharedPreferences(PREF_LOGIN, MODE_PRIVATE);
+
         id = intent.getIntExtra("id",0);
         dialog = new Dialog(DetailAsetActivity.this,R.style.MyAlertDialogTheme);
         dialog.setContentView(R.layout.loading);
@@ -296,7 +304,18 @@ public class DetailAsetActivity extends AppCompatActivity {
         fotoimg3 = findViewById(R.id.fotoimg3);
         fotoimg4 = findViewById(R.id.fotoimg4);
         inpBtnMap = findViewById(R.id.inpBtnMap);
+        btnApprove = findViewById(R.id.btnApprove);
+        btnReject = findViewById(R.id.btnReject);
+
 //        btnSubmit = findViewById(R.id.btnSubmit);
+
+
+        btnApprove.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                customDialog.show();
+            }
+        });
 
         inpBtnMap.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -424,6 +443,7 @@ public class DetailAsetActivity extends AppCompatActivity {
         initCalender();
         getSpinnerData();
         setValueInput();
+        initCustomDialog();
 
     }
 
@@ -549,7 +569,7 @@ public class DetailAsetActivity extends AppCompatActivity {
 
             @Override
             public void onResponse(Call<AsetModel> call, Response<AsetModel> response) {
-                dialog.hide();
+                dialog.dismiss();
                 if (!response.isSuccessful()){
                     Toast.makeText(getApplicationContext(),String.valueOf(response.code()),Toast.LENGTH_LONG).show();
                     finish();
@@ -577,7 +597,10 @@ public class DetailAsetActivity extends AppCompatActivity {
                 inpUmrEkonomis.setText(utils.MonthToYear(response.body().getData().getUmurEkonomisInMonth()));
                 inpNilaiAsetSAP.setText(formatrupiah(Double.parseDouble(String.valueOf(response.body().getData().getUmurEkonomisInMonth()))));
                 inpPersenKondisi.setText(String.valueOf(response.body().getData().getPersenKondisi()));
-                statusPosisi = String.valueOf(response.body().getData().getStatusPosisi());
+                statusPosisi = response.body().getData().getStatusPosisi();
+                id = response.body().getData().getAsetId();
+
+
 
                 String url1 = baseUrlImg+response.body().getData().getFotoAset1();
                 String url2 = baseUrlImg+response.body().getData().getFotoAset2();
@@ -623,6 +646,7 @@ public class DetailAsetActivity extends AppCompatActivity {
 
 
                 checkApproved();
+                checkQrCode();
 //                Log.d("asetapix", spinnerJenisAset.getSelectedItem().toString());
 //                if (spinnerJenisAset.getSelectedItem().toString() == "tanaman" && spinnerAsetKondisi.getSelectedItem().toString() == "normal") {
 //                    listBtnMap.setVisibility(View.VISIBLE);
@@ -724,7 +748,7 @@ public class DetailAsetActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<AsetModel> call, Throwable t) {
-                dialog.hide();
+                dialog.dismiss();
                 Log.d("asetapix",t.getMessage());
                 finish();
             }
@@ -1179,13 +1203,28 @@ public class DetailAsetActivity extends AppCompatActivity {
     }
     public void checkApproved(){
         ViewGroup ln = findViewById(R.id.approveGroup);
-        sharedPreferences = DetailAsetActivity.this.getSharedPreferences(PREF_LOGIN, MODE_PRIVATE);
+
         Integer hak_akses_id = Integer.valueOf(sharedPreferences.getString("hak_akses_id", "0"));
-        if (Integer.parseInt(statusPosisi) == 4) {
-            ln.setVisibility(View.VISIBLE);
+        if (statusPosisi == 2 || statusPosisi == 4 || statusPosisi == 6 || statusPosisi == 8 || statusPosisi == 10  ) {
+            if (statusPosisi == 2 && hak_akses_id == 6 ) ln.setVisibility(View.VISIBLE);
+            else if (statusPosisi == 4 && hak_akses_id == 5 ) ln.setVisibility(View.VISIBLE);
+            else if (statusPosisi == 6 && hak_akses_id == 4 ) ln.setVisibility(View.VISIBLE);
+            else if (statusPosisi == 8 && hak_akses_id == 3 ) ln.setVisibility(View.VISIBLE);
+            else if (statusPosisi == 10 && hak_akses_id == 2 ) ln.setVisibility(View.VISIBLE);
+            else {
+                ln.setVisibility(View.GONE);
+            }
         } else {
             ln.setVisibility(View.GONE);
         }
+    }
+
+    public void checkQrCode(){
+        ViewGroup ln = findViewById(R.id.qrGroup);
+        Integer hak_akses_id = Integer.valueOf(sharedPreferences.getString("hak_akses_id", "0"));
+        if (statusPosisi == 5 && hak_akses_id == 7 ) ln.setVisibility(View.VISIBLE);
+        else ln.setVisibility(View.GONE);
+
     }
     public void getSpinnerData(){
         getTipeAset();
@@ -1195,5 +1234,58 @@ public class DetailAsetActivity extends AppCompatActivity {
         getAfdeling();
         getSubUnit();
         getUnit();
+    }
+
+    private void initCustomDialog(){
+//        Dialog customDialog = new Dialog(DetailAsetActivity.this);
+//        customDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+//        customDialog.setContentView(R.layout.dialog_approve);
+//        customDialog.setCancelable(true);
+//        customDialog.show();
+
+        customDialog = new Dialog(DetailAsetActivity.this,R.style.MyAlertDialogTheme);
+        customDialog.setContentView(R.layout.dialog_approve);
+        customDialog.setCanceledOnTouchOutside(false);
+        customDialog.getWindow().setBackgroundDrawable(new ColorDrawable(0));
+//        customDialog.show();
+
+        Button btnYa = customDialog.findViewById(R.id.btnYaKirim);
+        Button btnTidak = customDialog.findViewById(R.id.btnTidakKirim);
+        btnTidak.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                customDialog.dismiss();
+            }
+        });
+
+        btnYa.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Call<AsetApproveModel> call = asetInterface.approveAset(id);
+
+                call.enqueue(new Callback<AsetApproveModel>() {
+                    @Override
+                    public void onResponse(Call<AsetApproveModel> call, Response<AsetApproveModel> response) {
+                        if (response.isSuccessful() && response.body() != null) {
+                            startActivity(new Intent(DetailAsetActivity.this,LonglistAsetActivity.class));
+                            customDialog.dismiss();
+                            return;
+                        } else {
+                            Toast.makeText(getApplicationContext(),"Kesalahan jaringan mohon coba lagi",Toast.LENGTH_LONG).show();
+                            customDialog.dismiss();
+                            return;
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<AsetApproveModel> call, Throwable t) {
+                        Toast.makeText(getApplicationContext(),"Kesalahan : " + t.getMessage() ,Toast.LENGTH_LONG).show();
+                        customDialog.dismiss();
+                        return;
+                    }
+                });
+
+            }
+        });
     }
 }

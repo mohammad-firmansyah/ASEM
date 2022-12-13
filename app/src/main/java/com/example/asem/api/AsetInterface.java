@@ -1,6 +1,7 @@
 package com.example.asem.api;
 
 import com.example.asem.api.model.AfdellingModel;
+import com.example.asem.api.model.AsetApproveModel;
 import com.example.asem.api.model.AsetJenisModel;
 import com.example.asem.api.model.AsetKodeModel2;
 import com.example.asem.api.model.AsetKondisi;
@@ -61,6 +62,12 @@ public interface AsetInterface {
     Call<AsetModel> editAset(
             @Header("Content-Type") String contentType, @Body MultipartBody body
             );
+
+    @GET("approve/{id}")
+    Call<AsetApproveModel> approveAset(@Path("id") int id);
+
+    @POST("reject")
+    Call<AsetApproveModel> rejectAset(@Path("id") int id, @Header("Content-Type") String contentType, @Body MultipartBody body);
 
     @POST("aset/create")
     Call<AsetModel2> addAset(

@@ -1186,8 +1186,7 @@ public class AddAsetActivity extends AppCompatActivity {
                 spinnerUnit.setAdapter(adapter);
                 sharedPreferences = AddAsetActivity.this.getSharedPreferences(PREF_LOGIN, MODE_PRIVATE);
                 Integer unit_id = Integer.valueOf(sharedPreferences.getString("unit_id", "0"));
-
-                spinnerUnit.setSelection(unit_id);
+                spinnerUnit.setSelection((unit_id-1));
             }
 
             @Override
@@ -1195,6 +1194,7 @@ public class AddAsetActivity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(),t.getMessage(),Toast.LENGTH_LONG).show();
                 return;
             }
+
         });
     }
 
