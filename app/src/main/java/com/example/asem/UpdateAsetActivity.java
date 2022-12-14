@@ -166,6 +166,7 @@ public class UpdateAsetActivity extends AppCompatActivity {
     EditText inpKeterangan;
     EditText inpUmrEkonomis;
     EditText inpPersenKondisi;
+    EditText inpKetReject;
 
     ViewGroup foto1rl;
     ViewGroup foto2rl;
@@ -373,6 +374,7 @@ public class UpdateAsetActivity extends AppCompatActivity {
         inpKeterangan = findViewById(R.id.inpKeterangan);
         inpJumlahPohon = findViewById(R.id.inpJmlhPohon);
         inpPersenKondisi = findViewById(R.id.inpPersenKondisi);
+        inpKetReject = findViewById(R.id.inpKetReject);
 
         foto1rl = findViewById(R.id.foto1);
         foto2rl = findViewById(R.id.foto2);
@@ -402,6 +404,7 @@ public class UpdateAsetActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
 
 //        listener spinner
 
@@ -1264,6 +1267,7 @@ public class UpdateAsetActivity extends AppCompatActivity {
         TextView tvLuasTanaman = findViewById(R.id.luasTanaman);
         TextView tvLuasNonTanaman = findViewById(R.id.luasNonTanaman);
         TextView tvPersenKondisi = findViewById(R.id.tvPersenKondisi);
+        TextView tvKetReject = findViewById(R.id.tvKetReject);
 
         HorizontalScrollView scrollPartition = findViewById(R.id.scrollPartition);
 //        Toast.makeText(getApplicationContext(),String.valueOf(spinnerSubUnit.getSelectedItemId()),Toast.LENGTH_LONG).show();

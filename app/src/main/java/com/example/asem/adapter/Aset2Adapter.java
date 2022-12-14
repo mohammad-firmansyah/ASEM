@@ -13,6 +13,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.drawable.ColorDrawable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -40,6 +41,7 @@ import com.example.asem.api.model.AsetModel2;
 import com.example.asem.api.model.Data2;
 import com.example.asem.api.model.DeleteModel;
 import com.example.asem.utils.utils;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -54,8 +56,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class Aset2Adapter  extends RecyclerView.Adapter<Aset2Adapter.ViewHolder>{
 
     private AsetInterface asetInterface;
-
-    Integer id;
+    Dialog customDialogBelumApprove;
+    FloatingActionButton fab;
     List<Data2> myAsetData;
     Context context;
     SharedPreferences sharedPreferences;
@@ -177,120 +179,116 @@ public class Aset2Adapter  extends RecyclerView.Adapter<Aset2Adapter.ViewHolder>
         holder.btnKirim.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showDialogKirim("Yakin Kirim Data?",
-                        asetInterface.kirimDataAset(id)
-                );
+                int statpos = myPostData2.getStatusPosisiID();
+                if (statpos == 2 || statpos == 4 ||statpos == 6|| statpos==8|| statpos==10){ //init statpos pending
+                    initDialogBelomApprove();
+                    //Toast.makeText(context, "masuk ga", Toast.LENGTH_SHORT).show();
+                } else{
+                    sharedPreferences = context.getSharedPreferences(PREF_LOGIN, MODE_PRIVATE);
+                    String user_id = sharedPreferences.getString("user_id", "-");
+                    showDialogKirim("Yakin Kirim Data?",
+                            asetInterface.kirimDataAset(id, Integer.parseInt(user_id))
+                    );
+                }
             }
         });
 
         sharedPreferences = context.getSharedPreferences(PREF_LOGIN, MODE_PRIVATE);
         String hak_akses_id = sharedPreferences.getString("hak_akses_id", "-");
+        //Log.d("asetapix", hak_akses_id);
 
-        if(hak_akses_id == "1"){ //operator
-            if(myPostData2.getStatusPosisiID().equals("1")){
+        if(hak_akses_id.equals("7") ){ //operator
+            if(myPostData2.getStatusPosisiID()==1){ //if status posisi operator
                 holder.btnEdit.setVisibility(View.VISIBLE);
                 holder.btnKirim.setVisibility(View.VISIBLE);
                 holder.btnDetail.setVisibility(View.VISIBLE);
+                holder.btnHapus.setVisibility(View.VISIBLE);
                 //hapus statusreject, dan keterangan reject
-                //btnFAB status visible hanya di op
-            } else if(myPostData2.getStatusPosisiID().equals("5")){
+            } else if(myPostData2.getStatusPosisiID()== 5){
                 holder.btnEdit.setVisibility(View.VISIBLE);
-                holder.btnKirim.setVisibility(View.VISIBLE);
-            } else {
+                holder.btnDetail.setVisibility(View.VISIBLE);
+                holder.btnKirim.setVisibility(View.GONE);
+            }else {
                 holder.btnEdit.setVisibility(View.GONE);
                 holder.btnKirim.setVisibility(View.GONE);
-                holder.btnDetail.setVisibility(View.GONE);
+                holder.btnDetail.setVisibility(View.VISIBLE);
             }
-        } else if(hak_akses_id=="2"){ //pending asisten
-            if(myPostData2.getStatusPosisiID().equals("2")){
+        } else if(hak_akses_id.equals("6")){ //asisten
+            if(myPostData2.getStatusPosisiID()==2 ){ //if status posisi pending dan asisten
+                holder.btnDetail.setVisibility(View.VISIBLE);
                 holder.btnEdit.setVisibility(View.VISIBLE);
                 holder.btnKirim.setVisibility(View.VISIBLE);
-            } else {
-                holder.btnEdit.setVisibility(View.GONE);
-                holder.btnKirim.setVisibility(View.GONE);
+            } else if ( myPostData2.getStatusPosisiID()==3 ) {
+                holder.btnDetail.setVisibility(View.VISIBLE);
+                holder.btnEdit.setVisibility(View.VISIBLE);
+                holder.btnKirim.setVisibility(View.VISIBLE);
             }
-        } else if (hak_akses_id.equals("3") ){ //asisten
-            if(myPostData2.getStatusPosisiID().equals("3")){
-                holder.btnEdit.setVisibility(View.VISIBLE);
-                holder.btnKirim.setVisibility(View.VISIBLE);
-            } else {
+            else {
                 holder.btnEdit.setVisibility(View.GONE);
                 holder.btnKirim.setVisibility(View.GONE);
+                holder.btnDetail.setVisibility(View.VISIBLE);
             }
-        }else if (hak_akses_id == "4"){ //pending astu
-            if(myPostData2.getStatusPosisiID().equals("4")){
+        } else if (hak_akses_id.equals("5") ){ //astuu
+            if(myPostData2.getStatusPosisiID() == 4) { //if statpos pending astuu dan astuu
+                holder.btnDetail.setVisibility(View.VISIBLE);
                 holder.btnEdit.setVisibility(View.VISIBLE);
                 holder.btnKirim.setVisibility(View.VISIBLE);
+            } else if(myPostData2.getStatusPosisiID()== 5) {
+                    holder.btnKirim.setOnClickListener(v -> {
+                        if (myPostData2.getFotoAsetQr() == null) {
+                            Toast.makeText(context.getApplicationContext(), "Mohon Foto Aset dengan QRCODE Dilengkapi oleh Operator", Toast.LENGTH_SHORT).show();
+                        } else {
+                            sharedPreferences = context.getSharedPreferences(PREF_LOGIN, MODE_PRIVATE);
+                            String user_id = sharedPreferences.getString("user_id", "-");
+                            showDialogKirim("Yakin Kirim Data?",
+                                    asetInterface.kirimDataAset(id, Integer.parseInt(user_id))
+                            );
+                        }
+                    });
             } else {
                 holder.btnEdit.setVisibility(View.GONE);
                 holder.btnKirim.setVisibility(View.GONE);
+                holder.btnDetail.setVisibility(View.VISIBLE);
             }
-        } else if (hak_akses_id == "5"){ //astu
-            if(myPostData2.getStatusPosisiID().equals("5")){
+        }else if (hak_akses_id.equals("4")){ //askep
+            if(myPostData2.getStatusPosisiID()== 6 || myPostData2.getStatusPosisiID()== 7){ //if statpos pending askep dan askep
                 holder.btnEdit.setVisibility(View.VISIBLE);
                 holder.btnKirim.setVisibility(View.VISIBLE);
-                holder.btnKirim.setOnClickListener(v -> {
-                    if(myPostData2.getFotoAsetQr() == null){
-                        Toast.makeText(context.getApplicationContext(), "Mohon Foto Aset dengan QRCODE Dilengkapi oleh Operator", Toast.LENGTH_SHORT).show();
-                    } else{
-                    }
-                });
+                holder.btnDetail.setVisibility(View.VISIBLE);
             } else {
                 holder.btnEdit.setVisibility(View.GONE);
                 holder.btnKirim.setVisibility(View.GONE);
+                holder.btnDetail.setVisibility(View.VISIBLE);
             }
-        } else if (hak_akses_id == "6"){ //pending askep
-            if(myPostData2.getStatusPosisiID().equals("6")){
+        } else if (hak_akses_id.equals("3")){ //mnj
+            if(myPostData2.getStatusPosisiID()== 8 || myPostData2.getStatusPosisiID()== 9){ //if statpos pending mnj dan mnj
                 holder.btnEdit.setVisibility(View.VISIBLE);
                 holder.btnKirim.setVisibility(View.VISIBLE);
+                holder.btnDetail.setVisibility(View.VISIBLE);
             } else {
                 holder.btnEdit.setVisibility(View.GONE);
                 holder.btnKirim.setVisibility(View.GONE);
+                holder.btnDetail.setVisibility(View.VISIBLE);
             }
-        } else if (hak_akses_id ==  "7"){ //askep
-            if(myPostData2.getStatusPosisiID().equals("7")){
+        } else if (hak_akses_id.equals("2")) { //kasi
+            if (myPostData2.getStatusPosisiID()== 10 ) { //if statpos pendingkasi dan kasi
                 holder.btnEdit.setVisibility(View.VISIBLE);
                 holder.btnKirim.setVisibility(View.VISIBLE);
-            } else {
-                holder.btnEdit.setVisibility(View.GONE);
+                holder.btnDetail.setVisibility(View.VISIBLE);
+            } else if (myPostData2.getStatusPosisiID()== 11){
                 holder.btnKirim.setVisibility(View.GONE);
+                holder.btnDetail.setVisibility(View.VISIBLE);
+                holder.btnEdit.setVisibility(View.GONE);
             }
-        } else if (hak_akses_id == "8"){ //pending manajer
-            if(myPostData2.getStatusPosisiID().equals("8")){
-                holder.btnEdit.setVisibility(View.VISIBLE);
-                holder.btnKirim.setVisibility(View.VISIBLE);
-            } else {
+            else {
                 holder.btnEdit.setVisibility(View.GONE);
                 holder.btnKirim.setVisibility(View.GONE);
-            }
-        } else if (hak_akses_id == "9"){ //manajer
-            if(myPostData2.getStatusPosisiID().equals("9")){
-                holder.btnEdit.setVisibility(View.VISIBLE);
-                holder.btnKirim.setVisibility(View.VISIBLE);
-            } else {
-                holder.btnEdit.setVisibility(View.GONE);
-                holder.btnKirim.setVisibility(View.GONE);
-            }
-        } else if (hak_akses_id == "10"){ //pending kasi
-            if(myPostData2.getStatusPosisiID().equals("10")){
-                holder.btnEdit.setVisibility(View.VISIBLE);
-                holder.btnKirim.setVisibility(View.VISIBLE);
-            } else {
-                holder.btnEdit.setVisibility(View.GONE);
-                holder.btnKirim.setVisibility(View.GONE);
-            }
-        } else if(hak_akses_id == "11"){ //kasi
-            if(myPostData2.getStatusPosisiID().equals("11")){
-                holder.btnEdit.setVisibility(View.VISIBLE);
-                holder.btnKirim.setVisibility(View.VISIBLE);
-            } else {
-                holder.btnEdit.setVisibility(View.GONE);
-                holder.btnKirim.setVisibility(View.GONE);
+                holder.btnDetail.setVisibility(View.VISIBLE);
             }
         }
 
-        // jika data di posisi reject maka bikin bg jadi kuning
-        // selain posisi tersebut bg normal
+//        // jika data di posisi reject maka bikin bg jadi kuning
+//        // selain posisi tersebut bg normal
 //        switch (myPostData2.getStatusPosisiID()){
 //            case posisi reject:
 //            case posisi reject:
@@ -316,13 +314,8 @@ public class Aset2Adapter  extends RecyclerView.Adapter<Aset2Adapter.ViewHolder>
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.ly_kirim_sukses);
         dialog.show();
-        //TextView textdialog = dialog.findViewById(R.id.tvKirim);
-        //TextView texttanya = dialog.findViewById(R.id.tvTanyaKirim);
         Button cancel = dialog.findViewById(R.id.btnTidakKirim);
         Button kirim = dialog.findViewById(R.id.btnYaKirim);
-
-        //textdialog.setText(customtext);
-        //texttanya.setText(customtext);
 
         cancel.setOnClickListener(view -> {
             dialog.dismiss();
@@ -349,6 +342,20 @@ public class Aset2Adapter  extends RecyclerView.Adapter<Aset2Adapter.ViewHolder>
             notifyDataSetChanged();
             Intent gas = new Intent(context, LonglistAsetActivity.class);
             context.startActivity(gas);
+        });
+    }
+
+    void initDialogBelomApprove(){
+        customDialogBelumApprove = new Dialog(context, R.style.MyAlertDialogTheme);
+        customDialogBelumApprove.setContentView(R.layout.dialog_pending);
+        customDialogBelumApprove.setCanceledOnTouchOutside(false);
+        customDialogBelumApprove.getWindow().setBackgroundDrawable(new ColorDrawable(0));
+        customDialogBelumApprove.show();
+
+        Button btnTutup = customDialogBelumApprove.findViewById(R.id.btnTutup);
+        btnTutup.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) { customDialogBelumApprove.dismiss();}
         });
     }
 

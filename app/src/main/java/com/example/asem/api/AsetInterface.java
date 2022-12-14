@@ -47,8 +47,8 @@ public interface AsetInterface {
     @GET("unit/")
     Call<UnitModel> getUnit();
 
-    @GET("aset/")
-    Call<List<Data2>> getAllAset();
+    @GET("aset-all/{id}")
+    Call<List<Data2>> getAllAset(@Path("id") Integer id);
 
     @GET("aset-tipe/")
     Call<List<AsetTipe>> getAsetTipe();
@@ -96,14 +96,11 @@ public interface AsetInterface {
 
     @GET("login")Call<LoginModel> getData();
 
-
-    @GET("kirim/{id}")
+    @GET("kirim/{id}/{user_id}")
     Call<AsetModel2> kirimDataAset(
-//            @Field("aset_sub_unit") String aset_sub_unit,
-//            @Field("status_posisi_id") String status_posisi_id,
-            @Path("id") int id
-            //@Field("message") String kirim
-            );
+            @Path("id") int id,
+            @Path("user_id") int user_id
+    );
 
 
 }
