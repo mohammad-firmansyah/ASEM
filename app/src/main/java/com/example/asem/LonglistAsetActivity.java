@@ -63,8 +63,6 @@ public class LonglistAsetActivity extends AppCompatActivity {
         fab = findViewById(R.id.addAset);
         //fab.setBackgroundTintList(ColorStateList.valueOf(Color.rgb(10, 50, 50)));
 
-
-
         btnReport = findViewById(R.id.btnReport);
         btnFilter = findViewById(R.id.btnFilter);
 
@@ -89,10 +87,6 @@ public class LonglistAsetActivity extends AppCompatActivity {
                 startActivity(new Intent(LonglistAsetActivity.this, AddAsetActivity.class));
             }
         });
-
-
-
-
 
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(baseUrl)
