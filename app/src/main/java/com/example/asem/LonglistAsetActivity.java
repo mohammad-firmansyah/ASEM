@@ -15,6 +15,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.asem.adapter.Aset2Adapter;
@@ -42,6 +43,7 @@ public class LonglistAsetActivity extends AppCompatActivity {
     Button btnFilter;
     FloatingActionButton fab;
     RecyclerView rcAset;
+    EditText etSearchBar;
 
     public static String baseUrl = "http://202.148.9.226:7710/mnj_aset_repo/public/api/";
     private AsetInterface asetInterface;
@@ -61,6 +63,7 @@ public class LonglistAsetActivity extends AppCompatActivity {
         rcAset.setHasFixedSize(true);
         rcAset.setLayoutManager(new LinearLayoutManager(this));
         fab = findViewById(R.id.addAset);
+        etSearchBar = findViewById(R.id.etSearchBar);
         //fab.setBackgroundTintList(ColorStateList.valueOf(Color.rgb(10, 50, 50)));
 
         btnReport = findViewById(R.id.btnReport);

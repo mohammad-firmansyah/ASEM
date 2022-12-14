@@ -98,7 +98,7 @@ public class MainActivity extends AppCompatActivity {
 //            startActivity(new Intent(MainActivity.this,LonglistAsetActivity.class));
             dialog.show();
 
-            Call<LoginModel> call = asetInterface.login(username,user_pass);
+            Call<LoginModel> call = asetInterface.login(username,user_pass);    
             call.enqueue(new Callback<LoginModel>() {
                 @Override
                 public void onResponse(Call<LoginModel> call, Response<LoginModel> response) {

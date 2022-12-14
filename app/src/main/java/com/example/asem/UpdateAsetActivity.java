@@ -56,6 +56,7 @@ import com.example.asem.api.MyErrorMessage;
 import com.example.asem.api.model.Afdelling;
 import com.example.asem.api.model.AfdellingModel;
 import com.example.asem.api.model.Aset;
+import com.example.asem.api.model.AsetApproveModel;
 import com.example.asem.api.model.AsetJenis;
 import com.example.asem.api.model.AsetJenisModel;
 import com.example.asem.api.model.AsetKode;
@@ -1753,4 +1754,5 @@ public class UpdateAsetActivity extends AppCompatActivity {
         getSubUnit();
         getUnit();
     }
+
 }

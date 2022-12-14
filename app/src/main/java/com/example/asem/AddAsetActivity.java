@@ -450,6 +450,8 @@ public class AddAsetActivity extends AppCompatActivity {
                     }
             );
 
+
+
     ActivityResultLauncher<Intent> activityCaptureFoto4 =
             registerForActivityResult(
                     new ActivityResultContracts.StartActivityForResult(),

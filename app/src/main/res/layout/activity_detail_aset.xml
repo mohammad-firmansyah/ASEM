@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity"
+    tools:context=".DetailAsetActivity"
     android:padding="18dp"
     android:background="@color/background_grey"
     >
@@ -600,7 +600,7 @@
                 android:layout_width="match_parent"
                 android:id="@+id/inpNmrBAST"
                 android:layout_marginBottom="10dp"
-                android:layout_height="41dp"
+                android:layout_height="50dp"
                 android:paddingVertical="10dp"
                 android:lines="1"
                 android:inputType="numberDecimal"
@@ -738,7 +738,7 @@
                     android:layout_height="40dp"
                     android:text="DOWNLOAD"
                     android:textSize="10sp"
-
+                    android:id="@+id/downloadQr"
 
                     />
             </LinearLayout>
@@ -746,6 +746,7 @@
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="346dp"
+                android:id="@+id/qrDefault"
                 android:src="@drawable/qr_default"
                 android:padding="20dp"
                 android:background="@drawable/tgl_spinner"
@@ -770,7 +771,6 @@
                 android:layout_height="41dp"
                 android:paddingVertical="10dp"
                 android:lines="1"
-                android:hint="12323/sdadsa/1ccs"
                 android:background="@drawable/tgl_spinner"
                 />
         </LinearLayout>
@@ -816,7 +816,7 @@
                 android:layout_height="128dp"
                 android:id="@+id/addNewFotoAsetAndQr"
                 android:orientation="horizontal"
-                android:background="@color/white"
+                android:background="@drawable/edit_text_spiner"
                 android:gravity="center"
                 android:layout_marginVertical="10dp"
                 >
@@ -825,10 +825,12 @@
                     android:layout_width="72dp"
                     android:layout_height="72dp"
                     android:src="@drawable/ic_outline_image_24"
+                    android:id="@+id/fotoasetqr"
                     />
             </LinearLayout>
 
             <Button
+                android:id="@+id/inpSimpanFotoQr"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingVertical="10dp"

@@ -80,6 +80,11 @@ public interface AsetInterface {
             @Header("Content-Type") String contentType, @Body MultipartBody body
     );
 
+    @POST("kirim-foto-asetqr/{id}")
+    Call<AsetApproveModel> addFotoAsetQr(@Path("id") int id,
+            @Header("Content-Type") String contentType, @Body MultipartBody body
+    );
+
     @DELETE("aset/{id}")
     Call<DeleteModel> deleteReport(@Path("id") int asetId);
 
