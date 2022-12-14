@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/approveDialog"
+    app:cardCornerRadius="20dp"
+    app:cardUseCompatPadding="true"
+    android:layout_gravity="center"
+    app:cardBackgroundColor="@color/white"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="30dp"
+        android:paddingBottom="20dp">
+
+        <TextView
+            android:id="@+id/tvKirim"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="REJECT?"
+            android:gravity="center"
+            android:fontFamily="sans-serif-black"
+            android:textSize="24sp"
+            android:textColor="@color/main_grey"
+
+            >
+        </TextView>
+
+        <TextView
+            android:id="@+id/tvTanyaKirim"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tvKirim"
+            android:gravity="center"
+            android:paddingTop="10dp"
+            android:paddingBottom="20dp"
+            android:paddingHorizontal="60dp"
+            android:text="DATA AKAN DIKEMBALIKAN KE POSISI OPERATOR,YAKIN REJECT DATA?">
+        </TextView>
+
+        <EditText
+            android:id="@+id/inpRejctMessages"
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:padding="10dp"
+            android:layout_marginHorizontal="20dp"
+            android:layout_below="@+id/tvTanyaKirim"
+            android:layout_marginBottom="10dp"
+            android:gravity="start"
+            android:background="@color/background_grey" />
+
+                <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/inpRejctMessages"
+            android:padding="10dp"
+                    android:orientation="horizontal"
+                    >
+
+            <!--            <Button-->
+            <!--                android:id="@+id/btnTidakKirim"-->
+            <!--                android:layout_width="0dp"-->
+            <!--                android:layout_height="50dp"-->
+            <!--                android:layout_weight="0.5"-->
+            <!--                android:layout_below="@+id/tvTanyaKirim"-->
+            <!--                android:layout_marginLeft="55dp"-->
+            <!--                android:layout_marginRight="20dp"-->
+            <!--                android:minWidth="120dp"-->
+            <!--                android:text="TIDAK"-->
+            <!--                android:textSize="11sp"-->
+            <!--                android:backgroundTint="@color/main_grey">-->
+            <!--            </Button>-->
+
+
+            <!--            <Button-->
+            <!--                android:id="@+id/btnYaKirim"-->
+            <!--                android:layout_width="0dp"-->
+            <!--                android:layout_height="50dp"-->
+            <!--                android:layout_weight="0.5"-->
+            <!--                android:layout_marginLeft="20dp"-->
+            <!--                android:layout_marginRight="40dp"-->
+            <!--                android:layout_below="@+id/tvTanyaKirim"-->
+            <!--                android:layout_toRightOf="@id/btnTidakKirim"-->
+            <!--                android:text="KIRIM"-->
+            <!--                android:textSize="11sp"-->
+            <!--                android:fontFamily="sans-serif-black"-->
+            <!--                android:textColor="@color/red"-->
+            <!--                android:backgroundTint="@color/white"-->
+            <!--                android:minWidth="120dp">-->
+            <!--                -->
+
+            <!--            </Button>-->
+
+
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:layout_weight="0.5"
+                android:paddingVertical="10dp"
+                android:layout_gravity="center"
+                android:id="@+id/btnYaKirim"
+                android:gravity="center"
+                android:text="KIRIM"
+                android:textStyle="bold"
+                android:textColor="@color/main_grey"
+                android:textSize="14sp"
+                android:layout_marginHorizontal="10dp"
+                android:background="@drawable/bg_rounded_btn_main"
+                />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:layout_weight="0.5"
+                android:paddingVertical="10dp"
+                android:layout_gravity="center"
+                android:id="@+id/btnTidakKirim"
+                android:gravity="center"
+                android:text="TIDAK"
+                android:layout_marginHorizontal="10dp"
+                android:textStyle="bold"
+                android:textColor="@color/white"
+                android:textSize="14sp"
+                android:background="@drawable/bg_rounded_btn_sc"
+
+                />
+
+
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+</androidx.cardview.widget.CardView>

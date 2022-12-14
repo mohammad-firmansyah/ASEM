@@ -113,7 +113,8 @@ import org.json.JSONObject;
 
 public class DetailAsetActivity extends AppCompatActivity {
 //    Data aset = new Data();
-    Dialog customDialog;
+    Dialog customDialogApprove;
+    Dialog customDialogReject;
     Button inpBtnMap;
     Button btnFile;
     Button btnSubmit;
@@ -313,7 +314,14 @@ public class DetailAsetActivity extends AppCompatActivity {
         btnApprove.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                customDialog.show();
+                customDialogApprove.show();
+            }
+        });
+
+        btnReject.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                customDialogReject.show();
             }
         });
 
@@ -1221,9 +1229,16 @@ public class DetailAsetActivity extends AppCompatActivity {
 
     public void checkQrCode(){
         ViewGroup ln = findViewById(R.id.qrGroup);
+        ViewGroup ln2 = findViewById(R.id.uploadFotoGroup);
         Integer hak_akses_id = Integer.valueOf(sharedPreferences.getString("hak_akses_id", "0"));
-        if (statusPosisi == 5 && hak_akses_id == 7 ) ln.setVisibility(View.VISIBLE);
-        else ln.setVisibility(View.GONE);
+        if (statusPosisi == 5 && hak_akses_id == 7 ) {
+            ln.setVisibility(View.VISIBLE);
+            ln2.setVisibility(View.VISIBLE);
+        }
+        else {
+            ln.setVisibility(View.GONE);
+            ln2.setVisibility(View.GONE);
+        }
 
     }
     public void getSpinnerData(){
@@ -1243,18 +1258,80 @@ public class DetailAsetActivity extends AppCompatActivity {
 //        customDialog.setCancelable(true);
 //        customDialog.show();
 
-        customDialog = new Dialog(DetailAsetActivity.this,R.style.MyAlertDialogTheme);
-        customDialog.setContentView(R.layout.dialog_approve);
-        customDialog.setCanceledOnTouchOutside(false);
-        customDialog.getWindow().setBackgroundDrawable(new ColorDrawable(0));
+        customDialogApprove = new Dialog(DetailAsetActivity.this,R.style.MyAlertDialogTheme);
+        customDialogApprove.setContentView(R.layout.dialog_approve);
+        customDialogApprove.setCanceledOnTouchOutside(false);
+        customDialogApprove.getWindow().setBackgroundDrawable(new ColorDrawable(0));
+
+        customDialogReject = new Dialog(DetailAsetActivity.this,R.style.MyAlertDialogTheme);
+        customDialogReject.setContentView(R.layout.dialog_reject);
+        customDialogReject.setCanceledOnTouchOutside(false);
+        customDialogReject.getWindow().setBackgroundDrawable(new ColorDrawable(0));
 //        customDialog.show();
 
-        Button btnYa = customDialog.findViewById(R.id.btnYaKirim);
-        Button btnTidak = customDialog.findViewById(R.id.btnTidakKirim);
+        Button btnYa = customDialogApprove.findViewById(R.id.btnYaKirim);
+        Button btnTidak = customDialogApprove.findViewById(R.id.btnTidakKirim);
+
+        Button btnYa2 = customDialogReject.findViewById(R.id.btnYaKirim);
+        Button btnTidak2 = customDialogReject.findViewById(R.id.btnTidakKirim);
+
+        btnTidak2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                customDialogReject.dismiss();
+            }
+        });
+
+        btnYa2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                EditText ketReject = customDialogReject.findViewById(R.id.inpRejctMessages);
+                if ("".equals(ketReject.getText().toString().trim())) {
+                    ketReject.setError("Wajib Diisi");
+                    ketReject.requestFocus();
+                    return;
+                }
+
+                Log.d("asetapix2",String.valueOf(ketReject.getText()));
+                MultipartBody.Builder builder = new MultipartBody.Builder();
+                builder.addPart(MultipartBody.Part.createFormData("ket_reject",null,RequestBody.create(MediaType.parse("text/plain"), String.valueOf(ketReject.getText()))));
+                MultipartBody multipartBody = builder
+                        .build();
+                String contentType = "multipart/form-data; charset=utf-8; boundary=" + multipartBody.boundary();
+                Call<AsetApproveModel> call = asetInterface.rejectAset(id,contentType,multipartBody);
+
+
+                call.enqueue(new Callback<AsetApproveModel>() {
+                    @Override
+                    public void onResponse(Call<AsetApproveModel> call, Response<AsetApproveModel> response) {
+                        if (response.isSuccessful() && response.body() != null) {
+
+
+                            startActivity(new Intent(DetailAsetActivity.this,LonglistAsetActivity.class));
+                            customDialogReject.dismiss();
+                            return;
+                        } else {
+                            Toast.makeText(getApplicationContext(),"Kesalahan jaringan mohon coba lagi",Toast.LENGTH_LONG).show();
+                            customDialogReject.dismiss();
+                            return;
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<AsetApproveModel> call, Throwable t) {
+                        Toast.makeText(getApplicationContext(),"Kesalahan : " + t.getMessage() ,Toast.LENGTH_LONG).show();
+                        customDialogReject.dismiss();
+                        return;
+                    }
+                });
+                customDialogReject.dismiss();
+            }
+        });
+
         btnTidak.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                customDialog.dismiss();
+                customDialogApprove.dismiss();
             }
         });
 
@@ -1268,11 +1345,11 @@ public class DetailAsetActivity extends AppCompatActivity {
                     public void onResponse(Call<AsetApproveModel> call, Response<AsetApproveModel> response) {
                         if (response.isSuccessful() && response.body() != null) {
                             startActivity(new Intent(DetailAsetActivity.this,LonglistAsetActivity.class));
-                            customDialog.dismiss();
+                            customDialogApprove.dismiss();
                             return;
                         } else {
                             Toast.makeText(getApplicationContext(),"Kesalahan jaringan mohon coba lagi",Toast.LENGTH_LONG).show();
-                            customDialog.dismiss();
+                            customDialogApprove.dismiss();
                             return;
                         }
                     }
@@ -1280,7 +1357,7 @@ public class DetailAsetActivity extends AppCompatActivity {
                     @Override
                     public void onFailure(Call<AsetApproveModel> call, Throwable t) {
                         Toast.makeText(getApplicationContext(),"Kesalahan : " + t.getMessage() ,Toast.LENGTH_LONG).show();
-                        customDialog.dismiss();
+                        customDialogApprove.dismiss();
                         return;
                     }
                 });

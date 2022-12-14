@@ -66,8 +66,8 @@ public interface AsetInterface {
     @GET("approve/{id}")
     Call<AsetApproveModel> approveAset(@Path("id") int id);
 
-    @POST("reject")
-    Call<AsetApproveModel> rejectAset(@Path("id") int id, @Header("Content-Type") String contentType, @Body MultipartBody body);
+    @POST("reject/{id}")
+    Call<AsetApproveModel> rejectAset(@Path("id") int id,@Header("Content-Type") String contentType, @Body MultipartBody body);
 
     @POST("aset/create")
     Call<AsetModel2> addAset(

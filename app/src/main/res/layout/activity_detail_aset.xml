@@ -802,6 +802,15 @@
                     android:layout_weight="0.5"
                     />
             </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:id="@+id/uploadFotoGroup"
+                >
+
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="128dp"
@@ -828,6 +837,7 @@
                 android:textColor="@color/white"
                 />
 
+            </LinearLayout>
 
         </LinearLayout>
     </ScrollView>
