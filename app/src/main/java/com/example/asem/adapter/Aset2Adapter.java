@@ -182,6 +182,7 @@ public class Aset2Adapter  extends RecyclerView.Adapter<Aset2Adapter.ViewHolder>
                 holder.btnKirim.setVisibility(View.VISIBLE);
                 holder.btnDetail.setVisibility(View.VISIBLE);
                 //hapus statusreject, dan keterangan reject
+                //btnFAB status visible hanya di op
             } else if(myPostData2.getStatusPosisiID().equals("5")){
                 holder.btnEdit.setVisibility(View.VISIBLE);
                 holder.btnKirim.setVisibility(View.VISIBLE);
