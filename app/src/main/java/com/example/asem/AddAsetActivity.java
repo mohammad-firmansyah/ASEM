@@ -1928,9 +1928,9 @@ public class AddAsetActivity extends AppCompatActivity {
             RequestBody requestNilaiResidu = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(nilai_residu));
 
             RequestBody requestSubUnit = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(spinnerIdSubUnit));
-            RequestBody requestUnit = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(spinnerIdUnit+1));
+            RequestBody requestUnit = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(Integer.parseInt(spinnerIdUnit)+1));
             RequestBody requestAfdeling = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(spinnerIdAfdeling));
-            Log.d("asetapix",String.valueOf(spinnerIdAfdeling) + String.valueOf(tgl_oleh));
+            Log.d("asetapix","unit :"+ String.valueOf(spinnerIdUnit));
 
 
 

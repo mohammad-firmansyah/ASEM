@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.Dialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -15,7 +16,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.asem.adapter.Aset2Adapter;
@@ -38,12 +38,15 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class LonglistAsetActivity extends AppCompatActivity {
+    private static final String PREF_LOGIN = "LOGIN_PREF";
+    SharedPreferences sharedPreferences;
 
     Button btnReport;
     Button btnFilter;
     FloatingActionButton fab;
     RecyclerView rcAset;
-    EditText etSearchBar;
+
+    Integer user_id;
 
     public static String baseUrl = "http://202.148.9.226:7710/mnj_aset_repo/public/api/";
     private AsetInterface asetInterface;
@@ -63,7 +66,17 @@ public class LonglistAsetActivity extends AppCompatActivity {
         rcAset.setHasFixedSize(true);
         rcAset.setLayoutManager(new LinearLayoutManager(this));
         fab = findViewById(R.id.addAset);
-        etSearchBar = findViewById(R.id.etSearchBar);
+        sharedPreferences = getSharedPreferences(PREF_LOGIN, MODE_PRIVATE);
+        String hak_akses_id = sharedPreferences.getString("hak_akses_id", "-");
+        if (hak_akses_id.equals("7")){
+            fab.setVisibility(View.VISIBLE);
+        }else {
+            fab.setVisibility(View.GONE);
+        }
+
+        user_id = Integer.parseInt(sharedPreferences.getString("user_id", "-"));
+
+
         //fab.setBackgroundTintList(ColorStateList.valueOf(Color.rgb(10, 50, 50)));
 
         btnReport = findViewById(R.id.btnReport);
@@ -101,12 +114,13 @@ public class LonglistAsetActivity extends AppCompatActivity {
         AsetAdapter adapter = new AsetAdapter(allData,LonglistAsetActivity.this);
         rcAset.setAdapter(adapter);
 
+
         getAllAset();
     }
 
     private void getAllAset(){
         dialog.show();
-        Call<List<Data2>> call = asetInterface.getAllAset();
+        Call<List<Data2>> call = asetInterface.getAllAset(user_id);
         call.enqueue(new Callback<List<Data2>>() {
             @Override
             public void onResponse(Call<List<Data2>> call, Response<List<Data2>> response) {
@@ -152,7 +166,7 @@ public class LonglistAsetActivity extends AppCompatActivity {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Keluar");
         builder.setMessage("Apa anda yakin keluar aplikasi?")
-                .setPositiveButton("Iya", (dialog, id) -> finishAffinity())
+                .setPositiveButton("Iya", (dialog, id) ->finishAffinity())
                 .setNegativeButton("Tidak", (dialog, id) -> dialog.cancel());
         AlertDialog alert = builder.create();
         alert.setCanceledOnTouchOutside(true);

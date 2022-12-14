@@ -61,6 +61,9 @@ public class MainActivity extends AppCompatActivity {
         etNIP = findViewById(R.id.etNIP);
         etPass = findViewById(R.id.etPassword);
 
+        //String username = sharedPreferences.getString("username", "-");
+//        Log.d("tessp", username);
+
 
         btnLogin = findViewById(R.id.btnLogin);
 /*
