@@ -1,97 +1,61 @@
 package com.example.asem;
 
-import static com.example.asem.utils.utils.CurrencyToNumber;
-import static com.example.asem.utils.utils.latitudeValue;
-import static com.example.asem.utils.utils.longitudeValue;
-
 import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
 import androidx.core.content.FileProvider;
-import androidx.exifinterface.media.ExifInterface;
 
 import android.Manifest;
-import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
-import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
 import android.graphics.drawable.ColorDrawable;
-import android.location.Location;
-import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
-import android.os.Looper;
 import android.provider.MediaStore;
-import android.provider.Settings;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.asem.api.AsetInterface;
-import com.example.asem.api.MyErrorMessage;
 import com.example.asem.api.model.Afdelling;
 import com.example.asem.api.model.AfdellingModel;
-import com.example.asem.api.model.Aset;
 import com.example.asem.api.model.AsetApproveModel;
-import com.example.asem.api.model.AsetJenis;
 import com.example.asem.api.model.AsetJenisModel;
-import com.example.asem.api.model.AsetKode;
 import com.example.asem.api.model.AsetKode2;
-import com.example.asem.api.model.AsetKodeModel;
 import com.example.asem.api.model.AsetKodeModel2;
 import com.example.asem.api.model.AsetKondisi;
 import com.example.asem.api.model.AsetModel;
+import com.example.asem.api.model.AsetModel2;
 import com.example.asem.api.model.AsetTipe;
-import com.example.asem.api.model.Data;
 import com.example.asem.api.model.SubUnit;
 import com.example.asem.api.model.SubUnitModel;
 import com.example.asem.api.model.Unit;
 import com.example.asem.api.model.UnitModel;
-import com.example.asem.utils.GpsConverter;
 import com.example.asem.utils.utils;
-import com.google.android.gms.location.LocationCallback;
-import com.google.android.gms.location.LocationResult;
-import com.google.android.gms.location.LocationServices;
-import com.google.gson.Gson;
-import com.jaiselrahman.filepicker.activity.FilePickerActivity;
-import com.jaiselrahman.filepicker.config.Configurations;
-import com.jaiselrahman.filepicker.model.MediaFile;
 import com.squareup.picasso.Picasso;
 
 import java.io.File;
-import java.lang.reflect.Type;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
@@ -106,13 +70,35 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import com.google.android.gms.location.FusedLocationProviderClient;
-import com.google.android.gms.location.LocationRequest;
-
-import org.jetbrains.annotations.NotNull;
-import org.json.JSONObject;
 
 public class DetailAsetActivity extends AppCompatActivity {
-//    Data aset = new Data();
+
+
+    String url1 = "";
+    String url2 = "";
+    String url3 = "";
+    String url4 = "";
+    File asetqrfoto;
+    ActivityResultLauncher<Intent> activityCaptureFoto1 =
+            registerForActivityResult(
+                    new ActivityResultContracts.StartActivityForResult(),
+                    new ActivityResultCallback<ActivityResult>() {
+                        @Override
+                        public void onActivityResult(ActivityResult activityResult) {
+                            int resultCode = activityResult.getResultCode();
+                            if (resultCode== Activity.RESULT_OK){
+                                asetqrfoto = utils.savePictureResult(
+                                        DetailAsetActivity.this, photoname1, fotoasetqr, true
+                                );
+//                                setExifLocation(asetqrfoto,1);
+                            } else if (resultCode == Activity.RESULT_CANCELED){
+                                android.widget.Toast.makeText(DetailAsetActivity.this, "pilih gambar dibatalkan", Toast.LENGTH_SHORT).show();
+                            }
+
+                        }
+                    }
+            );
+    //    Data aset = new Data();
     Dialog customDialogApprove;
     Dialog customDialogReject;
     Button inpBtnMap;
@@ -124,6 +110,12 @@ public class DetailAsetActivity extends AppCompatActivity {
     Button map4;
     Button btnApprove;
     Button btnReject;
+    Button inpSimpanFotoQr;
+    Button downloadQr;
+
+    EditText inpNoInv;
+    ImageView fotoasetqr;
+    ViewGroup addNewFotoAsetAndQr;
 
     Integer statusPosisi;
 
@@ -190,6 +182,7 @@ public class DetailAsetActivity extends AppCompatActivity {
     ImageView fotoimg2;
     ImageView fotoimg3;
     ImageView fotoimg4;
+    ImageView qrDefault;
 
 
     String photoname1 = "foto1.png";
@@ -245,6 +238,9 @@ public class DetailAsetActivity extends AppCompatActivity {
 //        progress.show();
 
 
+
+        inpNoInv = findViewById(R.id.inpNoInv);
+        inpNoInv.setEnabled(false);
         listBtnMap = findViewById(R.id.listMapButton);
         inpTglOleh = findViewById(R.id.inpTglMasukAset);
         inpTglOleh.setEnabled(false);
@@ -263,8 +259,9 @@ public class DetailAsetActivity extends AppCompatActivity {
         spinnerSubUnit.setEnabled(false);
         spinnerUnit = findViewById(R.id.inpUnit);
         spinnerUnit.setEnabled(false);
+        fotoasetqr = findViewById(R.id.fotoasetqr);
 
-
+        addNewFotoAsetAndQr = findViewById(R.id.addNewFotoAsetAndQr);
         inpTglInput = findViewById(R.id.inpTglInput);
         inpTglInput.setEnabled(false);
         inpUmrEkonomis = findViewById(R.id.inpUmrEkonomis);
@@ -289,6 +286,9 @@ public class DetailAsetActivity extends AppCompatActivity {
         inpJumlahPohon.setEnabled(false);
         inpPersenKondisi = findViewById(R.id.inpPersenKondisi);
         inpPersenKondisi.setEnabled(false);
+        qrDefault = findViewById(R.id.qrDefault);
+        downloadQr = findViewById(R.id.downloadQr);
+        inpSimpanFotoQr = findViewById(R.id.inpSimpanFotoQr);
 
         map1 = findViewById(R.id.map1);
         map2 = findViewById(R.id.map2);
@@ -310,6 +310,22 @@ public class DetailAsetActivity extends AppCompatActivity {
 
 //        btnSubmit = findViewById(R.id.btnSubmit);
 
+        inpSimpanFotoQr.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+//                Log.d("asetapix","clicked data");
+//                Toast.makeText(getApplicationContext(),"helo",Toast.LENGTH_LONG).show();
+                addFotoQrAset();
+            }
+        });
+
+//        inpSimpanFotoQr.setOnClickListener(view -> Log.d("asetapix","hello"));
+//        addNewFotoAsetAndQr.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                captureFotoQcLoses("fotoaset.png",activityCaptureFoto1);
+//            }
+//        });
 
         btnApprove.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -334,6 +350,41 @@ public class DetailAsetActivity extends AppCompatActivity {
             }
         });
 
+        foto1rl.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(DetailAsetActivity.this,DetailImageActivity.class);
+                intent.putExtra("url",url1);
+                startActivity(intent);
+            }
+        });
+
+        foto2rl.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(DetailAsetActivity.this,DetailImageActivity.class);
+                intent.putExtra("url",url2);
+                startActivity(intent);
+            }
+        });
+
+        foto3rl.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(DetailAsetActivity.this,DetailImageActivity.class);
+                intent.putExtra("url",url3);
+                startActivity(intent);
+            }
+        });
+
+        foto4rl.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(DetailAsetActivity.this,DetailImageActivity.class);
+                intent.putExtra("url",url4);
+                startActivity(intent);
+            }
+        });
 
 
         inpNilaiAsetSAP.addTextChangedListener(new TextWatcher() {
@@ -608,12 +659,22 @@ public class DetailAsetActivity extends AppCompatActivity {
                 statusPosisi = response.body().getData().getStatusPosisi();
                 id = response.body().getData().getAsetId();
 
+                if (response.body().getData().getNoInv() != null) {
+                    inpNoInv.setText(String.valueOf(response.body().getData().getNoInv()));
+                };
+
+                String qrurl = baseUrlImg+"/"+response.body().getData().getFotoQr();
+                if (response.body().getData().getFotoAsetQr() != null) {
+                    qrDefault.getLayoutParams().height = 346;
+                    Log.d("asetapix","qrurl "+qrurl);
+                    Picasso.get().load(qrurl).resize(400,400).centerCrop().into(qrDefault);
+                }
 
 
-                String url1 = baseUrlImg+response.body().getData().getFotoAset1();
-                String url2 = baseUrlImg+response.body().getData().getFotoAset2();
-                String url3 = baseUrlImg+response.body().getData().getFotoAset3();
-                String url4 = baseUrlImg+response.body().getData().getFotoAset4();
+                url1 = baseUrlImg+response.body().getData().getFotoAset1();
+                url2 = baseUrlImg+response.body().getData().getFotoAset2();
+                url3 = baseUrlImg+response.body().getData().getFotoAset3();
+                url4 = baseUrlImg+response.body().getData().getFotoAset4();
                 fotoimg1.getLayoutParams().width = 200;
                 fotoimg1.getLayoutParams().height = 200;
                 Picasso.get().load(url1).resize(200,200).centerCrop().into(fotoimg1);
@@ -630,6 +691,13 @@ public class DetailAsetActivity extends AppCompatActivity {
                 fotoimg4.getLayoutParams().height = 200;
                 Picasso.get().load(url4).resize(200,200).centerCrop().into(fotoimg4);
 
+                if (response.body().getData().getFotoAsetQr()!=null ){
+                    String url = baseUrlImg + response.body().getData().getFotoAsetQr();
+                    fotoasetqr.getLayoutParams().width = 300;
+                    fotoasetqr.getLayoutParams().height = 300;
+                    Picasso.get().load(url).resize(300,300).centerCrop().into(fotoasetqr);
+
+                }
 
                 geotag1 = response.body().getData().getGeoTag1();
                 geotag2 = response.body().getData().getGeoTag2();
@@ -761,6 +829,21 @@ public class DetailAsetActivity extends AppCompatActivity {
                 finish();
             }
         });
+    }
+
+    private void captureFotoQcLoses(String imageName, ActivityResultLauncher<Intent> activityLauncherName){
+        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        File fileImage = new File(getExternalFilesDir(Environment.DIRECTORY_PICTURES), "/"+imageName);
+        if (fileImage.exists()){
+            fileImage.delete();
+            Log.d("captImg", "captureImage: "+fileImage.exists());
+            fileImage = new File(getExternalFilesDir(Environment.DIRECTORY_PICTURES), imageName);
+        }
+        Uri uriFile = FileProvider.getUriForFile(Objects.requireNonNull(getApplicationContext()),
+                BuildConfig.APPLICATION_ID + ".provider", fileImage);
+//
+        takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, uriFile);
+        activityLauncherName.launch(takePictureIntent);
     }
 
     private void getKodeAset(){
@@ -1362,6 +1445,44 @@ public class DetailAsetActivity extends AppCompatActivity {
                     }
                 });
 
+            }
+        });
+    }
+
+    private void addFotoQrAset(){
+        dialog.show();
+        MultipartBody.Builder builder = new MultipartBody.Builder();
+        builder.addPart(MultipartBody.Part.createFormData("foto_aset_qr",asetqrfoto.getName(),RequestBody.create(MediaType.parse("image/*"),asetqrfoto)));
+
+
+        MultipartBody multipartBody = builder
+                .build();
+        String contentType = "multipart/form-data; charset=utf-8; boundary=" + multipartBody.boundary();
+
+
+
+        Call<AsetApproveModel> call = asetInterface.addFotoAsetQr(id,contentType,multipartBody);
+
+        call.enqueue(new Callback<AsetApproveModel>() {
+            @Override
+            public void onResponse(Call<AsetApproveModel> call, Response<AsetApproveModel> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    dialog.dismiss();
+                    startActivity(new Intent(DetailAsetActivity.this,LonglistAsetActivity.class));
+                    finish();
+                    return;
+                } else {
+                    dialog.dismiss();
+                    Toast.makeText(getApplicationContext(),"Error : mohon coba lagi",Toast.LENGTH_LONG).show();
+                    return;
+                }
+            }
+
+            @Override
+            public void onFailure(Call<AsetApproveModel> call, Throwable t) {
+                dialog.dismiss();
+                Toast.makeText(getApplicationContext(),"Error : " + t.getMessage(),Toast.LENGTH_LONG).show();
+                return;
             }
         });
     }

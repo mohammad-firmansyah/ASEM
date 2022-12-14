@@ -32,6 +32,7 @@ import com.example.asem.DetailAsetActivity;
 import com.example.asem.LonglistAsetActivity;
 import com.example.asem.R;
 import com.example.asem.UpdateAsetActivity;
+import com.example.asem.UpdateFotoQrAsetActivity;
 import com.example.asem.api.ApiFunction;
 import com.example.asem.api.AsetInterface;
 import com.example.asem.api.model.Aset;
@@ -154,6 +155,15 @@ public class Aset2Adapter  extends RecyclerView.Adapter<Aset2Adapter.ViewHolder>
         holder.btnEdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                sharedPreferences = context.getSharedPreferences(PREF_LOGIN, MODE_PRIVATE);
+                Integer hak_akses_id = Integer.valueOf(sharedPreferences.getString("hak_akses_id", "0"));
+
+                if (myPostData2.getStatusPosisiID() == 5 && hak_akses_id == 7) {
+                    Intent intent = new Intent(context, UpdateFotoQrAsetActivity.class);
+                    intent.putExtra("id",(myPostData2.getAsetId()));
+                    context.startActivity(intent);
+                    return;
+                }
                 Intent intent = new Intent(context, UpdateAsetActivity.class);
                 intent.putExtra("id",(myPostData2.getAsetId()));
                 context.startActivity(intent);

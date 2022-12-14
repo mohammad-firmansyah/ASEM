@@ -24,6 +24,7 @@
             android:layout_height="47dp"
             android:background="@drawable/bg_searchbar"
             android:hint="Cari Data Aset"
+            android:inputType=""
             android:textColorHint="@color/grey3"
             />
         <androidx.appcompat.widget.AppCompatButton
