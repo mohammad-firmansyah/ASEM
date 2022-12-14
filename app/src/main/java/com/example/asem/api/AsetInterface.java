@@ -10,6 +10,7 @@ import com.example.asem.api.model.AsetModel2;
 import com.example.asem.api.model.AsetTipe;
 import com.example.asem.api.model.Data2;
 import com.example.asem.api.model.DeleteModel;
+import com.example.asem.api.model.Login;
 import com.example.asem.api.model.LoginModel;
 import com.example.asem.api.model.ReportModel;
 import com.example.asem.api.model.SubUnitModel;
@@ -88,13 +89,16 @@ public interface AsetInterface {
             @Field("user_pass") String user_pass
     );
 
-    @FormUrlEncoded
-    @POST("kirimDataAset")
+    @GET("login")Call<LoginModel> getData();
+
+
+    @GET("kirim/{id}")
     Call<AsetModel2> kirimDataAset(
 //            @Field("aset_sub_unit") String aset_sub_unit,
 //            @Field("status_posisi_id") String status_posisi_id,
-            @Field("id") int id,
-            @Field("message") String kirim);
+            @Path("id") int id
+            //@Field("message") String kirim
+            );
 
 
 }
