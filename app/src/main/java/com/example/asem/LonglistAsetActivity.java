@@ -1,5 +1,6 @@
 package com.example.asem;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
@@ -17,7 +18,9 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Toast;
@@ -29,7 +32,9 @@ import com.example.asem.api.model.Data;
 import com.example.asem.api.model.Data2;
 import com.example.asem.api.model.Unit;
 import com.example.asem.api.model.UnitModel;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.navigation.NavigationBarView;
 
 import java.sql.Array;
 import java.util.ArrayList;
@@ -41,7 +46,7 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class LonglistAsetActivity extends AppCompatActivity {
+public class LonglistAsetActivity extends AppCompatActivity  { //implements BottomNavigationView.OnItemSelectedListener
 
     private static final String[] PERMISSIONS_LOCATION_AND_STORAGE = {
             Manifest.permission.ACCESS_COARSE_LOCATION,
@@ -126,6 +131,30 @@ public class LonglistAsetActivity extends AppCompatActivity {
         AsetAdapter adapter = new AsetAdapter(allData,LonglistAsetActivity.this);
         rcAset.setAdapter(adapter);
 
+        BottomNavigationView bottomNavigationView = findViewById(R.id.bottomnav);
+
+        bottomNavigationView.setSelectedItemId(R.id.nav_longlist);
+
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+
+                switch (item.getItemId())
+                {
+                    case R.id.nav_beranda:
+                        startActivity(new Intent(getApplicationContext(),Home.class));
+                        overridePendingTransition(0,0);
+                        return true;
+                    case R.id.nav_longlist:
+                        return true;
+                    case R.id.nav_profil:
+                        startActivity(new Intent(getApplicationContext(),ProfilActivity.class));
+                        overridePendingTransition(0,0);
+                        return true;
+                }
+                return false;
+            }
+        });
 
         getAllAset();
     }
@@ -185,4 +214,22 @@ public class LonglistAsetActivity extends AppCompatActivity {
         alert.show();
     }
 
+//    @Override
+//    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+//
+//        switch (item.getItemId())
+//        {
+//            case R.id.nav_beranda:
+//                startActivity(new Intent(getApplicationContext(),Home.class));
+//                overridePendingTransition(0,0);
+//                return true;
+//            case R.id.nav_longlist:
+//                return true;
+//            case R.id.nav_profil:
+//                startActivity(new Intent(getApplicationContext(),ProfilActivity.class));
+//                overridePendingTransition(0,0);
+//                return true;
+//        }
+//        return false;
+//    }
 }
