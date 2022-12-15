@@ -77,9 +77,6 @@ import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
 import com.google.gson.Gson;
-import com.jaiselrahman.filepicker.activity.FilePickerActivity;
-import com.jaiselrahman.filepicker.config.Configurations;
-import com.jaiselrahman.filepicker.model.MediaFile;
 import com.squareup.picasso.Picasso;
 
 import java.io.File;

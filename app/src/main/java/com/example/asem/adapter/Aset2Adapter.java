@@ -124,8 +124,8 @@ public class Aset2Adapter  extends RecyclerView.Adapter<Aset2Adapter.ViewHolder>
                     @Override
                     public void onResponse(Call<DeleteModel> call, Response<DeleteModel> response) {
                         if (response.isSuccessful() && response.body() != null){
-                            Toast.makeText(context.getApplicationContext(),"aset deleted",Toast.LENGTH_LONG).show();
-//                                            startActivity(new Intent(context.getApplicationContext(),LonglistAsetActivity.class));
+                            context.startActivity(new Intent(context,LonglistAsetActivity.class));
+                            Toast.makeText(context.getApplicationContext(),"aset terhapus",Toast.LENGTH_LONG).show();
                             return;
                         }
 

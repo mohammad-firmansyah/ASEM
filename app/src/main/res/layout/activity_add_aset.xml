@@ -589,7 +589,6 @@
                 android:layout_height="41dp"
                 android:layout_marginBottom="10dp"
                 android:background="@drawable/edit_text_spiner"
-                android:inputType="numberDecimal"
                 android:lines="1"
                 android:paddingVertical="10dp"
                 />

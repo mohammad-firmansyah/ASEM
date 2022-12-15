@@ -78,9 +78,6 @@ import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
-import com.jaiselrahman.filepicker.activity.FilePickerActivity;
-import com.jaiselrahman.filepicker.config.Configurations;
-import com.jaiselrahman.filepicker.model.MediaFile;
 import com.squareup.picasso.Picasso;
 
 import java.io.File;
@@ -947,100 +944,6 @@ public class AddAsetActivity extends AppCompatActivity {
                 spinnerAsetKondisi.setSelection(response.body().getData().getAsetKondisi()-1);
                 spinnerKodeAset.setSelection(response.body().getData().getAsetKode()-1);
                 editVisibilityDynamic();
-//                Log.d("asetapix", spinnerJenisAset.getSelectedItem().toString());
-//                if (spinnerJenisAset.getSelectedItem().toString() == "tanaman" && spinnerAsetKondisi.getSelectedItem().toString() == "normal") {
-//                    listBtnMap.setVisibility(View.VISIBLE);
-//                    inpJumlahPohon.setVisibility(View.VISIBLE);
-//
-//                    tvUploudBA.setVisibility(View.GONE);
-//                    inpBtnMap.setVisibility(View.GONE);
-//                    btnFile.setVisibility(View.GONE);
-//
-//                }
-//
-//                if (spinnerJenisAset.getSelectedItem().toString() == "tanaman" && spinnerAsetKondisi.getSelectedItem().toString() == "rusak") {
-//                    listBtnMap.setVisibility(View.VISIBLE);
-//                    inpJumlahPohon.setVisibility(View.VISIBLE);
-//                    tvUploudBA.setVisibility(View.VISIBLE);
-//                    btnFile.setVisibility(View.VISIBLE);
-//
-//                    inpBtnMap.setVisibility(View.GONE);
-//
-//                }
-//
-//
-//                if (spinnerJenisAset.getSelectedItem().toString() == "tanaman" && spinnerAsetKondisi.getSelectedItem().toString() == "hilang") {
-//                    tvUploudBA.setVisibility(View.VISIBLE);
-//                    btnFile.setVisibility(View.VISIBLE);
-//
-//                    inpJumlahPohon.setVisibility(View.GONE);
-//                    listBtnMap.setVisibility(View.GONE);
-//                    inpJumlahPohon.setVisibility(View.GONE);
-//                    inpBtnMap.setVisibility(View.GONE);
-//
-//                }
-//
-//                if (spinnerJenisAset.getSelectedItem().toString() == "kayu" && spinnerAsetKondisi.getSelectedItem().toString() == "normal") {
-//                    listBtnMap.setVisibility(View.VISIBLE);
-//                    inpJumlahPohon.setVisibility(View.VISIBLE);
-//
-//                    tvUploudBA.setVisibility(View.GONE);
-//                    inpBtnMap.setVisibility(View.GONE);
-//                    btnFile.setVisibility(View.GONE);
-//
-//                }
-//
-//                if (spinnerJenisAset.getSelectedItem().toString() == "kayu" && spinnerAsetKondisi.getSelectedItem().toString() == "rusak") {
-//                    listBtnMap.setVisibility(View.VISIBLE);
-//                    inpJumlahPohon.setVisibility(View.VISIBLE);
-//                    tvUploudBA.setVisibility(View.VISIBLE);
-//                    btnFile.setVisibility(View.VISIBLE);
-//
-//                    inpBtnMap.setVisibility(View.GONE);
-//
-//                }
-//
-//                if (spinnerJenisAset.getSelectedItem().toString() == "kayu" && spinnerAsetKondisi.getSelectedItem().toString() == "hilang") {
-//                    tvUploudBA.setVisibility(View.VISIBLE);
-//                    btnFile.setVisibility(View.VISIBLE);
-//
-//                    inpJumlahPohon.setVisibility(View.GONE);
-//                    listBtnMap.setVisibility(View.GONE);
-//                    inpJumlahPohon.setVisibility(View.GONE);
-//                    inpBtnMap.setVisibility(View.GONE);
-//
-//                }
-//
-//                if (spinnerJenisAset.getSelectedItem().toString() == "non-tanaman" && spinnerAsetKondisi.getSelectedItem().toString() == "normal") {
-//                    inpBtnMap.setVisibility(View.VISIBLE);
-//
-//                    listBtnMap.setVisibility(View.GONE);
-//                    inpJumlahPohon.setVisibility(View.GONE);
-//                    tvUploudBA.setVisibility(View.GONE);
-//                    btnFile.setVisibility(View.GONE);
-//
-//                }
-//
-//                if (spinnerJenisAset.getSelectedItem().toString() == "non-tanaman" && spinnerAsetKondisi.getSelectedItem().toString() == "rusak") {
-//                    listBtnMap.setVisibility(View.VISIBLE);
-//                    tvUploudBA.setVisibility(View.VISIBLE);
-//                    btnFile.setVisibility(View.VISIBLE);
-//
-//                    inpJumlahPohon.setVisibility(View.GONE);
-//                    inpBtnMap.setVisibility(View.GONE);
-//
-//                }
-//
-//                if (spinnerJenisAset.getSelectedItem().toString() == "non-tanaman" && spinnerAsetKondisi.getSelectedItem().toString() == "hilang") {
-//                    tvUploudBA.setVisibility(View.VISIBLE);
-//                    btnFile.setVisibility(View.VISIBLE);
-//
-//                    inpJumlahPohon.setVisibility(View.GONE);
-//                    listBtnMap.setVisibility(View.GONE);
-//                    inpJumlahPohon.setVisibility(View.GONE);
-//                    inpBtnMap.setVisibility(View.GONE);
-//
-//                }
 
 
             }
@@ -1259,7 +1162,6 @@ public class AddAsetActivity extends AppCompatActivity {
             // request for permissions
             verifyStorageAndLocationPermissions(this);
         }
-        Log.d("mapsku", "onCreate: latlong val : "+latitudeValue+"-"+longitudeValue);
     }
 
     private boolean isLocationEnabled() {
@@ -1333,6 +1235,7 @@ public class AddAsetActivity extends AppCompatActivity {
                 if (list == 1) {
 
                     geotag1 = url;
+                    Log.d("aseturl","urlku" + geotag1);
                 } else if (list == 2) {
 
                     geotag2 = url;
@@ -1363,6 +1266,7 @@ public class AddAsetActivity extends AppCompatActivity {
             else {
                 geotag1 = url;
             }
+
 
         } catch (Exception e){
             Toast.makeText(this, "Error when set Exif Location", Toast.LENGTH_LONG).show();
@@ -1900,7 +1804,7 @@ public class AddAsetActivity extends AppCompatActivity {
 
         String tgl_oleh = String.valueOf(inpTglOleh.getText().toString().trim()+" 00:00:00");
         String masa_susut = String.valueOf(inpMasaPenyusutan.getText().toString().trim());
-        String nomor_bast = String.valueOf(inpMasaPenyusutan.getText().toString().trim());
+        String nomor_bast = String.valueOf(inpNomorBAST.getText().toString().trim());
         String nilai_residu = String.valueOf(CurrencyToNumber(inpNilaiResidu.getText().toString().trim()));
         String keterangan = String.valueOf(inpKeterangan.getText().toString().trim());
 
@@ -1930,7 +1834,7 @@ public class AddAsetActivity extends AppCompatActivity {
             RequestBody requestSubUnit = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(spinnerIdSubUnit));
             RequestBody requestUnit = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(Integer.parseInt(spinnerIdUnit)+1));
             RequestBody requestAfdeling = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(spinnerIdAfdeling));
-            Log.d("asetapix","unit :"+ String.valueOf(spinnerIdUnit));
+            Log.d("asetapix","nomor bast :"+ String.valueOf(nomor_bast));
 
 
 
@@ -2014,6 +1918,7 @@ public class AddAsetActivity extends AppCompatActivity {
 
 
             Call<AsetModel2> call = asetInterface.addAset(contentType,multipartBody);
+
 
             call.enqueue(new Callback<AsetModel2>(){
 

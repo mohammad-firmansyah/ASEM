@@ -2,12 +2,16 @@ package com.example.asem;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.Manifest;
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -38,6 +42,14 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class LonglistAsetActivity extends AppCompatActivity {
+
+    private static final String[] PERMISSIONS_LOCATION_AND_STORAGE = {
+            Manifest.permission.ACCESS_COARSE_LOCATION,
+            Manifest.permission.ACCESS_FINE_LOCATION,
+            Manifest.permission.READ_EXTERNAL_STORAGE,
+            Manifest.permission.WRITE_EXTERNAL_STORAGE
+    };
+
     private static final String PREF_LOGIN = "LOGIN_PREF";
     SharedPreferences sharedPreferences;
 
@@ -172,4 +184,5 @@ public class LonglistAsetActivity extends AppCompatActivity {
         alert.setCanceledOnTouchOutside(true);
         alert.show();
     }
+
 }

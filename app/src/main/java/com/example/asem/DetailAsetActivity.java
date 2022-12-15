@@ -644,7 +644,7 @@ public class DetailAsetActivity extends AppCompatActivity {
                 }
 
                 inpTglInput.setText(response.body().getData().getTglInput().split(" ")[0]);
-                inpTglOleh.setText(response.body().getData().getTglInput().split(" ")[0]);
+                inpTglOleh.setText(response.body().getData().getTglOleh().split(" ")[0]);
                 inpNoSAP.setText(String.valueOf(response.body().getData().getNomorSap()));
                 inpNamaAset.setText(response.body().getData().getAsetName());
                 inpLuasAset.setText(String.valueOf(response.body().getData().getAsetLuas()));
@@ -654,8 +654,9 @@ public class DetailAsetActivity extends AppCompatActivity {
                 inpNilaiResidu.setText(formatrupiah(Double.parseDouble(String.valueOf(response.body().getData().getNilaiResidu()))));
                 inpKeterangan.setText(response.body().getData().getKeterangan());
                 inpUmrEkonomis.setText(utils.MonthToYear(response.body().getData().getUmurEkonomisInMonth()));
-                inpNilaiAsetSAP.setText(formatrupiah(Double.parseDouble(String.valueOf(response.body().getData().getUmurEkonomisInMonth()))));
+                inpNilaiAsetSAP.setText(formatrupiah(Double.parseDouble(String.valueOf(response.body().getData().getNilaiOleh()))));
                 inpPersenKondisi.setText(String.valueOf(response.body().getData().getPersenKondisi()));
+                inpJumlahPohon.setText(String.valueOf(response.body().getData().getJumlahPohon()));
                 statusPosisi = response.body().getData().getStatusPosisi();
                 id = response.body().getData().getAsetId();
 
