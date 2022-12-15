@@ -31,7 +31,7 @@ public class SplashScreen extends AppCompatActivity {
 
         if(!username.equals("-")){
 //            Toast.makeText(getApplicationContext(),"Anda sudah login",Toast.LENGTH_SHORT).show();
-            Intent intent = new Intent(SplashScreen.this, LonglistAsetActivity.class);
+            Intent intent = new Intent(SplashScreen.this, ProfilActivity.class);
             finish();
             startActivity(intent);
         } else {

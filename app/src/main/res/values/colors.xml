@@ -3,7 +3,6 @@
     <color name="main_grey">#273848</color>
     <color name="border_grey">#2C3E50</color>
 
-
     <color name="orange">#FF9933</color>
     <color name="orange1">#C86400</color>
     <color name="orange2">#F9BF3B</color>
@@ -176,4 +175,15 @@
     <color name="second_blue">#1F2B37</color>
     <color name="canvas_grey">#D5D5D5</color>
     <color name="origin_red">#c0392b</color>
+
+    <!-- appcolor
+    main_grey
+    background_grey
+    BlueDark
+    white
+    origin_blue
+    black
+    origin_red
+    yellow
+    -->
 </resources>
