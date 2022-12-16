@@ -55,7 +55,7 @@ public class ProfilActivity extends AppCompatActivity {
         resetPass.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(ProfilActivity.this, "Fitur belum berfungsi", Toast.LENGTH_SHORT).show();
+                Toast.makeText(ProfilActivity.this, "Fitur Belum Berfungsi", Toast.LENGTH_SHORT).show();
             }
         });
         logOut.setOnClickListener(new View.OnClickListener() {
@@ -67,7 +67,7 @@ public class ProfilActivity extends AppCompatActivity {
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottomnav);
 
-        bottomNavigationView.setSelectedItemId(R.id.nav_longlist);
+        bottomNavigationView.setSelectedItemId(R.id.nav_profil);
 
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -114,13 +114,20 @@ public class ProfilActivity extends AppCompatActivity {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Keluar");
         builder.setMessage("Apa Anda Yakin Ingin Logout?")
-                .setPositiveButton("Iya", (dialog, id) -> finishAffinity())
+                .setPositiveButton("Iya", (dialog, id) -> logoutAct())
                 .setNegativeButton("Tidak", (dialog, id) -> dialog.cancel());
         AlertDialog alert = builder.create();
         alert.setCanceledOnTouchOutside(true);
         alert.show();
 //        startActivity(new Intent(ProfilActivity.this, MainActivity.class));
 //        finish();
+    }
+
+    public void logoutAct(){
+        SharedPreferences.Editor editor = getSharedPreferences(PREF_LOGIN, MODE_PRIVATE).edit().clear();
+        editor.clear().apply();
+        finishAffinity();
+        startActivity(new Intent(ProfilActivity.this, SplashScreen.class));
     }
 
     public void onBackPressed() {

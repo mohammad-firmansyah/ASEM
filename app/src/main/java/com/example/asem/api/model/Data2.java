@@ -120,6 +120,29 @@ public class Data2 {
     @Expose
     private Integer statusPosisiID;
 
+    @SerializedName("status_reject")
+    @Expose
+    private String statusReject;
+
+    @SerializedName("ket_reject")
+    @Expose
+    private String ketReject;
+
+    public String getStatusReject() {
+        return statusReject;
+    }
+
+    public void setStatusReject(String statusReject) {
+        this.statusReject = statusReject;
+    }
+
+    public String getKetReject() {
+        return ketReject;
+    }
+
+    public void setKetReject(String ketReject) {
+        this.ketReject = ketReject;
+    }
 
     public double getPersenKondisi() {
         return persenKondisi;

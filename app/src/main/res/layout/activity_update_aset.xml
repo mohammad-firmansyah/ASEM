@@ -44,7 +44,7 @@
                 android:text="keterangan"
                 android:gravity="top"
                 android:paddingTop="10dp"
-                android:background="@drawable/edit_text_spiner"
+                android:background="@drawable/tgl_spinner"
                 />
 
             <TextView

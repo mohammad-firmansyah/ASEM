@@ -18,6 +18,7 @@ public class Home extends AppCompatActivity {
     SharedPreferences sharedPreferences;
     CardView cvHome;
     TextView tvWelcome, tvNama, tvUserPosisi, tvBagian;
+    MenuItem nav_beranda, nav_profil, nav_longlist;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,7 +32,7 @@ public class Home extends AppCompatActivity {
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottomnav);
 
-        bottomNavigationView.setSelectedItemId(R.id.nav_longlist);
+        bottomNavigationView.setSelectedItemId(R.id.nav_beranda);
 
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override

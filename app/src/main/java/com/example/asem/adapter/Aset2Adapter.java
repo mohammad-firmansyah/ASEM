@@ -3,6 +3,7 @@ package com.example.asem.adapter;
 
 import static android.content.Context.MODE_PRIVATE;
 import static android.content.Intent.getIntent;
+import static androidx.core.content.ContextCompat.getColor;
 import static androidx.core.content.ContextCompat.startActivity;
 
 import static com.example.asem.LonglistAsetActivity.baseUrl;
@@ -13,8 +14,10 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.util.Log;
+import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -105,6 +108,15 @@ public class Aset2Adapter  extends RecyclerView.Adapter<Aset2Adapter.ViewHolder>
                 .build();
 
         asetInterface = retrofit.create(AsetInterface.class);
+
+        // jika data di posisi reject maka bikin bg jadi kuning
+        // selain posisi tersebut bg normal
+//        if (myPostData2.getStatusReject()!=null){
+//            //holder.cvRuang.setBackgroundColor(getColor(context,1));
+//            holder.cvRuang.setBackgroundResource(R.color.Khaki);
+//        } else{
+//            holder.cvAset.setBackgroundResource(R.color.white);
+//        }
 
 
         holder.btnHapus.setOnClickListener(new View.OnClickListener() {
@@ -287,17 +299,17 @@ public class Aset2Adapter  extends RecyclerView.Adapter<Aset2Adapter.ViewHolder>
             }
         }
 
-//        // jika data di posisi reject maka bikin bg jadi kuning
-//        // selain posisi tersebut bg normal
-//        switch (myPostData2.getStatusPosisiID()){
-//            case posisi reject:
+
+
+//        switch (myPostData2.getStatusReject()){
+//            case :
 //            case posisi reject:
 //                holder.cvAset.setBackgroundResource(R.drawable.bg_border_cancel);
 //                break;
 //            default:
 //                holder.cvAset.setBackgroundResource(R.drawable.bg_border);
 //                // bikin bg cardview longlist aset reject
-//                if (!myPostData2.getStatusReject().equals("0")){
+//                if (!myPostData2.getAsetId().equals("0")){
 //                    holder.cvAset.setBackgroundResource(R.color.Khaki);
 //                }
 //                break;
@@ -306,9 +318,6 @@ public class Aset2Adapter  extends RecyclerView.Adapter<Aset2Adapter.ViewHolder>
     }
 
     void showDialogKirim(String customtext,Call<AsetModel2> call) {
-
-//        Intent intent = getIntent();
-//        id = intent.getIntExtra("id", 0);
 
         final Dialog dialog =new Dialog(context);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -382,7 +391,7 @@ public class Aset2Adapter  extends RecyclerView.Adapter<Aset2Adapter.ViewHolder>
         Button btnKirim;
         View btnHapus;
         LinearLayout cvAset;
-        Data2 myPostData2;
+        LinearLayout cvRuang;
 
 
         public ViewHolder (@NonNull View v) {

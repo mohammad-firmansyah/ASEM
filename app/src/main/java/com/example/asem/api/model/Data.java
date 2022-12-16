@@ -129,8 +129,29 @@ public class Data {
     @SerializedName("status_posisi_id")
     @Expose
     private Integer statusPosisiID;
+    @SerializedName("status_reject")
+    @Expose
+    private String statusReject;
 
+    @SerializedName("ket_reject")
+    @Expose
+    private String ketReject;
 
+    public String getStatusReject() {
+        return statusReject;
+    }
+
+    public void setStatusReject(String statusReject) {
+        this.statusReject = statusReject;
+    }
+
+    public String getKetReject() {
+        return ketReject;
+    }
+
+    public void setKetReject(String ketReject) {
+        this.ketReject = ketReject;
+    }
 
     public Integer getStatusPosisiID() {
         return statusPosisiID;

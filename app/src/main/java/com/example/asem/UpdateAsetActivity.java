@@ -140,6 +140,7 @@ public class UpdateAsetActivity extends AppCompatActivity {
     EditText editText;
     EditText inpJumlahPohon;
     TextView tvUploudBA;
+    TextView tvKetReject;
     AsetModel asetModel;
     File source;
     private AsetInterface asetInterface;
@@ -372,6 +373,7 @@ public class UpdateAsetActivity extends AppCompatActivity {
         inpJumlahPohon = findViewById(R.id.inpJmlhPohon);
         inpPersenKondisi = findViewById(R.id.inpPersenKondisi);
         inpKetReject = findViewById(R.id.inpKetReject);
+        tvKetReject = findViewById(R.id.tvKetReject);
 
         foto1rl = findViewById(R.id.foto1);
         foto2rl = findViewById(R.id.foto2);
@@ -789,6 +791,16 @@ public class UpdateAsetActivity extends AppCompatActivity {
                 inpUmrEkonomis.setText(utils.MonthToYear(response.body().getData().getUmurEkonomisInMonth()));
                 inpNilaiAsetSAP.setText(formatrupiah(Double.parseDouble(String.valueOf(response.body().getData().getUmurEkonomisInMonth()))));
                 inpPersenKondisi.setText(String.valueOf(response.body().getData().getPersenKondisi()));
+                String ket_reject = response.body().getData().getKetReject();
+                if (ket_reject != null){
+                    inpKetReject.setVisibility(View.VISIBLE);
+                    inpKetReject.setEnabled(false);
+                    tvKetReject.setVisibility(View.VISIBLE);
+                    inpKetReject.setText(ket_reject);
+                } else {
+                    inpKetReject.setVisibility(View.GONE);
+                    tvKetReject.setVisibility(View.GONE);
+                }
                 String url1 = baseUrlImg+response.body().getData().getFotoAset1();
                 String url2 = baseUrlImg+response.body().getData().getFotoAset2();
                 String url3 = baseUrlImg+response.body().getData().getFotoAset3();
@@ -1541,7 +1553,6 @@ public class UpdateAsetActivity extends AppCompatActivity {
         String nilai_residu = String.valueOf(CurrencyToNumber(inpNilaiResidu.getText().toString().trim()));
         String keterangan = String.valueOf(inpKeterangan.getText().toString().trim());
         String asetId = String.valueOf(aset.getAsetId());
-
         Log.d("asetapix","tanggal : " + tgl_input + " - " + tgl_oleh);
 
 
