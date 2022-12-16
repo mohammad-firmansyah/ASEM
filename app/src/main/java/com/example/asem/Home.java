@@ -73,14 +73,7 @@ public class Home extends AppCompatActivity {
     }
 
     public void onBackPressed() {
-//        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-//        builder.setTitle("Keluar");
-//        builder.setMessage("Apa anda yakin keluar aplikasi?")
-//                .setPositiveButton("Iya", (dialog, id) ->finishAffinity())
-//                .setNegativeButton("Tidak", (dialog, id) -> dialog.cancel());
-//        AlertDialog alert = builder.create();
-//        alert.setCanceledOnTouchOutside(true);
-//        alert.show();
+
         startActivity(new Intent(Home.this,ProfilActivity.class));
         finish();
     }
