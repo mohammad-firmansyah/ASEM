@@ -38,10 +38,33 @@ public class Login {
         @SerializedName("updated_at")
         @Expose
         private String updatedAt;
+        @SerializedName("unit_desc")
+        @Expose
+        private String unitDesc;
+
+        @SerializedName("hak_akses_desc")
+        @Expose
+        private String hakAksesDesc;
+
+        public String getHakAksesDesc() {
+            return hakAksesDesc;
+        }
+
+        public void setHakAksesDesc(String hakAksesDesc) {
+            this.hakAksesDesc = hakAksesDesc;
+        }
+
+        public String getUnitDesc() {
+                return unitDesc;
+            }
+
+            public void setUnitDesc(String unitDesc) {
+                this.unitDesc = unitDesc;
+            }
 
         public Integer getUserId() {
-            return userId;
-        }
+                return userId;
+            }
 
         public void setUserId(Integer userId) {
             this.userId = userId;

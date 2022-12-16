@@ -39,9 +39,9 @@
 
                 <ImageView
                     android:id="@+id/Logo"
-                    android:layout_width="85dp"
-                    android:layout_height="85dp"
-                    android:src="@drawable/logo_ptpn"/>
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:src="@drawable/logo_amanat"/>
 
                 <TextView
                     android:id="@+id/Title"
@@ -49,7 +49,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
                     android:fontFamily="sans-serif-black"
-                    android:text="AMANAT12\nAplikasi\nManajemen Aset\nTerpadu\nN12"
+                    android:text="AMANAT12\nAplikasi\nManajemen Aset Terpadu\nPTPN XII"
                     android:textColor="@color/BlueDark"
                     android:textSize="18sp"
                     android:textStyle="bold"

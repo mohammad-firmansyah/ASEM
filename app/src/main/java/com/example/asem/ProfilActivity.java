@@ -33,7 +33,7 @@ public class ProfilActivity extends AppCompatActivity {
 
     private static final String PREF_LOGIN = "LOGIN_PREF";
 
-    TextView tvNIP,tvNama,tvUserPosisi,tvJabatan,tvBagian,tvEmail;
+    TextView tvNIP,tvNama,tvHakAkses,tvJabatan,tvBagian,tvEmail;
     CardView resetPass, logOut;
 
     SharedPreferences sharedPreferences;
@@ -45,7 +45,7 @@ public class ProfilActivity extends AppCompatActivity {
 
         tvNIP = findViewById(R.id.tvNIP);
         tvNama = findViewById(R.id.tvNama);
-        tvUserPosisi = findViewById(R.id.tvUserPosisi);
+        tvHakAkses = findViewById(R.id.tvHakAkses);
         tvJabatan = findViewById(R.id.tvJabatan);
         tvBagian = findViewById(R.id.tvBagian);
         tvEmail = findViewById(R.id.tvEmail);
@@ -97,15 +97,21 @@ public class ProfilActivity extends AppCompatActivity {
 
         sharedPreferences = getSharedPreferences(PREF_LOGIN,MODE_PRIVATE);
         String user_fullname = sharedPreferences.getString("nama", "-");
-        String jabatan = sharedPreferences.getString("user_jabatan","-");
         String nip = sharedPreferences.getString("user_nip", "-");
         String email = sharedPreferences.getString("user_email", "-");
+        String jabatan = sharedPreferences.getString("user_jabatan", "-");
+        String bagian = sharedPreferences.getString("unit_desc","-");
+        String hak_akses = sharedPreferences.getString("hak_akses_desc","-");
 
         //Log.d("asetapix",user_fullname);
         tvNama.setText(user_fullname);
-        tvJabatan.setText(jabatan);
+        tvHakAkses.setText(hak_akses);
         tvNIP.setText(nip);
         tvEmail.setText(email);
+        tvJabatan.setText(jabatan);
+        tvBagian.setText(bagian);
+        //tvJabatan.setText(String.valueOf("Staf Keuangan dan Akuntansi"));
+        //tvBagian.setText(String.valueOf("Bagian Keuangan dan Akuntansi"));
     }
 
     //fungsi layout menu

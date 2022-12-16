@@ -8,6 +8,13 @@
     app:cardElevation="6dp"
     app:cardUseCompatPadding="true"
     android:background="@color/white">
+
+    <RelativeLayout
+        android:id="@+id/bgCardView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -123,11 +130,13 @@
         </TextView>
     </LinearLayout>
 
+
+
     <LinearLayout
         android:id="@+id/cvAset"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-        
+
         <Button
             android:id="@+id/btn_detail"
             android:layout_width="0dp"
@@ -189,5 +198,7 @@
 
     </LinearLayout>
 
+
+    </RelativeLayout>
 
 </androidx.cardview.widget.CardView>

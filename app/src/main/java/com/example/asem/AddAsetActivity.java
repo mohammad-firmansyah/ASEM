@@ -111,6 +111,8 @@ public class AddAsetActivity extends AppCompatActivity {
     Button map2;
     Button map3;
     Button map4;
+    Button btnYaKirim;
+    Button btnTidakKirim;
 
     Context context;
     SharedPreferences sharedPreferences;
@@ -201,6 +203,8 @@ public class AddAsetActivity extends AppCompatActivity {
     String spinnerIdAfdeling;
     String spinnerIdSubUnit;
     String spinnerIdUnit;
+
+    Dialog customDialogAddAset;
 
 
     /**
@@ -530,7 +534,7 @@ public class AddAsetActivity extends AppCompatActivity {
 //        handler
 
 
-        btnSubmit.setOnClickListener(v -> addAset());
+        btnSubmit.setOnClickListener(v -> initDialogAddAset());
 
         spinnerTipeAset.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                 @Override
@@ -764,6 +768,33 @@ public class AddAsetActivity extends AppCompatActivity {
         initCalender();
         getSpinnerData();
 //        setValueInput();
+
+    }
+
+    void initDialogAddAset(){
+        customDialogAddAset = new Dialog(AddAsetActivity.this, R.style.MyAlertDialogTheme);
+        customDialogAddAset.setContentView(R.layout.dialog_addaset);
+        customDialogAddAset.setCanceledOnTouchOutside(false);
+        customDialogAddAset.getWindow().setBackgroundDrawable(new ColorDrawable(0));
+        btnYaKirim = customDialogAddAset.findViewById(R.id.btnYaKirim);
+        btnTidakKirim = customDialogAddAset.findViewById(R.id.btnTidakKirim);
+        //Toast.makeText(UpdateAsetActivity.this,"masuk", Toast.LENGTH_SHORT).show();
+        customDialogAddAset.show();
+
+        btnYaKirim.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                addAset();
+                //Toast.makeText(UpdateAsetActivity.this,"masuk", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        btnTidakKirim.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                customDialogAddAset.dismiss();
+            }
+        });
 
     }
 

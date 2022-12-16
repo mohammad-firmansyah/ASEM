@@ -107,7 +107,12 @@ public class Data2 {
     private String updatedAt;
     @SerializedName("jumlah_pohon")
     @Expose
-    private Object jumlahPohon;
+    private Integer jumlahPohon;
+
+    public void setJumlahPohon(Integer jumlahPohon) {
+        this.jumlahPohon = jumlahPohon;
+    }
+
     @SerializedName("umur_ekonomis_in_month")
     @Expose
     private Integer umurEkonomisInMonth;
@@ -128,9 +133,7 @@ public class Data2 {
     @Expose
     private String ketReject;
 
-    public String getStatusReject() {
-        return statusReject;
-    }
+    public String getStatusReject() { return statusReject; }
 
     public void setStatusReject(String statusReject) {
         this.statusReject = statusReject;
@@ -424,13 +427,13 @@ public class Data2 {
         this.updatedAt = updatedAt;
     }
 
-    public Object getJumlahPohon() {
+    public Integer getJumlahPohon() {
         return jumlahPohon;
     }
 
-    public void setJumlahPohon(Object jumlahPohon) {
-        this.jumlahPohon = jumlahPohon;
-    }
+//    public void setJumlahPohon(Object jumlahPohon) {
+//        this.jumlahPohon = jumlahPohon;
+//    }
 
     public Integer getUmurEkonomisInMonth() {
         return umurEkonomisInMonth;
