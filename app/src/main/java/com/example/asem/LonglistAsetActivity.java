@@ -23,6 +23,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.example.asem.adapter.Aset2Adapter;
@@ -63,7 +64,7 @@ public class LonglistAsetActivity extends AppCompatActivity  { //implements Bott
     FloatingActionButton fab;
     RecyclerView rcAset;
 
-    Integer user_id;
+    Integer unit_id;
 
     public static String baseUrl = "http://202.148.9.226:7710/mnj_aset_repo/public/api/";
     private AsetInterface asetInterface;
@@ -91,7 +92,7 @@ public class LonglistAsetActivity extends AppCompatActivity  { //implements Bott
             fab.setVisibility(View.GONE);
         }
 
-        user_id = Integer.parseInt(sharedPreferences.getString("user_id", "-"));
+        unit_id = Integer.parseInt(sharedPreferences.getString("unit_id", "-"));
 
 
         //fab.setBackgroundTintList(ColorStateList.valueOf(Color.rgb(10, 50, 50)));
@@ -102,7 +103,7 @@ public class LonglistAsetActivity extends AppCompatActivity  { //implements Bott
         btnFilter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(LonglistAsetActivity.this, "masuk filter", Toast.LENGTH_SHORT).show();
+                Toast.makeText(LonglistAsetActivity.this, "Filter Belum Tersedia", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -161,7 +162,7 @@ public class LonglistAsetActivity extends AppCompatActivity  { //implements Bott
 
     private void getAllAset(){
         dialog.show();
-        Call<List<Data2>> call = asetInterface.getAllAset(user_id);
+        Call<List<Data2>> call = asetInterface.getAllAset(unit_id);
         call.enqueue(new Callback<List<Data2>>() {
             @Override
             public void onResponse(Call<List<Data2>> call, Response<List<Data2>> response) {

@@ -3,6 +3,7 @@ package com.example.asem.adapter;
 
 import static android.content.Context.MODE_PRIVATE;
 import static android.content.Intent.getIntent;
+import static androidx.core.content.ContextCompat.getColor;
 import static androidx.core.content.ContextCompat.startActivity;
 
 import static com.example.asem.LonglistAsetActivity.baseUrl;
@@ -13,19 +14,23 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.util.Log;
+import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextClock;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.asem.AddAsetActivity;
@@ -57,6 +62,7 @@ public class Aset2Adapter  extends RecyclerView.Adapter<Aset2Adapter.ViewHolder>
 
     private AsetInterface asetInterface;
     Dialog customDialogBelumApprove;
+    Dialog customDialogCekDataReject;
     FloatingActionButton fab;
     List<Data2> myAsetData;
     Context context;
@@ -105,6 +111,15 @@ public class Aset2Adapter  extends RecyclerView.Adapter<Aset2Adapter.ViewHolder>
                 .build();
 
         asetInterface = retrofit.create(AsetInterface.class);
+
+        // jika data di posisi reject maka bikin bg jadi kuning
+        // selain posisi tersebut bg normal
+        if (myPostData2.getKetReject()!=null){
+            //holder.cvRuang.setBackgroundColor(getColor(context,1));
+            holder.bgCardView.setBackgroundResource(R.color.Khaki);
+        } else{
+            holder.bgCardView.setBackgroundResource(R.color.white);
+        }
 
 
         holder.btnHapus.setOnClickListener(new View.OnClickListener() {
@@ -183,7 +198,9 @@ public class Aset2Adapter  extends RecyclerView.Adapter<Aset2Adapter.ViewHolder>
                 if (statpos == 2 || statpos == 4 ||statpos == 6|| statpos==8|| statpos==10){ //init statpos pending
                     initDialogBelomApprove();
                     //Toast.makeText(context, "masuk ga", Toast.LENGTH_SHORT).show();
-                } else{
+                } else if (statpos == 1 && myPostData2.getStatusReject()!=null){
+                    initDataReject();
+                }else{
                     sharedPreferences = context.getSharedPreferences(PREF_LOGIN, MODE_PRIVATE);
                     String user_id = sharedPreferences.getString("user_id", "-");
                     showDialogKirim("Yakin Kirim Data?",
@@ -287,17 +304,17 @@ public class Aset2Adapter  extends RecyclerView.Adapter<Aset2Adapter.ViewHolder>
             }
         }
 
-//        // jika data di posisi reject maka bikin bg jadi kuning
-//        // selain posisi tersebut bg normal
-//        switch (myPostData2.getStatusPosisiID()){
-//            case posisi reject:
+
+
+//        switch (myPostData2.getStatusReject()){
+//            case :
 //            case posisi reject:
 //                holder.cvAset.setBackgroundResource(R.drawable.bg_border_cancel);
 //                break;
 //            default:
 //                holder.cvAset.setBackgroundResource(R.drawable.bg_border);
 //                // bikin bg cardview longlist aset reject
-//                if (!myPostData2.getStatusReject().equals("0")){
+//                if (!myPostData2.getAsetId().equals("0")){
 //                    holder.cvAset.setBackgroundResource(R.color.Khaki);
 //                }
 //                break;
@@ -306,9 +323,6 @@ public class Aset2Adapter  extends RecyclerView.Adapter<Aset2Adapter.ViewHolder>
     }
 
     void showDialogKirim(String customtext,Call<AsetModel2> call) {
-
-//        Intent intent = getIntent();
-//        id = intent.getIntExtra("id", 0);
 
         final Dialog dialog =new Dialog(context);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -359,6 +373,20 @@ public class Aset2Adapter  extends RecyclerView.Adapter<Aset2Adapter.ViewHolder>
         });
     }
 
+    void initDataReject(){
+        customDialogCekDataReject = new Dialog(context, R.style.MyAlertDialogTheme);
+        customDialogCekDataReject.setContentView(R.layout.dialog_datareject);
+        customDialogCekDataReject.setCanceledOnTouchOutside(false);
+        customDialogCekDataReject.getWindow().setBackgroundDrawable(new ColorDrawable(0));
+        customDialogCekDataReject.show();
+
+        Button btnTutup = customDialogCekDataReject.findViewById(R.id.btnTutup);
+        btnTutup.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) { customDialogCekDataReject.dismiss(); }
+        });
+    }
+
     @Override
     public int getItemCount() {
         if (myAsetData != null)
@@ -382,7 +410,8 @@ public class Aset2Adapter  extends RecyclerView.Adapter<Aset2Adapter.ViewHolder>
         Button btnKirim;
         View btnHapus;
         LinearLayout cvAset;
-        Data2 myPostData2;
+        RelativeLayout bgCardView;
+        CardView cvKirimSukses;
 
 
         public ViewHolder (@NonNull View v) {
@@ -403,7 +432,9 @@ public class Aset2Adapter  extends RecyclerView.Adapter<Aset2Adapter.ViewHolder>
             btnKirim = v.findViewById(R.id.btn_kirim);
             btnHapus = v.findViewById(R.id.btn_delete);
 
+            cvKirimSukses = v.findViewById(R.id.cvKirimSukses);
             cvAset = v.findViewById(R.id.cvAset);
+            bgCardView = v.findViewById(R.id.bgCardView);
 
         }
     }

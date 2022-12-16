@@ -26,17 +26,17 @@ public class SplashScreen extends AppCompatActivity {
     }
 
     private void checkLogin() {
-        String username = sharedPreferences.getString("username","-");
-        Log.d("asetapix", username);
+        String user_id = sharedPreferences.getString("user_id","-");
+        Log.d("asetapix", user_id);
 
-        if(!username.equals("-")){
+        if(user_id.equals("-")){
 //            Toast.makeText(getApplicationContext(),"Anda sudah login",Toast.LENGTH_SHORT).show();
-            Intent intent = new Intent(SplashScreen.this, ProfilActivity.class);
+            Intent intent = new Intent(SplashScreen.this, MainActivity.class);
             finish();
             startActivity(intent);
         } else {
 //            Toast.makeText(getApplicationContext(),"Harap login terlebih daulu",Toast.LENGTH_SHORT).show();
-            Intent intent = new Intent(SplashScreen.this, MainActivity.class);
+            Intent intent = new Intent(SplashScreen.this, Home.class);
             finish();
             startActivity(intent);
         }

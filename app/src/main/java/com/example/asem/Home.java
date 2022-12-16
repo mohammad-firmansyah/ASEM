@@ -17,7 +17,8 @@ public class Home extends AppCompatActivity {
     private static final String PREF_LOGIN = "LOGIN_PREF";
     SharedPreferences sharedPreferences;
     CardView cvHome;
-    TextView tvWelcome, tvNama, tvUserPosisi, tvBagian;
+    TextView tvWelcome, tvNama, tvHakAkses, tvBagian;
+    MenuItem nav_beranda, nav_profil, nav_longlist;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,11 +28,11 @@ public class Home extends AppCompatActivity {
         tvBagian = findViewById(R.id.tvBagian);
         tvWelcome = findViewById(R.id.tvWelcome);
         tvNama = findViewById(R.id.tvNama);
-        tvUserPosisi = findViewById(R.id.tvUserPosisi);
+        tvHakAkses = findViewById(R.id.tvHakAkses);
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottomnav);
 
-        bottomNavigationView.setSelectedItemId(R.id.nav_longlist);
+        bottomNavigationView.setSelectedItemId(R.id.nav_beranda);
 
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -61,10 +62,13 @@ public class Home extends AppCompatActivity {
     public void getHome(){
         sharedPreferences = getSharedPreferences(PREF_LOGIN, MODE_PRIVATE);
         String user_fullname = sharedPreferences.getString("nama", "-");
-        String jabatan = sharedPreferences.getString("user_jabatan","-");
+        String hak_akses  = sharedPreferences.getString("hak_akses_desc","-");
+        String bagian = sharedPreferences.getString("unit_desc","-");
 
         tvNama.setText(user_fullname);
-        tvUserPosisi.setText(jabatan);
+        tvHakAkses.setText(hak_akses);
+        tvBagian.setText(bagian);
+
 
     }
 

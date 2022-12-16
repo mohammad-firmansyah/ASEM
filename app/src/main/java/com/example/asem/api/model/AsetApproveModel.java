@@ -13,7 +13,15 @@ public class AsetApproveModel {
     private String message;
     @SerializedName("data")
     @Expose
-    private Data data;
+    private Data2 data;
+
+    public Data2 getData() {
+        return data;
+    }
+
+    public void setData(Data2 data) {
+        this.data = data;
+    }
 
     public Boolean getStatus() {
         return status;
@@ -31,11 +39,5 @@ public class AsetApproveModel {
         this.message = message;
     }
 
-    public Data getData() {
-        return data;
-    }
 
-    public void setData(Data data) {
-        this.data = data;
-    }
 }

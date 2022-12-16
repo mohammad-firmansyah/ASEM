@@ -33,7 +33,7 @@ public class ProfilActivity extends AppCompatActivity {
 
     private static final String PREF_LOGIN = "LOGIN_PREF";
 
-    TextView tvNIP,tvNama,tvUserPosisi,tvJabatan,tvBagian,tvEmail;
+    TextView tvNIP,tvNama,tvHakAkses,tvJabatan,tvBagian,tvEmail;
     CardView resetPass, logOut;
 
     SharedPreferences sharedPreferences;
@@ -45,7 +45,7 @@ public class ProfilActivity extends AppCompatActivity {
 
         tvNIP = findViewById(R.id.tvNIP);
         tvNama = findViewById(R.id.tvNama);
-        tvUserPosisi = findViewById(R.id.tvUserPosisi);
+        tvHakAkses = findViewById(R.id.tvHakAkses);
         tvJabatan = findViewById(R.id.tvJabatan);
         tvBagian = findViewById(R.id.tvBagian);
         tvEmail = findViewById(R.id.tvEmail);
@@ -55,7 +55,7 @@ public class ProfilActivity extends AppCompatActivity {
         resetPass.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(ProfilActivity.this, "Fitur belum berfungsi", Toast.LENGTH_SHORT).show();
+                Toast.makeText(ProfilActivity.this, "Fitur Belum Berfungsi", Toast.LENGTH_SHORT).show();
             }
         });
         logOut.setOnClickListener(new View.OnClickListener() {
@@ -67,7 +67,7 @@ public class ProfilActivity extends AppCompatActivity {
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottomnav);
 
-        bottomNavigationView.setSelectedItemId(R.id.nav_longlist);
+        bottomNavigationView.setSelectedItemId(R.id.nav_profil);
 
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -97,15 +97,21 @@ public class ProfilActivity extends AppCompatActivity {
 
         sharedPreferences = getSharedPreferences(PREF_LOGIN,MODE_PRIVATE);
         String user_fullname = sharedPreferences.getString("nama", "-");
-        String jabatan = sharedPreferences.getString("user_jabatan","-");
         String nip = sharedPreferences.getString("user_nip", "-");
         String email = sharedPreferences.getString("user_email", "-");
+        String jabatan = sharedPreferences.getString("user_jabatan", "-");
+        String bagian = sharedPreferences.getString("unit_desc","-");
+        String hak_akses = sharedPreferences.getString("hak_akses_desc","-");
 
         //Log.d("asetapix",user_fullname);
         tvNama.setText(user_fullname);
-        tvJabatan.setText(jabatan);
+        tvHakAkses.setText(hak_akses);
         tvNIP.setText(nip);
         tvEmail.setText(email);
+        tvJabatan.setText(jabatan);
+        tvBagian.setText(bagian);
+        //tvJabatan.setText(String.valueOf("Staf Keuangan dan Akuntansi"));
+        //tvBagian.setText(String.valueOf("Bagian Keuangan dan Akuntansi"));
     }
 
     //fungsi layout menu
@@ -114,13 +120,20 @@ public class ProfilActivity extends AppCompatActivity {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Keluar");
         builder.setMessage("Apa Anda Yakin Ingin Logout?")
-                .setPositiveButton("Iya", (dialog, id) -> finishAffinity())
+                .setPositiveButton("Iya", (dialog, id) -> logoutAct())
                 .setNegativeButton("Tidak", (dialog, id) -> dialog.cancel());
         AlertDialog alert = builder.create();
         alert.setCanceledOnTouchOutside(true);
         alert.show();
 //        startActivity(new Intent(ProfilActivity.this, MainActivity.class));
 //        finish();
+    }
+
+    public void logoutAct(){
+        SharedPreferences.Editor editor = getSharedPreferences(PREF_LOGIN, MODE_PRIVATE).edit().clear();
+        editor.clear().apply();
+        finishAffinity();
+        startActivity(new Intent(ProfilActivity.this, SplashScreen.class));
     }
 
     public void onBackPressed() {
