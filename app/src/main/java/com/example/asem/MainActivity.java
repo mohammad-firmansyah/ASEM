@@ -125,15 +125,18 @@ public class MainActivity extends AppCompatActivity {
                             editor.putString("username", username);
                             editor.putString("user_nip", String.valueOf(login.getUserNip()));
                             editor.putString("user_id", String.valueOf(login.getUserId()));
+                            //editor.putString("user_id", user_id);
                             editor.putString("user_email", String.valueOf(login.getUserEmail()));
                             editor.putString("nama", String.valueOf(login.getUserFullname()));
                             editor.putString("user_jabatan", String.valueOf(login.getUserJabatan()));
                             editor.putString("unit_id", String.valueOf(login.getUnitId()));
                             editor.putString("hak_akses_id", String.valueOf(login.getHakAksesId()));
+                            editor.putString("unit_desc", String.valueOf(login.getUnitDesc()));
+                            editor.putString("hak_akses_desc", String.valueOf(login.getHakAksesDesc()));
                             editor.putBoolean("onSyncDone", false); // saat login awal dia kondisi belum sync
                             editor.apply();
                             //startActivity(new Intent(MainActivity.this, LonglistAsetActivity.class));
-                            startActivity(new Intent(MainActivity.this, LonglistAsetActivity.class));
+                            startActivity(new Intent(MainActivity.this, Home.class));
                         }else{
                             dialog.dismiss();
                             Log.d("taglogin", "onResponse: Login bre");

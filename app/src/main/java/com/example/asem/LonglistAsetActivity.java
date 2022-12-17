@@ -1,5 +1,6 @@
 package com.example.asem;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
@@ -17,9 +18,12 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.example.asem.adapter.Aset2Adapter;
@@ -29,7 +33,9 @@ import com.example.asem.api.model.Data;
 import com.example.asem.api.model.Data2;
 import com.example.asem.api.model.Unit;
 import com.example.asem.api.model.UnitModel;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.navigation.NavigationBarView;
 
 import java.sql.Array;
 import java.util.ArrayList;
@@ -41,7 +47,7 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class LonglistAsetActivity extends AppCompatActivity {
+public class LonglistAsetActivity extends AppCompatActivity  { //implements BottomNavigationView.OnItemSelectedListener
 
     private static final String[] PERMISSIONS_LOCATION_AND_STORAGE = {
             Manifest.permission.ACCESS_COARSE_LOCATION,
@@ -58,7 +64,7 @@ public class LonglistAsetActivity extends AppCompatActivity {
     FloatingActionButton fab;
     RecyclerView rcAset;
 
-    Integer user_id;
+    Integer unit_id;
 
     public static String baseUrl = "http://202.148.9.226:7710/mnj_aset_repo/public/api/";
     private AsetInterface asetInterface;
@@ -86,7 +92,7 @@ public class LonglistAsetActivity extends AppCompatActivity {
             fab.setVisibility(View.GONE);
         }
 
-        user_id = Integer.parseInt(sharedPreferences.getString("user_id", "-"));
+        unit_id = Integer.parseInt(sharedPreferences.getString("unit_id", "-"));
 
 
         //fab.setBackgroundTintList(ColorStateList.valueOf(Color.rgb(10, 50, 50)));
@@ -97,7 +103,7 @@ public class LonglistAsetActivity extends AppCompatActivity {
         btnFilter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(LonglistAsetActivity.this, "masuk filter", Toast.LENGTH_SHORT).show();
+                Toast.makeText(LonglistAsetActivity.this, "Filter Belum Tersedia", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -126,13 +132,37 @@ public class LonglistAsetActivity extends AppCompatActivity {
         AsetAdapter adapter = new AsetAdapter(allData,LonglistAsetActivity.this);
         rcAset.setAdapter(adapter);
 
+        BottomNavigationView bottomNavigationView = findViewById(R.id.bottomnav);
+
+        bottomNavigationView.setSelectedItemId(R.id.nav_longlist);
+
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+
+                switch (item.getItemId())
+                {
+                    case R.id.nav_beranda:
+                        startActivity(new Intent(getApplicationContext(),Home.class));
+                        overridePendingTransition(0,0);
+                        return true;
+                    case R.id.nav_longlist:
+                        return true;
+                    case R.id.nav_profil:
+                        startActivity(new Intent(getApplicationContext(),ProfilActivity.class));
+                        overridePendingTransition(0,0);
+                        return true;
+                }
+                return false;
+            }
+        });
 
         getAllAset();
     }
 
     private void getAllAset(){
         dialog.show();
-        Call<List<Data2>> call = asetInterface.getAllAset(user_id);
+        Call<List<Data2>> call = asetInterface.getAllAset(unit_id);
         call.enqueue(new Callback<List<Data2>>() {
             @Override
             public void onResponse(Call<List<Data2>> call, Response<List<Data2>> response) {
@@ -185,4 +215,22 @@ public class LonglistAsetActivity extends AppCompatActivity {
         alert.show();
     }
 
+//    @Override
+//    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+//
+//        switch (item.getItemId())
+//        {
+//            case R.id.nav_beranda:
+//                startActivity(new Intent(getApplicationContext(),Home.class));
+//                overridePendingTransition(0,0);
+//                return true;
+//            case R.id.nav_longlist:
+//                return true;
+//            case R.id.nav_profil:
+//                startActivity(new Intent(getApplicationContext(),ProfilActivity.class));
+//                overridePendingTransition(0,0);
+//                return true;
+//        }
+//        return false;
+//    }
 }

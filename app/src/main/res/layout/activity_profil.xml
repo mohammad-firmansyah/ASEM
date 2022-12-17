@@ -64,7 +64,7 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="2"
                             android:fontFamily="sans-serif-black"
-                            android:text="Posisi"
+                            android:text="Hak Akses"
                             android:textColor="@color/second_blue"
                             android:textSize="14sp" />
 
@@ -79,12 +79,12 @@
                             android:textSize="14sp" />
 
                         <TextView
-                            android:id="@+id/tvUserPosisi"
+                            android:id="@+id/tvHakAkses"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="8.5"
                             android:fontFamily="sans-serif"
-                            android:text="Posisi"
+                            android:text="Hak Akses"
                             android:textColor="@color/second_blue"
                             android:textSize="14sp" />
 
@@ -253,9 +253,12 @@
     </LinearLayout>
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottomnav"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:layout_alignParentBottom="true"
+        app:itemTextColor="@drawable/selector"
+        app:itemIconTint="@drawable/selector"
         app:menu="@menu/bottom_nav"/>
 
 

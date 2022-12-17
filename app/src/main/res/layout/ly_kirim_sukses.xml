@@ -7,7 +7,7 @@
     app:cardCornerRadius="20dp"
     app:cardUseCompatPadding="true"
     android:layout_gravity="center"
-    app:cardBackgroundColor="@color/grey3"
+    app:cardBackgroundColor="@color/background_grey"
     android:orientation="vertical">
 
     <RelativeLayout
@@ -57,7 +57,7 @@
                 android:minWidth="120dp"
                 android:text="TIDAK"
                 android:textSize="11sp"
-                android:backgroundTint="@color/IndianRed">
+                android:backgroundTint="@color/origin_red">
             </Button>
 
             <Button

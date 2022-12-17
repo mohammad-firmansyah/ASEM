@@ -65,6 +65,7 @@ import com.example.asem.api.model.AsetKodeModel;
 import com.example.asem.api.model.AsetKodeModel2;
 import com.example.asem.api.model.AsetKondisi;
 import com.example.asem.api.model.AsetModel;
+import com.example.asem.api.model.AsetModel2;
 import com.example.asem.api.model.AsetTipe;
 import com.example.asem.api.model.Data;
 import com.example.asem.api.model.SubUnit;
@@ -112,6 +113,8 @@ public class UpdateAsetActivity extends AppCompatActivity {
     Button inpBtnMap;
     Button btnFile;
     Button btnSubmit;
+    Button btnYaKirim;
+    Button btnTidakKirim;
     Button map1;
     Button map2;
     Button map3;
@@ -140,6 +143,7 @@ public class UpdateAsetActivity extends AppCompatActivity {
     EditText editText;
     EditText inpJumlahPohon;
     TextView tvUploudBA;
+    TextView tvKetReject;
     AsetModel asetModel;
     File source;
     private AsetInterface asetInterface;
@@ -202,6 +206,8 @@ public class UpdateAsetActivity extends AppCompatActivity {
     String spinnerIdSubUnit;
     String spinnerIdUnit;
     String spinnerIdAfdeling;
+
+    Dialog customDialogEditAset;
 
 
     Integer id;
@@ -372,6 +378,7 @@ public class UpdateAsetActivity extends AppCompatActivity {
         inpJumlahPohon = findViewById(R.id.inpJmlhPohon);
         inpPersenKondisi = findViewById(R.id.inpPersenKondisi);
         inpKetReject = findViewById(R.id.inpKetReject);
+        tvKetReject = findViewById(R.id.tvKetReject);
 
         foto1rl = findViewById(R.id.foto1);
         foto2rl = findViewById(R.id.foto2);
@@ -390,7 +397,14 @@ public class UpdateAsetActivity extends AppCompatActivity {
         inpBtnMap = findViewById(R.id.inpBtnMap);
         btnSubmit = findViewById(R.id.btnSubmit);
 
-        btnSubmit.setOnClickListener(v -> editAset());
+//        btnSubmit.setOnClickListener(v -> editAset());
+        btnSubmit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                initDialogEditAset();
+            }
+        });
+
         inpBtnMap.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -643,6 +657,33 @@ public class UpdateAsetActivity extends AppCompatActivity {
         });
     }
 
+    public void initDialogEditAset(){
+        customDialogEditAset = new Dialog(UpdateAsetActivity.this, R.style.MyAlertDialogTheme);
+        customDialogEditAset.setContentView(R.layout.dialog_submitupdate);
+        customDialogEditAset.setCanceledOnTouchOutside(false);
+        customDialogEditAset.getWindow().setBackgroundDrawable(new ColorDrawable(0));
+        btnYaKirim = customDialogEditAset.findViewById(R.id.btnYaKirim);
+        btnTidakKirim = customDialogEditAset.findViewById(R.id.btnTidakKirim);
+        //Toast.makeText(UpdateAsetActivity.this,"masuk", Toast.LENGTH_SHORT).show();
+        customDialogEditAset.show();
+
+        btnYaKirim.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                editAset();
+                //Toast.makeText(UpdateAsetActivity.this,"masuk", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        btnTidakKirim.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                customDialogEditAset.dismiss();
+            }
+        });
+
+    }
+
     private void updateLabel(){
         String myFormat="yyyy-MM-dd";
         SimpleDateFormat dateFormat=new SimpleDateFormat(myFormat, Locale.US);
@@ -789,6 +830,16 @@ public class UpdateAsetActivity extends AppCompatActivity {
                 inpUmrEkonomis.setText(utils.MonthToYear(response.body().getData().getUmurEkonomisInMonth()));
                 inpNilaiAsetSAP.setText(formatrupiah(Double.parseDouble(String.valueOf(response.body().getData().getUmurEkonomisInMonth()))));
                 inpPersenKondisi.setText(String.valueOf(response.body().getData().getPersenKondisi()));
+                String ket_reject = response.body().getData().getKetReject();
+                if (ket_reject != null){
+                    inpKetReject.setVisibility(View.VISIBLE);
+                    inpKetReject.setEnabled(false);
+                    tvKetReject.setVisibility(View.VISIBLE);
+                    inpKetReject.setText(ket_reject);
+                } else {
+                    inpKetReject.setVisibility(View.GONE);
+                    tvKetReject.setVisibility(View.GONE);
+                }
                 String url1 = baseUrlImg+response.body().getData().getFotoAset1();
                 String url2 = baseUrlImg+response.body().getData().getFotoAset2();
                 String url3 = baseUrlImg+response.body().getData().getFotoAset3();
@@ -1526,6 +1577,7 @@ public class UpdateAsetActivity extends AppCompatActivity {
     }
     public void editAset(){
         dialog.show();
+        Log.d("asetapix","masuk gk ges" );
         String tgl_input = inpTglInput.getText().toString().trim() + " 00:00:00";
 
         String nama_aset = inpNamaAset.getText().toString().trim();
@@ -1541,7 +1593,6 @@ public class UpdateAsetActivity extends AppCompatActivity {
         String nilai_residu = String.valueOf(CurrencyToNumber(inpNilaiResidu.getText().toString().trim()));
         String keterangan = String.valueOf(inpKeterangan.getText().toString().trim());
         String asetId = String.valueOf(aset.getAsetId());
-
         Log.d("asetapix","tanggal : " + tgl_input + " - " + tgl_oleh);
 
 
@@ -1551,7 +1602,7 @@ public class UpdateAsetActivity extends AppCompatActivity {
 //                geotag4 = geotag1;
 //            }
 
-        MultipartBody.Part img1Part = null,img2Part = null,img3Part=null,img4Part=null,partBaFile=null;
+                MultipartBody.Part img1Part = null, img2Part = null, img3Part = null, img4Part = null, partBaFile = null;
 
         if (bafile_file != null){
             RequestBody requestBaFile = RequestBody.create(MediaType.parse("multipart/form-file"), bafile_file);
@@ -1601,6 +1652,7 @@ public class UpdateAsetActivity extends AppCompatActivity {
             RequestBody requestSubUnit = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(spinnerIdSubUnit));
             RequestBody requestUnit = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(spinnerIdUnit+1));
             RequestBody requestAfdeling = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(spinnerIdAfdeling));
+            RequestBody requestJumlahPohon = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(inpJumlahPohon.getText()));
 
             MultipartBody.Builder builder = new MultipartBody.Builder();
             builder.addPart(MultipartBody.Part.createFormData("aset_id",null,requestAsetId));
@@ -1626,7 +1678,9 @@ public class UpdateAsetActivity extends AppCompatActivity {
                 builder.addPart(MultipartBody.Part.createFormData("afdeling_id",null,requestAfdeling));
             }
 
-
+            if (!inpJumlahPohon.getText().equals("")) {
+                builder.addPart(MultipartBody.Part.createFormData("jumlah_pohon",null,requestJumlahPohon));
+            }
 
             if (bafile_file != null){
                 RequestBody requestBaFile = RequestBody.create(MediaType.parse("multipart/form-file"), bafile_file);
@@ -1660,7 +1714,6 @@ public class UpdateAsetActivity extends AppCompatActivity {
 
 
             String contentType = "multipart/form-data; charset=utf-8; boundary=" + multipartBody.boundary();
-
 
 
             Call<AsetModel> call = asetInterface.editAset(contentType,multipartBody);
@@ -1705,6 +1758,41 @@ public class UpdateAsetActivity extends AppCompatActivity {
 //                RequestBody requestBaFile = RequestBody.create(MediaType.parse("multipart/form-file"), source);
 //                MultipartBody.Part partBaFile = MultipartBody.Part.createFormData("foto_tunggak", source.getName(), requestBaFile);
 //            }
+
+            //ini untuk bandingin inputan terupdate di db
+
+//        Call<AsetModel> call = asetInterface.getAset(id);
+//        call.enqueue(new Callback<AsetModel>() {
+//            @Override
+//            public void onResponse(Call<AsetModel> call, Response<AsetModel> response) {
+//                aset = response.body().getData();
+//
+//                String tgl_input2 = response.body().getData().getTglInput().split(" ")[0];
+//                String nama_aset2 = response.body().getData().getAsetName();
+//                String nomor_aset_sap2 = String.valueOf(response.body().getData().getNomorSap());
+//                String ba_file2 = response.body().getData().getAsetName();
+//                String luas_aset2 = String.valueOf(response.body().getData().getAsetLuas());
+//                String nilai_aset2 = String.valueOf(response.body().getData().getNilaiOleh());
+//
+//                String tgl_oleh2 = response.body().getData().getTglInput().split(" ")[0];
+//                String masa_susut2 = String.valueOf(response.body().getData().getMasaSusut());
+//                String nomor_bast2 = String.valueOf(response.body().getData().getNomorBast());
+//                String nilai_residu2 = formatrupiah(Double.parseDouble(String.valueOf(response.body().getData().getNilaiResidu())));
+//                String keterangan2 = response.body().getData().getKeterangan();
+//
+//
+//                inpUmrEkonomis.setText(utils.MonthToYear(response.body().getData().getUmurEkonomisInMonth()));
+//                inpNilaiAsetSAP.setText(formatrupiah(Double.parseDouble(String.valueOf(response.body().getData().getUmurEkonomisInMonth()))));
+//                inpPersenKondisi.setText(String.valueOf(response.body().getData().getPersenKondisi()));
+//            }
+//
+//            @Override
+//            public void onFailure(Call<AsetModel> call, Throwable t) {
+//                dialog.dismiss();
+//                Log.d("asetapix",t.getMessage());
+//                finish();
+//            }
+//        });
 
     }
     public void setAdapterAsetKode(){

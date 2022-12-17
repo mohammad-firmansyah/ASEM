@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/submitupdateDialog"
+    app:cardCornerRadius="20dp"
+    app:cardUseCompatPadding="true"
+    android:layout_gravity="center"
+    app:cardBackgroundColor="@color/white"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="30dp"
+        android:paddingBottom="20dp">
+
+        <TextView
+            android:id="@+id/tvKirim"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="YAKIN PERBARUI DATA INI?"
+            android:gravity="center"
+            android:fontFamily="sans-serif-black"
+            android:textSize="24sp"
+            android:textColor="@color/main_grey"
+
+            >
+        </TextView>
+
+        <TextView
+            android:id="@+id/tvTanyaKirim"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tvKirim"
+            android:gravity="center"
+            android:paddingTop="10dp"
+            android:paddingBottom="20dp"
+            android:paddingHorizontal="60dp"
+            android:text="DATA AKAN DIPERBARUI,\nYAKIN MENYETUJUI DATA?">
+        </TextView>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tvTanyaKirim"
+            android:padding="10dp">
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:layout_weight="0.5"
+                android:paddingVertical="10dp"
+                android:layout_gravity="center"
+                android:id="@+id/btnYaKirim"
+                android:gravity="center"
+                android:text="YA"
+                android:textStyle="bold"
+                android:textColor="@color/main_grey"
+                android:textSize="14sp"
+                android:layout_marginHorizontal="10dp"
+                android:background="@drawable/bg_rounded_btn_main"
+                />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:layout_weight="0.5"
+                android:paddingVertical="10dp"
+                android:layout_gravity="center"
+                android:id="@+id/btnTidakKirim"
+                android:gravity="center"
+                android:text="TIDAK"
+                android:layout_marginHorizontal="10dp"
+                android:textStyle="bold"
+                android:textColor="@color/white"
+                android:textSize="14sp"
+                android:background="@drawable/bg_rounded_btn_sc"
+
+                />
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+</androidx.cardview.widget.CardView>
