@@ -71,6 +71,12 @@
         android:layout_below="@id/upLayout"
         android:layout_above="@+id/bottomnav"
         tools:context=".MainActivity">
+
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/srlonglist"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -89,6 +95,8 @@
 
             </androidx.recyclerview.widget.RecyclerView>
         </LinearLayout>
+
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
         <!-- ini action floating button -->
 
