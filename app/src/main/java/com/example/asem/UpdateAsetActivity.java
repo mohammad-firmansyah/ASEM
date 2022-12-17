@@ -55,6 +55,7 @@ import com.example.asem.api.AsetInterface;
 import com.example.asem.api.MyErrorMessage;
 import com.example.asem.api.model.Afdelling;
 import com.example.asem.api.model.AfdellingModel;
+import com.example.asem.api.model.AllSpinner;
 import com.example.asem.api.model.Aset;
 import com.example.asem.api.model.AsetApproveModel;
 import com.example.asem.api.model.AsetJenis;
@@ -68,6 +69,7 @@ import com.example.asem.api.model.AsetModel;
 import com.example.asem.api.model.AsetModel2;
 import com.example.asem.api.model.AsetTipe;
 import com.example.asem.api.model.Data;
+import com.example.asem.api.model.DataAllSpinner;
 import com.example.asem.api.model.SubUnit;
 import com.example.asem.api.model.SubUnitModel;
 import com.example.asem.api.model.Unit;
@@ -121,6 +123,8 @@ public class UpdateAsetActivity extends AppCompatActivity {
     Button map4;
     double longitudeValue = 0;
     double latitudeValue = 0;
+    DataAllSpinner allSpinner;
+
     SharedPreferences sharedPreferences;
     private static final String PREF_LOGIN = "LOGIN_PREF";
 
@@ -338,6 +342,8 @@ public class UpdateAsetActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_update_aset);
 
+        sharedPreferences = UpdateAsetActivity.this.getSharedPreferences(PREF_LOGIN, MODE_PRIVATE);
+
         dialog = new Dialog(UpdateAsetActivity.this,R.style.MyAlertDialogTheme);
         dialog.setContentView(R.layout.loading);
         dialog.setCanceledOnTouchOutside(false);
@@ -468,7 +474,21 @@ public class UpdateAsetActivity extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 spinnerIdSubUnit = String.valueOf(position);
                 editVisibilityDynamic();
+                setValueInput();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> arg0) {
+
+            }
+        });
+
+        spinnerUnit.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                editVisibilityDynamic();
                 setAfdelingAdapter();
+                setValueInput();
             }
 
             @Override
@@ -643,8 +663,8 @@ public class UpdateAsetActivity extends AppCompatActivity {
 
         btnFile = findViewById(R.id.inpUploudBA);
 
+        getAllSpinnerData();
         initCalender();
-        getSpinnerData();
         setValueInput();
 
         btnFile.setOnClickListener(new View.OnClickListener(){
@@ -807,9 +827,8 @@ public class UpdateAsetActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<AsetModel> call, Response<AsetModel> response) {
                 dialog.dismiss();
-                if (!response.isSuccessful()){
+                if (!response.isSuccessful() && response.body() == null){
                     Toast.makeText(getApplicationContext(),String.valueOf(response.code()),Toast.LENGTH_LONG).show();
-                    finish();
                     return;
                 }
 
@@ -818,7 +837,7 @@ public class UpdateAsetActivity extends AppCompatActivity {
                 aset = response.body().getData();
                 tvUploudBA.setText(response.body().getData().getBeritaAcara());
                 inpTglInput.setText(response.body().getData().getTglInput().split(" ")[0]);
-                inpTglOleh.setText(response.body().getData().getTglInput().split(" ")[0]);
+                inpTglOleh.setText(response.body().getData().getTglOleh().split(" ")[0]);
                 inpNoSAP.setText(String.valueOf(response.body().getData().getNomorSap()));
                 inpNamaAset.setText(response.body().getData().getAsetName());
                 inpLuasAset.setText(String.valueOf(response.body().getData().getAsetLuas()));
@@ -830,6 +849,7 @@ public class UpdateAsetActivity extends AppCompatActivity {
                 inpUmrEkonomis.setText(utils.MonthToYear(response.body().getData().getUmurEkonomisInMonth()));
                 inpNilaiAsetSAP.setText(formatrupiah(Double.parseDouble(String.valueOf(response.body().getData().getUmurEkonomisInMonth()))));
                 inpPersenKondisi.setText(String.valueOf(response.body().getData().getPersenKondisi()));
+                inpJumlahPohon.setText(String.valueOf(response.body().getData().getJumlahPohon()));
                 String ket_reject = response.body().getData().getKetReject();
                 if (ket_reject != null){
                     inpKetReject.setVisibility(View.VISIBLE);
@@ -875,7 +895,6 @@ public class UpdateAsetActivity extends AppCompatActivity {
                 spinnerJenisAset.setSelection(response.body().getData().getAsetJenis()-1);
                 spinnerAsetKondisi.setSelection(response.body().getData().getAsetKondisi()-1);
                 spinnerKodeAset.setSelection(response.body().getData().getAsetKode()-1);
-                spinnerUnit.setSelection(response.body().getData().getUnitId()-1);
                 spinnerSubUnit.setSelection(response.body().getData().getAsetSubUnit()-1);
 
                 if (response.body().getData().getAfdelingId() != null) {
@@ -1315,7 +1334,6 @@ public class UpdateAsetActivity extends AppCompatActivity {
         TextView tvLuasTanaman = findViewById(R.id.luasTanaman);
         TextView tvLuasNonTanaman = findViewById(R.id.luasNonTanaman);
         TextView tvPersenKondisi = findViewById(R.id.tvPersenKondisi);
-        TextView tvKetReject = findViewById(R.id.tvKetReject);
 
         HorizontalScrollView scrollPartition = findViewById(R.id.scrollPartition);
 //        Toast.makeText(getApplicationContext(),String.valueOf(spinnerSubUnit.getSelectedItemId()),Toast.LENGTH_LONG).show();
@@ -1577,56 +1595,24 @@ public class UpdateAsetActivity extends AppCompatActivity {
     }
     public void editAset(){
         dialog.show();
-        Log.d("asetapix","masuk gk ges" );
-        String tgl_input = inpTglInput.getText().toString().trim() + " 00:00:00";
-
-        String nama_aset = inpNamaAset.getText().toString().trim();
-        String nomor_aset_sap = inpNoSAP.getText().toString().trim();
-        String ba_file = tvUploudBA.getText().toString().trim();
-        String luas_aset = inpLuasAset.getText().toString().trim();
-        String nilai_aset = String.valueOf(CurrencyToNumber(inpNilaiAsetSAP.getText().toString().trim()));
-
-
-        String tgl_oleh = String.valueOf(inpTglOleh.getText().toString().trim()) + " 00:00:00";
-        String masa_susut = String.valueOf(inpMasaPenyusutan.getText().toString().trim());
-        String nomor_bast = String.valueOf(inpMasaPenyusutan.getText().toString().trim());
-        String nilai_residu = String.valueOf(CurrencyToNumber(inpNilaiResidu.getText().toString().trim()));
-        String keterangan = String.valueOf(inpKeterangan.getText().toString().trim());
-        String asetId = String.valueOf(aset.getAsetId());
-        Log.d("asetapix","tanggal : " + tgl_input + " - " + tgl_oleh);
-
-
-//            if (Integer.valueOf(spinnerIdTipeAsset) == 1) {
-//                geotag2 = geotag1;
-//                geotag3 = geotag1;
-//                geotag4 = geotag1;
-//            }
-
-                MultipartBody.Part img1Part = null, img2Part = null, img3Part = null, img4Part = null, partBaFile = null;
-
-        if (bafile_file != null){
-            RequestBody requestBaFile = RequestBody.create(MediaType.parse("multipart/form-file"), bafile_file);
-            partBaFile = MultipartBody.Part.createFormData("ba_file", bafile_file.getName(), requestBaFile);
-        }
-
-        if (img1 != null) {
-            img1Part = MultipartBody.Part.createFormData("img1",img1.getName(),RequestBody.create(MediaType.parse("image/*"),img1));
-        }
-
-        if (img2 != null) {
-            img2Part = MultipartBody.Part.createFormData("img2",img2.getName(),RequestBody.create(MediaType.parse("image/*"),img2));
-        }
-
-        if (img3 != null) {
-            img3Part = MultipartBody.Part.createFormData("img3",img3.getName(),RequestBody.create(MediaType.parse("image/*"),img3));
-        }
-
-        if (img4 != null) {
-            img4Part = MultipartBody.Part.createFormData("img4",img4.getName(),RequestBody.create(MediaType.parse("image/*"),img4));
-        }
 
 
         try{
+
+            String tgl_input = inpTglInput.getText().toString().trim() + " 00:00:00";
+            String nama_aset = inpNamaAset.getText().toString().trim();
+            String nomor_aset_sap = inpNoSAP.getText().toString().trim();
+            String luas_aset = inpLuasAset.getText().toString().trim();
+            String nilai_aset = String.valueOf(CurrencyToNumber(inpNilaiAsetSAP.getText().toString().trim()));
+            String tgl_oleh = inpTglOleh.getText().toString().trim() + " 00:00:00";
+            String masa_susut = inpMasaPenyusutan.getText().toString().trim();
+            String nomor_bast = inpMasaPenyusutan.getText().toString().trim();
+            String nilai_residu = String.valueOf(CurrencyToNumber(inpNilaiResidu.getText().toString().trim()));
+            String keterangan = inpKeterangan.getText().toString().trim();
+            String asetId = String.valueOf(aset.getAsetId());
+
+            MultipartBody.Part partBaFile = null;
+
 
             RequestBody requestAsetId = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(asetId));
             RequestBody requestTipeAset = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(spinnerIdTipeAsset));
@@ -1678,9 +1664,7 @@ public class UpdateAsetActivity extends AppCompatActivity {
                 builder.addPart(MultipartBody.Part.createFormData("afdeling_id",null,requestAfdeling));
             }
 
-            if (!inpJumlahPohon.getText().equals("")) {
-                builder.addPart(MultipartBody.Part.createFormData("jumlah_pohon",null,requestJumlahPohon));
-            }
+            builder.addPart(MultipartBody.Part.createFormData("jumlah_pohon",null,requestJumlahPohon));
 
             if (bafile_file != null){
                 RequestBody requestBaFile = RequestBody.create(MediaType.parse("multipart/form-file"), bafile_file);
@@ -1716,12 +1700,12 @@ public class UpdateAsetActivity extends AppCompatActivity {
             String contentType = "multipart/form-data; charset=utf-8; boundary=" + multipartBody.boundary();
 
 
-            Call<AsetModel> call = asetInterface.editAset(contentType,multipartBody);
+            Call<AsetModel2> call = asetInterface.editAset(contentType,multipartBody);
 
-            call.enqueue(new Callback<AsetModel>(){
+            call.enqueue(new Callback<AsetModel2>(){
 
                 @Override
-                public void onResponse(Call<AsetModel> call, Response<AsetModel> response) {
+                public void onResponse(Call<AsetModel2> call, Response<AsetModel2> response) {
                     if (response.isSuccessful() && response.body() != null){
                         dialog.dismiss();
                         Toast.makeText(getApplicationContext(),"succeed edit aset",Toast.LENGTH_LONG).show();
@@ -1741,7 +1725,7 @@ public class UpdateAsetActivity extends AppCompatActivity {
                 }
 
                 @Override
-                public void onFailure(Call<AsetModel> call, Throwable t) {
+                public void onFailure(Call<AsetModel2> call, Throwable t) {
                     dialog.dismiss();
                     Toast.makeText(getApplicationContext(),"edit aset" + t.getMessage(),Toast.LENGTH_LONG).show();
                 }
@@ -1754,45 +1738,6 @@ public class UpdateAsetActivity extends AppCompatActivity {
 
 
 
-//            if (ba_file != "isi.pdf"){
-//                RequestBody requestBaFile = RequestBody.create(MediaType.parse("multipart/form-file"), source);
-//                MultipartBody.Part partBaFile = MultipartBody.Part.createFormData("foto_tunggak", source.getName(), requestBaFile);
-//            }
-
-            //ini untuk bandingin inputan terupdate di db
-
-//        Call<AsetModel> call = asetInterface.getAset(id);
-//        call.enqueue(new Callback<AsetModel>() {
-//            @Override
-//            public void onResponse(Call<AsetModel> call, Response<AsetModel> response) {
-//                aset = response.body().getData();
-//
-//                String tgl_input2 = response.body().getData().getTglInput().split(" ")[0];
-//                String nama_aset2 = response.body().getData().getAsetName();
-//                String nomor_aset_sap2 = String.valueOf(response.body().getData().getNomorSap());
-//                String ba_file2 = response.body().getData().getAsetName();
-//                String luas_aset2 = String.valueOf(response.body().getData().getAsetLuas());
-//                String nilai_aset2 = String.valueOf(response.body().getData().getNilaiOleh());
-//
-//                String tgl_oleh2 = response.body().getData().getTglInput().split(" ")[0];
-//                String masa_susut2 = String.valueOf(response.body().getData().getMasaSusut());
-//                String nomor_bast2 = String.valueOf(response.body().getData().getNomorBast());
-//                String nilai_residu2 = formatrupiah(Double.parseDouble(String.valueOf(response.body().getData().getNilaiResidu())));
-//                String keterangan2 = response.body().getData().getKeterangan();
-//
-//
-//                inpUmrEkonomis.setText(utils.MonthToYear(response.body().getData().getUmurEkonomisInMonth()));
-//                inpNilaiAsetSAP.setText(formatrupiah(Double.parseDouble(String.valueOf(response.body().getData().getUmurEkonomisInMonth()))));
-//                inpPersenKondisi.setText(String.valueOf(response.body().getData().getPersenKondisi()));
-//            }
-//
-//            @Override
-//            public void onFailure(Call<AsetModel> call, Throwable t) {
-//                dialog.dismiss();
-//                Log.d("asetapix",t.getMessage());
-//                finish();
-//            }
-//        });
 
     }
     public void setAdapterAsetKode(){
@@ -1834,6 +1779,123 @@ public class UpdateAsetActivity extends AppCompatActivity {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerAfdeling.setAdapter(adapter);
     }
+
+
+    public void getAllSpinnerData(){
+        Call<AllSpinner> call = asetInterface.getAllSpinner();
+
+        call.enqueue(new Callback<AllSpinner>() {
+            @Override
+            public void onResponse(Call<AllSpinner> call, Response<AllSpinner> response) {
+                if (!response.isSuccessful() && response.body().getData() == null) {
+                    Toast.makeText(getApplicationContext(),response.code(),Toast.LENGTH_LONG).show();
+                    return;
+                }
+
+                allSpinner = response.body().getData();
+
+                DataAllSpinner dataAllSpinner = response.body().getData();
+                List<String> listSpinnerTipe = new ArrayList<>();
+                List<String> listSpinnerJenis = new ArrayList<>();
+                List<String> listSpinnerKondisiAset = new ArrayList<>();
+                List<String> listSpinnerKodeAset = new ArrayList<>();
+                List<String> listSpinnerUnit = new ArrayList<>();
+                List<String> listSpinnerSubUnit = new ArrayList<>();
+                List<String> listSpinnerAfdeling = new ArrayList<>();
+
+                // get data tipe aset
+                for (AsetTipe at : dataAllSpinner.getAsetTipe()){
+                    listSpinnerTipe.add(at.getAset_tipe_desc());
+                }
+
+                // get data jenis
+                for (AsetJenis at : dataAllSpinner.getAsetJenis()){
+                    listSpinnerJenis.add(at.getAset_jenis_desc());
+                }
+
+                // get kondisi aset
+                for (AsetKondisi at : dataAllSpinner.getAsetKondisi()){
+                    listSpinnerKondisiAset.add(at.getAset_kondisi_desc());
+                }
+
+                // get kode aset
+                asetKode2 = dataAllSpinner.getAsetKode();
+
+                setAdapterAsetKode();
+
+                // get unit
+                for (Unit at : dataAllSpinner.getUnit()){
+                    listSpinnerUnit.add(at.getUnit_desc());
+                }
+
+                // get sub unit
+                for (SubUnit at : dataAllSpinner.getSubUnit()){
+                    listSpinnerSubUnit.add(at.getSub_unit_desc());
+                }
+
+                // get afdeling
+                afdeling = dataAllSpinner.getAfdeling();
+                for (Afdelling at : dataAllSpinner.getAfdeling()){
+                    listSpinnerUnit.add(at.getAfdelling_desc());
+                }
+
+
+                // set adapter tipe
+                ArrayAdapter<String> adapterTipe = new ArrayAdapter<String>(getApplicationContext(),
+                        android.R.layout.simple_spinner_item, listSpinnerTipe);
+                adapterTipe.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                spinnerTipeAset.setAdapter(adapterTipe);
+
+                // set adapter jenis
+                ArrayAdapter<String> adapterJenis = new ArrayAdapter<String>(getApplicationContext(),
+                        android.R.layout.simple_spinner_item, listSpinnerJenis);
+                adapterJenis.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                spinnerJenisAset.setAdapter(adapterJenis);
+
+                // set adapter kondisi aset
+                ArrayAdapter<String> adapterKondisiAset = new ArrayAdapter<String>(getApplicationContext(),
+                        android.R.layout.simple_spinner_item, listSpinnerKondisiAset);
+                adapterKondisiAset.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                spinnerAsetKondisi.setAdapter(adapterKondisiAset);
+
+                // set adapter kode aset
+                ArrayAdapter<String> adapterKodeAset = new ArrayAdapter<String>(getApplicationContext(),
+                        android.R.layout.simple_spinner_item, listSpinnerKodeAset);
+                adapterKodeAset.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                spinnerKodeAset.setAdapter(adapterKodeAset);
+
+                // set adapter unit
+                ArrayAdapter<String> adapterUnit = new ArrayAdapter<String>(getApplicationContext(),
+                        android.R.layout.simple_spinner_item, listSpinnerUnit);
+                adapterUnit.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                spinnerUnit.setAdapter(adapterUnit);
+                Integer unit_id = Integer.valueOf(sharedPreferences.getString("unit_id", "0"));
+                spinnerUnit.setSelection(unit_id-1);
+
+
+                // set adapter sub unit
+                ArrayAdapter<String> adapterSubUnit = new ArrayAdapter<String>(getApplicationContext(),
+                        android.R.layout.simple_spinner_item, listSpinnerSubUnit);
+                adapterSubUnit.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                spinnerSubUnit.setAdapter(adapterSubUnit);
+
+                // set adapter afedeling
+                ArrayAdapter<String> adapterAfdeling = new ArrayAdapter<String>(getApplicationContext(),
+                        android.R.layout.simple_spinner_item, listSpinnerAfdeling);
+                adapterAfdeling.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                spinnerAfdeling.setAdapter(adapterAfdeling);
+            }
+
+            @Override
+            public void onFailure(Call<AllSpinner> call, Throwable t) {
+                Toast.makeText(getApplicationContext(),t.getMessage(),Toast.LENGTH_LONG).show();
+                return;
+            }
+        });
+
+    }
+
+
     public void getSpinnerData(){
         getTipeAset();
         getKodeAset();

@@ -56,6 +56,8 @@ import android.widget.Toast;
 import com.example.asem.api.AsetInterface;
 import com.example.asem.api.model.Afdelling;
 import com.example.asem.api.model.AfdellingModel;
+import com.example.asem.api.model.AllSpinner;
+import com.example.asem.api.model.AsetJenis;
 import com.example.asem.api.model.AsetJenisModel;
 import com.example.asem.api.model.AsetKode;
 import com.example.asem.api.model.AsetKode2;
@@ -67,6 +69,7 @@ import com.example.asem.api.model.AsetModel2;
 import com.example.asem.api.model.AsetTipe;
 import com.example.asem.api.model.Data;
 import com.example.asem.api.model.Data2;
+import com.example.asem.api.model.DataAllSpinner;
 import com.example.asem.api.model.SubUnit;
 import com.example.asem.api.model.SubUnitModel;
 import com.example.asem.api.model.Unit;
@@ -114,6 +117,7 @@ public class AddAsetActivity extends AppCompatActivity {
     Button btnYaKirim;
     Button btnTidakKirim;
 
+    DataAllSpinner allSpinner;
     Context context;
     SharedPreferences sharedPreferences;
     private static final String PREF_LOGIN = "LOGIN_PREF";
@@ -766,8 +770,7 @@ public class AddAsetActivity extends AppCompatActivity {
 
 
         initCalender();
-        getSpinnerData();
-//        setValueInput();
+        getAllSpinnerData();
 
     }
 
@@ -2000,6 +2003,130 @@ public class AddAsetActivity extends AppCompatActivity {
 
     }
 
+    public void getAllSpinnerData(){
+
+        Call<AllSpinner> call = asetInterface.getAllSpinner();
+
+        call.enqueue(new Callback<AllSpinner>() {
+            @Override
+            public void onResponse(Call<AllSpinner> call, Response<AllSpinner> response) {
+                if (!response.isSuccessful() && response.body().getData() == null) {
+                    Toast.makeText(getApplicationContext(),response.code(),Toast.LENGTH_LONG).show();
+                    dialog.dismiss();
+                    return;
+                }
+                dialog.dismiss();
+                allSpinner = response.body().getData();
+
+                DataAllSpinner dataAllSpinner = response.body().getData();
+                List<String> listSpinnerTipe = new ArrayList<>();
+                List<String> listSpinnerJenis = new ArrayList<>();
+                List<String> listSpinnerKondisiAset = new ArrayList<>();
+                List<String> listSpinnerKodeAset = new ArrayList<>();
+                List<String> listSpinnerUnit = new ArrayList<>();
+                List<String> listSpinnerSubUnit = new ArrayList<>();
+                List<String> listSpinnerAfdeling = new ArrayList<>();
+
+                listSpinnerTipe.add("Pilih Tipe Aset");
+                listSpinnerJenis.add("Pilih Jenis Aset");
+                listSpinnerKondisiAset.add("Pilih Kondisi Aset");
+                listSpinnerKodeAset.add("Pilih Kode Aset");
+                listSpinnerSubUnit.add("Pilih Sub Unit ");
+                listSpinnerAfdeling.add("Pilih Sub Afdeling Aset");
+                // get data tipe aset
+                for (AsetTipe at : dataAllSpinner.getAsetTipe()){
+                    listSpinnerTipe.add(at.getAset_tipe_desc());
+                }
+
+                // get data jenis
+                for (AsetJenis at : dataAllSpinner.getAsetJenis()){
+                    listSpinnerJenis.add(at.getAset_jenis_desc());
+                }
+
+                // get kondisi aset
+                for (AsetKondisi at : dataAllSpinner.getAsetKondisi()){
+                    listSpinnerKondisiAset.add(at.getAset_kondisi_desc());
+                }
+
+                // get kode aset
+                asetKode2 = dataAllSpinner.getAsetKode();
+
+
+                // get unit
+                for (Unit at : dataAllSpinner.getUnit()){
+                    listSpinnerUnit.add(at.getUnit_desc());
+                }
+
+                // get sub unit
+                for (SubUnit at : dataAllSpinner.getSubUnit()){
+                    listSpinnerSubUnit.add(at.getSub_unit_desc());
+                }
+
+                // get afdeling
+                afdeling = dataAllSpinner.getAfdeling();
+                for (Afdelling at : dataAllSpinner.getAfdeling()){
+                    listSpinnerUnit.add(at.getAfdelling_desc());
+                }
+
+
+
+                // set adapter tipe
+                ArrayAdapter<String> adapterTipe = new ArrayAdapter<String>(getApplicationContext(),
+                        android.R.layout.simple_spinner_item, listSpinnerTipe);
+                adapterTipe.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                spinnerTipeAset.setAdapter(adapterTipe);
+
+                // set adapter jenis
+                ArrayAdapter<String> adapterJenis = new ArrayAdapter<String>(getApplicationContext(),
+                        android.R.layout.simple_spinner_item, listSpinnerJenis);
+                adapterJenis.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                spinnerJenisAset.setAdapter(adapterJenis);
+
+                // set adapter kondisi aset
+                ArrayAdapter<String> adapterKondisiAset = new ArrayAdapter<String>(getApplicationContext(),
+                        android.R.layout.simple_spinner_item, listSpinnerKondisiAset);
+                adapterKondisiAset.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                spinnerAsetKondisi.setAdapter(adapterKondisiAset);
+
+                // set adapter kode aset
+                ArrayAdapter<String> adapterKodeAset = new ArrayAdapter<String>(getApplicationContext(),
+                        android.R.layout.simple_spinner_item, listSpinnerKodeAset);
+                adapterKodeAset.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                spinnerKodeAset.setAdapter(adapterKodeAset);
+
+                // set adapter unit
+                ArrayAdapter<String> adapterUnit = new ArrayAdapter<String>(getApplicationContext(),
+                        android.R.layout.simple_spinner_item, listSpinnerUnit);
+                adapterUnit.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                spinnerUnit.setAdapter(adapterUnit);
+                sharedPreferences = AddAsetActivity.this.getSharedPreferences(PREF_LOGIN, MODE_PRIVATE);
+                Integer unit_id = Integer.valueOf(sharedPreferences.getString("unit_id", "0"));
+                spinnerUnit.setSelection(unit_id-1);
+
+
+
+                // set adapter sub unit
+                ArrayAdapter<String> adapterSubUnit = new ArrayAdapter<String>(getApplicationContext(),
+                        android.R.layout.simple_spinner_item, listSpinnerSubUnit);
+                adapterSubUnit.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                spinnerSubUnit.setAdapter(adapterSubUnit);
+
+                // set adapter afedeling
+                ArrayAdapter<String> adapterAfdeling = new ArrayAdapter<String>(getApplicationContext(),
+                        android.R.layout.simple_spinner_item, listSpinnerAfdeling);
+                adapterAfdeling.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                spinnerAfdeling.setAdapter(adapterAfdeling);
+            }
+
+            @Override
+            public void onFailure(Call<AllSpinner> call, Throwable t) {
+                dialog.dismiss();
+                Toast.makeText(getApplicationContext(),t.getMessage(),Toast.LENGTH_LONG).show();
+                return;
+            }
+        });
+
+    }
     public void getSpinnerData(){
         getTipeAset();
         getKodeAset();

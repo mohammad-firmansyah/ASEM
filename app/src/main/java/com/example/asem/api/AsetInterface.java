@@ -1,6 +1,7 @@
 package com.example.asem.api;
 
 import com.example.asem.api.model.AfdellingModel;
+import com.example.asem.api.model.AllSpinner;
 import com.example.asem.api.model.AsetApproveModel;
 import com.example.asem.api.model.AsetJenisModel;
 import com.example.asem.api.model.AsetKodeModel2;
@@ -50,6 +51,9 @@ public interface AsetInterface {
     @GET("aset-all/{id}")
     Call<List<Data2>> getAllAset(@Path("id") Integer id);
 
+    @GET("all-spinner/")
+    Call<AllSpinner> getAllSpinner();
+
     @GET("aset-tipe/")
     Call<List<AsetTipe>> getAsetTipe();
 
@@ -60,7 +64,7 @@ public interface AsetInterface {
     Call<AfdellingModel> getAfdeling();
 
     @POST("aset/edit")
-    Call<AsetModel> editAset(
+    Call<AsetModel2> editAset(
             @Header("Content-Type") String contentType, @Body MultipartBody body
             );
 

@@ -23,6 +23,7 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -36,7 +37,9 @@ import android.widget.Toast;
 import com.example.asem.api.AsetInterface;
 import com.example.asem.api.model.Afdelling;
 import com.example.asem.api.model.AfdellingModel;
+import com.example.asem.api.model.AllSpinner;
 import com.example.asem.api.model.AsetApproveModel;
+import com.example.asem.api.model.AsetJenis;
 import com.example.asem.api.model.AsetJenisModel;
 import com.example.asem.api.model.AsetKode2;
 import com.example.asem.api.model.AsetKodeModel2;
@@ -44,6 +47,7 @@ import com.example.asem.api.model.AsetKondisi;
 import com.example.asem.api.model.AsetModel;
 import com.example.asem.api.model.AsetModel2;
 import com.example.asem.api.model.AsetTipe;
+import com.example.asem.api.model.DataAllSpinner;
 import com.example.asem.api.model.SubUnit;
 import com.example.asem.api.model.SubUnitModel;
 import com.example.asem.api.model.Unit;
@@ -79,6 +83,7 @@ public class DetailAsetActivity extends AppCompatActivity {
     String url3 = "";
     String url4 = "";
     File asetqrfoto;
+    DataAllSpinner allSpinner;
     ActivityResultLauncher<Intent> activityCaptureFoto1 =
             registerForActivityResult(
                     new ActivityResultContracts.StartActivityForResult(),
@@ -319,13 +324,88 @@ public class DetailAsetActivity extends AppCompatActivity {
             }
         });
 
-//        inpSimpanFotoQr.setOnClickListener(view -> Log.d("asetapix","hello"));
-//        addNewFotoAsetAndQr.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                captureFotoQcLoses("fotoaset.png",activityCaptureFoto1);
-//            }
-//        });
+
+        spinnerSubUnit.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                spinnerIdSubUnit = String.valueOf(position);
+                editVisibilityDynamic();
+                setAfdelingAdapter();
+                setValueInput();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> arg0) {
+
+            }
+        });
+
+        spinnerUnit.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                editVisibilityDynamic();
+                setValueInput();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> arg0) {
+
+            }
+        });
+
+        spinnerTipeAset.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                spinnerIdTipeAsset = String.valueOf(position+1);
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> arg0) {
+
+            }
+        });
+
+        spinnerJenisAset.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                spinnerIdJenisAset = String.valueOf(position+1);
+                editVisibilityDynamic();
+                setAdapterAsetKode();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> arg0) {
+
+            }
+        });
+
+        spinnerKodeAset.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                spinnerIdKodeAset = String.valueOf(position+1);
+//                editVisibilityDynamic();
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> arg0) {
+
+            }
+        });
+
+        spinnerAsetKondisi.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                spinnerIdAsetKondisi = String.valueOf(position+1);
+                editVisibilityDynamic();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> arg0) {
+
+            }
+        });
 
         btnApprove.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -500,8 +580,10 @@ public class DetailAsetActivity extends AppCompatActivity {
         });
 
         initCalender();
-        getSpinnerData();
+        getAllSpinnerData();
+//        getSpinnerData();
         setValueInput();
+
         initCustomDialog();
 
     }
@@ -709,13 +791,11 @@ public class DetailAsetActivity extends AppCompatActivity {
 //                set selection spinners
                 spinnerTipeAset.setSelection(response.body().getData().getAsetTipe()-1);
                 spinnerJenisAset.setSelection(response.body().getData().getAsetJenis()-1);
+
                 spinnerAsetKondisi.setSelection(response.body().getData().getAsetKondisi()-1);
 
-                spinnerUnit.setSelection(response.body().getData().getUnitId()-1);
                 spinnerSubUnit.setSelection(response.body().getData().getAsetSubUnit()-1);
-                Log.d("asetapix",String.valueOf(response.body().getData().getAsetSubUnit()));
 
-                setAdapterAsetKode();
                 spinnerKodeAset.setSelection(response.body().getData().getAsetKode()-1);
                 if (response.body().getData().getAfdelingId() != null) {
                     spinnerAfdeling.setSelection(response.body().getData().getAfdelingId()-1);
@@ -1275,7 +1355,6 @@ public class DetailAsetActivity extends AppCompatActivity {
 
         for (AsetKode2 a : asetKode2) {
             if (a.getAsetJenis()-1 == spinnerJenisAset.getSelectedItemId()) {
-                Log.d("asetapix22",  "aset jenis dari spinner "+ String.valueOf(spinnerJenisAset.getSelectedItemId()));
 
                 if ((a.getAsetJenis()) == 1 ) {
                     aset_kode_temp = a.getAsetClass() + "/" + a.getAsetDesc();
@@ -1288,6 +1367,7 @@ public class DetailAsetActivity extends AppCompatActivity {
                 asetKode.add(aset_kode_temp);
             }
         }
+
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(getApplicationContext(),
                 android.R.layout.simple_spinner_item, asetKode);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -1323,6 +1403,119 @@ public class DetailAsetActivity extends AppCompatActivity {
             ln.setVisibility(View.GONE);
             ln2.setVisibility(View.GONE);
         }
+
+    }
+
+    public void getAllSpinnerData(){
+        Call<AllSpinner> call = asetInterface.getAllSpinner();
+
+        call.enqueue(new Callback<AllSpinner>() {
+            @Override
+            public void onResponse(Call<AllSpinner> call, Response<AllSpinner> response) {
+                if (!response.isSuccessful() && response.body().getData() == null) {
+                    Toast.makeText(getApplicationContext(),response.code(),Toast.LENGTH_LONG).show();
+                    return;
+                }
+
+                allSpinner = response.body().getData();
+
+                DataAllSpinner dataAllSpinner = response.body().getData();
+                List<String> listSpinnerTipe = new ArrayList<>();
+                List<String> listSpinnerJenis = new ArrayList<>();
+                List<String> listSpinnerKondisiAset = new ArrayList<>();
+                List<String> listSpinnerKodeAset = new ArrayList<>();
+                List<String> listSpinnerUnit = new ArrayList<>();
+                List<String> listSpinnerSubUnit = new ArrayList<>();
+                List<String> listSpinnerAfdeling = new ArrayList<>();
+
+                // get data tipe aset
+                for (AsetTipe at : dataAllSpinner.getAsetTipe()){
+                    listSpinnerTipe.add(at.getAset_tipe_desc());
+                }
+
+                // get data jenis
+                for (AsetJenis at : dataAllSpinner.getAsetJenis()){
+                    listSpinnerJenis.add(at.getAset_jenis_desc());
+                }
+
+                // get kondisi aset
+                for (AsetKondisi at : dataAllSpinner.getAsetKondisi()){
+                    listSpinnerKondisiAset.add(at.getAset_kondisi_desc());
+                }
+
+                // get kode aset
+                asetKode2 = dataAllSpinner.getAsetKode();
+
+
+                // get unit
+                for (Unit at : dataAllSpinner.getUnit()){
+                    listSpinnerUnit.add(at.getUnit_desc());
+                }
+
+                // get sub unit
+                for (SubUnit at : dataAllSpinner.getSubUnit()){
+                    listSpinnerSubUnit.add(at.getSub_unit_desc());
+                }
+
+                // get afdeling
+                afdeling = dataAllSpinner.getAfdeling();
+                for (Afdelling at : dataAllSpinner.getAfdeling()){
+                    listSpinnerUnit.add(at.getAfdelling_desc());
+                }
+
+
+                // set adapter tipe
+                ArrayAdapter<String> adapterTipe = new ArrayAdapter<String>(getApplicationContext(),
+                        android.R.layout.simple_spinner_item, listSpinnerTipe);
+                adapterTipe.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                spinnerTipeAset.setAdapter(adapterTipe);
+
+                // set adapter jenis
+                ArrayAdapter<String> adapterJenis = new ArrayAdapter<String>(getApplicationContext(),
+                        android.R.layout.simple_spinner_item, listSpinnerJenis);
+                adapterJenis.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                spinnerJenisAset.setAdapter(adapterJenis);
+
+                // set adapter kondisi aset
+                ArrayAdapter<String> adapterKondisiAset = new ArrayAdapter<String>(getApplicationContext(),
+                        android.R.layout.simple_spinner_item, listSpinnerKondisiAset);
+                adapterKondisiAset.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                spinnerAsetKondisi.setAdapter(adapterKondisiAset);
+
+                // set adapter kode aset
+                ArrayAdapter<String> adapterKodeAset = new ArrayAdapter<String>(getApplicationContext(),
+                        android.R.layout.simple_spinner_item, listSpinnerKodeAset);
+                adapterKodeAset.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                spinnerKodeAset.setAdapter(adapterKodeAset);
+
+                // set adapter unit
+                ArrayAdapter<String> adapterUnit = new ArrayAdapter<String>(getApplicationContext(),
+                        android.R.layout.simple_spinner_item, listSpinnerUnit);
+                adapterUnit.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                spinnerUnit.setAdapter(adapterUnit);
+                Integer unit_id = Integer.valueOf(sharedPreferences.getString("unit_id", "0"));
+                spinnerUnit.setSelection(unit_id-1);
+
+                // set adapter sub unit
+
+                ArrayAdapter<String> adapterSubUnit = new ArrayAdapter<String>(getApplicationContext(),
+                        android.R.layout.simple_spinner_item, listSpinnerSubUnit);
+                adapterSubUnit.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                spinnerSubUnit.setAdapter(adapterSubUnit);
+
+                // set adapter afedeling
+                ArrayAdapter<String> adapterAfdeling = new ArrayAdapter<String>(getApplicationContext(),
+                        android.R.layout.simple_spinner_item, listSpinnerAfdeling);
+                adapterAfdeling.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                spinnerAfdeling.setAdapter(adapterAfdeling);
+            }
+
+            @Override
+            public void onFailure(Call<AllSpinner> call, Throwable t) {
+                Toast.makeText(getApplicationContext(),t.getMessage(),Toast.LENGTH_LONG).show();
+                return;
+            }
+        });
 
     }
     public void getSpinnerData(){
@@ -1486,5 +1679,20 @@ public class DetailAsetActivity extends AppCompatActivity {
                 return;
             }
         });
+    }
+
+    public void setAfdelingAdapter(){
+        List<String> afdelings = new ArrayList<>();
+        afdelings.add("pilih afdeling");
+        for (Afdelling a:afdeling) {
+            if (a.getUnit_id() == (spinnerUnit.getSelectedItemId()+1)) {
+                afdelings.add(a.getAfdelling_desc());
+            }
+        }
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getApplicationContext(),
+                android.R.layout.simple_spinner_item, afdelings);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerAfdeling.setAdapter(adapter);
     }
 }
