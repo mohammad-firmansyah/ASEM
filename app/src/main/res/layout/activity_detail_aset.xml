@@ -474,7 +474,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginVertical="10dp"
-                android:text="LUAS AREAL :"
+                android:text="LUAS AREAL (Ha) :"
                 android:textColor="@color/main_grey"
                 android:textSize="14sp"
                 android:textStyle="bold"
@@ -819,6 +819,7 @@
                 android:background="@drawable/edit_text_spiner"
                 android:gravity="center"
                 android:layout_marginVertical="10dp"
+                android:visibility="gone"
                 >
 
                 <ImageView
@@ -830,6 +831,7 @@
             </LinearLayout>
 
             <Button
+                android:visibility="gone"
                 android:id="@+id/inpSimpanFotoQr"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

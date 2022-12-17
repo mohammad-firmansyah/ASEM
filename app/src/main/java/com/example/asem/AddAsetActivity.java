@@ -561,6 +561,7 @@ public class AddAsetActivity extends AppCompatActivity {
 
                 editVisibilityDynamic();
                 setAdapterAsetKode();
+                Log.d("asetapix",spinnerIdJenisAset);
             }
 
             @Override
@@ -1901,6 +1902,7 @@ public class AddAsetActivity extends AppCompatActivity {
             if (spinnerJenisAset.getSelectedItemId() == 1 || spinnerJenisAset.getSelectedItemId() == 3)  {
                 RequestBody requestJumlahPohon = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(inpJumlahPohon.getText().toString()));
                 builder.addPart(MultipartBody.Part.createFormData("jumlah_pohon",null,requestJumlahPohon));
+                Log.d("asetapix", String.valueOf(requestJumlahPohon));
             }
 
             if (spinnerJenisAset.getSelectedItemId() == 2 )  {
@@ -1942,6 +1944,7 @@ public class AddAsetActivity extends AppCompatActivity {
             if (inpKeterangan != null){
                 RequestBody requestKeterangan = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(keterangan));
                 builder.addPart(MultipartBody.Part.createFormData("keterangan",null,requestKeterangan));
+                Log.d("asetapix", String.valueOf(requestKeterangan));
             }
 
 

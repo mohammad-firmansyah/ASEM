@@ -35,10 +35,8 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/tvKirim"
             android:gravity="center"
-            android:paddingTop="10dp"
-            android:paddingBottom="20dp"
-            android:paddingHorizontal="60dp"
-            android:text="DATA AKAN DIKIRIM KE POSISI SELANJUTNYA,YAKIN MENYETUJUI DATA?">
+            android:paddingHorizontal="30dp"
+            android:text="">
         </TextView>
 
         <LinearLayout
@@ -89,7 +87,7 @@
                 android:layout_gravity="center"
                 android:id="@+id/btnYaKirim"
                 android:gravity="center"
-                android:text="KIRIM"
+                android:text="YA"
                 android:textStyle="bold"
                 android:textColor="@color/main_grey"
                 android:textSize="14sp"

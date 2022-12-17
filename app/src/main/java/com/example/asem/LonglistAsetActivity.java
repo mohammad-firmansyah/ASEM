@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.Manifest;
 import android.app.Activity;
@@ -63,6 +64,7 @@ public class LonglistAsetActivity extends AppCompatActivity  { //implements Bott
     Button btnFilter;
     FloatingActionButton fab;
     RecyclerView rcAset;
+    SwipeRefreshLayout srlonglist;
 
     Integer unit_id;
 
@@ -84,6 +86,8 @@ public class LonglistAsetActivity extends AppCompatActivity  { //implements Bott
         rcAset.setHasFixedSize(true);
         rcAset.setLayoutManager(new LinearLayoutManager(this));
         fab = findViewById(R.id.addAset);
+        srlonglist = findViewById(R.id.srlonglist);
+
         sharedPreferences = getSharedPreferences(PREF_LOGIN, MODE_PRIVATE);
         String hak_akses_id = sharedPreferences.getString("hak_akses_id", "-");
         if (hak_akses_id.equals("7")){
@@ -131,6 +135,13 @@ public class LonglistAsetActivity extends AppCompatActivity  { //implements Bott
         allData = new Data[]{};
         AsetAdapter adapter = new AsetAdapter(allData,LonglistAsetActivity.this);
         rcAset.setAdapter(adapter);
+
+        srlonglist.setOnRefreshListener(() ->{
+            srlonglist.setRefreshing(false);
+            Intent intent = new Intent(LonglistAsetActivity.this, LonglistAsetActivity.class);
+            startActivity(intent);
+            finish();
+        });
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottomnav);
 
