@@ -135,9 +135,19 @@ public class MainActivity extends AppCompatActivity {
                             editor.putString("hak_akses_id", String.valueOf(login.getHakAksesId()));
                             editor.putString("unit_desc", String.valueOf(login.getUnitDesc()));
                             editor.putString("hak_akses_desc", String.valueOf(login.getHakAksesDesc()));
+
                             editor.putString("sub_unit_desc", String.valueOf(login.getSubUnitDesc()));
                             editor.putString("afdeling_desc", String.valueOf(login.getAfdelingDesc()));
-                            //Log.d("logapix","masuk : "+sub_unit);
+
+                            editor.putString("sub_unit_id", String.valueOf(login.getSubUnitId()));
+                            if (login.getSubUnitId() == 2) {
+
+                                editor.putString("afdeling_id", String.valueOf(login.getAfdelingId()));
+                            }  else  {
+
+                                editor.putString("afdeling_id", String.valueOf(0));
+                            }
+
                             editor.putBoolean("onSyncDone", false); // saat login awal dia kondisi belum sync
                             editor.apply();
                             //startActivity(new Intent(MainActivity.this, LonglistAsetActivity.class));

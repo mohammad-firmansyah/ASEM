@@ -31,6 +31,7 @@ import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Handler;
 import android.os.Looper;
 import android.provider.MediaStore;
 import android.provider.Settings;
@@ -828,7 +829,12 @@ public class UpdateAsetActivity extends AppCompatActivity {
 
             @Override
             public void onResponse(Call<AsetModel> call, Response<AsetModel> response) {
-                dialog.dismiss();
+                Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    public void run() {
+                        dialog.dismiss();
+                    }
+                }, 1500);
                 if (!response.isSuccessful() && response.body() == null){
                     Toast.makeText(getApplicationContext(),String.valueOf(response.code()),Toast.LENGTH_LONG).show();
                     return;
@@ -915,9 +921,13 @@ public class UpdateAsetActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<AsetModel> call, Throwable t) {
-                dialog.dismiss();
-                Log.d("asetapix",t.getMessage());
-                finish();
+                Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    public void run() {
+                        dialog.dismiss();
+                    }
+                }, 1500);
+                Toast.makeText(getApplicationContext(),t.getMessage(),Toast.LENGTH_LONG).show();
             }
 
         }

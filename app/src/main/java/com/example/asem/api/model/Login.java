@@ -41,10 +41,17 @@ public class Login {
         @SerializedName("unit_desc")
         @Expose
         private String unitDesc;
+        @SerializedName("sub_unit_id")
+        @Expose
+        private Integer subUnitId;
+        @SerializedName("afdeling_id")
+        @Expose
+        private Integer afdelingId;
 
         @SerializedName("hak_akses_desc")
         @Expose
         private String hakAksesDesc;
+
 
         @SerializedName("sub_unit_desc")
         @Expose
@@ -68,6 +75,22 @@ public class Login {
 
     public void setAfdelingDesc(String afdelingDesc) {
         this.afdelingDesc = afdelingDesc;
+
+    public Integer getSubUnitId() {
+        return subUnitId;
+    }
+
+    public void setSubUnitId(Integer subUnitId) {
+        this.subUnitId = subUnitId;
+    }
+
+    public Integer getAfdelingId() {
+        return afdelingId;
+    }
+
+    public void setAfdelingId(Integer afdelingId) {
+        this.afdelingId = afdelingId;
+
     }
 
     public String getHakAksesDesc() {
