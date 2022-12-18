@@ -121,6 +121,8 @@ public class MainActivity extends AppCompatActivity {
                             String user_id = sharedPreferences.getString("user_id", "-");
                             String hak_akses_id = sharedPreferences.getString("hak_akses_id", "-");
                             String unit_id = sharedPreferences.getString("unit_id", "-");
+                            String sub_unit = sharedPreferences.getString("sub_unit_id", "-");
+                            String afdeling_id = sharedPreferences.getString("afdeling_id", "-");
 
                             editor.putString("username", username);
                             editor.putString("user_nip", String.valueOf(login.getUserNip()));
@@ -133,6 +135,9 @@ public class MainActivity extends AppCompatActivity {
                             editor.putString("hak_akses_id", String.valueOf(login.getHakAksesId()));
                             editor.putString("unit_desc", String.valueOf(login.getUnitDesc()));
                             editor.putString("hak_akses_desc", String.valueOf(login.getHakAksesDesc()));
+                            editor.putString("sub_unit_desc", String.valueOf(login.getSubUnitDesc()));
+                            editor.putString("afdeling_desc", String.valueOf(login.getAfdelingDesc()));
+                            //Log.d("logapix","masuk : "+sub_unit);
                             editor.putBoolean("onSyncDone", false); // saat login awal dia kondisi belum sync
                             editor.apply();
                             //startActivity(new Intent(MainActivity.this, LonglistAsetActivity.class));

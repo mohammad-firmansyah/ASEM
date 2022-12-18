@@ -1747,52 +1747,69 @@ public class AddAsetActivity extends AppCompatActivity {
             return;
         }
 //
-        if (spinnerAsetKondisi.getSelectedItemId() != 3) {
-
-            if (img1 == null || img2 == null || img3 == null || img4 == null) {
-                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
-                        this);
-
-                // set title dialog
-                alertDialogBuilder.setTitle("Error!");
-
-                // set pesan dari dialog
-
-            alertDialogBuilder
-                    .setMessage("Semua Gambar harus di isi!")
-                    .setCancelable(false)
-                    .setPositiveButton("Ok",new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog,int id) {
-                            // jika tombol diklik, maka akan menutup activity ini
-                            dialog.cancel();
-                        }
-                    });
-
-
-            // membuat alert dialog dari builder
-            AlertDialog alertDialog = alertDialogBuilder.create();
-
-            // menampilkan alert dialog
-            alertDialog.show();
-            dialog.dismiss();
+        if (spinnerJenisAset.getSelectedItemId() == 2) {
+            if (Integer.parseInt(inpPersenKondisi.getText().toString()) > 100 || Integer.parseInt(inpPersenKondisi.getText().toString()) < 0) {
+                dialog.dismiss();
+                inpPersenKondisi.setError("Isian Persen Kondisi Wajib Minimal 0 Maksimal 100");
+                inpPersenKondisi.requestFocus();
                 return;
+            }
+        }
 
-        }
-        }
+//        if (spinnerAsetKondisi.getSelectedItemId() != 3){
+//            if(url1 == null)
+//        }
+//        if (spinnerAsetKondisi.getSelectedItemId() != 3) {
+
+//            if (img1 == null || img2 == null || img3 == null || img4 == null) {
+//                String url1;
+//                Log.d("asetapix", "ini image"+);
+//
+//                Toast.makeText(AddAsetActivity.this,"Semua Foto Wajib Diisi", Toast.LENGTH_SHORT).show();
+//
+//                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
+//                        this);
+//
+//                // set title dialog
+//                alertDialogBuilder.setTitle("Error!");
+//
+//                // set pesan dari dialog
+//
+//            alertDialogBuilder
+//                    .setMessage("Semua Gambar harus di isi!")
+//                    .setCancelable(false)
+//                    .setPositiveButton("Ok",new DialogInterface.OnClickListener() {
+//                        public void onClick(DialogInterface dialog,int id) {
+//                            // jika tombol diklik, maka akan menutup activity ini
+//                            dialog.cancel();
+//                        }
+//                    });
+//
+//
+//            // membuat alert dialog dari builder
+//            AlertDialog alertDialog = alertDialogBuilder.create();
+//
+//            // menampilkan alert dialog
+//            alertDialog.show();
+//            dialog.dismiss();
+//                return;
+//
+//        }
+//        }
 //
 //        if(spinnerTipeAset.getSelectedItemId() != 0 || spinnerAsetKondisi.getSelectedItemId() != 2 || spinnerAsetKondisi.getSelectedItemId() != 3) {
 //
-//            if (inpNomorBAST.getText().toString().equals("")) {
-//                inpNomorBAST.setError("Nomor Bast harus diisi");
-//                inpNomorBAST.requestFocus();
-//                dialog.dismiss();
-//                return;
-//            }
+            if (inpNomorBAST.getText().toString().equals("")) {
+                inpNomorBAST.setError("Nomor Bast harus diisi");
+                inpNomorBAST.requestFocus();
+                dialog.dismiss();
+                return;
+            }
 //        }
 ////
 //
         if (inpNilaiAsetSAP.getText().toString().equals("")) {
-            inpNilaiAsetSAP.setError("Nilai Aset harus diisi");
+            inpNilaiAsetSAP.setError("Nilai Perolehan Aset harus diisi");
             inpNilaiAsetSAP.requestFocus();
             dialog.dismiss();
             return;
@@ -1820,15 +1837,15 @@ public class AddAsetActivity extends AppCompatActivity {
         }
 
 
-//        if (spinnerJenisAset.getSelectedItemId() == 1 ) {
-//
-//            if (inpJumlahPohon.getText().toString().equals("")) {
-//                inpJumlahPohon.setError("Jumlah Pohon harus diisi");
-//                inpJumlahPohon.requestFocus();
-//                dialog.dismiss();
-//                return;
-//            }
-//        }
+        if (spinnerJenisAset.getSelectedItemId() == 1 || spinnerJenisAset.getSelectedItemId() == 3 ) {
+
+            if (inpJumlahPohon.getText().toString().equals("")) {
+                inpJumlahPohon.setError("Jumlah Pohon harus diisi");
+                inpJumlahPohon.requestFocus();
+                dialog.dismiss();
+                return;
+            }
+        }
 
 
 

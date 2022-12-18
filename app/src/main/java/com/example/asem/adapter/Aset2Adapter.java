@@ -63,6 +63,7 @@ public class Aset2Adapter  extends RecyclerView.Adapter<Aset2Adapter.ViewHolder>
     private AsetInterface asetInterface;
     Dialog customDialogBelumApprove;
     Dialog customDialogCekDataReject;
+    Dialog customDialogDeleteData;
     FloatingActionButton fab;
     List<Data2> myAsetData;
     Context context;
@@ -121,43 +122,57 @@ public class Aset2Adapter  extends RecyclerView.Adapter<Aset2Adapter.ViewHolder>
             holder.bgCardView.setBackgroundResource(R.color.white);
         }
 
-
         holder.btnHapus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                AsetInterface asetInterface;
-                Retrofit retrofit = new Retrofit.Builder()
-                        .baseUrl("http://202.148.9.226:7710/mnj_aset_repo/public/api/")
-                        .addConverterFactory(GsonConverterFactory.create())
-                        .build();
 
-                asetInterface = retrofit.create(AsetInterface.class);
-                Call<DeleteModel> call = asetInterface.deleteReport(myPostData2.getAsetId());
+                final Dialog dialog =new Dialog(context);
+//                dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                dialog.setCanceledOnTouchOutside(false);
+                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(0));
+                dialog.setContentView(R.layout.dialog_delete);
+                dialog.show();
+                Button cancel = dialog.findViewById(R.id.btnTidakKirim);
+                Button ya = dialog.findViewById(R.id.btnYaKirim);
 
-                call.enqueue(new Callback<DeleteModel>(){
+                cancel.setOnClickListener(v -> {dialog.dismiss();});
 
+                ya.setOnClickListener(new View.OnClickListener() {
                     @Override
-                    public void onResponse(Call<DeleteModel> call, Response<DeleteModel> response) {
-                        if (response.isSuccessful() && response.body() != null){
-                            context.startActivity(new Intent(context,LonglistAsetActivity.class));
-                            Toast.makeText(context.getApplicationContext(),"aset terhapus",Toast.LENGTH_LONG).show();
-                            return;
-                        }
+                    public void onClick(View v) {
+                        AsetInterface asetInterface;
+                        Retrofit retrofit = new Retrofit.Builder()
+                                .baseUrl("http://202.148.9.226:7710/mnj_aset_repo/public/api/")
+                                .addConverterFactory(GsonConverterFactory.create())
+                                .build();
 
-                        Toast.makeText(context.getApplicationContext(),"error data tidak dapat dimasukan",Toast.LENGTH_LONG).show();
-                    }
+                        asetInterface = retrofit.create(AsetInterface.class);
+                        Call<DeleteModel> call = asetInterface.deleteReport(myPostData2.getAsetId());
 
-                    @Override
-                    public void onFailure(Call<DeleteModel> call, Throwable t) {
-                        Log.d("asetapix", "onError : "+t.getMessage());
-                        Log.d("asetapix",String.valueOf(call.request().body()));
-                        Log.d("asetapix",String.valueOf(call.request().url()));
-                        Log.d("asetapix",String.valueOf(call.request().method()));
-                        Toast.makeText(context.getApplicationContext(),"error " + t.getMessage(),Toast.LENGTH_LONG).show();
+                        call.enqueue(new Callback<DeleteModel>(){
+
+                            @Override
+                            public void onResponse(Call<DeleteModel> call, Response<DeleteModel> response) {
+                                if (response.isSuccessful() && response.body() != null){
+                                    context.startActivity(new Intent(context,LonglistAsetActivity.class));
+                                    Toast.makeText(context.getApplicationContext(),"aset terhapus",Toast.LENGTH_LONG).show();
+                                    return;
+                                }
+
+                                Toast.makeText(context.getApplicationContext(),"error data tidak dapat dimasukan",Toast.LENGTH_LONG).show();
+                            }
+
+                            @Override
+                            public void onFailure(Call<DeleteModel> call, Throwable t) {
+                                Log.d("asetapix", "onError : "+t.getMessage());
+                                Log.d("asetapix",String.valueOf(call.request().body()));
+                                Log.d("asetapix",String.valueOf(call.request().url()));
+                                Log.d("asetapix",String.valueOf(call.request().method()));
+                                Toast.makeText(context.getApplicationContext(),"error " + t.getMessage(),Toast.LENGTH_LONG).show();
+                            }
+                        });
                     }
                 });
-
-
             }
         });
         holder.btnDetail.setOnClickListener(new View.OnClickListener() {
@@ -385,6 +400,10 @@ public class Aset2Adapter  extends RecyclerView.Adapter<Aset2Adapter.ViewHolder>
             @Override
             public void onClick(View v) { customDialogCekDataReject.dismiss(); }
         });
+    }
+
+    void initDataDelete(){
+
     }
 
     @Override

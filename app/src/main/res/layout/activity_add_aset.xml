@@ -242,7 +242,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
-                android:text="UPLOUD BA :"
+                android:text="UPLOAD BA :"
                 android:textColor="@color/main_grey"
                 android:textSize="14sp"
                 android:textStyle="bold" />
@@ -279,7 +279,7 @@
                     android:backgroundTint="@color/BlueDark"
                     android:onClick="uploadImage"
                     android:spinnerMode="dropdown"
-                    android:text="UPLOUD"
+                    android:text="UPLOAD"
                     android:textColor="@color/white"
                     android:textSize="10sp"
                     tools:ignore="HardcodedText"/>

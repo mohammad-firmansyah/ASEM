@@ -46,7 +46,31 @@ public class Login {
         @Expose
         private String hakAksesDesc;
 
-        public String getHakAksesDesc() {
+        @SerializedName("sub_unit_desc")
+        @Expose
+        private String subUnitDesc;
+
+        @SerializedName("afdeling_desc")
+        @Expose
+        private String afdelingDesc;
+
+        public String getSubUnitDesc() {
+            return subUnitDesc;
+        }
+
+        public void setSubUnitDesc(String subUnitDesc) {
+            this.subUnitDesc = subUnitDesc;
+        }
+
+    public String getAfdelingDesc() {
+        return afdelingDesc;
+    }
+
+    public void setAfdelingDesc(String afdelingDesc) {
+        this.afdelingDesc = afdelingDesc;
+    }
+
+    public String getHakAksesDesc() {
             return hakAksesDesc;
         }
 
