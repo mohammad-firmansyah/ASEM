@@ -17,6 +17,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Handler;
 import android.provider.MediaStore;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -65,6 +66,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
+import java.util.concurrent.TimeUnit;
 
 //import butterknife.BindView;
 import okhttp3.MediaType;
@@ -720,11 +722,18 @@ public class DetailAsetActivity extends AppCompatActivity {
 
             @Override
             public void onResponse(Call<AsetModel> call, Response<AsetModel> response) {
-                dialog.dismiss();
+                Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    public void run() {
+                        dialog.dismiss();
+                    }
+                }, 1500);
+
                 if (!response.isSuccessful() && response.body().getData() == null){
                     Toast.makeText(getApplicationContext(),String.valueOf(response.code()),Toast.LENGTH_LONG).show();
                     return;
                 }
+
 
 
 //                aset = response.body().getData();
@@ -825,9 +834,13 @@ public class DetailAsetActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<AsetModel> call, Throwable t) {
-                dialog.dismiss();
-                Log.d("asetapix",t.getMessage());
-                finish();
+                Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    public void run() {
+                        dialog.dismiss();
+                    }
+                }, 1500);
+                Toast.makeText(getApplicationContext(),t.getMessage(),Toast.LENGTH_LONG).show();
             }
         });
 

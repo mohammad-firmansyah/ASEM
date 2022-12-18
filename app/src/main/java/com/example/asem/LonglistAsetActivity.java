@@ -66,7 +66,7 @@ public class LonglistAsetActivity extends AppCompatActivity  { //implements Bott
     RecyclerView rcAset;
     SwipeRefreshLayout srlonglist;
 
-    Integer unit_id;
+    Integer user_id;
 
     public static String baseUrl = "http://202.148.9.226:7710/mnj_aset_repo/public/api/";
     private AsetInterface asetInterface;
@@ -96,7 +96,7 @@ public class LonglistAsetActivity extends AppCompatActivity  { //implements Bott
             fab.setVisibility(View.GONE);
         }
 
-        unit_id = Integer.parseInt(sharedPreferences.getString("unit_id", "-"));
+        user_id = Integer.parseInt(sharedPreferences.getString("user_id", "0"));
 
 
         //fab.setBackgroundTintList(ColorStateList.valueOf(Color.rgb(10, 50, 50)));
@@ -173,7 +173,7 @@ public class LonglistAsetActivity extends AppCompatActivity  { //implements Bott
 
     private void getAllAset(){
         dialog.show();
-        Call<List<Data2>> call = asetInterface.getAllAset(unit_id);
+        Call<List<Data2>> call = asetInterface.getAllAset(user_id);
         call.enqueue(new Callback<List<Data2>>() {
             @Override
             public void onResponse(Call<List<Data2>> call, Response<List<Data2>> response) {
@@ -184,22 +184,6 @@ public class LonglistAsetActivity extends AppCompatActivity  { //implements Bott
                 }
 
                 List<Data2> datas = response.body();
-//
-//                Data2 allData [] = {};
-//                for (int i = 0; i <= datas.size(); i++) {
-//                    allData[i] = datas.get(i);
-////                    Log.d("asetapix","h");
-//                }
-
-
-//                Data[] allData2 = new Data[]{
-//                        new Data(1,23,"dsa",1,1,1,1,1,21212,"fotoaset1","fotoaset2","fotoaset3","foto4","geo2","geo3","geo4","geotag4",12000,"12/12/12 00:00:00","12/12/12 00:00:00",120000,210000,"212212","2","keterangan","foorqr","112121","asdasd",1,1,1,21, "12/12/12 00:00:00","12/12/12 00:00:00","dssdja",22),
-//                        new Data(2,22,"as",1,1,1,1,1,21212,"fotoaset1","fotoaset2","fotoaset3","foto4","geo2","geo3","geo4","geotag4",12000,"12/12/12 00:00:00","12/12/12 00:00:00",120000,210000,"212212","2","keterangan","foorqr","112121","asdasd",1,1,1,21, "12/12/12 00:00:00","12/12/12 00:00:00","dssdja",22),
-//                        new Data(3,21,"dsasa",1,1,1,1,1,21212,"fotoaset1","fotoaset2","fotoaset3","foto4","geo2","geo3","geo4","geotag4",12000,"12/12/12 00:00:00","12/12/12 00:00:00",120000,210000,"212212","2","keterangan","foorqr","112121","asdasd",1,1,1,21, "12/12/12 00:00:00","12/12/12 00:00:00","dssdja",22),
-//                        new Data(4,24,"dsasa",1,1,1,1,1,21212,"fotoaset1","fotoaset2","fotoaset3","foto4","geo2","geo3","geo4","geotag4",12000,"12/12/12 00:00:00","12/12/12 00:00:00",120000,210000,"212212","2","keterangan","foorqr","112121","asdasd",1,1,1,21, "12/12/12 00:00:00","12/12/12 00:00:00","dssdja",22),
-//                        new Data(5,26,"dsasa",1,1,1,1,1,21212,"fotoaset1","fotoaset2","fotoaset3","foto4","geo2","geo3","geo4","geotag4",12000,"12/12/12 00:00:00","12/12/12 00:00:00",120000,210000,"212212","2","keterangan","foorqr","112121","asdasd",1,1,1,21, "12/12/12 00:00:00","12/12/12 00:00:00","dssdja",22),
-//                        new Data(6,27,"dsasa",1,1,1,1,1,21212,"fotoaset1","fotoaset2","fotoaset3","foto4","geo2","geo3","geo4","geotag4",12000,"12/12/12 00:00:00","12/12/12 00:00:00",120000,210000,"212212","2","keterangan","foorqr","112121","asdasd",1,1,1,21, "12/12/12 00:00:00","12/12/12 00:00:00","dssdja",22)
-//                };
                 Aset2Adapter adapter = new Aset2Adapter(datas,LonglistAsetActivity.this);
                 rcAset.setAdapter(adapter);
             }
