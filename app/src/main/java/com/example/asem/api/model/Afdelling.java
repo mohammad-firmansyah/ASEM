@@ -3,7 +3,7 @@ package com.example.asem.api.model;
 import com.google.gson.annotations.SerializedName;
 
 public class Afdelling {
-    @SerializedName("afdelling_id")
+    @SerializedName("afdeling_id")
     private int afdeling_id;
     @SerializedName("afdeling_desc")
     private String afdeling_desc;

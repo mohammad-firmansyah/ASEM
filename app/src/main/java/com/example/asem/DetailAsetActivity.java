@@ -60,8 +60,10 @@ import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.Objects;
 
 //import butterknife.BindView;
@@ -82,6 +84,7 @@ public class DetailAsetActivity extends AppCompatActivity {
     String url2 = "";
     String url3 = "";
     String url4 = "";
+    Map<Integer, Integer> mapAfdelingSpinner = new HashMap<Integer, Integer>();
     File asetqrfoto;
     DataAllSpinner allSpinner;
     ActivityResultLauncher<Intent> activityCaptureFoto1 =
@@ -153,6 +156,7 @@ public class DetailAsetActivity extends AppCompatActivity {
     TextView tvUploudBA;
     AsetModel asetModel;
     File source;
+
     private AsetInterface asetInterface;
     Spinner spinnerTipeAset;
     Spinner spinnerJenisAset;
@@ -330,8 +334,8 @@ public class DetailAsetActivity extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 spinnerIdSubUnit = String.valueOf(position);
                 editVisibilityDynamic();
-                setAfdelingAdapter();
                 setValueInput();
+                setAfdelingAdapter();
             }
 
             @Override
@@ -705,18 +709,22 @@ public class DetailAsetActivity extends AppCompatActivity {
         });
     }
     private void setValueInput(){
+
+
+
+
         Call<AsetModel> call = asetInterface.getAset(id);
+
+
         call.enqueue(new Callback<AsetModel>() {
 
             @Override
             public void onResponse(Call<AsetModel> call, Response<AsetModel> response) {
                 dialog.dismiss();
-                if (!response.isSuccessful()){
+                if (!response.isSuccessful() && response.body().getData() == null){
                     Toast.makeText(getApplicationContext(),String.valueOf(response.code()),Toast.LENGTH_LONG).show();
-                    finish();
                     return;
                 }
-
 
 
 //                aset = response.body().getData();
@@ -749,7 +757,6 @@ public class DetailAsetActivity extends AppCompatActivity {
                 String qrurl = baseUrlImg+"/"+response.body().getData().getFotoQr();
                 if (response.body().getData().getFotoAsetQr() != null) {
                     qrDefault.getLayoutParams().height = 346;
-                    Log.d("asetapix","qrurl "+qrurl);
                     Picasso.get().load(qrurl).resize(400,400).centerCrop().into(qrDefault);
                 }
 
@@ -797,108 +804,21 @@ public class DetailAsetActivity extends AppCompatActivity {
                 spinnerSubUnit.setSelection(response.body().getData().getAsetSubUnit()-1);
 
                 spinnerKodeAset.setSelection(response.body().getData().getAsetKode()-1);
-                if (response.body().getData().getAfdelingId() != null) {
-                    spinnerAfdeling.setSelection(response.body().getData().getAfdelingId()-1);
+                try {
+
+                    if (response.body().getData().getAfdelingId() != null) {
+
+                        spinnerAfdeling.setSelection(mapAfdelingSpinner.get(response.body().getData().getAfdelingId()));
+
+                    }
+                } catch (Exception e){
                 }
 
 
                 checkApproved();
                 checkQrCode();
-//                Log.d("asetapix", spinnerJenisAset.getSelectedItem().toString());
-//                if (spinnerJenisAset.getSelectedItem().toString() == "tanaman" && spinnerAsetKondisi.getSelectedItem().toString() == "normal") {
-//                    listBtnMap.setVisibility(View.VISIBLE);
-//                    inpJumlahPohon.setVisibility(View.VISIBLE);
-//
-//                    tvUploudBA.setVisibility(View.GONE);
-//                    inpBtnMap.setVisibility(View.GONE);
-//                    btnFile.setVisibility(View.GONE);
-//
-//                }
-//
-//                if (spinnerJenisAset.getSelectedItem().toString() == "tanaman" && spinnerAsetKondisi.getSelectedItem().toString() == "rusak") {
-//                    listBtnMap.setVisibility(View.VISIBLE);
-//                    inpJumlahPohon.setVisibility(View.VISIBLE);
-//                    tvUploudBA.setVisibility(View.VISIBLE);
-//                    btnFile.setVisibility(View.VISIBLE);
-//
-//                    inpBtnMap.setVisibility(View.GONE);
-//
-//                }
-//
-//
-//                if (spinnerJenisAset.getSelectedItem().toString() == "tanaman" && spinnerAsetKondisi.getSelectedItem().toString() == "hilang") {
-//                    tvUploudBA.setVisibility(View.VISIBLE);
-//                    btnFile.setVisibility(View.VISIBLE);
-//
-//                    inpJumlahPohon.setVisibility(View.GONE);
-//                    listBtnMap.setVisibility(View.GONE);
-//                    inpJumlahPohon.setVisibility(View.GONE);
-//                    inpBtnMap.setVisibility(View.GONE);
-//
-//                }
-//
-//                if (spinnerJenisAset.getSelectedItem().toString() == "kayu" && spinnerAsetKondisi.getSelectedItem().toString() == "normal") {
-//                    listBtnMap.setVisibility(View.VISIBLE);
-//                    inpJumlahPohon.setVisibility(View.VISIBLE);
-//
-//                    tvUploudBA.setVisibility(View.GONE);
-//                    inpBtnMap.setVisibility(View.GONE);
-//                    btnFile.setVisibility(View.GONE);
-//
-//                }
-//
-//                if (spinnerJenisAset.getSelectedItem().toString() == "kayu" && spinnerAsetKondisi.getSelectedItem().toString() == "rusak") {
-//                    listBtnMap.setVisibility(View.VISIBLE);
-//                    inpJumlahPohon.setVisibility(View.VISIBLE);
-//                    tvUploudBA.setVisibility(View.VISIBLE);
-//                    btnFile.setVisibility(View.VISIBLE);
-//
-//                    inpBtnMap.setVisibility(View.GONE);
-//
-//                }
-//
-//                if (spinnerJenisAset.getSelectedItem().toString() == "kayu" && spinnerAsetKondisi.getSelectedItem().toString() == "hilang") {
-//                    tvUploudBA.setVisibility(View.VISIBLE);
-//                    btnFile.setVisibility(View.VISIBLE);
-//
-//                    inpJumlahPohon.setVisibility(View.GONE);
-//                    listBtnMap.setVisibility(View.GONE);
-//                    inpJumlahPohon.setVisibility(View.GONE);
-//                    inpBtnMap.setVisibility(View.GONE);
-//
-//                }
-//
-//                if (spinnerJenisAset.getSelectedItem().toString() == "non-tanaman" && spinnerAsetKondisi.getSelectedItem().toString() == "normal") {
-//                    inpBtnMap.setVisibility(View.VISIBLE);
-//
-//                    listBtnMap.setVisibility(View.GONE);
-//                    inpJumlahPohon.setVisibility(View.GONE);
-//                    tvUploudBA.setVisibility(View.GONE);
-//                    btnFile.setVisibility(View.GONE);
-//
-//                }
-//
-//                if (spinnerJenisAset.getSelectedItem().toString() == "non-tanaman" && spinnerAsetKondisi.getSelectedItem().toString() == "rusak") {
-//                    listBtnMap.setVisibility(View.VISIBLE);
-//                    tvUploudBA.setVisibility(View.VISIBLE);
-//                    btnFile.setVisibility(View.VISIBLE);
-//
-//                    inpJumlahPohon.setVisibility(View.GONE);
-//                    inpBtnMap.setVisibility(View.GONE);
-//
-//                }
-//
-//                if (spinnerJenisAset.getSelectedItem().toString() == "non-tanaman" && spinnerAsetKondisi.getSelectedItem().toString() == "hilang") {
-//                    tvUploudBA.setVisibility(View.VISIBLE);
-//                    btnFile.setVisibility(View.VISIBLE);
-//
-//                    inpJumlahPohon.setVisibility(View.GONE);
-//                    listBtnMap.setVisibility(View.GONE);
-//                    inpJumlahPohon.setVisibility(View.GONE);
-//                    inpBtnMap.setVisibility(View.GONE);
-//
-//                }
                 editVisibilityDynamic();
+
 
 
             }
@@ -910,6 +830,7 @@ public class DetailAsetActivity extends AppCompatActivity {
                 finish();
             }
         });
+
     }
 
     private void captureFotoQcLoses(String imageName, ActivityResultLauncher<Intent> activityLauncherName){
@@ -1412,6 +1333,7 @@ public class DetailAsetActivity extends AppCompatActivity {
         call.enqueue(new Callback<AllSpinner>() {
             @Override
             public void onResponse(Call<AllSpinner> call, Response<AllSpinner> response) {
+
                 if (!response.isSuccessful() && response.body().getData() == null) {
                     Toast.makeText(getApplicationContext(),response.code(),Toast.LENGTH_LONG).show();
                     return;
@@ -1462,6 +1384,10 @@ public class DetailAsetActivity extends AppCompatActivity {
                 for (Afdelling at : dataAllSpinner.getAfdeling()){
                     listSpinnerUnit.add(at.getAfdelling_desc());
                 }
+
+                setAfdelingAdapter();
+
+
 
 
                 // set adapter tipe
@@ -1684,9 +1610,12 @@ public class DetailAsetActivity extends AppCompatActivity {
     public void setAfdelingAdapter(){
         List<String> afdelings = new ArrayList<>();
         afdelings.add("pilih afdeling");
+        Integer i = 1;
         for (Afdelling a:afdeling) {
             if (a.getUnit_id() == (spinnerUnit.getSelectedItemId()+1)) {
                 afdelings.add(a.getAfdelling_desc());
+                mapAfdelingSpinner.put(a.getAfdelling_id(),i);
+                i++;
             }
         }
 

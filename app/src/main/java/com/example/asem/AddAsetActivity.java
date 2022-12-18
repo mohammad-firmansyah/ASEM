@@ -93,8 +93,10 @@ import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.Objects;
 
 import okhttp3.MediaType;
@@ -182,6 +184,7 @@ public class AddAsetActivity extends AppCompatActivity {
     ImageView fotoimg4;
 
 
+    Map<String, Integer> mapAfdeling = new HashMap();
     String photoname1 = "foto1.png";
     String photoname2 = "foto2.png";
     String photoname3 = "foto3.png";
@@ -782,7 +785,6 @@ public class AddAsetActivity extends AppCompatActivity {
         customDialogAddAset.getWindow().setBackgroundDrawable(new ColorDrawable(0));
         btnYaKirim = customDialogAddAset.findViewById(R.id.btnYaKirim);
         btnTidakKirim = customDialogAddAset.findViewById(R.id.btnTidakKirim);
-        //Toast.makeText(UpdateAsetActivity.this,"masuk", Toast.LENGTH_SHORT).show();
         customDialogAddAset.show();
 
         btnYaKirim.setOnClickListener(new View.OnClickListener() {
@@ -1868,8 +1870,8 @@ public class AddAsetActivity extends AppCompatActivity {
 
             RequestBody requestSubUnit = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(spinnerIdSubUnit));
             RequestBody requestUnit = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(Integer.parseInt(spinnerIdUnit)+1));
-            RequestBody requestAfdeling = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(spinnerIdAfdeling));
-            Log.d("asetapix","nomor bast :"+ String.valueOf(nomor_bast));
+            RequestBody requestAfdeling = RequestBody.create(MediaType.parse("text/plain"), String.valueOf((mapAfdeling.get(spinnerAfdeling.getSelectedItem().toString().trim()))));
+            Log.d("amanat13","nomor bast :"+ String.valueOf(mapAfdeling.get(spinnerAfdeling.getSelectedItem().toString().trim())));
 
 
 
@@ -1902,7 +1904,6 @@ public class AddAsetActivity extends AppCompatActivity {
             if (spinnerJenisAset.getSelectedItemId() == 1 || spinnerJenisAset.getSelectedItemId() == 3)  {
                 RequestBody requestJumlahPohon = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(inpJumlahPohon.getText().toString()));
                 builder.addPart(MultipartBody.Part.createFormData("jumlah_pohon",null,requestJumlahPohon));
-                Log.d("asetapix", String.valueOf(requestJumlahPohon));
             }
 
             if (spinnerJenisAset.getSelectedItemId() == 2 )  {
@@ -2068,6 +2069,7 @@ public class AddAsetActivity extends AppCompatActivity {
                 // get afdeling
                 afdeling = dataAllSpinner.getAfdeling();
                 for (Afdelling at : dataAllSpinner.getAfdeling()){
+                    mapAfdeling.put(at.getAfdelling_desc(),at.getAfdelling_id());
                     listSpinnerUnit.add(at.getAfdelling_desc());
                 }
 

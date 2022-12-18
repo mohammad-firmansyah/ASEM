@@ -93,6 +93,7 @@ import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.Objects;
 
 //import butterknife.BindView;
@@ -124,7 +125,8 @@ public class UpdateAsetActivity extends AppCompatActivity {
     double longitudeValue = 0;
     double latitudeValue = 0;
     DataAllSpinner allSpinner;
-
+    Map<Integer, Integer> mapAfdelingSpinner = new HashMap<Integer, Integer>();
+    Map<Integer, Integer> mapSpinnerAfdeling = new HashMap<Integer, Integer>();
     SharedPreferences sharedPreferences;
     private static final String PREF_LOGIN = "LOGIN_PREF";
 
@@ -472,7 +474,7 @@ public class UpdateAsetActivity extends AppCompatActivity {
         spinnerSubUnit.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                spinnerIdSubUnit = String.valueOf(position);
+                spinnerIdSubUnit = String.valueOf(position+1);
                 editVisibilityDynamic();
                 setValueInput();
             }
@@ -684,7 +686,6 @@ public class UpdateAsetActivity extends AppCompatActivity {
         customDialogEditAset.getWindow().setBackgroundDrawable(new ColorDrawable(0));
         btnYaKirim = customDialogEditAset.findViewById(R.id.btnYaKirim);
         btnTidakKirim = customDialogEditAset.findViewById(R.id.btnTidakKirim);
-        //Toast.makeText(UpdateAsetActivity.this,"masuk", Toast.LENGTH_SHORT).show();
         customDialogEditAset.show();
 
         btnYaKirim.setOnClickListener(new View.OnClickListener() {
@@ -822,6 +823,7 @@ public class UpdateAsetActivity extends AppCompatActivity {
     }
     private void setValueInput(){
         Call<AsetModel> call = asetInterface.getAset(id);
+
         call.enqueue(new Callback<AsetModel>() {
 
             @Override
@@ -897,104 +899,16 @@ public class UpdateAsetActivity extends AppCompatActivity {
                 spinnerKodeAset.setSelection(response.body().getData().getAsetKode()-1);
                 spinnerSubUnit.setSelection(response.body().getData().getAsetSubUnit()-1);
 
-                if (response.body().getData().getAfdelingId() != null) {
-                    spinnerAfdeling.setSelection(response.body().getData().getAfdelingId()-1);
-                }
+                    try {
+
+                        if (response.body().getData().getAfdelingId() != null) {
+
+                            spinnerAfdeling.setSelection(mapAfdelingSpinner.get(response.body().getData().getAfdelingId()));
+
+                        }
+                    } catch (Exception e){
+                    }
                 editVisibilityDynamic();
-//                Log.d("asetapix", spinnerJenisAset.getSelectedItem().toString());
-//                if (spinnerJenisAset.getSelectedItem().toString() == "tanaman" && spinnerAsetKondisi.getSelectedItem().toString() == "normal") {
-//                    listBtnMap.setVisibility(View.VISIBLE);
-//                    inpJumlahPohon.setVisibility(View.VISIBLE);
-//
-//                    tvUploudBA.setVisibility(View.GONE);
-//                    inpBtnMap.setVisibility(View.GONE);
-//                    btnFile.setVisibility(View.GONE);
-//
-//                }
-//
-//                if (spinnerJenisAset.getSelectedItem().toString() == "tanaman" && spinnerAsetKondisi.getSelectedItem().toString() == "rusak") {
-//                    listBtnMap.setVisibility(View.VISIBLE);
-//                    inpJumlahPohon.setVisibility(View.VISIBLE);
-//                    tvUploudBA.setVisibility(View.VISIBLE);
-//                    btnFile.setVisibility(View.VISIBLE);
-//
-//                    inpBtnMap.setVisibility(View.GONE);
-//
-//                }
-//
-//
-//                if (spinnerJenisAset.getSelectedItem().toString() == "tanaman" && spinnerAsetKondisi.getSelectedItem().toString() == "hilang") {
-//                    tvUploudBA.setVisibility(View.VISIBLE);
-//                    btnFile.setVisibility(View.VISIBLE);
-//
-//                    inpJumlahPohon.setVisibility(View.GONE);
-//                    listBtnMap.setVisibility(View.GONE);
-//                    inpJumlahPohon.setVisibility(View.GONE);
-//                    inpBtnMap.setVisibility(View.GONE);
-//
-//                }
-//
-//                if (spinnerJenisAset.getSelectedItem().toString() == "kayu" && spinnerAsetKondisi.getSelectedItem().toString() == "normal") {
-//                    listBtnMap.setVisibility(View.VISIBLE);
-//                    inpJumlahPohon.setVisibility(View.VISIBLE);
-//
-//                    tvUploudBA.setVisibility(View.GONE);
-//                    inpBtnMap.setVisibility(View.GONE);
-//                    btnFile.setVisibility(View.GONE);
-//
-//                }
-//
-//                if (spinnerJenisAset.getSelectedItem().toString() == "kayu" && spinnerAsetKondisi.getSelectedItem().toString() == "rusak") {
-//                    listBtnMap.setVisibility(View.VISIBLE);
-//                    inpJumlahPohon.setVisibility(View.VISIBLE);
-//                    tvUploudBA.setVisibility(View.VISIBLE);
-//                    btnFile.setVisibility(View.VISIBLE);
-//
-//                    inpBtnMap.setVisibility(View.GONE);
-//
-//                }
-//
-//                if (spinnerJenisAset.getSelectedItem().toString() == "kayu" && spinnerAsetKondisi.getSelectedItem().toString() == "hilang") {
-//                    tvUploudBA.setVisibility(View.VISIBLE);
-//                    btnFile.setVisibility(View.VISIBLE);
-//
-//                    inpJumlahPohon.setVisibility(View.GONE);
-//                    listBtnMap.setVisibility(View.GONE);
-//                    inpJumlahPohon.setVisibility(View.GONE);
-//                    inpBtnMap.setVisibility(View.GONE);
-//
-//                }
-//
-//                if (spinnerJenisAset.getSelectedItem().toString() == "non-tanaman" && spinnerAsetKondisi.getSelectedItem().toString() == "normal") {
-//                    inpBtnMap.setVisibility(View.VISIBLE);
-//
-//                    listBtnMap.setVisibility(View.GONE);
-//                    inpJumlahPohon.setVisibility(View.GONE);
-//                    tvUploudBA.setVisibility(View.GONE);
-//                    btnFile.setVisibility(View.GONE);
-//
-//                }
-//
-//                if (spinnerJenisAset.getSelectedItem().toString() == "non-tanaman" && spinnerAsetKondisi.getSelectedItem().toString() == "rusak") {
-//                    listBtnMap.setVisibility(View.VISIBLE);
-//                    tvUploudBA.setVisibility(View.VISIBLE);
-//                    btnFile.setVisibility(View.VISIBLE);
-//
-//                    inpJumlahPohon.setVisibility(View.GONE);
-//                    inpBtnMap.setVisibility(View.GONE);
-//
-//                }
-//
-//                if (spinnerJenisAset.getSelectedItem().toString() == "non-tanaman" && spinnerAsetKondisi.getSelectedItem().toString() == "hilang") {
-//                    tvUploudBA.setVisibility(View.VISIBLE);
-//                    btnFile.setVisibility(View.VISIBLE);
-//
-//                    inpJumlahPohon.setVisibility(View.GONE);
-//                    listBtnMap.setVisibility(View.GONE);
-//                    inpJumlahPohon.setVisibility(View.GONE);
-//                    inpBtnMap.setVisibility(View.GONE);
-//
-//                }
 
 
             }
@@ -1005,8 +919,14 @@ public class UpdateAsetActivity extends AppCompatActivity {
                 Log.d("asetapix",t.getMessage());
                 finish();
             }
-        });
-    }
+
+        }
+            );
+        }
+
+
+
+
 
     private void getKodeAset(){
         Call<AsetKodeModel2> call = asetInterface.getAsetKode();
@@ -1599,7 +1519,6 @@ public class UpdateAsetActivity extends AppCompatActivity {
 
         try{
 
-            String tgl_input = inpTglInput.getText().toString().trim() + " 00:00:00";
             String nama_aset = inpNamaAset.getText().toString().trim();
             String nomor_aset_sap = inpNoSAP.getText().toString().trim();
             String luas_aset = inpLuasAset.getText().toString().trim();
@@ -1614,30 +1533,31 @@ public class UpdateAsetActivity extends AppCompatActivity {
             MultipartBody.Part partBaFile = null;
 
 
-            RequestBody requestAsetId = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(asetId));
+            RequestBody requestAsetId = RequestBody.create(MediaType.parse("text/plain"), asetId);
             RequestBody requestTipeAset = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(spinnerIdTipeAsset));
             RequestBody requestJenisAset = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(spinnerIdJenisAset));
             RequestBody requestKondisiAset = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(spinnerIdAsetKondisi));
             RequestBody requestKodeAset = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(spinnerIdKodeAset));
-            RequestBody requestNamaAset = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(nama_aset));
-            RequestBody requestNomorAsetSAP = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(nomor_aset_sap));
+            RequestBody requestNamaAset = RequestBody.create(MediaType.parse("text/plain"), nama_aset);
+            RequestBody requestNomorAsetSAP = RequestBody.create(MediaType.parse("text/plain"), nomor_aset_sap);
 
             RequestBody requestGeoTag1 = RequestBody.create(MediaType.parse("text/plain"),String.valueOf(geotag1));
             RequestBody requestGeoTag2 = RequestBody.create(MediaType.parse("text/plain"),String.valueOf(geotag2));
             RequestBody requestGeoTag3 = RequestBody.create(MediaType.parse("text/plain"),String.valueOf(geotag3));
             RequestBody requestGeoTag4 = RequestBody.create(MediaType.parse("text/plain"),String.valueOf(geotag4));
 
-            RequestBody requestLuasAset = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(luas_aset));
-            RequestBody requestNilaiAsetSAP = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(nilai_aset));
-            RequestBody requestTglOleh = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(tgl_oleh));
-            RequestBody requestTglInput = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(tgl_input));
-            RequestBody requestMasaSusut = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(masa_susut));
-            RequestBody requestNomorBAST = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(nomor_bast));
-            RequestBody requestNilaiResidu = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(nilai_residu));
-            RequestBody requestKeterangan = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(keterangan));
+            RequestBody requestLuasAset = RequestBody.create(MediaType.parse("text/plain"), luas_aset);
+            RequestBody requestNilaiAsetSAP = RequestBody.create(MediaType.parse("text/plain"), nilai_aset);
+            RequestBody requestTglOleh = RequestBody.create(MediaType.parse("text/plain"), tgl_oleh);
+            RequestBody requestMasaSusut = RequestBody.create(MediaType.parse("text/plain"), masa_susut);
+            RequestBody requestNomorBAST = RequestBody.create(MediaType.parse("text/plain"), nomor_bast);
+            RequestBody requestNilaiResidu = RequestBody.create(MediaType.parse("text/plain"), nilai_residu);
+            RequestBody requestKeterangan = RequestBody.create(MediaType.parse("text/plain"), keterangan);
             RequestBody requestSubUnit = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(spinnerIdSubUnit));
-            RequestBody requestUnit = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(spinnerIdUnit+1));
-            RequestBody requestAfdeling = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(spinnerIdAfdeling));
+            int afdelingId = (int) spinnerAfdeling.getSelectedItemId();
+            RequestBody requestAfdeling = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(mapSpinnerAfdeling.get(afdelingId)));
+            Integer unit_id = Integer.valueOf(sharedPreferences.getString("unit_id", "0"));
+            RequestBody requestUnit = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(unit_id));
             RequestBody requestJumlahPohon = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(inpJumlahPohon.getText()));
 
             MultipartBody.Builder builder = new MultipartBody.Builder();
@@ -1648,23 +1568,18 @@ public class UpdateAsetActivity extends AppCompatActivity {
             builder.addPart(MultipartBody.Part.createFormData("aset_kondisi",null,requestKondisiAset));
             builder.addPart(MultipartBody.Part.createFormData("aset_kode",null,requestKodeAset));
             builder.addPart(MultipartBody.Part.createFormData("nomor_sap",null,requestNomorAsetSAP));
-
             builder.addPart(MultipartBody.Part.createFormData("aset_luas",null,requestLuasAset));
             builder.addPart(MultipartBody.Part.createFormData("tgl_oleh",null,requestTglOleh));
-            builder.addPart(MultipartBody.Part.createFormData("tgl_input",null,requestTglInput));
             builder.addPart(MultipartBody.Part.createFormData("nilai_residu",null,requestNilaiResidu));
             builder.addPart(MultipartBody.Part.createFormData("nilai_oleh",null,requestNilaiAsetSAP));
-            builder.addPart(MultipartBody.Part.createFormData("nomor_bast",null,requestNomorBAST));
             builder.addPart(MultipartBody.Part.createFormData("masa_susut",null,requestMasaSusut));
             builder.addPart(MultipartBody.Part.createFormData("keterangan",null,requestKeterangan));
+
             builder.addPart(MultipartBody.Part.createFormData("aset_sub_unit",null,requestSubUnit));
-            builder.addPart(MultipartBody.Part.createFormData("unit_id",null,requestUnit));
-
-            if (spinnerSubUnit.getSelectedItemId() == 1) {
-                builder.addPart(MultipartBody.Part.createFormData("afdeling_id",null,requestAfdeling));
-            }
-
+            builder.addPart(MultipartBody.Part.createFormData("nomor_bast",null,requestNomorBAST));
             builder.addPart(MultipartBody.Part.createFormData("jumlah_pohon",null,requestJumlahPohon));
+            builder.addPart(MultipartBody.Part.createFormData("afdeling_id",null,requestAfdeling));
+            builder.addPart(MultipartBody.Part.createFormData("unit_id",null,requestUnit));
 
             if (bafile_file != null){
                 RequestBody requestBaFile = RequestBody.create(MediaType.parse("multipart/form-file"), bafile_file);
@@ -1768,9 +1683,13 @@ public class UpdateAsetActivity extends AppCompatActivity {
     public void setAfdelingAdapter(){
         List<String> afdelings = new ArrayList<>();
         afdelings.add("pilih afdeling");
+        Integer i = 1;
         for (Afdelling a:afdeling) {
             if (a.getUnit_id() == (spinnerUnit.getSelectedItemId()+1)) {
+                mapAfdelingSpinner.put(a.getAfdelling_id(),i);
+                mapSpinnerAfdeling.put(i,a.getAfdelling_id());
                 afdelings.add(a.getAfdelling_desc());
+                i++;
             }
         }
 
@@ -1838,6 +1757,8 @@ public class UpdateAsetActivity extends AppCompatActivity {
                 for (Afdelling at : dataAllSpinner.getAfdeling()){
                     listSpinnerUnit.add(at.getAfdelling_desc());
                 }
+
+                setAfdelingAdapter();
 
 
                 // set adapter tipe
