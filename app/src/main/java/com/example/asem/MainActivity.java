@@ -7,6 +7,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.drawable.ColorDrawable;
@@ -48,10 +49,13 @@ public class MainActivity extends AppCompatActivity {
 
     String username, user_pass;
 
+    Context context;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
 
         dialog = new Dialog(MainActivity.this,R.style.MyAlertDialogTheme);
         dialog.setContentView(R.layout.loading);
@@ -99,7 +103,7 @@ public class MainActivity extends AppCompatActivity {
             etPass.requestFocus();
         }else{
 //            startActivity(new Intent(MainActivity.this,LonglistAsetActivity.class));
-            dialog.show();
+//            dialog.show();
 
             Call<LoginModel> call = asetInterface.login(username,user_pass);    
             call.enqueue(new Callback<LoginModel>() {
@@ -125,6 +129,7 @@ public class MainActivity extends AppCompatActivity {
                             String afdeling_id = sharedPreferences.getString("afdeling_id", "-");
 
                             editor.putString("username", username);
+                            editor.putString("user_pass", user_pass);
                             editor.putString("user_nip", String.valueOf(login.getUserNip()));
                             editor.putString("user_id", String.valueOf(login.getUserId()));
                             //editor.putString("user_id", user_id);
@@ -156,26 +161,29 @@ public class MainActivity extends AppCompatActivity {
                         }else{
                             dialog.dismiss();
                             Log.d("taglogin", "onResponse: Login bre");
-                            Toast.makeText(MainActivity.this, response.body().getMessage(), Toast.LENGTH_LONG).show();}
+                            Toast.makeText(MainActivity.this, response.body().getMessage(), Toast.LENGTH_LONG).show();
+                        }
                     }else{
                         dialog.dismiss();
                         if (response.toString().contains("code=500")){
                             Toast.makeText(MainActivity.this,"Username atau Password anda salah", Toast.LENGTH_SHORT).show();
                         }else {
-                            Toast.makeText(MainActivity.this,response.toString(), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(MainActivity.this,"Username atau Password anda salah", Toast.LENGTH_SHORT).show();
+//                            Toast.makeText(MainActivity.this,response.toString(), Toast.LENGTH_SHORT).show();
                         }
                 }}
 
                 @Override
                 public void onFailure( @NonNull Call<LoginModel> call, @NonNull Throwable t) {
-                        Log.d("fail", "onFailure: "+t);
-                        Toast.makeText(MainActivity.this, "Gagal Terhubung ke Server", Toast.LENGTH_SHORT).show();
-                        Toast.makeText(MainActivity.this, "Login Error : "+t.getMessage(), Toast.LENGTH_SHORT).show();
-                        dialog.dismiss();
+                    Toast.makeText(MainActivity.this,"Username atau Password anda salah", Toast.LENGTH_SHORT).show();
+//                        Log.d("fail", "onFailure: "+t);
+//                        Toast.makeText(MainActivity.this, "Gagal Terhubung ke Server", Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(MainActivity.this, "Login Error : "+t.getMessage(), Toast.LENGTH_SHORT).show();
+                    dialog.dismiss();
                     }
             });
 
-        } dialog.dismiss();
+        } dialog.show();
     }
 
 //    public void onBackPressed(){
