@@ -1565,9 +1565,14 @@ public class UpdateAsetActivity extends AppCompatActivity {
             RequestBody requestKeterangan = RequestBody.create(MediaType.parse("text/plain"), keterangan);
             RequestBody requestSubUnit = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(spinnerIdSubUnit));
             int afdelingId = (int) spinnerAfdeling.getSelectedItemId();
-            RequestBody requestAfdeling = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(mapSpinnerAfdeling.get(afdelingId)));
-            Integer unit_id = Integer.valueOf(sharedPreferences.getString("unit_id", "0"));
-            RequestBody requestUnit = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(unit_id));
+            RequestBody requestAfdeling = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(0));
+            if (afdelingId != 0){
+                requestAfdeling = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(mapSpinnerAfdeling.get(afdelingId)));
+            } else {
+                requestAfdeling = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(0));
+
+            }
+            RequestBody requestUnit = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(Integer.parseInt(String.valueOf(spinnerUnit.getSelectedItemId())) +1));
             RequestBody requestJumlahPohon = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(inpJumlahPohon.getText()));
 
             MultipartBody.Builder builder = new MultipartBody.Builder();

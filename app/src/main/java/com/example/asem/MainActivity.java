@@ -136,10 +136,11 @@ public class MainActivity extends AppCompatActivity {
                             editor.putString("unit_desc", String.valueOf(login.getUnitDesc()));
                             editor.putString("hak_akses_desc", String.valueOf(login.getHakAksesDesc()));
 
-                            editor.putString("sub_unit_desc", String.valueOf(login.getSubUnitDesc()));
-                            editor.putString("afdeling_desc", String.valueOf(login.getAfdelingDesc()));
-
-                            editor.putString("sub_unit_id", String.valueOf(login.getSubUnitId()));
+                            if (login.getSubUnitId() != 0){
+                                editor.putString("sub_unit_id", String.valueOf(login.getSubUnitId()));
+                            } else {
+                                editor.putString("sub_unit_id", String.valueOf("0"));
+                            }
                             if (login.getSubUnitId() == 2) {
 
                                 editor.putString("afdeling_id", String.valueOf(login.getAfdelingId()));

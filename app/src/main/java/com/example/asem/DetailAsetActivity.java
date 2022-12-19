@@ -764,11 +764,11 @@ public class DetailAsetActivity extends AppCompatActivity {
                 };
 
                 String qrurl = baseUrlImg+"/"+response.body().getData().getFotoQr();
-                if (response.body().getData().getFotoAsetQr() != null) {
+                Log.d("amanat12",qrurl);
+                if (response.body().getData().getFotoQr() != null) {
                     qrDefault.getLayoutParams().height = 346;
                     Picasso.get().load(qrurl).resize(400,400).centerCrop().into(qrDefault);
                 }
-
 
                 url1 = baseUrlImg+response.body().getData().getFotoAset1();
                 url2 = baseUrlImg+response.body().getData().getFotoAset2();
@@ -861,52 +861,6 @@ public class DetailAsetActivity extends AppCompatActivity {
         activityLauncherName.launch(takePictureIntent);
     }
 
-    private void getKodeAset(){
-        Call<AsetKodeModel2> call = asetInterface.getAsetKode();
-        call.enqueue(new Callback<AsetKodeModel2>() {
-            @Override
-            public void onResponse(Call<AsetKodeModel2> call, Response<AsetKodeModel2> response) {
-                if (!response.isSuccessful()){
-                    Toast.makeText(getApplicationContext(),String.valueOf(response.code()),Toast.LENGTH_LONG).show();
-                    return;
-                }
-
-                List<AsetKode2> asetKode = response.body().getData();
-                List<String> listSpinner = new ArrayList<>();
-
-                asetKode2 = asetKode;
-
-                for ( AsetKode2 a : asetKode ){
-
-                    String aset_kode_temp = "";
-
-
-//                    aset_kode_temp = a.getAsetClass() + "/" + a.getAsetGroup() + "/" + a.getAsetDesc();
-                    if (a.getAsetJenis() == 1 ) {
-                        aset_kode_temp = a.getAsetClass() + "/" + a.getAsetDesc();
-                    } else if (a.getAsetJenis() == 2) {
-                        aset_kode_temp = a.getAsetClass() + "/" + a.getAsetGroup() + "/" + a.getAsetDesc();
-                    } else {
-                        aset_kode_temp = a.getAsetClass() + "/" + a.getAsetGroup() + "/" + a.getAsetDesc();
-                    }
-
-
-                    listSpinner.add(aset_kode_temp);
-                }
-
-                ArrayAdapter<String> adapter = new ArrayAdapter<String>(getApplicationContext(),
-                        android.R.layout.simple_spinner_item, listSpinner);
-                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                spinnerKodeAset.setAdapter(adapter);
-            }
-
-            @Override
-            public void onFailure(Call<AsetKodeModel2> call, Throwable t) {
-                Toast.makeText(getApplicationContext(),t.getMessage(),Toast.LENGTH_LONG).show();
-                return;
-            }
-        });
-    }
 
 
     public String formatrupiah(Double number){
@@ -919,99 +873,6 @@ public class DetailAsetActivity extends AppCompatActivity {
     }
 
 
-    private void getAfdeling(){
-        Call<AfdellingModel> call = asetInterface.getAfdeling();
-        call.enqueue(new Callback<AfdellingModel>() {
-            @Override
-            public void onResponse(Call<AfdellingModel> call, Response<AfdellingModel> response) {
-
-                if (!response.isSuccessful()){
-//                    Toast.makeText(getApplicationContext(),String.valueOf(response.code()),Toast.LENGTH_LONG).show();
-//                    utils.Ngetoast(getApplicationContext(),);
-                    return;
-                }
-                List<String> listSpinner = new ArrayList<>();
-                for (int i=0;i<response.body().getData().size();i++){
-                    listSpinner.add(response.body().getData().get(i).getAfdelling_desc());
-                }
-
-                // Set hasil result json ke dalam adapter spinner
-                ArrayAdapter<String> adapter = new ArrayAdapter<String>(getApplicationContext(),
-                        android.R.layout.simple_spinner_item, listSpinner);
-                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                spinnerAfdeling.setAdapter(adapter);
-            }
-
-            @Override
-            public void onFailure(Call<AfdellingModel> call, Throwable t) {
-                Toast.makeText(getApplicationContext(),t.getMessage(),Toast.LENGTH_LONG).show();
-                return;
-            }
-        });
-    }
-
-    private void getSubUnit(){
-        Call<SubUnitModel> call = asetInterface.getSubUnit();
-        call.enqueue(new Callback<SubUnitModel>() {
-            @Override
-            public void onResponse(Call<SubUnitModel> call, Response<SubUnitModel> response) {
-                if (!response.isSuccessful()){
-//                    Toast.makeText(getApplicationContext(),String.valueOf(response.code()),Toast.LENGTH_LONG).show();
-                    return;
-                }
-
-                List<SubUnit> subUnit = response.body().getData();
-                List<String> listSpinner = new ArrayList<>();
-
-                for ( SubUnit a : subUnit ){
-                    listSpinner.add(a.getSub_unit_desc());
-                }
-
-                ArrayAdapter<String> adapter = new ArrayAdapter<String>(getApplicationContext(),
-                        android.R.layout.simple_spinner_item, listSpinner);
-                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                spinnerSubUnit.setAdapter(adapter);
-            }
-
-            @Override
-            public void onFailure(Call<SubUnitModel> call, Throwable t) {
-                Toast.makeText(getApplicationContext(),t.getMessage(),Toast.LENGTH_LONG).show();
-                return;
-            }
-        });
-    }
-
-    private void getUnit(){
-        Call<UnitModel> call = asetInterface.getUnit();
-        call.enqueue(new Callback<UnitModel>() {
-            @Override
-            public void onResponse(Call<UnitModel> call, Response<UnitModel> response) {
-                if (!response.isSuccessful()){
-//                    Toast.makeText(getApplicationContext(),String.valueOf(response.code()),Toast.LENGTH_LONG).show();
-                    return;
-                }
-
-                List<Unit> unit = response.body().getData();
-                List<String> listSpinner = new ArrayList<>();
-
-
-                for ( Unit a : unit ){
-                    listSpinner.add(a.getUnit_desc());
-                }
-
-                ArrayAdapter<String> adapter = new ArrayAdapter<String>(getApplicationContext(),
-                        android.R.layout.simple_spinner_item, listSpinner);
-                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                spinnerUnit.setAdapter(adapter);
-            }
-
-            @Override
-            public void onFailure(Call<UnitModel> call, Throwable t) {
-                Toast.makeText(getApplicationContext(),t.getMessage(),Toast.LENGTH_LONG).show();
-                return;
-            }
-        });
-    }
 
     public void editVisibilityDynamic(){
         TextView tvBa = findViewById(R.id.tvBa);
@@ -1329,14 +1190,13 @@ public class DetailAsetActivity extends AppCompatActivity {
         ViewGroup ln = findViewById(R.id.qrGroup);
         ViewGroup ln2 = findViewById(R.id.uploadFotoGroup);
         Integer hak_akses_id = Integer.valueOf(sharedPreferences.getString("hak_akses_id", "0"));
-        if (statusPosisi == 5 && hak_akses_id == 7 ) {
-            ln.setVisibility(View.VISIBLE);
-            ln2.setVisibility(View.VISIBLE);
-        }
-        else {
+        ln2.setVisibility(View.VISIBLE);
+        ln.setVisibility(View.VISIBLE);
+        if (statusPosisi < 5) {
             ln.setVisibility(View.GONE);
             ln2.setVisibility(View.GONE);
         }
+
 
     }
 
@@ -1457,22 +1317,8 @@ public class DetailAsetActivity extends AppCompatActivity {
         });
 
     }
-    public void getSpinnerData(){
-        getTipeAset();
-        getKodeAset();
-        getAsetJenis();
-        getAsetKondisi();
-        getAfdeling();
-        getSubUnit();
-        getUnit();
-    }
 
     private void initCustomDialog(){
-//        Dialog customDialog = new Dialog(DetailAsetActivity.this);
-//        customDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-//        customDialog.setContentView(R.layout.dialog_approve);
-//        customDialog.setCancelable(true);
-//        customDialog.show();
 
         customDialogApprove = new Dialog(DetailAsetActivity.this,R.style.MyAlertDialogTheme);
         customDialogApprove.setContentView(R.layout.dialog_approve);
@@ -1560,8 +1406,11 @@ public class DetailAsetActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(Call<AsetApproveModel> call, Response<AsetApproveModel> response) {
                         if (response.isSuccessful() && response.body() != null) {
+                            btnYa.setEnabled(false);
                             startActivity(new Intent(DetailAsetActivity.this,LonglistAsetActivity.class));
+
                             customDialogApprove.dismiss();
+                            btnYa.setEnabled(true);
                             return;
                         } else {
                             Toast.makeText(getApplicationContext(),"Kesalahan jaringan mohon coba lagi",Toast.LENGTH_LONG).show();
