@@ -8,6 +8,7 @@ import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.DownloadManager;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
@@ -59,6 +60,8 @@ public class ReportActivity extends AppCompatActivity {
     private AsetInterface asetInterface;
     final Calendar myCalendar= Calendar.getInstance();
     Spinner spinnerTipeAset;
+    SharedPreferences sharedPreferences;
+    private static final String PREF_LOGIN = "LOGIN_PREF";
     Spinner spinnerJenisAset;
     Spinner spinnerAsetKondisi;
     Spinner spinnerKodeAset;
@@ -82,6 +85,9 @@ public class ReportActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_report);
+
+
+        sharedPreferences = ReportActivity.this.getSharedPreferences(PREF_LOGIN, MODE_PRIVATE);
 
         dialog = new Dialog(ReportActivity.this,R.style.MyAlertDialogTheme);
         dialog.setContentView(R.layout.loading);
@@ -435,6 +441,8 @@ public class ReportActivity extends AppCompatActivity {
             RequestBody requestJenisReport = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(spinnerJenisReport.getSelectedItem().toString()));
             RequestBody requestTglInput1 = RequestBody.create(MediaType.parse("text/plain"), inpTglInput1.getText()+" 00:00:00");
             RequestBody requestTglInput2 = RequestBody.create(MediaType.parse("text/plain"), inpTglInput2.getText()+" 00:00:00");
+            Integer unit_id = Integer.valueOf(sharedPreferences.getString("unit_id", "0"));
+            RequestBody requestUnit = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(unit_id));
             Log.d("asetapix",String.valueOf(spinnerJenisReport.getSelectedItem().toString()));
 
 
@@ -447,6 +455,7 @@ public class ReportActivity extends AppCompatActivity {
             builder.addPart(MultipartBody.Part.createFormData("aset_kode",null,requestKodeAset));
             builder.addPart(MultipartBody.Part.createFormData("tgl_input1",null,requestTglInput1));
             builder.addPart(MultipartBody.Part.createFormData("tgl_input2",null,requestTglInput2));
+            builder.addPart(MultipartBody.Part.createFormData("unit_id",null,requestUnit));
             Log.d("asetapix",String.valueOf(inpTglInput1.getText()));
 
             int selectedId = radioGroup.getCheckedRadioButtonId();

@@ -11,6 +11,7 @@ import android.Manifest;
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.app.DownloadManager;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.drawable.ColorDrawable;
@@ -24,6 +25,8 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.CookieManager;
+import android.webkit.URLUtil;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -127,6 +130,7 @@ public class DetailAsetActivity extends AppCompatActivity {
     ImageView fotoasetqr;
     ViewGroup addNewFotoAsetAndQr;
 
+    String qrurl;
     Integer statusPosisi;
 
     Integer id;
@@ -321,6 +325,15 @@ public class DetailAsetActivity extends AppCompatActivity {
 
 //        btnSubmit = findViewById(R.id.btnSubmit);
 
+        downloadQr.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (qrurl != null) {
+
+                    downloadQrImage(qrurl);
+                }
+            }
+        });
         inpSimpanFotoQr.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -594,6 +607,24 @@ public class DetailAsetActivity extends AppCompatActivity {
 
     }
 
+    private void downloadQrImage(String url) {
+
+            Log.d("asetapix",url);
+            DownloadManager.Request request = new DownloadManager.Request(Uri.parse(url));
+            String title = URLUtil.guessFileName(url,null,null);
+            request.setTitle(title);
+            request.setDescription("Downloading File Please Wait.....");
+            String cookie = CookieManager.getInstance().getCookie(url);
+            request.addRequestHeader("cookie",cookie);
+            request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
+
+            DownloadManager downloadManager = (DownloadManager)getSystemService(DOWNLOAD_SERVICE);
+            downloadManager.enqueue(request);
+
+            Toast.makeText(this, "Downloading Started", Toast.LENGTH_SHORT).show();
+
+    }
+
     private void updateLabel(){
         String myFormat="yyyy-MM-dd";
         SimpleDateFormat dateFormat=new SimpleDateFormat(myFormat, Locale.US);
@@ -620,96 +651,8 @@ public class DetailAsetActivity extends AppCompatActivity {
     }
 
 
-    private void getAsetJenis(){
-        Call<AsetJenisModel> call = asetInterface.getAsetJenis();
-        call.enqueue(new Callback<AsetJenisModel>() {
-            @Override
-            public void onResponse(Call<AsetJenisModel> call, Response<AsetJenisModel> response) {
 
-                if (!response.isSuccessful()){
-                    Toast.makeText(getApplicationContext(),String.valueOf(response.code()),Toast.LENGTH_LONG).show();
-                    return;
-                }
 
-                List<String> listSpinner = new ArrayList<>();
-
-                for (int i = 0; i < response.body().getData().size();i++){
-                    listSpinner.add(response.body().getData().get(i).getAset_jenis_desc());
-                }
-
-                ArrayAdapter<String> adapter = new ArrayAdapter<String>(getApplicationContext(),
-                        android.R.layout.simple_spinner_item, listSpinner);
-                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                spinnerJenisAset.setAdapter(adapter);
-            }
-
-            @Override
-            public void onFailure(Call<AsetJenisModel> call, Throwable t) {
-                Toast.makeText(getApplicationContext(),t.getMessage(),Toast.LENGTH_LONG).show();
-            }
-        });
-    }
-
-    private void getTipeAset(){
-        Call<List<AsetTipe>> call = asetInterface.getAsetTipe();
-        call.enqueue(new Callback<List<AsetTipe>>() {
-            @Override
-            public void onResponse(Call<List<AsetTipe>> call, Response<List<AsetTipe>> response) {
-                if (!response.isSuccessful()){
-                    Toast.makeText(getApplicationContext(),String.valueOf(response.code()),Toast.LENGTH_LONG).show();
-//                    utils.Ngetoast(getApplicationContext(),);
-                    return;
-                }
-                List<String> listSpinner = new ArrayList<>();
-
-                for (int i=0;i<response.body().size();i++){
-                    listSpinner.add(response.body().get(i).getAset_tipe_desc());
-                }
-                Log.d("asetapi", listSpinner.get(0));
-
-                // Set hasil result json ke dalam adapter spinner
-                ArrayAdapter<String> adapter = new ArrayAdapter<String>(getApplicationContext(),
-                        android.R.layout.simple_spinner_item, listSpinner);
-                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                spinnerTipeAset.setAdapter(adapter);
-            }
-
-            @Override
-            public void onFailure(Call<List<AsetTipe>> call, Throwable t) {
-                Toast.makeText(getApplicationContext(),t.getMessage(),Toast.LENGTH_LONG).show();
-            }
-        });
-    }
-
-    private void getAsetKondisi(){
-        Call<List<AsetKondisi>> call = asetInterface.getAsetKondisi();
-        call.enqueue(new Callback<List<AsetKondisi>>() {
-            @Override
-            public void onResponse(Call<List<AsetKondisi>> call, Response<List<AsetKondisi>> response) {
-                if (!response.isSuccessful()){
-                    Toast.makeText(getApplicationContext(),String.valueOf(response.code()),Toast.LENGTH_LONG).show();
-                    return;
-                }
-
-                List<String> listSpinner = new ArrayList<>();
-                for (int i=0;i<response.body().size();i++){
-                    listSpinner.add(response.body().get(i).getAset_kondisi_desc());
-                }
-
-                // Set hasil result json ke dalam adapter spinner
-                ArrayAdapter<String> adapter = new ArrayAdapter<String>(getApplicationContext(),
-                        android.R.layout.simple_spinner_item, listSpinner);
-                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                spinnerAsetKondisi.setAdapter(adapter);
-            }
-
-            @Override
-            public void onFailure(Call<List<AsetKondisi>> call, Throwable t) {
-                Toast.makeText(getApplicationContext(),t.getMessage(),Toast.LENGTH_LONG).show();
-                return;
-            }
-        });
-    }
     private void setValueInput(){
 
 
@@ -763,7 +706,7 @@ public class DetailAsetActivity extends AppCompatActivity {
                     inpNoInv.setText(String.valueOf(response.body().getData().getNoInv()));
                 };
 
-                String qrurl = baseUrlImg+"/"+response.body().getData().getFotoQr();
+                qrurl = baseUrlImg+"/"+response.body().getData().getFotoQr();
                 Log.d("amanat12",qrurl);
                 if (response.body().getData().getFotoQr() != null) {
                     qrDefault.getLayoutParams().height = 346;
@@ -845,23 +788,6 @@ public class DetailAsetActivity extends AppCompatActivity {
         });
 
     }
-
-    private void captureFotoQcLoses(String imageName, ActivityResultLauncher<Intent> activityLauncherName){
-        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        File fileImage = new File(getExternalFilesDir(Environment.DIRECTORY_PICTURES), "/"+imageName);
-        if (fileImage.exists()){
-            fileImage.delete();
-            Log.d("captImg", "captureImage: "+fileImage.exists());
-            fileImage = new File(getExternalFilesDir(Environment.DIRECTORY_PICTURES), imageName);
-        }
-        Uri uriFile = FileProvider.getUriForFile(Objects.requireNonNull(getApplicationContext()),
-                BuildConfig.APPLICATION_ID + ".provider", fileImage);
-//
-        takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, uriFile);
-        activityLauncherName.launch(takePictureIntent);
-    }
-
-
 
     public String formatrupiah(Double number){
         Locale localeID = new Locale("IND","ID");
