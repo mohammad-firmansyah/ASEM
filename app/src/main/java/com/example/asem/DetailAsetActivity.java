@@ -767,12 +767,10 @@ public class DetailAsetActivity extends AppCompatActivity {
                     Picasso.get().load(url).resize(300,300).centerCrop().into(fotoasetqr);
 
                 }
-//                else{
-//                    tvFotoAsetQR.setVisibility(View.GONE);
-//                    addNewFotoAsetAndQr.setVisibility(View.GONE);
-//                }
-//
-//                if(response.body().getData().getFotoAsetQr()!=null)
+                else{
+                    tvFotoAsetQR.setVisibility(View.GONE);
+                    addNewFotoAsetAndQr.setVisibility(View.GONE);
+                }
 
                 geotag1 = response.body().getData().getGeoTag1();
                 geotag2 = response.body().getData().getGeoTag2();

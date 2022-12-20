@@ -239,6 +239,13 @@ public class Aset2Adapter  extends RecyclerView.Adapter<Aset2Adapter.ViewHolder>
                 holder.btnEdit.setVisibility(View.VISIBLE);
                 holder.btnDetail.setVisibility(View.VISIBLE);
                 holder.btnKirim.setVisibility(View.GONE);
+                if (myPostData2.getFotoAsetQr() != null){
+                    holder.btnQRijo.setVisibility(View.VISIBLE);
+                    holder.btnQR.setVisibility(View.GONE);
+                }else{
+                    holder.btnQRijo.setVisibility(View.GONE);
+                    holder.btnQR.setVisibility(View.VISIBLE);
+                }
             }else {
                 holder.btnEdit.setVisibility(View.GONE);
                 holder.btnKirim.setVisibility(View.GONE);
@@ -266,6 +273,10 @@ public class Aset2Adapter  extends RecyclerView.Adapter<Aset2Adapter.ViewHolder>
                 holder.btnKirim.setVisibility(View.VISIBLE);
             } else if(myPostData2.getStatusPosisiID()== 5) {
                 if (myPostData2.getFotoAsetQr() != null){
+                    holder.btnQRijo.setVisibility(View.VISIBLE);
+                    holder.btnQR.setVisibility(View.GONE);
+                }else{
+                    holder.btnQRijo.setVisibility(View.GONE);
                     holder.btnQR.setVisibility(View.VISIBLE);
                 }
                     holder.btnKirim.setOnClickListener(v -> {
@@ -427,6 +438,7 @@ public class Aset2Adapter  extends RecyclerView.Adapter<Aset2Adapter.ViewHolder>
         Button btnKirim;
         View btnHapus;
         View btnQR;
+        View btnQRijo;
         LinearLayout cvAset;
         RelativeLayout bgCardView;
         CardView cvKirimSukses;
@@ -450,6 +462,7 @@ public class Aset2Adapter  extends RecyclerView.Adapter<Aset2Adapter.ViewHolder>
             btnKirim = v.findViewById(R.id.btn_kirim);
             btnHapus = v.findViewById(R.id.btn_delete);
             btnQR = v.findViewById(R.id.btnQR);
+            btnQRijo = v.findViewById(R.id.btnQRijo);
 
             cvKirimSukses = v.findViewById(R.id.cvKirimSukses);
             cvAset = v.findViewById(R.id.cvAset);
