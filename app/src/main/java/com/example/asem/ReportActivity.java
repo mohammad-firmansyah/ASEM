@@ -55,6 +55,8 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ReportActivity extends AppCompatActivity {
+    DatePickerDialog.OnDateSetListener date;
+    DatePickerDialog.OnDateSetListener date2;
     public static String baseUrl = "http://202.148.9.226:7710/mnj_aset_repo/public/api/";
     public static String baseUrlAset = "http://202.148.9.226:7710/mnj_aset_repo/public";
     private AsetInterface asetInterface;
@@ -128,6 +130,7 @@ public class ReportActivity extends AppCompatActivity {
 
         getSpinnerData();
         initCalender();
+        initCalender2();
 
         btnSubmit.setOnClickListener(v -> apiDownloadReport());
 
@@ -196,6 +199,15 @@ public class ReportActivity extends AppCompatActivity {
             }
         });
 
+
+//        inpTglInput2.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                new DatePickerDialog(ReportActivity.this,date,myCalendar2.get(Calendar.YEAR),myCalendar2.get(Calendar.MONTH),myCalendar2.get(Calendar.DAY_OF_MONTH)).show();
+//                initCalender2();
+//                updateLabel2();
+//            }
+//        });
     }
 
     private void getTipeAset(){
@@ -268,6 +280,12 @@ public class ReportActivity extends AppCompatActivity {
         });
     }
 
+    private void updateLabel(){
+        String myFormat="yyyy-MM-dd";
+        SimpleDateFormat dateFormat=new SimpleDateFormat(myFormat, Locale.US);
+        inpTglInput1.setText(dateFormat.format(myCalendar1.getTime()));
+    }
+
     public void initCalender(){
         DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
 
@@ -276,39 +294,44 @@ public class ReportActivity extends AppCompatActivity {
                 myCalendar1.set(Calendar.YEAR, year);
                 myCalendar1.set(Calendar.MONTH,month);
                 myCalendar1.set(Calendar.DAY_OF_MONTH,day);
-
-                myCalendar2.set(Calendar.YEAR, year);
-                myCalendar2.set(Calendar.MONTH,month);
-                myCalendar2.set(Calendar.DAY_OF_MONTH,day);
-//                updateLabel1();
+                updateLabel();
             }
         };
         inpTglInput1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 new DatePickerDialog(ReportActivity.this,date,myCalendar1.get(Calendar.YEAR),myCalendar1.get(Calendar.MONTH),myCalendar1.get(Calendar.DAY_OF_MONTH)).show();
-                updateLabel1();
-            }
-        });
-        inpTglInput2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                new DatePickerDialog(ReportActivity.this,date,myCalendar2.get(Calendar.YEAR),myCalendar2.get(Calendar.MONTH),myCalendar2.get(Calendar.DAY_OF_MONTH)).show();
-                updateLabel2();
             }
         });
     }
 
-    private void updateLabel1(){
-        String myFormat="yyyy/MM/dd";
-        SimpleDateFormat dateFormat=new SimpleDateFormat(myFormat, Locale.US);
-        inpTglInput1.setText(dateFormat.format(myCalendar1.getTime()));
-    }
     private void updateLabel2(){
-        String myFormat="yyyy/MM/dd";
+        String myFormat="yyyy-MM-dd";
         SimpleDateFormat dateFormat=new SimpleDateFormat(myFormat, Locale.US);
         inpTglInput2.setText(dateFormat.format(myCalendar2.getTime()));
     }
+
+    public void initCalender2(){
+        DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
+
+            @Override
+            public void onDateSet(DatePicker view, int year, int month, int day) {
+                myCalendar2.set(Calendar.YEAR, year);
+                myCalendar2.set(Calendar.MONTH,month);
+                myCalendar2.set(Calendar.DAY_OF_MONTH,day);
+                updateLabel2();
+            }
+        };
+        inpTglInput2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                new DatePickerDialog(ReportActivity.this,date,myCalendar2.get(Calendar.YEAR),myCalendar2.get(Calendar.MONTH),myCalendar2.get(Calendar.DAY_OF_MONTH)).show();
+            }
+        });
+    }
+
+
+
 
     private void getAsetJenis(){
         Call<AsetJenisModel> call = asetInterface.getAsetJenis();
