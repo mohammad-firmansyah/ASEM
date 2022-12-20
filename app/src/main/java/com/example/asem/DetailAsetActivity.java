@@ -52,6 +52,7 @@ import com.example.asem.api.model.AsetModel;
 import com.example.asem.api.model.AsetModel2;
 import com.example.asem.api.model.AsetTipe;
 import com.example.asem.api.model.DataAllSpinner;
+import com.example.asem.api.model.ReportModel;
 import com.example.asem.api.model.SubUnit;
 import com.example.asem.api.model.SubUnitModel;
 import com.example.asem.api.model.Unit;
@@ -330,7 +331,26 @@ public class DetailAsetActivity extends AppCompatActivity {
             public void onClick(View view) {
                 if (qrurl != null) {
 
-                    downloadQrImage(qrurl);
+
+
+                    Call<ReportModel> call = asetInterface.downloadQr(id);
+                    call.enqueue(new Callback<ReportModel>() {
+                        @Override
+                        public void onResponse(Call<ReportModel> call, Response<ReportModel> response) {
+                            if (!response.isSuccessful()){
+                                Toast.makeText(getApplicationContext(),"download gagal "+String.valueOf(response.code()),Toast.LENGTH_LONG).show();
+                                return;
+                            }
+
+                            downloadQrImage(baseUrlImg+"/qrcode.pdf");
+
+                        }
+
+                        @Override
+                        public void onFailure(Call<ReportModel> call, Throwable t) {
+                            Toast.makeText(getApplicationContext(),"download gagal "+t.getMessage(),Toast.LENGTH_LONG).show();
+                        }
+                    });
                 }
             }
         });

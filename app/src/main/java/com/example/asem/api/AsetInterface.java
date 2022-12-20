@@ -13,6 +13,7 @@ import com.example.asem.api.model.Data2;
 import com.example.asem.api.model.DeleteModel;
 import com.example.asem.api.model.Login;
 import com.example.asem.api.model.LoginModel;
+import com.example.asem.api.model.Report;
 import com.example.asem.api.model.ReportModel;
 import com.example.asem.api.model.Search;
 import com.example.asem.api.model.SearchModel;
@@ -86,6 +87,11 @@ public interface AsetInterface {
     @POST("export")
     Call<ReportModel> downloadReport(
             @Header("Content-Type") String contentType, @Body MultipartBody body
+    );
+
+    @GET("download-qr/{id}")
+    Call<ReportModel> downloadQr(
+            @Path("id") int id
     );
 
     @POST("kirim-foto-asetqr/{id}")

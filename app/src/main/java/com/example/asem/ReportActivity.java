@@ -58,7 +58,8 @@ public class ReportActivity extends AppCompatActivity {
     public static String baseUrl = "http://202.148.9.226:7710/mnj_aset_repo/public/api/";
     public static String baseUrlAset = "http://202.148.9.226:7710/mnj_aset_repo/public";
     private AsetInterface asetInterface;
-    final Calendar myCalendar= Calendar.getInstance();
+    final Calendar myCalendar1= Calendar.getInstance();
+    final Calendar myCalendar2= Calendar.getInstance();
     Spinner spinnerTipeAset;
     SharedPreferences sharedPreferences;
     private static final String PREF_LOGIN = "LOGIN_PREF";
@@ -272,23 +273,27 @@ public class ReportActivity extends AppCompatActivity {
 
             @Override
             public void onDateSet(DatePicker view, int year, int month, int day) {
-                myCalendar.set(Calendar.YEAR, year);
-                myCalendar.set(Calendar.MONTH,month);
-                myCalendar.set(Calendar.DAY_OF_MONTH,day);
+                myCalendar1.set(Calendar.YEAR, year);
+                myCalendar1.set(Calendar.MONTH,month);
+                myCalendar1.set(Calendar.DAY_OF_MONTH,day);
+
+                myCalendar2.set(Calendar.YEAR, year);
+                myCalendar2.set(Calendar.MONTH,month);
+                myCalendar2.set(Calendar.DAY_OF_MONTH,day);
 //                updateLabel1();
             }
         };
         inpTglInput1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                new DatePickerDialog(ReportActivity.this,date,myCalendar.get(Calendar.YEAR),myCalendar.get(Calendar.MONTH),myCalendar.get(Calendar.DAY_OF_MONTH)).show();
+                new DatePickerDialog(ReportActivity.this,date,myCalendar1.get(Calendar.YEAR),myCalendar1.get(Calendar.MONTH),myCalendar1.get(Calendar.DAY_OF_MONTH)).show();
                 updateLabel1();
             }
         });
         inpTglInput2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                new DatePickerDialog(ReportActivity.this,date,myCalendar.get(Calendar.YEAR),myCalendar.get(Calendar.MONTH),myCalendar.get(Calendar.DAY_OF_MONTH)).show();
+                new DatePickerDialog(ReportActivity.this,date,myCalendar2.get(Calendar.YEAR),myCalendar2.get(Calendar.MONTH),myCalendar2.get(Calendar.DAY_OF_MONTH)).show();
                 updateLabel2();
             }
         });
@@ -297,12 +302,12 @@ public class ReportActivity extends AppCompatActivity {
     private void updateLabel1(){
         String myFormat="yyyy/MM/dd";
         SimpleDateFormat dateFormat=new SimpleDateFormat(myFormat, Locale.US);
-        inpTglInput1.setText(dateFormat.format(myCalendar.getTime()));
+        inpTglInput1.setText(dateFormat.format(myCalendar1.getTime()));
     }
     private void updateLabel2(){
         String myFormat="yyyy/MM/dd";
         SimpleDateFormat dateFormat=new SimpleDateFormat(myFormat, Locale.US);
-        inpTglInput2.setText(dateFormat.format(myCalendar.getTime()));
+        inpTglInput2.setText(dateFormat.format(myCalendar2.getTime()));
     }
 
     private void getAsetJenis(){
@@ -399,7 +404,6 @@ public class ReportActivity extends AppCompatActivity {
 
     private void downloadReport(String url){
 
-        Log.d("asetapix",url);
         DownloadManager.Request request = new DownloadManager.Request(Uri.parse(url));
         String title = URLUtil.guessFileName(url,null,null);
         request.setTitle(title);
@@ -411,7 +415,7 @@ public class ReportActivity extends AppCompatActivity {
         DownloadManager downloadManager = (DownloadManager)getSystemService(DOWNLOAD_SERVICE);
         downloadManager.enqueue(request);
 
-        Toast.makeText(this, "Downloading Started", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Berhasil Mengunduh", Toast.LENGTH_SHORT).show();
 
     }
 
@@ -419,13 +423,13 @@ public class ReportActivity extends AppCompatActivity {
 
         dialog.show();
         if (inpTglInput1.getText().toString().matches("")) {
-            dialog.hide();
+            dialog.dismiss();
             inpTglInput1.setError("Tgl 1 harus diisi");
             inpTglInput1.requestFocus();
             return;
         }
         if (inpTglInput2.getText().toString().matches("")) {
-            dialog.hide();
+            dialog.dismiss();
             inpTglInput2.setError("Tgl 2 harus diisi");
             inpTglInput2.requestFocus();
             return;
@@ -443,7 +447,6 @@ public class ReportActivity extends AppCompatActivity {
             RequestBody requestTglInput2 = RequestBody.create(MediaType.parse("text/plain"), inpTglInput2.getText()+" 00:00:00");
             Integer unit_id = Integer.valueOf(sharedPreferences.getString("unit_id", "0"));
             RequestBody requestUnit = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(unit_id));
-            Log.d("asetapix",String.valueOf(spinnerJenisReport.getSelectedItem().toString()));
 
 
 
@@ -489,32 +492,20 @@ public class ReportActivity extends AppCompatActivity {
 
                             downloadReport(baseUrlAset + "/" + String.valueOf(response.body().getData()));
 
-                            Log.d("asetdua",baseUrlAset + "/" + String.valueOf(response.body().getData()));
                         } else {
                             downloadReport(baseUrlAset+String.valueOf(response.body().getData()));
                         }
-                        Log.d("asetdua",baseUrlAset + "/" + String.valueOf(response.body().getData()));
-                        Toast.makeText(getApplicationContext(),"success",Toast.LENGTH_LONG).show();
                         return;
                     }
 
-                    dialog.hide();
+                    dialog.dismiss();
 
-                    Log.d("asetapix",String.valueOf(response.errorBody()));
-                    Log.d("asetapix",String.valueOf(call.request().body()));
-                    Log.d("asetapix",String.valueOf(call.request().url()));
-                    Log.d("asetapix",String.valueOf(response.code()));
-//                    Toast.makeText(getApplicationContext(),"success",Toast.LENGTH_LONG).show();
 
                 }
 
                 @Override
                 public void onFailure(Call<ReportModel> call, Throwable t) {
-                    dialog.hide();
-                    Log.d("asetapix", "onError : "+t.getMessage());
-                    Log.d("asetapix",String.valueOf(call.request().body()));
-                    Log.d("asetapix",String.valueOf(call.request().url()));
-                    Log.d("asetapix",String.valueOf(call.request().method()));
+                    dialog.dismiss();
                     Toast.makeText(getApplicationContext(),"error " + t.getMessage(),Toast.LENGTH_LONG).show();
                 }
             });
