@@ -454,7 +454,9 @@ public class AddAsetActivity extends AppCompatActivity {
         spinnerAsetKondisi = findViewById(R.id.inpKndsAset);
         spinnerKodeAset = findViewById(R.id.inpKodeAset);
         spinnerAfdeling = findViewById(R.id.inpAfdeling);
+        spinnerAfdeling.setEnabled(false);
         spinnerSubUnit = findViewById(R.id.inpSubUnit);
+        spinnerSubUnit.setEnabled(false);
         spinnerUnit = findViewById(R.id.inpUnit);
         spinnerUnit.setEnabled(false);
         inpNamaAset = findViewById(R.id.inpNamaAset);
@@ -558,6 +560,7 @@ public class AddAsetActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 spinnerIdAfdeling = String.valueOf(position);
+                editVisibilityDynamic();
             }
 
             @Override

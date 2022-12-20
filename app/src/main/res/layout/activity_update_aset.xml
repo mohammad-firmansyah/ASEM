@@ -203,7 +203,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="41dp"
                 android:layout_marginBottom="10dp"
-                android:background="@drawable/rounded_spinner"
+                android:background="@drawable/bg_not_clickable_spinner"
                 android:spinnerMode="dropdown" />
 
 
@@ -226,7 +226,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="41dp"
                 android:layout_marginBottom="10dp"
-                android:background="@drawable/rounded_spinner"
+                android:background="@drawable/bg_not_clickable_spinner"
                 android:spinnerMode="dropdown" />
 
 
@@ -305,7 +305,7 @@
                     android:layout_marginBottom="10dp"
                     android:background="@drawable/edit_text_spiner"
                     android:spinnerMode="dropdown"
-                    android:text="UPLOUD"
+                    android:text="UPLOAD"
                     android:onClick="uploadImage"
                     android:layout_marginStart="5dp"
                     android:textSize="10sp"
