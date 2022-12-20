@@ -765,7 +765,6 @@ public class DetailAsetActivity extends AppCompatActivity {
                     fotoasetqr.getLayoutParams().width = 300;
                     fotoasetqr.getLayoutParams().height = 300;
                     Picasso.get().load(url).resize(300,300).centerCrop().into(fotoasetqr);
-
                 }
                 else{
                     tvFotoAsetQR.setVisibility(View.GONE);

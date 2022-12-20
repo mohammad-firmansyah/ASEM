@@ -851,13 +851,14 @@ public class UpdateAsetActivity extends AppCompatActivity {
                 inpNoSAP.setText(String.valueOf(response.body().getData().getNomorSap()));
                 inpNamaAset.setText(response.body().getData().getAsetName());
                 inpLuasAset.setText(String.valueOf(response.body().getData().getAsetLuas()));
-                inpNilaiAsetSAP.setText(String.valueOf(response.body().getData().getNilaiOleh()));
+                inpNilaiAsetSAP.setText(formatrupiah(Double.parseDouble(String.valueOf(response.body().getData().getNilaiOleh()))));
+                Log.d("asetapix",formatrupiah(Double.parseDouble(String.valueOf(response.body().getData().getNilaiOleh()))) );
                 inpMasaPenyusutan.setText(String.valueOf(response.body().getData().getMasaSusut()));
                 inpNomorBAST.setText(String.valueOf(response.body().getData().getNomorBast()));
                 inpNilaiResidu.setText(formatrupiah(Double.parseDouble(String.valueOf(response.body().getData().getNilaiResidu()))));
                 inpKeterangan.setText(response.body().getData().getKeterangan());
                 inpUmrEkonomis.setText(utils.MonthToYear(response.body().getData().getUmurEkonomisInMonth()));
-                inpNilaiAsetSAP.setText(formatrupiah(Double.parseDouble(String.valueOf(response.body().getData().getUmurEkonomisInMonth()))));
+//                inpNilaiAsetSAP.setText(formatrupiah(Double.parseDouble(String.valueOf(response.body().getData().getUmurEkonomisInMonth()))));
                 inpPersenKondisi.setText(String.valueOf(response.body().getData().getPersenKondisi()));
                 inpJumlahPohon.setText(String.valueOf(response.body().getData().getJumlahPohon()));
                 String ket_reject = response.body().getData().getKetReject();
