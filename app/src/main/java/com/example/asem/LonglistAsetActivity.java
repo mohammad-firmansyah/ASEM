@@ -4,43 +4,31 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
-import androidx.core.app.ActivityCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.Manifest;
-import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
-import android.content.res.ColorStateList;
-import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.example.asem.adapter.Aset2Adapter;
-import com.example.asem.adapter.AsetAdapter;
+import com.example.asem.adapter.SearchAsetAdapter;
 import com.example.asem.api.AsetInterface;
 import com.example.asem.api.model.Data;
 import com.example.asem.api.model.Data2;
-import com.example.asem.api.model.Unit;
-import com.example.asem.api.model.UnitModel;
+import com.example.asem.api.model.Search;
+import com.example.asem.api.model.SearchModel;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.navigation.NavigationBarView;
 
-import java.sql.Array;
-import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -64,7 +52,10 @@ public class LonglistAsetActivity extends AppCompatActivity  { //implements Bott
     Button btnReport;
     Button btnFilter;
     FloatingActionButton fab;
-    RecyclerView rcAset;
+
+    RecyclerView rcAset; //untuk aset utama
+    RecyclerView rcAset2; // untuk search dan filter
+
     SwipeRefreshLayout srlonglist;
     SearchView searchView;
 
@@ -87,6 +78,10 @@ public class LonglistAsetActivity extends AppCompatActivity  { //implements Bott
         rcAset = findViewById(R.id.asetAll);
         rcAset.setHasFixedSize(true);
         rcAset.setLayoutManager(new LinearLayoutManager(this));
+        rcAset2 = findViewById(R.id.recView2);
+        rcAset2.setHasFixedSize(true);
+        rcAset2.setLayoutManager(new LinearLayoutManager(this));
+
         fab = findViewById(R.id.addAset);
         srlonglist = findViewById(R.id.srlonglist);
         searchView = findViewById(R.id.svSearch);
@@ -108,15 +103,23 @@ public class LonglistAsetActivity extends AppCompatActivity  { //implements Bott
         //bisa serj no sap, no inventaris, nama aset
         searchView.clearFocus();
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            SharedPreferences.Editor editor = getSharedPreferences(PREF_LOGIN,MODE_PRIVATE).edit();
+//            SharedPreferences.Editor editor = getSharedPreferences(PREF_LOGIN,MODE_PRIVATE).edit();
             @Override
             public boolean onQueryTextSubmit(String query) {
-
+                getDataSearch(query);
+                rcAset.setVisibility(View.GONE);
+                rcAset2.setVisibility(View.VISIBLE);
+//                Toast.makeText(rcAset2.get,"halo",Toast.LENGTH_SHORT).show();
                 return false;
             }
 
             @Override
             public boolean onQueryTextChange(String newText) {
+                if (newText.isEmpty()){
+                    Intent intent = new Intent(LonglistAsetActivity.this, LonglistAsetActivity.class);
+                    startActivity(intent);
+                    finish();
+                }
                 return false;
             }
         });
@@ -152,9 +155,11 @@ public class LonglistAsetActivity extends AppCompatActivity  { //implements Bott
                 .build();
 
         asetInterface = retrofit.create(AsetInterface.class);
-        allData = new Data[]{};
-        AsetAdapter adapter = new AsetAdapter(allData,LonglistAsetActivity.this);
-        rcAset.setAdapter(adapter);
+//        allData = new Data[]{};
+//        AsetAdapter adapter = new AsetAdapter(allData,LonglistAsetActivity.this);
+//        rcAset.setAdapter(adapter);
+
+
 
         srlonglist.setOnRefreshListener(() ->{
             srlonglist.setRefreshing(false);
@@ -212,6 +217,41 @@ public class LonglistAsetActivity extends AppCompatActivity  { //implements Bott
             public void onFailure(Call<List<Data2>> call, Throwable t) {
                 dialog.dismiss();
                 Toast.makeText(getApplicationContext(),t.getMessage(),Toast.LENGTH_LONG).show();
+                return;
+            }
+        });
+    }
+
+
+    //fungsi search ini masih api, yg fungsi get nya belum
+//    public void getSearch{}
+
+    private void getDataSearch(String query){
+        dialog.show();
+        Integer id = null;
+        Search search = new Search();
+        SharedPreferences.Editor editor = getSharedPreferences(PREF_LOGIN,MODE_PRIVATE).edit();
+        Call<SearchModel> call = asetInterface.searchAset(String.valueOf(search),query);
+        call.enqueue(new Callback<SearchModel>() {
+            @Override
+            public void onResponse(Call<SearchModel> call, Response<SearchModel> response) {
+                dialog.dismiss();
+                editor.putString("-",query);
+
+                SearchModel dataS = response.body();
+                SearchAsetAdapter adapter2 = new SearchAsetAdapter(dataS, LonglistAsetActivity.this);
+                rcAset2.setAdapter(adapter2);
+                adapter2.notifyDataSetChanged();
+                srlonglist.setRefreshing(false);
+
+            }
+
+            @Override
+            public void onFailure(Call<SearchModel> call, Throwable t) {
+                dialog.dismiss();
+                Toast.makeText(getApplicationContext(), "knp ya", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getApplicationContext(),t.getMessage(),Toast.LENGTH_SHORT).show();
+                srlonglist.setRefreshing(false);
                 return;
             }
         });
