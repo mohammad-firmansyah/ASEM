@@ -87,13 +87,23 @@
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/asetAll"
-
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="2dp">
+                android:layout_margin="2dp"/>
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                
+                <androidx.recyclerview.widget.RecyclerView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:visibility="gone"
+                    android:orientation="vertical"
+                    android:id="@+id/recView2"/>
 
-            </androidx.recyclerview.widget.RecyclerView>
+            </LinearLayout>
+
         </LinearLayout>
 
         </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

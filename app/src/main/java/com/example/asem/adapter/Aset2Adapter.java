@@ -63,8 +63,7 @@ public class Aset2Adapter  extends RecyclerView.Adapter<Aset2Adapter.ViewHolder>
     private AsetInterface asetInterface;
     Dialog customDialogBelumApprove;
     Dialog customDialogCekDataReject;
-    Dialog customDialogDeleteData;
-    FloatingActionButton fab;
+
     List<Data2> myAsetData;
     Context context;
     SharedPreferences sharedPreferences;
@@ -400,10 +399,6 @@ public class Aset2Adapter  extends RecyclerView.Adapter<Aset2Adapter.ViewHolder>
             @Override
             public void onClick(View v) { customDialogCekDataReject.dismiss(); }
         });
-    }
-
-    void initDataDelete(){
-
     }
 
     @Override

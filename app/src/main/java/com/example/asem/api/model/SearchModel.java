@@ -4,6 +4,13 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 public class SearchModel {
+
+    public SearchModel(boolean status, String message, Data2 data) {
+        this.status = status;
+        this.message = message;
+        this.data = data;
+    }
+
     @SerializedName("status")
     @Expose
     private boolean status;
@@ -14,29 +21,29 @@ public class SearchModel {
 
     @SerializedName("data")
     @Expose
-    private String data;
+    private Data2 data;
 
-    public boolean isStatus() {
-        return status;
-    }
+        public boolean isStatus() {
+            return status;
+        }
 
-    public void setStatus(boolean status) {
-        this.status = status;
-    }
+        public void setStatus(boolean status) {
+            this.status = status;
+        }
 
-    public String getMessage() {
-        return message;
-    }
+        public String getMessage() {
+            return message;
+        }
 
-    public void setMessage(String message) {
-        this.message = message;
-    }
+        public void setMessage(String message) {
+            this.message = message;
+        }
 
-    public String getData() {
-        return data;
-    }
+        public Data2 getData() {
+            return data;
+        }
 
-    public void setData(String data) {
-        this.data = data;
-    }
+        public void setData(Data2 data) {
+            this.data = data;
+        }
 }

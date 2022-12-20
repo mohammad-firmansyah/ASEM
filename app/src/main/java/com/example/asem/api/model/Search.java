@@ -119,6 +119,33 @@ public class Search {
     @SerializedName("ket_reject")
     @Expose
     private Object ketReject;
+    @SerializedName("umur_ekonomis_in_month")
+    @Expose
+    private Integer umurEkonomis;
+
+    @SerializedName("status_posisi_id")
+    @Expose
+    private Integer statusPosisiID;
+
+    public Integer getStatusPosisiID() {
+        return statusPosisiID;
+    }
+
+    public void setStatusPosisiID(Integer statusPosisiID) {
+        this.statusPosisiID = statusPosisiID;
+    }
+
+    public void setKetReject(Object ketReject) {
+        this.ketReject = ketReject;
+    }
+
+    public Integer getUmurEkonomis() {
+        return umurEkonomis;
+    }
+
+    public void setUmurEkonomis(Integer umurEkonomis) {
+        this.umurEkonomis = umurEkonomis;
+    }
 
     public Integer getAsetId() {
         return asetId;
