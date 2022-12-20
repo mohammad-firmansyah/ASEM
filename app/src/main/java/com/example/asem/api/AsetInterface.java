@@ -14,6 +14,7 @@ import com.example.asem.api.model.DeleteModel;
 import com.example.asem.api.model.Login;
 import com.example.asem.api.model.LoginModel;
 import com.example.asem.api.model.ReportModel;
+import com.example.asem.api.model.SearchModel;
 import com.example.asem.api.model.SubUnitModel;
 import com.example.asem.api.model.UnitModel;
 
@@ -106,6 +107,11 @@ public interface AsetInterface {
     Call<AsetModel2> kirimDataAset(
             @Path("id") int id,
             @Path("user_id") int user_id
+    );
+
+    @FormUrlEncoded
+    @POST("search")Call<SearchModel> searchAset(
+            @Path("id") Integer id
     );
 
 

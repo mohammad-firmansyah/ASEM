@@ -5,8 +5,10 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.TextView;
@@ -19,11 +21,18 @@ public class Home extends AppCompatActivity {
     CardView cvHome;
     TextView tvWelcome, tvNama, tvHakAkses, tvBagian;
     MenuItem nav_beranda, nav_profil, nav_longlist;
+    Dialog dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+
+//        dialog = new Dialog(Home.this,R.style.MyAlertDialogTheme);
+//        dialog.setContentView(R.layout.loading);
+//        dialog.setCanceledOnTouchOutside(false);
+//        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(0));
+//        dialog.show();
 
         tvBagian = findViewById(R.id.tvBagian);
         tvWelcome = findViewById(R.id.tvWelcome);

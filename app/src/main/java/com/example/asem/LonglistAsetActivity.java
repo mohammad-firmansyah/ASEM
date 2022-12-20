@@ -3,6 +3,7 @@ package com.example.asem;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
 import androidx.core.app.ActivityCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -65,6 +66,7 @@ public class LonglistAsetActivity extends AppCompatActivity  { //implements Bott
     FloatingActionButton fab;
     RecyclerView rcAset;
     SwipeRefreshLayout srlonglist;
+    SearchView searchView;
 
     Integer user_id;
 
@@ -87,6 +89,7 @@ public class LonglistAsetActivity extends AppCompatActivity  { //implements Bott
         rcAset.setLayoutManager(new LinearLayoutManager(this));
         fab = findViewById(R.id.addAset);
         srlonglist = findViewById(R.id.srlonglist);
+        searchView = findViewById(R.id.svSearch);
 
         sharedPreferences = getSharedPreferences(PREF_LOGIN, MODE_PRIVATE);
         String hak_akses_id = sharedPreferences.getString("hak_akses_id", "-");
@@ -100,6 +103,23 @@ public class LonglistAsetActivity extends AppCompatActivity  { //implements Bott
 
 
         //fab.setBackgroundTintList(ColorStateList.valueOf(Color.rgb(10, 50, 50)));
+
+        //search function dibawah ini
+        //bisa serj no sap, no inventaris, nama aset
+        searchView.clearFocus();
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            SharedPreferences.Editor editor = getSharedPreferences(PREF_LOGIN,MODE_PRIVATE).edit();
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                return false;
+            }
+        });
 
         btnReport = findViewById(R.id.btnReport);
         btnFilter = findViewById(R.id.btnFilter);
