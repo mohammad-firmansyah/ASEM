@@ -265,6 +265,9 @@ public class Aset2Adapter  extends RecyclerView.Adapter<Aset2Adapter.ViewHolder>
                 holder.btnEdit.setVisibility(View.VISIBLE);
                 holder.btnKirim.setVisibility(View.VISIBLE);
             } else if(myPostData2.getStatusPosisiID()== 5) {
+                if (myPostData2.getFotoAsetQr() != null){
+                    holder.btnQR.setVisibility(View.VISIBLE);
+                }
                     holder.btnKirim.setOnClickListener(v -> {
                         if (myPostData2.getFotoAsetQr() == null) {
                             Toast.makeText(context.getApplicationContext(), "Mohon Foto Aset dengan QRCODE Dilengkapi oleh Operator", Toast.LENGTH_SHORT).show();
@@ -423,6 +426,7 @@ public class Aset2Adapter  extends RecyclerView.Adapter<Aset2Adapter.ViewHolder>
         Button btnEdit;
         Button btnKirim;
         View btnHapus;
+        View btnQR;
         LinearLayout cvAset;
         RelativeLayout bgCardView;
         CardView cvKirimSukses;
@@ -445,6 +449,7 @@ public class Aset2Adapter  extends RecyclerView.Adapter<Aset2Adapter.ViewHolder>
             btnEdit = v.findViewById(R.id.btn_edit);
             btnKirim = v.findViewById(R.id.btn_kirim);
             btnHapus = v.findViewById(R.id.btn_delete);
+            btnQR = v.findViewById(R.id.btnQR);
 
             cvKirimSukses = v.findViewById(R.id.cvKirimSukses);
             cvAset = v.findViewById(R.id.cvAset);

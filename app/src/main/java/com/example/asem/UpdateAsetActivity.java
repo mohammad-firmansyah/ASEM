@@ -371,7 +371,9 @@ public class UpdateAsetActivity extends AppCompatActivity {
         spinnerUnit = findViewById(R.id.inpUnit);
         spinnerUnit.setEnabled(false);
         spinnerSubUnit = findViewById(R.id.inpSubUnit);
+        spinnerSubUnit.setEnabled(false);
         spinnerAfdeling = findViewById(R.id.inpAfdeling);
+        spinnerAfdeling.setEnabled(false);
         inpTglInput = findViewById(R.id.inpTglInput);
         inpTglInput.setEnabled(false);
         inpUmrEkonomis = findViewById(R.id.inpUmrEkonomis);

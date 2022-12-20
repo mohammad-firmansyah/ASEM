@@ -24,6 +24,14 @@
         >
 
         <View
+            android:id="@+id/btnQR"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:visibility="gone"
+            android:layout_marginRight="7dp"
+            android:background="@drawable/ic_baseline_qr_code_2_24"/>
+
+        <View
             android:id="@+id/btn_delete"
             android:visibility="gone"
             android:layout_width="25dp"

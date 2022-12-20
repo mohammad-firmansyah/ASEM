@@ -774,6 +774,41 @@
                 android:background="@drawable/tgl_spinner"
                 />
         </LinearLayout>
+
+
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="FOTO ASET + QR CODE :"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/main_grey"
+                    android:layout_marginVertical="10dp"
+                    android:id="@+id/tvFotoAsetQR"
+
+                    />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="128dp"
+                    android:id="@+id/addNewFotoAsetAndQr"
+                    android:orientation="horizontal"
+                    android:background="@drawable/tgl_spinner"
+                    android:gravity="center"
+                    android:layout_marginVertical="10dp"
+                    >
+
+                    <ImageView
+                        android:layout_width="72dp"
+                        android:layout_height="72dp"
+                        android:src="@drawable/ic_outline_image_24"
+                        android:id="@+id/fotoasetqr"
+                        />
+                </LinearLayout>
+
+
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -811,24 +846,7 @@
                 >
 
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="128dp"
-                android:id="@+id/addNewFotoAsetAndQr"
-                android:orientation="horizontal"
-                android:background="@drawable/edit_text_spiner"
-                android:gravity="center"
-                android:layout_marginVertical="10dp"
-                android:visibility="gone"
-                >
 
-                <ImageView
-                    android:layout_width="72dp"
-                    android:layout_height="72dp"
-                    android:src="@drawable/ic_outline_image_24"
-                    android:id="@+id/fotoasetqr"
-                    />
-            </LinearLayout>
 
             <Button
                 android:visibility="gone"

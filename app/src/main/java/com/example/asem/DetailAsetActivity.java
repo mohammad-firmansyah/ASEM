@@ -34,6 +34,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -130,6 +131,7 @@ public class DetailAsetActivity extends AppCompatActivity {
     EditText inpNoInv;
     ImageView fotoasetqr;
     ViewGroup addNewFotoAsetAndQr;
+    LinearLayout fotoasetqrgroup;
 
     String qrurl;
     Integer statusPosisi;
@@ -161,6 +163,7 @@ public class DetailAsetActivity extends AppCompatActivity {
     EditText editText;
     EditText inpJumlahPohon;
     TextView tvUploudBA;
+    TextView tvFotoAsetQR;
     AsetModel asetModel;
     File source;
 
@@ -276,6 +279,7 @@ public class DetailAsetActivity extends AppCompatActivity {
         spinnerUnit = findViewById(R.id.inpUnit);
         spinnerUnit.setEnabled(false);
         fotoasetqr = findViewById(R.id.fotoasetqr);
+        tvFotoAsetQR = findViewById(R.id.tvFotoAsetQR);
 
         addNewFotoAsetAndQr = findViewById(R.id.addNewFotoAsetAndQr);
         inpTglInput = findViewById(R.id.inpTglInput);
@@ -753,13 +757,22 @@ public class DetailAsetActivity extends AppCompatActivity {
                 fotoimg4.getLayoutParams().height = 200;
                 Picasso.get().load(url4).resize(200,200).centerCrop().into(fotoimg4);
 
+//                Log.d("asetapix", response.body().getData().getFotoAsetQr());
+
                 if (response.body().getData().getFotoAsetQr()!=null ){
+//                    fotoasetqrgroup.setVisibility(View.VISIBLE);
                     String url = baseUrlImg + response.body().getData().getFotoAsetQr();
                     fotoasetqr.getLayoutParams().width = 300;
                     fotoasetqr.getLayoutParams().height = 300;
                     Picasso.get().load(url).resize(300,300).centerCrop().into(fotoasetqr);
 
                 }
+//                else{
+//                    tvFotoAsetQR.setVisibility(View.GONE);
+//                    addNewFotoAsetAndQr.setVisibility(View.GONE);
+//                }
+//
+//                if(response.body().getData().getFotoAsetQr()!=null)
 
                 geotag1 = response.body().getData().getGeoTag1();
                 geotag2 = response.body().getData().getGeoTag2();
