@@ -854,7 +854,7 @@ public class UpdateAsetActivity extends AppCompatActivity {
                 inpTglOleh.setText(response.body().getData().getTglOleh().split(" ")[0]);
                 inpNoSAP.setText(String.valueOf(response.body().getData().getNomorSap()));
                 inpNamaAset.setText(response.body().getData().getAsetName());
-                inpLuasAset.setText(String.valueOf(response.body().getData().getAsetLuas()));
+                inpLuasAset.setText(String.valueOf(Double.parseDouble(String.valueOf(response.body().getData().getAsetLuas()))));
                 inpNilaiAsetSAP.setText(formatrupiah(Double.parseDouble(String.valueOf(response.body().getData().getNilaiOleh()))));
                 Log.d("asetapix",formatrupiah(Double.parseDouble(String.valueOf(response.body().getData().getNilaiOleh()))) );
                 inpMasaPenyusutan.setText(String.valueOf(response.body().getData().getMasaSusut()));
@@ -1546,7 +1546,7 @@ public class UpdateAsetActivity extends AppCompatActivity {
 
             String nama_aset = inpNamaAset.getText().toString().trim();
             String nomor_aset_sap = inpNoSAP.getText().toString().trim();
-            String luas_aset = inpLuasAset.getText().toString().trim();
+            String luas_aset = String.valueOf(Double.parseDouble(inpLuasAset.getText().toString().trim()));
             String nilai_aset = String.valueOf(CurrencyToNumber(inpNilaiAsetSAP.getText().toString().trim()));
             String tgl_oleh = inpTglOleh.getText().toString().trim() + " 00:00:00";
             String masa_susut = inpMasaPenyusutan.getText().toString().trim();
@@ -1554,6 +1554,7 @@ public class UpdateAsetActivity extends AppCompatActivity {
             String nilai_residu = String.valueOf(CurrencyToNumber(inpNilaiResidu.getText().toString().trim()));
             String keterangan = inpKeterangan.getText().toString().trim();
             String asetId = String.valueOf(aset.getAsetId());
+            String jumlahPohon = inpJumlahPohon.getText().toString();
 
             MultipartBody.Part partBaFile = null;
 
@@ -1588,7 +1589,7 @@ public class UpdateAsetActivity extends AppCompatActivity {
 
             }
             RequestBody requestUnit = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(Integer.parseInt(String.valueOf(spinnerUnit.getSelectedItemId())) +1));
-            RequestBody requestJumlahPohon = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(inpJumlahPohon.getText()));
+            RequestBody requestJumlahPohon = RequestBody.create(MediaType.parse("text/plain"), jumlahPohon);
 
             MultipartBody.Builder builder = new MultipartBody.Builder();
             builder.addPart(MultipartBody.Part.createFormData("aset_id",null,requestAsetId));

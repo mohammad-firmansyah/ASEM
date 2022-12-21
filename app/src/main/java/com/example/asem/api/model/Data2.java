@@ -56,7 +56,7 @@ public class Data2 {
     private String geoTag4;
     @SerializedName("aset_luas")
     @Expose
-    private Integer asetLuas;
+    private Double asetLuas;
     @SerializedName("tgl_input")
     @Expose
     private String tglInput;
@@ -291,11 +291,11 @@ public class Data2 {
         this.geoTag4 = geoTag4;
     }
 
-    public Integer getAsetLuas() {
+    public Double getAsetLuas() {
         return asetLuas;
     }
 
-    public void setAsetLuas(Integer asetLuas) {
+    public void setAsetLuas(Double asetLuas) {
         this.asetLuas = asetLuas;
     }
 

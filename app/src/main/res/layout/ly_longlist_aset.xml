@@ -95,36 +95,39 @@
             android:layout_marginTop="30dp">
         </TextView>
     </LinearLayout>
-    <LinearLayout
-        android:id="@+id/baris3"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="5dp">
-        <TextView
-            android:id="@+id/tv_aset_jenis"
-            android:layout_height="wrap_content"
+
+        <LinearLayout
+            android:id="@+id/baris3"
             android:layout_width="match_parent"
-            android:text="aset_jenis"
-            android:textColor="@color/black"
-            android:layout_weight="1"
-            android:layout_marginTop="60dp">
-        </TextView>
-        <TextView
-            android:id="@+id/tv_umur_ekonomis"
             android:layout_height="wrap_content"
-            android:layout_width="match_parent"
-            android:textColor="@color/black"
-            android:text="umur_ekonomis"
-            android:layout_weight="1"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="60dp">
-        </TextView>
-    </LinearLayout>
-    <LinearLayout
+            android:padding="5dp">
+
+            <TextView
+                android:id="@+id/tv_aset_jenis"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="60dp"
+                android:layout_weight="1"
+                android:text="aset_jenis"
+                android:textColor="@color/black"/>
+
+            <TextView
+                android:id="@+id/tv_umur_ekonomis"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="60dp"
+                android:layout_weight="1"
+                android:text="umur_ekonomis"
+                android:textColor="@color/black"/>
+        </LinearLayout>
+
+        <LinearLayout
         android:id="@+id/baris4"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="5dp">
+        android:padding="5dp"
+            android:layout_marginBottom="5dp">
         <TextView
             android:id="@+id/tv_afdeling"
             android:layout_height="wrap_content"
@@ -142,7 +145,8 @@
             android:text="no_inv"
             android:layout_weight="1"
             android:layout_marginLeft="10dp"
-            android:layout_marginTop="90dp">
+            android:layout_marginTop="90dp"
+            android:layout_marginBottom="5dp">
         </TextView>
     </LinearLayout>
 

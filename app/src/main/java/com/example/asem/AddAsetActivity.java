@@ -1453,7 +1453,8 @@ public class AddAsetActivity extends AppCompatActivity {
         String nama_aset = inpNamaAset.getText().toString().trim();
         String nomor_aset_sap = inpNoSAP.getText().toString().trim();
         String ba_file = tvUploudBA.getText().toString().trim();
-        String luas_aset = inpLuasAset.getText().toString().trim();
+//        String luas_aset = inpLuasAset.getText().toString().trim();
+        String luas_aset = String.valueOf(Double.parseDouble(inpLuasAset.getText().toString().trim()));
         String nilai_aset = String.valueOf(CurrencyToNumber(inpNilaiAsetSAP.getText().toString().trim()));
 
 

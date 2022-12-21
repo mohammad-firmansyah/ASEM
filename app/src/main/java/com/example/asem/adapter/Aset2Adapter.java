@@ -234,12 +234,17 @@ public class Aset2Adapter  extends RecyclerView.Adapter<Aset2Adapter.ViewHolder>
                 holder.btnKirim.setVisibility(View.VISIBLE);
                 holder.btnDetail.setVisibility(View.VISIBLE);
                 holder.btnHapus.setVisibility(View.VISIBLE);
+                holder.btnQR.setVisibility(View.GONE);
+                holder.btnQRijo.setVisibility(View.GONE);
                 //hapus statusreject, dan keterangan reject
             } else if(myPostData2.getStatusPosisiID()== 5){
                 holder.btnEdit.setVisibility(View.VISIBLE);
                 holder.btnDetail.setVisibility(View.VISIBLE);
                 holder.btnKirim.setVisibility(View.GONE);
                 if (myPostData2.getFotoAsetQr() != null){
+                    //tombol edit hilang, karna fotoasetqr sudah terisi
+                    holder.btnEdit.setVisibility(View.GONE);
+
                     holder.btnQRijo.setVisibility(View.VISIBLE);
                     holder.btnQR.setVisibility(View.GONE);
                 }else{
@@ -250,28 +255,52 @@ public class Aset2Adapter  extends RecyclerView.Adapter<Aset2Adapter.ViewHolder>
                 holder.btnEdit.setVisibility(View.GONE);
                 holder.btnKirim.setVisibility(View.GONE);
                 holder.btnDetail.setVisibility(View.VISIBLE);
+                holder.btnQR.setVisibility(View.GONE);
+                holder.btnQRijo.setVisibility(View.GONE);
             }
         } else if(hak_akses_id.equals("6")){ //asisten
             if(myPostData2.getStatusPosisiID()==2 ){ //if status posisi pending dan asisten
                 holder.btnDetail.setVisibility(View.VISIBLE);
                 holder.btnEdit.setVisibility(View.VISIBLE);
                 holder.btnKirim.setVisibility(View.VISIBLE);
+                holder.btnQR.setVisibility(View.GONE);
+                holder.btnQRijo.setVisibility(View.GONE);
             } else if ( myPostData2.getStatusPosisiID()==3 ) {
                 holder.btnDetail.setVisibility(View.VISIBLE);
                 holder.btnEdit.setVisibility(View.VISIBLE);
                 holder.btnKirim.setVisibility(View.VISIBLE);
+                holder.btnQR.setVisibility(View.GONE);
+                holder.btnQRijo.setVisibility(View.GONE);
             }
             else {
                 holder.btnEdit.setVisibility(View.GONE);
                 holder.btnKirim.setVisibility(View.GONE);
                 holder.btnDetail.setVisibility(View.VISIBLE);
+                holder.btnQR.setVisibility(View.GONE);
+                holder.btnQRijo.setVisibility(View.GONE);
             }
         } else if (hak_akses_id.equals("5") ){ //astuu
             if(myPostData2.getStatusPosisiID() == 4) { //if statpos pending astuu dan astuu
                 holder.btnDetail.setVisibility(View.VISIBLE);
                 holder.btnEdit.setVisibility(View.VISIBLE);
                 holder.btnKirim.setVisibility(View.VISIBLE);
+                holder.btnQR.setVisibility(View.GONE);
+                holder.btnQRijo.setVisibility(View.GONE);
             } else if(myPostData2.getStatusPosisiID()== 5) {
+                holder.btnDetail.setVisibility(View.VISIBLE);
+                holder.btnEdit.setVisibility(View.VISIBLE);
+                holder.btnKirim.setVisibility(View.VISIBLE);
+                holder.btnKirim.setOnClickListener(v -> {
+                    if (myPostData2.getFotoAsetQr() == null) {
+                        Toast.makeText(context.getApplicationContext(), "Mohon Foto Aset dengan QRCODE Dilengkapi oleh Operator", Toast.LENGTH_SHORT).show();
+                    } else {
+                        sharedPreferences = context.getSharedPreferences(PREF_LOGIN, MODE_PRIVATE);
+                        String user_id = sharedPreferences.getString("user_id", "-");
+                        showDialogKirim("Yakin Kirim Data?",
+                                asetInterface.kirimDataAset(id, Integer.parseInt(user_id))
+                        );
+                    }
+                });
                 if (myPostData2.getFotoAsetQr() != null){
                     holder.btnQRijo.setVisibility(View.VISIBLE);
                     holder.btnQR.setVisibility(View.GONE);
@@ -279,56 +308,62 @@ public class Aset2Adapter  extends RecyclerView.Adapter<Aset2Adapter.ViewHolder>
                     holder.btnQRijo.setVisibility(View.GONE);
                     holder.btnQR.setVisibility(View.VISIBLE);
                 }
-                    holder.btnKirim.setOnClickListener(v -> {
-                        if (myPostData2.getFotoAsetQr() == null) {
-                            Toast.makeText(context.getApplicationContext(), "Mohon Foto Aset dengan QRCODE Dilengkapi oleh Operator", Toast.LENGTH_SHORT).show();
-                        } else {
-                            sharedPreferences = context.getSharedPreferences(PREF_LOGIN, MODE_PRIVATE);
-                            String user_id = sharedPreferences.getString("user_id", "-");
-                            showDialogKirim("Yakin Kirim Data?",
-                                    asetInterface.kirimDataAset(id, Integer.parseInt(user_id))
-                            );
-                        }
-                    });
+
             } else {
                 holder.btnEdit.setVisibility(View.GONE);
                 holder.btnKirim.setVisibility(View.GONE);
                 holder.btnDetail.setVisibility(View.VISIBLE);
+                holder.btnQR.setVisibility(View.GONE);
+                holder.btnQRijo.setVisibility(View.GONE);
             }
         }else if (hak_akses_id.equals("4")){ //askep
             if(myPostData2.getStatusPosisiID()== 6 || myPostData2.getStatusPosisiID()== 7){ //if statpos pending askep dan askep
                 holder.btnEdit.setVisibility(View.VISIBLE);
                 holder.btnKirim.setVisibility(View.VISIBLE);
                 holder.btnDetail.setVisibility(View.VISIBLE);
+                holder.btnQR.setVisibility(View.GONE);
+                holder.btnQRijo.setVisibility(View.GONE);
             } else {
                 holder.btnEdit.setVisibility(View.GONE);
                 holder.btnKirim.setVisibility(View.GONE);
                 holder.btnDetail.setVisibility(View.VISIBLE);
+                holder.btnQR.setVisibility(View.GONE);
+                holder.btnQRijo.setVisibility(View.GONE);
             }
         } else if (hak_akses_id.equals("3")){ //mnj
             if(myPostData2.getStatusPosisiID()== 8 || myPostData2.getStatusPosisiID()== 9){ //if statpos pending mnj dan mnj
                 holder.btnEdit.setVisibility(View.VISIBLE);
                 holder.btnKirim.setVisibility(View.VISIBLE);
                 holder.btnDetail.setVisibility(View.VISIBLE);
+                holder.btnQR.setVisibility(View.GONE);
+                holder.btnQRijo.setVisibility(View.GONE);
             } else {
                 holder.btnEdit.setVisibility(View.GONE);
                 holder.btnKirim.setVisibility(View.GONE);
                 holder.btnDetail.setVisibility(View.VISIBLE);
+                holder.btnQR.setVisibility(View.GONE);
+                holder.btnQRijo.setVisibility(View.GONE);
             }
         } else if (hak_akses_id.equals("2")) { //kasi
             if (myPostData2.getStatusPosisiID()== 10 ) { //if statpos pendingkasi dan kasi
                 holder.btnEdit.setVisibility(View.VISIBLE);
                 holder.btnKirim.setVisibility(View.VISIBLE);
                 holder.btnDetail.setVisibility(View.VISIBLE);
+                holder.btnQR.setVisibility(View.GONE);
+                holder.btnQRijo.setVisibility(View.GONE);
             } else if (myPostData2.getStatusPosisiID()== 11){
                 holder.btnKirim.setVisibility(View.GONE);
                 holder.btnDetail.setVisibility(View.VISIBLE);
                 holder.btnEdit.setVisibility(View.GONE);
+                holder.btnQR.setVisibility(View.GONE);
+                holder.btnQRijo.setVisibility(View.GONE);
             }
             else {
                 holder.btnEdit.setVisibility(View.GONE);
                 holder.btnKirim.setVisibility(View.GONE);
                 holder.btnDetail.setVisibility(View.VISIBLE);
+                holder.btnQR.setVisibility(View.GONE);
+                holder.btnQRijo.setVisibility(View.GONE);
             }
         }
 

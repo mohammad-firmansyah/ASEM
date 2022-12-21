@@ -624,9 +624,10 @@ import com.google.android.gms.location.FusedLocationProviderClient;
                     inpNilaiResidu.setText(formatrupiah(Double.parseDouble(String.valueOf(response.body().getData().getNilaiResidu()))));
                     inpKeterangan.setText(response.body().getData().getKeterangan());
                     inpUmrEkonomis.setText(utils.MonthToYear(response.body().getData().getUmurEkonomisInMonth()));
-                    inpNilaiAsetSAP.setText(formatrupiah(Double.parseDouble(String.valueOf(response.body().getData().getUmurEkonomisInMonth()))));
+//                    inpNilaiAsetSAP.setText(formatrupiah(Double.parseDouble(String.valueOf(response.body().getData().getUmurEkonomisInMonth()))));
                     inpPersenKondisi.setText(String.valueOf(response.body().getData().getPersenKondisi()));
                     statusPosisi = response.body().getData().getStatusPosisi();
+                    inpJumlahPohon.setText(String.valueOf(response.body().getData().getJumlahPohon()));
                     id = response.body().getData().getAsetId();
 
 //                    if (response.body().getData().getNoInv() != null) {
