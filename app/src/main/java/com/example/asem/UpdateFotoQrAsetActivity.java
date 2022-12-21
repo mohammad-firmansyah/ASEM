@@ -84,7 +84,7 @@ import com.google.android.gms.location.FusedLocationProviderClient;
                                 int resultCode = activityResult.getResultCode();
                                 if (resultCode== Activity.RESULT_OK){
                                     asetqrfoto = utils.savePictureResult(
-                                            UpdateFotoQrAsetActivity.this, photoname1, fotoasetqr, true
+                                            UpdateFotoQrAsetActivity.this, "fotoasetqr.png", fotoasetqr, false
                                     );
 //                                setExifLocation(asetqrfoto,1);
                                 } else if (resultCode == Activity.RESULT_CANCELED){
@@ -319,7 +319,7 @@ import com.google.android.gms.location.FusedLocationProviderClient;
             addNewFotoAsetAndQr.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    captureFotoQcLoses("fotoaset.png",activityCaptureFoto1);
+                    captureFotoQcLoses("fotoasetqr.png",activityCaptureFoto1);
                 }
             });
 
