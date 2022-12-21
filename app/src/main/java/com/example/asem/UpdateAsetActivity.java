@@ -125,6 +125,9 @@ public class UpdateAsetActivity extends AppCompatActivity {
     Button map4;
     double longitudeValue = 0;
     double latitudeValue = 0;
+    Map<Integer,Integer> mapKodeSpinner = new HashMap();
+    Map<Integer,Integer> mapSpinnerkode = new HashMap();
+
     DataAllSpinner allSpinner;
     Map<Integer, Integer> mapAfdelingSpinner = new HashMap<Integer, Integer>();
     Map<Integer, Integer> mapSpinnerAfdeling = new HashMap<Integer, Integer>();
@@ -905,7 +908,7 @@ public class UpdateAsetActivity extends AppCompatActivity {
                 spinnerTipeAset.setSelection(response.body().getData().getAsetTipe()-1);
                 spinnerJenisAset.setSelection(response.body().getData().getAsetJenis()-1);
                 spinnerAsetKondisi.setSelection(response.body().getData().getAsetKondisi()-1);
-                spinnerKodeAset.setSelection(response.body().getData().getAsetKode()-1);
+//                spinnerKodeAset.setSelection(response.body().getData().getAsetKode()-1);
                 spinnerSubUnit.setSelection(response.body().getData().getAsetSubUnit()-1);
 
                     try {
@@ -914,6 +917,14 @@ public class UpdateAsetActivity extends AppCompatActivity {
 
                             spinnerAfdeling.setSelection(mapAfdelingSpinner.get(response.body().getData().getAfdelingId()));
 
+                        }
+
+                        if (mapKodeSpinner.get(response.body().getData().getAsetKode()) != null) {
+
+                            spinnerKodeAset.setSelection(mapKodeSpinner.get(response.body().getData().getAsetKode()));
+
+                        Log.d("amanat12", String.valueOf(spinnerKodeAset.getSelectedItemId()));
+                        Log.d("amanat12", String.valueOf(mapKodeSpinner.get(response.body().getData().getAsetKode())));
                         }
                     } catch (Exception e){
                     }
@@ -1550,7 +1561,7 @@ public class UpdateAsetActivity extends AppCompatActivity {
             RequestBody requestTipeAset = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(spinnerIdTipeAsset));
             RequestBody requestJenisAset = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(spinnerIdJenisAset));
             RequestBody requestKondisiAset = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(spinnerIdAsetKondisi));
-            RequestBody requestKodeAset = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(spinnerIdKodeAset));
+            RequestBody requestKodeAset = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(mapSpinnerkode.get(Integer.parseInt(String.valueOf(spinnerKodeAset.getSelectedItemId())))));
             RequestBody requestNamaAset = RequestBody.create(MediaType.parse("text/plain"), nama_aset);
             RequestBody requestNomorAsetSAP = RequestBody.create(MediaType.parse("text/plain"), nomor_aset_sap);
 
@@ -1676,7 +1687,7 @@ public class UpdateAsetActivity extends AppCompatActivity {
     public void setAdapterAsetKode(){
         List<String> asetKode = new ArrayList<>();
         String aset_kode_temp;
-
+        Integer i = 0;
         for (AsetKode2 a : asetKode2) {
             if (a.getAsetJenis()-1 == spinnerJenisAset.getSelectedItemId()) {
                 Log.d("asetapix22",  "aset jenis dari spinner "+ String.valueOf(spinnerJenisAset.getSelectedItemId()));
@@ -1689,6 +1700,10 @@ public class UpdateAsetActivity extends AppCompatActivity {
                     aset_kode_temp = a.getAsetClass() + "/" + a.getAsetGroup() + "/" + a.getAsetDesc();
                 }
 
+                mapKodeSpinner.put(a.getAsetKodeId(),i);
+                mapSpinnerkode.put(i,a.getAsetKodeId());
+
+                i++;
                 asetKode.add(aset_kode_temp);
             }
         }

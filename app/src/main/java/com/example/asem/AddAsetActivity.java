@@ -187,6 +187,9 @@ public class AddAsetActivity extends AppCompatActivity {
     Map<Integer, Integer> mapAfdelingSpinner = new HashMap<Integer, Integer>();
     Map<Integer, Integer> mapSpinnerAfdeling = new HashMap<Integer, Integer>();
     Map<Integer, String> mapAfdeling = new HashMap();
+
+    Map<Integer,Integer> mapKodeSpinner = new HashMap();
+    Map<Integer,Integer> mapSpinnerkode = new HashMap();
     String photoname1 = "foto1.png";
     String photoname2 = "foto2.png";
     String photoname3 = "foto3.png";
@@ -1470,11 +1473,14 @@ public class AddAsetActivity extends AppCompatActivity {
             RequestBody requestTipeAset = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(spinnerIdTipeAsset));
             RequestBody requestJenisAset = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(spinnerIdJenisAset));
             RequestBody requestKondisiAset = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(spinnerIdAsetKondisi));
-            RequestBody requestKodeAset = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(spinnerIdKodeAset));
+            RequestBody requestKodeAset = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(mapSpinnerkode.get(Integer.parseInt(String.valueOf(spinnerKodeAset.getSelectedItemId())))));
+//            RequestBody requestKodeAset = RequestBody.create(MediaType.parse("text/plain"), String.valueOf( Integer.parseInt(String.valueOf(spinnerKodeAset.getSelectedItemId())) + 1));
             RequestBody requestNamaAset = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(nama_aset));
             RequestBody requestNomorAsetSAP = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(nomor_aset_sap));
-
-
+            Log.d("amanat14", String.valueOf(spinnerKodeAset.getSelectedItemId()));
+            Integer kode = Math.toIntExact(spinnerKodeAset.getSelectedItemId());
+            Log.d("amanat14", String.valueOf(kode));
+            Log.d("amanat14", String.valueOf(mapSpinnerkode.get(Integer.parseInt(String.valueOf(spinnerKodeAset.getSelectedItemId() + 1)))));
 
             RequestBody requestLuasAset = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(luas_aset));
             RequestBody requestNilaiAsetSAP = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(nilai_aset));
@@ -1487,7 +1493,6 @@ public class AddAsetActivity extends AppCompatActivity {
             RequestBody requestUnit = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(Integer.parseInt(String.valueOf(spinnerUnit.getSelectedItemId()))+1));
             Integer afdeling_id = Integer.valueOf(sharedPreferences.getString("afdeling_id", "0"));
             RequestBody requestAfdeling = RequestBody.create(MediaType.parse("text/plain"), String.valueOf((afdeling_id)));
-            Log.d("amanat13","nomor bast :"+ String.valueOf(mapAfdeling.get(spinnerAfdeling.getSelectedItem().toString().trim())));
 
 
 
@@ -1768,7 +1773,8 @@ public class AddAsetActivity extends AppCompatActivity {
         List<String> asetKode = new ArrayList<>();
         String aset_kode_temp = "";
 
-        asetKode.add("Pilih Aset Kode");
+        asetKode.add("pilih aset kode");
+        Integer i = 1;
         for (AsetKode2 a : asetKode2) {
 
 
@@ -1782,6 +1788,10 @@ public class AddAsetActivity extends AppCompatActivity {
                     aset_kode_temp = a.getAsetClass() + "/" + a.getAsetGroup() + "/" + a.getAsetDesc();
                 }
 
+                mapKodeSpinner.put(a.getAsetKodeId(),i);
+                mapSpinnerkode.put(i,a.getAsetKodeId());
+
+                i++;
                 asetKode.add(aset_kode_temp);
             }
         }

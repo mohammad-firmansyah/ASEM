@@ -92,6 +92,9 @@ public class DetailAsetActivity extends AppCompatActivity {
     String url3 = "";
     String url4 = "";
     Map<Integer, Integer> mapAfdelingSpinner = new HashMap<Integer, Integer>();
+
+    Map<Integer,Integer> mapKodeSpinner = new HashMap();
+    Map<Integer,Integer> mapSpinnerkode = new HashMap();
     File asetqrfoto;
     DataAllSpinner allSpinner;
     ActivityResultLauncher<Intent> activityCaptureFoto1 =
@@ -377,8 +380,8 @@ public class DetailAsetActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 spinnerIdSubUnit = String.valueOf(position);
-                editVisibilityDynamic();
                 setValueInput();
+                editVisibilityDynamic();
                 setAfdelingAdapter();
             }
 
@@ -391,8 +394,8 @@ public class DetailAsetActivity extends AppCompatActivity {
         spinnerUnit.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                editVisibilityDynamic();
                 setValueInput();
+                editVisibilityDynamic();
             }
 
             @Override
@@ -684,9 +687,6 @@ public class DetailAsetActivity extends AppCompatActivity {
 
     private void setValueInput(){
 
-
-
-
         Call<AsetModel> call = asetInterface.getAset(id);
 
 
@@ -747,7 +747,6 @@ public class DetailAsetActivity extends AppCompatActivity {
                 };
 
                 qrurl = baseUrlImg+"/"+response.body().getData().getFotoQr();
-                Log.d("amanat12",qrurl);
                 if (response.body().getData().getFotoQr() != null) {
                     qrDefault.getLayoutParams().height = 346;
                     Picasso.get().load(qrurl).resize(400,400).centerCrop().into(qrDefault);
@@ -801,13 +800,21 @@ public class DetailAsetActivity extends AppCompatActivity {
 
                 spinnerSubUnit.setSelection(response.body().getData().getAsetSubUnit()-1);
 
-                spinnerKodeAset.setSelection(response.body().getData().getAsetKode()-1);
+
                 try {
 
                     if (response.body().getData().getAfdelingId() != null) {
 
                         spinnerAfdeling.setSelection(mapAfdelingSpinner.get(response.body().getData().getAfdelingId()));
 
+                    }
+
+                    if (mapKodeSpinner.get(response.body().getData().getAsetKode()) != null) {
+
+                        spinnerKodeAset.setSelection(mapKodeSpinner.get(response.body().getData().getAsetKode()));
+
+//                        Log.d("amanat12", String.valueOf(spinnerKodeAset.getSelectedItemId()));
+//                        Log.d("amanat12", String.valueOf(mapKodeSpinner.get(response.body().getData().getAsetKode()-1)));
                     }
                 } catch (Exception e){
                 }
@@ -1119,7 +1126,7 @@ public class DetailAsetActivity extends AppCompatActivity {
     public void setAdapterAsetKode(){
         List<String> asetKode = new ArrayList<>();
         String aset_kode_temp;
-
+        Integer i = 0;
         for (AsetKode2 a : asetKode2) {
             if (a.getAsetJenis()-1 == spinnerJenisAset.getSelectedItemId()) {
 
@@ -1131,6 +1138,10 @@ public class DetailAsetActivity extends AppCompatActivity {
                     aset_kode_temp = a.getAsetClass() + "/" + a.getAsetGroup() + "/" + a.getAsetDesc();
                 }
 
+                mapKodeSpinner.put(a.getAsetKodeId(),i);
+                mapSpinnerkode.put(i,a.getAsetKodeId());
+
+                i++;
                 asetKode.add(aset_kode_temp);
             }
         }
@@ -1212,6 +1223,7 @@ public class DetailAsetActivity extends AppCompatActivity {
 
                 // get kode aset
                 asetKode2 = dataAllSpinner.getAsetKode();
+                setAdapterAsetKode();
 
 
                 // get unit
@@ -1253,11 +1265,11 @@ public class DetailAsetActivity extends AppCompatActivity {
                 adapterKondisiAset.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 spinnerAsetKondisi.setAdapter(adapterKondisiAset);
 
-                // set adapter kode aset
-                ArrayAdapter<String> adapterKodeAset = new ArrayAdapter<String>(getApplicationContext(),
-                        android.R.layout.simple_spinner_item, listSpinnerKodeAset);
-                adapterKodeAset.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                spinnerKodeAset.setAdapter(adapterKodeAset);
+//                // set adapter kode aset
+//                ArrayAdapter<String> adapterKodeAset = new ArrayAdapter<String>(getApplicationContext(),
+//                        android.R.layout.simple_spinner_item, listSpinnerKodeAset);
+//                adapterKodeAset.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+//                spinnerKodeAset.setAdapter(adapterKodeAset);
 
                 // set adapter unit
                 ArrayAdapter<String> adapterUnit = new ArrayAdapter<String>(getApplicationContext(),
