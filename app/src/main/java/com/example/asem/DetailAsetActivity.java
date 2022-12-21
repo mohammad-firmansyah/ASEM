@@ -380,9 +380,12 @@ public class DetailAsetActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 spinnerIdSubUnit = String.valueOf(position);
-                setValueInput();
+
                 editVisibilityDynamic();
                 setAfdelingAdapter();
+
+                setValueInput();
+
             }
 
             @Override
@@ -394,8 +397,11 @@ public class DetailAsetActivity extends AppCompatActivity {
         spinnerUnit.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                setValueInput();
+
                 editVisibilityDynamic();
+
+                setValueInput();
+
             }
 
             @Override
@@ -423,6 +429,7 @@ public class DetailAsetActivity extends AppCompatActivity {
                 spinnerIdJenisAset = String.valueOf(position+1);
                 editVisibilityDynamic();
                 setAdapterAsetKode();
+                setValueInput();
             }
 
             @Override

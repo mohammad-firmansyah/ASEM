@@ -524,6 +524,7 @@ public class UpdateAsetActivity extends AppCompatActivity {
                 spinnerIdJenisAset = String.valueOf(position+1);
                 editVisibilityDynamic();
                 setAdapterAsetKode();
+                setValueInput();
             }
 
             @Override
