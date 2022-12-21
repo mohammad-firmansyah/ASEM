@@ -68,7 +68,7 @@ public class Data {
     private String geoTag4;
     @SerializedName("aset_luas")
     @Expose
-    private Integer asetLuas;
+    private Double asetLuas;
     @SerializedName("tgl_input")
     @Expose
     private String tglInput;
@@ -299,11 +299,11 @@ public class Data {
         this.geoTag4 = geoTag4;
     }
 
-    public Integer getAsetLuas() {
+    public Double getAsetLuas() {
         return asetLuas;
     }
 
-    public void setAsetLuas(Integer asetLuas) {
+    public void setAsetLuas(Double asetLuas) {
         this.asetLuas = asetLuas;
     }
 
@@ -451,7 +451,7 @@ public class Data {
         this.umurEkonomisInMonth = umurEkonomisInMonth;
     }
 
-    public Data(Integer jumlahPohon,Integer asetId, String asetName, Integer asetTipe, Integer asetJenis, Integer asetKondisi, Integer asetSubUnit, Integer asetKode, String nomorSap, String fotoAset1, String fotoAset2, String fotoAset3, String fotoAset4, String geoTag1, String geoTag2, String geoTag3, String geoTag4, Integer asetLuas, String tglInput, String tglOleh, Integer nilaiResidu, Integer nilaiOleh, String nomorBast, String masaSusut, String keterangan, String fotoQr, String noInv, String fotoAsetQr, Integer statusPosisi, Integer unitId, Integer afdelingId, Integer userInputId, String createdAt, String updatedAt, String baFile, Integer umurEkonomisInMonth, double persenKondisi) {
+    public Data(Integer jumlahPohon,Integer asetId, String asetName, Integer asetTipe, Integer asetJenis, Integer asetKondisi, Integer asetSubUnit, Integer asetKode, String nomorSap, String fotoAset1, String fotoAset2, String fotoAset3, String fotoAset4, String geoTag1, String geoTag2, String geoTag3, String geoTag4, Double asetLuas, String tglInput, String tglOleh, Integer nilaiResidu, Integer nilaiOleh, String nomorBast, String masaSusut, String keterangan, String fotoQr, String noInv, String fotoAsetQr, Integer statusPosisi, Integer unitId, Integer afdelingId, Integer userInputId, String createdAt, String updatedAt, String baFile, Integer umurEkonomisInMonth, double persenKondisi) {
         this.jumlahPohon = jumlahPohon;
         this.asetId = asetId;
         this.asetName = asetName;
