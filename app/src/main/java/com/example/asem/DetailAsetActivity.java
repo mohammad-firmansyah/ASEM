@@ -164,6 +164,7 @@ public class DetailAsetActivity extends AppCompatActivity {
     EditText inpJumlahPohon;
     TextView tvUploudBA;
     TextView tvFotoAsetQR;
+    TextView tvKetReject;
     AsetModel asetModel;
     File source;
 
@@ -188,6 +189,7 @@ public class DetailAsetActivity extends AppCompatActivity {
     EditText inpKeterangan;
     EditText inpUmrEkonomis;
     EditText inpPersenKondisi;
+    EditText inpKetReject;
 
 
 
@@ -258,6 +260,8 @@ public class DetailAsetActivity extends AppCompatActivity {
 
 
 
+        inpKetReject = findViewById(R.id.inpKetReject);
+        inpKetReject.setEnabled(false);
         inpNoInv = findViewById(R.id.inpNoInv);
         inpNoInv.setEnabled(false);
         listBtnMap = findViewById(R.id.listMapButton);
@@ -280,6 +284,7 @@ public class DetailAsetActivity extends AppCompatActivity {
         spinnerUnit.setEnabled(false);
         fotoasetqr = findViewById(R.id.fotoasetqr);
         tvFotoAsetQR = findViewById(R.id.tvFotoAsetQR);
+        tvKetReject = findViewById(R.id.tvKetReject);
 
         addNewFotoAsetAndQr = findViewById(R.id.addNewFotoAsetAndQr);
         inpTglInput = findViewById(R.id.inpTglInput);
@@ -723,6 +728,17 @@ public class DetailAsetActivity extends AppCompatActivity {
                 inpNilaiAsetSAP.setText(formatrupiah(Double.parseDouble(String.valueOf(response.body().getData().getNilaiOleh()))));
                 inpPersenKondisi.setText(String.valueOf(response.body().getData().getPersenKondisi()));
                 inpJumlahPohon.setText(String.valueOf(response.body().getData().getJumlahPohon()));
+                String ket_reject = response.body().getData().getKetReject();
+                if (ket_reject != null){
+                    inpKetReject.setVisibility(View.VISIBLE);
+                    inpKetReject.setEnabled(false);
+                    tvKetReject.setVisibility(View.VISIBLE);
+                    inpKetReject.setText(ket_reject);
+                } else {
+                    inpKetReject.setVisibility(View.GONE);
+                    tvKetReject.setVisibility(View.GONE);
+                }
+
                 statusPosisi = response.body().getData().getStatusPosisi();
                 id = response.body().getData().getAsetId();
 
@@ -1441,5 +1457,6 @@ public class DetailAsetActivity extends AppCompatActivity {
                 android.R.layout.simple_spinner_item, afdelings);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerAfdeling.setAdapter(adapter);
+        Log.d("asetapix", String.valueOf(spinnerIdAfdeling));
     }
 }
