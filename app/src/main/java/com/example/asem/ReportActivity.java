@@ -12,6 +12,7 @@ import android.content.SharedPreferences;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.util.Log;
 import android.view.View;
 import android.webkit.CookieManager;
@@ -427,18 +428,29 @@ public class ReportActivity extends AppCompatActivity {
 
     private void downloadReport(String url){
 
-        DownloadManager.Request request = new DownloadManager.Request(Uri.parse(url));
+//        DownloadManager.Request request = new DownloadManager.Request(Uri.parse(url));
         String title = URLUtil.guessFileName(url,null,null);
-        request.setTitle(title);
-        request.setDescription("Downloading File Please Wait.....");
-        String cookie = CookieManager.getInstance().getCookie(url);
-        request.addRequestHeader("cookie",cookie);
-        request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
+//        request.setTitle(title);
+//        request.setDescription("Downloading File Please Wait.....");
+//        String cookie = CookieManager.getInstance().getCookie(url);
+//        request.addRequestHeader("cookie",cookie);
+//        request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
+//
+//        DownloadManager downloadManager = (DownloadManager)getSystemService(DOWNLOAD_SERVICE);
+//        downloadManager.enqueue(request);
+//
+//        Toast.makeText(this, "Berhasil Mengunduh", Toast.LENGTH_SHORT).show();
 
+
+
+        DownloadManager.Request request = new DownloadManager.Request(Uri.parse(url));
+        request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS,title);
+        request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
+        request.allowScanningByMediaScanner();
         DownloadManager downloadManager = (DownloadManager)getSystemService(DOWNLOAD_SERVICE);
         downloadManager.enqueue(request);
 
-        Toast.makeText(this, "Berhasil Mengunduh", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Download Dimulai" , Toast.LENGTH_SHORT).show();
 
     }
 
