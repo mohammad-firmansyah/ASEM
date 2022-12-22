@@ -470,7 +470,8 @@ import com.google.android.gms.location.FusedLocationProviderClient;
             });
 
             initCalender();
-            getSpinnerData();
+//            getSpinnerData();
+            getAllSpinnerData();
             setValueInput();
             initCustomDialog();
 
@@ -502,96 +503,7 @@ import com.google.android.gms.location.FusedLocationProviderClient;
         }
 
 
-        private void getAsetJenis(){
-            Call<AsetJenisModel> call = asetInterface.getAsetJenis();
-            call.enqueue(new Callback<AsetJenisModel>() {
-                @Override
-                public void onResponse(Call<AsetJenisModel> call, Response<AsetJenisModel> response) {
 
-                    if (!response.isSuccessful()){
-                        Toast.makeText(getApplicationContext(),String.valueOf(response.code()),Toast.LENGTH_LONG).show();
-                        return;
-                    }
-
-                    List<String> listSpinner = new ArrayList<>();
-
-                    for (int i = 0; i < response.body().getData().size();i++){
-                        listSpinner.add(response.body().getData().get(i).getAset_jenis_desc());
-                    }
-
-                    ArrayAdapter<String> adapter = new ArrayAdapter<String>(getApplicationContext(),
-                            android.R.layout.simple_spinner_item, listSpinner);
-                    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                    spinnerJenisAset.setAdapter(adapter);
-                }
-
-                @Override
-                public void onFailure(Call<AsetJenisModel> call, Throwable t) {
-                    Toast.makeText(getApplicationContext(),t.getMessage(),Toast.LENGTH_LONG).show();
-                }
-            });
-        }
-
-        private void getTipeAset(){
-            Call<List<AsetTipe>> call = asetInterface.getAsetTipe();
-            call.enqueue(new Callback<List<AsetTipe>>() {
-                @Override
-                public void onResponse(Call<List<AsetTipe>> call, Response<List<AsetTipe>> response) {
-                    if (!response.isSuccessful()){
-                        Toast.makeText(getApplicationContext(),String.valueOf(response.code()),Toast.LENGTH_LONG).show();
-//                    utils.Ngetoast(getApplicationContext(),);
-                        return;
-                    }
-                    List<String> listSpinner = new ArrayList<>();
-
-                    for (int i=0;i<response.body().size();i++){
-                        listSpinner.add(response.body().get(i).getAset_tipe_desc());
-                    }
-                    Log.d("asetapi", listSpinner.get(0));
-
-                    // Set hasil result json ke dalam adapter spinner
-                    ArrayAdapter<String> adapter = new ArrayAdapter<String>(getApplicationContext(),
-                            android.R.layout.simple_spinner_item, listSpinner);
-                    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                    spinnerTipeAset.setAdapter(adapter);
-                }
-
-                @Override
-                public void onFailure(Call<List<AsetTipe>> call, Throwable t) {
-                    Toast.makeText(getApplicationContext(),t.getMessage(),Toast.LENGTH_LONG).show();
-                }
-            });
-        }
-
-        private void getAsetKondisi(){
-            Call<List<AsetKondisi>> call = asetInterface.getAsetKondisi();
-            call.enqueue(new Callback<List<AsetKondisi>>() {
-                @Override
-                public void onResponse(Call<List<AsetKondisi>> call, Response<List<AsetKondisi>> response) {
-                    if (!response.isSuccessful()){
-                        Toast.makeText(getApplicationContext(),String.valueOf(response.code()),Toast.LENGTH_LONG).show();
-                        return;
-                    }
-
-                    List<String> listSpinner = new ArrayList<>();
-                    for (int i=0;i<response.body().size();i++){
-                        listSpinner.add(response.body().get(i).getAset_kondisi_desc());
-                    }
-
-                    // Set hasil result json ke dalam adapter spinner
-                    ArrayAdapter<String> adapter = new ArrayAdapter<String>(getApplicationContext(),
-                            android.R.layout.simple_spinner_item, listSpinner);
-                    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                    spinnerAsetKondisi.setAdapter(adapter);
-                }
-
-                @Override
-                public void onFailure(Call<List<AsetKondisi>> call, Throwable t) {
-                    Toast.makeText(getApplicationContext(),t.getMessage(),Toast.LENGTH_LONG).show();
-                    return;
-                }
-            });
-        }
         private void setValueInput(){
             Call<AsetModel> call = asetInterface.getAset(id);
             call.enqueue(new Callback<AsetModel>() {
@@ -642,6 +554,7 @@ import com.google.android.gms.location.FusedLocationProviderClient;
 //                    }
 
 
+
                     String url1 = baseUrlImg+response.body().getData().getFotoAset1();
                     String url2 = baseUrlImg+response.body().getData().getFotoAset2();
                     String url3 = baseUrlImg+response.body().getData().getFotoAset3();
@@ -683,6 +596,15 @@ import com.google.android.gms.location.FusedLocationProviderClient;
 //                    if (response.body().getData().getAfdelingId() != null) {
 //                        spinnerAfdeling.setSelection(response.body().getData().getAfdelingId()-1);
 //                    }
+
+
+                    if (response.body().getData().getAsetFotoQrStatus() != null){
+                        String url = baseUrlImg+response.body().getData().getFotoAsetQr();
+                        fotoasetqr.getLayoutParams().width = 400;
+                        fotoasetqr.getLayoutParams().height = 400;
+                        Picasso.get().load(url).resize(400,400).centerCrop().into(fotoasetqr);
+                    }
+
 
                     try {
 
@@ -828,52 +750,6 @@ import com.google.android.gms.location.FusedLocationProviderClient;
             activityLauncherName.launch(takePictureIntent);
         }
 
-        private void getKodeAset(){
-            Call<AsetKodeModel2> call = asetInterface.getAsetKode();
-            call.enqueue(new Callback<AsetKodeModel2>() {
-                @Override
-                public void onResponse(Call<AsetKodeModel2> call, Response<AsetKodeModel2> response) {
-                    if (!response.isSuccessful()){
-                        Toast.makeText(getApplicationContext(),String.valueOf(response.code()),Toast.LENGTH_LONG).show();
-                        return;
-                    }
-
-                    List<AsetKode2> asetKode = response.body().getData();
-                    List<String> listSpinner = new ArrayList<>();
-
-                    asetKode2 = asetKode;
-
-                    for ( AsetKode2 a : asetKode ){
-
-                        String aset_kode_temp = "";
-
-
-//                    aset_kode_temp = a.getAsetClass() + "/" + a.getAsetGroup() + "/" + a.getAsetDesc();
-                        if (a.getAsetJenis() == 1 ) {
-                            aset_kode_temp = a.getAsetClass() + "/" + a.getAsetDesc();
-                        } else if (a.getAsetJenis() == 2) {
-                            aset_kode_temp = a.getAsetClass() + "/" + a.getAsetGroup() + "/" + a.getAsetDesc();
-                        } else {
-                            aset_kode_temp = a.getAsetClass() + "/" + a.getAsetGroup() + "/" + a.getAsetDesc();
-                        }
-
-
-                        listSpinner.add(aset_kode_temp);
-                    }
-
-                    ArrayAdapter<String> adapter = new ArrayAdapter<String>(getApplicationContext(),
-                            android.R.layout.simple_spinner_item, listSpinner);
-                    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                    spinnerKodeAset.setAdapter(adapter);
-                }
-
-                @Override
-                public void onFailure(Call<AsetKodeModel2> call, Throwable t) {
-                    Toast.makeText(getApplicationContext(),t.getMessage(),Toast.LENGTH_LONG).show();
-                    return;
-                }
-            });
-        }
 
 
         public String formatrupiah(Double number){
@@ -886,99 +762,6 @@ import com.google.android.gms.location.FusedLocationProviderClient;
         }
 
 
-        private void getAfdeling(){
-            Call<AfdellingModel> call = asetInterface.getAfdeling();
-            call.enqueue(new Callback<AfdellingModel>() {
-                @Override
-                public void onResponse(Call<AfdellingModel> call, Response<AfdellingModel> response) {
-
-                    if (!response.isSuccessful()){
-//                    Toast.makeText(getApplicationContext(),String.valueOf(response.code()),Toast.LENGTH_LONG).show();
-//                    utils.Ngetoast(getApplicationContext(),);
-                        return;
-                    }
-                    List<String> listSpinner = new ArrayList<>();
-                    for (int i=0;i<response.body().getData().size();i++){
-                        listSpinner.add(response.body().getData().get(i).getAfdelling_desc());
-                    }
-
-                    // Set hasil result json ke dalam adapter spinner
-                    ArrayAdapter<String> adapter = new ArrayAdapter<String>(getApplicationContext(),
-                            android.R.layout.simple_spinner_item, listSpinner);
-                    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                    spinnerAfdeling.setAdapter(adapter);
-                }
-
-                @Override
-                public void onFailure(Call<AfdellingModel> call, Throwable t) {
-                    Toast.makeText(getApplicationContext(),t.getMessage(),Toast.LENGTH_LONG).show();
-                    return;
-                }
-            });
-        }
-
-        private void getSubUnit(){
-            Call<SubUnitModel> call = asetInterface.getSubUnit();
-            call.enqueue(new Callback<SubUnitModel>() {
-                @Override
-                public void onResponse(Call<SubUnitModel> call, Response<SubUnitModel> response) {
-                    if (!response.isSuccessful()){
-//                    Toast.makeText(getApplicationContext(),String.valueOf(response.code()),Toast.LENGTH_LONG).show();
-                        return;
-                    }
-
-                    List<SubUnit> subUnit = response.body().getData();
-                    List<String> listSpinner = new ArrayList<>();
-
-                    for ( SubUnit a : subUnit ){
-                        listSpinner.add(a.getSub_unit_desc());
-                    }
-
-                    ArrayAdapter<String> adapter = new ArrayAdapter<String>(getApplicationContext(),
-                            android.R.layout.simple_spinner_item, listSpinner);
-                    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                    spinnerSubUnit.setAdapter(adapter);
-                }
-
-                @Override
-                public void onFailure(Call<SubUnitModel> call, Throwable t) {
-                    Toast.makeText(getApplicationContext(),t.getMessage(),Toast.LENGTH_LONG).show();
-                    return;
-                }
-            });
-        }
-
-        private void getUnit(){
-            Call<UnitModel> call = asetInterface.getUnit();
-            call.enqueue(new Callback<UnitModel>() {
-                @Override
-                public void onResponse(Call<UnitModel> call, Response<UnitModel> response) {
-                    if (!response.isSuccessful()){
-//                    Toast.makeText(getApplicationContext(),String.valueOf(response.code()),Toast.LENGTH_LONG).show();
-                        return;
-                    }
-
-                    List<Unit> unit = response.body().getData();
-                    List<String> listSpinner = new ArrayList<>();
-
-
-                    for ( Unit a : unit ){
-                        listSpinner.add(a.getUnit_desc());
-                    }
-
-                    ArrayAdapter<String> adapter = new ArrayAdapter<String>(getApplicationContext(),
-                            android.R.layout.simple_spinner_item, listSpinner);
-                    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                    spinnerUnit.setAdapter(adapter);
-                }
-
-                @Override
-                public void onFailure(Call<UnitModel> call, Throwable t) {
-                    Toast.makeText(getApplicationContext(),t.getMessage(),Toast.LENGTH_LONG).show();
-                    return;
-                }
-            });
-        }
 
         public void editVisibilityDynamic(){
             TextView tvBa = findViewById(R.id.tvBa);
@@ -1282,15 +1065,6 @@ import com.google.android.gms.location.FusedLocationProviderClient;
 //            }
 //
 //        }
-        public void getSpinnerData(){
-            getTipeAset();
-            getKodeAset();
-            getAsetJenis();
-            getAsetKondisi();
-            getAfdeling();
-            getSubUnit();
-            getUnit();
-        }
 
         private void initCustomDialog(){
 //        Dialog customDialog = new Dialog(DetailAsetActivity.this);

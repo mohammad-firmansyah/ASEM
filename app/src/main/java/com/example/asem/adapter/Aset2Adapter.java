@@ -195,6 +195,15 @@ public class Aset2Adapter  extends RecyclerView.Adapter<Aset2Adapter.ViewHolder>
                     context.startActivity(intent);
                     return;
                 }
+
+                if (myPostData2.getAsetFotoQrStatus() != null && hak_akses_id == 7){
+
+                    Intent intent = new Intent(context, UpdateFotoQrAsetActivity.class);
+                    intent.putExtra("id",(myPostData2.getAsetId()));
+                    context.startActivity(intent);
+                    return;
+                }
+
                 Intent intent = new Intent(context, UpdateAsetActivity.class);
                 intent.putExtra("id",(myPostData2.getAsetId()));
                 context.startActivity(intent);
