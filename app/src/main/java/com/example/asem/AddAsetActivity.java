@@ -752,6 +752,7 @@ public class AddAsetActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 addAset();
+
                 //Toast.makeText(UpdateAsetActivity.this,"masuk", Toast.LENGTH_SHORT).show();
             }
         });
@@ -1436,182 +1437,197 @@ public class AddAsetActivity extends AppCompatActivity {
             return;
         }
 
+        if ("non tanaman".equals(String.valueOf(spinnerJenisAset.getSelectedItem()))){
+            if ("normal".equals(String.valueOf(spinnerAsetKondisi.getSelectedItem()))){
+                if (img1 == null || img2 == null || img3 == null || img4 == null){
+                    Toast.makeText(getApplicationContext(), "Foto Wajib Diisi Lengkap!", Toast.LENGTH_SHORT).show();
+
+                    dialog.dismiss();
+                    return;
+                }
+            }
+        }
+
+        if ("non tanaman".equals(String.valueOf(spinnerJenisAset.getSelectedItem()))){
+            if ( "rusak".equals (String.valueOf(spinnerAsetKondisi.getSelectedItem()))){
+                if (img1 == null || img2 == null || img3 == null || img4 == null){
+                    Toast.makeText(getApplicationContext(), "Foto Wajib Diisi Lengkap!", Toast.LENGTH_SHORT).show();
+
+                    dialog.dismiss();
+                    return;
+                }
+            }
+        }
 
 
 //        if (spinnerJenisAset.getSelectedItemId() == 1 || spinnerJenisAset.getSelectedItemId() == 3 ) {
 
-  //          if (inpJumlahPohon.getText().toString().equals("")) {
-    //            inpJumlahPohon.setError("Jumlah Pohon harus diisi");
-      //          inpJumlahPohon.requestFocus();
-        //        dialog.dismiss();
-          //      return;
-           // }
-        //}
+            //          if (inpJumlahPohon.getText().toString().equals("")) {
+            //            inpJumlahPohon.setError("Jumlah Pohon harus diisi");
+            //          inpJumlahPohon.requestFocus();
+            //        dialog.dismiss();
+            //      return;
+            // }
+            //}
 
 
-
-        String nama_aset = inpNamaAset.getText().toString().trim();
-        String nomor_aset_sap = inpNoSAP.getText().toString().trim();
-        String ba_file = tvUploudBA.getText().toString().trim();
+            String nama_aset = inpNamaAset.getText().toString().trim();
+            String nomor_aset_sap = inpNoSAP.getText().toString().trim();
+            String ba_file = tvUploudBA.getText().toString().trim();
 //        String luas_aset = inpLuasAset.getText().toString().trim();
-        String luas_aset = String.valueOf(Double.parseDouble(inpLuasAset.getText().toString().trim()));
-        String nilai_aset = String.valueOf(CurrencyToNumber(inpNilaiAsetSAP.getText().toString().trim()));
+            String luas_aset = String.valueOf(Double.parseDouble(inpLuasAset.getText().toString().trim()));
+            String nilai_aset = String.valueOf(CurrencyToNumber(inpNilaiAsetSAP.getText().toString().trim()));
 
 
-        String tgl_oleh = String.valueOf(inpTglOleh.getText().toString().trim()+" 00:00:00");
-        String masa_susut = String.valueOf(inpMasaPenyusutan.getText().toString().trim());
-        String nomor_bast = String.valueOf(inpNomorBAST.getText().toString().trim());
-        String nilai_residu = String.valueOf(CurrencyToNumber(inpNilaiResidu.getText().toString().trim()));
-        String keterangan = String.valueOf(inpKeterangan.getText().toString().trim());
+            String tgl_oleh = String.valueOf(inpTglOleh.getText().toString().trim() + " 00:00:00");
+            String masa_susut = String.valueOf(inpMasaPenyusutan.getText().toString().trim());
+            String nomor_bast = String.valueOf(inpNomorBAST.getText().toString().trim());
+            String nilai_residu = String.valueOf(CurrencyToNumber(inpNilaiResidu.getText().toString().trim()));
+            String keterangan = String.valueOf(inpKeterangan.getText().toString().trim());
 
 
-        MultipartBody.Part img1Part = null,img2Part = null,img3Part=null,img4Part=null,partBaFile=null;
+            MultipartBody.Part img1Part = null, img2Part = null, img3Part = null, img4Part = null, partBaFile = null;
 
 
+            try {
 
-        try{
-
-            RequestBody requestTipeAset = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(spinnerIdTipeAsset));
-            RequestBody requestJenisAset = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(spinnerIdJenisAset));
-            RequestBody requestKondisiAset = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(spinnerIdAsetKondisi));
-            RequestBody requestKodeAset = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(mapSpinnerkode.get(Integer.parseInt(String.valueOf(spinnerKodeAset.getSelectedItemId())))));
+                RequestBody requestTipeAset = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(spinnerIdTipeAsset));
+                RequestBody requestJenisAset = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(spinnerIdJenisAset));
+                RequestBody requestKondisiAset = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(spinnerIdAsetKondisi));
+                RequestBody requestKodeAset = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(mapSpinnerkode.get(Integer.parseInt(String.valueOf(spinnerKodeAset.getSelectedItemId())))));
 //            RequestBody requestKodeAset = RequestBody.create(MediaType.parse("text/plain"), String.valueOf( Integer.parseInt(String.valueOf(spinnerKodeAset.getSelectedItemId())) + 1));
-            RequestBody requestNamaAset = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(nama_aset));
-            RequestBody requestNomorAsetSAP = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(nomor_aset_sap));
-            Log.d("amanat14", String.valueOf(spinnerKodeAset.getSelectedItemId()));
-            Integer kode = Math.toIntExact(spinnerKodeAset.getSelectedItemId());
-            Log.d("amanat14", String.valueOf(kode));
-            Log.d("amanat14", String.valueOf(mapSpinnerkode.get(Integer.parseInt(String.valueOf(spinnerKodeAset.getSelectedItemId() + 1)))));
+                RequestBody requestNamaAset = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(nama_aset));
+                RequestBody requestNomorAsetSAP = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(nomor_aset_sap));
+                Log.d("amanat14", String.valueOf(spinnerKodeAset.getSelectedItemId()));
+                Integer kode = Math.toIntExact(spinnerKodeAset.getSelectedItemId());
+                Log.d("amanat14", String.valueOf(kode));
+                Log.d("amanat14", String.valueOf(mapSpinnerkode.get(Integer.parseInt(String.valueOf(spinnerKodeAset.getSelectedItemId() + 1)))));
 
-            RequestBody requestLuasAset = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(luas_aset));
-            RequestBody requestNilaiAsetSAP = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(nilai_aset));
-            RequestBody requestTglOleh = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(tgl_oleh));
-            RequestBody requestMasaSusut = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(masa_susut));
-            RequestBody requestNomorBAST = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(nomor_bast));
-            RequestBody requestNilaiResidu = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(nilai_residu));
+                RequestBody requestLuasAset = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(luas_aset));
+                RequestBody requestNilaiAsetSAP = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(nilai_aset));
+                RequestBody requestTglOleh = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(tgl_oleh));
+                RequestBody requestMasaSusut = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(masa_susut));
+                RequestBody requestNomorBAST = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(nomor_bast));
+                RequestBody requestNilaiResidu = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(nilai_residu));
 
-            RequestBody requestSubUnit = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(spinnerIdSubUnit));
-            RequestBody requestUnit = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(Integer.parseInt(String.valueOf(spinnerUnit.getSelectedItemId()))+1));
-            Integer afdeling_id = Integer.valueOf(sharedPreferences.getString("afdeling_id", "0"));
-            RequestBody requestAfdeling = RequestBody.create(MediaType.parse("text/plain"), String.valueOf((afdeling_id)));
+                RequestBody requestSubUnit = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(spinnerIdSubUnit));
+                RequestBody requestUnit = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(Integer.parseInt(String.valueOf(spinnerUnit.getSelectedItemId())) + 1));
+                Integer afdeling_id = Integer.valueOf(sharedPreferences.getString("afdeling_id", "0"));
+                RequestBody requestAfdeling = RequestBody.create(MediaType.parse("text/plain"), String.valueOf((afdeling_id)));
 
 
+                MultipartBody.Builder builder = new MultipartBody.Builder();
+                builder.addPart(MultipartBody.Part.createFormData("aset_name", null, requestNamaAset));
+                builder.addPart(MultipartBody.Part.createFormData("aset_tipe", null, requestTipeAset));
+                builder.addPart(MultipartBody.Part.createFormData("aset_jenis", null, requestJenisAset));
+                builder.addPart(MultipartBody.Part.createFormData("aset_kondisi", null, requestKondisiAset));
+                builder.addPart(MultipartBody.Part.createFormData("aset_kode", null, requestKodeAset));
+                builder.addPart(MultipartBody.Part.createFormData("nomor_sap", null, requestNomorAsetSAP));
 
-            MultipartBody.Builder builder = new MultipartBody.Builder();
-            builder.addPart(MultipartBody.Part.createFormData("aset_name",null,requestNamaAset));
-            builder.addPart(MultipartBody.Part.createFormData("aset_tipe",null,requestTipeAset));
-            builder.addPart(MultipartBody.Part.createFormData("aset_jenis",null,requestJenisAset));
-            builder.addPart(MultipartBody.Part.createFormData("aset_kondisi",null,requestKondisiAset));
-            builder.addPart(MultipartBody.Part.createFormData("aset_kode",null,requestKodeAset));
-            builder.addPart(MultipartBody.Part.createFormData("nomor_sap",null,requestNomorAsetSAP));
-
-            builder.addPart(MultipartBody.Part.createFormData("aset_luas",null,requestLuasAset));
-            builder.addPart(MultipartBody.Part.createFormData("tgl_oleh",null,requestTglOleh));
-            builder.addPart(MultipartBody.Part.createFormData("nilai_residu",null,requestNilaiResidu));
-            builder.addPart(MultipartBody.Part.createFormData("nilai_oleh",null,requestNilaiAsetSAP));
-            builder.addPart(MultipartBody.Part.createFormData("nomor_bast",null,requestNomorBAST));
-            builder.addPart(MultipartBody.Part.createFormData("masa_susut",null,requestMasaSusut));
+                builder.addPart(MultipartBody.Part.createFormData("aset_luas", null, requestLuasAset));
+                builder.addPart(MultipartBody.Part.createFormData("tgl_oleh", null, requestTglOleh));
+                builder.addPart(MultipartBody.Part.createFormData("nilai_residu", null, requestNilaiResidu));
+                builder.addPart(MultipartBody.Part.createFormData("nilai_oleh", null, requestNilaiAsetSAP));
+                builder.addPart(MultipartBody.Part.createFormData("nomor_bast", null, requestNomorBAST));
+                builder.addPart(MultipartBody.Part.createFormData("masa_susut", null, requestMasaSusut));
 
 //            builder.addPart(MultipartBody.Part.createFormData("foto_aset1", img1.getName(), RequestBody.create(MediaType.parse("image/*"), img1)));
 //            builder.addPart(MultipartBody.Part.createFormData("foto_aset2",img2.getName(),RequestBody.create(MediaType.parse("image/*"),img2)));
 //            builder.addPart(MultipartBody.Part.createFormData("foto_aset3",img3.getName(),RequestBody.create(MediaType.parse("image/*"),img3)));
 //            builder.addPart(MultipartBody.Part.createFormData("foto_aset4",img4.getName(),RequestBody.create(MediaType.parse("image/*"),img4)));
-            builder.addPart(MultipartBody.Part.createFormData("aset_sub_unit",null,requestSubUnit));
-            builder.addPart(MultipartBody.Part.createFormData("unit_id",null,requestUnit));
+                builder.addPart(MultipartBody.Part.createFormData("aset_sub_unit", null, requestSubUnit));
+                builder.addPart(MultipartBody.Part.createFormData("unit_id", null, requestUnit));
 
-            if (spinnerSubUnit.getSelectedItemId() == 2) {
-                builder.addPart(MultipartBody.Part.createFormData("afdeling_id",null,requestAfdeling));
-            }
+                if (spinnerSubUnit.getSelectedItemId() == 2) {
+                    builder.addPart(MultipartBody.Part.createFormData("afdeling_id", null, requestAfdeling));
+                }
 
-            if (spinnerJenisAset.getSelectedItemId() == 1 || spinnerJenisAset.getSelectedItemId() == 3)  {
-                RequestBody requestJumlahPohon = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(inpJumlahPohon.getText().toString()));
-                builder.addPart(MultipartBody.Part.createFormData("jumlah_pohon",null,requestJumlahPohon));
-            }
+                if (spinnerJenisAset.getSelectedItemId() == 1 || spinnerJenisAset.getSelectedItemId() == 3) {
+                    RequestBody requestJumlahPohon = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(inpJumlahPohon.getText().toString()));
+                    builder.addPart(MultipartBody.Part.createFormData("jumlah_pohon", null, requestJumlahPohon));
+                }
 
-            if (spinnerJenisAset.getSelectedItemId() == 2 )  {
-                RequestBody requestPersenKondisi = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(inpPersenKondisi.getText().toString()));
-                builder.addPart(MultipartBody.Part.createFormData("persen_kondisi",null,requestPersenKondisi));
-            }
+                if (spinnerJenisAset.getSelectedItemId() == 2) {
+                    RequestBody requestPersenKondisi = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(inpPersenKondisi.getText().toString()));
+                    builder.addPart(MultipartBody.Part.createFormData("persen_kondisi", null, requestPersenKondisi));
+                }
 
-            if (img1 != null) {
-                RequestBody requestGeoTag1 = RequestBody.create(MediaType.parse("text/plain"),String.valueOf(geotag1));
-                builder.addPart(MultipartBody.Part.createFormData("foto_aset1", img1.getName(), RequestBody.create(MediaType.parse("image/*"), img1)));
-                builder.addPart(MultipartBody.Part.createFormData("geo_tag1",null,requestGeoTag1));
-            }
+                if (img1 != null) {
+                    RequestBody requestGeoTag1 = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(geotag1));
+                    builder.addPart(MultipartBody.Part.createFormData("foto_aset1", img1.getName(), RequestBody.create(MediaType.parse("image/*"), img1)));
+                    builder.addPart(MultipartBody.Part.createFormData("geo_tag1", null, requestGeoTag1));
+                }
 
-            if (img2 != null) {
-                RequestBody requestGeoTag2 = RequestBody.create(MediaType.parse("text/plain"),String.valueOf(geotag2));
-                builder.addPart(MultipartBody.Part.createFormData("foto_aset2",img2.getName(),RequestBody.create(MediaType.parse("image/*"),img2)));
-                builder.addPart(MultipartBody.Part.createFormData("geo_tag2",null,requestGeoTag2));
-            }
+                if (img2 != null) {
+                    RequestBody requestGeoTag2 = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(geotag2));
+                    builder.addPart(MultipartBody.Part.createFormData("foto_aset2", img2.getName(), RequestBody.create(MediaType.parse("image/*"), img2)));
+                    builder.addPart(MultipartBody.Part.createFormData("geo_tag2", null, requestGeoTag2));
+                }
 
-            if (img3 != null) {
-                RequestBody requestGeoTag3 = RequestBody.create(MediaType.parse("text/plain"),String.valueOf(geotag3));
-                builder.addPart(MultipartBody.Part.createFormData("foto_aset3",img3.getName(),RequestBody.create(MediaType.parse("image/*"),img3)));
-                builder.addPart(MultipartBody.Part.createFormData("geo_tag3",null,requestGeoTag3));
-            }
+                if (img3 != null) {
+                    RequestBody requestGeoTag3 = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(geotag3));
+                    builder.addPart(MultipartBody.Part.createFormData("foto_aset3", img3.getName(), RequestBody.create(MediaType.parse("image/*"), img3)));
+                    builder.addPart(MultipartBody.Part.createFormData("geo_tag3", null, requestGeoTag3));
+                }
 
-            if (img4 != null) {
-                RequestBody requestGeoTag4 = RequestBody.create(MediaType.parse("text/plain"),String.valueOf(geotag4));
-                builder.addPart(MultipartBody.Part.createFormData("foto_aset4",img4.getName(),RequestBody.create(MediaType.parse("image/*"),img4)));
-                builder.addPart(MultipartBody.Part.createFormData("geo_tag4",null,requestGeoTag4));
-            }
-
-
-            if (bafile_file != null){
-                RequestBody requestBaFile = RequestBody.create(MediaType.parse("multipart/form-file"), bafile_file);
-                partBaFile = MultipartBody.Part.createFormData("ba_file", bafile_file.getName(), requestBaFile);
-                builder.addPart(partBaFile);
-            }
-
-            if (inpKeterangan != null){
-                RequestBody requestKeterangan = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(keterangan));
-                builder.addPart(MultipartBody.Part.createFormData("keterangan",null,requestKeterangan));
-                Log.d("asetapix", String.valueOf(requestKeterangan));
-            }
+                if (img4 != null) {
+                    RequestBody requestGeoTag4 = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(geotag4));
+                    builder.addPart(MultipartBody.Part.createFormData("foto_aset4", img4.getName(), RequestBody.create(MediaType.parse("image/*"), img4)));
+                    builder.addPart(MultipartBody.Part.createFormData("geo_tag4", null, requestGeoTag4));
+                }
 
 
-            MultipartBody multipartBody = builder
-                    .build();
-            String contentType = "multipart/form-data; charset=utf-8; boundary=" + multipartBody.boundary();
+                if (bafile_file != null) {
+                    RequestBody requestBaFile = RequestBody.create(MediaType.parse("multipart/form-file"), bafile_file);
+                    partBaFile = MultipartBody.Part.createFormData("ba_file", bafile_file.getName(), requestBaFile);
+                    builder.addPart(partBaFile);
+                }
+
+                if (inpKeterangan != null) {
+                    RequestBody requestKeterangan = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(keterangan));
+                    builder.addPart(MultipartBody.Part.createFormData("keterangan", null, requestKeterangan));
+                    Log.d("asetapix", String.valueOf(requestKeterangan));
+                }
 
 
+                MultipartBody multipartBody = builder
+                        .build();
+                String contentType = "multipart/form-data; charset=utf-8; boundary=" + multipartBody.boundary();
 
-            Call<AsetModel2> call = asetInterface.addAset(contentType,multipartBody);
+
+                Call<AsetModel2> call = asetInterface.addAset(contentType, multipartBody);
 
 
-            call.enqueue(new Callback<AsetModel2>(){
+                call.enqueue(new Callback<AsetModel2>() {
 
-                @Override
-                public void onResponse(Call<AsetModel2> call, Response<AsetModel2> response) {
-                    if (!response.isSuccessful() && response.body() == null){
+                    @Override
+                    public void onResponse(Call<AsetModel2> call, Response<AsetModel2> response) {
+                        if (!response.isSuccessful() && response.body() == null) {
+                            dialog.dismiss();
+                            customDialogAddAset.dismiss();
+                            inpNoSAP.setError("Nomor SAP sudah ada");
+                            inpNoSAP.requestFocus();
+                            return;
+                        }
                         dialog.dismiss();
-                        customDialogAddAset.dismiss();
-                        inpNoSAP.setError("Nomor SAP sudah ada");
-                        inpNoSAP.requestFocus();
+                        Toast.makeText(getApplicationContext(), "success", Toast.LENGTH_LONG).show();
+                        startActivity(new Intent(AddAsetActivity.this, LonglistAsetActivity.class));
                         return;
+
                     }
-                    dialog.dismiss();
-                    Toast.makeText(getApplicationContext(),"success",Toast.LENGTH_LONG).show();
-                    startActivity(new Intent(AddAsetActivity.this,LonglistAsetActivity.class));
-                    return;
 
-                }
-
-                @Override
-                public void onFailure(Call<AsetModel2> call, Throwable t) {
-                    dialog.dismiss();
-                    Toast.makeText(getApplicationContext(),"error " + t.getMessage(),Toast.LENGTH_LONG).show();
-                }
-            });
-        }
-        catch (Exception e ){
-            dialog.dismiss();
-            Toast.makeText(getApplicationContext(),"error " + e.getMessage(),Toast.LENGTH_LONG).show();
-            e.printStackTrace();
+                    @Override
+                    public void onFailure(Call<AsetModel2> call, Throwable t) {
+                        dialog.dismiss();
+                        Toast.makeText(getApplicationContext(), "error " + t.getMessage(), Toast.LENGTH_LONG).show();
+                    }
+                });
+            } catch (Exception e) {
+                dialog.dismiss();
+                Toast.makeText(getApplicationContext(), "error " + e.getMessage(), Toast.LENGTH_LONG).show();
+                e.printStackTrace();
 //            startActivity(new Intent(AddAsetActivity.this,LonglistAsetActivity.class));
-        }
-
+            }
 
 
 //            if (ba_file != "isi.pdf"){
@@ -1619,7 +1635,7 @@ public class AddAsetActivity extends AppCompatActivity {
 //                MultipartBody.Part partBaFile = MultipartBody.Part.createFormData("foto_tunggak", source.getName(), requestBaFile);
 //            }
 
-    }
+        }
 
     public void getAllSpinnerData(){
 

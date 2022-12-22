@@ -247,10 +247,11 @@ public class UpdateAsetActivity extends AppCompatActivity {
             bafile_file = new File(path);
             Toast.makeText(getApplicationContext(),"sukses unggah berita acara",Toast.LENGTH_LONG).show();
             tvUploudBA.setText(bafile_file.getName());
-        } else {
-            Toast.makeText(UpdateAsetActivity.this,"gagal unggah file",Toast.LENGTH_LONG).show();
-            return;
         }
+//        else {
+//            Toast.makeText(UpdateAsetActivity.this,"gagal unggah file",Toast.LENGTH_LONG).show();
+//            return;
+//        }
     }
 
     public void openfilechoser(){
@@ -880,24 +881,44 @@ public class UpdateAsetActivity extends AppCompatActivity {
                 String url3 = baseUrlImg+response.body().getData().getFotoAset3();
                 String url4 = baseUrlImg+response.body().getData().getFotoAset4();
 
+                if (response.body().getData().getFotoAset1() == null ){
+                    map1.setEnabled(false);
+                } else {
+                    map1.setEnabled(true);
+                    fotoimg1.getLayoutParams().width = 200;
+                    fotoimg1.getLayoutParams().height = 200;
+                    Picasso.get().load(url1).resize(200,200).centerCrop().into(fotoimg1);
+                }
+
+                if (response.body().getData().getFotoAset2() == null ){
+                    map2.setEnabled(false);
+                } else {
+                    map2.setEnabled(true);
+                    fotoimg2.getLayoutParams().width = 200;
+                    fotoimg2.getLayoutParams().height = 200;
+                    Picasso.get().load(url2).resize(200,200).centerCrop().into(fotoimg2);
+                }
+
+                if (response.body().getData().getFotoAset3() == null ){
+                    map3.setEnabled(false);
+                } else {
+                    map3.setEnabled(true);
+                    fotoimg3.getLayoutParams().width = 200;
+                    fotoimg3.getLayoutParams().height = 200;
+                    Picasso.get().load(url3).resize(200,200).centerCrop().into(fotoimg3);
+                }
+
+                if (response.body().getData().getFotoAset4() == null ){
+                    map4.setEnabled(false);
+                } else {
+                    map4.setEnabled(true);
+                    fotoimg4.getLayoutParams().width = 200;
+                    fotoimg4.getLayoutParams().height = 200;
+                    Picasso.get().load(url4).resize(200,200).centerCrop().into(fotoimg4);
+                }
+
+
 //                Log.d("asetapix",url4 + " " + url1+ " " + url2+ " " + url3);
-
-                fotoimg1.getLayoutParams().width = 200;
-                fotoimg1.getLayoutParams().height = 200;
-                Picasso.get().load(url1).resize(200,200).centerCrop().into(fotoimg1);
-
-                fotoimg2.getLayoutParams().width = 200;
-                fotoimg2.getLayoutParams().height = 200;
-                Picasso.get().load(url2).resize(200,200).centerCrop().into(fotoimg2);
-
-                fotoimg3.getLayoutParams().width = 200;
-                fotoimg3.getLayoutParams().height = 200;
-                Picasso.get().load(url3).resize(200,200).centerCrop().into(fotoimg3);
-
-                fotoimg4.getLayoutParams().width = 200;
-                fotoimg4.getLayoutParams().height = 200;
-                Picasso.get().load(url4).resize(200,200).centerCrop().into(fotoimg4);
-
 
                 geotag1 = response.body().getData().getGeoTag1();
                 geotag2 = response.body().getData().getGeoTag2();
@@ -1541,6 +1562,27 @@ public class UpdateAsetActivity extends AppCompatActivity {
     public void editAset(){
         dialog.show();
 
+        if ("non tanaman".equals(String.valueOf(spinnerJenisAset.getSelectedItem()))){
+            if ("normal".equals(String.valueOf(spinnerAsetKondisi.getSelectedItem()))){
+                if (img1 == null || img2 == null || img3 == null || img4 == null){
+                    Toast.makeText(getApplicationContext(), "Foto Wajib Diisi Lengkap!", Toast.LENGTH_SHORT).show();
+
+                    dialog.dismiss();
+                    return;
+                }
+            }
+        }
+
+        if ("non tanaman".equals(String.valueOf(spinnerJenisAset.getSelectedItem()))){
+            if ( "rusak".equals (String.valueOf(spinnerAsetKondisi.getSelectedItem()))){
+                if (img1 == null || img2 == null || img3 == null || img4 == null){
+                    Toast.makeText(getApplicationContext(), "Foto Wajib Diisi Lengkap!", Toast.LENGTH_SHORT).show();
+
+                    dialog.dismiss();
+                    return;
+                }
+            }
+        }
 
         try{
 
@@ -1621,21 +1663,21 @@ public class UpdateAsetActivity extends AppCompatActivity {
             if (img1 != null) {
                 builder.addPart(MultipartBody.Part.createFormData("foto_aset1", img1.getName(), RequestBody.create(MediaType.parse("image/*"), img1)));
                 builder.addPart(MultipartBody.Part.createFormData("geo_tag1",null,requestGeoTag1));
-                builder.addPart(MultipartBody.Part.createFormData("geo_tag2",null,requestGeoTag2));
-                builder.addPart(MultipartBody.Part.createFormData("geo_tag3",null,requestGeoTag3));
-                builder.addPart(MultipartBody.Part.createFormData("geo_tag4",null,requestGeoTag4));
             }
 
             if (img2 != null) {
                 builder.addPart(MultipartBody.Part.createFormData("foto_aset2",img2.getName(),RequestBody.create(MediaType.parse("image/*"),img2)));
+                builder.addPart(MultipartBody.Part.createFormData("geo_tag2",null,requestGeoTag2));
             }
 
             if (img3 != null) {
                 builder.addPart(MultipartBody.Part.createFormData("foto_aset3",img3.getName(),RequestBody.create(MediaType.parse("image/*"),img3)));
+                builder.addPart(MultipartBody.Part.createFormData("geo_tag3",null,requestGeoTag3));
             }
 
             if (img4 != null) {
                 builder.addPart(MultipartBody.Part.createFormData("foto_aset4",img4.getName(),RequestBody.create(MediaType.parse("image/*"),img4)));
+                builder.addPart(MultipartBody.Part.createFormData("geo_tag4",null,requestGeoTag4));
             }
 
             MultipartBody multipartBody = builder

@@ -763,21 +763,46 @@ public class DetailAsetActivity extends AppCompatActivity {
                 url2 = baseUrlImg+response.body().getData().getFotoAset2();
                 url3 = baseUrlImg+response.body().getData().getFotoAset3();
                 url4 = baseUrlImg+response.body().getData().getFotoAset4();
-                fotoimg1.getLayoutParams().width = 200;
-                fotoimg1.getLayoutParams().height = 200;
-                Picasso.get().load(url1).resize(200,200).centerCrop().into(fotoimg1);
 
-                fotoimg2.getLayoutParams().width = 200;
-                fotoimg2.getLayoutParams().height = 200;
-                Picasso.get().load(url2).resize(200,200).centerCrop().into(fotoimg2);
+                if (response.body().getData().getFotoAset1() == null ){
+                    map1.setEnabled(false);
+                    foto1rl.setEnabled(false);
+                } else {
+                    map1.setEnabled(true);
+                    fotoimg1.getLayoutParams().width = 200;
+                    fotoimg1.getLayoutParams().height = 200;
+                    Picasso.get().load(url1).resize(200,200).centerCrop().into(fotoimg1);
+                }
 
-                fotoimg3.getLayoutParams().width = 200;
-                fotoimg3.getLayoutParams().height = 200;
-                Picasso.get().load(url3).resize(200,200).centerCrop().into(fotoimg3);
+                if (response.body().getData().getFotoAset2() == null ){
+                    map2.setEnabled(false);
+                    foto2rl.setEnabled(false);
+                } else {
+                    map2.setEnabled(true);
+                    fotoimg2.getLayoutParams().width = 200;
+                    fotoimg2.getLayoutParams().height = 200;
+                    Picasso.get().load(url2).resize(200,200).centerCrop().into(fotoimg2);
+                }
 
-                fotoimg4.getLayoutParams().width = 200;
-                fotoimg4.getLayoutParams().height = 200;
-                Picasso.get().load(url4).resize(200,200).centerCrop().into(fotoimg4);
+                if (response.body().getData().getFotoAset3() == null ){
+                    map3.setEnabled(false);
+                    foto3rl.setEnabled(false);
+                } else {
+                    map3.setEnabled(true);
+                    fotoimg3.getLayoutParams().width = 200;
+                    fotoimg3.getLayoutParams().height = 200;
+                    Picasso.get().load(url3).resize(200,200).centerCrop().into(fotoimg3);
+                }
+
+                if (response.body().getData().getFotoAset4() == null ){
+                    map4.setEnabled(false);
+                    foto4rl.setEnabled(false);
+                } else {
+                    map4.setEnabled(true);
+                    fotoimg4.getLayoutParams().width = 200;
+                    fotoimg4.getLayoutParams().height = 200;
+                    Picasso.get().load(url4).resize(200,200).centerCrop().into(fotoimg4);
+                }
 
 //                Log.d("asetapix", response.body().getData().getFotoAsetQr());
 
@@ -811,6 +836,7 @@ public class DetailAsetActivity extends AppCompatActivity {
                 try {
 
                     if (response.body().getData().getAfdelingId() != null) {
+//                        Log.d("afdeling_id", String.valueOf(response.body().getData().getAfdelingId()));
 
                         spinnerAfdeling.setSelection(mapAfdelingSpinner.get(response.body().getData().getAfdelingId()));
 
