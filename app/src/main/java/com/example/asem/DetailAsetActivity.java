@@ -91,6 +91,7 @@ public class DetailAsetActivity extends AppCompatActivity {
     String url2 = "";
     String url3 = "";
     String url4 = "";
+    String urlfotoasetqr = "";
     Map<Integer, Integer> mapAfdelingSpinner = new HashMap<Integer, Integer>();
 
     Map<Integer,Integer> mapKodeSpinner = new HashMap();
@@ -524,6 +525,15 @@ public class DetailAsetActivity extends AppCompatActivity {
             }
         });
 
+        addNewFotoAsetAndQr.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(DetailAsetActivity.this,DetailImageActivity.class);
+                intent.putExtra("url",urlfotoasetqr);
+                startActivity(intent);
+            }
+        });
+
 
         inpNilaiAsetSAP.addTextChangedListener(new TextWatcher() {
             private String setEditText = inpNilaiAsetSAP.getText().toString().trim();
@@ -763,6 +773,7 @@ public class DetailAsetActivity extends AppCompatActivity {
                 url2 = baseUrlImg+response.body().getData().getFotoAset2();
                 url3 = baseUrlImg+response.body().getData().getFotoAset3();
                 url4 = baseUrlImg+response.body().getData().getFotoAset4();
+                urlfotoasetqr = baseUrlImg+response.body().getData().getFotoAsetQr();
 
                 if (response.body().getData().getFotoAset1() == null ){
                     map1.setEnabled(false);
@@ -811,7 +822,7 @@ public class DetailAsetActivity extends AppCompatActivity {
                     String url = baseUrlImg + response.body().getData().getFotoAsetQr();
                     fotoasetqr.getLayoutParams().width = 300;
                     fotoasetqr.getLayoutParams().height = 300;
-                    Picasso.get().load(url).resize(300,300).centerCrop().into(fotoasetqr);
+                    Picasso.get().load(urlfotoasetqr).resize(300,300).centerCrop().into(fotoasetqr);
                 }
                 else{
                     tvFotoAsetQR.setVisibility(View.GONE);

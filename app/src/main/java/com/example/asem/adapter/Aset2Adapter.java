@@ -223,7 +223,8 @@ public class Aset2Adapter  extends RecyclerView.Adapter<Aset2Adapter.ViewHolder>
                     //Toast.makeText(context, "masuk ga", Toast.LENGTH_SHORT).show();
                 } else if (statpos == 1 && myPostData2.getStatusReject()!=null){
                     initDataReject();
-                }else{
+                }
+                else{
                     sharedPreferences = context.getSharedPreferences(PREF_LOGIN, MODE_PRIVATE);
                     String user_id = sharedPreferences.getString("user_id", "-");
                     showDialogKirim("Yakin Kirim Data?",
@@ -415,6 +416,8 @@ public class Aset2Adapter  extends RecyclerView.Adapter<Aset2Adapter.ViewHolder>
                     if (response.isSuccessful() && response.body() != null){
                         Toast.makeText(context.getApplicationContext(), "berhasil mengirim data", Toast.LENGTH_LONG).show();
                     }else {
+                        //cek image apakah sudah terfoto semua atau belum
+                        //get response body data,if (url img 1-4 = adaa) then bisa kirim, else
                         Toast.makeText(context.getApplicationContext(), response.toString(), Toast.LENGTH_SHORT).show();
                     }
                 }

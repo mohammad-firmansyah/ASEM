@@ -363,6 +363,8 @@ public class AddAsetActivity extends AppCompatActivity {
                                 img1 = utils.savePictureResult(
                                         AddAsetActivity.this, photoname1, fotoimg1, true
                                 );
+                                fotoimg1.getLayoutParams().width = 200;
+                                fotoimg1.getLayoutParams().height = 200;
                                 setExifLocation(img1,1);
                             } else if (resultCode == Activity.RESULT_CANCELED){
                                 android.widget.Toast.makeText(AddAsetActivity.this, "Cancelled", Toast.LENGTH_SHORT).show();
@@ -383,6 +385,8 @@ public class AddAsetActivity extends AppCompatActivity {
                                 img2 = utils.savePictureResult(
                                         AddAsetActivity.this, photoname2, fotoimg2, true
                                 );
+                                fotoimg2.getLayoutParams().width = 200;
+                                fotoimg2.getLayoutParams().height = 200;
                                 setExifLocation(img2,2);
                             } else if (resultCode == Activity.RESULT_CANCELED){
                                 android.widget.Toast.makeText(AddAsetActivity.this, "Cancelled", Toast.LENGTH_SHORT).show();
@@ -403,6 +407,8 @@ public class AddAsetActivity extends AppCompatActivity {
                                 img3 = utils.savePictureResult(
                                         AddAsetActivity.this, photoname3, fotoimg3, true
                                 );
+                                fotoimg3.getLayoutParams().width = 200;
+                                fotoimg3.getLayoutParams().height = 200;
                                 setExifLocation(img3,3);
                             } else if (resultCode == Activity.RESULT_CANCELED){
                                 android.widget.Toast.makeText(AddAsetActivity.this, "Cancelled", Toast.LENGTH_SHORT).show();
@@ -425,6 +431,8 @@ public class AddAsetActivity extends AppCompatActivity {
                                 img4 = utils.savePictureResult(
                                         AddAsetActivity.this, photoname4, fotoimg4, true
                                 );
+                                fotoimg4.getLayoutParams().width = 200;
+                                fotoimg4.getLayoutParams().height = 200;
                                 setExifLocation(img4,4);
                             } else if (resultCode == Activity.RESULT_CANCELED){
                                 android.widget.Toast.makeText(AddAsetActivity.this, "Cancelled", Toast.LENGTH_SHORT).show();
