@@ -25,6 +25,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
+import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.location.Location;
 import android.location.LocationManager;
@@ -49,6 +50,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -70,6 +72,7 @@ import com.example.asem.api.model.AsetTipe;
 import com.example.asem.api.model.Data;
 import com.example.asem.api.model.Data2;
 import com.example.asem.api.model.DataAllSpinner;
+import com.example.asem.api.model.Sap;
 import com.example.asem.api.model.SubUnit;
 import com.example.asem.api.model.SubUnitModel;
 import com.example.asem.api.model.Unit;
@@ -124,7 +127,7 @@ public class AddAsetActivity extends AppCompatActivity {
     SharedPreferences sharedPreferences;
     private static final String PREF_LOGIN = "LOGIN_PREF";
     Uri docUri;
-
+    List<String> listSpinnerSap=new ArrayList<>();
     List<AsetKode2> asetKode2 = new ArrayList<>();
     List<Afdelling> afdeling = new ArrayList<>();
 
@@ -142,8 +145,8 @@ public class AddAsetActivity extends AppCompatActivity {
     };
     private static final int LOCATION_PERMISSION_AND_STORAGE = 33;
 
-    public static String baseUrl = "http://202.148.9.226:7710/mnj_aset_repo/public/api/";
-    public String baseUrlImg = "http://202.148.9.226:7710/mnj_aset_repo/public";
+    public static String baseUrl = "http://202.148.9.226:7710/mnj_aset_production/public/api/";
+    public String baseUrlImg = "http://202.148.9.226:7710/mnj_aset_production/public";
     final Calendar myCalendar= Calendar.getInstance();
     EditText editText;
     EditText inpJumlahPohon;
@@ -161,7 +164,8 @@ public class AddAsetActivity extends AppCompatActivity {
     Spinner spinnerKomoditi;
 
     EditText inpNamaAset;
-    EditText inpNoSAP;
+    EditText inpHGU;
+    TextView inpNoSAP;
     EditText inpLuasAset;
     EditText inpNilaiAsetSAP;
     EditText inpTglOleh;
@@ -187,6 +191,7 @@ public class AddAsetActivity extends AppCompatActivity {
     Map<Integer, Integer> mapAfdelingSpinner = new HashMap<Integer, Integer>();
     Map<Integer, Integer> mapSpinnerAfdeling = new HashMap<Integer, Integer>();
     Map<Integer, String> mapAfdeling = new HashMap();
+    Map<Integer, Integer> mapSap = new HashMap();
 
     Map<Integer,Integer> mapKodeSpinner = new HashMap();
     Map<Integer,Integer> mapSpinnerkode = new HashMap();
@@ -442,6 +447,9 @@ public class AddAsetActivity extends AppCompatActivity {
                     }
             );
     private Dialog dialog;
+    ListView listView;
+    EditText  editTextSap;
+    Dialog spinnerNoSap;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -455,6 +463,7 @@ public class AddAsetActivity extends AppCompatActivity {
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(0));
         dialog.show();
 
+        spinnerNoSap = new Dialog(AddAsetActivity.this);
 
         getLastLocation(AddAsetActivity.this,getApplicationContext());
 
@@ -480,7 +489,7 @@ public class AddAsetActivity extends AppCompatActivity {
         inpKeterangan = findViewById(R.id.inpKeterangan);
         inpJumlahPohon = findViewById(R.id.inpJmlhPohon);
         inpPersenKondisi = findViewById(R.id.inpPersenKondisi);
-
+        inpHGU = findViewById(R.id.inpHGU);
 //        spinnerKomoditi = findViewById(R.id.inpKomoditi);
 
 //        List<String> listSpinner = new ArrayList<>();
@@ -606,6 +615,70 @@ public class AddAsetActivity extends AppCompatActivity {
             }
         });
 
+        inpNoSAP.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                spinnerNoSap.setContentView(R.layout.searchable_spinner);
+                spinnerNoSap.getWindow().setLayout(650,800);
+                spinnerNoSap.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                spinnerNoSap.show();
+                editTextSap=spinnerNoSap.findViewById(R.id.edit_text);
+                listView=spinnerNoSap.findViewById(R.id.list_view);
+//                spinnerNoSap.show();
+
+//                if (listSpinnerSap.size() != 0){
+
+                ArrayAdapter<String> adapterSap =new ArrayAdapter<>(AddAsetActivity.this, android.R.layout.simple_list_item_1,listSpinnerSap);
+                listView.setAdapter(adapterSap);
+
+                //                 Initialize array adapter
+
+                // set adapter
+                listView.setAdapter(adapterSap);
+
+                    editTextSap.addTextChangedListener(new TextWatcher() {
+                        @Override
+                        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                        }
+
+                        @Override
+                        public void onTextChanged(CharSequence s, int start, int before, int count) {
+                            adapterSap.getFilter().filter(s);
+                        }
+
+                        @Override
+                        public void afterTextChanged(Editable s) {
+
+                        }
+                    });
+
+                    listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                            // when item selected from list
+                            // set selected item on textView
+                            inpNoSAP.setText(adapterSap.getItem(position));
+
+                            // Dismiss dialog
+                            spinnerNoSap.dismiss();
+                        }
+                    });
+
+
+//                }
+
+
+
+
+
+
+
+
+
+
+            }
+        });
         foto1rl.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -1480,7 +1553,7 @@ public class AddAsetActivity extends AppCompatActivity {
 
 
             String nama_aset = inpNamaAset.getText().toString().trim();
-            String nomor_aset_sap = inpNoSAP.getText().toString().trim();
+            Integer nomor_aset_sap = mapSap.get(Integer.parseInt(inpNoSAP.getText().toString().trim()));
             String ba_file = tvUploudBA.getText().toString().trim();
 //        String luas_aset = inpLuasAset.getText().toString().trim();
             String luas_aset = String.valueOf(Double.parseDouble(inpLuasAset.getText().toString().trim()));
@@ -1517,6 +1590,7 @@ public class AddAsetActivity extends AppCompatActivity {
                 RequestBody requestMasaSusut = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(masa_susut));
                 RequestBody requestNomorBAST = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(nomor_bast));
                 RequestBody requestNilaiResidu = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(nilai_residu));
+                RequestBody requestHGU = RequestBody.create(MediaType.parse("text/plain"), inpHGU.getText().toString().trim());
 
                 RequestBody requestSubUnit = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(spinnerIdSubUnit));
                 RequestBody requestUnit = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(Integer.parseInt(String.valueOf(spinnerUnit.getSelectedItemId())) + 1));
@@ -1531,6 +1605,7 @@ public class AddAsetActivity extends AppCompatActivity {
                 builder.addPart(MultipartBody.Part.createFormData("aset_kondisi", null, requestKondisiAset));
                 builder.addPart(MultipartBody.Part.createFormData("aset_kode", null, requestKodeAset));
                 builder.addPart(MultipartBody.Part.createFormData("nomor_sap", null, requestNomorAsetSAP));
+                builder.addPart(MultipartBody.Part.createFormData("hgu", null, requestHGU));
 
                 builder.addPart(MultipartBody.Part.createFormData("aset_luas", null, requestLuasAset));
                 builder.addPart(MultipartBody.Part.createFormData("tgl_oleh", null, requestTglOleh));
@@ -1538,11 +1613,6 @@ public class AddAsetActivity extends AppCompatActivity {
                 builder.addPart(MultipartBody.Part.createFormData("nilai_oleh", null, requestNilaiAsetSAP));
                 builder.addPart(MultipartBody.Part.createFormData("nomor_bast", null, requestNomorBAST));
                 builder.addPart(MultipartBody.Part.createFormData("masa_susut", null, requestMasaSusut));
-
-//            builder.addPart(MultipartBody.Part.createFormData("foto_aset1", img1.getName(), RequestBody.create(MediaType.parse("image/*"), img1)));
-//            builder.addPart(MultipartBody.Part.createFormData("foto_aset2",img2.getName(),RequestBody.create(MediaType.parse("image/*"),img2)));
-//            builder.addPart(MultipartBody.Part.createFormData("foto_aset3",img3.getName(),RequestBody.create(MediaType.parse("image/*"),img3)));
-//            builder.addPart(MultipartBody.Part.createFormData("foto_aset4",img4.getName(),RequestBody.create(MediaType.parse("image/*"),img4)));
                 builder.addPart(MultipartBody.Part.createFormData("aset_sub_unit", null, requestSubUnit));
                 builder.addPart(MultipartBody.Part.createFormData("unit_id", null, requestUnit));
 
@@ -1704,6 +1774,12 @@ public class AddAsetActivity extends AppCompatActivity {
                     listSpinnerSubUnit.add(at.getSub_unit_desc());
                 }
 
+                // get sap
+                for (Sap at : dataAllSpinner.getSap()){
+                    mapSap.put(Integer.parseInt(at.getSap_desc()),at.getSap_id());
+                    listSpinnerSap.add(at.getSap_desc());
+                }
+
                 // get afdeling
                 Integer i=0;
                 afdeling = dataAllSpinner.getAfdeling();
@@ -1741,6 +1817,28 @@ public class AddAsetActivity extends AppCompatActivity {
                         android.R.layout.simple_spinner_item, listSpinnerKodeAset);
                 adapterKodeAset.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 spinnerKodeAset.setAdapter(adapterKodeAset);
+
+                // set adapter sap aset
+                try{
+
+                    if (listView != null) {
+
+                        ArrayAdapter<String> adapterSap = new ArrayAdapter<String>(getApplicationContext(),
+                                android.R.layout.simple_spinner_item, listSpinnerSap);
+                        adapterSap.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                        listView.setAdapter(adapterSap);
+
+
+
+
+
+                    }
+                } catch(Exception e){
+                    e.printStackTrace();
+                }
+
+//
+
 
                 // set adapter unit
                 ArrayAdapter<String> adapterUnit = new ArrayAdapter<String>(getApplicationContext(),

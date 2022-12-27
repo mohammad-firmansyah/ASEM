@@ -58,8 +58,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class ReportActivity extends AppCompatActivity {
     DatePickerDialog.OnDateSetListener date;
     DatePickerDialog.OnDateSetListener date2;
-    public static String baseUrl = "http://202.148.9.226:7710/mnj_aset_repo/public/api/";
-    public static String baseUrlAset = "http://202.148.9.226:7710/mnj_aset_repo/public";
+    public static String baseUrl = "http://202.148.9.226:7710/mnj_aset_production/public/api/";
+    public static String baseUrlAset = "http://202.148.9.226:7710/mnj_aset_production/public";
     private AsetInterface asetInterface;
     final Calendar myCalendar1= Calendar.getInstance();
     final Calendar myCalendar2= Calendar.getInstance();

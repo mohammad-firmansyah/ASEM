@@ -25,6 +25,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.location.Location;
 import android.location.LocationManager;
@@ -47,6 +48,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -71,6 +73,7 @@ import com.example.asem.api.model.AsetModel2;
 import com.example.asem.api.model.AsetTipe;
 import com.example.asem.api.model.Data;
 import com.example.asem.api.model.DataAllSpinner;
+import com.example.asem.api.model.Sap;
 import com.example.asem.api.model.SubUnit;
 import com.example.asem.api.model.SubUnitModel;
 import com.example.asem.api.model.Unit;
@@ -127,6 +130,9 @@ public class UpdateAsetActivity extends AppCompatActivity {
     double latitudeValue = 0;
     Map<Integer,Integer> mapKodeSpinner = new HashMap();
     Map<Integer,Integer> mapSpinnerkode = new HashMap();
+    Map<Integer, Integer> mapSap = new HashMap();
+    Map<Integer, Integer> mapSpinnerSap = new HashMap();
+    List<String> listSpinnerSap = new ArrayList<>();
 
     DataAllSpinner allSpinner;
     Map<Integer, Integer> mapAfdelingSpinner = new HashMap<Integer, Integer>();
@@ -147,14 +153,15 @@ public class UpdateAsetActivity extends AppCompatActivity {
     };
     private static final int LOCATION_PERMISSION_AND_STORAGE = 33;
 
-    public static String baseUrl = "http://202.148.9.226:7710/mnj_aset_repo/public/api/";
-    public String baseUrlImg = "http://202.148.9.226:7710/mnj_aset_repo/public";
+    public static String baseUrl = "http://202.148.9.226:7710/mnj_aset_production/public/api/";
+    public String baseUrlImg = "http://202.148.9.226:7710/mnj_aset_production/public";
     final Calendar myCalendar= Calendar.getInstance();
     EditText editText;
     EditText inpJumlahPohon;
     TextView tvUploudBA;
     TextView tvKetReject;
     AsetModel asetModel;
+//    List<String> listSpinnerSap=new ArrayList<>();
     File source;
     private AsetInterface asetInterface;
     Spinner spinnerTipeAset;
@@ -167,11 +174,12 @@ public class UpdateAsetActivity extends AppCompatActivity {
 
     EditText inpTglInput;
     EditText inpNamaAset;
-    EditText inpNoSAP;
+    TextView inpNoSAP;
     EditText inpLuasAset;
     EditText inpNilaiAsetSAP;
     EditText inpTglOleh;
     EditText inpMasaPenyusutan;
+    EditText inpHGU;
     EditText inpNomorBAST;
     EditText inpNilaiResidu;
     EditText inpKeterangan;
@@ -342,6 +350,9 @@ public class UpdateAsetActivity extends AppCompatActivity {
                     }
             );
     private Dialog dialog;
+    ListView listView;
+    EditText  editTextSap;
+    Dialog spinnerNoSap;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -350,6 +361,8 @@ public class UpdateAsetActivity extends AppCompatActivity {
         setContentView(R.layout.activity_update_aset);
 
         sharedPreferences = UpdateAsetActivity.this.getSharedPreferences(PREF_LOGIN, MODE_PRIVATE);
+
+        spinnerNoSap = new Dialog(UpdateAsetActivity.this);
 
         dialog = new Dialog(UpdateAsetActivity.this,R.style.MyAlertDialogTheme);
         dialog.setContentView(R.layout.loading);
@@ -392,6 +405,7 @@ public class UpdateAsetActivity extends AppCompatActivity {
         inpKeterangan = findViewById(R.id.inpKeterangan);
         inpJumlahPohon = findViewById(R.id.inpJmlhPohon);
         inpPersenKondisi = findViewById(R.id.inpPersenKondisi);
+        inpHGU = findViewById(R.id.inpHGU);
         inpKetReject = findViewById(R.id.inpKetReject);
         tvKetReject = findViewById(R.id.tvKetReject);
 
@@ -412,6 +426,70 @@ public class UpdateAsetActivity extends AppCompatActivity {
         inpBtnMap = findViewById(R.id.inpBtnMap);
         btnSubmit = findViewById(R.id.btnSubmit);
 
+        inpNoSAP.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                spinnerNoSap.setContentView(R.layout.searchable_spinner);
+                spinnerNoSap.getWindow().setLayout(650,800);
+                spinnerNoSap.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                spinnerNoSap.show();
+                editTextSap=spinnerNoSap.findViewById(R.id.edit_text);
+                listView=spinnerNoSap.findViewById(R.id.list_view);
+//                spinnerNoSap.show();
+
+//                if (listSpinnerSap.size() != 0){
+
+                ArrayAdapter<String> adapterSap =new ArrayAdapter<>(UpdateAsetActivity.this, android.R.layout.simple_list_item_1,listSpinnerSap);
+                listView.setAdapter(adapterSap);
+
+                //                 Initialize array adapter
+
+                // set adapter
+                listView.setAdapter(adapterSap);
+
+                editTextSap.addTextChangedListener(new TextWatcher() {
+                    @Override
+                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                    }
+
+                    @Override
+                    public void onTextChanged(CharSequence s, int start, int before, int count) {
+                        adapterSap.getFilter().filter(s);
+                    }
+
+                    @Override
+                    public void afterTextChanged(Editable s) {
+
+                    }
+                });
+
+                listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                        // when item selected from list
+                        // set selected item on textView
+                        inpNoSAP.setText(adapterSap.getItem(position));
+
+                        // Dismiss dialog
+                        spinnerNoSap.dismiss();
+                    }
+                });
+
+
+//                }
+
+
+
+
+
+
+
+
+
+
+            }
+        });
 //        btnSubmit.setOnClickListener(v -> editAset());
         btnSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -853,7 +931,7 @@ public class UpdateAsetActivity extends AppCompatActivity {
                 tvUploudBA.setText(response.body().getData().getBeritaAcara());
                 inpTglInput.setText(response.body().getData().getTglInput().split(" ")[0]);
                 inpTglOleh.setText(response.body().getData().getTglOleh().split(" ")[0]);
-                inpNoSAP.setText(String.valueOf(response.body().getData().getNomorSap()));
+                inpNoSAP.setText(String.valueOf(mapSpinnerSap.get(Integer.parseInt(response.body().getData().getNomorSap()))));
                 inpNamaAset.setText(response.body().getData().getAsetName());
                 inpLuasAset.setText(String.valueOf(Double.parseDouble(String.valueOf(response.body().getData().getAsetLuas()))));
                 inpNilaiAsetSAP.setText(formatrupiah(Double.parseDouble(String.valueOf(response.body().getData().getNilaiOleh()))));
@@ -866,6 +944,7 @@ public class UpdateAsetActivity extends AppCompatActivity {
 //                inpNilaiAsetSAP.setText(formatrupiah(Double.parseDouble(String.valueOf(response.body().getData().getUmurEkonomisInMonth()))));
                 inpPersenKondisi.setText(String.valueOf(response.body().getData().getPersenKondisi()));
                 inpJumlahPohon.setText(String.valueOf(response.body().getData().getJumlahPohon()));
+                inpHGU.setText(String.valueOf(response.body().getData().getHgu()));
                 String ket_reject = response.body().getData().getKetReject();
                 if (ket_reject != null){
                     inpKetReject.setVisibility(View.VISIBLE);
@@ -1587,7 +1666,7 @@ public class UpdateAsetActivity extends AppCompatActivity {
         try{
 
             String nama_aset = inpNamaAset.getText().toString().trim();
-            String nomor_aset_sap = inpNoSAP.getText().toString().trim();
+            Integer nomor_aset_sap = mapSap.get(Integer.parseInt(inpNoSAP.getText().toString().trim()));
             String luas_aset = String.valueOf(Double.parseDouble(inpLuasAset.getText().toString().trim()));
             String nilai_aset = String.valueOf(CurrencyToNumber(inpNilaiAsetSAP.getText().toString().trim()));
             String tgl_oleh = inpTglOleh.getText().toString().trim() + " 00:00:00";
@@ -1607,7 +1686,7 @@ public class UpdateAsetActivity extends AppCompatActivity {
             RequestBody requestKondisiAset = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(spinnerIdAsetKondisi));
             RequestBody requestKodeAset = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(mapSpinnerkode.get(Integer.parseInt(String.valueOf(spinnerKodeAset.getSelectedItemId())))));
             RequestBody requestNamaAset = RequestBody.create(MediaType.parse("text/plain"), nama_aset);
-            RequestBody requestNomorAsetSAP = RequestBody.create(MediaType.parse("text/plain"), nomor_aset_sap);
+            RequestBody requestNomorAsetSAP = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(nomor_aset_sap));
 
             RequestBody requestGeoTag1 = RequestBody.create(MediaType.parse("text/plain"),String.valueOf(geotag1));
             RequestBody requestGeoTag2 = RequestBody.create(MediaType.parse("text/plain"),String.valueOf(geotag2));
@@ -1631,6 +1710,7 @@ public class UpdateAsetActivity extends AppCompatActivity {
 
             }
             RequestBody requestUnit = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(Integer.parseInt(String.valueOf(spinnerUnit.getSelectedItemId())) +1));
+            RequestBody requestHGU = RequestBody.create(MediaType.parse("text/plain"), inpHGU.getText().toString().trim());
             RequestBody requestJumlahPohon = RequestBody.create(MediaType.parse("text/plain"), jumlahPohon);
 
             MultipartBody.Builder builder = new MultipartBody.Builder();
@@ -1653,6 +1733,7 @@ public class UpdateAsetActivity extends AppCompatActivity {
             builder.addPart(MultipartBody.Part.createFormData("jumlah_pohon",null,requestJumlahPohon));
             builder.addPart(MultipartBody.Part.createFormData("afdeling_id",null,requestAfdeling));
             builder.addPart(MultipartBody.Part.createFormData("unit_id",null,requestUnit));
+            builder.addPart(MultipartBody.Part.createFormData("hgu",null,requestHGU));
 
             if (bafile_file != null){
                 RequestBody requestBaFile = RequestBody.create(MediaType.parse("multipart/form-file"), bafile_file);
@@ -1799,6 +1880,7 @@ public class UpdateAsetActivity extends AppCompatActivity {
                 List<String> listSpinnerSubUnit = new ArrayList<>();
                 List<String> listSpinnerAfdeling = new ArrayList<>();
 
+
                 // get data tipe aset
                 for (AsetTipe at : dataAllSpinner.getAsetTipe()){
                     listSpinnerTipe.add(at.getAset_tipe_desc());
@@ -1827,6 +1909,13 @@ public class UpdateAsetActivity extends AppCompatActivity {
                 // get sub unit
                 for (SubUnit at : dataAllSpinner.getSubUnit()){
                     listSpinnerSubUnit.add(at.getSub_unit_desc());
+                }
+
+                // get sap
+                for (Sap at : dataAllSpinner.getSap()){
+                    mapSap.put(Integer.parseInt(at.getSap_desc()),at.getSap_id());
+                    mapSpinnerSap.put(at.getSap_id(),Integer.parseInt(at.getSap_desc()));
+                    listSpinnerSap.add(at.getSap_desc());
                 }
 
                 // get afdeling

@@ -11,7 +11,7 @@ import com.squareup.picasso.Picasso;
 
 public class DetailImageActivity extends AppCompatActivity {
 
-    String baseUrlImg = "http://202.148.9.226:7710/mnj_aset_repo/public";
+    String baseUrlImg = "http://202.148.9.226:7710/mnj_aset_production/public";
     String url;
     ImageView detailImgData;
     @Override

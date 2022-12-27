@@ -30,6 +30,18 @@ public class DataAllSpinner {
     @Expose
     private List<Afdelling> afdeling = null;
 
+    @SerializedName("sap")
+    @Expose
+    private List<Sap> sap = null;
+
+    public List<Sap> getSap() {
+        return sap;
+    }
+
+    public void setSap(List<Sap> sap) {
+        this.sap = sap;
+    }
+
     public List<AsetTipe> getAsetTipe() {
         return asetTipe;
     }

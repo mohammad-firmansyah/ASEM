@@ -61,7 +61,7 @@ public class LonglistAsetActivity extends AppCompatActivity  { //implements Bott
 
     Integer user_id;
 
-    public static String baseUrl = "http://202.148.9.226:7710/mnj_aset_repo/public/api/";
+    public static String baseUrl = "http://202.148.9.226:7710/mnj_aset_production/public/api/";
     private AsetInterface asetInterface;
     private Dialog dialog;
     Data[] allData;

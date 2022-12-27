@@ -142,6 +142,18 @@ public class Data {
     @Expose
     private String asetFotoQrStatus;
 
+    @SerializedName("hgu")
+    @Expose
+    private String hgu;
+
+
+    public String getHgu() {
+        return hgu;
+    }
+
+    public void setHgu(String hgu) {
+        this.hgu = hgu;
+    }
 
     public String getAsetFotoQrStatus() {
         return asetFotoQrStatus;

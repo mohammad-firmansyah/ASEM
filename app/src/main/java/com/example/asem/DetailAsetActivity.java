@@ -54,6 +54,7 @@ import com.example.asem.api.model.AsetModel2;
 import com.example.asem.api.model.AsetTipe;
 import com.example.asem.api.model.DataAllSpinner;
 import com.example.asem.api.model.ReportModel;
+import com.example.asem.api.model.Sap;
 import com.example.asem.api.model.SubUnit;
 import com.example.asem.api.model.SubUnitModel;
 import com.example.asem.api.model.Unit;
@@ -93,6 +94,10 @@ public class DetailAsetActivity extends AppCompatActivity {
     String url4 = "";
     String urlfotoasetqr = "";
     Map<Integer, Integer> mapAfdelingSpinner = new HashMap<Integer, Integer>();
+    Map<Integer, Integer> mapSap = new HashMap();
+    Map<Integer, Integer> mapSpinnerSap = new HashMap();
+    List<String> listSpinnerSap = new ArrayList<>();
+
 
     Map<Integer,Integer> mapKodeSpinner = new HashMap();
     Map<Integer,Integer> mapSpinnerkode = new HashMap();
@@ -133,6 +138,7 @@ public class DetailAsetActivity extends AppCompatActivity {
     Button downloadQr;
 
     EditText inpNoInv;
+    EditText inpHGU;
     ImageView fotoasetqr;
     ViewGroup addNewFotoAsetAndQr;
     LinearLayout fotoasetqrgroup;
@@ -161,8 +167,8 @@ public class DetailAsetActivity extends AppCompatActivity {
     };
     private static final int LOCATION_PERMISSION_AND_STORAGE = 33;
 
-    public static String baseUrl = "http://202.148.9.226:7710/mnj_aset_repo/public/api/";
-    public String baseUrlImg = "http://202.148.9.226:7710/mnj_aset_repo/public";
+    public static String baseUrl = "http://202.148.9.226:7710/mnj_aset_production/public/api/";
+    public String baseUrlImg = "http://202.148.9.226:7710/mnj_aset_production/public";
     final Calendar myCalendar= Calendar.getInstance();
     EditText editText;
     EditText inpJumlahPohon;
@@ -318,6 +324,8 @@ public class DetailAsetActivity extends AppCompatActivity {
         qrDefault = findViewById(R.id.qrDefault);
         downloadQr = findViewById(R.id.downloadQr);
         inpSimpanFotoQr = findViewById(R.id.inpSimpanFotoQr);
+        inpHGU = findViewById(R.id.inpHGU);
+        inpHGU.setEnabled(false);
 
         map1 = findViewById(R.id.map1);
         map2 = findViewById(R.id.map2);
@@ -733,7 +741,7 @@ public class DetailAsetActivity extends AppCompatActivity {
 
                 inpTglInput.setText(response.body().getData().getTglInput().split(" ")[0]);
                 inpTglOleh.setText(response.body().getData().getTglOleh().split(" ")[0]);
-                inpNoSAP.setText(String.valueOf(response.body().getData().getNomorSap()));
+                inpNoSAP.setText(String.valueOf(mapSpinnerSap.get(Integer.parseInt(response.body().getData().getNomorSap()))));
                 inpNamaAset.setText(response.body().getData().getAsetName());
                 inpLuasAset.setText(String.valueOf(response.body().getData().getAsetLuas()));
                 inpNilaiAsetSAP.setText(String.valueOf(response.body().getData().getNilaiOleh()));
@@ -745,6 +753,7 @@ public class DetailAsetActivity extends AppCompatActivity {
                 inpNilaiAsetSAP.setText(formatrupiah(Double.parseDouble(String.valueOf(response.body().getData().getNilaiOleh()))));
                 inpPersenKondisi.setText(String.valueOf(response.body().getData().getPersenKondisi()));
                 inpJumlahPohon.setText(String.valueOf(response.body().getData().getJumlahPohon()));
+                inpHGU.setText(String.valueOf(response.body().getData().getHgu()));
                 String ket_reject = response.body().getData().getKetReject();
                 if (ket_reject != null){
                     inpKetReject.setVisibility(View.VISIBLE);
@@ -1278,6 +1287,14 @@ public class DetailAsetActivity extends AppCompatActivity {
                 // get sub unit
                 for (SubUnit at : dataAllSpinner.getSubUnit()){
                     listSpinnerSubUnit.add(at.getSub_unit_desc());
+                }
+
+
+                // get sap
+                for (Sap at : dataAllSpinner.getSap()){
+                    mapSap.put(Integer.parseInt(at.getSap_desc()),at.getSap_id());
+                    mapSpinnerSap.put(at.getSap_id(),Integer.parseInt(at.getSap_desc()));
+                    listSpinnerSap.add(at.getSap_desc());
                 }
 
                 // get afdeling

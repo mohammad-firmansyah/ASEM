@@ -230,14 +230,18 @@
                 android:textSize="14sp"
                 android:textStyle="bold" />
 
-            <EditText
+            <TextView
 
                 android:id="@+id/inpNmrSAP"
+                android:text="Pilih Nomor SAP"
                 android:layout_width="match_parent"
                 android:layout_height="41dp"
                 android:layout_marginBottom="10dp"
-                android:background="@drawable/edit_text_spiner"
-                android:inputType="numberDecimal" />
+                android:textSize="14sp"
+                android:paddingVertical="10dp"
+                android:textStyle="bold"
+                android:background="@drawable/rounded_spinner"
+                 />
 
             <TextView
                 android:id="@+id/tvBa"
@@ -458,8 +462,6 @@
                 android:layout_height="41dp"
                 android:layout_marginBottom="10dp"
                 android:background="@drawable/edit_text_spiner"
-                android:inputType="numberDecimal"
-                android:spinnerMode="dropdown"
                 />
             <TextView
                 android:layout_width="match_parent"
@@ -485,7 +487,6 @@
 
 
                 />
-
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -496,6 +497,12 @@
                 android:textStyle="bold"
                 android:id="@+id/luasTanaman"
                 />
+
+
+
+
+
+
 
             <TextView
                 android:layout_width="match_parent"
@@ -543,6 +550,7 @@
                 android:inputType="numberDecimal"
                 android:lines="1"
                 android:paddingVertical="10dp" />
+
 
 
             <TextView
