@@ -10,10 +10,12 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.Manifest;
 import android.app.Dialog;
+import android.app.SearchManager;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -29,6 +31,9 @@ import com.example.asem.api.model.SearchModel;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import org.jetbrains.annotations.NotNull;
+
+import java.util.Collections;
 import java.util.List;
 
 import retrofit2.Call;
@@ -60,10 +65,13 @@ public class LonglistAsetActivity extends AppCompatActivity  { //implements Bott
     SearchView searchView;
 
     Integer user_id;
+    String search;
 
+//    public static String baseUrl = "http://202.148.9.226:7710/mnj_aset_repo/public/api/";
     public static String baseUrl = "http://202.148.9.226:7710/mnj_aset_production/public/api/";
     private AsetInterface asetInterface;
     private Dialog dialog;
+
     Data[] allData;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,22 +105,23 @@ public class LonglistAsetActivity extends AppCompatActivity  { //implements Bott
         user_id = Integer.parseInt(sharedPreferences.getString("user_id", "0"));
 
 
-        //fab.setBackgroundTintList(ColorStateList.valueOf(Color.rgb(10, 50, 50)));
 
         //search function dibawah ini
         //bisa serj no sap, no inventaris, nama aset
-        searchView.clearFocus();
+
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
 //            SharedPreferences.Editor editor = getSharedPreferences(PREF_LOGIN,MODE_PRIVATE).edit();
             @Override
-            public boolean onQueryTextSubmit(String query) {
-                getDataSearch(query);
+            public boolean onQueryTextSubmit(String search) {
+//                Toast.makeText(rcAset2.get,"halo",Toast.LENGTH_SHORT).show();
+                sharedPreferences = getApplicationContext().getSharedPreferences(PREF_LOGIN, MODE_PRIVATE);
+                int userId = Integer.parseInt(sharedPreferences.getString("user_id", "-"));
+                getData(search, userId);
                 rcAset.setVisibility(View.GONE);
                 rcAset2.setVisibility(View.VISIBLE);
-//                Toast.makeText(rcAset2.get,"halo",Toast.LENGTH_SHORT).show();
                 return false;
             }
-
+            //klik X untuk reset data
             @Override
             public boolean onQueryTextChange(String newText) {
                 if (newText.isEmpty()){
@@ -226,36 +235,71 @@ public class LonglistAsetActivity extends AppCompatActivity  { //implements Bott
     //fungsi search ini masih api, yg fungsi get nya belum
 //    public void getSearch{}
 
-    private void getDataSearch(String query){
+    public void getData(String search, int userId){
+
+        getDataApiSearch(asetInterface.searchAset(search, userId));
+//        Log.d("ceksearch","bisa search :"+search);
         dialog.show();
-        Integer id = null;
-        Search search = new Search();
-        SharedPreferences.Editor editor = getSharedPreferences(PREF_LOGIN,MODE_PRIVATE).edit();
-        Call<SearchModel> call = asetInterface.searchAset(String.valueOf(search),query);
-        call.enqueue(new Callback<SearchModel>() {
+    };
+
+    private void getDataApiSearch(@NotNull Call<List<Search>> call){
+//        call = asetInterface.searchAset();
+        call.enqueue(new Callback<List<Search>>() {
             @Override
-            public void onResponse(Call<SearchModel> call, Response<SearchModel> response) {
-                dialog.dismiss();
-                editor.putString("-",query);
-
-                SearchModel dataS = response.body();
-                SearchAsetAdapter adapter2 = new SearchAsetAdapter(dataS, LonglistAsetActivity.this);
-                rcAset2.setAdapter(adapter2);
-                adapter2.notifyDataSetChanged();
+            public void onResponse(Call<List<Search>> call, Response<List<Search>> response) {
+                if(!response.isSuccessful() && response.body() == null){
+//                    Toast.makeText(getApplicationContext(),String.valueOf(response.code()),Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Data Tidak Ditemukan", Toast.LENGTH_SHORT).show();
+                    dialog.dismiss();
+                    return;
+                }
+                List<Search> dataS = response.body();
+                SearchAsetAdapter adapter = new SearchAsetAdapter(dataS, LonglistAsetActivity.this);
+                rcAset2.setAdapter(adapter);
+                Log.d("ceksearch","bisa search :" +search);
+//                Toast.makeText(getApplicationContext(),"ini masuk kan", Toast.LENGTH_SHORT).show();
+                adapter.notifyDataSetChanged();
                 srlonglist.setRefreshing(false);
-
+                dialog.dismiss();
             }
 
             @Override
-            public void onFailure(Call<SearchModel> call, Throwable t) {
+            public void onFailure(Call<List<Search>> call, Throwable t) {
+                Toast.makeText(getApplicationContext(),"Error :"+t.getMessage(),Toast.LENGTH_SHORT).show();
                 dialog.dismiss();
-                Toast.makeText(getApplicationContext(), "knp ya", Toast.LENGTH_SHORT).show();
-//                Toast.makeText(getApplicationContext(),t.getMessage(),Toast.LENGTH_SHORT).show();
                 srlonglist.setRefreshing(false);
                 return;
             }
         });
     }
+
+//    private void getDataSearch(){
+//        dialog.show();
+//        Search search = new Search();
+//        Call<SearchModel> call = asetInterface.searchAset(String.valueOf(search));
+//        call.enqueue(new Callback<SearchModel>() {
+//            @Override
+//            public void onResponse(Call<SearchModel> call, Response<SearchModel> response) {
+//                dialog.dismiss();
+//
+//                SearchModel dataS = response.body() ;
+//                SearchAsetAdapter adapter2 = new SearchAsetAdapter((List<Search>) dataS, LonglistAsetActivity.this);
+//                rcAset2.setAdapter(adapter2);
+//                adapter2.notifyDataSetChanged();
+//                srlonglist.setRefreshing(false);
+//
+//            }
+//
+//            @Override
+//            public void onFailure(Call<SearchModel> call, Throwable t) {
+//                dialog.dismiss();
+//                Toast.makeText(getApplicationContext(), "knp ya", Toast.LENGTH_SHORT).show();
+////                Toast.makeText(getApplicationContext(),t.getMessage(),Toast.LENGTH_SHORT).show();
+//                srlonglist.setRefreshing(false);
+//                return;
+//            }
+//        });
+//    }
 
     //getdata sorting list trhdp status posisi masing-masing
 

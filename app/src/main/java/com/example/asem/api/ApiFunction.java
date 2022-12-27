@@ -4,6 +4,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.example.asem.api.model.AsetModel;
+import com.google.gson.Gson;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -13,18 +14,29 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ApiFunction {
 
-    public static String BASE_URL = "http://202.148.9.226:9910/aset_mnj_repo/public/api/aset/1/";
+    public static String BASE_URL = "http://202.148.9.226:9910/aset_mnj_production/public/api/";
 
-    public Object initAPI(Object apiData){
-        Object apiInterface;
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
+//    public Object initAPI(Object apiData){
+//        Object apiInterface;
+//        Retrofit retrofit = new Retrofit.Builder()
+//                .baseUrl(BASE_URL)
+//                .addConverterFactory(GsonConverterFactory.create())
+//                .build();
+//
+//        apiInterface = retrofit.create(apiData.getClass());
+//
+//        return apiInterface;
+//    }
 
-        apiInterface = retrofit.create(apiData.getClass());
-
-        return apiInterface;
+    private static Retrofit retrofit = null;
+    public static Retrofit getRetrofit(){
+        if(retrofit==null){
+            retrofit = new Retrofit.Builder()
+                    .baseUrl(BASE_URL)
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .build();
+        }
+        return retrofit;
     }
 
     private void getAset(AsetInterface asetInterface){

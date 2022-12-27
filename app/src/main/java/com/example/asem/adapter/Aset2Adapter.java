@@ -141,7 +141,7 @@ public class Aset2Adapter  extends RecyclerView.Adapter<Aset2Adapter.ViewHolder>
                     public void onClick(View v) {
                         AsetInterface asetInterface;
                         Retrofit retrofit = new Retrofit.Builder()
-                                .baseUrl(baseUrl)
+                                .baseUrl("http://202.148.9.226:7710/mnj_aset_production/public/api/")
                                 .addConverterFactory(GsonConverterFactory.create())
                                 .build();
 
