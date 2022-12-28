@@ -11,9 +11,7 @@ import com.example.asem.api.model.AsetModel2;
 import com.example.asem.api.model.AsetTipe;
 import com.example.asem.api.model.Data2;
 import com.example.asem.api.model.DeleteModel;
-import com.example.asem.api.model.Login;
 import com.example.asem.api.model.LoginModel;
-import com.example.asem.api.model.Report;
 import com.example.asem.api.model.ReportModel;
 import com.example.asem.api.model.Search;
 import com.example.asem.api.model.SearchModel;
@@ -117,9 +115,10 @@ public interface AsetInterface {
     );
 
     @FormUrlEncoded
-    @POST("search")Call<SearchModel> searchAset(
+    @POST("search")
+    Call<List<Search>> searchAset(
             @Field("search") String search,
-            @Field("query") String query
+            @Field("userId") int userID
     );
 
 

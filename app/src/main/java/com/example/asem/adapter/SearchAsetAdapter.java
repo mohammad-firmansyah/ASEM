@@ -39,6 +39,8 @@ import com.example.asem.utils.utils;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.util.List;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -48,7 +50,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class SearchAsetAdapter extends RecyclerView.Adapter<SearchAsetAdapter.ViewHolder> {
 
     private AsetInterface asetInterface;
-    SearchModel dataSearch;
+    List<Search> dataSearch;
     Context context;
     SharedPreferences sharedPreferences;
     private static final String PREF_LOGIN = "LOGIN_PREF";
@@ -57,8 +59,8 @@ public class SearchAsetAdapter extends RecyclerView.Adapter<SearchAsetAdapter.Vi
     Dialog customDialogBelumApprove, customDialogCekDataReject;
     private int id;
 
-    public SearchAsetAdapter(SearchModel dataS, LonglistAsetActivity longlistAsetActivity) {
-        this.dataSearch = dataS;
+    public SearchAsetAdapter(List<Search> data, LonglistAsetActivity longlistAsetActivity) {
+        this.dataSearch = data;
         this.context = longlistAsetActivity;
     }
 
@@ -73,8 +75,8 @@ public class SearchAsetAdapter extends RecyclerView.Adapter<SearchAsetAdapter.Vi
     }
 
     @Override
-    public void onBindViewHolder(@NonNull SearchAsetAdapter.ViewHolder holder, int position) {
-        final Data2 mySearchData = dataSearch.getData();
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+        final Search mySearchData = dataSearch.get(position);
 
         holder.tvTglInput.setText(mySearchData.getTglInput());
         holder.tvNoSAP.setText(String.valueOf(String.valueOf(mySearchData.getNomorSap())));
@@ -145,7 +147,7 @@ public class SearchAsetAdapter extends RecyclerView.Adapter<SearchAsetAdapter.Vi
                     public void onClick(View v) {
                         AsetInterface asetInterface;
                         Retrofit retrofit = new Retrofit.Builder()
-                                .baseUrl("http://202.148.9.226:7710/mnj_aset_repo/public/api/")
+                                .baseUrl("http://202.148.9.226:7710/mnj_aset_production/public/api/")
                                 .addConverterFactory(GsonConverterFactory.create())
                                 .build();
 
@@ -369,6 +371,8 @@ public class SearchAsetAdapter extends RecyclerView.Adapter<SearchAsetAdapter.Vi
 
     @Override
     public int getItemCount() {
+        if (dataSearch != null)
+            return dataSearch.size();
         return 0;
     }
 

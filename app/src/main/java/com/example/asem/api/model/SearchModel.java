@@ -3,9 +3,11 @@ package com.example.asem.api.model;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.util.List;
+
 public class SearchModel {
 
-    public SearchModel(boolean status, String message, Data2 data) {
+    public SearchModel(boolean status, String message, List<Search> data) {
         this.status = status;
         this.message = message;
         this.data = data;
@@ -21,7 +23,7 @@ public class SearchModel {
 
     @SerializedName("data")
     @Expose
-    private Data2 data;
+    private List<Search> data;
 
         public boolean isStatus() {
             return status;
@@ -39,11 +41,11 @@ public class SearchModel {
             this.message = message;
         }
 
-        public Data2 getData() {
+        public List<Search> getData() {
             return data;
         }
 
-        public void setData(Data2 data) {
+        public void setData(List<Search> data) {
             this.data = data;
         }
 }
