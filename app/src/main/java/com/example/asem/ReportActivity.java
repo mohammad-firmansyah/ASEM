@@ -58,8 +58,10 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class ReportActivity extends AppCompatActivity {
     DatePickerDialog.OnDateSetListener date;
     DatePickerDialog.OnDateSetListener date2;
-    public static String baseUrl = "http://202.148.9.226:7710/mnj_aset_production/public/api/";
-    public static String baseUrlAset = "http://202.148.9.226:7710/mnj_aset_production/public";
+//    public static String baseUrl = "http://202.148.9.226:7710/mnj_aset_production/public/api/";
+    public static String baseUrl = "https://amanat.ptpn12.com/api/";
+//    public static String baseUrlAset = "http://202.148.9.226:7710/mnj_aset_production/public";
+    public static String baseUrlAset = "https://amanat.ptpn12.com";
     private AsetInterface asetInterface;
     final Calendar myCalendar1= Calendar.getInstance();
     final Calendar myCalendar2= Calendar.getInstance();
@@ -84,6 +86,7 @@ public class ReportActivity extends AppCompatActivity {
     RadioGroup radioGroup;
     EditText inpTglInput1;
     EditText inpTglInput2;
+    EditText inpHGU;
     private Dialog dialog;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -112,6 +115,7 @@ public class ReportActivity extends AppCompatActivity {
 
         inpTglInput1 = findViewById(R.id.inpTglInput);
         inpTglInput2 = findViewById(R.id.inpTglInput2);
+        inpHGU = findViewById(R.id.inpTglInput2);
 
 
 
@@ -482,6 +486,7 @@ public class ReportActivity extends AppCompatActivity {
             RequestBody requestTglInput2 = RequestBody.create(MediaType.parse("text/plain"), inpTglInput2.getText()+" 00:00:00");
             Integer unit_id = Integer.valueOf(sharedPreferences.getString("unit_id", "0"));
             RequestBody requestUnit = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(unit_id));
+            RequestBody requestHGU = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(inpHGU.getText().toString().trim()));
 
 
 
@@ -494,7 +499,7 @@ public class ReportActivity extends AppCompatActivity {
             builder.addPart(MultipartBody.Part.createFormData("tgl_input1",null,requestTglInput1));
             builder.addPart(MultipartBody.Part.createFormData("tgl_input2",null,requestTglInput2));
             builder.addPart(MultipartBody.Part.createFormData("unit_id",null,requestUnit));
-            Log.d("asetapix",String.valueOf(inpTglInput1.getText()));
+            builder.addPart(MultipartBody.Part.createFormData("hgu",null,requestHGU));
 
             int selectedId = radioGroup.getCheckedRadioButtonId();
             RadioButton radioButton = (RadioButton) findViewById(selectedId);

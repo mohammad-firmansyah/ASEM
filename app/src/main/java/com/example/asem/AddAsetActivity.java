@@ -145,8 +145,10 @@ public class AddAsetActivity extends AppCompatActivity {
     };
     private static final int LOCATION_PERMISSION_AND_STORAGE = 33;
 
-    public static String baseUrl = "http://202.148.9.226:7710/mnj_aset_production/public/api/";
-    public String baseUrlImg = "http://202.148.9.226:7710/mnj_aset_production/public";
+//    public static String baseUrl = "http://202.148.9.226:7710/mnj_aset_production/public/api/";
+    public static String baseUrl = "https://amanat.ptpn12.com/api/";
+//    public String baseUrlImg = "http://202.148.9.226:7710/mnj_aset_production/public";
+    public String baseUrlImg = "https://amanat.ptpn12.com";
     final Calendar myCalendar= Calendar.getInstance();
     EditText editText;
     EditText inpJumlahPohon;
