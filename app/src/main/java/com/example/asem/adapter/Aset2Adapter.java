@@ -2,13 +2,6 @@ package com.example.asem.adapter;
 
 
 import static android.content.Context.MODE_PRIVATE;
-import static android.content.Intent.getIntent;
-import static androidx.core.content.ContextCompat.getColor;
-import static androidx.core.content.ContextCompat.startActivity;
-
-import static com.example.asem.LonglistAsetActivity.baseUrl;
-
-import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -34,6 +27,7 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.asem.AddAsetActivity;
+import com.example.asem.AsemApp;
 import com.example.asem.DetailAsetActivity;
 import com.example.asem.LonglistAsetActivity;
 import com.example.asem.R;
@@ -106,7 +100,7 @@ public class Aset2Adapter  extends RecyclerView.Adapter<Aset2Adapter.ViewHolder>
         }
 
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(baseUrl)
+                .baseUrl(AsemApp.BASE_URL_API)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
@@ -141,7 +135,7 @@ public class Aset2Adapter  extends RecyclerView.Adapter<Aset2Adapter.ViewHolder>
                     public void onClick(View v) {
                         AsetInterface asetInterface;
                         Retrofit retrofit = new Retrofit.Builder()
-                                .baseUrl(baseUrl)
+                                .baseUrl(AsemApp.BASE_URL_API)
                                 .addConverterFactory(GsonConverterFactory.create())
                                 .build();
 

@@ -153,10 +153,6 @@ public class UpdateAsetActivity extends AppCompatActivity {
     };
     private static final int LOCATION_PERMISSION_AND_STORAGE = 33;
 
-    //    public static String baseUrl = "http://202.148.9.226:7710/mnj_aset_production/public/api/";
-    public static String baseUrl = "https://amanat.ptpn12.com/api/";
-    //    public static String baseUrlAset = "http://202.148.9.226:7710/mnj_aset_production/public";
-    public static String baseUrlImg = "https://amanat.ptpn12.com";
     final Calendar myCalendar= Calendar.getInstance();
     EditText editText;
     EditText inpJumlahPohon;
@@ -745,7 +741,7 @@ public class UpdateAsetActivity extends AppCompatActivity {
             }
         });
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(baseUrl)
+                .baseUrl(AsemApp.BASE_URL_API)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
@@ -957,10 +953,10 @@ public class UpdateAsetActivity extends AppCompatActivity {
                     inpKetReject.setVisibility(View.GONE);
                     tvKetReject.setVisibility(View.GONE);
                 }
-                String url1 = baseUrlImg+response.body().getData().getFotoAset1();
-                String url2 = baseUrlImg+response.body().getData().getFotoAset2();
-                String url3 = baseUrlImg+response.body().getData().getFotoAset3();
-                String url4 = baseUrlImg+response.body().getData().getFotoAset4();
+                String url1 = AsemApp.BASE_URL_ASSET+response.body().getData().getFotoAset1();
+                String url2 = AsemApp.BASE_URL_ASSET+response.body().getData().getFotoAset2();
+                String url3 = AsemApp.BASE_URL_ASSET+response.body().getData().getFotoAset3();
+                String url4 = AsemApp.BASE_URL_ASSET+response.body().getData().getFotoAset4();
 
                 if (response.body().getData().getFotoAset1() == null ){
                     map1.setEnabled(false);

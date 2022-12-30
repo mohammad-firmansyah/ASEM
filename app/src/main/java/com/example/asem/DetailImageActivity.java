@@ -11,11 +11,11 @@ import com.squareup.picasso.Picasso;
 
 public class DetailImageActivity extends AppCompatActivity {
 
-//    String baseUrlImg = "http://202.148.9.226:7710/mnj_aset_production/public";
 //    public static String baseUrl = "http://202.148.9.226:7710/mnj_aset_production/public/api/";
-    public static String baseUrl = "http://amanat.ptpn12.com/api/";
-    //    public static String baseUrlAset = "http://202.148.9.226:7710/mnj_aset_production/public";
-    public static String baseUrlImg = "http://amanat.ptpn12.com";
+//    public static String baseUrlImg = "http://202.148.9.226:7710/mnj_aset_production/public";
+    //    public static String baseUrl = "http://amanat.ptpn12.com/api/";
+//        public static String baseUrlAset = "http://202.148.9.226:7710/mnj_aset_production/public";
+//     public static String baseUrlImg = "http://amanat.ptpn12.com";
     String url;
     ImageView detailImgData;
     @Override

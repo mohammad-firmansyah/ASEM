@@ -170,9 +170,9 @@ public class DetailAsetActivity extends AppCompatActivity {
 //    public static String baseUrl = "http://202.148.9.226:7710/mnj_aset_production/public/api/";
 //    public String baseUrlImg = "http://202.148.9.226:7710/mnj_aset_production/public";
 //    public static String baseUrl = "http://202.148.9.226:7710/mnj_aset_production/public/api/";
-public static String baseUrl = "https://amanat.ptpn12.com/api/";
+//public static String baseUrl = "https://amanat.ptpn12.com/api/";
     //    public static String baseUrlAset = "http://202.148.9.226:7710/mnj_aset_production/public";
-    public static String baseUrlImg = "https://amanat.ptpn12.com";
+//    public static String baseUrlImg = "https://amanat.ptpn12.com";
     final Calendar myCalendar= Calendar.getInstance();
     EditText editText;
     EditText inpJumlahPohon;
@@ -367,7 +367,7 @@ public static String baseUrl = "https://amanat.ptpn12.com/api/";
                                 return;
                             }
 
-                            downloadQrImage(baseUrlImg+"/qrcode.pdf");
+                            downloadQrImage(AsemApp.BASE_URL_ASSET+"/qrcode.pdf");
 
                         }
 
@@ -615,7 +615,7 @@ public static String baseUrl = "https://amanat.ptpn12.com/api/";
             }
         });
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(baseUrl)
+                .baseUrl(AsemApp.BASE_URL_API)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
@@ -776,17 +776,17 @@ public static String baseUrl = "https://amanat.ptpn12.com/api/";
                     inpNoInv.setText(String.valueOf(response.body().getData().getNoInv()));
                 };
 
-                qrurl = baseUrlImg+"/"+response.body().getData().getFotoQr();
+                qrurl = AsemApp.BASE_URL_API+"/"+response.body().getData().getFotoQr();
                 if (response.body().getData().getFotoQr() != null) {
                     qrDefault.getLayoutParams().height = 346;
                     Picasso.get().load(qrurl).resize(400,400).centerCrop().into(qrDefault);
                 }
 
-                url1 = baseUrlImg+response.body().getData().getFotoAset1();
-                url2 = baseUrlImg+response.body().getData().getFotoAset2();
-                url3 = baseUrlImg+response.body().getData().getFotoAset3();
-                url4 = baseUrlImg+response.body().getData().getFotoAset4();
-                urlfotoasetqr = baseUrlImg+response.body().getData().getFotoAsetQr();
+                url1 = AsemApp.BASE_URL_ASSET+response.body().getData().getFotoAset1();
+                url2 = AsemApp.BASE_URL_ASSET+response.body().getData().getFotoAset2();
+                url3 = AsemApp.BASE_URL_ASSET+response.body().getData().getFotoAset3();
+                url4 = AsemApp.BASE_URL_ASSET+response.body().getData().getFotoAset4();
+                urlfotoasetqr = AsemApp.BASE_URL_ASSET+response.body().getData().getFotoAsetQr();
 
                 if (response.body().getData().getFotoAset1() == null ){
                     map1.setEnabled(false);
@@ -832,7 +832,7 @@ public static String baseUrl = "https://amanat.ptpn12.com/api/";
 
                 if (response.body().getData().getFotoAsetQr()!=null ){
 //                    fotoasetqrgroup.setVisibility(View.VISIBLE);
-                    String url = baseUrlImg + response.body().getData().getFotoAsetQr();
+                    String url = AsemApp.BASE_URL_ASSET + response.body().getData().getFotoAsetQr();
                     fotoasetqr.getLayoutParams().width = 300;
                     fotoasetqr.getLayoutParams().height = 300;
                     Picasso.get().load(urlfotoasetqr).resize(300,300).centerCrop().into(fotoasetqr);

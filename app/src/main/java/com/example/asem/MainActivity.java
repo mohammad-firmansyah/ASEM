@@ -1,7 +1,6 @@
 package com.example.asem;
 
 import static android.app.PendingIntent.getActivity;
-import static com.example.asem.LonglistAsetActivity.baseUrl;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -79,7 +78,7 @@ public class MainActivity extends AppCompatActivity {
         });
 */
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(baseUrl)
+                .baseUrl(AsemApp.BASE_URL_API)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 

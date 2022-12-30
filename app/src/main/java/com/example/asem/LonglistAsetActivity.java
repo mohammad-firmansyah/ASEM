@@ -62,9 +62,9 @@ public class LonglistAsetActivity extends AppCompatActivity  { //implements Bott
     Integer user_id;
 
     //    public static String baseUrl = "http://202.148.9.226:7710/mnj_aset_production/public/api/";
-    public static String baseUrl = "https://amanat.ptpn12.com/api/";
+//    public static String baseUrl = "https://amanat.ptpn12.com/api/";
     //    public static String baseUrlAset = "http://202.148.9.226:7710/mnj_aset_production/public";
-    public static String baseUrlAset = "https://amanat.ptpn12.com";
+//    public static String baseUrlAset = "https://amanat.ptpn12.com";
     private AsetInterface asetInterface;
     private Dialog dialog;
     Data[] allData;
@@ -153,7 +153,7 @@ public class LonglistAsetActivity extends AppCompatActivity  { //implements Bott
         });
 
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(baseUrl)
+                .baseUrl(AsemApp.BASE_URL_API)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 

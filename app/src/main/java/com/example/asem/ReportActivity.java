@@ -59,9 +59,9 @@ public class ReportActivity extends AppCompatActivity {
     DatePickerDialog.OnDateSetListener date;
     DatePickerDialog.OnDateSetListener date2;
 //    public static String baseUrl = "http://202.148.9.226:7710/mnj_aset_production/public/api/";
-    public static String baseUrl = "https://amanat.ptpn12.com/api/";
+//    public static String baseUrl = "https://amanat.ptpn12.com/api/";
 //    public static String baseUrlAset = "http://202.148.9.226:7710/mnj_aset_production/public";
-    public static String baseUrlAset = "https://amanat.ptpn12.com";
+//    public static String baseUrlAset = "https://amanat.ptpn12.com";
     private AsetInterface asetInterface;
     final Calendar myCalendar1= Calendar.getInstance();
     final Calendar myCalendar2= Calendar.getInstance();
@@ -126,7 +126,7 @@ public class ReportActivity extends AppCompatActivity {
         imgBack.setVisibility(View.GONE);
 
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(baseUrl)
+                .baseUrl(AsemApp.BASE_URL_API)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
@@ -530,10 +530,10 @@ public class ReportActivity extends AppCompatActivity {
                         Log.d("asetData",String.valueOf(response.body().getData()));
                         if ("laporan.pdf".equals(String.valueOf(response.body().getData()))) {
 
-                            downloadReport(baseUrlAset + "/" + String.valueOf(response.body().getData()));
+                            downloadReport(AsemApp.BASE_URL_ASSET + "/" + String.valueOf(response.body().getData()));
 
                         } else {
-                            downloadReport(baseUrlAset+String.valueOf(response.body().getData()));
+                            downloadReport(AsemApp.BASE_URL_ASSET+String.valueOf(response.body().getData()));
                         }
                         return;
                     }

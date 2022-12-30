@@ -2,7 +2,6 @@ package com.example.asem.adapter;
 
 import static android.content.Context.MODE_PRIVATE;
 
-import static com.example.asem.LonglistAsetActivity.baseUrl;
 
 import android.app.Dialog;
 import android.content.Context;
@@ -24,6 +23,7 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.asem.AsemApp;
 import com.example.asem.DetailAsetActivity;
 import com.example.asem.LonglistAsetActivity;
 import com.example.asem.R;
@@ -92,7 +92,7 @@ public class SearchAsetAdapter extends RecyclerView.Adapter<SearchAsetAdapter.Vi
         }
 
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(baseUrl)
+                .baseUrl(AsemApp.BASE_URL_API)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 

@@ -145,11 +145,11 @@ import com.google.android.gms.location.FusedLocationProviderClient;
         };
         private static final int LOCATION_PERMISSION_AND_STORAGE = 33;
 
-//        public static String baseUrl = "http://202.148.9.226:7710/mnj_aset_production/public/api/";
-//        public String baseUrlImg = "http://202.148.9.226:7710/mnj_aset_production/public";
+        public static String baseUrl = "http://202.148.9.226:7710/mnj_aset_production/public/api/";
+        public String baseUrlImg = "http://202.148.9.226:7710/mnj_aset_production/public";
 
-        public static String baseUrl = "https://amanat.ptpn12.com/api/";
-        public static String baseUrlImg = "https://amanat.ptpn12.com";
+//        public static String baseUrl = "https://amanat.ptpn12.com/api/";
+//        public static String baseUrlImg = "https://amanat.ptpn12.com";
         final Calendar myCalendar= Calendar.getInstance();
         EditText editText;
         EditText inpJumlahPohon;
