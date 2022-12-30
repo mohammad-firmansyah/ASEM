@@ -162,6 +162,7 @@ public class MainActivity extends AppCompatActivity {
                             Log.d("taglogin", "onResponse: Login bre");
                             Toast.makeText(MainActivity.this, response.body().getMessage(), Toast.LENGTH_LONG).show();
                         }
+                        dialog.show();
                     }else{
                         dialog.dismiss();
                         if (response.toString().contains("code=500")){
@@ -182,7 +183,8 @@ public class MainActivity extends AppCompatActivity {
                     }
             });
 
-        } dialog.show();
+        }
+//        dialog.show();
     }
 
 //    public void onBackPressed(){

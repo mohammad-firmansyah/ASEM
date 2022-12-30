@@ -3,7 +3,45 @@ package com.example.asem.api.model;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.util.List;
+
 public class Search {
+
+    @SerializedName("status")
+    @Expose
+    private boolean status;
+
+    @SerializedName("message")
+    @Expose
+    private String message;
+
+    @SerializedName("data")
+    @Expose
+    private List<Search> data;
+
+    public boolean isStatus() {
+        return status;
+    }
+
+    public void setStatus(boolean status) {
+        this.status = status;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
+    public List<Search> getData() {
+        return data;
+    }
+
+    public void setData(List<Search> data) {
+        this.data = data;
+    }
 
     @SerializedName("aset_id")
     @Expose
@@ -55,7 +93,7 @@ public class Search {
     private String geoTag4;
     @SerializedName("aset_luas")
     @Expose
-    private Integer asetLuas;
+    private Double asetLuas;
     @SerializedName("tgl_input")
     @Expose
     private String tglInput;
@@ -121,7 +159,7 @@ public class Search {
     private Object ketReject;
     @SerializedName("umur_ekonomis_in_month")
     @Expose
-    private Integer umurEkonomis;
+    private Integer umurEkonomisInMonth;
 
     @SerializedName("status_posisi_id")
     @Expose
@@ -139,12 +177,12 @@ public class Search {
         this.ketReject = ketReject;
     }
 
-    public Integer getUmurEkonomis() {
-        return umurEkonomis;
+    public Integer getUmurEkonomisInMonth() {
+        return umurEkonomisInMonth;
     }
 
-    public void setUmurEkonomis(Integer umurEkonomis) {
-        this.umurEkonomis = umurEkonomis;
+    public void setUmurEkonomisInMonth(Integer umurEkonomis) {
+        this.umurEkonomisInMonth = umurEkonomis;
     }
 
     public Integer getAsetId() {
@@ -275,11 +313,11 @@ public class Search {
         this.geoTag4 = geoTag4;
     }
 
-    public Integer getAsetLuas() {
+    public Double getAsetLuas() {
         return asetLuas;
     }
 
-    public void setAsetLuas(Integer asetLuas) {
+    public void setAsetLuas(Double asetLuas) {
         this.asetLuas = asetLuas;
     }
 
