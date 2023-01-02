@@ -2,11 +2,34 @@ package com.example.asem;
 
 import android.content.SharedPreferences;
 
+import androidx.annotation.NonNull;
+
+import okhttp3.OkHttpClient;
+import okhttp3.logging.HttpLoggingInterceptor;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
+
 public class AsemApp {
     public static String BASE_URL_API = "http://202.148.9.226:7710/mnj_aset_production/public/api/";
     public static String BASE_URL_ASSET = "http://202.148.9.226:7710/mnj_aset_production/public";
     private static final String PREF_LOGIN = "LOGIN_PREF";
     private static final String LOGIN_CREDENTIALS = "LOGIN_CREDENTIALS";
+
+    @NonNull
+    public static Retrofit getApiClient() {
+
+        // Used to log the request and response.
+        HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
+        interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+        OkHttpClient httpClient = new OkHttpClient.Builder().addInterceptor(interceptor).build();
+
+        // Returning the retrofit object.
+        return new Retrofit.Builder()
+                .baseUrl(BASE_URL_API)
+                .client(httpClient)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+    }
 
     //TEMPAT UNTUK initiate LOGIN,SHAREDPREFERENCES
 

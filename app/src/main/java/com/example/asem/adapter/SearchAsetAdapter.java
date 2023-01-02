@@ -75,6 +75,7 @@ public class SearchAsetAdapter extends RecyclerView.Adapter<SearchAsetAdapter.Vi
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+        asetInterface = AsemApp.getApiClient().create(AsetInterface.class);
         final Search mySearchData = dataSearch.get(position);
 
         holder.tvTglInput.setText(mySearchData.getTglInput());
@@ -92,25 +93,26 @@ public class SearchAsetAdapter extends RecyclerView.Adapter<SearchAsetAdapter.Vi
             holder.tvNoinv.setText("-");
         }
 
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(AsemApp.BASE_URL_API)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-
-        asetInterface = retrofit.create(AsetInterface.class);
-
         holder.btnEdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 sharedPreferences = context.getSharedPreferences(PREF_LOGIN, MODE_PRIVATE);
                 Integer hak_akses_id = Integer.valueOf(sharedPreferences.getString("hak_akses_id", "0"));
 
-                if (mySearchData.getStatusPosisiID() == 5 && hak_akses_id == 7) {
-                    Intent intent = new Intent(context, UpdateFotoQrAsetActivity.class);
-                    intent.putExtra("id",(mySearchData.getAsetId()));
-                    context.startActivity(intent);
-                    return;
-                }
+//                if (mySearchData.getStatusPosisiID() == 5 && hak_akses_id == 7) {
+//                    Intent intent = new Intent(context, UpdateFotoQrAsetActivity.class);
+//                    intent.putExtra("id",(mySearchData.getAsetId()));
+//                    context.startActivity(intent);
+//                    return;
+//                }
+//                if (mySearchData.getAsetFotoQrStatus() != null && hak_akses_id == 7){
+//
+//                    Intent intent = new Intent(context, UpdateFotoQrAsetActivity.class);
+//                    intent.putExtra("id",(mySearchData.getAsetId()));
+//                    context.startActivity(intent);
+//                    return;
+//                }
+
                 Intent intent = new Intent(context, UpdateAsetActivity.class);
                 intent.putExtra("id",(mySearchData.getAsetId()));
                 context.startActivity(intent);
@@ -144,13 +146,14 @@ public class SearchAsetAdapter extends RecyclerView.Adapter<SearchAsetAdapter.Vi
                 ya.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        AsetInterface asetInterface;
-                        Retrofit retrofit = new Retrofit.Builder()
-                                .baseUrl("http://202.148.9.226:7710/mnj_aset_production/public/api/")
-                                .addConverterFactory(GsonConverterFactory.create())
-                                .build();
-
-                        asetInterface = retrofit.create(AsetInterface.class);
+//                        AsetInterface asetInterface;
+//                        Retrofit retrofit = new Retrofit.Builder()
+//                                .baseUrl("http://202.148.9.226:7710/mnj_aset_production/public/api/")
+//                                .addConverterFactory(GsonConverterFactory.create())
+//                                .build();
+//
+//                        asetInterface = retrofit.create(AsetInterface.class);
+                        asetInterface = AsemApp.getApiClient().create(AsetInterface.class);
                         Call<DeleteModel> call = asetInterface.deleteReport(mySearchData.getAsetId());
 
                         call.enqueue(new Callback<DeleteModel>(){
@@ -180,11 +183,11 @@ public class SearchAsetAdapter extends RecyclerView.Adapter<SearchAsetAdapter.Vi
         });
 
         int id = mySearchData.getAsetId();
-        int statpos = mySearchData.getStatusPosisiID();
 
         holder.btnKirim.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                int statpos = mySearchData.getStatusPosisiID();
                 if (statpos == 2||statpos == 4||statpos == 6||statpos == 8||statpos == 10){
                     initDialogBelomApprove();
                 } else if(statpos == 1 && mySearchData.getStatusReject()!=null){

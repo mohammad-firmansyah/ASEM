@@ -260,6 +260,8 @@ public class DetailAsetActivity extends AppCompatActivity {
 
         sharedPreferences = DetailAsetActivity.this.getSharedPreferences(PREF_LOGIN, MODE_PRIVATE);
 
+        asetInterface = AsemApp.getApiClient().create(AsetInterface.class);
+
         id = intent.getIntExtra("id",0);
         dialog = new Dialog(DetailAsetActivity.this,R.style.MyAlertDialogTheme);
         dialog.setContentView(R.layout.loading);
@@ -614,12 +616,6 @@ public class DetailAsetActivity extends AppCompatActivity {
 
             }
         });
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(AsemApp.BASE_URL_API)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-
-        asetInterface = retrofit.create(AsetInterface.class);
 
         btnFile = findViewById(R.id.inpUploudBA);
 

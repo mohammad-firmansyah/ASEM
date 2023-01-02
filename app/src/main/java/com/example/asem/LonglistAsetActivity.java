@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
+import androidx.appcompat.widget.SwitchCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -18,6 +19,7 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.Toast;
 
 import com.example.asem.adapter.Aset2Adapter;
@@ -61,6 +63,7 @@ public class LonglistAsetActivity extends AppCompatActivity  { //implements Bott
 
     SwipeRefreshLayout srlonglist;
     SearchView searchView;
+    SwitchCompat switch_offline;
 
     Integer user_id;
 
@@ -91,6 +94,7 @@ public class LonglistAsetActivity extends AppCompatActivity  { //implements Bott
         fab = findViewById(R.id.addAset);
         srlonglist = findViewById(R.id.srlonglist);
         searchView = findViewById(R.id.svSearch);
+        switch_offline = findViewById(R.id.switchoffline);
 
         sharedPreferences = getSharedPreferences(PREF_LOGIN, MODE_PRIVATE);
         String hak_akses_id = sharedPreferences.getString("hak_akses_id", "-");
@@ -133,6 +137,17 @@ public class LonglistAsetActivity extends AppCompatActivity  { //implements Bott
             }
         });
 
+//        Boolean switchState = switch_offline.isChecked();
+        switch_offline.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked){
+                    //aktifkan longlist offline
+                    switch_offline.setChecked(true);
+                }
+            }
+        });
+
         btnReport = findViewById(R.id.btnReport);
         btnFilter = findViewById(R.id.btnFilter);
 
@@ -158,12 +173,7 @@ public class LonglistAsetActivity extends AppCompatActivity  { //implements Bott
             }
         });
 
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(AsemApp.BASE_URL_API)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-
-        asetInterface = retrofit.create(AsetInterface.class);
+        asetInterface = AsemApp.getApiClient().create(AsetInterface.class);
 //        allData = new Data[]{};
 //        AsetAdapter adapter = new AsetAdapter(allData,LonglistAsetActivity.this);
 //        rcAset.setAdapter(adapter);

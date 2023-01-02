@@ -82,6 +82,7 @@ public class Aset2Adapter  extends RecyclerView.Adapter<Aset2Adapter.ViewHolder>
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+        asetInterface = AsemApp.getApiClient().create(AsetInterface.class);
         final Data2 myPostData2 = myAsetData.get(position);
 
         holder.tvTglInput.setText(myPostData2.getTglInput());
@@ -98,13 +99,6 @@ public class Aset2Adapter  extends RecyclerView.Adapter<Aset2Adapter.ViewHolder>
         } else {
             holder.tvNoinv.setText("-");
         }
-
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(AsemApp.BASE_URL_API)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-
-        asetInterface = retrofit.create(AsetInterface.class);
 
         // jika data di posisi reject maka bikin bg jadi kuning
         // selain posisi tersebut bg normal
