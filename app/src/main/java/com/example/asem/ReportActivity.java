@@ -96,6 +96,8 @@ public class ReportActivity extends AppCompatActivity {
 
         sharedPreferences = ReportActivity.this.getSharedPreferences(PREF_LOGIN, MODE_PRIVATE);
 
+        asetInterface = AsemApp.getApiClient().create(AsetInterface.class);
+
         dialog = new Dialog(ReportActivity.this,R.style.MyAlertDialogTheme);
         dialog.setContentView(R.layout.loading);
         dialog.setCanceledOnTouchOutside(false);
@@ -125,12 +127,6 @@ public class ReportActivity extends AppCompatActivity {
         actionBar.hide();
         imgBack.setVisibility(View.GONE);
 
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(AsemApp.BASE_URL_API)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-
-        asetInterface = retrofit.create(AsetInterface.class);
 
 
         getSpinnerData();

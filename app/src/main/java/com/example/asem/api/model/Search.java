@@ -165,6 +165,18 @@ public class Search {
     @Expose
     private Integer statusPosisiID;
 
+    @SerializedName("aset_foto_qr_status")
+    @Expose
+    private String asetFotoQrStatus;
+
+    public String getAsetFotoQrStatus() {
+        return asetFotoQrStatus;
+    }
+
+    public void setAsetFotoQrStatus(String asetFotoQrStatus) {
+        this.asetFotoQrStatus = asetFotoQrStatus;
+    }
+
     public Integer getStatusPosisiID() {
         return statusPosisiID;
     }

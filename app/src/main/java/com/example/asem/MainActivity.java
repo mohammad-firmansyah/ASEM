@@ -55,6 +55,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        asetInterface = AsemApp.getApiClient().create(AsetInterface.class);
 
         dialog = new Dialog(MainActivity.this,R.style.MyAlertDialogTheme);
         dialog.setContentView(R.layout.loading);
@@ -64,25 +65,7 @@ public class MainActivity extends AppCompatActivity {
         etNIP = findViewById(R.id.etNIP);
         etPass = findViewById(R.id.etPassword);
 
-        //String username = sharedPreferences.getString("username", "-");
-//        Log.d("tessp", username);
-
-
         btnLogin = findViewById(R.id.btnLogin);
-/*
-        btnLogin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, LonglistAsetActivity.class));
-            }
-        });
-*/
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(AsemApp.BASE_URL_API)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-
-        asetInterface = retrofit.create(AsetInterface.class);
 
         btnLogin.setOnClickListener(v -> loginProses());
 
@@ -101,8 +84,6 @@ public class MainActivity extends AppCompatActivity {
             etPass.setError("Password wajib diisi!");
             etPass.requestFocus();
         }else{
-//            startActivity(new Intent(MainActivity.this,LonglistAsetActivity.class));
-//            dialog.show();
 
             Call<LoginModel> call = asetInterface.login(username,user_pass);    
             call.enqueue(new Callback<LoginModel>() {
@@ -184,7 +165,6 @@ public class MainActivity extends AppCompatActivity {
             });
 
         }
-//        dialog.show();
     }
 
 //    public void onBackPressed(){

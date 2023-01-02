@@ -360,6 +360,8 @@ public class UpdateAsetActivity extends AppCompatActivity {
 
         sharedPreferences = UpdateAsetActivity.this.getSharedPreferences(PREF_LOGIN, MODE_PRIVATE);
 
+        asetInterface = AsemApp.getApiClient().create(AsetInterface.class);
+
         spinnerNoSap = new Dialog(UpdateAsetActivity.this);
 
         dialog = new Dialog(UpdateAsetActivity.this,R.style.MyAlertDialogTheme);
@@ -740,12 +742,6 @@ public class UpdateAsetActivity extends AppCompatActivity {
 
             }
         });
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(AsemApp.BASE_URL_API)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-
-        asetInterface = retrofit.create(AsetInterface.class);
 
         btnFile = findViewById(R.id.inpUploudBA);
 

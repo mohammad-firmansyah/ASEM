@@ -61,6 +61,37 @@
 
     </LinearLayout>
 
+    <LinearLayout
+        android:id="@+id/switchoff"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:layout_below="@id/upLayout"
+        >
+
+        <androidx.appcompat.widget.SwitchCompat
+            android:id="@+id/switchoffline"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.7"
+            android:gravity="center"
+            android:text="List Data Online"
+            android:textStyle="italic"
+            />
+
+        <TextView
+            android:id="@+id/tvSwitchOffline"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.5"
+            android:text="List Data Offline"
+            android:gravity="center"
+            android:textColor="@color/black"
+            android:textStyle="italic"
+            android:layout_toRightOf="@id/switchoffline"
+            />
+
+    </LinearLayout>
+
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
@@ -68,7 +99,7 @@
         android:layout_height="wrap_content"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:gravity="center"
-        android:layout_below="@id/upLayout"
+        android:layout_below="@id/switchoff"
         android:layout_above="@+id/bottomnav"
         tools:context=".MainActivity">
 

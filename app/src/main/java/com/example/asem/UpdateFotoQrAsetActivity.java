@@ -233,6 +233,8 @@ import com.google.android.gms.location.FusedLocationProviderClient;
 
             sharedPreferences = UpdateFotoQrAsetActivity.this.getSharedPreferences(PREF_LOGIN, MODE_PRIVATE);
 
+            asetInterface = AsemApp.getApiClient().create(AsetInterface.class);
+
             id = intent.getIntExtra("id",0);
             dialog = new Dialog(UpdateFotoQrAsetActivity.this,R.style.MyAlertDialogTheme);
             dialog.setContentView(R.layout.loading);
@@ -427,13 +429,6 @@ import com.google.android.gms.location.FusedLocationProviderClient;
 
                 }
             });
-            Retrofit retrofit = new Retrofit.Builder()
-                    .baseUrl(baseUrl)
-                    .addConverterFactory(GsonConverterFactory.create())
-                    .build();
-
-            asetInterface = retrofit.create(AsetInterface.class);
-
             btnFile = findViewById(R.id.inpUploudBA);
 
             map1.setOnClickListener(new View.OnClickListener() {

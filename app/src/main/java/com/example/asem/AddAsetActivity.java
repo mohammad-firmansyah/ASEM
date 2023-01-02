@@ -455,9 +455,11 @@ public class AddAsetActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_add_aset);
 
         sharedPreferences = AddAsetActivity.this.getSharedPreferences(PREF_LOGIN, MODE_PRIVATE);
-        setContentView(R.layout.activity_add_aset);
+        
+        asetInterface = AsemApp.getApiClient().create(AsetInterface.class);
 
         dialog = new Dialog(AddAsetActivity.this,R.style.MyAlertDialogTheme);
         dialog.setContentView(R.layout.loading);
@@ -803,14 +805,6 @@ public class AddAsetActivity extends AppCompatActivity {
 
 
 //        handler
-
-
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(AsemApp.BASE_URL_API)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-
-        asetInterface = retrofit.create(AsetInterface.class);
 
 
 
