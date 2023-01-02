@@ -1,0 +1,713 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity"
+    android:padding="18dp"
+    android:background="@color/background_grey"
+    >
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:text="TIPE ASSET :"
+                android:textColor="@color/main_grey"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+
+
+            <Spinner
+                android:id="@+id/inpTipeAset"
+                android:layout_width="match_parent"
+                android:layout_height="41dp"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/rounded_spinner"
+                android:spinnerMode="dropdown"
+
+
+                />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:text="JENIS ASSET :"
+                android:textColor="@color/main_grey"
+                android:textSize="14sp"
+                android:textStyle="bold"
+
+
+                />
+
+
+            <Spinner
+
+                android:id="@+id/inpJenisAset"
+                android:layout_width="match_parent"
+                android:layout_height="41dp"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/rounded_spinner"
+                android:spinnerMode="dropdown" />
+
+            <!--            <TextView-->
+            <!--                android:layout_width="match_parent"-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--                android:layout_marginBottom="10dp"-->
+            <!--                android:text="KOMODITI :"-->
+            <!--                android:textColor="@color/main_grey"-->
+            <!--                android:textSize="14sp"-->
+            <!--                android:textStyle="bold"-->
+
+
+            <!--                />-->
+
+
+            <!--            <Spinner-->
+
+            <!--                android:id="@+id/inpKomoditi"-->
+            <!--                android:layout_width="match_parent"-->
+            <!--                android:layout_height="41dp"-->
+            <!--                android:layout_marginBottom="10dp"-->
+            <!--                android:background="@drawable/rounded_spinner"-->
+            <!--                android:spinnerMode="dropdown" />-->
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:text="KONDISI ASET:"
+                android:textColor="@color/main_grey"
+                android:textSize="14sp"
+                android:textStyle="bold"
+
+
+                />
+
+
+            <Spinner
+
+                android:id="@+id/inpKndsAset"
+                android:layout_width="match_parent"
+                android:layout_height="41dp"
+
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/rounded_spinner"
+                android:spinnerMode="dropdown"
+
+                />
+
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:text="KODE ASET :"
+                android:textColor="@color/main_grey"
+                android:textSize="14sp"
+                android:textStyle="bold"
+
+
+                />
+
+            <Spinner
+
+                android:id="@+id/inpKodeAset"
+                android:layout_width="match_parent"
+                android:layout_height="41dp"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/rounded_spinner"
+                android:spinnerMode="dropdown" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:text="UNIT :"
+                android:textColor="@color/main_grey"
+                android:textSize="14sp"
+                android:textStyle="bold"
+
+
+                />
+
+            <Spinner
+
+                android:id="@+id/inpUnit"
+                android:layout_width="match_parent"
+                android:layout_height="41dp"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/tgl_spinner"
+                android:spinnerMode="dropdown" />
+
+
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:text="SUB UNIT :"
+                android:textColor="@color/main_grey"
+                android:textSize="14sp"
+                android:textStyle="bold"
+
+
+                />
+
+            <Spinner
+
+                android:id="@+id/inpSubUnit"
+                android:layout_width="match_parent"
+                android:layout_height="41dp"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/tgl_spinner"
+                android:spinnerMode="dropdown" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:text="AFDELING :"
+                android:textColor="@color/main_grey"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:id="@+id/tvAfdeling"
+
+                />
+
+            <Spinner
+
+                android:id="@+id/inpAfdeling"
+                android:layout_width="match_parent"
+                android:layout_height="41dp"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/tgl_spinner"
+                android:spinnerMode="dropdown"
+                />
+
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:text="NAMA ASET :"
+                android:textColor="@color/main_grey"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+
+
+            <EditText
+
+                android:id="@+id/inpNamaAset"
+                android:layout_width="match_parent"
+                android:layout_height="41dp"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/edit_text_spiner" />
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:text="NOMOR ASET SAP :"
+                android:textColor="@color/main_grey"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+
+            <TextView
+
+                android:id="@+id/inpNmrSAP"
+                android:text="Pilih Nomor SAP"
+                android:layout_width="match_parent"
+                android:layout_height="41dp"
+                android:layout_marginBottom="10dp"
+                android:textSize="14sp"
+                android:paddingVertical="10dp"
+                android:textStyle="bold"
+                android:background="@drawable/rounded_spinner"
+                />
+
+            <TextView
+                android:id="@+id/tvBa"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:text="UPLOAD BA :"
+                android:textColor="@color/main_grey"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                >
+
+
+                <TextView
+                    android:id="@+id/tvUploudBA"
+                    android:layout_width="0dp"
+                    android:layout_height="41dp"
+                    android:layout_weight=".70"
+                    android:background="@drawable/edit_text_spiner"
+                    android:gravity="center_vertical"
+                    android:text="Tidak Ada File"
+                    android:textColor="@color/main_grey"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+
+                <Button
+
+                    android:id="@+id/inpUploudBA"
+                    android:layout_width="0dp"
+                    android:layout_height="41dp"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_toEndOf="@+id/tvUploudBA"
+                    android:layout_weight="0.3"
+                    android:background="@drawable/edit_text_spiner"
+                    android:backgroundTint="@color/BlueDark"
+                    android:onClick="uploadImage"
+                    android:spinnerMode="dropdown"
+                    android:text="UPLOAD"
+                    android:textColor="@color/white"
+                    android:textSize="10sp"
+                    tools:ignore="HardcodedText"/>
+            </LinearLayout>
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:text="FOTO ASET :"
+                android:textColor="@color/main_grey"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:id="@+id/tvFoto"
+                />
+
+            <HorizontalScrollView
+                android:id="@+id/scrollPartition"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:scrollbars="none">
+
+                <LinearLayout
+                    android:id="@+id/lytPartition"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingLeft="4dp"
+                    android:paddingRight="4dp"
+                    android:scrollbars="none">
+
+                    <RelativeLayout
+                        android:id="@+id/foto1"
+                        android:layout_width="91dp"
+                        android:layout_height="99dp"
+                        android:layout_marginRight="7dp"
+                        android:background="@drawable/edit_text_spiner">
+
+                        <ImageView
+                            android:id="@+id/fotoimg1"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:layout_centerHorizontal="true"
+                            android:layout_centerVertical="true"
+                            android:src="@drawable/ic_outline_image_24" />
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:id="@+id/foto2"
+                        android:layout_width="91dp"
+                        android:layout_height="99dp"
+                        android:layout_marginRight="7dp"
+                        android:background="@drawable/edit_text_spiner"
+
+                        >
+
+                        <ImageView
+                            android:id="@+id/fotoimg2"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:layout_centerHorizontal="true"
+                            android:layout_centerVertical="true"
+                            android:src="@drawable/ic_outline_image_24" />
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:id="@+id/foto3"
+                        android:layout_width="91dp"
+                        android:layout_height="99dp"
+                        android:layout_marginRight="7dp"
+                        android:background="@drawable/edit_text_spiner">
+
+                        <ImageView
+                            android:id="@+id/fotoimg3"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:layout_centerHorizontal="true"
+                            android:layout_centerVertical="true"
+                            android:src="@drawable/ic_outline_image_24" />
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:id="@+id/foto4"
+                        android:layout_width="91dp"
+                        android:layout_height="99dp"
+                        android:layout_marginRight="7dp"
+                        android:background="@drawable/edit_text_spiner">
+
+                        <ImageView
+                            android:id="@+id/fotoimg4"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:layout_centerHorizontal="true"
+                            android:layout_centerVertical="true"
+                            android:src="@drawable/ic_outline_image_24" />
+                    </RelativeLayout>
+
+                </LinearLayout>
+            </HorizontalScrollView>
+
+            <!--            <Button-->
+            <!--                android:id="@+id/inpBtnMap"-->
+            <!--                android:layout_width="match_parent"-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--                android:layout_marginTop="10dp"-->
+            <!--                android:background="@drawable/button_background"-->
+            <!--                android:text="Map" />-->
+
+            <!--            <LinearLayout-->
+            <!--                android:id="@+id/listMapButton"-->
+            <!--                android:layout_width="match_parent"-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--                android:layout_marginBottom="10dp"-->
+            <!--                android:orientation="horizontal">-->
+
+            <!--                <Button-->
+            <!--                    android:id="@+id/map1"-->
+            <!--                    android:layout_width="0dp"-->
+            <!--                    android:layout_height="wrap_content"-->
+            <!--                    android:layout_marginTop="10dp"-->
+            <!--                    android:layout_weight="0.3"-->
+            <!--                    android:background="@drawable/button_background"-->
+            <!--                    android:text="Map" />-->
+
+            <!--                <Button-->
+            <!--                    android:id="@+id/map2"-->
+            <!--                    android:layout_width="0dp"-->
+            <!--                    android:layout_height="wrap_content"-->
+            <!--                    android:layout_marginStart="5dp"-->
+            <!--                    android:layout_marginTop="10dp"-->
+            <!--                    android:layout_weight="0.3"-->
+            <!--                    android:background="@drawable/button_background"-->
+            <!--                    android:text="Map" />-->
+
+            <!--                <Button-->
+            <!--                    android:id="@+id/map3"-->
+            <!--                    android:layout_width="0dp"-->
+            <!--                    android:layout_height="wrap_content"-->
+            <!--                    android:layout_marginStart="5dp"-->
+            <!--                    android:layout_marginTop="10dp"-->
+            <!--                    android:layout_weight="0.3"-->
+            <!--                    android:background="@drawable/button_background"-->
+            <!--                    android:text="Map" />-->
+
+            <!--                <Button-->
+            <!--                    android:id="@+id/map4"-->
+            <!--                    android:layout_width="0dp"-->
+            <!--                    android:layout_height="wrap_content"-->
+            <!--                    android:layout_marginStart="5dp"-->
+            <!--                    android:layout_marginTop="10dp"-->
+            <!--                    android:layout_weight="0.3"-->
+            <!--                    android:background="@drawable/button_background"-->
+            <!--                    android:text="Map" />-->
+            <!--            </LinearLayout>-->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="10dp"
+                android:text="HGU :"
+                android:textColor="@color/main_grey"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:id="@+id/tvHGU"
+                />
+
+
+            <EditText
+
+                android:id="@+id/inpHGU"
+                android:layout_width="match_parent"
+                android:layout_height="41dp"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/edit_text_spiner"
+                />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="10dp"
+                android:text="PERSEN KONDISI :"
+                android:textColor="@color/main_grey"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:id="@+id/tvPersenKondisi"
+                />
+
+
+            <EditText
+
+                android:id="@+id/inpPersenKondisi"
+                android:layout_width="match_parent"
+                android:layout_height="41dp"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/edit_text_spiner"
+                android:inputType="numberDecimal"
+                android:spinnerMode="dropdown"
+
+
+                />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="10dp"
+                android:text="LUAS AREAL (Ha) :"
+                android:textColor="@color/main_grey"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:id="@+id/luasTanaman"
+                />
+
+
+
+
+
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="10dp"
+                android:text="KAPASITAS/LUAS BANGUNAN :"
+                android:textColor="@color/main_grey"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:id="@+id/luasNonTanaman"
+                />
+
+
+            <EditText
+
+                android:id="@+id/inpLuasAset"
+                android:layout_width="match_parent"
+                android:layout_height="41dp"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/edit_text_spiner"
+                android:inputType="numberDecimal"
+                android:spinnerMode="dropdown"
+
+                />
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="10dp"
+                android:text="NILAI PEROLEHAN :"
+                android:textColor="@color/main_grey"
+                android:textSize="14sp"
+                android:textStyle="bold"
+
+                />
+
+
+            <EditText
+                android:id="@+id/inpNilaiAsetSAP"
+                android:layout_width="match_parent"
+                android:layout_height="41dp"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/edit_text_spiner"
+                android:inputType="numberDecimal"
+                android:lines="1"
+                android:paddingVertical="10dp" />
+
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="10dp"
+                android:text="TANGGAL PEROLEHAN:"
+                android:textColor="@color/main_grey"
+                android:textSize="14sp"
+                android:textStyle="bold"
+
+                />
+
+
+            <EditText
+                android:id="@+id/inpTglMasukAset"
+                android:layout_width="match_parent"
+                android:layout_height="41dp"
+                android:background="@drawable/pickdate_background"
+                android:clickable="false"
+                android:cursorVisible="false"
+                android:focusable="false"
+                android:focusableInTouchMode="false"
+                android:hint="tanggal perolehan"
+                android:paddingVertical="10dp" />
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="10dp"
+                android:text="MASA PENYUSUTAN :"
+                android:textColor="@color/main_grey"
+                android:textSize="14sp"
+                android:textStyle="bold"
+
+                />
+
+
+            <EditText
+                android:id="@+id/inpMasaPenyusutan"
+                android:layout_width="match_parent"
+                android:layout_height="41dp"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/tahun_background"
+                android:inputType="numberDecimal"
+                android:lines="1"
+                android:paddingVertical="10dp" />
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="10dp"
+                android:text="NOMOR BAST :"
+                android:textColor="@color/main_grey"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:id="@+id/tvBast"
+
+
+                />
+
+
+            <EditText
+                android:id="@+id/inpNmrBAST"
+                android:layout_width="match_parent"
+                android:layout_height="41dp"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/edit_text_spiner"
+                android:lines="1"
+                android:paddingVertical="10dp"
+                />
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="10dp"
+                android:text="NILAI RESIDU :"
+                android:textColor="@color/main_grey"
+                android:textSize="14sp"
+                android:textStyle="bold"
+
+                />
+
+
+            <EditText
+                android:id="@+id/inpNmrResidu"
+                android:layout_width="match_parent"
+                android:layout_height="41dp"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/edit_text_spiner"
+                android:inputType="numberDecimal"
+                android:lines="1"
+                android:paddingVertical="10dp" />
+
+
+
+            <TextView
+                android:id="@+id/tvPohon"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="10dp"
+                android:text="JUMLAH POHON :"
+                android:textColor="@color/main_grey"
+                android:textSize="14sp"
+                android:textStyle="bold"
+
+                />
+
+
+            <EditText
+                android:id="@+id/inpJmlhPohon"
+                android:layout_width="match_parent"
+                android:layout_height="41dp"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/edit_text_spiner"
+                android:hint="jumlah pohon"
+                android:inputType="numberDecimal"
+                android:lines="1"
+                android:paddingVertical="10dp" />
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="10dp"
+                android:text="KETERANGAN :"
+                android:textColor="@color/main_grey"
+                android:textSize="14sp"
+                android:textStyle="bold"
+
+                />
+
+
+            <EditText
+                android:id="@+id/inpKeterangan"
+                android:layout_width="match_parent"
+                android:layout_height="128dp"
+                android:layout_weight="1"
+                android:background="@drawable/edit_text_spiner"
+                android:gravity="top"
+                android:inputType="textCapSentences|textMultiLine"
+                android:paddingTop="10dp"
+                android:text="-" />
+
+            <Button
+                android:id="@+id/btnSubmit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/button_background"
+                android:text="SIMPAN DATA" />
+
+
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

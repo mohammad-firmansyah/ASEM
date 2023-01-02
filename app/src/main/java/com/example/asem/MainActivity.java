@@ -124,7 +124,7 @@ public class MainActivity extends AppCompatActivity {
                             if (login.getSubUnitId() != 0){
                                 editor.putString("sub_unit_id", String.valueOf(login.getSubUnitId()));
                             } else {
-                                editor.putString("sub_unit_id", String.valueOf("0"));
+                                editor.putString("sub_unit_id", "0");
                             }
                             if (login.getSubUnitId() == 2) {
 

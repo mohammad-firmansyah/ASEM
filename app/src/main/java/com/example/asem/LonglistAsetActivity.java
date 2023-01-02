@@ -29,6 +29,8 @@ import com.example.asem.api.model.Data;
 import com.example.asem.api.model.Data2;
 import com.example.asem.api.model.Search;
 import com.example.asem.api.model.SearchModel;
+import com.example.asem.db.AsetHelper;
+import com.example.asem.db.model.Aset;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -43,6 +45,9 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class LonglistAsetActivity extends AppCompatActivity  { //implements BottomNavigationView.OnItemSelectedListener
+
+
+
 
     private static final String[] PERMISSIONS_LOCATION_AND_STORAGE = {
             Manifest.permission.ACCESS_COARSE_LOCATION,
@@ -67,10 +72,6 @@ public class LonglistAsetActivity extends AppCompatActivity  { //implements Bott
 
     Integer user_id;
 
-    //    public static String baseUrl = "http://202.148.9.226:7710/mnj_aset_production/public/api/";
-//    public static String baseUrl = "https://amanat.ptpn12.com/api/";
-    //    public static String baseUrlAset = "http://202.148.9.226:7710/mnj_aset_production/public";
-//    public static String baseUrlAset = "https://amanat.ptpn12.com";
     private AsetInterface asetInterface;
     private Dialog dialog;
     Data[] allData;
@@ -79,6 +80,9 @@ public class LonglistAsetActivity extends AppCompatActivity  { //implements Bott
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_longlist_aset);
+
+
+
         dialog = new Dialog(LonglistAsetActivity.this,R.style.MyAlertDialogTheme);
         dialog.setContentView(R.layout.loading);
         dialog.setCanceledOnTouchOutside(false);
@@ -169,7 +173,10 @@ public class LonglistAsetActivity extends AppCompatActivity  { //implements Bott
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(LonglistAsetActivity.this, AddAsetActivity.class));
+//                startActivity(new Intent(LonglistAsetActivity.this, AddAsetActivity.class));
+                startActivity(new Intent(LonglistAsetActivity.this, AsetAddUpdateOfflineActivity.class));
+
+
             }
         });
 

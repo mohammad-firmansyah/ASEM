@@ -1,10 +1,14 @@
-package com.example.asem.api.model;
+package com.example.asem.db.model;
+
+
+import android.os.Parcel;
+import android.os.Parcelable;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 
-public class Data2 {
+public class Aset implements Parcelable {
 
     @SerializedName("aset_id")
     @Expose
@@ -65,10 +69,10 @@ public class Data2 {
     private String tglOleh;
     @SerializedName("nilai_residu")
     @Expose
-    private Integer nilaiResidu;
+    private Long nilaiResidu;
     @SerializedName("nilai_oleh")
     @Expose
-    private Integer nilaiOleh;
+    private Long nilaiOleh;
     @SerializedName("nomor_bast")
     @Expose
     private String nomorBast;
@@ -339,19 +343,19 @@ public class Data2 {
         this.tglOleh = tglOleh;
     }
 
-    public Integer getNilaiResidu() {
+    public Long getNilaiResidu() {
         return nilaiResidu;
     }
 
-    public void setNilaiResidu(Integer nilaiResidu) {
+    public void setNilaiResidu(Long nilaiResidu) {
         this.nilaiResidu = nilaiResidu;
     }
 
-    public Integer getNilaiOleh() {
+    public Long getNilaiOleh() {
         return nilaiOleh;
     }
 
-    public void setNilaiOleh(Integer nilaiOleh) {
+    public void setNilaiOleh(Long nilaiOleh) {
         this.nilaiOleh = nilaiOleh;
     }
 
@@ -467,4 +471,130 @@ public class Data2 {
         this.umurEkonomisInMonth = umurEkonomisInMonth;
     }
 
+    public Aset(Integer asetId, String asetName, String asetTipe, String asetJenis, String asetKondisi, String asetSubUnit, String asetKode, String nomorSap, String fotoAset1, String fotoAset2, String fotoAset3, String fotoAset4, String geoTag1, String geoTag2, String geoTag3, String geoTag4, Double asetLuas, String tglInput, String tglOleh, Long nilaiResidu, Long nilaiOleh, String nomorBast, String masaSusut, String keterangan, Object fotoQr, Object noInv, Object fotoAsetQr, String statusPosisi, String unitId, String afdelingId, Object userInputId, String createdAt, String updatedAt, Integer jumlahPohon, Integer umurEkonomisInMonth, double persenKondisi, Integer statusPosisiID, String statusReject, String ketReject, String asetFotoQrStatus) {
+        this.asetId = asetId;
+        this.asetName = asetName;
+        this.asetTipe = asetTipe;
+        this.asetJenis = asetJenis;
+        this.asetKondisi = asetKondisi;
+        this.asetSubUnit = asetSubUnit;
+        this.asetKode = asetKode;
+        this.nomorSap = nomorSap;
+        this.fotoAset1 = fotoAset1;
+        this.fotoAset2 = fotoAset2;
+        this.fotoAset3 = fotoAset3;
+        this.fotoAset4 = fotoAset4;
+        this.geoTag1 = geoTag1;
+        this.geoTag2 = geoTag2;
+        this.geoTag3 = geoTag3;
+        this.geoTag4 = geoTag4;
+        this.asetLuas = asetLuas;
+        this.tglInput = tglInput;
+        this.tglOleh = tglOleh;
+        this.nilaiResidu = nilaiResidu;
+        this.nilaiOleh = nilaiOleh;
+        this.nomorBast = nomorBast;
+        this.masaSusut = masaSusut;
+        this.keterangan = keterangan;
+        this.fotoQr = fotoQr;
+        this.noInv = noInv;
+        this.fotoAsetQr = fotoAsetQr;
+        this.statusPosisi = statusPosisi;
+        this.unitId = unitId;
+        this.afdelingId = afdelingId;
+        this.userInputId = userInputId;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
+        this.jumlahPohon = jumlahPohon;
+        this.umurEkonomisInMonth = umurEkonomisInMonth;
+        this.persenKondisi = persenKondisi;
+        this.statusPosisiID = statusPosisiID;
+        this.statusReject = statusReject;
+        this.ketReject = ketReject;
+        this.asetFotoQrStatus = asetFotoQrStatus;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(this.asetId);
+        dest.writeString(this.asetTipe);
+        dest.writeString(this.asetJenis);
+        dest.writeString(this.tglInput);
+        dest.writeString(this.asetKode);
+        dest.writeString(this.asetKondisi);
+        dest.writeString(this.unitId);
+        dest.writeString(this.asetSubUnit);
+        dest.writeString(this.afdelingId);
+        dest.writeString(this.asetName);
+        dest.writeString(this.nomorSap);
+        dest.writeString(this.fotoAset1);
+        dest.writeString(this.fotoAset2);
+        dest.writeString(this.fotoAset3);
+        dest.writeString(this.fotoAset4);
+        dest.writeString(this.geoTag1);
+        dest.writeString(this.geoTag2);
+        dest.writeString(this.geoTag3);
+        dest.writeString(this.geoTag4);
+        dest.writeString(this.hgu);
+        dest.writeDouble(this.persenKondisi);
+        dest.writeDouble(this.asetLuas);
+        dest.writeLong(this.nilaiOleh);
+        dest.writeString(this.tglOleh);
+        dest.writeString(this.masaSusut);
+        dest.writeString(this.nomorBast);
+        dest.writeLong(this.nilaiResidu);
+        dest.writeInt(this.umurEkonomisInMonth);
+        dest.writeString(this.keterangan);
+    }
+    public Aset() {
+    }
+    private Aset(Parcel in) {
+        this.asetId = in.readInt();
+        this.asetTipe = in.readString();
+        this.asetKondisi = in.readString();
+        this.asetJenis = in.readString();
+        this.tglInput = in.readString();
+        this.asetKode = in.readString();
+        this.unitId = in.readString();
+        this.asetSubUnit = in.readString();
+        this.afdelingId = in.readString();
+        this.afdelingId = in.readString();
+
+        this.asetName = in.readString();
+        this.nomorSap = in.readString();
+        this.fotoAset1 = in.readString();
+        this.fotoAset2 = in.readString();
+        this.fotoAset3 = in.readString();
+        this.fotoAset4 = in.readString();
+        this.geoTag1 = in.readString();
+        this.geoTag2 = in.readString();
+        this.geoTag3 = in.readString();
+        this.geoTag4 = in.readString();
+        this.hgu = in.readString();
+        this.persenKondisi = in.readInt();
+        this.asetLuas = in.readDouble();
+        this.nilaiOleh = in.readLong();
+        this.tglOleh = in.readString();
+        this.masaSusut = in.readString();
+        this.nomorBast = in.readString();
+        this.nilaiResidu = in.readLong();
+        this.umurEkonomisInMonth = in.readInt();
+        this.keterangan = in.readString();
+    }
+    public static final Parcelable.Creator<Aset> CREATOR = new Parcelable.Creator<Aset>() {
+        @Override
+        public Aset createFromParcel(Parcel source) {
+            return new Aset(source);
+        }
+        @Override
+        public Aset[] newArray(int size) {
+            return new Aset[size];
+        }
+    };
 }
+

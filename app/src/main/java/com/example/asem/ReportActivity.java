@@ -26,6 +26,7 @@ import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.asem.api.AsetInterface;
@@ -45,9 +46,11 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
+import java.util.concurrent.TimeUnit;
 
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
+import okhttp3.OkHttpClient;
 import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -58,10 +61,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class ReportActivity extends AppCompatActivity {
     DatePickerDialog.OnDateSetListener date;
     DatePickerDialog.OnDateSetListener date2;
-//    public static String baseUrl = "http://202.148.9.226:7710/mnj_aset_production/public/api/";
-//    public static String baseUrl = "https://amanat.ptpn12.com/api/";
-//    public static String baseUrlAset = "http://202.148.9.226:7710/mnj_aset_production/public";
-//    public static String baseUrlAset = "https://amanat.ptpn12.com";
+    Integer unit_id = 0;
     private AsetInterface asetInterface;
     final Calendar myCalendar1= Calendar.getInstance();
     final Calendar myCalendar2= Calendar.getInstance();
@@ -72,6 +72,7 @@ public class ReportActivity extends AppCompatActivity {
     Spinner spinnerAsetKondisi;
     Spinner spinnerKodeAset;
     Spinner spinnerJenisReport;
+    Spinner spinnerUnit;
 
     String spinnerIdTipeAsset;
     String spinnerIdJenisAset;
@@ -83,6 +84,7 @@ public class ReportActivity extends AppCompatActivity {
     Button btnSubmit;
     ImageView imgBack;
 
+    TextView tvUnit;
     RadioGroup radioGroup;
     EditText inpTglInput1;
     EditText inpTglInput2;
@@ -98,12 +100,15 @@ public class ReportActivity extends AppCompatActivity {
 
         asetInterface = AsemApp.getApiClient().create(AsetInterface.class);
 
+        unit_id = Integer.valueOf(sharedPreferences.getString("unit_id", "0"));
         dialog = new Dialog(ReportActivity.this,R.style.MyAlertDialogTheme);
         dialog.setContentView(R.layout.loading);
         dialog.setCanceledOnTouchOutside(false);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(0));
 //        dialog.show();
 
+        tvUnit = findViewById(R.id.tvUnit);
+        spinnerUnit = findViewById(R.id.spinnerUnit);
         spinnerJenisReport = findViewById(R.id.spinnerReport);
         spinnerTipeAset = findViewById(R.id.inpTipeAset);
         spinnerJenisAset = findViewById(R.id.inpJenisAset);
@@ -139,6 +144,7 @@ public class ReportActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 spinnerIdTipeAsset = String.valueOf(position);
+                setVisibilityDynamic();
 
             }
 
@@ -152,6 +158,7 @@ public class ReportActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 spinnerIdJenisAset = String.valueOf(position);
+                setVisibilityDynamic();
 
             }
 
@@ -165,6 +172,7 @@ public class ReportActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 spinnerIdAsetKondisi = String.valueOf(position);
+                setVisibilityDynamic();
 
             }
 
@@ -178,6 +186,7 @@ public class ReportActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 spinnerIdKodeAset = String.valueOf(position);
+                setVisibilityDynamic();
 
             }
 
@@ -191,7 +200,7 @@ public class ReportActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 getSpinnerIdJenisReport = String.valueOf(position);
-
+                setVisibilityDynamic();
             }
 
             @Override
@@ -209,6 +218,8 @@ public class ReportActivity extends AppCompatActivity {
 //                updateLabel2();
 //            }
 //        });
+
+        setVisibilityDynamic();
     }
 
     private void getTipeAset(){
@@ -457,18 +468,18 @@ public class ReportActivity extends AppCompatActivity {
     private void apiDownloadReport(){
 
         dialog.show();
-        if (inpTglInput1.getText().toString().matches("")) {
-            dialog.dismiss();
-            inpTglInput1.setError("Tgl 1 harus diisi");
-            inpTglInput1.requestFocus();
-            return;
-        }
-        if (inpTglInput2.getText().toString().matches("")) {
-            dialog.dismiss();
-            inpTglInput2.setError("Tgl 2 harus diisi");
-            inpTglInput2.requestFocus();
-            return;
-        }
+//        if (inpTglInput1.getText().toString().matches("")) {
+//            dialog.dismiss();
+//            inpTglInput1.setError("Tgl 1 harus diisi");
+//            inpTglInput1.requestFocus();
+//            return;
+//        }
+//        if (inpTglInput2.getText().toString().matches("")) {
+//            dialog.dismiss();
+//            inpTglInput2.setError("Tgl 2 harus diisi");
+//            inpTglInput2.requestFocus();
+//            return;
+//        }
 
 
         try{
@@ -480,7 +491,9 @@ public class ReportActivity extends AppCompatActivity {
             RequestBody requestJenisReport = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(spinnerJenisReport.getSelectedItem().toString()));
             RequestBody requestTglInput1 = RequestBody.create(MediaType.parse("text/plain"), inpTglInput1.getText()+" 00:00:00");
             RequestBody requestTglInput2 = RequestBody.create(MediaType.parse("text/plain"), inpTglInput2.getText()+" 00:00:00");
-            Integer unit_id = Integer.valueOf(sharedPreferences.getString("unit_id", "0"));
+
+
+
             RequestBody requestUnit = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(unit_id));
             RequestBody requestHGU = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(inpHGU.getText().toString().trim()));
 
@@ -552,4 +565,23 @@ public class ReportActivity extends AppCompatActivity {
 
 }
 
+public void setVisibilityDynamic(){
+
+        TextView tvHgu = findViewById(R.id.tvHGU);
+
+        if (unit_id == 0) {
+            spinnerUnit.setVisibility(View.VISIBLE);
+        } else {
+            spinnerUnit.setVisibility(View.GONE);
+            tvUnit.setVisibility(View.GONE);
+        }
+
+        if (spinnerJenisAset.getSelectedItemId() != 0 || spinnerKodeAset.getSelectedItemId() != 0 || spinnerAsetKondisi.getSelectedItemId() != 0 || spinnerTipeAset.getSelectedItemId() != 0) {
+           inpHGU.setEnabled(false);
+           tvHgu.setEnabled(false);
+
+           inpTglInput1.setEnabled(false);
+           inpTglInput2.setEnabled(false);
+        }
+    }
 }
