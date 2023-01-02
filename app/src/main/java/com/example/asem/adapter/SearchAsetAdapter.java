@@ -57,7 +57,6 @@ public class SearchAsetAdapter extends RecyclerView.Adapter<SearchAsetAdapter.Vi
     private static final String TAG = "cekTAG";
 
     Dialog customDialogBelumApprove, customDialogCekDataReject;
-    private int id;
 
     public SearchAsetAdapter(List<Search> data, LonglistAsetActivity longlistAsetActivity) {
         this.dataSearch = data;
@@ -180,10 +179,12 @@ public class SearchAsetAdapter extends RecyclerView.Adapter<SearchAsetAdapter.Vi
             }
         });
 
+        int id = mySearchData.getAsetId();
+        int statpos = mySearchData.getStatusPosisiID();
+
         holder.btnKirim.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int statpos = mySearchData.getStatusPosisiID();
                 if (statpos == 2||statpos == 4||statpos == 6||statpos == 8||statpos == 10){
                     initDialogBelomApprove();
                 } else if(statpos == 1 && mySearchData.getStatusReject()!=null){
@@ -202,95 +203,95 @@ public class SearchAsetAdapter extends RecyclerView.Adapter<SearchAsetAdapter.Vi
         String hak_akses_id = sharedPreferences.getString("hak_akses_id", "-");
         //Log.d("asetapix", hak_akses_id);
 
-        if(hak_akses_id.equals("7") ){ //operator
-            if(mySearchData.getStatusPosisiID()==1){ //if status posisi operator
-                holder.btnEdit.setVisibility(View.VISIBLE);
-                holder.btnKirim.setVisibility(View.VISIBLE);
-                holder.btnDetail.setVisibility(View.VISIBLE);
-                holder.btnHapus.setVisibility(View.VISIBLE);
-                //hapus statusreject, dan keterangan reject
-            } else if(mySearchData.getStatusPosisiID()== 5){
-                holder.btnEdit.setVisibility(View.VISIBLE);
-                holder.btnDetail.setVisibility(View.VISIBLE);
-                holder.btnKirim.setVisibility(View.GONE);
-            }else {
-                holder.btnEdit.setVisibility(View.GONE);
-                holder.btnKirim.setVisibility(View.GONE);
-                holder.btnDetail.setVisibility(View.VISIBLE);
-            }
-        } else if(hak_akses_id.equals("6")){ //asisten
-            if(mySearchData.getStatusPosisiID()==2 ){ //if status posisi pending dan asisten
-                holder.btnDetail.setVisibility(View.VISIBLE);
-                holder.btnEdit.setVisibility(View.VISIBLE);
-                holder.btnKirim.setVisibility(View.VISIBLE);
-            } else if ( mySearchData.getStatusPosisiID()==3 ) {
-                holder.btnDetail.setVisibility(View.VISIBLE);
-                holder.btnEdit.setVisibility(View.VISIBLE);
-                holder.btnKirim.setVisibility(View.VISIBLE);
-            }
-            else {
-                holder.btnEdit.setVisibility(View.GONE);
-                holder.btnKirim.setVisibility(View.GONE);
-                holder.btnDetail.setVisibility(View.VISIBLE);
-            }
-        } else if (hak_akses_id.equals("5") ){ //astuu
-            if(mySearchData.getStatusPosisiID() == 4) { //if statpos pending astuu dan astuu
-                holder.btnDetail.setVisibility(View.VISIBLE);
-                holder.btnEdit.setVisibility(View.VISIBLE);
-                holder.btnKirim.setVisibility(View.VISIBLE);
-            } else if(mySearchData.getStatusPosisiID()== 5) {
-                holder.btnKirim.setOnClickListener(v -> {
-                    if (mySearchData.getFotoAsetQr() == null) {
-                        Toast.makeText(context.getApplicationContext(), "Mohon Foto Aset dengan QRCODE Dilengkapi oleh Operator", Toast.LENGTH_SHORT).show();
-                    } else {
-                        sharedPreferences = context.getSharedPreferences(PREF_LOGIN, MODE_PRIVATE);
-                        String user_id = sharedPreferences.getString("user_id", "-");
-                        showDialogKirim("Yakin Kirim Data?",
-                                asetInterface.kirimDataAset(id, Integer.parseInt(user_id))
-                        );
-                    }
-                });
-            } else {
-                holder.btnEdit.setVisibility(View.GONE);
-                holder.btnKirim.setVisibility(View.GONE);
-                holder.btnDetail.setVisibility(View.VISIBLE);
-            }
-        }else if (hak_akses_id.equals("4")){ //askep
-            if(mySearchData.getStatusPosisiID()== 6 || mySearchData.getStatusPosisiID()== 7){ //if statpos pending askep dan askep
-                holder.btnEdit.setVisibility(View.VISIBLE);
-                holder.btnKirim.setVisibility(View.VISIBLE);
-                holder.btnDetail.setVisibility(View.VISIBLE);
-            } else {
-                holder.btnEdit.setVisibility(View.GONE);
-                holder.btnKirim.setVisibility(View.GONE);
-                holder.btnDetail.setVisibility(View.VISIBLE);
-            }
-        } else if (hak_akses_id.equals("3")){ //mnj
-            if(mySearchData.getStatusPosisiID()== 8 || mySearchData.getStatusPosisiID()== 9){ //if statpos pending mnj dan mnj
-                holder.btnEdit.setVisibility(View.VISIBLE);
-                holder.btnKirim.setVisibility(View.VISIBLE);
-                holder.btnDetail.setVisibility(View.VISIBLE);
-            } else {
-                holder.btnEdit.setVisibility(View.GONE);
-                holder.btnKirim.setVisibility(View.GONE);
-                holder.btnDetail.setVisibility(View.VISIBLE);
-            }
-        } else if (hak_akses_id.equals("2")) { //kasi
-            if (mySearchData.getStatusPosisiID()== 10 ) { //if statpos pendingkasi dan kasi
-                holder.btnEdit.setVisibility(View.VISIBLE);
-                holder.btnKirim.setVisibility(View.VISIBLE);
-                holder.btnDetail.setVisibility(View.VISIBLE);
-            } else if (mySearchData.getStatusPosisiID()== 11){
-                holder.btnKirim.setVisibility(View.GONE);
-                holder.btnDetail.setVisibility(View.VISIBLE);
-                holder.btnEdit.setVisibility(View.GONE);
-            }
-            else {
-                holder.btnEdit.setVisibility(View.GONE);
-                holder.btnKirim.setVisibility(View.GONE);
-                holder.btnDetail.setVisibility(View.VISIBLE);
-            }
-        }
+//        if(hak_akses_id.equals("7") ){ //operator
+//            if(mySearchData.getStatusPosisiID()==1){ //if status posisi operator
+//                holder.btnEdit.setVisibility(View.VISIBLE);
+//                holder.btnKirim.setVisibility(View.VISIBLE);
+//                holder.btnDetail.setVisibility(View.VISIBLE);
+//                holder.btnHapus.setVisibility(View.VISIBLE);
+//                //hapus statusreject, dan keterangan reject
+//            } else if(mySearchData.getStatusPosisiID()== 5){
+//                holder.btnEdit.setVisibility(View.VISIBLE);
+//                holder.btnDetail.setVisibility(View.VISIBLE);
+//                holder.btnKirim.setVisibility(View.GONE);
+//            }else {
+//                holder.btnEdit.setVisibility(View.GONE);
+//                holder.btnKirim.setVisibility(View.GONE);
+//                holder.btnDetail.setVisibility(View.VISIBLE);
+//            }
+//        } else if(hak_akses_id.equals("6")){ //asisten
+//            if(mySearchData.getStatusPosisiID()==2 ){ //if status posisi pending dan asisten
+//                holder.btnDetail.setVisibility(View.VISIBLE);
+//                holder.btnEdit.setVisibility(View.VISIBLE);
+//                holder.btnKirim.setVisibility(View.VISIBLE);
+//            } else if ( mySearchData.getStatusPosisiID()==3 ) {
+//                holder.btnDetail.setVisibility(View.VISIBLE);
+//                holder.btnEdit.setVisibility(View.VISIBLE);
+//                holder.btnKirim.setVisibility(View.VISIBLE);
+//            }
+//            else {
+//                holder.btnEdit.setVisibility(View.GONE);
+//                holder.btnKirim.setVisibility(View.GONE);
+//                holder.btnDetail.setVisibility(View.VISIBLE);
+//            }
+//        } else if (hak_akses_id.equals("5") ){ //astuu
+//            if(mySearchData.getStatusPosisiID() == 4) { //if statpos pending astuu dan astuu
+//                holder.btnDetail.setVisibility(View.VISIBLE);
+//                holder.btnEdit.setVisibility(View.VISIBLE);
+//                holder.btnKirim.setVisibility(View.VISIBLE);
+//            } else if(mySearchData.getStatusPosisiID()== 5) {
+//                holder.btnKirim.setOnClickListener(v -> {
+//                    if (mySearchData.getFotoAsetQr() == null) {
+//                        Toast.makeText(context.getApplicationContext(), "Mohon Foto Aset dengan QRCODE Dilengkapi oleh Operator", Toast.LENGTH_SHORT).show();
+//                    } else {
+//                        sharedPreferences = context.getSharedPreferences(PREF_LOGIN, MODE_PRIVATE);
+//                        String user_id = sharedPreferences.getString("user_id", "-");
+//                        showDialogKirim("Yakin Kirim Data?",
+//                                asetInterface.kirimDataAset(id, Integer.parseInt(user_id))
+//                        );
+//                    }
+//                });
+//            } else {
+//                holder.btnEdit.setVisibility(View.GONE);
+//                holder.btnKirim.setVisibility(View.GONE);
+//                holder.btnDetail.setVisibility(View.VISIBLE);
+//            }
+//        }else if (hak_akses_id.equals("4")){ //askep
+//            if(mySearchData.getStatusPosisiID()== 6 || mySearchData.getStatusPosisiID()== 7){ //if statpos pending askep dan askep
+//                holder.btnEdit.setVisibility(View.VISIBLE);
+//                holder.btnKirim.setVisibility(View.VISIBLE);
+//                holder.btnDetail.setVisibility(View.VISIBLE);
+//            } else {
+//                holder.btnEdit.setVisibility(View.GONE);
+//                holder.btnKirim.setVisibility(View.GONE);
+//                holder.btnDetail.setVisibility(View.VISIBLE);
+//            }
+//        } else if (hak_akses_id.equals("3")){ //mnj
+//            if(mySearchData.getStatusPosisiID()== 8 || mySearchData.getStatusPosisiID()== 9){ //if statpos pending mnj dan mnj
+//                holder.btnEdit.setVisibility(View.VISIBLE);
+//                holder.btnKirim.setVisibility(View.VISIBLE);
+//                holder.btnDetail.setVisibility(View.VISIBLE);
+//            } else {
+//                holder.btnEdit.setVisibility(View.GONE);
+//                holder.btnKirim.setVisibility(View.GONE);
+//                holder.btnDetail.setVisibility(View.VISIBLE);
+//            }
+//        } else if (hak_akses_id.equals("2")) { //kasi
+//            if (mySearchData.getStatusPosisiID()== 10 ) { //if statpos pendingkasi dan kasi
+//                holder.btnEdit.setVisibility(View.VISIBLE);
+//                holder.btnKirim.setVisibility(View.VISIBLE);
+//                holder.btnDetail.setVisibility(View.VISIBLE);
+//            } else if (mySearchData.getStatusPosisiID()== 11){
+//                holder.btnKirim.setVisibility(View.GONE);
+//                holder.btnDetail.setVisibility(View.VISIBLE);
+//                holder.btnEdit.setVisibility(View.GONE);
+//            }
+//            else {
+//                holder.btnEdit.setVisibility(View.GONE);
+//                holder.btnKirim.setVisibility(View.GONE);
+//                holder.btnDetail.setVisibility(View.VISIBLE);
+//            }
+//        }
 
         // jika data di posisi reject maka bikin bg jadi kuning
         // selain posisi tersebut bg normal
