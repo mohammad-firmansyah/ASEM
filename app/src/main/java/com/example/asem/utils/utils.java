@@ -247,7 +247,7 @@ public class utils {
         return split[0].substring(0,2)+". "+split[0].substring(2,length);
     }
 
-    public static int CurrencyToNumber(String curr){
+    public static long CurrencyToNumber(String curr){
         String s= "";
         String[] splited = curr.split(" ");
         s=splited[1];
@@ -258,12 +258,11 @@ public class utils {
             String result = "";
             for (String split : splitedTwc){
                 result+=split;
-                System.out.println(split);
             }
 
-            return Integer.parseInt(result);
+            return Long.parseLong(result);
         } else{
-            return Integer.parseInt(s);
+            return Long.parseLong(s);
         }
 
         // System.out.println(splitedTwc.length);

@@ -1528,29 +1528,26 @@ public class AddAsetActivity extends AppCompatActivity {
 
 
 //        if (spinnerJenisAset.getSelectedItemId() == 1 || spinnerJenisAset.getSelectedItemId() == 3 ) {
-
-            //          if (inpJumlahPohon.getText().toString().equals("")) {
-            //            inpJumlahPohon.setError("Jumlah Pohon harus diisi");
-            //          inpJumlahPohon.requestFocus();
-            //        dialog.dismiss();
-            //      return;
-            // }
-            //}
+//
+//                      if (inpJumlahPohon.getText().toString().equals("")) {
+//                        inpJumlahPohon.setError("Jumlah Pohon harus diisi");
+//                      inpJumlahPohon.requestFocus();
+//                    dialog.dismiss();
+//                  return;
+//             }
+//            }
 
 
             String nama_aset = inpNamaAset.getText().toString().trim();
             Integer nomor_aset_sap = mapSap.get(Integer.parseInt(inpNoSAP.getText().toString().trim()));
-            String ba_file = tvUploudBA.getText().toString().trim();
 //        String luas_aset = inpLuasAset.getText().toString().trim();
             String luas_aset = String.valueOf(Double.parseDouble(inpLuasAset.getText().toString().trim()));
             String nilai_aset = String.valueOf(CurrencyToNumber(inpNilaiAsetSAP.getText().toString().trim()));
-
-
-            String tgl_oleh = String.valueOf(inpTglOleh.getText().toString().trim() + " 00:00:00");
-            String masa_susut = String.valueOf(inpMasaPenyusutan.getText().toString().trim());
-            String nomor_bast = String.valueOf(inpNomorBAST.getText().toString().trim());
+            String tgl_oleh = inpTglOleh.getText().toString().trim() + " 00:00:00";
+            String masa_susut = inpMasaPenyusutan.getText().toString().trim();
+            String nomor_bast = inpNomorBAST.getText().toString().trim();
             String nilai_residu = String.valueOf(CurrencyToNumber(inpNilaiResidu.getText().toString().trim()));
-            String keterangan = String.valueOf(inpKeterangan.getText().toString().trim());
+            String keterangan = inpKeterangan.getText().toString().trim();
 
 
             MultipartBody.Part img1Part = null, img2Part = null, img3Part = null, img4Part = null, partBaFile = null;
@@ -1562,20 +1559,19 @@ public class AddAsetActivity extends AppCompatActivity {
                 RequestBody requestJenisAset = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(spinnerIdJenisAset));
                 RequestBody requestKondisiAset = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(spinnerIdAsetKondisi));
                 RequestBody requestKodeAset = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(mapSpinnerkode.get(Integer.parseInt(String.valueOf(spinnerKodeAset.getSelectedItemId())))));
-//            RequestBody requestKodeAset = RequestBody.create(MediaType.parse("text/plain"), String.valueOf( Integer.parseInt(String.valueOf(spinnerKodeAset.getSelectedItemId())) + 1));
                 RequestBody requestNamaAset = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(nama_aset));
                 RequestBody requestNomorAsetSAP = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(nomor_aset_sap));
-                Log.d("amanat14", String.valueOf(spinnerKodeAset.getSelectedItemId()));
                 Integer kode = Math.toIntExact(spinnerKodeAset.getSelectedItemId());
-                Log.d("amanat14", String.valueOf(kode));
-                Log.d("amanat14", String.valueOf(mapSpinnerkode.get(Integer.parseInt(String.valueOf(spinnerKodeAset.getSelectedItemId() + 1)))));
+//                Log.d("amanat14", String.valueOf(spinnerKodeAset.getSelectedItemId()));
+//                Log.d("amanat14", String.valueOf(kode));
+//                Log.d("amanat14", String.valueOf(mapSpinnerkode.get(Integer.parseInt(String.valueOf(spinnerKodeAset.getSelectedItemId() + 1)))));
 
-                RequestBody requestLuasAset = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(luas_aset));
-                RequestBody requestNilaiAsetSAP = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(nilai_aset));
-                RequestBody requestTglOleh = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(tgl_oleh));
-                RequestBody requestMasaSusut = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(masa_susut));
-                RequestBody requestNomorBAST = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(nomor_bast));
-                RequestBody requestNilaiResidu = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(nilai_residu));
+                RequestBody requestLuasAset = RequestBody.create(MediaType.parse("text/plain"), luas_aset);
+                RequestBody requestNilaiAsetSAP = RequestBody.create(MediaType.parse("text/plain"), nilai_aset);
+                RequestBody requestTglOleh = RequestBody.create(MediaType.parse("text/plain"), tgl_oleh);
+                RequestBody requestMasaSusut = RequestBody.create(MediaType.parse("text/plain"), masa_susut);
+                RequestBody requestNomorBAST = RequestBody.create(MediaType.parse("text/plain"), nomor_bast);
+                RequestBody requestNilaiResidu = RequestBody.create(MediaType.parse("text/plain"), nilai_residu);
                 RequestBody requestHGU = RequestBody.create(MediaType.parse("text/plain"), inpHGU.getText().toString().trim());
 
                 RequestBody requestSubUnit = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(spinnerIdSubUnit));
