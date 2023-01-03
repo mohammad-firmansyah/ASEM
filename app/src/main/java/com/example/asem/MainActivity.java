@@ -140,23 +140,23 @@ public class MainActivity extends AppCompatActivity {
                             startActivity(new Intent(MainActivity.this, Home.class));
                         }else{
                             dialog.dismiss();
-                            Log.d("taglogin", "onResponse: Login bre");
+                            Log.d(TAG, "onResponse: Login bre");
                             Toast.makeText(MainActivity.this, response.body().getMessage(), Toast.LENGTH_LONG).show();
                         }
                         dialog.show();
                     }else{
                         dialog.dismiss();
                         if (response.toString().contains("code=500")){
-                            Toast.makeText(MainActivity.this,"Username atau Password anda salah", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(context,"Username atau Password anda salah", Toast.LENGTH_SHORT).show();
                         }else {
-                            Toast.makeText(MainActivity.this,"Username atau Password anda salah", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(context,"Username atau Password anda salah", Toast.LENGTH_SHORT).show();
 //                            Toast.makeText(MainActivity.this,response.toString(), Toast.LENGTH_SHORT).show();
                         }
                 }}
 
                 @Override
                 public void onFailure( @NonNull Call<LoginModel> call, @NonNull Throwable t) {
-                    Toast.makeText(MainActivity.this,"Username atau Password anda salah", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context,"Username atau Password anda salah", Toast.LENGTH_SHORT).show();
 //                        Log.d("fail", "onFailure: "+t);
 //                        Toast.makeText(MainActivity.this, "Gagal Terhubung ke Server", Toast.LENGTH_SHORT).show();
 //                        Toast.makeText(MainActivity.this, "Login Error : "+t.getMessage(), Toast.LENGTH_SHORT).show();

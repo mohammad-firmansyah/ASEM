@@ -76,6 +76,7 @@
             android:gravity="center"
             android:text="List Data Online"
             android:textStyle="italic"
+            android:checked="false"
             />
 
         <TextView

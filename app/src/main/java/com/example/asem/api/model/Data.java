@@ -477,8 +477,7 @@ public class Data {
         this.umurEkonomisInMonth = umurEkonomisInMonth;
     }
 
-    public Data(Integer jumlahPohon,Integer asetId, String asetName, Integer asetTipe, Integer asetJenis, Integer asetKondisi, Integer asetSubUnit, Integer asetKode, String nomorSap, String fotoAset1, String fotoAset2, String fotoAset3, String fotoAset4, String geoTag1, String geoTag2, String geoTag3, String geoTag4, Double asetLuas, String tglInput, String tglOleh, Integer nilaiResidu, Integer nilaiOleh, String nomorBast, String masaSusut, String keterangan, String fotoQr, String noInv, String fotoAsetQr, Integer statusPosisi, Integer unitId, Integer afdelingId, Integer userInputId, String createdAt, String updatedAt, String baFile, Integer umurEkonomisInMonth, double persenKondisi) {
-        this.jumlahPohon = jumlahPohon;
+    public Data(Integer asetId, String asetName, Integer asetTipe, Integer asetJenis, Integer asetKondisi, Integer asetSubUnit, Integer asetKode, String nomorSap, String fotoAset1, String fotoAset2, String fotoAset3, String fotoAset4, String geoTag1, String geoTag2, String geoTag3, String geoTag4, Double asetLuas, String tglInput, String tglOleh, Integer nilaiResidu, Integer nilaiOleh, String nomorBast, String masaSusut, String keterangan, String fotoQr, String noInv, String fotoAsetQr, Integer statusPosisi, Integer unitId, Integer afdelingId, Integer userInputId, String createdAt, String updatedAt, Integer jumlahPohon, double persenKondisi,String baFile,String statusReject,String ket_reject,String aset_foto_qr_status,String hgu  ) {
         this.asetId = asetId;
         this.asetName = asetName;
         this.asetTipe = asetTipe;
@@ -512,8 +511,12 @@ public class Data {
         this.userInputId = userInputId;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
-        this.beritaAcara = baFile;
-        this.umurEkonomisInMonth = umurEkonomisInMonth;
+        this.jumlahPohon = jumlahPohon;
         this.persenKondisi = persenKondisi;
+        this.beritaAcara = baFile;
+        this.statusReject = statusReject;
+        this.ketReject = ket_reject;
+        this.asetFotoQrStatus = aset_foto_qr_status;
+        this.hgu = hgu;
     }
 }
