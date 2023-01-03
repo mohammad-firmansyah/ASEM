@@ -28,6 +28,7 @@ import com.example.asem.R;
 import com.example.asem.UpdateAsetActivity;
 import com.example.asem.UpdateFotoQrAsetActivity;
 import com.example.asem.api.AsetInterface;
+import com.example.asem.api.model.Data;
 import com.example.asem.api.model.DeleteModel;
 import com.example.asem.db.model.Aset;
 import com.example.asem.utils.utils;
@@ -48,6 +49,14 @@ public class AsetOfflineAdapter extends RecyclerView.Adapter<AsetOfflineAdapter.
     private static final String TAG = "KirimTAG";
 
     private final ArrayList<Aset> listAset = new ArrayList<>();
+
+    Data[] myAsetData;
+
+    public AsetOfflineAdapter(Data[] allData, LonglistAsetActivity longlistAsetActivity) {
+        this.myAsetData = allData;
+        this.context = longlistAsetActivity;
+    }
+
     public ArrayList<Aset> getListAset() {
         return listAset;
     }
@@ -75,7 +84,7 @@ public class AsetOfflineAdapter extends RecyclerView.Adapter<AsetOfflineAdapter.
         @NonNull
         @Override
         public AsetViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-            View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.ly_longlist_aset, viewGroup, false);
+            View view = LayoutInflater.from(context).inflate(R.layout.ly_longlist_aset, viewGroup, false);
             return new AsetViewHolder(view);
         }
         @Override
@@ -94,13 +103,13 @@ public class AsetOfflineAdapter extends RecyclerView.Adapter<AsetOfflineAdapter.
             } else {
                 holder.tvNoinv.setText("-");
             }
-
-            Retrofit retrofit = new Retrofit.Builder()
-                    .baseUrl(AsemApp.BASE_URL_API)
-                    .addConverterFactory(GsonConverterFactory.create())
-                    .build();
-
-            AsetInterface asetInterface = retrofit.create(AsetInterface.class);
+//
+//            Retrofit retrofit = new Retrofit.Builder()
+//                    .baseUrl(AsemApp.BASE_URL_API)
+//                    .addConverterFactory(GsonConverterFactory.create())
+//                    .build();
+//
+//            AsetInterface asetInterface = retrofit.create(AsetInterface.class);
 
             // jika data di posisi reject maka bikin bg jadi kuning
             // selain posisi tersebut bg normal
@@ -117,82 +126,85 @@ public class AsetOfflineAdapter extends RecyclerView.Adapter<AsetOfflineAdapter.
 
                     final Dialog dialog =new Dialog(context);
 //                dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-                    dialog.setCanceledOnTouchOutside(false);
-                    dialog.getWindow().setBackgroundDrawable(new ColorDrawable(0));
-                    dialog.setContentView(R.layout.dialog_delete);
-                    dialog.show();
-                    Button cancel = dialog.findViewById(R.id.btnTidakKirim);
-                    Button ya = dialog.findViewById(R.id.btnYaKirim);
-
-                    cancel.setOnClickListener(v -> {dialog.dismiss();});
-
-                    ya.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            AsetInterface asetInterface;
-                            Retrofit retrofit = new Retrofit.Builder()
-                                    .baseUrl(AsemApp.BASE_URL_API)
-                                    .addConverterFactory(GsonConverterFactory.create())
-                                    .build();
-
-                            asetInterface = retrofit.create(AsetInterface.class);
-                            Call<DeleteModel> call = asetInterface.deleteReport(listAset.get(holder.getAdapterPosition()).getAsetId());
-
-                            call.enqueue(new Callback<DeleteModel>(){
-
-                                @Override
-                                public void onResponse(Call<DeleteModel> call, Response<DeleteModel> response) {
-                                    if (response.isSuccessful() && response.body() != null){
-                                        context.startActivity(new Intent(context, LonglistAsetActivity.class));
-                                        Toast.makeText(context.getApplicationContext(),"aset terhapus",Toast.LENGTH_LONG).show();
-                                        return;
-                                    }
-
-                                    Toast.makeText(context.getApplicationContext(),"error data tidak dapat dimasukan",Toast.LENGTH_LONG).show();
-                                }
-
-                                @Override
-                                public void onFailure(Call<DeleteModel> call, Throwable t) {
-                                    Toast.makeText(context.getApplicationContext(),"error " + t.getMessage(),Toast.LENGTH_LONG).show();
-                                }
-                            });
-                        }
-                    });
+//                    dialog.setCanceledOnTouchOutside(false);
+//                    dialog.getWindow().setBackgroundDrawable(new ColorDrawable(0));
+//                    dialog.setContentView(R.layout.dialog_delete);
+//                    dialog.show();
+//                    Button cancel = dialog.findViewById(R.id.btnTidakKirim);
+//                    Button ya = dialog.findViewById(R.id.btnYaKirim);
+//
+//                    cancel.setOnClickListener(v -> {dialog.dismiss();});
+//
+//                    ya.setOnClickListener(new View.OnClickListener() {
+//                        @Override
+//                        public void onClick(View v) {
+//                            AsetInterface asetInterface;
+//                            Retrofit retrofit = new Retrofit.Builder()
+//                                    .baseUrl(AsemApp.BASE_URL_API)
+//                                    .addConverterFactory(GsonConverterFactory.create())
+//                                    .build();
+//
+//                            asetInterface = retrofit.create(AsetInterface.class);
+//                            Call<DeleteModel> call = asetInterface.deleteReport(listAset.get(holder.getAdapterPosition()).getAsetId());
+//
+//                            call.enqueue(new Callback<DeleteModel>(){
+//
+//                                @Override
+//                                public void onResponse(Call<DeleteModel> call, Response<DeleteModel> response) {
+//                                    if (response.isSuccessful() && response.body() != null){
+//                                        context.startActivity(new Intent(context, LonglistAsetActivity.class));
+//                                        Toast.makeText(context.getApplicationContext(),"aset terhapus",Toast.LENGTH_LONG).show();
+//                                        return;
+//                                    }
+//
+//                                    Toast.makeText(context.getApplicationContext(),"error data tidak dapat dimasukan",Toast.LENGTH_LONG).show();
+//                                }
+//
+//                                @Override
+//                                public void onFailure(Call<DeleteModel> call, Throwable t) {
+//                                    Toast.makeText(context.getApplicationContext(),"error " + t.getMessage(),Toast.LENGTH_LONG).show();
+//                                }
+//                            });
+//                        }
+//                    });
+                    Toast.makeText(context,"Masuk Kirim Offline", Toast.LENGTH_SHORT).show();
                 }
             });
             holder.btnDetail.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Intent intent = new Intent(context, DetailAsetActivity.class);
-                    intent.putExtra("id",listAset.get(holder.getAdapterPosition()).getAsetId());
-                    context.startActivity(intent);
+//                    Intent intent = new Intent(context, DetailAsetActivity.class);
+//                    intent.putExtra("id",listAset.get(holder.getAdapterPosition()).getAsetId());
+//                    context.startActivity(intent);
+                    Toast.makeText(context,"Masuk Detail Offline",Toast.LENGTH_SHORT).show();
                 }
             });
 
             holder.btnEdit.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    sharedPreferences = context.getSharedPreferences(PREF_LOGIN, MODE_PRIVATE);
-                    Integer hak_akses_id = Integer.valueOf(sharedPreferences.getString("hak_akses_id", "0"));
-
-                    if (listAset.get(holder.getAdapterPosition()).getStatusPosisiID() == 5 && hak_akses_id == 7) {
-                        Intent intent = new Intent(context, UpdateFotoQrAsetActivity.class);
-                        intent.putExtra("id",listAset.get(holder.getAdapterPosition()).getAsetId());
-                        context.startActivity(intent);
-                        return;
-                    }
-
-                    if (listAset.get(holder.getAdapterPosition()).getAsetFotoQrStatus() != null && hak_akses_id == 7){
-
-                        Intent intent = new Intent(context, UpdateFotoQrAsetActivity.class);
-                        intent.putExtra("id",listAset.get(holder.getAdapterPosition()).getAsetId());
-                        context.startActivity(intent);
-                        return;
-                    }
-
-                    Intent intent = new Intent(context, UpdateAsetActivity.class);
-                    intent.putExtra("id",listAset.get(holder.getAdapterPosition()).getAsetId());
-                    context.startActivity(intent);
+//                    sharedPreferences = context.getSharedPreferences(PREF_LOGIN, MODE_PRIVATE);
+//                    Integer hak_akses_id = Integer.valueOf(sharedPreferences.getString("hak_akses_id", "0"));
+//
+//                    if (listAset.get(holder.getAdapterPosition()).getStatusPosisiID() == 5 && hak_akses_id == 7) {
+//                        Intent intent = new Intent(context, UpdateFotoQrAsetActivity.class);
+//                        intent.putExtra("id",listAset.get(holder.getAdapterPosition()).getAsetId());
+//                        context.startActivity(intent);
+//                        return;
+//                    }
+//
+//                    if (listAset.get(holder.getAdapterPosition()).getAsetFotoQrStatus() != null && hak_akses_id == 7){
+//
+//                        Intent intent = new Intent(context, UpdateFotoQrAsetActivity.class);
+//                        intent.putExtra("id",listAset.get(holder.getAdapterPosition()).getAsetId());
+//                        context.startActivity(intent);
+//                        return;
+//                    }
+//
+//                    Intent intent = new Intent(context, UpdateAsetActivity.class);
+//                    intent.putExtra("id",listAset.get(holder.getAdapterPosition()).getAsetId());
+//                    context.startActivity(intent);
+                    Toast.makeText(context,"Masuk Edit Offline", Toast.LENGTH_SHORT).show();
                 }
             });
     }

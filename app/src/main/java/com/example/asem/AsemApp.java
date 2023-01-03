@@ -4,6 +4,9 @@ import android.content.SharedPreferences;
 
 import androidx.annotation.NonNull;
 
+import java.sql.Time;
+import java.util.concurrent.TimeUnit;
+
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
@@ -21,7 +24,11 @@ public class AsemApp {
         // Used to log the request and response.
         HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
         interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
-        OkHttpClient httpClient = new OkHttpClient.Builder().addInterceptor(interceptor).build();
+        OkHttpClient httpClient = new OkHttpClient.Builder()
+                .callTimeout(2, TimeUnit.MINUTES)
+                .connectTimeout(20, TimeUnit.SECONDS)
+                .readTimeout(30, TimeUnit.SECONDS)
+                .addInterceptor(interceptor).build();
 
         // Returning the retrofit object.
         return new Retrofit.Builder()

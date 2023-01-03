@@ -13,6 +13,8 @@ import android.Manifest;
 import android.app.Dialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
@@ -23,6 +25,7 @@ import android.widget.CompoundButton;
 import android.widget.Toast;
 
 import com.example.asem.adapter.Aset2Adapter;
+import com.example.asem.adapter.AsetOfflineAdapter;
 import com.example.asem.adapter.SearchAsetAdapter;
 import com.example.asem.api.AsetInterface;
 import com.example.asem.api.model.Data;
@@ -30,12 +33,15 @@ import com.example.asem.api.model.Data2;
 import com.example.asem.api.model.Search;
 import com.example.asem.api.model.SearchModel;
 import com.example.asem.db.AsetHelper;
+import com.example.asem.db.DatabaseContract;
+import com.example.asem.db.DatabaseHelper;
 import com.example.asem.db.model.Aset;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -58,6 +64,9 @@ public class LonglistAsetActivity extends AppCompatActivity  { //implements Bott
 
     private static final String PREF_LOGIN = "LOGIN_PREF";
     SharedPreferences sharedPreferences;
+    AsetOfflineAdapter offlineAdapter;
+    DatabaseHelper dbOffline;
+    ArrayList<Aset> dataoffline;
 
     Button btnReport;
     Button btnFilter;
@@ -74,7 +83,6 @@ public class LonglistAsetActivity extends AppCompatActivity  { //implements Bott
 
     private AsetInterface asetInterface;
     private Dialog dialog;
-    Data[] allData;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -140,14 +148,55 @@ public class LonglistAsetActivity extends AppCompatActivity  { //implements Bott
                 return false;
             }
         });
+//
+//        dbOffline = new DatabaseHelper(this);
+//        dataoffline = new ArrayList<>();
+//        if (hak_akses_id.equals("7")){
+//            dataoffline = ;
+//        }
 
 //        Boolean switchState = switch_offline.isChecked();
         switch_offline.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                dialog.show();
+                srlonglist.setEnabled(false);
+                fab.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        startActivity(new Intent(LonglistAsetActivity.this, AddAsetActivity.class));
+                    }
+                });
                 if(isChecked){
                     //aktifkan longlist offline
-                    switch_offline.setChecked(true);
+                    if (switch_offline.isEmojiCompatEnabled()){
+                        dialog.dismiss();
+                        switch_offline.setChecked(true);
+                        rcAset.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+                        rcAset.setAdapter(offlineAdapter);
+                        getDataOffline();
+                        btnReport.setOnClickListener(view -> Toast.makeText(getApplicationContext(),"Fitur Tidak Tersedia Dalam Mode Offline",Toast.LENGTH_SHORT).show());
+                        btnFilter.setOnClickListener(view -> Toast.makeText(getApplicationContext(),"Fitur Tidak Tersedia Dalam Mode Offline",Toast.LENGTH_SHORT).show());
+                        searchView.setVisibility(View.GONE);
+                        switch_offline.setTrackTintList(ColorStateList.valueOf(getResources().getColor(R.color.MediumBlue)));
+                        switch_offline.setThumbTintList(ColorStateList.valueOf(getResources().getColor(R.color.Blue2)));
+                        fab.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                startActivity(new Intent(LonglistAsetActivity.this, AsetAddUpdateOfflineActivity.class));
+
+                            }
+                        });
+                    }
+                }else {
+                    dialog.dismiss();
+                    srlonglist.setEnabled(true);
+                    getAllAset();
+                    btnReport.setVisibility(View.VISIBLE);
+                    btnFilter.setVisibility(View.VISIBLE);
+                    searchView.setVisibility(View.VISIBLE);
+                    switch_offline.setTrackTintList(ColorStateList.valueOf(Color.GRAY));
+                    switch_offline.setThumbTintList(ColorStateList.valueOf(Color.WHITE));
                 }
             }
         });
@@ -170,15 +219,14 @@ public class LonglistAsetActivity extends AppCompatActivity  { //implements Bott
             }
         });
 
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(LonglistAsetActivity.this, AddAsetActivity.class));
-//                startActivity(new Intent(LonglistAsetActivity.this, AsetAddUpdateOfflineActivity.class));
-
-
-            }
-        });
+//        fab.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+////                startActivity(new Intent(LonglistAsetActivity.this, AddAsetActivity.class));
+//                startActivity(new Intent(LonglistAsetActivity.this, AddAsetActivity.class));
+//
+//            }
+//        });
 
         asetInterface = AsemApp.getApiClient().create(AsetInterface.class);
 //        allData = new Data[]{};
@@ -220,6 +268,14 @@ public class LonglistAsetActivity extends AppCompatActivity  { //implements Bott
         });
 
         getAllAset();
+    }
+
+    private void getDataOffline(){
+        Data[] allData = new Data[]{
+                new Data(1,"tesoff",1,2,1,2,1,"6","fotoaset1","fotoaset2","fotoaset3","fotoaset4","geo","null","null","null", 999.0,"2023-01-03 10:11:23","2023-01-03 00:00:00",9,666,"nnn","1","-",null,null,null,1,16,185,null,"2023-01-03T03:11:23.000000Z","2023-01-03T03:11:23.000000Z",null,99,null,null,null,null,"jjj")
+        };
+        AsetOfflineAdapter asetOfflineAdapter = new AsetOfflineAdapter(allData,LonglistAsetActivity.this);
+        rcAset.setAdapter(asetOfflineAdapter);
     }
 
     private void getAllAset(){
