@@ -56,8 +56,7 @@ public class MappingHelper {
         ArrayList<Aset> asetList = new ArrayList<>();
 
         while (asetCursor.moveToNext()) {
-//            int id = asetCursor.getInt(asetCursor.getColumnIndexOrThrow(_ID));
-            Integer asetid = asetCursor.getInt(asetCursor.getColumnIndexOrThrow(String.valueOf("aset_id")));
+            Integer asetid = asetCursor.getInt(asetCursor.getColumnIndexOrThrow(ASETID));
             String asetname = asetCursor.getString(asetCursor.getColumnIndexOrThrow(ASETNAME));
             String asettipe = asetCursor.getString(asetCursor.getColumnIndexOrThrow(ASETTIPE));
             String asetjenis = asetCursor.getString(asetCursor.getColumnIndexOrThrow(ASETJENIS));

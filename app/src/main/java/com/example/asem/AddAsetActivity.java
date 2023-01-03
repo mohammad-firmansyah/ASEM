@@ -1552,7 +1552,6 @@ public class AddAsetActivity extends AppCompatActivity {
 
             MultipartBody.Part img1Part = null, img2Part = null, img3Part = null, img4Part = null, partBaFile = null;
 
-
             try {
 
                 RequestBody requestTipeAset = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(spinnerIdTipeAsset));
