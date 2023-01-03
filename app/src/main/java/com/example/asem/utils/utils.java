@@ -12,6 +12,10 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.google.android.material.snackbar.Snackbar;
+
 import java.io.File;
 import java.text.NumberFormat;
 import java.util.ArrayList;
@@ -25,6 +29,10 @@ public class utils {
     public static double longitudeValue = 0;
     public static double latitudeValue = 0;
 
+
+    private void showSnackbarMessage(RecyclerView rcview,String message) {
+        Snackbar.make(rcview, message, Snackbar.LENGTH_SHORT).show();
+    }
 
     public static class Directory {
         public static final String DIRECTORY_TANAMAN = "Asem/Aset/Tanaman/Pictures";

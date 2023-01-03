@@ -10,7 +10,7 @@ public class DatabaseContract {
         static String ASETTIPE;
         static String ASETJENIS;
         static String ASETKONDISI;
-        static String ASETSUB_UNIT;
+        static String ASETSUBUNIT;
         static String ASETKODE;
         static String NOMORSAP;
         static String FOTOASET1;
@@ -29,15 +29,23 @@ public class DatabaseContract {
         static String NOMORBAST;
         static String MASASUSUT;
         static String KETERANGAN;
-        static Object FOTOQR;
-        static Object NOINV;
-        static Object FOTOASETQR;
+        static String FOTOQR;
+        static String NOINV;
+        static String FOTOASETQR;
         static String STATUSPOSISI;
         static String UNITID;
         static String AFDELINGID;
-        static Object USERINPUTID;
+        static String USERINPUTID;
         static String CREATEDAT;
         static String UPDATEDAT;
         static Integer JUMLAHPOHON;
+        static String HGU;
+        static String ASETFOTOQRSTATUS;
+        static Integer STATUSPOSISIID;
+        static String KETREJECT;
+        static String STATUSREJECT;
+        static Double PERSENKONDISI;
+        static Integer UMUREKONOMISINMONTH;
+
     }
 }

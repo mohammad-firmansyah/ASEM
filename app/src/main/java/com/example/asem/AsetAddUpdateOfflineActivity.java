@@ -1,5 +1,6 @@
 package com.example.asem;
 
+import static android.provider.BaseColumns._ID;
 import static com.example.asem.utils.utils.CurrencyToNumber;
 
 import androidx.activity.result.ActivityResult;
@@ -18,6 +19,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -31,6 +33,7 @@ import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Handler;
 import android.os.Looper;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
@@ -53,6 +56,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.asem.adapter.AsetOfflineAdapter;
 import com.example.asem.api.AsetInterface;
 import com.example.asem.api.model.Afdelling;
 import com.example.asem.api.model.AllSpinner;
@@ -67,6 +71,7 @@ import com.example.asem.api.model.Sap;
 import com.example.asem.api.model.SubUnit;
 import com.example.asem.api.model.Unit;
 import com.example.asem.db.AsetHelper;
+import com.example.asem.db.MappingHelper;
 import com.example.asem.db.model.Aset;
 import com.example.asem.utils.GpsConverter;
 import com.example.asem.utils.utils;
@@ -82,6 +87,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.lang.ref.WeakReference;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -91,6 +97,8 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
@@ -99,12 +107,12 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class AsetAddUpdateOfflineActivity extends AppCompatActivity {
+public class AsetAddUpdateOfflineActivity extends AppCompatActivity  implements LoadNotesCallback  {
     private boolean isEdit = false;
     private Aset aset;
     private int position;
     private AsetHelper asetHelper;
-
+    private AsetOfflineAdapter adapter;
 
     private static final String PREF_LOGIN = "LOGIN_PREF";
     SharedPreferences sharedPreferences;
@@ -121,7 +129,7 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity {
 
     Uri docUri;
     List<String> listSpinnerSap=new ArrayList<>();
-    List<AsetKode2> asetKode = new ArrayList<>();
+    List<AsetKode2> asetKode2 = new ArrayList<>();
     List<Afdelling> afdeling = new ArrayList<>();
     List<Unit> unit = new ArrayList<>();
     List<SubUnit> subUnit = new ArrayList<>();
@@ -458,6 +466,19 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity {
         asetHelper = AsetHelper.getInstance(getApplicationContext());
         asetHelper.open();
 
+        Cursor dataCursor = asetHelper.queryAll();
+        ArrayList<Aset> asetAll = MappingHelper.mapCursorToArrayList(dataCursor);
+//        Aset Data = new Aset(Integer.parseInt("1"),"2","3","4","5","6","7","8","9","10","11","12","13","14","15","16",17.0,"18","19", new Long(20),new Long(21),"22","23","24","25","26","27","28","29","30","31","32","33",Integer.parseInt("34"),Integer.parseInt("35"),36.0,37,"38","39","40");
+
+//        ContentValues values = new ContentValues();
+//        values.put("aset_name", "1");
+
+
+//        long result = asetHelper.insert(values);
+//        Log.d("amanatsql", String.valueOf(result));
+        Log.d("amanatsql", String.valueOf(asetAll));
+        asetHelper.close();
+
         aset = getIntent().getParcelableExtra(EXTRA_ASET);
         if (aset != null) {
             position = getIntent().getIntExtra(EXTRA_POSITION, 0);
@@ -474,7 +495,7 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity {
         dialog.setContentView(R.layout.loading);
         dialog.setCanceledOnTouchOutside(false);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(0));
-        dialog.show();
+//        dialog.show();
 
         spinnerNoSap = new Dialog(AsetAddUpdateOfflineActivity.this);
 
@@ -526,6 +547,7 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity {
 //        inpBtnMap = findViewById(R.id.inpBtnMap);
         btnSubmit = findViewById(R.id.btnSubmit);
         btnFile = findViewById(R.id.inpUploudBA);
+
 
 //        handler
 
@@ -643,8 +665,6 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity {
 
                 ArrayAdapter<String> adapterSap =new ArrayAdapter<>(AsetAddUpdateOfflineActivity.this, android.R.layout.simple_list_item_1,listSpinnerSap);
                 listView.setAdapter(adapterSap);
-
-                //                 Initialize array adapter
 
                 // set adapter
                 listView.setAdapter(adapterSap);
@@ -814,7 +834,7 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity {
 
 
         initCalender();
-        getAllSpinnerData();
+//        getAllSpinnerData();
     }
 
     void initDialogAddAset(){
@@ -1125,7 +1145,7 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity {
         });
 
 
-        getAllSpinnerData();
+//        getAllSpinnerData();
     }
 
 
@@ -1655,158 +1675,177 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity {
         }
     }
 
-    public void getAllSpinnerData(){
-
-
-                dialog.dismiss();
-                allSpinner = response.body().getData();
-
-                DataAllSpinner dataAllSpinner = response.body().getData();
-                List<String> listSpinnerTipe = new ArrayList<>();
-                List<String> listSpinnerJenis = new ArrayList<>();
-                List<String> listSpinnerKondisiAset = new ArrayList<>();
-                List<String> listSpinnerKodeAset = new ArrayList<>();
-                List<String> listSpinnerUnit = new ArrayList<>();
-                List<String> listSpinnerSubUnit = new ArrayList<>();
-                List<String> listSpinnerAfdeling = new ArrayList<>();
-
-                listSpinnerTipe.add("Pilih Tipe Aset");
-                listSpinnerJenis.add("Pilih Jenis Aset");
-                listSpinnerKondisiAset.add("Pilih Kondisi Aset");
-                listSpinnerKodeAset.add("Pilih Kode Aset");
-                listSpinnerSubUnit.add("Pilih Sub Unit ");
-                listSpinnerAfdeling.add("Pilih Afdeling Aset");
-                // get data tipe aset
-                for (AsetTipe at : dataAllSpinner.getAsetTipe()){
-                    listSpinnerTipe.add(at.getAset_tipe_desc());
-                }
-
-                // get data jenis
-                for (AsetJenis at : dataAllSpinner.getAsetJenis()){
-                    listSpinnerJenis.add(at.getAset_jenis_desc());
-                }
-
-                // get kondisi aset
-                for (AsetKondisi at : dataAllSpinner.getAsetKondisi()){
-                    listSpinnerKondisiAset.add(at.getAset_kondisi_desc());
-                }
-
-                // get kode aset
-                asetKode = dataAllSpinner.getAsetKode();
-
-
-                // get unit
-                for (Unit at : dataAllSpinner.getUnit()){
-                    listSpinnerUnit.add(at.getUnit_desc());
-                }
-
-                // get sub unit
-                for (SubUnit at : dataAllSpinner.getSubUnit()){
-                    listSpinnerSubUnit.add(at.getSub_unit_desc());
-                }
-
-                // get sap
-                for (Sap at : dataAllSpinner.getSap()){
-                    mapSap.put(Integer.parseInt(at.getSap_desc()),at.getSap_id());
-                    listSpinnerSap.add(at.getSap_desc());
-                }
-
-                // get afdeling
-                Integer i=0;
-                afdeling = dataAllSpinner.getAfdeling();
-                for (Afdelling at : dataAllSpinner.getAfdeling()){
-                    if (at.getUnit_id() == (spinnerUnit.getSelectedItemId()+1)) {
-                        mapSpinnerAfdeling.put(at.getAfdelling_id(), i);
-                        mapAfdeling.put(i, at.getAfdelling_desc());
-                        listSpinnerAfdeling.add(at.getAfdelling_desc());
-                        i++;
-                    }
-                }
-
-                Integer afdeling_id = Integer.valueOf(sharedPreferences.getString("afdeling_id", "0"));
-
-                // set adapter tipe
-                ArrayAdapter<String> adapterTipe = new ArrayAdapter<String>(getApplicationContext(),
-                        android.R.layout.simple_spinner_item, listSpinnerTipe);
-                adapterTipe.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                spinnerTipeAset.setAdapter(adapterTipe);
-
-                // set adapter jenis
-                ArrayAdapter<String> adapterJenis = new ArrayAdapter<String>(getApplicationContext(),
-                        android.R.layout.simple_spinner_item, listSpinnerJenis);
-                adapterJenis.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                spinnerJenisAset.setAdapter(adapterJenis);
-
-                // set adapter kondisi aset
-                ArrayAdapter<String> adapterKondisiAset = new ArrayAdapter<String>(getApplicationContext(),
-                        android.R.layout.simple_spinner_item, listSpinnerKondisiAset);
-                adapterKondisiAset.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                spinnerAsetKondisi.setAdapter(adapterKondisiAset);
-
-                // set adapter kode aset
-                ArrayAdapter<String> adapterKodeAset = new ArrayAdapter<String>(getApplicationContext(),
-                        android.R.layout.simple_spinner_item, listSpinnerKodeAset);
-                adapterKodeAset.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                spinnerKodeAset.setAdapter(adapterKodeAset);
-
-                // set adapter sap aset
-                try{
-
-                    if (listView != null) {
-
-                        ArrayAdapter<String> adapterSap = new ArrayAdapter<String>(getApplicationContext(),
-                                android.R.layout.simple_spinner_item, listSpinnerSap);
-                        adapterSap.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                        listView.setAdapter(adapterSap);
-                    }
-                } catch(Exception e){
-                    e.printStackTrace();
-                }
-
-//
-
-
-                // set adapter unit
-                ArrayAdapter<String> adapterUnit = new ArrayAdapter<String>(getApplicationContext(),
-                        android.R.layout.simple_spinner_item, listSpinnerUnit);
-                adapterUnit.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                spinnerUnit.setAdapter(adapterUnit);
-                sharedPreferences = AsetAddUpdateOfflineActivity.this.getSharedPreferences(PREF_LOGIN, MODE_PRIVATE);
-                try {
-
-                    Integer unit_id = Integer.valueOf(sharedPreferences.getString("unit_id", "0"));
-                    spinnerUnit.setSelection(unit_id-1);
-                } catch(Exception e){}
-
-
-
-                // set adapter sub unit
-                ArrayAdapter<String> adapterSubUnit = new ArrayAdapter<String>(getApplicationContext(),
-                        android.R.layout.simple_spinner_item, listSpinnerSubUnit);
-                adapterSubUnit.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                spinnerSubUnit.setAdapter(adapterSubUnit);
-                try {
-                    Integer sub_unit_id = Integer.valueOf(sharedPreferences.getString("sub_unit_id", "0"));
-                    spinnerSubUnit.setSelection(sub_unit_id);
-                } catch (Exception e){}
-
-                // set adapter afedeling
-                ArrayAdapter<String> adapterAfdeling = new ArrayAdapter<String>(getApplicationContext(),
-                        android.R.layout.simple_spinner_item, listSpinnerAfdeling);
-                adapterAfdeling.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                spinnerAfdeling.setAdapter(adapterAfdeling);
-                try {
-
-                    if (listSpinnerAfdeling.size() != 0) {
-
-                        spinnerAfdeling.setSelection(mapAfdelingSpinner.get(afdeling_id));
-
-                    }
-                } catch (Exception e){
-                }
-
-
+    @Override
+    public void preExecute() {
+        dialog.show();
     }
+    @Override
+    public void postExecute(ArrayList<Aset> aset) {
+        dialog.dismiss();
+        if (aset.size() > 0) {
+            adapter.setListAset(aset);
+        } else {
+            adapter.setListAset(new ArrayList<Aset>());
+//            utils.showSnackbarMessage(rvNotes,"Tidak ada data saat ini");
+        }
+    }
+
+//    public void getAllSpinnerData(){
+//
+//        // proses ambil data
+//        new LoadNotesAsync(this, this).execute();
+//
+//                dialog.dismiss();
+//                allSpinner = response.body().getData();
+//
+//                DataAllSpinner dataAllSpinner = response.body().getData();
+//
+//
+//                List<String> listSpinnerTipe = new ArrayList<>();
+//                List<String> listSpinnerJenis = new ArrayList<>();
+//                List<String> listSpinnerKondisiAset = new ArrayList<>();
+//                List<String> listSpinnerKodeAset = new ArrayList<>();
+//                List<String> listSpinnerUnit = new ArrayList<>();
+//                List<String> listSpinnerSubUnit = new ArrayList<>();
+//                List<String> listSpinnerAfdeling = new ArrayList<>();
+//
+//                listSpinnerTipe.add("Pilih Tipe Aset");
+//                listSpinnerJenis.add("Pilih Jenis Aset");
+//                listSpinnerKondisiAset.add("Pilih Kondisi Aset");
+//                listSpinnerKodeAset.add("Pilih Kode Aset");
+//                listSpinnerSubUnit.add("Pilih Sub Unit ");
+//                listSpinnerAfdeling.add("Pilih Afdeling Aset");
+//                // get data tipe aset
+//                for (AsetTipe at : dataAllSpinner.getAsetTipe()){
+//                    listSpinnerTipe.add(at.getAset_tipe_desc());
+//                }
+//
+//                // get data jenis
+//                for (AsetJenis at : dataAllSpinner.getAsetJenis()){
+//                    listSpinnerJenis.add(at.getAset_jenis_desc());
+//                }
+//
+//                // get kondisi aset
+//                for (AsetKondisi at : dataAllSpinner.getAsetKondisi()){
+//                    listSpinnerKondisiAset.add(at.getAset_kondisi_desc());
+//                }
+//
+//                // get kode aset
+//                asetKode2 = dataAllSpinner.getAsetKode();
+//
+//
+//                // get unit
+//                for (Unit at : dataAllSpinner.getUnit()){
+//                    listSpinnerUnit.add(at.getUnit_desc());
+//                }
+//
+//                // get sub unit
+//                for (SubUnit at : dataAllSpinner.getSubUnit()){
+//                    listSpinnerSubUnit.add(at.getSub_unit_desc());
+//                }
+//
+//                // get sap
+//                for (Sap at : dataAllSpinner.getSap()){
+//                    mapSap.put(Integer.parseInt(at.getSap_desc()),at.getSap_id());
+//                    listSpinnerSap.add(at.getSap_desc());
+//                }
+//
+//                // get afdeling
+//                Integer i=0;
+//                afdeling = dataAllSpinner.getAfdeling();
+//                for (Afdelling at : dataAllSpinner.getAfdeling()){
+//                    if (at.getUnit_id() == (spinnerUnit.getSelectedItemId()+1)) {
+//                        mapSpinnerAfdeling.put(at.getAfdelling_id(), i);
+//                        mapAfdeling.put(i, at.getAfdelling_desc());
+//                        listSpinnerAfdeling.add(at.getAfdelling_desc());
+//                        i++;
+//                    }
+//                }
+//
+//                Integer afdeling_id = Integer.valueOf(sharedPreferences.getString("afdeling_id", "0"));
+//
+//                // set adapter tipe
+//                ArrayAdapter<String> adapterTipe = new ArrayAdapter<String>(getApplicationContext(),
+//                        android.R.layout.simple_spinner_item, listSpinnerTipe);
+//                adapterTipe.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+//                spinnerTipeAset.setAdapter(adapterTipe);
+//
+//                // set adapter jenis
+//                ArrayAdapter<String> adapterJenis = new ArrayAdapter<String>(getApplicationContext(),
+//                        android.R.layout.simple_spinner_item, listSpinnerJenis);
+//                adapterJenis.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+//                spinnerJenisAset.setAdapter(adapterJenis);
+//
+//                // set adapter kondisi aset
+//                ArrayAdapter<String> adapterKondisiAset = new ArrayAdapter<String>(getApplicationContext(),
+//                        android.R.layout.simple_spinner_item, listSpinnerKondisiAset);
+//                adapterKondisiAset.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+//                spinnerAsetKondisi.setAdapter(adapterKondisiAset);
+//
+//                // set adapter kode aset
+//                ArrayAdapter<String> adapterKodeAset = new ArrayAdapter<String>(getApplicationContext(),
+//                        android.R.layout.simple_spinner_item, listSpinnerKodeAset);
+//                adapterKodeAset.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+//                spinnerKodeAset.setAdapter(adapterKodeAset);
+//
+//                // set adapter sap aset
+//                try{
+//
+//                    if (listView != null) {
+//
+//                        ArrayAdapter<String> adapterSap = new ArrayAdapter<String>(getApplicationContext(),
+//                                android.R.layout.simple_spinner_item, listSpinnerSap);
+//                        adapterSap.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+//                        listView.setAdapter(adapterSap);
+//                    }
+//                } catch(Exception e){
+//                    e.printStackTrace();
+//                }
+//
+////
+//
+//
+//                // set adapter unit
+//                ArrayAdapter<String> adapterUnit = new ArrayAdapter<String>(getApplicationContext(),
+//                        android.R.layout.simple_spinner_item, listSpinnerUnit);
+//                adapterUnit.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+//                spinnerUnit.setAdapter(adapterUnit);
+//                sharedPreferences = AsetAddUpdateOfflineActivity.this.getSharedPreferences(PREF_LOGIN, MODE_PRIVATE);
+//                try {
+//
+//                    Integer unit_id = Integer.valueOf(sharedPreferences.getString("unit_id", "0"));
+//                    spinnerUnit.setSelection(unit_id-1);
+//                } catch(Exception e){}
+//
+//
+//
+//                // set adapter sub unit
+//                ArrayAdapter<String> adapterSubUnit = new ArrayAdapter<String>(getApplicationContext(),
+//                        android.R.layout.simple_spinner_item, listSpinnerSubUnit);
+//                adapterSubUnit.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+//                spinnerSubUnit.setAdapter(adapterSubUnit);
+//                try {
+//                    Integer sub_unit_id = Integer.valueOf(sharedPreferences.getString("sub_unit_id", "0"));
+//                    spinnerSubUnit.setSelection(sub_unit_id);
+//                } catch (Exception e){}
+//
+//                // set adapter afedeling
+//                ArrayAdapter<String> adapterAfdeling = new ArrayAdapter<String>(getApplicationContext(),
+//                        android.R.layout.simple_spinner_item, listSpinnerAfdeling);
+//                adapterAfdeling.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+//                spinnerAfdeling.setAdapter(adapterAfdeling);
+//                try {
+//
+//                    if (listSpinnerAfdeling.size() != 0) {
+//
+//                        spinnerAfdeling.setSelection(mapAfdelingSpinner.get(afdeling_id));
+//
+//                    }
+//                } catch (Exception e){
+//                }
+//
+//
+//    }
     public void spinnerValidation(){
 
         if (spinnerTipeAset.getSelectedItemId()== 0) {
@@ -2201,4 +2240,38 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity {
 //            }
 
     }
+
+
+
+
+    private static class LoadNotesAsync {
+        private final WeakReference<Context> weakContext;
+        private final WeakReference<LoadNotesCallback> weakCallback;
+        private LoadNotesAsync(Context context, LoadNotesCallback callback) {
+            weakContext = new WeakReference<>(context);
+            weakCallback = new WeakReference<>(callback);
+        }
+        void execute() {
+            ExecutorService executor = Executors.newSingleThreadExecutor();
+            Handler handler = new Handler(Looper.getMainLooper());
+            weakCallback.get().preExecute();
+            executor.execute(() -> {
+                Context context = weakContext.get();
+                AsetHelper asetHelper = AsetHelper.getInstance(context);
+                asetHelper.open();
+                Cursor dataCursor = asetHelper.queryAll();
+                ArrayList<Aset> aset = MappingHelper.mapCursorToArrayList(dataCursor);
+                asetHelper.close();
+                handler.post(() -> weakCallback.get().postExecute(aset));
+            });
+        }
+    }
+
+
+
+}
+
+interface LoadNotesCallback {
+    void preExecute();
+    void postExecute(ArrayList<Aset> notes);
 }

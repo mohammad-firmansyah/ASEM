@@ -471,7 +471,7 @@ public class Aset implements Parcelable {
         this.umurEkonomisInMonth = umurEkonomisInMonth;
     }
 
-    public Aset(Integer asetId, String asetName, String asetTipe, String asetJenis, String asetKondisi, String asetSubUnit, String asetKode, String nomorSap, String fotoAset1, String fotoAset2, String fotoAset3, String fotoAset4, String geoTag1, String geoTag2, String geoTag3, String geoTag4, Double asetLuas, String tglInput, String tglOleh, Long nilaiResidu, Long nilaiOleh, String nomorBast, String masaSusut, String keterangan, Object fotoQr, Object noInv, Object fotoAsetQr, String statusPosisi, String unitId, String afdelingId, Object userInputId, String createdAt, String updatedAt, Integer jumlahPohon, Integer umurEkonomisInMonth, double persenKondisi, Integer statusPosisiID, String statusReject, String ketReject, String asetFotoQrStatus) {
+    public Aset(Integer asetId, String asetName, String asetTipe, String asetJenis, String asetKondisi, String asetSubUnit, String asetKode, String nomorSap, String fotoAset1, String fotoAset2, String fotoAset3, String fotoAset4, String geoTag1, String geoTag2, String geoTag3, String geoTag4, Double asetLuas, String tglInput, String tglOleh, Long nilaiResidu, Long nilaiOleh, String nomorBast, String masaSusut, String keterangan, String fotoQr, String noInv, String fotoAsetQr, String statusPosisi, String unitId, String afdelingId, String userInputId, String createdAt, String updatedAt, Integer jumlahPohon, Integer umurEkonomisInMonth, double persenKondisi, Integer statusPosisiID, String statusReject, String ketReject, String asetFotoQrStatus) {
         this.asetId = asetId;
         this.asetName = asetName;
         this.asetTipe = asetTipe;

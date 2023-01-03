@@ -49,7 +49,7 @@ public class AsetHelper {
                 null,
                 null,
                 null,
-                _ID + " ASC");
+                null);
     }
 
     public Cursor queryById(String id) {
