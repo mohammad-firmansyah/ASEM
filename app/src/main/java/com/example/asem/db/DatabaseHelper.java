@@ -83,18 +83,18 @@ public class DatabaseHelper  extends SQLiteOpenHelper {
     }
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        db.execSQL("DROP TABLE IF EXIST data_aset cascade");
-        db.execSQL("DROP TABLE IF EXIST afdeling cascade ");
-        db.execSQL("DROP TABLE IF EXIST unit cascade");
-        db.execSQL("DROP TABLE IF EXIST sub_unit cascade");
-        db.execSQL("DROP TABLE IF EXIST hak_akses cascade");
-        db.execSQL("DROP TABLE IF EXIST aset_jenis cascade");
-        db.execSQL("DROP TABLE IF EXIST aset_kode cascade");
-        db.execSQL("DROP TABLE IF EXIST aset_kondisi cascade");
-        db.execSQL("DROP TABLE IF EXIST status_posisi cascade");
-        db.execSQL("DROP TABLE IF EXIST aset_tipe cascade");
-        db.execSQL("DROP TABLE IF EXIST users cascade");
-        db.execSQL("DROP TABLE IF EXIST sap cascade");
+        db.execSQL("DROP TABLE IF EXISTS data_aset");
+        db.execSQL("DROP TABLE IF EXISTS afdeling  ");
+        db.execSQL("DROP TABLE IF EXISTS unit ");
+        db.execSQL("DROP TABLE IF EXISTS sub_unit ");
+        db.execSQL("DROP TABLE IF EXISTS hak_akses ");
+        db.execSQL("DROP TABLE IF EXISTS aset_jenis ");
+        db.execSQL("DROP TABLE IF EXISTS aset_kode ");
+        db.execSQL("DROP TABLE IF EXISTS aset_kondisi ");
+        db.execSQL("DROP TABLE IF EXISTS status_posisi ");
+        db.execSQL("DROP TABLE IF EXISTS aset_tipe ");
+        db.execSQL("DROP TABLE IF EXISTS users ");
+        db.execSQL("DROP TABLE IF EXISTS sap ");
         onCreate(db);
     }
 }
