@@ -66,7 +66,7 @@ import com.example.asem.api.model.AsetKondisi;
 import com.example.asem.api.model.AsetModel;
 import com.example.asem.api.model.AsetModel2;
 import com.example.asem.api.model.AsetTipe;
-import com.example.asem.api.model.DataAllSpinner;
+import com.example.asem.db.model.DataAllSpinner;
 import com.example.asem.api.model.Sap;
 import com.example.asem.api.model.SubUnit;
 import com.example.asem.api.model.Unit;
@@ -99,7 +99,6 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
@@ -464,7 +463,7 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity  implements 
         setContentView(R.layout.activity_aset_add_update_offline);
 
         asetHelper = AsetHelper.getInstance(getApplicationContext());
-        asetHelper.open();
+//        asetHelper.open();
 
 //        Cursor dataCursor = asetHelper.queryAll();
 //        ArrayList<Aset> asetAll = MappingHelper.mapCursorToArrayList(dataCursor);
@@ -834,7 +833,7 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity  implements 
 
 
         initCalender();
-//        getAllSpinnerData();
+        getAllSpinnerData();
     }
 
     void initDialogAddAset(){
@@ -1145,7 +1144,7 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity  implements 
         });
 
 
-//        getAllSpinnerData();
+        getAllSpinnerData();
     }
 
 
@@ -1692,55 +1691,81 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity  implements 
 
     public void getAllSpinnerData(){
 
-//        // proses ambil data
-//        new LoadNotesAsync(this, this).execute();
+        asetHelper.open();
+        Cursor asetTipe = asetHelper.getAllAsetTipe();
+        Cursor asetJenis = asetHelper.getAllAsetJenis();
+        Cursor asetKondisi = asetHelper.getAllAsetKondisi();
+        Cursor asetKode = asetHelper.getAllAsetKode();
+        Cursor unit = asetHelper.getAllUnit();
+        Cursor subUnit = asetHelper.getAllSubUnit();
+        Cursor afdeling = asetHelper.getAllAfdeling();
+        Cursor sap = asetHelper.getAllSap();
+         DataAllSpinner dataAllSpinner = MappingHelper.mapCursorToArrayListSpinner(asetTipe,asetJenis,asetKondisi,asetKode,unit,subUnit,afdeling,sap);
 
-                    dialog.dismiss();
-//                allSpinner = response.body().getData();
-//
-//                DataAllSpinner dataAllSpinner = response.body().getData();
-//                Afdelling afdeling = response.body()
+        List<String> listSpinnerTipe = new ArrayList<>();
+
+        List<String> listSpinnerJenis = new ArrayList<>();
+
+        List<String> listSpinnerKondisiAset = new ArrayList<>();
+
+        List<String> listSpinnerKodeAset = new ArrayList<>();
+
+        List<String> listSpinnerUnit = new ArrayList<>();
+
+        List<String> listSpinnerSubUnit = new ArrayList<>();
+
+        List<String> listSpinnerAfdeling = new ArrayList<>();
 
 
+        listSpinnerTipe.add("Pilih Tipe Aset");
 
+        listSpinnerJenis.add("Pilih Jenis Aset");
 
-                List<String> listSpinnerTipe = new ArrayList<>();
-                List<String> listSpinnerJenis = new ArrayList<>();
-                List<String> listSpinnerKondisiAset = new ArrayList<>();
-                List<String> listSpinnerKodeAset = new ArrayList<>();
-                List<String> listSpinnerUnit = new ArrayList<>();
-                List<String> listSpinnerSubUnit = new ArrayList<>();
-                List<String> listSpinnerAfdeling = new ArrayList<>();
+        listSpinnerKondisiAset.add("Pilih Kondisi Aset");
 
-                listSpinnerTipe.add("Pilih Tipe Aset");
-                listSpinnerJenis.add("Pilih Jenis Aset");
-                listSpinnerKondisiAset.add("Pilih Kondisi Aset");
-                listSpinnerKodeAset.add("Pilih Kode Aset");
-                listSpinnerSubUnit.add("Pilih Sub Unit ");
-                listSpinnerAfdeling.add("Pilih Afdeling Aset");
+        listSpinnerKodeAset.add("Pilih Kode Aset");
+
+        listSpinnerSubUnit.add("Pilih Sub Unit ");
+
+        listSpinnerAfdeling.add("Pilih Afdeling Aset");
                 // get data tipe aset
-                for (AsetTipe at : dataAllSpinner.getAsetTipe()){
-                    listSpinnerTipe.add(at.getAset_tipe_desc());
-                }
+
+        for (AsetTipe at : dataAllSpinner.getAsetTipe()){
+
+            listSpinnerTipe.add(at.getAset_tipe_desc());
+
+        }
 
                 // get data jenis
-                for (AsetJenis at : dataAllSpinner.getAsetJenis()){
-                    listSpinnerJenis.add(at.getAset_jenis_desc());
-                }
 
-                // get kondisi aset
-                for (AsetKondisi at : dataAllSpinner.getAsetKondisi()){
-                    listSpinnerKondisiAset.add(at.getAset_kondisi_desc());
-                }
+        for (AsetJenis at : dataAllSpinner.getAsetJenis()){
 
-                // get kode aset
-                asetKode2 = dataAllSpinner.getAsetKode();
+            listSpinnerJenis.add(at.getAset_jenis_desc());
+
+        }
 
 
-                // get unit
-                for (Unit at : dataAllSpinner.getUnit()){
-                    listSpinnerUnit.add(at.getUnit_desc());
-                }
+        // get kondisi aset
+
+        for (AsetKondisi at : dataAllSpinner.getAsetKondisi()){
+
+            listSpinnerKondisiAset.add(at.getAset_kondisi_desc());
+
+        }
+
+
+        // get kode aset
+
+        asetKode2 = dataAllSpinner.getAsetKode();
+
+
+
+        // get unit
+
+        for (Unit at : dataAllSpinner.getUnit()){
+            listSpinnerUnit.add(at.getUnit_desc());
+
+        }
 
                 // get sub unit
                 for (SubUnit at : dataAllSpinner.getSubUnit()){
@@ -1755,7 +1780,6 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity  implements 
 
                 // get afdeling
                 Integer i=0;
-                afdeling = dataAllSpinner.getAfdeling();
                 for (Afdelling at : dataAllSpinner.getAfdeling()){
                     if (at.getUnit_id() == (spinnerUnit.getSelectedItemId()+1)) {
                         mapSpinnerAfdeling.put(at.getAfdelling_id(), i);
@@ -2263,7 +2287,7 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity  implements 
                 AsetHelper asetHelper = AsetHelper.getInstance(context);
                 asetHelper.open();
                 Cursor dataCursor = asetHelper.queryAll();
-                ArrayList<Aset> aset = MappingHelper.mapCursorToArrayList(dataCursor);
+                ArrayList<Aset> aset = MappingHelper.mapCursorToArrayListAset(dataCursor);
                 asetHelper.close();
                 handler.post(() -> weakCallback.get().postExecute(aset));
             });

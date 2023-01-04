@@ -33,7 +33,6 @@ import com.example.asem.api.model.Data2;
 import com.example.asem.api.model.Search;
 import com.example.asem.api.model.SearchModel;
 import com.example.asem.db.AsetHelper;
-import com.example.asem.db.DatabaseContract;
 import com.example.asem.db.DatabaseHelper;
 import com.example.asem.db.model.Aset;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -88,9 +87,7 @@ public class LonglistAsetActivity extends AppCompatActivity  { //implements Bott
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_longlist_aset);
-
-
-
+        
         dialog = new Dialog(LonglistAsetActivity.this,R.style.MyAlertDialogTheme);
         dialog.setContentView(R.layout.loading);
         dialog.setCanceledOnTouchOutside(false);

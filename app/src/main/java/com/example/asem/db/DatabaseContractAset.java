@@ -2,9 +2,9 @@ package com.example.asem.db;
 
 import android.provider.BaseColumns;
 
-public class DatabaseContract {
+public class DatabaseContractAset {
     static String TABLE_NAME = "data_aset";
-    static final class NoteColumns implements BaseColumns {
+    static final class AsetColumns implements BaseColumns {
         static String ASETID = "aset_id";
         static String ASETNAME = "aset_name";
         static String ASETTIPE = "aset_tipe";

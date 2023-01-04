@@ -81,4 +81,14 @@ public class AsetKode2 {
     public void setAsetJenis(Integer asetJenis) {
         this.asetJenis = asetJenis;
     }
+
+    public AsetKode2(Integer asetKodeId, String createdAt, String updatedAt, String asetClass, String asetGroup, String asetDesc, Integer asetJenis) {
+        this.asetKodeId = asetKodeId;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
+        this.asetClass = asetClass;
+        this.asetGroup = asetGroup;
+        this.asetDesc = asetDesc;
+        this.asetJenis = asetJenis;
+    }
 }

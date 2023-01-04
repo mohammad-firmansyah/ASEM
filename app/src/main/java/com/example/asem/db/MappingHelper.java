@@ -1,104 +1,152 @@
 package com.example.asem.db;
 
-import static android.provider.BaseColumns._ID;
-
-import static com.example.asem.db.DatabaseContract.NoteColumns.AFDELINGID;
-import static com.example.asem.db.DatabaseContract.NoteColumns.ASETFOTOQRSTATUS;
-import static com.example.asem.db.DatabaseContract.NoteColumns.ASETID;
-import static com.example.asem.db.DatabaseContract.NoteColumns.ASETJENIS;
-import static com.example.asem.db.DatabaseContract.NoteColumns.ASETKODE;
-import static com.example.asem.db.DatabaseContract.NoteColumns.ASETKONDISI;
-import static com.example.asem.db.DatabaseContract.NoteColumns.ASETLUAS;
-import static com.example.asem.db.DatabaseContract.NoteColumns.ASETNAME;
-import static com.example.asem.db.DatabaseContract.NoteColumns.ASETSUBUNIT;
-import static com.example.asem.db.DatabaseContract.NoteColumns.ASETTIPE;
-import static com.example.asem.db.DatabaseContract.NoteColumns.CREATEDAT;
-import static com.example.asem.db.DatabaseContract.NoteColumns.FOTOASET1;
-import static com.example.asem.db.DatabaseContract.NoteColumns.FOTOASET2;
-import static com.example.asem.db.DatabaseContract.NoteColumns.FOTOASET3;
-import static com.example.asem.db.DatabaseContract.NoteColumns.FOTOASET4;
-import static com.example.asem.db.DatabaseContract.NoteColumns.FOTOASETQR;
-import static com.example.asem.db.DatabaseContract.NoteColumns.FOTOQR;
-import static com.example.asem.db.DatabaseContract.NoteColumns.GEOTAG1;
-import static com.example.asem.db.DatabaseContract.NoteColumns.GEOTAG2;
-import static com.example.asem.db.DatabaseContract.NoteColumns.GEOTAG3;
-import static com.example.asem.db.DatabaseContract.NoteColumns.GEOTAG4;
-import static com.example.asem.db.DatabaseContract.NoteColumns.HGU;
-import static com.example.asem.db.DatabaseContract.NoteColumns.JUMLAHPOHON;
-import static com.example.asem.db.DatabaseContract.NoteColumns.KETERANGAN;
-import static com.example.asem.db.DatabaseContract.NoteColumns.KETREJECT;
-import static com.example.asem.db.DatabaseContract.NoteColumns.MASASUSUT;
-import static com.example.asem.db.DatabaseContract.NoteColumns.NILAIOLEH;
-import static com.example.asem.db.DatabaseContract.NoteColumns.NILAIRESIDU;
-import static com.example.asem.db.DatabaseContract.NoteColumns.NOINV;
-import static com.example.asem.db.DatabaseContract.NoteColumns.NOMORBAST;
-import static com.example.asem.db.DatabaseContract.NoteColumns.NOMORSAP;
-import static com.example.asem.db.DatabaseContract.NoteColumns.PERSENKONDISI;
-import static com.example.asem.db.DatabaseContract.NoteColumns.STATUSPOSISI;
-import static com.example.asem.db.DatabaseContract.NoteColumns.STATUSPOSISIID;
-import static com.example.asem.db.DatabaseContract.NoteColumns.STATUSREJECT;
-import static com.example.asem.db.DatabaseContract.NoteColumns.TGLINPUT;
-import static com.example.asem.db.DatabaseContract.NoteColumns.TGLOLEH;
-import static com.example.asem.db.DatabaseContract.NoteColumns.UMUREKONOMISINMONTH;
-import static com.example.asem.db.DatabaseContract.NoteColumns.UNITID;
-import static com.example.asem.db.DatabaseContract.NoteColumns.UPDATEDAT;
-import static com.example.asem.db.DatabaseContract.NoteColumns.USERINPUTID;
-
+import static com.example.asem.db.DatabaseContractAset.AsetColumns;
+import static com.example.asem.db.DatabaseContractAsetTipe.AsetTipeColumns;
+import static com.example.asem.db.DatabaseContractAsetJenis.AsetJenisColumns;
+import static com.example.asem.db.DatabaseContractAsetKode.AsetKodeColumns;
+import static com.example.asem.db.DatabaseContractAsetKondisi.AsetKondisiColumns;
+import static com.example.asem.db.DatabaseContractUnit.UnitColumns;
+import static com.example.asem.db.DatabaseContractSubUnit.SubUnitColumns;
+import static com.example.asem.db.DatabaseContractAfdeling.AfdelingColumns;
+import static com.example.asem.db.DatabaseContractSap.SapColumns;
 import android.database.Cursor;
 
+import com.example.asem.api.model.Afdelling;
+import com.example.asem.api.model.AsetJenis;
+import com.example.asem.api.model.AsetKode2;
+import com.example.asem.api.model.AsetKondisi;
+import com.example.asem.api.model.AsetTipe;
+import com.example.asem.api.model.Sap;
+import com.example.asem.api.model.SubUnit;
+import com.example.asem.api.model.Unit;
 import com.example.asem.db.model.Aset;
+import com.example.asem.db.model.DataAllSpinner;
 
 import java.util.ArrayList;
 
 public class MappingHelper {
 
-    public static ArrayList<Aset> mapCursorToArrayList(Cursor asetCursor) {
+    public static ArrayList<Aset> mapCursorToArrayListAset(Cursor asetCursor) {
         ArrayList<Aset> asetList = new ArrayList<>();
 
         while (asetCursor.moveToNext()) {
-            Integer asetid = asetCursor.getInt(asetCursor.getColumnIndexOrThrow(ASETID));
-            String asetname = asetCursor.getString(asetCursor.getColumnIndexOrThrow(ASETNAME));
-            String asettipe = asetCursor.getString(asetCursor.getColumnIndexOrThrow(ASETTIPE));
-            String asetjenis = asetCursor.getString(asetCursor.getColumnIndexOrThrow(ASETJENIS));
-            String asetkondisi = asetCursor.getString(asetCursor.getColumnIndexOrThrow(ASETKONDISI));
-            String asetsubunit = asetCursor.getString(asetCursor.getColumnIndexOrThrow(ASETSUBUNIT));
-            String asetkode = asetCursor.getString(asetCursor.getColumnIndexOrThrow(ASETKODE));
-            String nomorsap = asetCursor.getString(asetCursor.getColumnIndexOrThrow(NOMORSAP));
-            String fotoaset1 = asetCursor.getString(asetCursor.getColumnIndexOrThrow(FOTOASET1));
-            String fotoaset2 = asetCursor.getString(asetCursor.getColumnIndexOrThrow(FOTOASET2));
-            String fotoaset3 = asetCursor.getString(asetCursor.getColumnIndexOrThrow(FOTOASET3));
-            String fotoaset4 = asetCursor.getString(asetCursor.getColumnIndexOrThrow(FOTOASET4));
-            String geotag1 = asetCursor.getString(asetCursor.getColumnIndexOrThrow(GEOTAG1));
-            String geotag2 = asetCursor.getString(asetCursor.getColumnIndexOrThrow(GEOTAG2));
-            String geotag3 = asetCursor.getString(asetCursor.getColumnIndexOrThrow(GEOTAG3));
-            String geotag4 = asetCursor.getString(asetCursor.getColumnIndexOrThrow(GEOTAG4));
-            Double asetluas = asetCursor.getDouble(asetCursor.getColumnIndexOrThrow(String.valueOf(ASETLUAS)));
-            String tglinput = asetCursor.getString(asetCursor.getColumnIndexOrThrow(TGLINPUT));
-            String tgloleh = asetCursor.getString(asetCursor.getColumnIndexOrThrow(TGLOLEH));
-            Long nilairesidu = asetCursor.getLong(asetCursor.getColumnIndexOrThrow(String.valueOf(NILAIRESIDU)));
-            Long nilaioleh = asetCursor.getLong(asetCursor.getColumnIndexOrThrow(String.valueOf(NILAIOLEH)));
-            String nomorbast = asetCursor.getString(asetCursor.getColumnIndexOrThrow(NOMORBAST));
-            String masasusut = asetCursor.getString(asetCursor.getColumnIndexOrThrow(MASASUSUT));
-            String keterangan = asetCursor.getString(asetCursor.getColumnIndexOrThrow(KETERANGAN));
-            String fotoqr = asetCursor.getString(asetCursor.getColumnIndexOrThrow(FOTOQR));
-            String noinv = asetCursor.getString(asetCursor.getColumnIndexOrThrow(NOINV));
-            String fotoasetqr = asetCursor.getString(asetCursor.getColumnIndexOrThrow(FOTOASETQR));
-            String statusposisi = asetCursor.getString(asetCursor.getColumnIndexOrThrow(STATUSPOSISI));
-            String unitid = asetCursor.getString(asetCursor.getColumnIndexOrThrow(UNITID));
-            String afdelingid = asetCursor.getString(asetCursor.getColumnIndexOrThrow(AFDELINGID));
-            String userinputid = asetCursor.getString(asetCursor.getColumnIndexOrThrow(USERINPUTID));
-            String createdat = asetCursor.getString(asetCursor.getColumnIndexOrThrow(CREATEDAT));
-            String updatedat = asetCursor.getString(asetCursor.getColumnIndexOrThrow(UPDATEDAT));
-            Integer jumlahpohon = asetCursor.getInt(asetCursor.getColumnIndexOrThrow(String.valueOf(JUMLAHPOHON)));
-            String hgu = asetCursor.getString(asetCursor.getColumnIndexOrThrow(HGU));
-            String asetfotoqrstatus = asetCursor.getString(asetCursor.getColumnIndexOrThrow(ASETFOTOQRSTATUS));
-            Integer statusposisiid = asetCursor.getInt(asetCursor.getColumnIndexOrThrow(String.valueOf(STATUSPOSISIID)));
-            String ketreject = asetCursor.getString(asetCursor.getColumnIndexOrThrow(KETREJECT));
-            String statusreject = asetCursor.getString(asetCursor.getColumnIndexOrThrow(STATUSREJECT));
-            Double persenkondisi = asetCursor.getDouble(asetCursor.getColumnIndexOrThrow(String.valueOf(PERSENKONDISI)));
-            Integer umurekonomisinmonth = asetCursor.getInt(asetCursor.getColumnIndexOrThrow(String.valueOf(UMUREKONOMISINMONTH)));
-            asetList.add(new Aset(asetid, asetname,asettipe,asetjenis,asetkondisi,asetsubunit,asetkode,nomorsap,fotoaset1,fotoaset2,fotoaset3,fotoaset4,geotag1,geotag2,geotag3,geotag4,asetluas,tglinput,tgloleh,nilairesidu,nilaioleh,nomorbast,masasusut,keterangan,fotoqr,noinv,fotoasetqr,statusposisi,unitid,afdelingid,userinputid,createdat,updatedat,jumlahpohon,umurekonomisinmonth,persenkondisi,statusposisiid,statusreject,ketreject,asetfotoqrstatus));
+            Integer asetid = asetCursor.getInt(asetCursor.getColumnIndexOrThrow(AsetColumns.ASETID));
+            String asetname = asetCursor.getString(asetCursor.getColumnIndexOrThrow(AsetColumns.ASETNAME));
+            String asettipe = asetCursor.getString(asetCursor.getColumnIndexOrThrow(AsetColumns.ASETTIPE));
+            String asetjenis = asetCursor.getString(asetCursor.getColumnIndexOrThrow(AsetColumns.ASETJENIS));
+            String asetkondisi = asetCursor.getString(asetCursor.getColumnIndexOrThrow(AsetColumns.ASETKONDISI));
+            String asetsubunit = asetCursor.getString(asetCursor.getColumnIndexOrThrow(AsetColumns.ASETSUBUNIT));
+            String asetkode = asetCursor.getString(asetCursor.getColumnIndexOrThrow(AsetColumns.ASETKODE));
+            String nomorsap = asetCursor.getString(asetCursor.getColumnIndexOrThrow(AsetColumns.NOMORSAP));
+            String fotoaset1 = asetCursor.getString(asetCursor.getColumnIndexOrThrow(AsetColumns.FOTOASET1));
+            String fotoaset2 = asetCursor.getString(asetCursor.getColumnIndexOrThrow(AsetColumns.FOTOASET2));
+            String fotoaset3 = asetCursor.getString(asetCursor.getColumnIndexOrThrow(AsetColumns.FOTOASET3));
+            String fotoaset4 = asetCursor.getString(asetCursor.getColumnIndexOrThrow(AsetColumns.FOTOASET4));
+            String geotag1 = asetCursor.getString(asetCursor.getColumnIndexOrThrow(AsetColumns.GEOTAG1));
+            String geotag2 = asetCursor.getString(asetCursor.getColumnIndexOrThrow(AsetColumns.GEOTAG2));
+            String geotag3 = asetCursor.getString(asetCursor.getColumnIndexOrThrow(AsetColumns.GEOTAG3));
+            String geotag4 = asetCursor.getString(asetCursor.getColumnIndexOrThrow(AsetColumns.GEOTAG4));
+            Double asetluas = asetCursor.getDouble(asetCursor.getColumnIndexOrThrow(String.valueOf(AsetColumns.ASETLUAS)));
+            String tglinput = asetCursor.getString(asetCursor.getColumnIndexOrThrow(AsetColumns.TGLINPUT));
+            String tgloleh = asetCursor.getString(asetCursor.getColumnIndexOrThrow(AsetColumns.TGLOLEH));
+            Long nilairesidu = asetCursor.getLong(asetCursor.getColumnIndexOrThrow(String.valueOf(AsetColumns.NILAIRESIDU)));
+            Long nilaioleh = asetCursor.getLong(asetCursor.getColumnIndexOrThrow(String.valueOf(AsetColumns.NILAIOLEH)));
+            String nomorbast = asetCursor.getString(asetCursor.getColumnIndexOrThrow(AsetColumns.NOMORBAST));
+            String masasusut = asetCursor.getString(asetCursor.getColumnIndexOrThrow(AsetColumns.MASASUSUT));
+            String keterangan = asetCursor.getString(asetCursor.getColumnIndexOrThrow(AsetColumns.KETERANGAN));
+            String fotoqr = asetCursor.getString(asetCursor.getColumnIndexOrThrow(AsetColumns.FOTOQR));
+            String noinv = asetCursor.getString(asetCursor.getColumnIndexOrThrow(AsetColumns.NOINV));
+            String fotoasetqr = asetCursor.getString(asetCursor.getColumnIndexOrThrow(AsetColumns.FOTOASETQR));
+            String statusposisi = asetCursor.getString(asetCursor.getColumnIndexOrThrow(AsetColumns.STATUSPOSISI));
+            String unitid = asetCursor.getString(asetCursor.getColumnIndexOrThrow(AsetColumns.UNITID));
+            String afdelingid = asetCursor.getString(asetCursor.getColumnIndexOrThrow(AsetColumns.AFDELINGID));
+            String userinputid = asetCursor.getString(asetCursor.getColumnIndexOrThrow(AsetColumns.USERINPUTID));
+            String createdat = asetCursor.getString(asetCursor.getColumnIndexOrThrow(AsetColumns.CREATEDAT));
+            String updatedat = asetCursor.getString(asetCursor.getColumnIndexOrThrow(AsetColumns.UPDATEDAT));
+            Integer jumlahpohon = asetCursor.getInt(asetCursor.getColumnIndexOrThrow(String.valueOf(AsetColumns.JUMLAHPOHON)));
+            String hgu = asetCursor.getString(asetCursor.getColumnIndexOrThrow(AsetColumns.HGU));
+            String asetfotoqrstatus = asetCursor.getString(asetCursor.getColumnIndexOrThrow(AsetColumns.ASETFOTOQRSTATUS));
+            Integer statusposisiid = asetCursor.getInt(asetCursor.getColumnIndexOrThrow(String.valueOf(AsetColumns.STATUSPOSISIID)));
+            String ketreject = asetCursor.getString(asetCursor.getColumnIndexOrThrow(AsetColumns.KETREJECT));
+            String statusreject = asetCursor.getString(asetCursor.getColumnIndexOrThrow(AsetColumns.STATUSREJECT));
+            Double persenkondisi = asetCursor.getDouble(asetCursor.getColumnIndexOrThrow(String.valueOf(AsetColumns.PERSENKONDISI)));
+            Integer umurekonomisinmonth = asetCursor.getInt(asetCursor.getColumnIndexOrThrow(String.valueOf(AsetColumns.UMUREKONOMISINMONTH)));
+            asetList.add(new Aset(asetid, asetname,asettipe,asetjenis,asetkondisi,asetsubunit,asetkode,nomorsap,fotoaset1,fotoaset2,fotoaset3,fotoaset4,geotag1,geotag2,geotag3,geotag4,asetluas,tglinput,tgloleh,nilairesidu,nilaioleh,nomorbast,masasusut,keterangan,fotoqr,noinv,fotoasetqr,statusposisi,unitid,afdelingid,userinputid,createdat,updatedat,jumlahpohon,umurekonomisinmonth,persenkondisi,statusposisiid,statusreject,ketreject,asetfotoqrstatus,hgu));
         }
         return asetList;
+    }
+
+    public static DataAllSpinner mapCursorToArrayListSpinner(Cursor asetTipe,Cursor asetJenis, Cursor asetKondisi,Cursor asetKode,Cursor unit,Cursor subUnit,Cursor afdeling, Cursor sap) {
+        DataAllSpinner dataAllSpinner = new DataAllSpinner();
+        ArrayList<AsetTipe> listAsetTipe = new ArrayList<>();
+        ArrayList<AsetJenis> listAsetJenis = new ArrayList<>();
+        ArrayList<AsetKondisi> listAsetKondisi = new ArrayList<>();
+        ArrayList<AsetKode2> listAsetKode = new ArrayList<>();
+        ArrayList<Unit> listUnit = new ArrayList<>();
+        ArrayList<SubUnit> listSubUnit = new ArrayList<>();
+        ArrayList<Afdelling> listAfdeling = new ArrayList<>();
+        ArrayList<Sap> listSap = new ArrayList<>();
+
+        while (asetTipe.moveToNext()) {
+            Integer asetTipeId = asetTipe.getInt(asetTipe.getColumnIndexOrThrow(AsetTipeColumns.ASETTIPEID));
+            String asetTipeDesc = asetTipe.getString(asetTipe.getColumnIndexOrThrow(AsetTipeColumns.ASETTIPEDESC));
+            listAsetTipe.add(new AsetTipe(asetTipeId,asetTipeDesc));
+        }
+
+        while (asetJenis.moveToNext()) {
+            Integer asetJenisId = asetJenis.getInt(asetJenis.getColumnIndexOrThrow(AsetJenisColumns.ASETJENISID));
+            String asetJenisDesc = asetJenis.getString(asetJenis.getColumnIndexOrThrow(AsetJenisColumns.ASETJENISDESC));
+            listAsetJenis.add(new AsetJenis(asetJenisId,asetJenisDesc));
+        }
+
+        while (asetKondisi.moveToNext()) {
+            Integer asetKondisiId = asetKondisi.getInt(asetKondisi.getColumnIndexOrThrow(AsetKondisiColumns.ASETKONDISIID));
+            String asetKondisiDesc = asetKondisi.getString(asetKondisi.getColumnIndexOrThrow(AsetKondisiColumns.ASETKONDISIDESC));
+            listAsetKondisi.add(new AsetKondisi(asetKondisiId,asetKondisiDesc));
+        }
+        while (asetKode.moveToNext()) {
+            Integer asetKodeid = asetKode.getInt(asetTipe.getColumnIndexOrThrow(AsetKodeColumns.ASETKODEID));
+            String asetkodeCreatedat = asetKode.getString(asetKode.getColumnIndexOrThrow(AsetKodeColumns.CREATEDAT));
+            String asetkodeUpdatedAt = asetKode.getString(asetKode.getColumnIndexOrThrow(AsetKodeColumns.UPDATEDAT));
+            String asetkodeClass = asetKode.getString(asetKode.getColumnIndexOrThrow(AsetKodeColumns.ASETCLASS));
+            String asetKodeGroup = asetKode.getString(asetKode.getColumnIndexOrThrow(AsetKodeColumns.ASETGROUP));
+            String asetKodeDesc = asetKode.getString(asetKode.getColumnIndexOrThrow(AsetKodeColumns.ASETDESC));
+            Integer asetKodeJenis = asetKode.getInt(asetKode.getColumnIndexOrThrow(AsetKodeColumns.ASETJENIS));
+            listAsetKode.add(new AsetKode2(asetKodeid,asetkodeCreatedat,asetkodeUpdatedAt,asetkodeClass,asetKodeGroup,asetKodeDesc,asetKodeJenis));
+        }
+        while (unit.moveToNext()) {
+            Integer unitId = unit.getInt(unit.getColumnIndexOrThrow(UnitColumns.UNITID));
+            String unitDesc = unit.getString(unit.getColumnIndexOrThrow(UnitColumns.UNITDESC));
+            listUnit.add(new Unit(unitId,unitDesc));
+        }
+        while (subUnit.moveToNext()) {
+            Integer subUnitId = subUnit.getInt(subUnit.getColumnIndexOrThrow(SubUnitColumns.SUBUNITID));
+            String subUnitDesc = subUnit.getString(subUnit.getColumnIndexOrThrow(SubUnitColumns.SUBUNITDESC));
+            listSubUnit.add(new SubUnit(subUnitId,subUnitDesc));
+        }
+        while (afdeling.moveToNext()) {
+            Integer afdelingId = afdeling.getInt(afdeling.getColumnIndexOrThrow(AfdelingColumns.AFDELINGID));
+            String afdelingDesc = afdeling.getString(afdeling.getColumnIndexOrThrow(AfdelingColumns.AFDELINGDESC));
+            Integer afdelingUnit = afdeling.getInt(afdeling.getColumnIndexOrThrow(AfdelingColumns.UNITID));
+            listAfdeling.add(new Afdelling(afdelingId,afdelingDesc,afdelingUnit));
+        }
+        while (sap.moveToNext()) {
+            Integer sapId = sap.getInt(sap.getColumnIndexOrThrow(SapColumns.SAPID));
+            String sapDesc = sap.getString(afdeling.getColumnIndexOrThrow(SapColumns.SAPDESC));
+            listSap.add(new Sap(sapId,sapDesc));
+        }
+
+
+
+        dataAllSpinner.setAsetTipe(listAsetTipe);
+        dataAllSpinner.setAsetJenis(listAsetJenis);
+        dataAllSpinner.setAsetKondisi(listAsetKondisi);
+        dataAllSpinner.setAsetKode(listAsetKode);
+        dataAllSpinner.setUnit(listUnit);
+        dataAllSpinner.setSubUnit(listSubUnit);
+        dataAllSpinner.setAfdeling(listAfdeling);
+        dataAllSpinner.setSap(listSap);
+
+        return dataAllSpinner;
     }
 }

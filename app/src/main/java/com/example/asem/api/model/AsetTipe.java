@@ -10,7 +10,7 @@ public class AsetTipe {
     @SerializedName("aset_tipe_desc")
     private String aset_tipe_desc;
 
-    public AsetTipe(int aset_tipe_id, String aset_tipe_desc) {
+    public AsetTipe(Integer aset_tipe_id, String aset_tipe_desc) {
         this.aset_tipe_id = aset_tipe_id;
         this.aset_tipe_desc = aset_tipe_desc;
     }

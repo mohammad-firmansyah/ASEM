@@ -1,7 +1,8 @@
 package com.example.asem.db;
 
 import static android.provider.BaseColumns._ID;
-import static com.example.asem.db.DatabaseContract.TABLE_NAME;
+import static com.example.asem.db.DatabaseContractAset.*;
+import static com.example.asem.db.DatabaseContractAfdeling.*;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -11,7 +12,6 @@ import android.database.sqlite.SQLiteDatabase;
 
 public class AsetHelper {
     private static AsetHelper INSTANCE;
-    private static final String DATABASE_TABLE = TABLE_NAME;
     private static DatabaseHelper dataBaseHelper;
     private static SQLiteDatabase database;
 
@@ -44,7 +44,7 @@ public class AsetHelper {
 
     public Cursor queryAll() {
         return database.query(
-                DATABASE_TABLE,
+                DatabaseContractAset.TABLE_NAME,
                 null,
                 null,
                 null,
@@ -64,7 +64,7 @@ public class AsetHelper {
                 null);
     }
 
-    public Cursor getAsetJenis() {
+    public Cursor getAllAsetJenis() {
         return database.query(
                 "aset_jenis",
                 null,
@@ -76,7 +76,7 @@ public class AsetHelper {
     }
 
 
-    public Cursor getAsetTipe() {
+    public Cursor getAllAsetTipe() {
         return database.query(
                 "aset_tipe",
                 null,
@@ -88,7 +88,7 @@ public class AsetHelper {
     }
 
 
-    public Cursor getAsetKondisi() {
+    public Cursor getAllAsetKondisi() {
         return database.query(
                 "aset_kondisi",
                 null,
@@ -99,7 +99,7 @@ public class AsetHelper {
                 null);
     }
 
-    public Cursor getAsetKode() {
+    public Cursor getAllAsetKode() {
         return database.query(
                 "aset_kode",
                 null,
@@ -110,7 +110,7 @@ public class AsetHelper {
                 null);
     }
 
-    public Cursor getHakAkses() {
+    public Cursor getAllHakAkses() {
         return database.query(
                 "hak_akses",
                 null,
@@ -121,7 +121,7 @@ public class AsetHelper {
                 null);
     }
 
-    public Cursor getSap() {
+    public Cursor getAllSap() {
         return database.query(
                 "sap",
                 null,
@@ -143,7 +143,7 @@ public class AsetHelper {
                 null);
     }
 
-    public Cursor getSubUnit() {
+    public Cursor getAllSubUnit() {
         return database.query(
                 "sub_unit",
                 null,
@@ -154,9 +154,9 @@ public class AsetHelper {
                 null);
     }
 
-    public Cursor getUnit() {
+    public Cursor getAllUnit() {
         return database.query(
-                "sub_unit",
+                "unit",
                 null,
                 null,
                 null,
@@ -178,7 +178,7 @@ public class AsetHelper {
 
     public Cursor queryById(String id) {
         return database.query(
-                DATABASE_TABLE,
+                DatabaseContractAset.TABLE_NAME,
                 null,
                 _ID + " = ?",
                 new String[]{id},
@@ -189,14 +189,14 @@ public class AsetHelper {
     }
 
     public long insert(ContentValues values) {
-        return database.insert(DATABASE_TABLE, null, values);
+        return database.insert(DatabaseContractAset.TABLE_NAME, null, values);
     }
 
     public int update(String id, ContentValues values) {
-        return database.update(DATABASE_TABLE, values, _ID + " = ?", new String[]{id});
+        return database.update(DatabaseContractAset.TABLE_NAME, values, "aset_id" + " = ?", new String[]{id});
     }
 
     public int deleteById(String id) {
-        return database.delete(DATABASE_TABLE, _ID + " = " + id, null);
+        return database.delete(DatabaseContractAset.TABLE_NAME, "aset_id" + " = " + id, null);
     }
 }

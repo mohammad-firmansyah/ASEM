@@ -6,7 +6,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 public class DatabaseHelper  extends SQLiteOpenHelper {
     public static String DATABASE_NAME = "asetmnj_prod";
-    private static final int DATABASE_VERSION = 3;
+    private static final int DATABASE_VERSION = 4;
     private static final String SQL_CREATE_TABLE_ASET = "create table `data_aset` (`aset_id` INTEGER PRIMARY KEY AUTOINCREMENT,`aset_name` varchar (765),`aset_tipe` int (11),`aset_jenis` int (11),`aset_kondisi` int (11),`aset_sub_unit` int (11),`aset_kode` int (11),`nomor_sap` varchar (765),`foto_aset1` varchar (765),`foto_aset2` varchar (765),`foto_aset3` varchar (765),`foto_aset4` varchar (765),`geo_tag1` varchar (765),`geo_tag2` varchar (765),`geo_tag3` varchar (765),`geo_tag4` varchar (765),\n\t`aset_luas` double ,\n\t`tgl_input` datetime ,\n\t`tgl_oleh` datetime ,`nilai_residu` bigint (20),`nilai_oleh` bigint (20),`nomor_bast` varchar (765),`masa_susut` varchar (765),`keterangan` varchar (765),`foto_qr` varchar (765),`no_inv` varchar (765),`foto_aset_qr` varchar (765),`status_posisi` int (11),`unit_id` int (11),`afdeling_id` int (11),`user_input_id` int (11),`created_at` timestamp ,`updated_at` datetime ,`jumlah_pohon` int (11),`persen_kondisi` double ,`berita_acara` varchar (765),`status_reject` varchar (765),`ket_reject` varchar (765),`aset_foto_qr_status` varchar (765),`hgu` varchar (765))";
 
     private static final String SQL_CREATE_TABLE_AFDELING = "create table `afdeling` ( afdeling_id INTEGER PRIMARY KEY AUTOINCREMENT, `afdeling_desc` varchar (300), `unit_id` int (11), `created_at` timestamp , `updated_at` datetime ); ";
@@ -83,18 +83,18 @@ public class DatabaseHelper  extends SQLiteOpenHelper {
     }
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        db.execSQL("DROP TABLE afdeling");
-        db.execSQL("DROP TABLE data_aset");
-        db.execSQL("DROP TABLE unit");
-        db.execSQL("DROP TABLE sub_unit");
-        db.execSQL("DROP TABLE hak_akses");
-        db.execSQL("DROP TABLE aset_jenis");
-        db.execSQL("DROP TABLE aset_kode");
-        db.execSQL("DROP TABLE aset_kondisi");
-        db.execSQL("DROP TABLE status_posisi");
-        db.execSQL("DROP TABLE aset_tipe");
-        db.execSQL("DROP TABLE users");
-        db.execSQL("DROP TABLE sap");
+        db.execSQL("DROP TABLE IF EXIST data_aset cascade");
+        db.execSQL("DROP TABLE IF EXIST afdeling cascade ");
+        db.execSQL("DROP TABLE IF EXIST unit cascade");
+        db.execSQL("DROP TABLE IF EXIST sub_unit cascade");
+        db.execSQL("DROP TABLE IF EXIST hak_akses cascade");
+        db.execSQL("DROP TABLE IF EXIST aset_jenis cascade");
+        db.execSQL("DROP TABLE IF EXIST aset_kode cascade");
+        db.execSQL("DROP TABLE IF EXIST aset_kondisi cascade");
+        db.execSQL("DROP TABLE IF EXIST status_posisi cascade");
+        db.execSQL("DROP TABLE IF EXIST aset_tipe cascade");
+        db.execSQL("DROP TABLE IF EXIST users cascade");
+        db.execSQL("DROP TABLE IF EXIST sap cascade");
         onCreate(db);
     }
 }
