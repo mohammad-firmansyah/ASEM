@@ -42,26 +42,132 @@ public class AsetHelper {
             database.close();
     }
 
-    public Cursor getAllSpinner(){
-        String sql = "SELECT c.*, o.* " +
-                "FROM customers c " +
-                "LEFT JOIN orders o " +
-                "ON c.customer_id = o.customer_id";
-        String s = "SELECT " +
-                "FROM table1" +
-                "LEFT JOIN table2" +
-                "ON table1.column_name = table2.column_name" +
-                "LEFT JOIN table3" +
-                "ON table2.column_name = table3.column_name" +
-                "LEFT JOIN table4" +
-                "ON table3.column_name = table4.column_name" +
-                "LEFT JOIN table5" +
-                "ON table4.column_name = table5.column_name;";
-        return database.rawQuery(sql,null);
-    }
     public Cursor queryAll() {
         return database.query(
                 DATABASE_TABLE,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null);
+    }
+
+    public Cursor getAllAfdeling() {
+        return database.query(
+                "afdeling",
+                null,
+                null,
+                null,
+                null,
+                null,
+                null);
+    }
+
+    public Cursor getAsetJenis() {
+        return database.query(
+                "aset_jenis",
+                null,
+                null,
+                null,
+                null,
+                null,
+                null);
+    }
+
+
+    public Cursor getAsetTipe() {
+        return database.query(
+                "aset_tipe",
+                null,
+                null,
+                null,
+                null,
+                null,
+                null);
+    }
+
+
+    public Cursor getAsetKondisi() {
+        return database.query(
+                "aset_kondisi",
+                null,
+                null,
+                null,
+                null,
+                null,
+                null);
+    }
+
+    public Cursor getAsetKode() {
+        return database.query(
+                "aset_kode",
+                null,
+                null,
+                null,
+                null,
+                null,
+                null);
+    }
+
+    public Cursor getHakAkses() {
+        return database.query(
+                "hak_akses",
+                null,
+                null,
+                null,
+                null,
+                null,
+                null);
+    }
+
+    public Cursor getSap() {
+        return database.query(
+                "sap",
+                null,
+                null,
+                null,
+                null,
+                null,
+                null);
+    }
+
+    public Cursor getStatusPosisi() {
+        return database.query(
+                "status_posisi",
+                null,
+                null,
+                null,
+                null,
+                null,
+                null);
+    }
+
+    public Cursor getSubUnit() {
+        return database.query(
+                "sub_unit",
+                null,
+                null,
+                null,
+                null,
+                null,
+                null);
+    }
+
+    public Cursor getUnit() {
+        return database.query(
+                "sub_unit",
+                null,
+                null,
+                null,
+                null,
+                null,
+                null);
+    }
+
+    public Cursor getUsers() {
+        return database.query(
+                "users",
                 null,
                 null,
                 null,
