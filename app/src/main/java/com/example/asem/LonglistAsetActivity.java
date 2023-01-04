@@ -172,11 +172,9 @@ public class LonglistAsetActivity extends AppCompatActivity  { //implements Bott
                         rcAset.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
                         rcAset.setAdapter(offlineAdapter);
                         getDataOffline();
-                        btnReport.setOnClickListener(view -> Toast.makeText(getApplicationContext(),"Fitur Tidak Tersedia Dalam Mode Offline",Toast.LENGTH_SHORT).show());
-                        btnFilter.setOnClickListener(view -> Toast.makeText(getApplicationContext(),"Fitur Tidak Tersedia Dalam Mode Offline",Toast.LENGTH_SHORT).show());
                         searchView.setVisibility(View.GONE);
                         switch_offline.setTrackTintList(ColorStateList.valueOf(getResources().getColor(R.color.MediumBlue)));
-                        switch_offline.setThumbTintList(ColorStateList.valueOf(getResources().getColor(R.color.Blue2)));
+                        switch_offline.setThumbTintList(ColorStateList.valueOf(getResources().getColor(R.color.white)));
                         fab.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
