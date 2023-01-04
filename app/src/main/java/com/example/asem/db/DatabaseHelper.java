@@ -84,6 +84,17 @@ public class DatabaseHelper  extends SQLiteOpenHelper {
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("DROP TABLE afdeling");
+        db.execSQL("DROP TABLE data_aset");
+        db.execSQL("DROP TABLE unit");
+        db.execSQL("DROP TABLE sub_unit");
+        db.execSQL("DROP TABLE hak_akses");
+        db.execSQL("DROP TABLE aset_jenis");
+        db.execSQL("DROP TABLE aset_kode");
+        db.execSQL("DROP TABLE aset_kondisi");
+        db.execSQL("DROP TABLE status_posisi");
+        db.execSQL("DROP TABLE aset_tipe");
+        db.execSQL("DROP TABLE users");
+        db.execSQL("DROP TABLE sap");
         onCreate(db);
     }
 }
