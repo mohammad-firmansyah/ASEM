@@ -466,8 +466,8 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity  implements 
         asetHelper = AsetHelper.getInstance(getApplicationContext());
         asetHelper.open();
 
-        Cursor dataCursor = asetHelper.queryAll();
-        ArrayList<Aset> asetAll = MappingHelper.mapCursorToArrayList(dataCursor);
+//        Cursor dataCursor = asetHelper.queryAll();
+//        ArrayList<Aset> asetAll = MappingHelper.mapCursorToArrayList(dataCursor);
 //        Aset Data = new Aset(Integer.parseInt("1"),"2","3","4","5","6","7","8","9","10","11","12","13","14","15","16",17.0,"18","19", new Long(20),new Long(21),"22","23","24","25","26","27","28","29","30","31","32","33",Integer.parseInt("34"),Integer.parseInt("35"),36.0,37,"38","39","40");
 
 //        ContentValues values = new ContentValues();
@@ -476,8 +476,8 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity  implements 
 
 //        long result = asetHelper.insert(values);
 //        Log.d("amanatsql", String.valueOf(result));
-        Log.d("amanatsql", String.valueOf(asetAll));
-        asetHelper.close();
+//        Log.d("amanatsql", String.valueOf(asetAll));
+//        asetHelper.close();
 
         aset = getIntent().getParcelableExtra(EXTRA_ASET);
         if (aset != null) {
