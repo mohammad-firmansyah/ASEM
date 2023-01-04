@@ -1454,6 +1454,7 @@ public class AddAsetActivity extends AppCompatActivity {
         spinnerValidation();
 //        Toast.makeText(getApplicationContext(), "hello im clicked", Toast.LENGTH_SHORT).show();
         if (inpNamaAset.getText().toString().equals("")) {
+            customDialogAddAset.dismiss();
             dialog.dismiss();
             inpNamaAset.setError("nama harus diisi");
             inpNamaAset.requestFocus();
@@ -1461,6 +1462,7 @@ public class AddAsetActivity extends AppCompatActivity {
         }
 
         if (inpNoSAP.getText().toString().equals("")) {
+            customDialogAddAset.dismiss();
             dialog.dismiss();
             inpNoSAP.setError("nomor SAP harus diisi");
             inpNoSAP.requestFocus();
@@ -1469,6 +1471,7 @@ public class AddAsetActivity extends AppCompatActivity {
 
         if (spinnerJenisAset.getSelectedItemId() == 2) {
             if (Integer.parseInt(inpPersenKondisi.getText().toString()) > 100 || Integer.parseInt(inpPersenKondisi.getText().toString()) < 0) {
+                customDialogAddAset.dismiss();
                 dialog.dismiss();
                 inpPersenKondisi.setError("Isian Persen Kondisi Wajib Minimal 0 Maksimal 100");
                 inpPersenKondisi.requestFocus();
@@ -1491,25 +1494,27 @@ public class AddAsetActivity extends AppCompatActivity {
         }
 
         if (inpMasaPenyusutan.getText().toString().equals("")) {
+            customDialogAddAset.dismiss();
+            dialog.dismiss();
             inpMasaPenyusutan.setError("Masa Penyusutan harus diisi");
             inpMasaPenyusutan.requestFocus();
-            dialog.dismiss();
             return;
         }
 
         if (inpNilaiResidu.getText().toString().equals("")) {
+            customDialogAddAset.dismiss();
+            dialog.dismiss();
             inpNilaiResidu.setError("Nilai Residu harus diisi");
             inpNilaiResidu.requestFocus();
-            dialog.dismiss();
             return;
         }
 
         if ("non tanaman".equals(String.valueOf(spinnerJenisAset.getSelectedItem()))){
             if ("normal".equals(String.valueOf(spinnerAsetKondisi.getSelectedItem()))){
                 if (img1 == null || img2 == null || img3 == null || img4 == null){
-                    Toast.makeText(getApplicationContext(), "Foto Wajib Diisi Lengkap!", Toast.LENGTH_SHORT).show();
-
+                    customDialogAddAset.dismiss();
                     dialog.dismiss();
+                    Toast.makeText(getApplicationContext(), "Foto Wajib Diisi Lengkap!", Toast.LENGTH_SHORT).show();
                     return;
                 }
             }
@@ -1518,9 +1523,9 @@ public class AddAsetActivity extends AppCompatActivity {
         if ("non tanaman".equals(String.valueOf(spinnerJenisAset.getSelectedItem()))){
             if ( "rusak".equals (String.valueOf(spinnerAsetKondisi.getSelectedItem()))){
                 if (img1 == null || img2 == null || img3 == null || img4 == null){
-                    Toast.makeText(getApplicationContext(), "Foto Wajib Diisi Lengkap!", Toast.LENGTH_SHORT).show();
-
                     dialog.dismiss();
+                    customDialogAddAset.dismiss();
+                    Toast.makeText(getApplicationContext(), "Foto Wajib Diisi Lengkap!", Toast.LENGTH_SHORT).show();
                     return;
                 }
             }
@@ -1537,22 +1542,22 @@ public class AddAsetActivity extends AppCompatActivity {
 //             }
 //            }
 
-
-            String nama_aset = inpNamaAset.getText().toString().trim();
-            Integer nomor_aset_sap = mapSap.get(Integer.parseInt(inpNoSAP.getText().toString().trim()));
-//        String luas_aset = inpLuasAset.getText().toString().trim();
-            String luas_aset = String.valueOf(Double.parseDouble(inpLuasAset.getText().toString().trim()));
-            String nilai_aset = String.valueOf(CurrencyToNumber(inpNilaiAsetSAP.getText().toString().trim()));
-            String tgl_oleh = inpTglOleh.getText().toString().trim() + " 00:00:00";
-            String masa_susut = inpMasaPenyusutan.getText().toString().trim();
-            String nomor_bast = inpNomorBAST.getText().toString().trim();
-            String nilai_residu = String.valueOf(CurrencyToNumber(inpNilaiResidu.getText().toString().trim()));
-            String keterangan = inpKeterangan.getText().toString().trim();
-
-
-            MultipartBody.Part img1Part = null, img2Part = null, img3Part = null, img4Part = null, partBaFile = null;
-
             try {
+
+
+                String nama_aset = inpNamaAset.getText().toString().trim();
+                Integer nomor_aset_sap = mapSap.get(Integer.parseInt(inpNoSAP.getText().toString().trim()));
+                String luas_aset = String.valueOf(Double.parseDouble(inpLuasAset.getText().toString().trim()));
+                String nilai_aset = String.valueOf(CurrencyToNumber(inpNilaiAsetSAP.getText().toString().trim()));
+                String tgl_oleh = inpTglOleh.getText().toString().trim() + " 00:00:00";
+                String masa_susut = inpMasaPenyusutan.getText().toString().trim();
+                String nomor_bast = inpNomorBAST.getText().toString().trim();
+                String nilai_residu = String.valueOf(CurrencyToNumber(inpNilaiResidu.getText().toString().trim()));
+                String keterangan = inpKeterangan.getText().toString().trim();
+
+
+                MultipartBody.Part img1Part = null, img2Part = null, img3Part = null, img4Part = null, partBaFile = null;
+
 
                 RequestBody requestTipeAset = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(spinnerIdTipeAsset));
                 RequestBody requestJenisAset = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(spinnerIdJenisAset));
@@ -1560,10 +1565,10 @@ public class AddAsetActivity extends AppCompatActivity {
                 RequestBody requestKodeAset = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(mapSpinnerkode.get(Integer.parseInt(String.valueOf(spinnerKodeAset.getSelectedItemId())))));
                 RequestBody requestNamaAset = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(nama_aset));
                 RequestBody requestNomorAsetSAP = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(nomor_aset_sap));
-                Integer kode = Math.toIntExact(spinnerKodeAset.getSelectedItemId());
-//                Log.d("amanat14", String.valueOf(spinnerKodeAset.getSelectedItemId()));
-//                Log.d("amanat14", String.valueOf(kode));
-//                Log.d("amanat14", String.valueOf(mapSpinnerkode.get(Integer.parseInt(String.valueOf(spinnerKodeAset.getSelectedItemId() + 1)))));
+//                Integer kode = Math.toIntExact(spinnerKodeAset.getSelectedItemId());
+////                Log.d("amanat14", String.valueOf(spinnerKodeAset.getSelectedItemId()));
+////                Log.d("amanat14", String.valueOf(kode));
+////                Log.d("amanat14", String.valueOf(mapSpinnerkode.get(Integer.parseInt(String.valueOf(spinnerKodeAset.getSelectedItemId() + 1)))));
 
                 RequestBody requestLuasAset = RequestBody.create(MediaType.parse("text/plain"), luas_aset);
                 RequestBody requestNilaiAsetSAP = RequestBody.create(MediaType.parse("text/plain"), nilai_aset);
@@ -1592,10 +1597,10 @@ public class AddAsetActivity extends AppCompatActivity {
                 builder.addPart(MultipartBody.Part.createFormData("tgl_oleh", null, requestTglOleh));
                 builder.addPart(MultipartBody.Part.createFormData("nilai_residu", null, requestNilaiResidu));
                 builder.addPart(MultipartBody.Part.createFormData("nilai_oleh", null, requestNilaiAsetSAP));
-                builder.addPart(MultipartBody.Part.createFormData("nomor_bast", null, requestNomorBAST));
                 builder.addPart(MultipartBody.Part.createFormData("masa_susut", null, requestMasaSusut));
                 builder.addPart(MultipartBody.Part.createFormData("aset_sub_unit", null, requestSubUnit));
                 builder.addPart(MultipartBody.Part.createFormData("unit_id", null, requestUnit));
+                builder.addPart(MultipartBody.Part.createFormData("nomor_bast", null, requestNomorBAST));
 
                 if (spinnerSubUnit.getSelectedItemId() == 2) {
                     builder.addPart(MultipartBody.Part.createFormData("afdeling_id", null, requestAfdeling));
@@ -1645,7 +1650,6 @@ public class AddAsetActivity extends AppCompatActivity {
                 if (inpKeterangan != null) {
                     RequestBody requestKeterangan = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(keterangan));
                     builder.addPart(MultipartBody.Part.createFormData("keterangan", null, requestKeterangan));
-                    Log.d("asetapix", String.valueOf(requestKeterangan));
                 }
 
 
