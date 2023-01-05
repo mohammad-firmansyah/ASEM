@@ -26,11 +26,13 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.location.Location;
 import android.location.LocationManager;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
@@ -88,10 +90,15 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.lang.ref.WeakReference;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -129,7 +136,7 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity  implements 
     Uri docUri;
     List<String> listSpinnerSap=new ArrayList<>();
     List<AsetKode2> asetKode2 = new ArrayList<>();
-    List<Afdelling> afdeling = new ArrayList<>();
+    List<Afdelling> afdeling2 = new ArrayList<>();
     List<Unit> unit = new ArrayList<>();
     List<SubUnit> subUnit = new ArrayList<>();
 
@@ -364,6 +371,8 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity  implements 
                         @Override
                         public void onActivityResult(ActivityResult activityResult) {
                             int resultCode = activityResult.getResultCode();
+//                            Intent data = activityResult.getData();
+
                             if (resultCode== Activity.RESULT_OK){
                                 img1 = utils.savePictureResult(
                                         AsetAddUpdateOfflineActivity.this, photoname1, fotoimg1, true
@@ -371,6 +380,7 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity  implements 
                                 fotoimg1.getLayoutParams().width = 200;
                                 fotoimg1.getLayoutParams().height = 200;
                                 setExifLocation(img1,1);
+
                             } else if (resultCode == Activity.RESULT_CANCELED){
                                 android.widget.Toast.makeText(AsetAddUpdateOfflineActivity.this, "Cancelled", Toast.LENGTH_SHORT).show();
                             }
@@ -628,7 +638,8 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity  implements 
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 spinnerIdSubUnit = String.valueOf(position);
                 editVisibilityDynamic();
-//                setAfdelingAdapter();
+                setAfdelingAdapter();
+//                getAllSpinnerData();
             }
 
             @Override
@@ -950,7 +961,7 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity  implements 
         spinnerUnit.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                setAfdelingAdapter();
+//                setAfdelingAdapter();
             }
 
             @Override
@@ -1144,7 +1155,7 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity  implements 
         });
 
 
-        getAllSpinnerData();
+//        getAllSpinnerData();
     }
 
 
@@ -1192,8 +1203,9 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity  implements 
 
     public void setAfdelingAdapter(){
         List<String> afdelings = new ArrayList<>();
+        afdelings.add("pilih Afdeling");
         Integer i = 1;
-        for (Afdelling a:afdeling) {
+        for (Afdelling a:afdeling2) {
             if (a.getUnit_id() == (spinnerUnit.getSelectedItemId()+1)) {
                 mapAfdelingSpinner.put(a.getAfdelling_id(),i);
                 mapSpinnerAfdeling.put(i,a.getAfdelling_id());
@@ -1202,10 +1214,24 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity  implements 
             }
         }
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getApplicationContext(),
+        // set adapter afedeling
+        Integer afdeling_id = Integer.parseInt(sharedPreferences.getString("afdeling_id", "0"));
+        ArrayAdapter<String> adapterAfdeling = new ArrayAdapter<String>(getApplicationContext(),
                 android.R.layout.simple_spinner_item, afdelings);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinnerAfdeling.setAdapter(adapter);
+        adapterAfdeling.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerAfdeling.setAdapter(adapterAfdeling);
+        try {
+
+            if (afdelings.size() != 0) {
+
+                Log.d("amanat14", String.valueOf(mapAfdelingSpinner.get(afdeling_id)));
+                spinnerAfdeling.setSelection(mapAfdelingSpinner.get(afdeling_id));
+
+
+            }
+        } catch (Exception e){
+        }
+
     }
     public void initCalender(){
         DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
@@ -1717,6 +1743,7 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity  implements 
         List<String> listSpinnerAfdeling = new ArrayList<>();
 
 
+
         listSpinnerTipe.add("Pilih Tipe Aset");
 
         listSpinnerJenis.add("Pilih Jenis Aset");
@@ -1778,18 +1805,32 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity  implements 
                     listSpinnerSap.add(at.getSap_desc());
                 }
 
+            // set adapter unit
+            ArrayAdapter<String> adapterUnit = new ArrayAdapter<String>(getApplicationContext(),
+                    android.R.layout.simple_spinner_item, listSpinnerUnit);
+            adapterUnit.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            spinnerUnit.setAdapter(adapterUnit);
+            sharedPreferences = AsetAddUpdateOfflineActivity.this.getSharedPreferences(PREF_LOGIN, MODE_PRIVATE);
+            try {
+
+                Integer unit_id = Integer.valueOf(sharedPreferences.getString("unit_id", "0"));
+                spinnerUnit.setSelection(unit_id-1);
+            } catch(Exception e){}
+
                 // get afdeling
                 Integer i=0;
+                afdeling2 = dataAllSpinner.getAfdeling();
                 for (Afdelling at : dataAllSpinner.getAfdeling()){
                     if (at.getUnit_id() == (spinnerUnit.getSelectedItemId()+1)) {
                         mapSpinnerAfdeling.put(at.getAfdelling_id(), i);
                         mapAfdeling.put(i, at.getAfdelling_desc());
                         listSpinnerAfdeling.add(at.getAfdelling_desc());
+                        Log.d("amanat15",listSpinnerAfdeling.get(i));
                         i++;
                     }
                 }
 
-                Integer afdeling_id = Integer.valueOf(sharedPreferences.getString("afdeling_id", "0"));
+
 
                 // set adapter tipe
                 ArrayAdapter<String> adapterTipe = new ArrayAdapter<String>(getApplicationContext(),
@@ -1816,6 +1857,7 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity  implements 
                 spinnerKodeAset.setAdapter(adapterKodeAset);
 
                 // set adapter sap aset
+
                 try{
 
                     if (listView != null) {
@@ -1832,17 +1874,17 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity  implements 
 //
 
 
-                // set adapter unit
-                ArrayAdapter<String> adapterUnit = new ArrayAdapter<String>(getApplicationContext(),
-                        android.R.layout.simple_spinner_item, listSpinnerUnit);
-                adapterUnit.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                spinnerUnit.setAdapter(adapterUnit);
-                sharedPreferences = AsetAddUpdateOfflineActivity.this.getSharedPreferences(PREF_LOGIN, MODE_PRIVATE);
-                try {
-
-                    Integer unit_id = Integer.valueOf(sharedPreferences.getString("unit_id", "0"));
-                    spinnerUnit.setSelection(unit_id-1);
-                } catch(Exception e){}
+//                // set adapter unit
+//                ArrayAdapter<String> adapterUnit = new ArrayAdapter<String>(getApplicationContext(),
+//                        android.R.layout.simple_spinner_item, listSpinnerUnit);
+//                adapterUnit.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+//                spinnerUnit.setAdapter(adapterUnit);
+//                sharedPreferences = AsetAddUpdateOfflineActivity.this.getSharedPreferences(PREF_LOGIN, MODE_PRIVATE);
+//                try {
+//
+//                    Integer unit_id = Integer.valueOf(sharedPreferences.getString("unit_id", "0"));
+//                    spinnerUnit.setSelection(unit_id-1);
+//                } catch(Exception e){}
 
 
 
@@ -1857,6 +1899,7 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity  implements 
                 } catch (Exception e){}
 
                 // set adapter afedeling
+                Integer afdeling_id = Integer.parseInt(sharedPreferences.getString("afdeling_id", "0"));
                 ArrayAdapter<String> adapterAfdeling = new ArrayAdapter<String>(getApplicationContext(),
                         android.R.layout.simple_spinner_item, listSpinnerAfdeling);
                 adapterAfdeling.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -1865,12 +1908,15 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity  implements 
 
                     if (listSpinnerAfdeling.size() != 0) {
 
+                        Log.d("amanat14", String.valueOf(mapAfdelingSpinner.get(afdeling_id)));
                         spinnerAfdeling.setSelection(mapAfdelingSpinner.get(afdeling_id));
+
 
                     }
                 } catch (Exception e){
                 }
 
+                asetHelper.close();
 
     }
     public void spinnerValidation(){
@@ -2018,256 +2064,158 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity  implements 
 
     public void addAset(){
         dialog.show();
-        spinnerValidation();
+//        spinnerValidation();
 //        Toast.makeText(getApplicationContext(), "hello im clicked", Toast.LENGTH_SHORT).show();
-        if (inpNamaAset.getText().toString().equals("")) {
-            dialog.dismiss();
-            inpNamaAset.setError("nama harus diisi");
-            inpNamaAset.requestFocus();
-            return;
-        }
-
-        if (inpNoSAP.getText().toString().equals("")) {
-            dialog.dismiss();
-            inpNoSAP.setError("nomor SAP harus diisi");
-            inpNoSAP.requestFocus();
-            return;
-        }
-
-        if (spinnerJenisAset.getSelectedItemId() == 2) {
-            if (Integer.parseInt(inpPersenKondisi.getText().toString()) > 100 || Integer.parseInt(inpPersenKondisi.getText().toString()) < 0) {
-                dialog.dismiss();
-                inpPersenKondisi.setError("Isian Persen Kondisi Wajib Minimal 0 Maksimal 100");
-                inpPersenKondisi.requestFocus();
-                return;
-            }
-        }
-
-        if (inpNilaiAsetSAP.getText().toString().equals("")) {
-            inpNilaiAsetSAP.setError("Nilai Perolehan Aset harus diisi");
-            inpNilaiAsetSAP.requestFocus();
-            dialog.dismiss();
-            return;
-        }
-
-        if (inpTglOleh.getText().toString().equals("")) {
-            inpTglOleh.setError("Tanggal Perolehan harus diisi");
-            inpTglOleh.requestFocus();
-            dialog.dismiss();
-            return;
-        }
-
-        if (inpMasaPenyusutan.getText().toString().equals("")) {
-            inpMasaPenyusutan.setError("Masa Penyusutan harus diisi");
-            inpMasaPenyusutan.requestFocus();
-            dialog.dismiss();
-            return;
-        }
-
-        if (inpNilaiResidu.getText().toString().equals("")) {
-            inpNilaiResidu.setError("Nilai Residu harus diisi");
-            inpNilaiResidu.requestFocus();
-            dialog.dismiss();
-            return;
-        }
-
-        if ("non tanaman".equals(String.valueOf(spinnerJenisAset.getSelectedItem()))){
-            if ("normal".equals(String.valueOf(spinnerAsetKondisi.getSelectedItem()))){
-                if (img1 == null || img2 == null || img3 == null || img4 == null){
-                    Toast.makeText(getApplicationContext(), "Foto Wajib Diisi Lengkap!", Toast.LENGTH_SHORT).show();
-
-                    dialog.dismiss();
-                    return;
-                }
-            }
-        }
-
-        if ("non tanaman".equals(String.valueOf(spinnerJenisAset.getSelectedItem()))){
-            if ( "rusak".equals (String.valueOf(spinnerAsetKondisi.getSelectedItem()))){
-                if (img1 == null || img2 == null || img3 == null || img4 == null){
-                    Toast.makeText(getApplicationContext(), "Foto Wajib Diisi Lengkap!", Toast.LENGTH_SHORT).show();
-
-                    dialog.dismiss();
-                    return;
-                }
-            }
-        }
-
-
-//        if (spinnerJenisAset.getSelectedItemId() == 1 || spinnerJenisAset.getSelectedItemId() == 3 ) {
-
-        //          if (inpJumlahPohon.getText().toString().equals("")) {
-        //            inpJumlahPohon.setError("Jumlah Pohon harus diisi");
-        //          inpJumlahPohon.requestFocus();
-        //        dialog.dismiss();
-        //      return;
-        // }
-        //}
-
-
-        String nama_aset = inpNamaAset.getText().toString().trim();
-        Integer nomor_aset_sap = mapSap.get(Integer.parseInt(inpNoSAP.getText().toString().trim()));
-        String ba_file = tvUploudBA.getText().toString().trim();
-//        String luas_aset = inpLuasAset.getText().toString().trim();
-        String luas_aset = String.valueOf(Double.parseDouble(inpLuasAset.getText().toString().trim()));
-        String nilai_aset = String.valueOf(CurrencyToNumber(inpNilaiAsetSAP.getText().toString().trim()));
-
-
-        String tgl_oleh = String.valueOf(inpTglOleh.getText().toString().trim() + " 00:00:00");
-        String masa_susut = String.valueOf(inpMasaPenyusutan.getText().toString().trim());
-        String nomor_bast = String.valueOf(inpNomorBAST.getText().toString().trim());
-        String nilai_residu = String.valueOf(CurrencyToNumber(inpNilaiResidu.getText().toString().trim()));
-        String keterangan = String.valueOf(inpKeterangan.getText().toString().trim());
-
-
-        MultipartBody.Part img1Part = null, img2Part = null, img3Part = null, img4Part = null, partBaFile = null;
-
+//        if (inpNamaAset.getText().toString().equals("")) {
+//            dialog.dismiss();
+//            inpNamaAset.setError("nama harus diisi");
+//            inpNamaAset.requestFocus();
+//            return;
+//        }
+//
+//        if (inpNoSAP.getText().toString().equals("")) {
+//            dialog.dismiss();
+//            inpNoSAP.setError("nomor SAP harus diisi");
+//            inpNoSAP.requestFocus();
+//            return;
+//        }
+//
+//        if (spinnerJenisAset.getSelectedItemId() == 2) {
+//            if (Integer.parseInt(inpPersenKondisi.getText().toString()) > 100 || Integer.parseInt(inpPersenKondisi.getText().toString()) < 0) {
+//                dialog.dismiss();
+//                inpPersenKondisi.setError("Isian Persen Kondisi Wajib Minimal 0 Maksimal 100");
+//                inpPersenKondisi.requestFocus();
+//                return;
+//            }
+//        }
+//
+//        if (inpNilaiAsetSAP.getText().toString().equals("")) {
+//            inpNilaiAsetSAP.setError("Nilai Perolehan Aset harus diisi");
+//            inpNilaiAsetSAP.requestFocus();
+//            dialog.dismiss();
+//            return;
+//        }
+//
+//        if (inpTglOleh.getText().toString().equals("")) {
+//            inpTglOleh.setError("Tanggal Perolehan harus diisi");
+//            inpTglOleh.requestFocus();
+//            dialog.dismiss();
+//            return;
+//        }
+//
+//        if (inpMasaPenyusutan.getText().toString().equals("")) {
+//            inpMasaPenyusutan.setError("Masa Penyusutan harus diisi");
+//            inpMasaPenyusutan.requestFocus();
+//            dialog.dismiss();
+//            return;
+//        }
+//
+//        if (inpNilaiResidu.getText().toString().equals("")) {
+//            inpNilaiResidu.setError("Nilai Residu harus diisi");
+//            inpNilaiResidu.requestFocus();
+//            dialog.dismiss();
+//            return;
+//        }
+//
+//        if ("non tanaman".equals(String.valueOf(spinnerJenisAset.getSelectedItem()))){
+//            if ("normal".equals(String.valueOf(spinnerAsetKondisi.getSelectedItem()))){
+//                if (img1 == null || img2 == null || img3 == null || img4 == null){
+//                    Toast.makeText(getApplicationContext(), "Foto Wajib Diisi Lengkap!", Toast.LENGTH_SHORT).show();
+//
+//                    dialog.dismiss();
+//                    return;
+//                }
+//            }
+//        }
+//
+//        if ("non tanaman".equals(String.valueOf(spinnerJenisAset.getSelectedItem()))){
+//            if ( "rusak".equals (String.valueOf(spinnerAsetKondisi.getSelectedItem()))){
+//                if (img1 == null || img2 == null || img3 == null || img4 == null){
+//                    Toast.makeText(getApplicationContext(), "Foto Wajib Diisi Lengkap!", Toast.LENGTH_SHORT).show();
+//
+//                    dialog.dismiss();
+//                    return;
+//                }
+//            }
+//        }
 
         try {
+            ContentValues values = new ContentValues();
+            values.put("aset_tipe", String.valueOf(1));
+            values.put("aset_jenis", String.valueOf(spinnerJenisAset.getSelectedItemId()));
+            values.put("aset_kondisi", String.valueOf(spinnerAsetKondisi.getSelectedItemId()));
+            values.put("aset_kode", String.valueOf(spinnerKodeAset.getSelectedItemId()));
+            values.put("unit_id", String.valueOf(spinnerUnit.getSelectedItemId()));
+            values.put("aset_sub_unit", String.valueOf(spinnerSubUnit.getSelectedItemId()));
+            values.put("afdeling_id", String.valueOf(spinnerAfdeling.getSelectedItemId()));
+            values.put("aset_name", inpNamaAset.getText().toString().trim());
+//            File newDir2 = new File(Environment.getDataDirectory().getAbsolutePath(), "amanat12");
+//            newDir2.mkdir();
+//
+//            Log.d("amanatpath",newDir2.getPath());
 
-            RequestBody requestTipeAset = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(spinnerIdTipeAsset));
-            RequestBody requestJenisAset = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(spinnerIdJenisAset));
-            RequestBody requestKondisiAset = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(spinnerIdAsetKondisi));
-            RequestBody requestKodeAset = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(mapSpinnerkode.get(Integer.parseInt(String.valueOf(spinnerKodeAset.getSelectedItemId())))));
-//            RequestBody requestKodeAset = RequestBody.create(MediaType.parse("text/plain"), String.valueOf( Integer.parseInt(String.valueOf(spinnerKodeAset.getSelectedItemId())) + 1));
-            RequestBody requestNamaAset = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(nama_aset));
-            RequestBody requestNomorAsetSAP = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(nomor_aset_sap));
-            Log.d("amanat14", String.valueOf(spinnerKodeAset.getSelectedItemId()));
-            Integer kode = Math.toIntExact(spinnerKodeAset.getSelectedItemId());
-            Log.d("amanat14", String.valueOf(kode));
-            Log.d("amanat14", String.valueOf(mapSpinnerkode.get(Integer.parseInt(String.valueOf(spinnerKodeAset.getSelectedItemId() + 1)))));
-
-            RequestBody requestLuasAset = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(luas_aset));
-            RequestBody requestNilaiAsetSAP = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(nilai_aset));
-            RequestBody requestTglOleh = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(tgl_oleh));
-            RequestBody requestMasaSusut = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(masa_susut));
-            RequestBody requestNomorBAST = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(nomor_bast));
-            RequestBody requestNilaiResidu = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(nilai_residu));
-            RequestBody requestHGU = RequestBody.create(MediaType.parse("text/plain"), inpHGU.getText().toString().trim());
-
-            RequestBody requestSubUnit = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(spinnerIdSubUnit));
-            RequestBody requestUnit = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(Integer.parseInt(String.valueOf(spinnerUnit.getSelectedItemId())) + 1));
-            Integer afdeling_id = Integer.valueOf(sharedPreferences.getString("afdeling_id", "0"));
-            RequestBody requestAfdeling = RequestBody.create(MediaType.parse("text/plain"), String.valueOf((afdeling_id)));
-
-
-            MultipartBody.Builder builder = new MultipartBody.Builder();
-            builder.addPart(MultipartBody.Part.createFormData("aset_name", null, requestNamaAset));
-            builder.addPart(MultipartBody.Part.createFormData("aset_tipe", null, requestTipeAset));
-            builder.addPart(MultipartBody.Part.createFormData("aset_jenis", null, requestJenisAset));
-            builder.addPart(MultipartBody.Part.createFormData("aset_kondisi", null, requestKondisiAset));
-            builder.addPart(MultipartBody.Part.createFormData("aset_kode", null, requestKodeAset));
-            builder.addPart(MultipartBody.Part.createFormData("nomor_sap", null, requestNomorAsetSAP));
-            builder.addPart(MultipartBody.Part.createFormData("hgu", null, requestHGU));
-
-            builder.addPart(MultipartBody.Part.createFormData("aset_luas", null, requestLuasAset));
-            builder.addPart(MultipartBody.Part.createFormData("tgl_oleh", null, requestTglOleh));
-            builder.addPart(MultipartBody.Part.createFormData("nilai_residu", null, requestNilaiResidu));
-            builder.addPart(MultipartBody.Part.createFormData("nilai_oleh", null, requestNilaiAsetSAP));
-            builder.addPart(MultipartBody.Part.createFormData("nomor_bast", null, requestNomorBAST));
-            builder.addPart(MultipartBody.Part.createFormData("masa_susut", null, requestMasaSusut));
-            builder.addPart(MultipartBody.Part.createFormData("aset_sub_unit", null, requestSubUnit));
-            builder.addPart(MultipartBody.Part.createFormData("unit_id", null, requestUnit));
-
-            if (spinnerSubUnit.getSelectedItemId() == 2) {
-                builder.addPart(MultipartBody.Part.createFormData("afdeling_id", null, requestAfdeling));
-            }
-
-            if (spinnerJenisAset.getSelectedItemId() == 1 || spinnerJenisAset.getSelectedItemId() == 3) {
-                RequestBody requestJumlahPohon = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(inpJumlahPohon.getText().toString()));
-                builder.addPart(MultipartBody.Part.createFormData("jumlah_pohon", null, requestJumlahPohon));
-            }
-
-            if (spinnerJenisAset.getSelectedItemId() == 2) {
-                RequestBody requestPersenKondisi = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(inpPersenKondisi.getText().toString()));
-                builder.addPart(MultipartBody.Part.createFormData("persen_kondisi", null, requestPersenKondisi));
-            }
-
-            if (img1 != null) {
-                RequestBody requestGeoTag1 = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(geotag1));
-                builder.addPart(MultipartBody.Part.createFormData("foto_aset1", img1.getName(), RequestBody.create(MediaType.parse("image/*"), img1)));
-                builder.addPart(MultipartBody.Part.createFormData("geo_tag1", null, requestGeoTag1));
-            }
-
-            if (img2 != null) {
-                RequestBody requestGeoTag2 = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(geotag2));
-                builder.addPart(MultipartBody.Part.createFormData("foto_aset2", img2.getName(), RequestBody.create(MediaType.parse("image/*"), img2)));
-                builder.addPart(MultipartBody.Part.createFormData("geo_tag2", null, requestGeoTag2));
-            }
-
-            if (img3 != null) {
-                RequestBody requestGeoTag3 = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(geotag3));
-                builder.addPart(MultipartBody.Part.createFormData("foto_aset3", img3.getName(), RequestBody.create(MediaType.parse("image/*"), img3)));
-                builder.addPart(MultipartBody.Part.createFormData("geo_tag3", null, requestGeoTag3));
-            }
-
-            if (img4 != null) {
-                RequestBody requestGeoTag4 = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(geotag4));
-                builder.addPart(MultipartBody.Part.createFormData("foto_aset4", img4.getName(), RequestBody.create(MediaType.parse("image/*"), img4)));
-                builder.addPart(MultipartBody.Part.createFormData("geo_tag4", null, requestGeoTag4));
-            }
-
-
-            if (bafile_file != null) {
-                RequestBody requestBaFile = RequestBody.create(MediaType.parse("multipart/form-file"), bafile_file);
-                partBaFile = MultipartBody.Part.createFormData("ba_file", bafile_file.getName(), requestBaFile);
-                builder.addPart(partBaFile);
-            }
-
-            if (inpKeterangan != null) {
-                RequestBody requestKeterangan = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(keterangan));
-                builder.addPart(MultipartBody.Part.createFormData("keterangan", null, requestKeterangan));
-                Log.d("asetapix", String.valueOf(requestKeterangan));
-            }
-
-
-            MultipartBody multipartBody = builder
-                    .build();
-            String contentType = "multipart/form-data; charset=utf-8; boundary=" + multipartBody.boundary();
-
-
-            Call<AsetModel2> call = asetInterface.addAset(contentType, multipartBody);
-
-
-            call.enqueue(new Callback<AsetModel2>() {
-
-                @Override
-                public void onResponse(Call<AsetModel2> call, Response<AsetModel2> response) {
-                    if (!response.isSuccessful() && response.body() == null) {
-                        dialog.dismiss();
-                        customDialogAddAset.dismiss();
-                        inpNoSAP.setError("Nomor SAP sudah ada");
-                        inpNoSAP.requestFocus();
-                        return;
-                    }
-                    dialog.dismiss();
-                    Toast.makeText(getApplicationContext(), "success", Toast.LENGTH_LONG).show();
-                    startActivity(new Intent(AsetAddUpdateOfflineActivity.this, LonglistAsetActivity.class));
-                    return;
-
-                }
-
-                @Override
-                public void onFailure(Call<AsetModel2> call, Throwable t) {
-                    dialog.dismiss();
-                    Toast.makeText(getApplicationContext(), "error " + t.getMessage(), Toast.LENGTH_LONG).show();
-                }
-            });
-        } catch (Exception e) {
+            Integer nomor_aset_sap = mapSap.get(Integer.parseInt(inpNoSAP.getText().toString().trim()));
+            values.put("nomor_sap",nomor_aset_sap);
+            values.put("foto_aset1",inpNamaAset.getText().toString().trim()+"1.png");
+            values.put("foto_aset2",inpNamaAset.getText().toString().trim()+"-2.png");
+            values.put("foto_aset3",inpNamaAset.getText().toString().trim()+"-3.png");
+            values.put("foto_aset4",inpNamaAset.getText().toString().trim()+"-4.png");
+            values.put("geo_tag1",geotag1);
+            values.put("geo_tag2",geotag2);
+            values.put("geo_tag3",geotag3);
+            values.put("geo_tag4",geotag4);
+            values.put("geo_tag4",geotag4);
+            asetHelper.open();
+            asetHelper.insert(values);
+            asetHelper.close();
             dialog.dismiss();
-            Toast.makeText(getApplicationContext(), "error " + e.getMessage(), Toast.LENGTH_LONG).show();
+            customDialogAddAset.dismiss();
+//            finish();
+//            saveImageInternal(img1,inpNamaAset.getText().toString().trim(),1);
+        } catch(Exception e) {
             e.printStackTrace();
-//            startActivity(new Intent(AddAsetActivity.this,LonglistAsetActivity.class));
         }
 
 
-//            if (ba_file != "isi.pdf"){
-//                RequestBody requestBaFile = RequestBody.create(MediaType.parse("multipart/form-file"), source);
-//                MultipartBody.Part partBaFile = MultipartBody.Part.createFormData("foto_tunggak", source.getName(), requestBaFile);
-//            }
+
 
     }
 
+
+    private void saveImageInternal(File img,String name,int i){
+        try {
+            File dir = null,newDir = null;
+            Path source = null,target = null;
+            String fileName = name + String.valueOf(i) + ".png";
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                source = Paths.get(img.getPath());
+
+                File dir2 = getFilesDir();
+                File newDir2 = new File(dir2, "amanat12");
+                newDir2.mkdir();
+
+                target = Paths.get("amanat12/"+fileName);
+                Log.d("amanatpath", String.valueOf(target));
+                Log.d("amanatdir", String.valueOf(getFilesDir()));
+            } else {
+
+            }
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                Files.move(source, target, StandardCopyOption.REPLACE_EXISTING);
+            }
+
+//            File dir = getFilesDir();
+//            File file = new File(dir, "image.png");
+//            FileOutputStream fos = new FileOutputStream(file);
+//            bitmap.compress(Bitmap.CompressFormat.PNG, 100, fos);
+//            fos.flush();
+//            fos.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
 
 
