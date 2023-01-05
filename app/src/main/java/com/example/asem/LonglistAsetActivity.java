@@ -87,7 +87,7 @@ public class LonglistAsetActivity extends AppCompatActivity  { //implements Bott
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_longlist_aset);
-        
+
         dialog = new Dialog(LonglistAsetActivity.this,R.style.MyAlertDialogTheme);
         dialog.setContentView(R.layout.loading);
         dialog.setCanceledOnTouchOutside(false);
