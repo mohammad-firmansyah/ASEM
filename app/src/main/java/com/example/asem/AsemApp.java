@@ -25,9 +25,9 @@ public class AsemApp {
         HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
         interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
         OkHttpClient httpClient = new OkHttpClient.Builder()
-                .callTimeout(2, TimeUnit.MINUTES)
-                .connectTimeout(20, TimeUnit.SECONDS)
-                .readTimeout(30, TimeUnit.SECONDS)
+                .callTimeout(0, TimeUnit.MINUTES)
+                .connectTimeout(0, TimeUnit.SECONDS)
+                .readTimeout(0, TimeUnit.SECONDS)
                 .addInterceptor(interceptor).build();
 
         // Returning the retrofit object.
