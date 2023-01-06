@@ -84,6 +84,7 @@ import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -1948,6 +1949,7 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity  implements 
             // menampilkan alert dialog
             alertDialog.show();
             dialog.dismiss();
+            customDialogAddAset.dismiss();
             return;
         }
 
@@ -1977,6 +1979,7 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity  implements 
             // menampilkan alert dialog
             alertDialog.show();
             dialog.dismiss();
+            customDialogAddAset.dismiss();
             return;
         }
         if (spinnerAsetKondisi.getSelectedItemId()== 0) {
@@ -2004,6 +2007,7 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity  implements 
             // menampilkan alert dialog
             alertDialog.show();
             dialog.dismiss();
+            customDialogAddAset.dismiss();
             return;
         }
         if (spinnerKodeAset.getSelectedItemId()== 0) {
@@ -2031,6 +2035,7 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity  implements 
             // menampilkan alert dialog
             alertDialog.show();
             dialog.dismiss();
+            customDialogAddAset.dismiss();
             return;
         }
         if (spinnerSubUnit.getSelectedItemId()== 0) {
@@ -2058,6 +2063,7 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity  implements 
             // menampilkan alert dialog
             alertDialog.show();
             dialog.dismiss();
+            customDialogAddAset.dismiss();
             return;
         }
 
@@ -2069,52 +2075,66 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity  implements 
         spinnerValidation();
         if (inpNamaAset.getText().toString().equals("")) {
             dialog.dismiss();
+            customDialogAddAset.dismiss();
             inpNamaAset.setError("nama harus diisi");
             inpNamaAset.requestFocus();
+
             return;
         }
 
         if (inpNoSAP.getText().toString().equals("")) {
             dialog.dismiss();
+            customDialogAddAset.dismiss();
             inpNoSAP.setError("nomor SAP harus diisi");
             inpNoSAP.requestFocus();
+
             return;
         }
 
         if (spinnerJenisAset.getSelectedItemId() == 2) {
             if (Integer.parseInt(inpPersenKondisi.getText().toString()) > 100 || Integer.parseInt(inpPersenKondisi.getText().toString()) < 0) {
                 dialog.dismiss();
+                customDialogAddAset.dismiss();
                 inpPersenKondisi.setError("Isian Persen Kondisi Wajib Minimal 0 Maksimal 100");
                 inpPersenKondisi.requestFocus();
+
                 return;
             }
         }
 
         if (inpNilaiAsetSAP.getText().toString().equals("")) {
+            dialog.dismiss();
+            customDialogAddAset.dismiss();
             inpNilaiAsetSAP.setError("Nilai Perolehan Aset harus diisi");
             inpNilaiAsetSAP.requestFocus();
-            dialog.dismiss();
+
             return;
         }
 
         if (inpTglOleh.getText().toString().equals("")) {
+            dialog.dismiss();
+            customDialogAddAset.dismiss();
             inpTglOleh.setError("Tanggal Perolehan harus diisi");
             inpTglOleh.requestFocus();
-            dialog.dismiss();
+
             return;
         }
 
         if (inpMasaPenyusutan.getText().toString().equals("")) {
+            dialog.dismiss();
+            customDialogAddAset.dismiss();
             inpMasaPenyusutan.setError("Masa Penyusutan harus diisi");
             inpMasaPenyusutan.requestFocus();
-            dialog.dismiss();
+
             return;
         }
 
         if (inpNilaiResidu.getText().toString().equals("")) {
+            dialog.dismiss();
+            customDialogAddAset.dismiss();
             inpNilaiResidu.setError("Nilai Residu harus diisi");
             inpNilaiResidu.requestFocus();
-            dialog.dismiss();
+
             return;
         }
 
@@ -2124,6 +2144,7 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity  implements 
                     Toast.makeText(getApplicationContext(), "Foto Wajib Diisi Lengkap!", Toast.LENGTH_SHORT).show();
 
                     dialog.dismiss();
+                    customDialogAddAset.dismiss();
                     return;
                 }
             }
@@ -2135,6 +2156,7 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity  implements 
                     Toast.makeText(getApplicationContext(), "Foto Wajib Diisi Lengkap!", Toast.LENGTH_SHORT).show();
 
                     dialog.dismiss();
+                    customDialogAddAset.dismiss();
                     return;
                 }
             }
@@ -2152,44 +2174,129 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity  implements 
             values.put("aset_name", inpNamaAset.getText().toString().trim());
             Context context = getApplicationContext();
 
-            File destination = new File( "/data/com.example.asem/foto/"+inpNamaAset.getText().toString().trim()+"-1.png");
 
-            if (img1.exists()) {
-                boolean success = img1.renameTo(destination);
-                if (success) {
-                    Log.d("amanat12","file successfully moved");
-                    Log.d("amanatdir", String.valueOf(img1.getAbsolutePath()));
-                } else {
-                    Log.d("amanat12","failed to move file");
+
+            // Get the internal files directory
+
+            String namaAsetWithoutSpace = inpNamaAset.getText().toString().trim();
+            namaAsetWithoutSpace = namaAsetWithoutSpace.replace(" ", "");
+
+            // Create a new file in the internal files directory
+
+            File newImg1 = new File(getFilesDir(),namaAsetWithoutSpace +"1.png");
+            File newImg2 = new File(getFilesDir(),namaAsetWithoutSpace+"2.png");
+            File newImg3 = new File(getFilesDir(),namaAsetWithoutSpace+"3.png");
+            File newImg4 = new File(getFilesDir(),namaAsetWithoutSpace+"4.png");
+
+            if (img1 != null) {
+                FileInputStream in = new FileInputStream(img1);
+                FileOutputStream out = new FileOutputStream(newImg1);
+
+                // Copy the file
+                byte[] buffer = new byte[1024];
+                int read;
+                while ((read = in.read(buffer)) != -1) {
+                    out.write(buffer, 0, read);
                 }
+
+                // Close the streams
+                in.close();
+                out.flush();
+                out.close();
+
+                // Delete the original file
+                img1.delete();
+
+                values.put("foto_aset1",newImg1.getAbsolutePath());
+                values.put("geo_tag1",geotag1);
+
+
             }
+
+            if (img2 != null) {
+                FileInputStream in = new FileInputStream(img2);
+                FileOutputStream out = new FileOutputStream(newImg2);
+
+                // Copy the file
+                byte[] buffer = new byte[1024];
+                int read;
+                while ((read = in.read(buffer)) != -1) {
+                    out.write(buffer, 0, read);
+                }
+
+                // Close the streams
+                in.close();
+                out.flush();
+                out.close();
+
+                // Delete the original file
+                img2.delete();
+                values.put("foto_aset2",newImg2.getAbsolutePath());
+                values.put("geo_tag2",geotag2);
+
+
+            }
+
+            if (img3 != null) {
+                FileInputStream in = new FileInputStream(img3);
+                FileOutputStream out = new FileOutputStream(newImg3);
+
+                // Copy the file
+                byte[] buffer = new byte[1024];
+                int read;
+                while ((read = in.read(buffer)) != -1) {
+                    out.write(buffer, 0, read);
+                }
+
+                // Close the streams
+                in.close();
+                out.flush();
+                out.close();
+
+                // Delete the original file
+                img3.delete();
+                values.put("foto_aset3",newImg3.getAbsolutePath());
+                values.put("geo_tag3",geotag3);
+
+
+            }
+
+            if (img4 != null) {
+                FileInputStream in = new FileInputStream(img4);
+                FileOutputStream out = new FileOutputStream(newImg4);
+
+                // Copy the file
+                byte[] buffer = new byte[1024];
+                int read;
+                while ((read = in.read(buffer)) != -1) {
+                    out.write(buffer, 0, read);
+                }
+
+                // Close the streams
+                in.close();
+                out.flush();
+                out.close();
+
+                // Delete the original file
+                img4.delete();
+                values.put("foto_aset4",newImg4.getAbsolutePath());
+                values.put("geo_tag4",geotag4);
+
+            }
+
+
+
 
 
 //            Integer nomor_aset_sap = mapSap.get(Integer.parseInt(inpNoSAP.getText().toString().trim()));
 //            values.put("nomor_sap",nomor_aset_sap);
 
 
-            values.put("foto_aset1",inpNamaAset.getText().toString().trim()+"-1.png");
-            values.put("foto_aset2",inpNamaAset.getText().toString().trim()+"-2.png");
-            values.put("foto_aset3",inpNamaAset.getText().toString().trim()+"-3.png");
-            values.put("foto_aset4",inpNamaAset.getText().toString().trim()+"-4.png");
-
-//            File existingFile = new File(img1.getParent());
-//            File newFile = new File(existingFile,path + inpNamaAset.getText().toString().trim()+"1.png");
-//
-//            try {
-//                newFile.createNewFile();
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//            }
 
 
-            values.put("geo_tag1",geotag1);
-            values.put("geo_tag2",geotag2);
-            values.put("geo_tag3",geotag3);
-            values.put("geo_tag4",geotag4);
-            values.put("geo_tag4",geotag4);
-            values.put("geo_tag4",geotag4);
+
+
+
             values.put("aset_luas",inpLuasAset.getText().toString().trim());
             values.put("persen_kondisi",inpPersenKondisi.getText().toString().trim());
             values.put("hgu",inpHGU.getText().toString().trim());
@@ -2220,6 +2327,8 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity  implements 
             finish();
 //            saveImageInternal(img1,inpNamaAset.getText().toString().trim(),1);
         } catch(Exception e) {
+            customDialogAddAset.dismiss();
+            dialog.dismiss();
             e.printStackTrace();
         }
 
