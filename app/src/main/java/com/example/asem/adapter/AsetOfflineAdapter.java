@@ -30,6 +30,8 @@ import com.example.asem.UpdateFotoQrAsetActivity;
 import com.example.asem.api.AsetInterface;
 import com.example.asem.api.model.Data;
 import com.example.asem.api.model.DeleteModel;
+import com.example.asem.db.AsetHelper;
+import com.example.asem.db.DatabaseHelper;
 import com.example.asem.db.model.Aset;
 import com.example.asem.utils.utils;
 
@@ -48,13 +50,17 @@ public class AsetOfflineAdapter extends RecyclerView.Adapter<AsetOfflineAdapter.
     private static final String PREF_LOGIN = "LOGIN_PREF";
     private static final String TAG = "KirimTAG";
 
-    private final ArrayList<Aset> listAset = new ArrayList<>();
+    ArrayList<Aset> listAset;// = new ArrayList<>();
+    DatabaseHelper dbAset;
+    AsetInterface asetInterface;
 
     Data[] myAsetData;
 
-    public AsetOfflineAdapter(Data[] allData, LonglistAsetActivity longlistAsetActivity) {
-        this.myAsetData = allData;
-        this.context = longlistAsetActivity;
+    public AsetOfflineAdapter(ArrayList<Aset> listAset, Context context) {
+        this.listAset = listAset;
+        this.context = context;
+        this.dbAset = new DatabaseHelper(context);
+        this.asetInterface = AsemApp.getApiClient().create(AsetInterface.class);
     }
 
     public ArrayList<Aset> getListAset() {
@@ -81,16 +87,16 @@ public class AsetOfflineAdapter extends RecyclerView.Adapter<AsetOfflineAdapter.
         notifyItemRangeChanged(position,listAset.size());
     }
 
-        @NonNull
-        @Override
-        public AsetViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-            View view = LayoutInflater.from(context).inflate(R.layout.ly_longlist_aset, viewGroup, false);
-            return new AsetViewHolder(view);
-        }
+    @NonNull
+    @Override
+    public AsetViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
+        View view = LayoutInflater.from(context).inflate(R.layout.ly_longlist_aset, viewGroup, false);
+        return new AsetViewHolder(view);
+    }
         @Override
         public void onBindViewHolder(@NonNull AsetViewHolder holder, int position) {
             holder.tvTglInput.setText(listAset.get(position).getTglInput());
-            holder.tvNoSAP.setText(String.valueOf(String.valueOf(listAset.get(position).getNomorSap())));
+            holder.tvNoSAP.setText(String.valueOf(listAset.get(position).getNomorSap()));
             holder.tvAsetJenis.setText(String.valueOf(listAset.get(position).getAsetJenis()));
             holder.tvAfdeling.setText(String.valueOf(listAset.get(position).getAfdelingId()));
             holder.tvAsetName.setText(String.valueOf(listAset.get(position).getAsetName()));
