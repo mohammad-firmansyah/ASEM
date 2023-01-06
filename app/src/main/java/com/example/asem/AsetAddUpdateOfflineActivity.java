@@ -96,6 +96,8 @@ import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -2064,80 +2066,79 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity  implements 
 
     public void addAset(){
         dialog.show();
-//        spinnerValidation();
-//        Toast.makeText(getApplicationContext(), "hello im clicked", Toast.LENGTH_SHORT).show();
-//        if (inpNamaAset.getText().toString().equals("")) {
-//            dialog.dismiss();
-//            inpNamaAset.setError("nama harus diisi");
-//            inpNamaAset.requestFocus();
-//            return;
-//        }
-//
-//        if (inpNoSAP.getText().toString().equals("")) {
-//            dialog.dismiss();
-//            inpNoSAP.setError("nomor SAP harus diisi");
-//            inpNoSAP.requestFocus();
-//            return;
-//        }
-//
-//        if (spinnerJenisAset.getSelectedItemId() == 2) {
-//            if (Integer.parseInt(inpPersenKondisi.getText().toString()) > 100 || Integer.parseInt(inpPersenKondisi.getText().toString()) < 0) {
-//                dialog.dismiss();
-//                inpPersenKondisi.setError("Isian Persen Kondisi Wajib Minimal 0 Maksimal 100");
-//                inpPersenKondisi.requestFocus();
-//                return;
-//            }
-//        }
-//
-//        if (inpNilaiAsetSAP.getText().toString().equals("")) {
-//            inpNilaiAsetSAP.setError("Nilai Perolehan Aset harus diisi");
-//            inpNilaiAsetSAP.requestFocus();
-//            dialog.dismiss();
-//            return;
-//        }
-//
-//        if (inpTglOleh.getText().toString().equals("")) {
-//            inpTglOleh.setError("Tanggal Perolehan harus diisi");
-//            inpTglOleh.requestFocus();
-//            dialog.dismiss();
-//            return;
-//        }
-//
-//        if (inpMasaPenyusutan.getText().toString().equals("")) {
-//            inpMasaPenyusutan.setError("Masa Penyusutan harus diisi");
-//            inpMasaPenyusutan.requestFocus();
-//            dialog.dismiss();
-//            return;
-//        }
-//
-//        if (inpNilaiResidu.getText().toString().equals("")) {
-//            inpNilaiResidu.setError("Nilai Residu harus diisi");
-//            inpNilaiResidu.requestFocus();
-//            dialog.dismiss();
-//            return;
-//        }
-//
-//        if ("non tanaman".equals(String.valueOf(spinnerJenisAset.getSelectedItem()))){
-//            if ("normal".equals(String.valueOf(spinnerAsetKondisi.getSelectedItem()))){
-//                if (img1 == null || img2 == null || img3 == null || img4 == null){
-//                    Toast.makeText(getApplicationContext(), "Foto Wajib Diisi Lengkap!", Toast.LENGTH_SHORT).show();
-//
-//                    dialog.dismiss();
-//                    return;
-//                }
-//            }
-//        }
-//
-//        if ("non tanaman".equals(String.valueOf(spinnerJenisAset.getSelectedItem()))){
-//            if ( "rusak".equals (String.valueOf(spinnerAsetKondisi.getSelectedItem()))){
-//                if (img1 == null || img2 == null || img3 == null || img4 == null){
-//                    Toast.makeText(getApplicationContext(), "Foto Wajib Diisi Lengkap!", Toast.LENGTH_SHORT).show();
-//
-//                    dialog.dismiss();
-//                    return;
-//                }
-//            }
-//        }
+        spinnerValidation();
+        if (inpNamaAset.getText().toString().equals("")) {
+            dialog.dismiss();
+            inpNamaAset.setError("nama harus diisi");
+            inpNamaAset.requestFocus();
+            return;
+        }
+
+        if (inpNoSAP.getText().toString().equals("")) {
+            dialog.dismiss();
+            inpNoSAP.setError("nomor SAP harus diisi");
+            inpNoSAP.requestFocus();
+            return;
+        }
+
+        if (spinnerJenisAset.getSelectedItemId() == 2) {
+            if (Integer.parseInt(inpPersenKondisi.getText().toString()) > 100 || Integer.parseInt(inpPersenKondisi.getText().toString()) < 0) {
+                dialog.dismiss();
+                inpPersenKondisi.setError("Isian Persen Kondisi Wajib Minimal 0 Maksimal 100");
+                inpPersenKondisi.requestFocus();
+                return;
+            }
+        }
+
+        if (inpNilaiAsetSAP.getText().toString().equals("")) {
+            inpNilaiAsetSAP.setError("Nilai Perolehan Aset harus diisi");
+            inpNilaiAsetSAP.requestFocus();
+            dialog.dismiss();
+            return;
+        }
+
+        if (inpTglOleh.getText().toString().equals("")) {
+            inpTglOleh.setError("Tanggal Perolehan harus diisi");
+            inpTglOleh.requestFocus();
+            dialog.dismiss();
+            return;
+        }
+
+        if (inpMasaPenyusutan.getText().toString().equals("")) {
+            inpMasaPenyusutan.setError("Masa Penyusutan harus diisi");
+            inpMasaPenyusutan.requestFocus();
+            dialog.dismiss();
+            return;
+        }
+
+        if (inpNilaiResidu.getText().toString().equals("")) {
+            inpNilaiResidu.setError("Nilai Residu harus diisi");
+            inpNilaiResidu.requestFocus();
+            dialog.dismiss();
+            return;
+        }
+
+        if ("non tanaman".equals(String.valueOf(spinnerJenisAset.getSelectedItem()))){
+            if ("normal".equals(String.valueOf(spinnerAsetKondisi.getSelectedItem()))){
+                if (img1 == null || img2 == null || img3 == null || img4 == null){
+                    Toast.makeText(getApplicationContext(), "Foto Wajib Diisi Lengkap!", Toast.LENGTH_SHORT).show();
+
+                    dialog.dismiss();
+                    return;
+                }
+            }
+        }
+
+        if ("non tanaman".equals(String.valueOf(spinnerJenisAset.getSelectedItem()))){
+            if ( "rusak".equals (String.valueOf(spinnerAsetKondisi.getSelectedItem()))){
+                if (img1 == null || img2 == null || img3 == null || img4 == null){
+                    Toast.makeText(getApplicationContext(), "Foto Wajib Diisi Lengkap!", Toast.LENGTH_SHORT).show();
+
+                    dialog.dismiss();
+                    return;
+                }
+            }
+        }
 
         try {
             ContentValues values = new ContentValues();
@@ -2149,28 +2150,74 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity  implements 
             values.put("aset_sub_unit", String.valueOf(spinnerSubUnit.getSelectedItemId()));
             values.put("afdeling_id", String.valueOf(spinnerAfdeling.getSelectedItemId()));
             values.put("aset_name", inpNamaAset.getText().toString().trim());
-//            File newDir2 = new File(Environment.getDataDirectory().getAbsolutePath(), "amanat12");
-//            newDir2.mkdir();
-//
-//            Log.d("amanatpath",newDir2.getPath());
+            Context context = getApplicationContext();
 
-            Integer nomor_aset_sap = mapSap.get(Integer.parseInt(inpNoSAP.getText().toString().trim()));
-            values.put("nomor_sap",nomor_aset_sap);
-            values.put("foto_aset1",inpNamaAset.getText().toString().trim()+"1.png");
+            File destination = new File( "/data/com.example.asem/foto/"+inpNamaAset.getText().toString().trim()+"-1.png");
+
+            if (img1.exists()) {
+                boolean success = img1.renameTo(destination);
+                if (success) {
+                    Log.d("amanat12","file successfully moved");
+                    Log.d("amanatdir", String.valueOf(img1.getAbsolutePath()));
+                } else {
+                    Log.d("amanat12","failed to move file");
+                }
+            }
+
+
+//            Integer nomor_aset_sap = mapSap.get(Integer.parseInt(inpNoSAP.getText().toString().trim()));
+//            values.put("nomor_sap",nomor_aset_sap);
+
+
+            values.put("foto_aset1",inpNamaAset.getText().toString().trim()+"-1.png");
             values.put("foto_aset2",inpNamaAset.getText().toString().trim()+"-2.png");
             values.put("foto_aset3",inpNamaAset.getText().toString().trim()+"-3.png");
             values.put("foto_aset4",inpNamaAset.getText().toString().trim()+"-4.png");
+
+//            File existingFile = new File(img1.getParent());
+//            File newFile = new File(existingFile,path + inpNamaAset.getText().toString().trim()+"1.png");
+//
+//            try {
+//                newFile.createNewFile();
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+
+
             values.put("geo_tag1",geotag1);
             values.put("geo_tag2",geotag2);
             values.put("geo_tag3",geotag3);
             values.put("geo_tag4",geotag4);
             values.put("geo_tag4",geotag4);
+            values.put("geo_tag4",geotag4);
+            values.put("aset_luas",inpLuasAset.getText().toString().trim());
+            values.put("persen_kondisi",inpPersenKondisi.getText().toString().trim());
+            values.put("hgu",inpHGU.getText().toString().trim());
+            values.put("nilai_oleh",utils.CurrencyToNumber(inpNilaiAsetSAP.getText().toString().trim()));
+            values.put("tgl_oleh",inpTglOleh.getText().toString().trim() + " 00:00:00");
+            LocalDateTime currentTime = null;
+            DateTimeFormatter formatter = null;
+            String formattedDateTime = null;
+
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+                currentTime = LocalDateTime.now();
+                 formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm:ss");
+                 formattedDateTime = currentTime.format(formatter);
+            }
+
+            values.put("tgl_input", String.valueOf(formattedDateTime));
+            values.put("masa_susut",inpMasaPenyusutan.getText().toString().trim());
+            values.put("nilai_residu",utils.CurrencyToNumber(inpNilaiResidu.getText().toString().trim()));
+            values.put("nomor_bast",inpNomorBAST.getText().toString().trim());
+            values.put("jumlah_pohon",inpJumlahPohon.getText().toString().trim());
+            values.put("keterangan",inpKeterangan.getText().toString().trim());
+
             asetHelper.open();
             asetHelper.insert(values);
             asetHelper.close();
-            dialog.dismiss();
             customDialogAddAset.dismiss();
-//            finish();
+            dialog.dismiss();
+            finish();
 //            saveImageInternal(img1,inpNamaAset.getText().toString().trim(),1);
         } catch(Exception e) {
             e.printStackTrace();

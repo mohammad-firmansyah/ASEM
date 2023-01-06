@@ -173,6 +173,8 @@ public class LonglistAsetActivity extends AppCompatActivity  { //implements Bott
                         rcAset.setAdapter(offlineAdapter);
                         getDataOffline();
                         searchView.setVisibility(View.GONE);
+                        btnReport.setVisibility(View.GONE);
+                        btnFilter.setVisibility(View.GONE);
                         switch_offline.setTrackTintList(ColorStateList.valueOf(getResources().getColor(R.color.MediumBlue)));
                         switch_offline.setThumbTintList(ColorStateList.valueOf(getResources().getColor(R.color.white)));
                         fab.setOnClickListener(new View.OnClickListener() {
@@ -265,12 +267,24 @@ public class LonglistAsetActivity extends AppCompatActivity  { //implements Bott
         getAllAset();
     }
 
+    // untuk load recycler 10 data dulu
+//    private void populateData() {
+//        int i = 0;
+//        dataApiSize = Math.min(dataList.size(), 10);
+//        Log.d(TAG, "populateData: "+ dataApiSize);
+//        while (i < dataApiSize) {
+//            rowsArrayList.add(dataList.get(i));
+//            i++;
+//        }
+//    }
+
     private void getDataOffline(){
         Data[] allData = new Data[]{
                 new Data(1,"tesoff",1,2,1,2,1,"6","fotoaset1","fotoaset2","fotoaset3","fotoaset4","geo","null","null","null", 999.0,"2023-01-03 10:11:23","2023-01-03 00:00:00",9,666,"nnn","1","-",null,null,null,1,16,185,null,"2023-01-03T03:11:23.000000Z","2023-01-03T03:11:23.000000Z",null,99,null,null,null,null,"jjj")
         };
-        AsetOfflineAdapter asetOfflineAdapter = new AsetOfflineAdapter(allData,LonglistAsetActivity.this);
-        rcAset.setAdapter(asetOfflineAdapter);
+//
+//        AsetOfflineAdapter asetOfflineAdapter = new AsetOfflineAdapter(listAset,LonglistAsetActivity.this);
+//        rcAset.setAdapter(asetOfflineAdapter);
     }
 
     private void getAllAset(){
