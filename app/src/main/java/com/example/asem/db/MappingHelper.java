@@ -132,7 +132,9 @@ public class MappingHelper {
         }
         while (sap.moveToNext()) {
             Integer sapId = sap.getInt(sap.getColumnIndexOrThrow(SapColumns.SAPID));
-            String sapDesc = sap.getString(afdeling.getColumnIndexOrThrow(SapColumns.SAPDESC));
+            String sapDesc = sap.getString(sap.getColumnIndexOrThrow(SapColumns.SAPDESC));
+//            String sapName = sap.getString(sap.getColumnIndexOrThrow(SapColumns.SAPNAME));
+//            Integer unitId = sap.getInt(sap.getColumnIndexOrThrow(SapColumns.UNITID));
             listSap.add(new Sap(sapId,sapDesc));
         }
 

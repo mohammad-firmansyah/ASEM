@@ -201,7 +201,7 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity  implements 
     Map<Integer, Integer> mapAfdelingSpinner = new HashMap<Integer, Integer>();
     Map<Integer, Integer> mapSpinnerAfdeling = new HashMap<Integer, Integer>();
     Map<Integer, String> mapAfdeling = new HashMap();
-    Map<Integer, Integer> mapSap = new HashMap();
+    Map<Long, Integer> mapSap = new HashMap();
 
     Map<Integer,Integer> mapKodeSpinner = new HashMap();
     Map<Integer,Integer> mapSpinnerkode = new HashMap();
@@ -1804,7 +1804,7 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity  implements 
 
                 // get sap
                 for (Sap at : dataAllSpinner.getSap()){
-                    mapSap.put(Integer.parseInt(at.getSap_desc()),at.getSap_id());
+                    mapSap.put(Long.parseLong(at.getSap_desc()),at.getSap_id());
                     listSpinnerSap.add(at.getSap_desc());
                 }
 
@@ -2284,18 +2284,8 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity  implements 
 
             }
 
-
-
-
-
-//            Integer nomor_aset_sap = mapSap.get(Integer.parseInt(inpNoSAP.getText().toString().trim()));
-//            values.put("nomor_sap",nomor_aset_sap);
-
-
-
-
-
-
+            Integer nomor_aset_sap = mapSap.get(Long.parseLong(inpNoSAP.getText().toString().trim()));
+            values.put("nomor_sap",nomor_aset_sap);
 
             values.put("aset_luas",inpLuasAset.getText().toString().trim());
             values.put("persen_kondisi",inpPersenKondisi.getText().toString().trim());

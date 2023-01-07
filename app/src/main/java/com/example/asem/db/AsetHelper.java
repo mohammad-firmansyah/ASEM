@@ -192,6 +192,37 @@ public class AsetHelper {
         return database.insert(DatabaseContractAset.TABLE_NAME, null, values);
     }
 
+    public long insertAsetTpe(ContentValues values) {
+        return database.insert(DatabaseContractAsetTipe.TABLE_NAME, null, values);
+    }
+
+    public long insertAfdeling(ContentValues values) {
+        return database.insert(DatabaseContractAfdeling.TABLE_NAME, null, values);
+    }
+
+    public long insertUnit(ContentValues values) {
+        return database.insert(DatabaseContractUnit.TABLE_NAME, null, values);
+    }
+
+    public long insertSubUnit(ContentValues values) {
+        return database.insert(DatabaseContractSubUnit.TABLE_NAME, null, values);
+    }
+
+    public long insertAsetKode(ContentValues values) {
+        return database.insert(DatabaseContractAsetKode.TABLE_NAME, null, values);
+    }
+
+    public long insertAsetJenis(ContentValues values) {
+        return database.insert(DatabaseContractAsetJenis.TABLE_NAME, null, values);
+    }
+
+    public long insertAsetKondisi(ContentValues values) {
+        return database.insert(DatabaseContractAsetKondisi.TABLE_NAME, null, values);
+    }
+    public long insertSap(ContentValues values) {
+        return database.insert(DatabaseContractSap.TABLE_NAME, null, values);
+    }
+
     public int update(String id, ContentValues values) {
         return database.update(DatabaseContractAset.TABLE_NAME, values, "aset_id" + " = ?", new String[]{id});
     }
