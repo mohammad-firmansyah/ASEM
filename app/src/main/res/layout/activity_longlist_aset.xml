@@ -8,6 +8,7 @@
     android:background="@color/background_grey"
     tools:context=".LonglistAsetActivity">
 
+
     <LinearLayout
         android:id="@+id/upLayout"
         android:layout_width="match_parent"
@@ -91,8 +92,35 @@
             android:layout_toRightOf="@id/switchoffline"
             />
 
+
     </LinearLayout>
 
+    <LinearLayout
+        android:id="@+id/btnsync"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_below="@id/switchoff"
+        android:layout_marginHorizontal="10dp"
+        android:layout_marginVertical="10dp"
+        >
+
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnSyncSpinner"
+            android:layout_marginHorizontal="5dp"
+            android:layout_width="0dp"
+            android:layout_weight="0.3"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:background="@drawable/bg_rounded_btn_sc"
+            android:text="Sinkronkan Data"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:textColor="@color/white"
+            android:textSize="15sp"
+            android:paddingVertical="10dp"
+            />
+    </LinearLayout>
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
@@ -100,7 +128,7 @@
         android:layout_height="wrap_content"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:gravity="center"
-        android:layout_below="@id/switchoff"
+        android:layout_below="@id/btnsync"
         android:layout_above="@+id/bottomnav"
         tools:context=".MainActivity">
 

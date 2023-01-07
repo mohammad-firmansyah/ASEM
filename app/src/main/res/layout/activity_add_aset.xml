@@ -62,27 +62,27 @@
                 android:background="@drawable/rounded_spinner"
                 android:spinnerMode="dropdown" />
 
-<!--            <TextView-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_marginBottom="10dp"-->
-<!--                android:text="KOMODITI :"-->
-<!--                android:textColor="@color/main_grey"-->
-<!--                android:textSize="14sp"-->
-<!--                android:textStyle="bold"-->
+            <!--            <TextView-->
+            <!--                android:layout_width="match_parent"-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--                android:layout_marginBottom="10dp"-->
+            <!--                android:text="KOMODITI :"-->
+            <!--                android:textColor="@color/main_grey"-->
+            <!--                android:textSize="14sp"-->
+            <!--                android:textStyle="bold"-->
 
 
-<!--                />-->
+            <!--                />-->
 
 
-<!--            <Spinner-->
+            <!--            <Spinner-->
 
-<!--                android:id="@+id/inpKomoditi"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="41dp"-->
-<!--                android:layout_marginBottom="10dp"-->
-<!--                android:background="@drawable/rounded_spinner"-->
-<!--                android:spinnerMode="dropdown" />-->
+            <!--                android:id="@+id/inpKomoditi"-->
+            <!--                android:layout_width="match_parent"-->
+            <!--                android:layout_height="41dp"-->
+            <!--                android:layout_marginBottom="10dp"-->
+            <!--                android:background="@drawable/rounded_spinner"-->
+            <!--                android:spinnerMode="dropdown" />-->
 
 
             <TextView
@@ -109,7 +109,6 @@
                 android:spinnerMode="dropdown"
 
                 />
-
 
 
             <TextView
@@ -155,8 +154,6 @@
                 android:spinnerMode="dropdown" />
 
 
-
-
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -179,6 +176,7 @@
                 android:spinnerMode="dropdown" />
 
             <TextView
+                android:id="@+id/tvAfdeling"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
@@ -186,7 +184,6 @@
                 android:textColor="@color/main_grey"
                 android:textSize="14sp"
                 android:textStyle="bold"
-                android:id="@+id/tvAfdeling"
 
                 />
 
@@ -197,9 +194,7 @@
                 android:layout_height="41dp"
                 android:layout_marginBottom="10dp"
                 android:background="@drawable/tgl_spinner"
-                android:spinnerMode="dropdown"
-                />
-
+                android:spinnerMode="dropdown" />
 
 
             <TextView
@@ -233,15 +228,14 @@
             <TextView
 
                 android:id="@+id/inpNmrSAP"
-                android:text="Pilih Nomor SAP"
                 android:layout_width="match_parent"
                 android:layout_height="41dp"
                 android:layout_marginBottom="10dp"
-                android:textSize="14sp"
-                android:paddingVertical="10dp"
-                android:textStyle="bold"
                 android:background="@drawable/rounded_spinner"
-                 />
+                android:paddingVertical="10dp"
+                android:text="Pilih Nomor SAP"
+                android:textSize="14sp"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/tvBa"
@@ -288,20 +282,19 @@
                     android:text="UPLOAD"
                     android:textColor="@color/white"
                     android:textSize="10sp"
-                    tools:ignore="HardcodedText"/>
+                    tools:ignore="HardcodedText" />
             </LinearLayout>
 
 
             <TextView
+                android:id="@+id/tvFoto"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
                 android:text="FOTO ASET :"
                 android:textColor="@color/main_grey"
                 android:textSize="14sp"
-                android:textStyle="bold"
-                android:id="@+id/tvFoto"
-                />
+                android:textStyle="bold" />
 
             <HorizontalScrollView
                 android:id="@+id/scrollPartition"
@@ -389,70 +382,69 @@
                 </LinearLayout>
             </HorizontalScrollView>
 
-<!--            <Button-->
-<!--                android:id="@+id/inpBtnMap"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_marginTop="10dp"-->
-<!--                android:background="@drawable/button_background"-->
-<!--                android:text="Map" />-->
+            <!--            <Button-->
+            <!--                android:id="@+id/inpBtnMap"-->
+            <!--                android:layout_width="match_parent"-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--                android:layout_marginTop="10dp"-->
+            <!--                android:background="@drawable/button_background"-->
+            <!--                android:text="Map" />-->
 
-<!--            <LinearLayout-->
-<!--                android:id="@+id/listMapButton"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_marginBottom="10dp"-->
-<!--                android:orientation="horizontal">-->
+            <!--            <LinearLayout-->
+            <!--                android:id="@+id/listMapButton"-->
+            <!--                android:layout_width="match_parent"-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--                android:layout_marginBottom="10dp"-->
+            <!--                android:orientation="horizontal">-->
 
-<!--                <Button-->
-<!--                    android:id="@+id/map1"-->
-<!--                    android:layout_width="0dp"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:layout_marginTop="10dp"-->
-<!--                    android:layout_weight="0.3"-->
-<!--                    android:background="@drawable/button_background"-->
-<!--                    android:text="Map" />-->
+            <!--                <Button-->
+            <!--                    android:id="@+id/map1"-->
+            <!--                    android:layout_width="0dp"-->
+            <!--                    android:layout_height="wrap_content"-->
+            <!--                    android:layout_marginTop="10dp"-->
+            <!--                    android:layout_weight="0.3"-->
+            <!--                    android:background="@drawable/button_background"-->
+            <!--                    android:text="Map" />-->
 
-<!--                <Button-->
-<!--                    android:id="@+id/map2"-->
-<!--                    android:layout_width="0dp"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:layout_marginStart="5dp"-->
-<!--                    android:layout_marginTop="10dp"-->
-<!--                    android:layout_weight="0.3"-->
-<!--                    android:background="@drawable/button_background"-->
-<!--                    android:text="Map" />-->
+            <!--                <Button-->
+            <!--                    android:id="@+id/map2"-->
+            <!--                    android:layout_width="0dp"-->
+            <!--                    android:layout_height="wrap_content"-->
+            <!--                    android:layout_marginStart="5dp"-->
+            <!--                    android:layout_marginTop="10dp"-->
+            <!--                    android:layout_weight="0.3"-->
+            <!--                    android:background="@drawable/button_background"-->
+            <!--                    android:text="Map" />-->
 
-<!--                <Button-->
-<!--                    android:id="@+id/map3"-->
-<!--                    android:layout_width="0dp"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:layout_marginStart="5dp"-->
-<!--                    android:layout_marginTop="10dp"-->
-<!--                    android:layout_weight="0.3"-->
-<!--                    android:background="@drawable/button_background"-->
-<!--                    android:text="Map" />-->
+            <!--                <Button-->
+            <!--                    android:id="@+id/map3"-->
+            <!--                    android:layout_width="0dp"-->
+            <!--                    android:layout_height="wrap_content"-->
+            <!--                    android:layout_marginStart="5dp"-->
+            <!--                    android:layout_marginTop="10dp"-->
+            <!--                    android:layout_weight="0.3"-->
+            <!--                    android:background="@drawable/button_background"-->
+            <!--                    android:text="Map" />-->
 
-<!--                <Button-->
-<!--                    android:id="@+id/map4"-->
-<!--                    android:layout_width="0dp"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:layout_marginStart="5dp"-->
-<!--                    android:layout_marginTop="10dp"-->
-<!--                    android:layout_weight="0.3"-->
-<!--                    android:background="@drawable/button_background"-->
-<!--                    android:text="Map" />-->
-<!--            </LinearLayout>-->
+            <!--                <Button-->
+            <!--                    android:id="@+id/map4"-->
+            <!--                    android:layout_width="0dp"-->
+            <!--                    android:layout_height="wrap_content"-->
+            <!--                    android:layout_marginStart="5dp"-->
+            <!--                    android:layout_marginTop="10dp"-->
+            <!--                    android:layout_weight="0.3"-->
+            <!--                    android:background="@drawable/button_background"-->
+            <!--                    android:text="Map" />-->
+            <!--            </LinearLayout>-->
             <TextView
+                android:id="@+id/tvHGU"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginVertical="10dp"
                 android:text="HGU :"
                 android:textColor="@color/main_grey"
                 android:textSize="14sp"
-                android:textStyle="bold"
-                android:id="@+id/tvHGU"
-                />
+                android:textStyle="bold" />
 
 
             <EditText
@@ -461,18 +453,17 @@
                 android:layout_width="match_parent"
                 android:layout_height="41dp"
                 android:layout_marginBottom="10dp"
-                android:background="@drawable/edit_text_spiner"
-                />
+                android:background="@drawable/edit_text_spiner" />
+
             <TextView
+                android:id="@+id/tvPersenKondisi"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginVertical="10dp"
                 android:text="PERSEN KONDISI :"
                 android:textColor="@color/main_grey"
                 android:textSize="14sp"
-                android:textStyle="bold"
-                android:id="@+id/tvPersenKondisi"
-                />
+                android:textStyle="bold" />
 
 
             <EditText
@@ -487,33 +478,27 @@
 
 
                 />
+
             <TextView
+                android:id="@+id/luasTanaman"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginVertical="10dp"
                 android:text="LUAS AREAL (Ha) :"
                 android:textColor="@color/main_grey"
                 android:textSize="14sp"
-                android:textStyle="bold"
-                android:id="@+id/luasTanaman"
-                />
-
-
-
-
-
+                android:textStyle="bold" />
 
 
             <TextView
+                android:id="@+id/luasNonTanaman"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginVertical="10dp"
                 android:text="KAPASITAS/LUAS BANGUNAN :"
                 android:textColor="@color/main_grey"
                 android:textSize="14sp"
-                android:textStyle="bold"
-                android:id="@+id/luasNonTanaman"
-                />
+                android:textStyle="bold" />
 
 
             <EditText
@@ -552,7 +537,6 @@
                 android:paddingVertical="10dp" />
 
 
-
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -570,10 +554,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="41dp"
                 android:background="@drawable/pickdate_background"
-                android:clickable="false"
-                android:cursorVisible="false"
-                android:focusable="false"
-                android:focusableInTouchMode="false"
                 android:hint="tanggal perolehan"
                 android:paddingVertical="10dp" />
 
@@ -602,6 +582,7 @@
 
 
             <TextView
+                android:id="@+id/tvBast"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginVertical="10dp"
@@ -609,7 +590,6 @@
                 android:textColor="@color/main_grey"
                 android:textSize="14sp"
                 android:textStyle="bold"
-                android:id="@+id/tvBast"
 
 
                 />
@@ -622,8 +602,7 @@
                 android:layout_marginBottom="10dp"
                 android:background="@drawable/edit_text_spiner"
                 android:lines="1"
-                android:paddingVertical="10dp"
-                />
+                android:paddingVertical="10dp" />
 
 
             <TextView
@@ -647,7 +626,6 @@
                 android:inputType="numberDecimal"
                 android:lines="1"
                 android:paddingVertical="10dp" />
-
 
 
             <TextView
