@@ -11,6 +11,8 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.Manifest;
 import android.app.Dialog;
+import android.content.ContentValues;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.ColorStateList;
@@ -20,18 +22,32 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CompoundButton;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.asem.adapter.Aset2Adapter;
 import com.example.asem.adapter.AsetOfflineAdapter;
 import com.example.asem.adapter.SearchAsetAdapter;
 import com.example.asem.api.AsetInterface;
+import com.example.asem.api.model.Afdelling;
+import com.example.asem.api.model.AllSpinner;
+import com.example.asem.api.model.AsetJenis;
+import com.example.asem.api.model.AsetKode;
+import com.example.asem.api.model.AsetKode2;
+import com.example.asem.api.model.AsetKondisi;
+import com.example.asem.api.model.AsetTipe;
 import com.example.asem.api.model.Data;
 import com.example.asem.api.model.Data2;
+import com.example.asem.api.model.DataAllSpinner;
+import com.example.asem.api.model.Sap;
 import com.example.asem.api.model.Search;
 import com.example.asem.api.model.SearchModel;
+import com.example.asem.api.model.SubUnit;
+import com.example.asem.api.model.Unit;
 import com.example.asem.db.AsetHelper;
 import com.example.asem.db.DatabaseHelper;
 import com.example.asem.db.model.Aset;
@@ -41,7 +57,9 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -52,7 +70,15 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class LonglistAsetActivity extends AppCompatActivity  { //implements BottomNavigationView.OnItemSelectedListener
 
 
-
+    DataAllSpinner allSpinner;
+    Context context;
+    List<String> listSpinnerSap=new ArrayList<>();
+    List<AsetKode2> asetKode2 = new ArrayList<>();
+    List<Afdelling> afdeling = new ArrayList<>();
+    Map<Integer, Integer> mapAfdelingSpinner = new HashMap<Integer, Integer>();
+    Map<Integer, Integer> mapSpinnerAfdeling = new HashMap<Integer, Integer>();
+    Map<Integer, String> mapAfdeling = new HashMap();
+    Map<Integer, Integer> mapSap = new HashMap();
 
     private static final String[] PERMISSIONS_LOCATION_AND_STORAGE = {
             Manifest.permission.ACCESS_COARSE_LOCATION,
@@ -69,6 +95,8 @@ public class LonglistAsetActivity extends AppCompatActivity  { //implements Bott
 
     Button btnReport;
     Button btnFilter;
+    Button btnSync;
+    ViewGroup vwSync;
     FloatingActionButton fab;
 
     RecyclerView rcAset; //untuk aset utama
@@ -99,11 +127,20 @@ public class LonglistAsetActivity extends AppCompatActivity  { //implements Bott
         rcAset2 = findViewById(R.id.recView2);
         rcAset2.setHasFixedSize(true);
         rcAset2.setLayoutManager(new LinearLayoutManager(this));
-
+        vwSync = findViewById(R.id.btnsync);
+        btnSync = findViewById(R.id.btnSyncSpinner);
         fab = findViewById(R.id.addAset);
         srlonglist = findViewById(R.id.srlonglist);
         searchView = findViewById(R.id.svSearch);
         switch_offline = findViewById(R.id.switchoffline);
+
+        btnSync.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getAllSpinnerData();
+                Toast.makeText(getApplicationContext(),"halo",Toast.LENGTH_LONG).show();
+            }
+        });
 
         sharedPreferences = getSharedPreferences(PREF_LOGIN, MODE_PRIVATE);
         String hak_akses_id = sharedPreferences.getString("hak_akses_id", "-");
@@ -152,6 +189,7 @@ public class LonglistAsetActivity extends AppCompatActivity  { //implements Bott
 //            dataoffline = ;
 //        }
 
+
 //        Boolean switchState = switch_offline.isChecked();
         switch_offline.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -161,12 +199,15 @@ public class LonglistAsetActivity extends AppCompatActivity  { //implements Bott
                 fab.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        Toast.makeText(getApplicationContext(),"helo",Toast.LENGTH_SHORT).show();
                         startActivity(new Intent(LonglistAsetActivity.this, AddAsetActivity.class));
                     }
                 });
                 if(isChecked){
                     //aktifkan longlist offline
                     if (switch_offline.isEmojiCompatEnabled()){
+                        vwSync.setVisibility(View.VISIBLE);
+
                         dialog.dismiss();
                         switch_offline.setChecked(true);
                         rcAset.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
@@ -187,6 +228,7 @@ public class LonglistAsetActivity extends AppCompatActivity  { //implements Bott
                     }
                 }else {
                     dialog.dismiss();
+                    vwSync.setVisibility(View.GONE);
                     srlonglist.setEnabled(true);
                     getAllAset();
                     btnReport.setVisibility(View.VISIBLE);
@@ -384,4 +426,107 @@ public class LonglistAsetActivity extends AppCompatActivity  { //implements Bott
 //        }
 //        return false;
 //    }
+public void getAllSpinnerData(){
+        dialog.show();
+
+    Call<AllSpinner> call = asetInterface.getAllSpinner();
+
+    call.enqueue(new Callback<AllSpinner>() {
+        @Override
+        public void onResponse(Call<AllSpinner> call, Response<AllSpinner> response) {
+            if (!response.isSuccessful() && response.body().getData() == null) {
+                Toast.makeText(getApplicationContext(),response.code(),Toast.LENGTH_LONG).show();
+                dialog.dismiss();
+                return;
+            }
+
+            allSpinner = response.body().getData();
+
+            DataAllSpinner dataAllSpinner = response.body().getData();
+            List<String> listSpinnerTipe = new ArrayList<>();
+            List<String> listSpinnerJenis = new ArrayList<>();
+            List<String> listSpinnerKondisiAset = new ArrayList<>();
+            List<String> listSpinnerKodeAset = new ArrayList<>();
+            List<String> listSpinnerUnit = new ArrayList<>();
+            List<String> listSpinnerSubUnit = new ArrayList<>();
+            List<String> listSpinnerAfdeling = new ArrayList<>();
+            // get data tipe aset
+            AsetHelper asetHelper = AsetHelper.getInstance(getApplicationContext());
+            asetHelper.open();
+            for (AsetTipe at : dataAllSpinner.getAsetTipe()){
+                ContentValues values = new ContentValues();
+                values.put("aset_tipe_desc",at.getAset_tipe_desc());
+                asetHelper.insertAsetTpe(values);
+            }
+
+            // get data jenis
+            for (AsetJenis at : dataAllSpinner.getAsetJenis()){
+                ContentValues values = new ContentValues();
+                values.put("aset_jenis_desc",at.getAset_jenis_desc());
+                asetHelper.insertAsetJenis(values);
+            }
+
+            // get kondisi aset
+            for (AsetKondisi at : dataAllSpinner.getAsetKondisi()){
+                ContentValues values = new ContentValues();
+                values.put("aset_kondisi_desc",at.getAset_kondisi_desc());
+                asetHelper.insertAsetKondisi(values);
+            }
+
+            // get kode aset
+            for (AsetKode2 at : dataAllSpinner.getAsetKode()){
+                ContentValues values = new ContentValues();
+                values.put("aset_class",at.getAsetClass());
+                values.put("aset_group",at.getAsetGroup());
+                values.put("aset_desc",at.getAsetDesc());
+                values.put("aset_jenis",at.getAsetJenis());
+                values.put("created_at",at.getCreatedAt());
+                values.put("updated_at",at.getUpdatedAt());
+                asetHelper.insertAsetKode(values);
+            }
+
+            // get unit
+            for (Unit at : dataAllSpinner.getUnit()){
+                ContentValues values = new ContentValues();
+                values.put("unit_desc",at.getUnit_desc());
+                asetHelper.insertUnit(values);
+            }
+
+            // get sub unit
+            for (SubUnit at : dataAllSpinner.getSubUnit()){
+                ContentValues values = new ContentValues();
+                values.put("sub_unit_desc",at.getSub_unit_desc());
+                asetHelper.insertSubUnit(values);
+            }
+
+            // get sap
+            for (Sap at : dataAllSpinner.getSap()){
+                ContentValues values = new ContentValues();
+                values.put("sap_desc",at.getSap_desc());
+                asetHelper.insertSap(values);
+            }
+
+            // get afdeling
+            for (Afdelling at : dataAllSpinner.getAfdeling()){
+                ContentValues values = new ContentValues();
+                values.put("afdeling_desc",at.getAfdelling_desc());
+                values.put("unit_id",at.getUnit_id());
+                asetHelper.insertAfdeling(values);
+            }
+
+            dialog.dismiss();
+            Toast.makeText(getApplicationContext(),"sikronasi data sukses",Toast.LENGTH_SHORT).show();
+            return;
+
+        }
+
+        @Override
+        public void onFailure(Call<AllSpinner> call, Throwable t) {
+            dialog.dismiss();
+            Toast.makeText(getApplicationContext(),t.getMessage(),Toast.LENGTH_LONG).show();
+            return;
+        }
+    });
+
+}
 }
