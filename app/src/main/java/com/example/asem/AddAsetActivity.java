@@ -193,7 +193,7 @@ public class AddAsetActivity extends AppCompatActivity {
     Map<Integer, Integer> mapAfdelingSpinner = new HashMap<Integer, Integer>();
     Map<Integer, Integer> mapSpinnerAfdeling = new HashMap<Integer, Integer>();
     Map<Integer, String> mapAfdeling = new HashMap();
-    Map<Integer, Integer> mapSap = new HashMap();
+    Map<Long, Integer> mapSap = new HashMap();
 
     Map<Integer,Integer> mapKodeSpinner = new HashMap();
     Map<Integer,Integer> mapSpinnerkode = new HashMap();
@@ -1546,7 +1546,7 @@ public class AddAsetActivity extends AppCompatActivity {
 
 
                 String nama_aset = inpNamaAset.getText().toString().trim();
-                Integer nomor_aset_sap = mapSap.get(Integer.parseInt(inpNoSAP.getText().toString().trim()));
+                Integer nomor_aset_sap = mapSap.get(Long.parseLong(inpNoSAP.getText().toString().trim()));
                 String luas_aset = String.valueOf(Double.parseDouble(inpLuasAset.getText().toString().trim()));
                 String nilai_aset = String.valueOf(CurrencyToNumber(inpNilaiAsetSAP.getText().toString().trim()));
                 String tgl_oleh = inpTglOleh.getText().toString().trim() + " 00:00:00";
@@ -1761,7 +1761,7 @@ public class AddAsetActivity extends AppCompatActivity {
 
                 // get sap
                 for (Sap at : dataAllSpinner.getSap()){
-                    mapSap.put(Integer.parseInt(at.getSap_desc()),at.getSap_id());
+                    mapSap.put(Long.parseLong(at.getSap_desc()),at.getSap_id());
                     listSpinnerSap.add(at.getSap_desc());
                 }
 

@@ -56,7 +56,7 @@ public class AsetOfflineAdapter extends RecyclerView.Adapter<AsetOfflineAdapter.
 
     Data[] myAsetData;
 
-    public AsetOfflineAdapter(ArrayList<Aset> listAset, Context context) {
+    public AsetOfflineAdapter(Context context, ArrayList<Aset> listAset) {
         this.listAset = listAset;
         this.context = context;
         this.dbAset = new DatabaseHelper(context);
@@ -72,20 +72,20 @@ public class AsetOfflineAdapter extends RecyclerView.Adapter<AsetOfflineAdapter.
         }
         this.listAset.addAll(listAset);
     }
-
-    public void addItem(Aset note) {
-        this.listAset.add(note);
-        notifyItemInserted(listAset.size() - 1);
-    }
-    public void updateItem(int position, Aset note) {
-        this.listAset.set(position, note);
-        notifyItemChanged(position, note);
-    }
-    public void removeItem(int position) {
-        this.listAset.remove(position);
-        notifyItemRemoved(position);
-        notifyItemRangeChanged(position,listAset.size());
-    }
+//
+//    public void addItem(Aset note) {
+//        this.listAset.add(note);
+//        notifyItemInserted(listAset.size() - 1);
+//    }
+//    public void updateItem(int position, Aset note) {
+//        this.listAset.set(position, note);
+//        notifyItemChanged(position, note);
+//    }
+//    public void removeItem(int position) {
+//        this.listAset.remove(position);
+//        notifyItemRemoved(position);
+//        notifyItemRangeChanged(position,listAset.size());
+//    }
 
     @NonNull
     @Override
@@ -109,22 +109,7 @@ public class AsetOfflineAdapter extends RecyclerView.Adapter<AsetOfflineAdapter.
             } else {
                 holder.tvNoinv.setText("-");
             }
-//
-//            Retrofit retrofit = new Retrofit.Builder()
-//                    .baseUrl(AsemApp.BASE_URL_API)
-//                    .addConverterFactory(GsonConverterFactory.create())
-//                    .build();
-//
-//            AsetInterface asetInterface = retrofit.create(AsetInterface.class);
 
-            // jika data di posisi reject maka bikin bg jadi kuning
-            // selain posisi tersebut bg normal
-//            if (listAset.get(i).getKetReject()!=null){
-//                //holder.cvRuang.setBackgroundColor(getColor(context,1));
-//                holder.bgCardView.setBackgroundResource(R.color.Khaki);
-//            } else{
-//                holder.bgCardView.setBackgroundResource(R.color.white);
-//            }
 
             holder.btnHapus.setOnClickListener(new View.OnClickListener() {
                 @Override
