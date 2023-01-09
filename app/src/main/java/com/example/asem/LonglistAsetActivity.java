@@ -98,6 +98,7 @@ public class LonglistAsetActivity extends AppCompatActivity  { //implements Bott
     Button btnReport;
     Button btnFilter;
     Button btnSync;
+    Button btnSyncReset;
     ViewGroup vwSync;
     FloatingActionButton fab;
 
@@ -131,6 +132,7 @@ public class LonglistAsetActivity extends AppCompatActivity  { //implements Bott
         rcAset2.setLayoutManager(new LinearLayoutManager(this));
         vwSync = findViewById(R.id.btnsync);
         btnSync = findViewById(R.id.btnSyncSpinner);
+        btnSyncReset = findViewById(R.id.btnSyncSpinnerDelete);
         fab = findViewById(R.id.addAset);
         srlonglist = findViewById(R.id.srlonglist);
         searchView = findViewById(R.id.svSearch);
@@ -140,6 +142,24 @@ public class LonglistAsetActivity extends AppCompatActivity  { //implements Bott
             @Override
             public void onClick(View view) {
                 getAllSpinnerData();
+            }
+        });
+
+ btnSyncReset.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AsetHelper asetHelper = AsetHelper.getInstance(getApplicationContext());
+                asetHelper.open();
+                asetHelper.deleteAsetJenis();
+                asetHelper.deleteAsetKode();
+                asetHelper.deleteAsetTpe();
+                asetHelper.deleteAsetKondisi();
+                asetHelper.deleteSap();
+                asetHelper.deleteAfdeling();
+                asetHelper.deleteUnit();
+                asetHelper.deleteSubUnit();
+                asetHelper.close();
+                Toast.makeText(getApplicationContext(),"success reset data spinner",Toast.LENGTH_LONG).show();
             }
         });
 
@@ -246,13 +266,13 @@ public class LonglistAsetActivity extends AppCompatActivity  { //implements Bott
 
                             }
                         });
-                        AsetHelper asetHelper = AsetHelper.getInstance(context);
-                        asetHelper.open();
-                        Cursor dataoffline = asetHelper.queryAll();
+//                        AsetHelper asetHelper = AsetHelper.getInstance(context);
+//                        asetHelper.open();
+//                        Cursor dataoffline = asetHelper.queryAll();
                         if (hak_akses_id.equals("7")){
-                            ArrayList<Aset> listAset = MappingHelper.mapCursorToArrayListAset(dataoffline);
-                            offlineAdapter = new AsetOfflineAdapter(LonglistAsetActivity.this, listAset);
-                            rcAset.setAdapter(offlineAdapter);
+//                            ArrayList<Aset> listAset = MappingHelper.mapCursorToArrayListAset(dataoffline);
+//                            offlineAdapter = new AsetOfflineAdapter(LonglistAsetActivity.this, listAset);
+//                            rcAset.setAdapter(offlineAdapter);
                         }
                     }
                 }else {
