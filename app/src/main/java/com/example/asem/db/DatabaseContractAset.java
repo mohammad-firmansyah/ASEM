@@ -45,6 +45,7 @@ public class DatabaseContractAset {
         static String STATUSREJECT = "status_reject";
         static String PERSENKONDISI = "persen_kondisi";
         static String UMUREKONOMISINMONTH = "umur_ekonomis_in_month";
+        static String BERITAACARA = "berita_acara";
 
     }
 }

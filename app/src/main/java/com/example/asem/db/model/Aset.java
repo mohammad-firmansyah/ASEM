@@ -16,6 +16,10 @@ public class Aset implements Parcelable {
     @SerializedName("aset_name")
     @Expose
     private String asetName;
+    @SerializedName("berita_acara")
+    @Expose
+    private String beritaAcara;
+
     @SerializedName("aset_tipe")
     @Expose
     private String asetTipe;
@@ -144,6 +148,14 @@ public class Aset implements Parcelable {
     @SerializedName("hgu")
     @Expose
     private String hgu;
+
+    public String getBeritaAcara() {
+        return beritaAcara;
+    }
+
+    public void setBeritaAcara(String beritaAcara) {
+        this.beritaAcara = beritaAcara;
+    }
 
     public String getHgu() {
         return hgu;
@@ -471,7 +483,7 @@ public class Aset implements Parcelable {
         this.umurEkonomisInMonth = umurEkonomisInMonth;
     }
 
-    public Aset(Integer asetId, String asetName, String asetTipe, String asetJenis, String asetKondisi, String asetSubUnit, String asetKode, String nomorSap, String fotoAset1, String fotoAset2, String fotoAset3, String fotoAset4, String geoTag1, String geoTag2, String geoTag3, String geoTag4, Double asetLuas, String tglInput, String tglOleh, Long nilaiResidu, Long nilaiOleh, String nomorBast, String masaSusut, String keterangan, String fotoQr, String noInv, String fotoAsetQr, String statusPosisi, String unitId, String afdelingId, String userInputId, String createdAt, String updatedAt, Integer jumlahPohon, double persenKondisi, String statusReject, String ketReject, String asetFotoQrStatus,String hgu) {
+    public Aset(Integer asetId, String asetName, String asetTipe, String asetJenis, String asetKondisi, String asetSubUnit, String asetKode, String nomorSap, String fotoAset1, String fotoAset2, String fotoAset3, String fotoAset4, String geoTag1, String geoTag2, String geoTag3, String geoTag4, Double asetLuas, String tglInput, String tglOleh, Long nilaiResidu, Long nilaiOleh, String nomorBast, String masaSusut, String keterangan, String fotoQr, String noInv, String fotoAsetQr, String statusPosisi, String unitId, String afdelingId, String userInputId, String createdAt, String updatedAt, Integer jumlahPohon, double persenKondisi, String statusReject, String ketReject, String asetFotoQrStatus,String hgu,String berita_acara) {
         this.asetId = asetId;
         this.asetName = asetName;
         this.asetTipe = asetTipe;
@@ -513,6 +525,7 @@ public class Aset implements Parcelable {
         this.statusReject = statusReject;
         this.ketReject = ketReject;
         this.asetFotoQrStatus = asetFotoQrStatus;
+        this.beritaAcara = berita_acara ;
     }
 
     @Override

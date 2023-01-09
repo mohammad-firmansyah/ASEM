@@ -62,6 +62,7 @@ import com.example.asem.adapter.AsetOfflineAdapter;
 import com.example.asem.api.AsetInterface;
 import com.example.asem.api.model.Afdelling;
 import com.example.asem.api.model.AllSpinner;
+import com.example.asem.api.model.AsetApproveModel;
 import com.example.asem.api.model.AsetJenis;
 import com.example.asem.api.model.AsetKode2;
 import com.example.asem.api.model.AsetKondisi;
@@ -1534,7 +1535,7 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity  implements 
 
                 // get afdeling
                 Integer i=0;
-                afdeling2 = dataAllSpinner.getAfdeling();
+                    afdeling2 = dataAllSpinner.getAfdeling();
                 for (Afdelling at : dataAllSpinner.getAfdeling()){
                     if (at.getUnit_id() == (spinnerUnit.getSelectedItemId()+1)) {
                         mapSpinnerAfdeling.put(at.getAfdelling_id(), i);

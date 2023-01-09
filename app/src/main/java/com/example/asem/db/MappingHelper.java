@@ -69,7 +69,8 @@ public class MappingHelper {
             String ketreject = asetCursor.getString(asetCursor.getColumnIndexOrThrow(AsetColumns.KETREJECT));
             String statusreject = asetCursor.getString(asetCursor.getColumnIndexOrThrow(AsetColumns.STATUSREJECT));
             Double persenkondisi = asetCursor.getDouble(asetCursor.getColumnIndexOrThrow(String.valueOf(AsetColumns.PERSENKONDISI)));
-            asetList.add(new Aset(asetid, asetname,asettipe,asetjenis,asetkondisi,asetsubunit,asetkode,nomorsap,fotoaset1,fotoaset2,fotoaset3,fotoaset4,geotag1,geotag2,geotag3,geotag4,asetluas,tglinput,tgloleh,nilairesidu,nilaioleh,nomorbast,masasusut,keterangan,fotoqr,noinv,fotoasetqr,statusposisi,unitid,afdelingid,userinputid,createdat,updatedat,jumlahpohon,persenkondisi,statusreject,ketreject,asetfotoqrstatus,hgu));
+            String beritaAcara = asetCursor.getString(asetCursor.getColumnIndexOrThrow(AsetColumns.BERITAACARA));
+            asetList.add(new Aset(asetid, asetname,asettipe,asetjenis,asetkondisi,asetsubunit,asetkode,nomorsap,fotoaset1,fotoaset2,fotoaset3,fotoaset4,geotag1,geotag2,geotag3,geotag4,asetluas,tglinput,tgloleh,nilairesidu,nilaioleh,nomorbast,masasusut,keterangan,fotoqr,noinv,fotoasetqr,statusposisi,unitid,afdelingid,userinputid,createdat,updatedat,jumlahpohon,persenkondisi,statusreject,ketreject,asetfotoqrstatus,hgu,beritaAcara));
         }
         return asetList;
     }
@@ -148,5 +149,54 @@ public class MappingHelper {
         dataAllSpinner.setSap(listSap);
 
         return dataAllSpinner;
+    }
+
+    public static Aset mapCursorToArrayAset(Cursor asetCursor) {
+        Aset asetList = new Aset();
+
+        while (asetCursor.moveToNext()) {
+            Integer asetid = asetCursor.getInt(asetCursor.getColumnIndexOrThrow(AsetColumns.ASETID));
+            String asetname = asetCursor.getString(asetCursor.getColumnIndexOrThrow(AsetColumns.ASETNAME));
+            String asettipe = asetCursor.getString(asetCursor.getColumnIndexOrThrow(AsetColumns.ASETTIPE));
+            String asetjenis = asetCursor.getString(asetCursor.getColumnIndexOrThrow(AsetColumns.ASETJENIS));
+            String asetkondisi = asetCursor.getString(asetCursor.getColumnIndexOrThrow(AsetColumns.ASETKONDISI));
+            String asetsubunit = asetCursor.getString(asetCursor.getColumnIndexOrThrow(AsetColumns.ASETSUBUNIT));
+            String asetkode = asetCursor.getString(asetCursor.getColumnIndexOrThrow(AsetColumns.ASETKODE));
+            String nomorsap = asetCursor.getString(asetCursor.getColumnIndexOrThrow(AsetColumns.NOMORSAP));
+            String fotoaset1 = asetCursor.getString(asetCursor.getColumnIndexOrThrow(AsetColumns.FOTOASET1));
+            String fotoaset2 = asetCursor.getString(asetCursor.getColumnIndexOrThrow(AsetColumns.FOTOASET2));
+            String fotoaset3 = asetCursor.getString(asetCursor.getColumnIndexOrThrow(AsetColumns.FOTOASET3));
+            String fotoaset4 = asetCursor.getString(asetCursor.getColumnIndexOrThrow(AsetColumns.FOTOASET4));
+            String geotag1 = asetCursor.getString(asetCursor.getColumnIndexOrThrow(AsetColumns.GEOTAG1));
+            String geotag2 = asetCursor.getString(asetCursor.getColumnIndexOrThrow(AsetColumns.GEOTAG2));
+            String geotag3 = asetCursor.getString(asetCursor.getColumnIndexOrThrow(AsetColumns.GEOTAG3));
+            String geotag4 = asetCursor.getString(asetCursor.getColumnIndexOrThrow(AsetColumns.GEOTAG4));
+            Double asetluas = asetCursor.getDouble(asetCursor.getColumnIndexOrThrow(String.valueOf(AsetColumns.ASETLUAS)));
+            String tglinput = asetCursor.getString(asetCursor.getColumnIndexOrThrow(AsetColumns.TGLINPUT));
+            String tgloleh = asetCursor.getString(asetCursor.getColumnIndexOrThrow(AsetColumns.TGLOLEH));
+            Long nilairesidu = asetCursor.getLong(asetCursor.getColumnIndexOrThrow(String.valueOf(AsetColumns.NILAIRESIDU)));
+            Long nilaioleh = asetCursor.getLong(asetCursor.getColumnIndexOrThrow(String.valueOf(AsetColumns.NILAIOLEH)));
+            String nomorbast = asetCursor.getString(asetCursor.getColumnIndexOrThrow(AsetColumns.NOMORBAST));
+            String masasusut = asetCursor.getString(asetCursor.getColumnIndexOrThrow(AsetColumns.MASASUSUT));
+            String keterangan = asetCursor.getString(asetCursor.getColumnIndexOrThrow(AsetColumns.KETERANGAN));
+            String fotoqr = asetCursor.getString(asetCursor.getColumnIndexOrThrow(AsetColumns.FOTOQR));
+            String noinv = asetCursor.getString(asetCursor.getColumnIndexOrThrow(AsetColumns.NOINV));
+            String fotoasetqr = asetCursor.getString(asetCursor.getColumnIndexOrThrow(AsetColumns.FOTOASETQR));
+            String statusposisi = asetCursor.getString(asetCursor.getColumnIndexOrThrow(AsetColumns.STATUSPOSISI));
+            String unitid = asetCursor.getString(asetCursor.getColumnIndexOrThrow(AsetColumns.UNITID));
+            String afdelingid = asetCursor.getString(asetCursor.getColumnIndexOrThrow(AsetColumns.AFDELINGID));
+            String userinputid = asetCursor.getString(asetCursor.getColumnIndexOrThrow(AsetColumns.USERINPUTID));
+            String createdat = asetCursor.getString(asetCursor.getColumnIndexOrThrow(AsetColumns.CREATEDAT));
+            String updatedat = asetCursor.getString(asetCursor.getColumnIndexOrThrow(AsetColumns.UPDATEDAT));
+            Integer jumlahpohon = asetCursor.getInt(asetCursor.getColumnIndexOrThrow(String.valueOf(AsetColumns.JUMLAHPOHON)));
+            String hgu = asetCursor.getString(asetCursor.getColumnIndexOrThrow(AsetColumns.HGU));
+            String asetfotoqrstatus = asetCursor.getString(asetCursor.getColumnIndexOrThrow(AsetColumns.ASETFOTOQRSTATUS));
+            String ketreject = asetCursor.getString(asetCursor.getColumnIndexOrThrow(AsetColumns.KETREJECT));
+            String statusreject = asetCursor.getString(asetCursor.getColumnIndexOrThrow(AsetColumns.STATUSREJECT));
+            Double persenkondisi = asetCursor.getDouble(asetCursor.getColumnIndexOrThrow(String.valueOf(AsetColumns.PERSENKONDISI)));
+            String beritaAcara = asetCursor.getString(asetCursor.getColumnIndexOrThrow(String.valueOf(AsetColumns.BERITAACARA)));
+            asetList = new Aset(asetid, asetname,asettipe,asetjenis,asetkondisi,asetsubunit,asetkode,nomorsap,fotoaset1,fotoaset2,fotoaset3,fotoaset4,geotag1,geotag2,geotag3,geotag4,asetluas,tglinput,tgloleh,nilairesidu,nilaioleh,nomorbast,masasusut,keterangan,fotoqr,noinv,fotoasetqr,statusposisi,unitid,afdelingid,userinputid,createdat,updatedat,jumlahpohon,persenkondisi,statusreject,ketreject,asetfotoqrstatus,hgu,beritaAcara);
+        }
+        return asetList;
     }
 }

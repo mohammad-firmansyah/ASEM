@@ -23,6 +23,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.asem.AsemApp;
 import com.example.asem.DetailAsetActivity;
+import com.example.asem.DetailAsetOfflineActivity;
 import com.example.asem.LonglistAsetActivity;
 import com.example.asem.R;
 import com.example.asem.UpdateAsetActivity;
@@ -164,9 +165,9 @@ public class AsetOfflineAdapter extends RecyclerView.Adapter<AsetOfflineAdapter.
             holder.btnDetail.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-//                    Intent intent = new Intent(context, DetailAsetActivity.class);
-//                    intent.putExtra("id",listAset.get(holder.getAdapterPosition()).getAsetId());
-//                    context.startActivity(intent);
+                    Intent intent = new Intent(context, DetailAsetOfflineActivity.class);
+                    intent.putExtra("id",listAset.get(holder.getAdapterPosition()).getAsetId());
+                    context.startActivity(intent);
                     Toast.makeText(context,"Masuk Detail Offline",Toast.LENGTH_SHORT).show();
                 }
             });

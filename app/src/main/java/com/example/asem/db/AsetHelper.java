@@ -53,6 +53,11 @@ public class AsetHelper {
                 null);
     }
 
+    public Cursor getAsetById(String id) {
+        return database.rawQuery("SELECT * FROM " + DatabaseContractAset.TABLE_NAME + "WHERE aset_id = ?", new String[]{String.valueOf("aset_id"),null});
+
+    }
+
     public Cursor getAllAfdeling() {
         return database.query(
                 "afdeling",
@@ -180,7 +185,7 @@ public class AsetHelper {
         return database.query(
                 DatabaseContractAset.TABLE_NAME,
                 null,
-                _ID + " = ?",
+                "aset_id" + " = ?",
                 new String[]{id},
                 null,
                 null,
