@@ -16,6 +16,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.ColorStateList;
+import android.database.Cursor;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -50,6 +51,7 @@ import com.example.asem.api.model.SubUnit;
 import com.example.asem.api.model.Unit;
 import com.example.asem.db.AsetHelper;
 import com.example.asem.db.DatabaseHelper;
+import com.example.asem.db.MappingHelper;
 import com.example.asem.db.model.Aset;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -181,12 +183,40 @@ public class LonglistAsetActivity extends AppCompatActivity  { //implements Bott
                 return false;
             }
         });
+
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getApplicationContext(), "halo online", Toast.LENGTH_SHORT).show();
+//                startActivity(new Intent(LonglistAsetActivity.this, AddAsetActivity.class));
+                startActivity(new Intent(LonglistAsetActivity.this, AddAsetActivity.class));
+
+            }
+        });
+
+        //-------fungsi offline dibawah ini-------//
+//        dbTebu = new DatabaseTebu.DataTmaTebuOfflineDbHelper(this);
+//        datamandor = new ArrayList<>();
 //
-//        dbOffline = new DatabaseHelper(this);
-//        dataoffline = new ArrayList<>();
-//        if (hak_akses_id.equals("7")){
-//            dataoffline = ;
+//        if (sharedPreferences.getString("jabatan","-").equals("MANDOR")){
+//            datamandor = dbTebu.readDataTmaTebu();
+//            adapterOffline = new AdapterLonglistOffline(LonglistTebu.this,datamandor);
 //        }
+//
+//        List<Data2> datas = response.body();
+//        Aset2Adapter adapter = new Aset2Adapter(datas,LonglistAsetActivity.this);
+//        rcAset.setAdapter(adapter);
+
+        dbOffline = new DatabaseHelper(this);
+        AsetHelper asetHelper = AsetHelper.getInstance(context);
+        Cursor dataoffline = asetHelper.queryAll();
+        asetHelper.open();
+        if (hak_akses_id.equals("7")){
+            ArrayList<Aset> listAset = MappingHelper.mapCursorToArrayListAset(dataoffline);
+            asetHelper.close();
+            offlineAdapter = new AsetOfflineAdapter(LonglistAsetActivity.this, listAset);
+            rcAset.setAdapter(offlineAdapter);
+        }
 
 
 //        Boolean switchState = switch_offline.isChecked();
@@ -198,7 +228,7 @@ public class LonglistAsetActivity extends AppCompatActivity  { //implements Bott
                 fab.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Toast.makeText(getApplicationContext(),"helo",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(),"halo online",Toast.LENGTH_SHORT).show();
                         startActivity(new Intent(LonglistAsetActivity.this, AddAsetActivity.class));
                     }
                 });
@@ -257,14 +287,6 @@ public class LonglistAsetActivity extends AppCompatActivity  { //implements Bott
             }
         });
 
-//        fab.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-////                startActivity(new Intent(LonglistAsetActivity.this, AddAsetActivity.class));
-//                startActivity(new Intent(LonglistAsetActivity.this, AddAsetActivity.class));
-//
-//            }
-//        });
 
         asetInterface = AsemApp.getApiClient().create(AsetInterface.class);
 //        allData = new Data[]{};
