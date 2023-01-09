@@ -140,8 +140,6 @@ public class LonglistAsetActivity extends AppCompatActivity  { //implements Bott
             @Override
             public void onClick(View view) {
                 getAllSpinnerData();
-                Toast.makeText(getApplicationContext(),"halo",Toast.LENGTH_LONG).show();
-                dialog.dismiss();
             }
         });
 
@@ -477,6 +475,7 @@ public void getAllSpinnerData(){
             AsetHelper asetHelper = AsetHelper.getInstance(getApplicationContext());
             asetHelper.open();
             for (AsetTipe at : dataAllSpinner.getAsetTipe()){
+//                asetHelper.deleteAsetTpe();
                 ContentValues values = new ContentValues();
                 values.put("aset_tipe_desc",at.getAset_tipe_desc());
                 asetHelper.insertAsetTpe(values);
@@ -484,6 +483,7 @@ public void getAllSpinnerData(){
 
             // get data jenis
             for (AsetJenis at : dataAllSpinner.getAsetJenis()){
+//                asetHelper.deleteAsetJenis();
                 ContentValues values = new ContentValues();
                 values.put("aset_jenis_desc",at.getAset_jenis_desc());
                 asetHelper.insertAsetJenis(values);
@@ -491,6 +491,7 @@ public void getAllSpinnerData(){
 
             // get kondisi aset
             for (AsetKondisi at : dataAllSpinner.getAsetKondisi()){
+//                asetHelper.deleteAsetKondisi();
                 ContentValues values = new ContentValues();
                 values.put("aset_kondisi_desc",at.getAset_kondisi_desc());
                 asetHelper.insertAsetKondisi(values);
@@ -498,6 +499,7 @@ public void getAllSpinnerData(){
 
             // get kode aset
             for (AsetKode2 at : dataAllSpinner.getAsetKode()){
+//                asetHelper.deleteAsetKode();
                 ContentValues values = new ContentValues();
                 values.put("aset_class",at.getAsetClass());
                 values.put("aset_group",at.getAsetGroup());
@@ -510,6 +512,7 @@ public void getAllSpinnerData(){
 
             // get unit
             for (Unit at : dataAllSpinner.getUnit()){
+//                asetHelper.deleteUnit();
                 ContentValues values = new ContentValues();
                 values.put("unit_desc",at.getUnit_desc());
                 asetHelper.insertUnit(values);
@@ -517,6 +520,7 @@ public void getAllSpinnerData(){
 
             // get sub unit
             for (SubUnit at : dataAllSpinner.getSubUnit()){
+//                asetHelper.deleteSubUnit();
                 ContentValues values = new ContentValues();
                 values.put("sub_unit_desc",at.getSub_unit_desc());
                 asetHelper.insertSubUnit(values);
@@ -524,6 +528,7 @@ public void getAllSpinnerData(){
 
             // get sap
             for (Sap at : dataAllSpinner.getSap()){
+//                asetHelper.deleteSap();
                 ContentValues values = new ContentValues();
                 values.put("sap_desc",at.getSap_desc());
                 asetHelper.insertSap(values);
@@ -531,6 +536,7 @@ public void getAllSpinnerData(){
 
             // get afdeling
             for (Afdelling at : dataAllSpinner.getAfdeling()){
+//                asetHelper.deleteAfdeling();
                 ContentValues values = new ContentValues();
                 values.put("afdeling_desc",at.getAfdelling_desc());
                 values.put("unit_id",at.getUnit_id());

@@ -192,35 +192,67 @@ public class AsetHelper {
         return database.insert(DatabaseContractAset.TABLE_NAME, null, values);
     }
 
-    public long insertAsetTpe(ContentValues values) {
-        return database.insert(DatabaseContractAsetTipe.TABLE_NAME, null, values);
+
+    public void insertAsetTpe(ContentValues values) {
+        database.insert(DatabaseContractAsetTipe.TABLE_NAME, null, values);
     }
 
-    public long insertAfdeling(ContentValues values) {
-        return database.insert(DatabaseContractAfdeling.TABLE_NAME, null, values);
+    public void deleteAsetTpe() {
+        database.delete(DatabaseContractAsetTipe.TABLE_NAME,null,null);
     }
 
-    public long insertUnit(ContentValues values) {
-        return database.insert(DatabaseContractUnit.TABLE_NAME, null, values);
+    public void insertAfdeling(ContentValues values) {
+        database.insert(DatabaseContractAfdeling.TABLE_NAME, null, values);
+    }
+    public void deleteAfdeling() {
+        database.delete(DatabaseContractAfdeling.TABLE_NAME,null,null);
     }
 
-    public long insertSubUnit(ContentValues values) {
-        return database.insert(DatabaseContractSubUnit.TABLE_NAME, null, values);
+    public void insertUnit(ContentValues values) {
+        database.insert(DatabaseContractUnit.TABLE_NAME, null, values);
     }
 
-    public long insertAsetKode(ContentValues values) {
-        return database.insert(DatabaseContractAsetKode.TABLE_NAME, null, values);
+    public void deleteUnit() {
+        database.delete(DatabaseContractUnit.TABLE_NAME,null,null);
     }
 
-    public long insertAsetJenis(ContentValues values) {
-        return database.insert(DatabaseContractAsetJenis.TABLE_NAME, null, values);
+    public void insertSubUnit(ContentValues values) {
+        database.insert(DatabaseContractSubUnit.TABLE_NAME, null, values);
+    }
+    public void deleteSubUnit() {
+        database.delete(DatabaseContractSubUnit.TABLE_NAME,null,null);
     }
 
-    public long insertAsetKondisi(ContentValues values) {
-        return database.insert(DatabaseContractAsetKondisi.TABLE_NAME, null, values);
+    public void insertAsetKode(ContentValues values) {
+        database.insert(DatabaseContractAsetKode.TABLE_NAME, null, values);
     }
-    public long insertSap(ContentValues values) {
-        return database.insert(DatabaseContractSap.TABLE_NAME, null, values);
+
+    public void deleteAsetKode() {
+        database.delete(DatabaseContractAsetKode.TABLE_NAME,null,null);
+    }
+
+    public void insertAsetJenis(ContentValues values) {
+        database.insert(DatabaseContractAsetJenis.TABLE_NAME, null, values);
+    }
+
+    public void deleteAsetJenis() {
+        database.delete(DatabaseContractAsetJenis.TABLE_NAME,null,null);
+    }
+
+    public void insertAsetKondisi(ContentValues values) {
+
+        database.insert(DatabaseContractAsetKondisi.TABLE_NAME, null, values);
+    }
+
+    public void deleteAsetKondisi() {
+
+        database.delete(DatabaseContractAsetKondisi.TABLE_NAME,null,null);
+    }
+    public void insertSap(ContentValues values) {
+        database.insert(DatabaseContractSap.TABLE_NAME, null, values);
+    }
+    public void deleteSap() {
+        database.delete(DatabaseContractSap.TABLE_NAME,null,null);
     }
 
     public int update(String id, ContentValues values) {
