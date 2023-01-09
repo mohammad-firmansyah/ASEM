@@ -207,16 +207,8 @@ public class LonglistAsetActivity extends AppCompatActivity  { //implements Bott
 //        Aset2Adapter adapter = new Aset2Adapter(datas,LonglistAsetActivity.this);
 //        rcAset.setAdapter(adapter);
 
-        dbOffline = new DatabaseHelper(this);
-        AsetHelper asetHelper = AsetHelper.getInstance(context);
-        Cursor dataoffline = asetHelper.queryAll();
-        asetHelper.open();
-        if (hak_akses_id.equals("7")){
-            ArrayList<Aset> listAset = MappingHelper.mapCursorToArrayListAset(dataoffline);
-            asetHelper.close();
-            offlineAdapter = new AsetOfflineAdapter(LonglistAsetActivity.this, listAset);
-            rcAset.setAdapter(offlineAdapter);
-        }
+//        dbOffline = new DatabaseHelper(this);
+
 
 
 //        Boolean switchState = switch_offline.isChecked();
@@ -254,6 +246,14 @@ public class LonglistAsetActivity extends AppCompatActivity  { //implements Bott
 
                             }
                         });
+                        AsetHelper asetHelper = AsetHelper.getInstance(context);
+                        asetHelper.open();
+                        Cursor dataoffline = asetHelper.queryAll();
+                        if (hak_akses_id.equals("7")){
+                            ArrayList<Aset> listAset = MappingHelper.mapCursorToArrayListAset(dataoffline);
+                            offlineAdapter = new AsetOfflineAdapter(LonglistAsetActivity.this, listAset);
+                            rcAset.setAdapter(offlineAdapter);
+                        }
                     }
                 }else {
                     dialog.dismiss();
