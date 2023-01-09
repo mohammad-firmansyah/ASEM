@@ -102,7 +102,7 @@ public class AsetOfflineAdapter extends RecyclerView.Adapter<AsetOfflineAdapter.
             holder.tvAsetName.setText(String.valueOf(listAset.get(position).getAsetName()));
 
             holder.tvNilaiAset.setText(utils.Formatrupiah(Double.parseDouble(String.valueOf(listAset.get(position).getNilaiOleh()))));
-            holder.tvUmurEkonomis.setText(utils.MonthToYear(listAset.get(position).getUmurEkonomisInMonth()));
+//            holder.tvUmurEkonomis.setText(utils.MonthToYear(listAset.get(position).getUmurEkonomisInMonth()));
             holder.tvStatusPosisi.setText(String.valueOf(listAset.get(position).getStatusPosisi()));
             if (listAset.get(position).getNoInv() != null) {
                 holder.tvNoinv.setText(String.valueOf(listAset.get(position).getNoInv()));

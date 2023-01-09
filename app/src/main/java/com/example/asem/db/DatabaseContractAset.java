@@ -30,7 +30,7 @@ public class DatabaseContractAset {
         static String MASASUSUT = "masa_susut";
         static String KETERANGAN = "keterangan";
         static String FOTOQR = "foto_qr";
-        static String NOINV = "no_iv";
+        static String NOINV = "no_inv";
         static String FOTOASETQR = "foto_aset_qr";
         static String STATUSPOSISI = "status_posisi";
         static String UNITID = "unit_id";
@@ -41,7 +41,6 @@ public class DatabaseContractAset {
         static String JUMLAHPOHON = "jumlah_pohon";
         static String HGU = "hgu";
         static String ASETFOTOQRSTATUS = "aset_foto_qr_status";
-        static String STATUSPOSISIID = "status_posisi_id";
         static String KETREJECT = "ket_reject";
         static String STATUSREJECT = "status_reject";
         static String PERSENKONDISI = "persen_kondisi";

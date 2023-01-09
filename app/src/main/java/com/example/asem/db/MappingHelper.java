@@ -66,12 +66,10 @@ public class MappingHelper {
             Integer jumlahpohon = asetCursor.getInt(asetCursor.getColumnIndexOrThrow(String.valueOf(AsetColumns.JUMLAHPOHON)));
             String hgu = asetCursor.getString(asetCursor.getColumnIndexOrThrow(AsetColumns.HGU));
             String asetfotoqrstatus = asetCursor.getString(asetCursor.getColumnIndexOrThrow(AsetColumns.ASETFOTOQRSTATUS));
-            Integer statusposisiid = asetCursor.getInt(asetCursor.getColumnIndexOrThrow(String.valueOf(AsetColumns.STATUSPOSISIID)));
             String ketreject = asetCursor.getString(asetCursor.getColumnIndexOrThrow(AsetColumns.KETREJECT));
             String statusreject = asetCursor.getString(asetCursor.getColumnIndexOrThrow(AsetColumns.STATUSREJECT));
             Double persenkondisi = asetCursor.getDouble(asetCursor.getColumnIndexOrThrow(String.valueOf(AsetColumns.PERSENKONDISI)));
-            Integer umurekonomisinmonth = asetCursor.getInt(asetCursor.getColumnIndexOrThrow(String.valueOf(AsetColumns.UMUREKONOMISINMONTH)));
-            asetList.add(new Aset(asetid, asetname,asettipe,asetjenis,asetkondisi,asetsubunit,asetkode,nomorsap,fotoaset1,fotoaset2,fotoaset3,fotoaset4,geotag1,geotag2,geotag3,geotag4,asetluas,tglinput,tgloleh,nilairesidu,nilaioleh,nomorbast,masasusut,keterangan,fotoqr,noinv,fotoasetqr,statusposisi,unitid,afdelingid,userinputid,createdat,updatedat,jumlahpohon,umurekonomisinmonth,persenkondisi,statusposisiid,statusreject,ketreject,asetfotoqrstatus,hgu));
+            asetList.add(new Aset(asetid, asetname,asettipe,asetjenis,asetkondisi,asetsubunit,asetkode,nomorsap,fotoaset1,fotoaset2,fotoaset3,fotoaset4,geotag1,geotag2,geotag3,geotag4,asetluas,tglinput,tgloleh,nilairesidu,nilaioleh,nomorbast,masasusut,keterangan,fotoqr,noinv,fotoasetqr,statusposisi,unitid,afdelingid,userinputid,createdat,updatedat,jumlahpohon,persenkondisi,statusreject,ketreject,asetfotoqrstatus,hgu));
         }
         return asetList;
     }
