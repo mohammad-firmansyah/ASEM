@@ -144,7 +144,7 @@ public class ReportActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 spinnerIdTipeAsset = String.valueOf(position);
-                setVisibilityDynamic();
+//                setVisibilityDynamic();
 
             }
 
@@ -158,7 +158,7 @@ public class ReportActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 spinnerIdJenisAset = String.valueOf(position);
-                setVisibilityDynamic();
+//                setVisibilityDynamic();
 
             }
 
@@ -172,7 +172,7 @@ public class ReportActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 spinnerIdAsetKondisi = String.valueOf(position);
-                setVisibilityDynamic();
+//                setVisibilityDynamic();
 
             }
 
@@ -186,7 +186,7 @@ public class ReportActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 spinnerIdKodeAset = String.valueOf(position);
-                setVisibilityDynamic();
+//                setVisibilityDynamic();
 
             }
 
@@ -200,7 +200,7 @@ public class ReportActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 getSpinnerIdJenisReport = String.valueOf(position);
-                setVisibilityDynamic();
+//                setVisibilityDynamic();
             }
 
             @Override
@@ -219,7 +219,7 @@ public class ReportActivity extends AppCompatActivity {
 //            }
 //        });
 
-        setVisibilityDynamic();
+//        setVisibilityDynamic();
     }
 
     private void getTipeAset(){
@@ -468,18 +468,18 @@ public class ReportActivity extends AppCompatActivity {
     private void apiDownloadReport(){
 
         dialog.show();
-//        if (inpTglInput1.getText().toString().matches("")) {
-//            dialog.dismiss();
-//            inpTglInput1.setError("Tgl 1 harus diisi");
-//            inpTglInput1.requestFocus();
-//            return;
-//        }
-//        if (inpTglInput2.getText().toString().matches("")) {
-//            dialog.dismiss();
-//            inpTglInput2.setError("Tgl 2 harus diisi");
-//            inpTglInput2.requestFocus();
-//            return;
-//        }
+        if (inpTglInput1.getText().toString().matches("")) {
+            dialog.dismiss();
+            inpTglInput1.setError("Tgl 1 harus diisi");
+            inpTglInput1.requestFocus();
+            return;
+        }
+        if (inpTglInput2.getText().toString().matches("")) {
+            dialog.dismiss();
+            inpTglInput2.setError("Tgl 2 harus diisi");
+            inpTglInput2.requestFocus();
+            return;
+        }
 
 
         try{
@@ -568,20 +568,21 @@ public class ReportActivity extends AppCompatActivity {
 public void setVisibilityDynamic(){
 
         TextView tvHgu = findViewById(R.id.tvHGU);
+        tvHgu.setVisibility(View.GONE);
 
-        if (unit_id == 0) {
-            spinnerUnit.setVisibility(View.VISIBLE);
-        } else {
-            spinnerUnit.setVisibility(View.GONE);
-            tvUnit.setVisibility(View.GONE);
-        }
-
-        if (spinnerJenisAset.getSelectedItemId() != 0 || spinnerKodeAset.getSelectedItemId() != 0 || spinnerAsetKondisi.getSelectedItemId() != 0 || spinnerTipeAset.getSelectedItemId() != 0) {
-           inpHGU.setEnabled(false);
-           tvHgu.setEnabled(false);
-
-           inpTglInput1.setEnabled(false);
-           inpTglInput2.setEnabled(false);
-        }
+//        if (unit_id == 0) {
+//            spinnerUnit.setVisibility(View.VISIBLE);
+//        } else {
+//            spinnerUnit.setVisibility(View.GONE);
+//            tvUnit.setVisibility(View.GONE);
+//        }
+//
+//        if (spinnerJenisAset.getSelectedItemId() != 0 || spinnerKodeAset.getSelectedItemId() != 0 || spinnerAsetKondisi.getSelectedItemId() != 0 || spinnerTipeAset.getSelectedItemId() != 0) {
+//           inpHGU.setEnabled(false);
+//           tvHgu.setEnabled(false);
+//
+////           inpTglInput1.setEnabled(false);
+////           inpTglInput2.setEnabled(false);
+//        }
     }
 }

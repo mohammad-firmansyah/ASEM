@@ -208,7 +208,6 @@ public class LonglistAsetActivity extends AppCompatActivity  { //implements Bott
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getApplicationContext(), "halo online", Toast.LENGTH_SHORT).show();
 //                startActivity(new Intent(LonglistAsetActivity.this, AddAsetActivity.class));
                 startActivity(new Intent(LonglistAsetActivity.this, AddAsetActivity.class));
 
@@ -241,7 +240,6 @@ public class LonglistAsetActivity extends AppCompatActivity  { //implements Bott
                 fab.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Toast.makeText(getApplicationContext(),"halo online",Toast.LENGTH_SHORT).show();
                         startActivity(new Intent(LonglistAsetActivity.this, AddAsetActivity.class));
                     }
                 });

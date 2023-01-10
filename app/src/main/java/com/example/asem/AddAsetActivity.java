@@ -1670,6 +1670,7 @@ public class AddAsetActivity extends AppCompatActivity {
                             customDialogAddAset.dismiss();
                             inpNoSAP.setError("Nomor SAP sudah ada");
                             inpNoSAP.requestFocus();
+                            Toast.makeText(getApplicationContext(),"nomor sap sudah ada",Toast.LENGTH_LONG).show();
                             return;
                         }
                         dialog.dismiss();
