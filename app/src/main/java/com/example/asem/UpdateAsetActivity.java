@@ -1,15 +1,12 @@
 package com.example.asem;
 
 import static com.example.asem.utils.utils.CurrencyToNumber;
-import static com.example.asem.utils.utils.latitudeValue;
-import static com.example.asem.utils.utils.longitudeValue;
 
 import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.FileProvider;
@@ -20,7 +17,6 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -49,23 +45,17 @@ import android.widget.EditText;
 import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.asem.api.AsetInterface;
-import com.example.asem.api.MyErrorMessage;
 import com.example.asem.api.model.Afdelling;
 import com.example.asem.api.model.AfdellingModel;
 import com.example.asem.api.model.AllSpinner;
-import com.example.asem.api.model.Aset;
-import com.example.asem.api.model.AsetApproveModel;
 import com.example.asem.api.model.AsetJenis;
 import com.example.asem.api.model.AsetJenisModel;
-import com.example.asem.api.model.AsetKode;
 import com.example.asem.api.model.AsetKode2;
-import com.example.asem.api.model.AsetKodeModel;
 import com.example.asem.api.model.AsetKodeModel2;
 import com.example.asem.api.model.AsetKondisi;
 import com.example.asem.api.model.AsetModel;
@@ -83,17 +73,13 @@ import com.example.asem.utils.utils;
 import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
-import com.google.gson.Gson;
 import com.squareup.picasso.Picasso;
 
 import java.io.File;
-import java.lang.reflect.Type;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -107,13 +93,9 @@ import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
+
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationRequest;
-
-import org.jetbrains.annotations.NotNull;
-import org.json.JSONObject;
 
 public class UpdateAsetActivity extends AppCompatActivity {
     Data aset;
@@ -130,8 +112,8 @@ public class UpdateAsetActivity extends AppCompatActivity {
     double latitudeValue = 0;
     Map<Integer,Integer> mapKodeSpinner = new HashMap();
     Map<Integer,Integer> mapSpinnerkode = new HashMap();
-    Map<Integer, Integer> mapSap = new HashMap();
-    Map<Integer, Integer> mapSpinnerSap = new HashMap();
+    Map<Long, Integer> mapSap = new HashMap();
+    Map<Integer, Long> mapSpinnerSap = new HashMap();
     List<String> listSpinnerSap = new ArrayList<>();
 
     DataAllSpinner allSpinner;
@@ -925,7 +907,7 @@ public class UpdateAsetActivity extends AppCompatActivity {
                 tvUploudBA.setText(response.body().getData().getBeritaAcara());
                 inpTglInput.setText(response.body().getData().getTglInput().split(" ")[0]);
                 inpTglOleh.setText(response.body().getData().getTglOleh().split(" ")[0]);
-                inpNoSAP.setText(String.valueOf(mapSpinnerSap.get(Integer.parseInt(response.body().getData().getNomorSap()))));
+                inpNoSAP.setText(response.body().getData().getNomorSap());
                 inpNamaAset.setText(response.body().getData().getAsetName());
                 inpLuasAset.setText(String.valueOf(Double.parseDouble(String.valueOf(response.body().getData().getAsetLuas()))));
                 inpNilaiAsetSAP.setText(formatrupiah(Double.parseDouble(String.valueOf(response.body().getData().getNilaiOleh()))));
@@ -1660,7 +1642,7 @@ public class UpdateAsetActivity extends AppCompatActivity {
         try{
 
             String nama_aset = inpNamaAset.getText().toString().trim();
-            Integer nomor_aset_sap = mapSap.get(Integer.parseInt(inpNoSAP.getText().toString().trim()));
+            String nomor_aset_sap = inpNoSAP.getText().toString().trim();
             String luas_aset = String.valueOf(Double.parseDouble(inpLuasAset.getText().toString().trim()));
             String nilai_aset = String.valueOf(CurrencyToNumber(inpNilaiAsetSAP.getText().toString().trim()));
             String tgl_oleh = inpTglOleh.getText().toString().trim() + " 00:00:00";
@@ -1907,8 +1889,8 @@ public class UpdateAsetActivity extends AppCompatActivity {
 
                 // get sap
                 for (Sap at : dataAllSpinner.getSap()){
-                    mapSap.put(Integer.parseInt(at.getSap_desc()),at.getSap_id());
-                    mapSpinnerSap.put(at.getSap_id(),Integer.parseInt(at.getSap_desc()));
+                    mapSap.put(Long.parseLong(at.getSap_desc()),at.getSap_id());
+                    mapSpinnerSap.put(at.getSap_id(),Long.parseLong(at.getSap_desc()));
                     listSpinnerSap.add(at.getSap_desc());
                 }
 

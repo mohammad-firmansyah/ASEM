@@ -13,10 +13,53 @@
         android:id="@+id/upLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/switchoff"
         android:orientation="horizontal"
         android:gravity="center_horizontal"
         android:padding="10dp"
         >
+
+        <LinearLayout
+            android:id="@+id/btnsync"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_below="@id/switchoff"
+            android:layout_marginHorizontal="10dp"
+            android:visibility="gone"
+            >
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnSyncSpinner"
+                android:layout_marginHorizontal="5dp"
+                android:layout_width="0dp"
+                android:layout_weight="0.3"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:background="@drawable/bg_rounded_btn_sc"
+                android:text="Sinkronkan Data"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:textColor="@color/white"
+                android:textSize="15sp"
+                android:paddingVertical="10dp"
+                />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnSyncSpinnerDelete"
+                android:layout_marginHorizontal="5dp"
+                android:layout_width="0dp"
+                android:layout_weight="0.3"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:background="@drawable/bg_rounded_btn_sc"
+                android:text="Reset Data"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:textColor="@color/white"
+                android:textSize="15sp"
+                android:paddingVertical="10dp"
+                />
+        </LinearLayout>
 
         <androidx.appcompat.widget.SearchView
             android:layout_weight="0.7"
@@ -66,7 +109,7 @@
         android:id="@+id/switchoff"
         android:layout_width="match_parent"
         android:layout_height="30dp"
-        android:layout_below="@id/upLayout"
+        android:paddingTop="6dp"
         android:visibility="gone"
         >
 
@@ -96,49 +139,7 @@
 
     </LinearLayout>
 
-    <LinearLayout
-        android:id="@+id/btnsync"
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:layout_below="@id/switchoff"
-        android:layout_marginHorizontal="10dp"
-        android:layout_marginVertical="10dp"
-        android:visibility="gone"
-        >
 
-
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btnSyncSpinner"
-            android:layout_marginHorizontal="5dp"
-            android:layout_width="0dp"
-            android:layout_weight="0.3"
-            android:layout_height="wrap_content"
-            android:padding="10dp"
-            android:background="@drawable/bg_rounded_btn_sc"
-            android:text="Sinkronkan Data"
-            android:textStyle="bold"
-            android:gravity="center"
-            android:textColor="@color/white"
-            android:textSize="15sp"
-            android:paddingVertical="10dp"
-            />
-
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btnSyncSpinnerDelete"
-            android:layout_marginHorizontal="5dp"
-            android:layout_width="0dp"
-            android:layout_weight="0.3"
-            android:layout_height="wrap_content"
-            android:padding="10dp"
-            android:background="@drawable/bg_rounded_btn_sc"
-            android:text="Reset Data"
-            android:textStyle="bold"
-            android:gravity="center"
-            android:textColor="@color/white"
-            android:textSize="15sp"
-            android:paddingVertical="10dp"
-            />
-    </LinearLayout>
 
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
@@ -146,9 +147,10 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:id="@+id/mainAset"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:gravity="center"
-        android:layout_below="@id/btnsync"
+        android:layout_below="@id/upLayout"
         android:layout_above="@+id/bottomnav"
         tools:context=".MainActivity">
 

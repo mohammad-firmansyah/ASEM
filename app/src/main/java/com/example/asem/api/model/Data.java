@@ -11,13 +11,13 @@ public class Data {
 
     @SerializedName("jumlah_pohon")
     @Expose
-    private Integer jumlahPohon;
+    private Long jumlahPohon;
 
-    public Integer getJumlahPohon() {
+    public Long getJumlahPohon() {
         return jumlahPohon;
     }
 
-    public void setJumlahPohon(Integer jumlahPohon) {
+    public void setJumlahPohon(Long jumlahPohon) {
         this.jumlahPohon = jumlahPohon;
     }
 
@@ -77,10 +77,10 @@ public class Data {
     private String tglOleh;
     @SerializedName("nilai_residu")
     @Expose
-    private Integer nilaiResidu;
+    private Long nilaiResidu;
     @SerializedName("nilai_oleh")
     @Expose
-    private Integer nilaiOleh;
+    private Long nilaiOleh;
     @SerializedName("nomor_bast")
     @Expose
     private String nomorBast;
@@ -349,19 +349,19 @@ public class Data {
         this.tglOleh = tglOleh;
     }
 
-    public Integer getNilaiResidu() {
+    public Long getNilaiResidu() {
         return nilaiResidu;
     }
 
-    public void setNilaiResidu(Integer nilaiResidu) {
+    public void setNilaiResidu(Long nilaiResidu) {
         this.nilaiResidu = nilaiResidu;
     }
 
-    public Integer getNilaiOleh() {
+    public Long getNilaiOleh() {
         return nilaiOleh;
     }
 
-    public void setNilaiOleh(Integer nilaiOleh) {
+    public void setNilaiOleh(Long nilaiOleh) {
         this.nilaiOleh = nilaiOleh;
     }
 
@@ -477,7 +477,7 @@ public class Data {
         this.umurEkonomisInMonth = umurEkonomisInMonth;
     }
 
-    public Data(Integer asetId, String asetName, Integer asetTipe, Integer asetJenis, Integer asetKondisi, Integer asetSubUnit, Integer asetKode, String nomorSap, String fotoAset1, String fotoAset2, String fotoAset3, String fotoAset4, String geoTag1, String geoTag2, String geoTag3, String geoTag4, Double asetLuas, String tglInput, String tglOleh, Integer nilaiResidu, Integer nilaiOleh, String nomorBast, String masaSusut, String keterangan, String fotoQr, String noInv, String fotoAsetQr, Integer statusPosisi, Integer unitId, Integer afdelingId, Integer userInputId, String createdAt, String updatedAt, Integer jumlahPohon, double persenKondisi,String baFile,String statusReject,String ket_reject,String aset_foto_qr_status,String hgu  ) {
+    public Data(Integer asetId, String asetName, Integer asetTipe, Integer asetJenis, Integer asetKondisi, Integer asetSubUnit, Integer asetKode, String nomorSap, String fotoAset1, String fotoAset2, String fotoAset3, String fotoAset4, String geoTag1, String geoTag2, String geoTag3, String geoTag4, Double asetLuas, String tglInput, String tglOleh, Long nilaiResidu, Long nilaiOleh, String nomorBast, String masaSusut, String keterangan, String fotoQr, String noInv, String fotoAsetQr, Integer statusPosisi, Integer unitId, Integer afdelingId, Integer userInputId, String createdAt, String updatedAt, Long jumlahPohon, double persenKondisi,String baFile,String statusReject,String ket_reject,String aset_foto_qr_status,String hgu  ) {
         this.asetId = asetId;
         this.asetName = asetName;
         this.asetTipe = asetTipe;

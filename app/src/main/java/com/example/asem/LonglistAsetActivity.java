@@ -235,7 +235,6 @@ public class LonglistAsetActivity extends AppCompatActivity  { //implements Bott
         switch_offline.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                dialog.show();
                 srlonglist.setEnabled(false);
                 fab.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -244,6 +243,7 @@ public class LonglistAsetActivity extends AppCompatActivity  { //implements Bott
                     }
                 });
                 if(isChecked){
+                    dialog.show();
                     //aktifkan longlist offline
                     if (switch_offline.isEmojiCompatEnabled()){
                         vwSync.setVisibility(View.VISIBLE);
@@ -363,7 +363,7 @@ public class LonglistAsetActivity extends AppCompatActivity  { //implements Bott
 
     private void getDataOffline(){
         Data[] allData = new Data[]{
-                new Data(1,"tesoff",1,2,1,2,1,"6","fotoaset1","fotoaset2","fotoaset3","fotoaset4","geo","null","null","null", 999.0,"2023-01-03 10:11:23","2023-01-03 00:00:00",9,666,"nnn","1","-",null,null,null,1,16,185,null,"2023-01-03T03:11:23.000000Z","2023-01-03T03:11:23.000000Z",null,99,null,null,null,null,"jjj")
+//                new Data(1,"tesoff",1,2,1,2,1,"6","fotoaset1","fotoaset2","fotoaset3","fotoaset4","geo","null","null","null", 999.0,"2023-01-03 10:11:23","2023-01-03 00:00:00",9,666,"nnn","1","-",null,null,null,1,16,185,null,"2023-01-03T03:11:23.000000Z","2023-01-03T03:11:23.000000Z",null,99,null,null,null,null,"jjj")
         };
 //
 //        AsetOfflineAdapter asetOfflineAdapter = new AsetOfflineAdapter(listAset,LonglistAsetActivity.this);
