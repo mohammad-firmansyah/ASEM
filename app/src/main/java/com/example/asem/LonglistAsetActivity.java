@@ -273,10 +273,7 @@ public class LonglistAsetActivity extends AppCompatActivity  { //implements Bott
                         if (hak_akses_id.equals("7")){
                             ArrayList<Aset> listAset = MappingHelper.mapCursorToArrayListAset(dataoffline);
                             offlineAdapter = new AsetOfflineAdapter(LonglistAsetActivity.this, listAset);
-                            if (listAset.size() != 0) {
-
                                 rcAset.setAdapter(offlineAdapter);
-                            }
                         }
                         asetHelper.close();
                     }

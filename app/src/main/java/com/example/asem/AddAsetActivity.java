@@ -1546,7 +1546,7 @@ public class AddAsetActivity extends AppCompatActivity {
 
 
                 String nama_aset = inpNamaAset.getText().toString().trim();
-                Integer nomor_aset_sap = mapSap.get(Long.parseLong(inpNoSAP.getText().toString().trim()));
+                String nomor_aset_sap = inpNoSAP.getText().toString().trim();
                 String luas_aset = String.valueOf(Double.parseDouble(inpLuasAset.getText().toString().trim()));
                 String nilai_aset = String.valueOf(CurrencyToNumber(inpNilaiAsetSAP.getText().toString().trim()));
                 String tgl_oleh = inpTglOleh.getText().toString().trim() + " 00:00:00";

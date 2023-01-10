@@ -9,6 +9,8 @@ import android.app.DownloadManager;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
@@ -54,6 +56,7 @@ import com.google.android.gms.location.FusedLocationProviderClient;
 import com.squareup.picasso.Picasso;
 
 import java.io.File;
+import java.net.URL;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -83,7 +86,7 @@ public class DetailAsetOfflineActivity extends AppCompatActivity {
     String urlfotoasetqr = "";
     Map<Integer, Integer> mapAfdelingSpinner = new HashMap<Integer, Integer>();
     Map<Long, Integer> mapSap = new HashMap();
-    Map<Integer, Integer> mapSpinnerSap = new HashMap();
+    Map<Integer, Long> mapSpinnerSap = new HashMap();
     List<String> listSpinnerSap = new ArrayList<>();
     Map<Integer,Integer> mapKodeSpinner = new HashMap();
     Map<Integer,Integer> mapSpinnerkode = new HashMap();
@@ -214,7 +217,8 @@ public class DetailAsetOfflineActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail_offline);
-        id = new Intent().getIntExtra("id",0);
+        Intent intent = getIntent();
+        id = intent.getIntExtra("id",0);
 
         asetHelper = AsetHelper.getInstance(getApplicationContext());
 
@@ -226,13 +230,13 @@ public class DetailAsetOfflineActivity extends AppCompatActivity {
         dialog.setContentView(R.layout.loading);
         dialog.setCanceledOnTouchOutside(false);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(0));
-        dialog.show();
+//        dialog.show();
         spinnerNoSap = new Dialog(DetailAsetOfflineActivity.this);
         spinnerNoSap.dismiss();
         spinnerNoSap.setContentView(R.layout.searchable_spinner);
         spinnerNoSap.getWindow().setLayout(650,800);
         spinnerNoSap.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        spinnerNoSap.show();
+//        spinnerNoSap.show();
         editTextSap=spinnerNoSap.findViewById(R.id.edit_text);
         listView=spinnerNoSap.findViewById(R.id.list_view);
         inpKetReject = findViewById(R.id.inpKetReject);
@@ -348,11 +352,9 @@ public class DetailAsetOfflineActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 spinnerIdSubUnit = String.valueOf(position);
-
                 editVisibilityDynamic();
                 setAfdelingAdapter();
-
-//                setValueInput();
+                setValueInput();
 
             }
 
@@ -367,7 +369,7 @@ public class DetailAsetOfflineActivity extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
                 editVisibilityDynamic();
-
+                setAfdelingAdapter();
                 setValueInput();
 
             }
@@ -611,7 +613,7 @@ public class DetailAsetOfflineActivity extends AppCompatActivity {
         initCalender();
         getAllSpinnerData();
 //        getSpinnerData();
-//        setValueInput();
+        setValueInput();
 
     }
 
@@ -641,31 +643,30 @@ public class DetailAsetOfflineActivity extends AppCompatActivity {
     }
 
     private void setValueInput(){
-
         try {
 
 
 //        Call<AsetModel> call = asetInterface.getAset(id);
-        asetHelper.open();
-        Cursor cursor= asetHelper.queryById(String.valueOf(id));
-        Aset aset = MappingHelper.mapCursorToArrayAset(cursor);
+            asetHelper.open();
+            Cursor cursor= asetHelper.queryById(String.valueOf(id));
+            Aset aset = MappingHelper.mapCursorToArrayAset(cursor);
 
-                if (aset.getBeritaAcara() != null ) {
+            inpNamaAset.setText(aset.getAsetName());
+            if (aset.getBeritaAcara() != null ) {
 
-                    tvUploudBA.setText(aset.getBeritaAcara());
-                }
+                tvUploudBA.setText(aset.getBeritaAcara());
 
-                inpTglInput.setText(aset.getTglInput().split(" ")[0]);
-                inpTglOleh.setText(aset.getTglOleh().split(" ")[0]);
-                inpNoSAP.setText(String.valueOf(mapSpinnerSap.get(Integer.parseInt(aset.getNomorSap()))));
-                inpNamaAset.setText(aset.getAsetName());
+            }
+            inpTglOleh.setText(aset.getTglOleh());
+            inpTglInput.setText(aset.getTglInput());
+            inpNoSAP.setText(String.valueOf(mapSpinnerSap.get(Integer.parseInt(aset.getNomorSap()))));
                 inpLuasAset.setText(String.valueOf(aset.getAsetLuas()));
                 inpNilaiAsetSAP.setText(String.valueOf(aset.getNilaiOleh()));
                 inpMasaPenyusutan.setText(String.valueOf(aset.getMasaSusut()));
                 inpNomorBAST.setText(String.valueOf(aset.getNomorBast()));
                 inpNilaiResidu.setText(formatrupiah(Double.parseDouble(String.valueOf(aset.getNilaiResidu()))));
                 inpKeterangan.setText(aset.getKeterangan());
-                inpUmrEkonomis.setText(utils.MonthToYear(aset.getUmurEkonomisInMonth()));
+//                inpUmrEkonomis.setText(utils.MonthToYear(aset.getUmurEkonomisInMonth()));
                 inpNilaiAsetSAP.setText(formatrupiah(Double.parseDouble(String.valueOf(aset.getNilaiOleh()))));
                 inpPersenKondisi.setText(String.valueOf(aset.getPersenKondisi()));
                 inpJumlahPohon.setText(String.valueOf(aset.getJumlahPohon()));
@@ -681,7 +682,7 @@ public class DetailAsetOfflineActivity extends AppCompatActivity {
                     tvKetReject.setVisibility(View.GONE);
                 }
 
-                statusPosisi = Integer.valueOf(aset.getStatusPosisi());
+//                statusPosisi = Integer.valueOf(aset.getStatusPosisi());
                 id = aset.getAsetId();
 
                 if (aset.getNoInv() != null) {
@@ -694,7 +695,7 @@ public class DetailAsetOfflineActivity extends AppCompatActivity {
                     Picasso.get().load(qrurl).resize(400,400).centerCrop().into(qrDefault);
                 }
 
-                url1 = AsemApp.BASE_URL_ASSET+aset.getFotoAset1();
+                url1 = "file://" + aset.getFotoAset1();
                 url2 = AsemApp.BASE_URL_ASSET+aset.getFotoAset2();
                 url3 = AsemApp.BASE_URL_ASSET+aset.getFotoAset3();
                 url4 = AsemApp.BASE_URL_ASSET+aset.getFotoAset4();
@@ -704,10 +705,17 @@ public class DetailAsetOfflineActivity extends AppCompatActivity {
                     map1.setEnabled(false);
                     foto1rl.setEnabled(false);
                 } else {
-                    map1.setEnabled(true);
+                    Log.d("amanat17-img",url1);
+                    URL url = new URL(url1);
+                    Bitmap bmp = BitmapFactory.decodeStream(url.openConnection().getInputStream());
                     fotoimg1.getLayoutParams().width = 200;
                     fotoimg1.getLayoutParams().height = 200;
-                    Picasso.get().load(url1).resize(200,200).centerCrop().into(fotoimg1);
+                    fotoimg1.setImageBitmap(bmp);
+                    map1.setEnabled(true);
+//                    fotoimg1.getLayoutParams().width = 200;
+//                    fotoimg1.getLayoutParams().height = 200;
+//                    Picasso.get().load(url1).resize(200,200).centerCrop().into(fotoimg1);
+
                 }
 
                 if (aset.getFotoAset2() == null ){
@@ -761,12 +769,11 @@ public class DetailAsetOfflineActivity extends AppCompatActivity {
 
 
 //                set selection spinners
-                spinnerTipeAset.setSelection(Integer.valueOf(aset.getAsetTipe())-1);
-                spinnerJenisAset.setSelection(Integer.valueOf(aset.getAsetJenis())-1);
+                spinnerTipeAset.setSelection(Integer.valueOf(aset.getAsetTipe()));
+                spinnerJenisAset.setSelection(Integer.valueOf(aset.getAsetJenis()));
+                spinnerAsetKondisi.setSelection(Integer.valueOf(aset.getAsetKondisi()));
+                spinnerSubUnit.setSelection(Integer.valueOf(aset.getAsetSubUnit()));
 
-                spinnerAsetKondisi.setSelection(Integer.valueOf(aset.getAsetKondisi())-1);
-
-                spinnerSubUnit.setSelection(Integer.valueOf(aset.getAsetSubUnit())-1);
 
 
                 try {
@@ -818,7 +825,7 @@ public class DetailAsetOfflineActivity extends AppCompatActivity {
 //        Toast.makeText(getApplicationContext(),String.valueOf(spinnerSubUnit.getSelectedItemId()),Toast.LENGTH_LONG).show();
 
 
-        if (spinnerSubUnit.getSelectedItemId() == 1){
+        if (spinnerSubUnit.getSelectedItemId() == 2){
             inpAfdeling.setVisibility(View.VISIBLE);
             tvAfdeling.setVisibility(View.VISIBLE);
 //            Toast.makeText(getApplicationContext(),String.valueOf(spinnerSubUnit.getSelectedItemId()),Toast.LENGTH_LONG).show();
@@ -1237,6 +1244,7 @@ public class DetailAsetOfflineActivity extends AppCompatActivity {
         // get sap
         for (Sap at : dataAllSpinner.getSap()){
             mapSap.put(Long.parseLong(at.getSap_desc()),at.getSap_id());
+            mapSpinnerSap.put(at.getSap_id(),Long.parseLong(at.getSap_desc()));
             listSpinnerSap.add(at.getSap_desc());
         }
 
@@ -1247,7 +1255,6 @@ public class DetailAsetOfflineActivity extends AppCompatActivity {
         spinnerUnit.setAdapter(adapterUnit);
         sharedPreferences = DetailAsetOfflineActivity.this.getSharedPreferences(PREF_LOGIN, MODE_PRIVATE);
         try {
-
             Integer unit_id = Integer.valueOf(sharedPreferences.getString("unit_id", "0"));
             spinnerUnit.setSelection(unit_id-1);
         } catch(Exception e){}

@@ -94,8 +94,8 @@ public class DetailAsetActivity extends AppCompatActivity {
 
     String urlfotoasetqr = "";
     Map<Integer, Integer> mapAfdelingSpinner = new HashMap<Integer, Integer>();
-    Map<Integer, Integer> mapSap = new HashMap();
-    Map<Integer, Integer> mapSpinnerSap = new HashMap();
+    Map<Long, Integer> mapSap = new HashMap();
+    Map<Integer, Long> mapSpinnerSap = new HashMap();
     List<String> listSpinnerSap = new ArrayList<>();
     Map<Integer,Integer> mapKodeSpinner = new HashMap();
     Map<Integer,Integer> mapSpinnerkode = new HashMap();
@@ -707,7 +707,7 @@ public class DetailAsetActivity extends AppCompatActivity {
 
                 inpTglInput.setText(response.body().getData().getTglInput().split(" ")[0]);
                 inpTglOleh.setText(response.body().getData().getTglOleh().split(" ")[0]);
-                inpNoSAP.setText(String.valueOf(mapSpinnerSap.get(Integer.parseInt(response.body().getData().getNomorSap()))));
+                inpNoSAP.setText(String.valueOf(mapSpinnerSap.get(Long.parseLong(response.body().getData().getNomorSap()))));
                 inpNamaAset.setText(response.body().getData().getAsetName());
                 inpLuasAset.setText(String.valueOf(response.body().getData().getAsetLuas()));
                 inpNilaiAsetSAP.setText(String.valueOf(response.body().getData().getNilaiOleh()));
@@ -1258,8 +1258,8 @@ public class DetailAsetActivity extends AppCompatActivity {
 
                 // get sap
                 for (Sap at : dataAllSpinner.getSap()){
-                    mapSap.put(Integer.parseInt(at.getSap_desc()),at.getSap_id());
-                    mapSpinnerSap.put(at.getSap_id(),Integer.parseInt(at.getSap_desc()));
+                    mapSap.put(Long.parseLong(at.getSap_desc()),at.getSap_id());
+                    mapSpinnerSap.put(at.getSap_id(),Long.parseLong(at.getSap_desc()));
                     listSpinnerSap.add(at.getSap_desc());
                 }
 
