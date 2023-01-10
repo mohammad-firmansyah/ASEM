@@ -1666,12 +1666,16 @@ public class AddAsetActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(Call<AsetModel2> call, Response<AsetModel2> response) {
                         if (!response.isSuccessful() && response.body() == null) {
+                            if (response.code() == 401) {
+                                dialog.dismiss();
+                                customDialogAddAset.dismiss();
+                                inpNoSAP.setError("Nomor SAP sudah ada");
+                                inpNoSAP.requestFocus();
+                                return;
+                            }
                             dialog.dismiss();
                             customDialogAddAset.dismiss();
-                            inpNoSAP.setError("Nomor SAP sudah ada");
-                            inpNoSAP.requestFocus();
-                            Toast.makeText(getApplicationContext(),"nomor sap sudah ada",Toast.LENGTH_LONG).show();
-                            return;
+                            Toast.makeText(getApplicationContext(),"error :" + response.message() + String.valueOf(response.code()),Toast.LENGTH_LONG).show();
                         }
 
                         dialog.dismiss();
