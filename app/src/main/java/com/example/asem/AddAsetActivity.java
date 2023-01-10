@@ -541,10 +541,8 @@ public class AddAsetActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 spinnerIdJenisAset = String.valueOf(position);
-
                 editVisibilityDynamic();
                 setAdapterAsetKode();
-                Log.d("asetapix",spinnerIdJenisAset);
             }
 
             @Override
@@ -1707,7 +1705,7 @@ public class AddAsetActivity extends AppCompatActivity {
         }
 
     public void getAllSpinnerData(){
-
+        dialog.show();
         Call<AllSpinner> call = asetInterface.getAllSpinner();
 
         call.enqueue(new Callback<AllSpinner>() {
@@ -1825,6 +1823,7 @@ public class AddAsetActivity extends AppCompatActivity {
 
                     }
                 } catch(Exception e){
+                    dialog.dismiss();
                     e.printStackTrace();
                 }
 
@@ -1869,6 +1868,8 @@ public class AddAsetActivity extends AppCompatActivity {
                     }
                 } catch (Exception e){
                 }
+
+                dialog.dismiss();
             }
 
             @Override

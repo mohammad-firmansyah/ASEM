@@ -126,13 +126,15 @@ public class MainActivity extends AppCompatActivity {
                             } else {
                                 editor.putString("sub_unit_id", "0");
                             }
-                            if (login.getSubUnitId() == 2) {
 
+
+                            if (login.getAfdelingId() != 0) {
                                 editor.putString("afdeling_id", String.valueOf(login.getAfdelingId()));
                             }  else  {
 
-                                editor.putString("afdeling_id", String.valueOf(0));
+                                editor.putString("afdeling_id", "0");
                             }
+
 
                             editor.putBoolean("onSyncDone", false); // saat login awal dia kondisi belum sync
                             editor.apply();

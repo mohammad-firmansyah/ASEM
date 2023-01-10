@@ -1539,9 +1539,9 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity  implements 
                 for (Afdelling at : dataAllSpinner.getAfdeling()){
                     if (at.getUnit_id() == (spinnerUnit.getSelectedItemId()+1)) {
                         mapSpinnerAfdeling.put(at.getAfdelling_id(), i);
+                        Log.d("amanat15", String.valueOf(mapAfdelingSpinner.get(i)));
                         mapAfdeling.put(i, at.getAfdelling_desc());
                         listSpinnerAfdeling.add(at.getAfdelling_desc());
-                        Log.d("amanat15",listSpinnerAfdeling.get(i));
                         i++;
                     }
                 }
@@ -1615,7 +1615,7 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity  implements 
                 } catch (Exception e){}
 
                 // set adapter afedeling
-                Integer afdeling_id = Integer.parseInt(sharedPreferences.getString("afdeling_id", "0"));
+
                 ArrayAdapter<String> adapterAfdeling = new ArrayAdapter<String>(getApplicationContext(),
                         android.R.layout.simple_spinner_item, listSpinnerAfdeling);
                 adapterAfdeling.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -1624,7 +1624,8 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity  implements 
 
                     if (listSpinnerAfdeling.size() != 0) {
 
-                        Log.d("amanat14", String.valueOf(mapAfdelingSpinner.get(afdeling_id)));
+                        Integer afdeling_id = Integer.parseInt(sharedPreferences.getString("afdeling_id", "0"));
+                        Log.d("mapafd", String.valueOf(mapAfdelingSpinner));
                         spinnerAfdeling.setSelection(mapAfdelingSpinner.get(afdeling_id));
 
 
@@ -1885,9 +1886,6 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity  implements 
             values.put("aset_sub_unit", String.valueOf(spinnerSubUnit.getSelectedItemId()));
             values.put("afdeling_id", String.valueOf(spinnerAfdeling.getSelectedItemId()));
             values.put("aset_name", inpNamaAset.getText().toString().trim());
-            Context context = getApplicationContext();
-
-
 
             // Get the internal files directory
 
@@ -1900,6 +1898,7 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity  implements 
             File newImg2 = new File(getFilesDir(),namaAsetWithoutSpace+"2.png");
             File newImg3 = new File(getFilesDir(),namaAsetWithoutSpace+"3.png");
             File newImg4 = new File(getFilesDir(),namaAsetWithoutSpace+"4.png");
+            File ba = new File(getFilesDir(),namaAsetWithoutSpace+"-ba.pdf");
 
             if (img1 != null) {
                 FileInputStream in = new FileInputStream(img1);
@@ -1994,6 +1993,29 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity  implements 
                 img4.delete();
                 values.put("foto_aset4",newImg4.getAbsolutePath());
                 values.put("geo_tag4",geotag4);
+
+            }
+
+            if (bafile_file != null) {
+
+                FileInputStream in = new FileInputStream(bafile_file);
+                FileOutputStream out = new FileOutputStream(ba);
+
+                // Copy the file
+                byte[] buffer = new byte[1024];
+                int read;
+                while ((read = in.read(buffer)) != -1) {
+                    out.write(buffer, 0, read);
+                }
+
+                // Close the streams
+                in.close();
+                out.flush();
+                out.close();
+
+                // Delete the original file
+                bafile_file.delete();
+                values.put("berita_acara",ba.getAbsolutePath());
 
             }
 

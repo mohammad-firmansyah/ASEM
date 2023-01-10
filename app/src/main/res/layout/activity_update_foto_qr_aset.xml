@@ -37,7 +37,7 @@
                 android:layout_marginBottom="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="41dp"
-                android:background="@drawable/bg_not_clickable_spinner"
+                android:background="@drawable/rounded_spinner"
                 android:spinnerMode="dropdown"
 
                 />
@@ -62,7 +62,7 @@
                 android:layout_marginBottom="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="41dp"
-                android:background="@drawable/bg_not_clickable_spinner"
+                android:background="@drawable/rounded_spinner"
                 android:spinnerMode="dropdown" />
 
 
@@ -85,7 +85,7 @@
                 android:layout_marginBottom="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="41dp"
-                android:background="@drawable/bg_not_clickable_spinner"
+                android:background="@drawable/rounded_spinner"
                 android:spinnerMode="dropdown" />
 
 
@@ -129,7 +129,7 @@
                 android:layout_marginBottom="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="41dp"
-                android:background="@drawable/bg_not_clickable_spinner"
+                android:background="@drawable/rounded_spinner"
                 android:spinnerMode="dropdown" />
 
             <TextView
@@ -151,7 +151,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="41dp"
                 android:layout_marginBottom="10dp"
-                android:background="@drawable/bg_not_clickable_spinner"
+                android:background="@drawable/rounded_spinner"
                 android:spinnerMode="dropdown" />
 
 
@@ -175,7 +175,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="41dp"
                 android:layout_marginBottom="10dp"
-                android:background="@drawable/bg_not_clickable_spinner"
+                android:background="@drawable/rounded_spinner"
                 android:spinnerMode="dropdown" />
 
             <TextView
@@ -196,7 +196,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="41dp"
                 android:layout_marginBottom="10dp"
-                android:background="@drawable/bg_not_clickable_spinner"
+                android:background="@drawable/rounded_spinner"
                 android:spinnerMode="dropdown" />
 
             <TextView
@@ -216,7 +216,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="41dp"
                 android:layout_marginBottom="10dp"
-                android:background="@drawable/tgl_spinner" />
+                android:background="@drawable/edit_text_spiner" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -233,7 +233,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="41dp"
                 android:layout_marginBottom="10dp"
-                android:background="@drawable/tgl_spinner"
+                android:background="@drawable/edit_text_spiner"
                 android:inputType="numberDecimal" />
             <TextView
                 android:id="@+id/tvBa"
@@ -256,7 +256,7 @@
                     android:layout_width="0dp"
                     android:layout_height="41dp"
                     android:layout_weight=".70"
-                    android:background="@drawable/tgl_spinner"
+                    android:background="@drawable/edit_text_spiner"
                     android:text="Tidak Ada File"
                     android:id="@+id/tvUploudBA"
                     android:gravity="center_vertical"
@@ -270,7 +270,7 @@
                     android:layout_height="41dp"
                     android:layout_weight="0.3"
                     android:layout_marginBottom="10dp"
-                    android:background="@drawable/edit_text_spiner"
+                    android:background="@drawable/rounded_spinner"
                     android:spinnerMode="dropdown"
                     android:text="UPLOAD"
                     android:onClick="uploadImage"
@@ -312,7 +312,7 @@
                     <RelativeLayout
                         android:layout_width="91dp"
                         android:layout_height="99dp"
-                        android:background="@drawable/tgl_spinner"
+                        android:background="@drawable/edit_text_spiner"
                         android:layout_marginRight="7dp"
                         android:id="@+id/foto1"
                         >
@@ -332,7 +332,7 @@
                         android:layout_width="91dp"
                         android:layout_height="99dp"
                         android:layout_marginRight="7dp"
-                        android:background="@drawable/tgl_spinner"
+                        android:background="@drawable/edit_text_spiner"
 
                         >
 
@@ -350,7 +350,7 @@
                         android:id="@+id/foto3"
                         android:layout_width="91dp"
                         android:layout_height="99dp"
-                        android:background="@drawable/tgl_spinner"
+                        android:background="@drawable/edit_text_spiner"
                         android:layout_marginRight="7dp"
                         >
 
@@ -369,7 +369,7 @@
                         android:layout_width="91dp"
                         android:layout_height="99dp"
                         android:layout_marginRight="7dp"
-                        android:background="@drawable/tgl_spinner">
+                        android:background="@drawable/edit_text_spiner">
 
                         <ImageView
                             android:id="@+id/fotoimg4"
@@ -465,35 +465,20 @@
                 >
 
 
-                <TextView
-                    android:id="@+id/tvUploadHGU"
-                    android:layout_width="0dp"
-                    android:layout_height="41dp"
-                    android:layout_weight=".70"
-                    android:background="@drawable/edit_text_spiner"
-                    android:gravity="center_vertical"
-                    android:text="Tidak Ada File"
-                    android:textColor="@color/main_grey"
-                    android:textSize="14sp"
-                    android:textStyle="bold" />
 
-                <Button
 
-                    android:id="@+id/inpUploadHGU"
-                    android:layout_width="0dp"
+                <EditText
+
+                    android:id="@+id/inpHGU"
+                    android:layout_width="match_parent"
                     android:layout_height="41dp"
-                    android:layout_marginStart="5dp"
                     android:layout_marginBottom="10dp"
-                    android:layout_toEndOf="@+id/tvUploadHGU"
-                    android:layout_weight="0.3"
                     android:background="@drawable/edit_text_spiner"
-                    android:backgroundTint="@color/BlueDark"
-                    android:onClick="uploadImage"
+                    android:inputType="numberDecimal"
                     android:spinnerMode="dropdown"
-                    android:text="UPLOAD"
-                    android:textColor="@color/white"
-                    android:textSize="10sp"
-                    tools:ignore="HardcodedText"/>
+
+                    />
+
             </LinearLayout>
 
             <TextView
@@ -514,7 +499,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="41dp"
                 android:layout_marginBottom="10dp"
-                android:background="@drawable/tgl_spinner"
+                android:background="@drawable/edit_text_spiner"
                 android:inputType="numberDecimal"
                 android:spinnerMode="dropdown"
 
@@ -549,7 +534,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="41dp"
                 android:layout_marginBottom="10dp"
-                android:background="@drawable/tgl_spinner"
+                android:background="@drawable/edit_text_spiner"
                 android:inputType="numberDecimal"
                 android:spinnerMode="dropdown"
 
@@ -579,7 +564,7 @@
                 android:paddingVertical="10dp"
                 android:lines="1"
                 android:inputType="numberDecimal"
-                android:background="@drawable/tgl_spinner"
+                android:background="@drawable/edit_text_spiner"
                 />
 
 
@@ -602,7 +587,7 @@
                 android:cursorVisible="false"
                 android:focusable="false"
                 android:focusableInTouchMode="false"
-                android:background= "@drawable/tgl_spinner"
+                android:background= "@drawable/pickdate_background"
                 android:hint="tanggal perolehan"
                 android:layout_height="41dp"
                 android:paddingVertical="10dp"/>
@@ -629,7 +614,7 @@
                 android:paddingVertical="10dp"
                 android:lines="1"
                 android:inputType="numberDecimal"
-                android:background="@drawable/tgl_spinner"
+                android:background="@drawable/tahun_background"
                 />
 
 
@@ -654,7 +639,7 @@
                 android:paddingVertical="10dp"
                 android:lines="1"
                 android:inputType="numberDecimal"
-                android:background="@drawable/tgl_spinner"
+                android:background="@drawable/edit_text_spiner"
                 />
 
 
@@ -678,7 +663,7 @@
                 android:paddingVertical="10dp"
                 android:lines="1"
                 android:inputType="numberDecimal"
-                android:background="@drawable/tgl_spinner"
+                android:background="@drawable/edit_text_spiner"
                 />
 
 
@@ -702,7 +687,7 @@
                 android:paddingVertical="10dp"
                 android:lines="1"
                 android:inputType="numberDecimal"
-                android:background="@drawable/tgl_spinner"
+                android:background="@drawable/edit_text_spiner"
                 />
 
             <TextView
@@ -727,7 +712,7 @@
                 android:lines="1"
                 android:hint="jumlah pohon"
                 android:inputType="numberDecimal"
-                android:background="@drawable/tgl_spinner"
+                android:background="@drawable/edit_text_spiner"
                 />
 
 
@@ -753,7 +738,7 @@
                 android:text="-"
                 android:gravity="top"
                 android:paddingTop="10dp"
-                android:background="@drawable/tgl_spinner"
+                android:background="@drawable/edit_text_spiner"
                 />
 
 

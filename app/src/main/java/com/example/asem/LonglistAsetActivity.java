@@ -149,6 +149,7 @@ public class LonglistAsetActivity extends AppCompatActivity  { //implements Bott
  btnSyncReset.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                dialog.show();
                 AsetHelper asetHelper = AsetHelper.getInstance(getApplicationContext());
                 asetHelper.open();
                 asetHelper.deleteAsetJenis();
@@ -160,6 +161,7 @@ public class LonglistAsetActivity extends AppCompatActivity  { //implements Bott
                 asetHelper.deleteUnit();
                 asetHelper.deleteSubUnit();
                 asetHelper.close();
+                dialog.dismiss();
                 Toast.makeText(getApplicationContext(),"success reset data spinner",Toast.LENGTH_LONG).show();
             }
         });
@@ -490,7 +492,7 @@ public void getAllSpinnerData(){
             List<String> listSpinnerKodeAset = new ArrayList<>();
             List<String> listSpinnerUnit = new ArrayList<>();
             List<String> listSpinnerSubUnit = new ArrayList<>();
-            List<String> listSpinnerAfdeling = new ArrayList<>();
+            List<String> listSpinnerAfdeling =   new ArrayList<>();
             // get data tipe aset
             AsetHelper asetHelper = AsetHelper.getInstance(getApplicationContext());
             asetHelper.open();
@@ -546,13 +548,7 @@ public void getAllSpinnerData(){
                 asetHelper.insertSubUnit(values);
             }
 
-            // get sap
-            for (Sap at : dataAllSpinner.getSap()){
-//                asetHelper.deleteSap();
-                ContentValues values = new ContentValues();
-                values.put("sap_desc",at.getSap_desc());
-                asetHelper.insertSap(values);
-            }
+
 
             // get afdeling
             for (Afdelling at : dataAllSpinner.getAfdeling()){
@@ -561,6 +557,14 @@ public void getAllSpinnerData(){
                 values.put("afdeling_desc",at.getAfdelling_desc());
                 values.put("unit_id",at.getUnit_id());
                 asetHelper.insertAfdeling(values);
+            }
+
+            // get sap
+            for (Sap at : dataAllSpinner.getSap()){
+//                asetHelper.deleteSap();
+                ContentValues values = new ContentValues();
+                values.put("sap_desc",at.getSap_desc());
+                asetHelper.insertSap(values);
             }
 
             dialog.dismiss();
