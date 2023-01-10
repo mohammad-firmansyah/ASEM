@@ -2003,7 +2003,7 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity  implements 
             values.put("aset_luas",inpLuasAset.getText().toString().trim());
             values.put("persen_kondisi",inpPersenKondisi.getText().toString().trim());
             values.put("hgu",inpHGU.getText().toString().trim());
-            values.put("nilai_oleh",utils.CurrencyToNumber(inpNilaiAsetSAP.getText().toString().trim()));
+//            values.put("nilai_oleh",utils.CurrencyToNumber(inpNilaiAsetSAP.getText().toString().trim()));
             values.put("tgl_oleh",inpTglOleh.getText().toString().trim() + " 00:00:00");
             LocalDateTime currentTime = null;
             DateTimeFormatter formatter = null;
@@ -2017,7 +2017,7 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity  implements 
 
             values.put("tgl_input", String.valueOf(formattedDateTime));
             values.put("masa_susut",inpMasaPenyusutan.getText().toString().trim());
-            values.put("nilai_residu",utils.CurrencyToNumber(inpNilaiResidu.getText().toString().trim()));
+//            values.put("nilai_residu",utils.CurrencyToNumber(inpNilaiResidu.getText().toString().trim()));
             values.put("nomor_bast",inpNomorBAST.getText().toString().trim());
             values.put("jumlah_pohon",inpJumlahPohon.getText().toString().trim());
             values.put("keterangan",inpKeterangan.getText().toString().trim());

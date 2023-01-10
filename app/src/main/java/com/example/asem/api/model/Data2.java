@@ -65,10 +65,10 @@ public class Data2 {
     private String tglOleh;
     @SerializedName("nilai_residu")
     @Expose
-    private Integer nilaiResidu;
+    private Long nilaiResidu;
     @SerializedName("nilai_oleh")
     @Expose
-    private Integer nilaiOleh;
+    private Long nilaiOleh;
     @SerializedName("nomor_bast")
     @Expose
     private String nomorBast;
@@ -107,9 +107,9 @@ public class Data2 {
     private String updatedAt;
     @SerializedName("jumlah_pohon")
     @Expose
-    private Integer jumlahPohon;
+    private Long jumlahPohon;
 
-    public void setJumlahPohon(Integer jumlahPohon) {
+    public void setJumlahPohon(Long jumlahPohon) {
         this.jumlahPohon = jumlahPohon;
     }
 
@@ -339,19 +339,19 @@ public class Data2 {
         this.tglOleh = tglOleh;
     }
 
-    public Integer getNilaiResidu() {
+    public Long getNilaiResidu() {
         return nilaiResidu;
     }
 
-    public void setNilaiResidu(Integer nilaiResidu) {
+    public void setNilaiResidu(Long nilaiResidu) {
         this.nilaiResidu = nilaiResidu;
     }
 
-    public Integer getNilaiOleh() {
+    public Long getNilaiOleh() {
         return nilaiOleh;
     }
 
-    public void setNilaiOleh(Integer nilaiOleh) {
+    public void setNilaiOleh(Long nilaiOleh) {
         this.nilaiOleh = nilaiOleh;
     }
 
@@ -451,7 +451,7 @@ public class Data2 {
         this.updatedAt = updatedAt;
     }
 
-    public Integer getJumlahPohon() {
+    public Long getJumlahPohon() {
         return jumlahPohon;
     }
 

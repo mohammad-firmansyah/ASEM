@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.io.File;
+import java.math.BigInteger;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Locale;
@@ -247,7 +248,7 @@ public class utils {
         return split[0].substring(0,2)+". "+split[0].substring(2,length);
     }
 
-    public static long CurrencyToNumber(String curr){
+    public static Long CurrencyToNumber(String curr){
         String s= "";
         String[] splited = curr.split(" ");
         s=splited[1];
@@ -263,6 +264,24 @@ public class utils {
             return Long.parseLong(result);
         } else{
             return Long.parseLong(s);
+        }}
+
+        public static String CurrencyToNumberString(String curr){
+        String s= "";
+        String[] splited = curr.split(" ");
+        s=splited[1];
+//        ArrayList<String> splitedTwc = new ArrayList<String>();
+        if (curr.contains(".")){
+            String[] splitedTwc = s.split("[.]");
+
+            String result = "";
+            for (String split : splitedTwc){
+                result+=split;
+            }
+
+            return result;
+        } else{
+            return s;
         }
 
         // System.out.println(splitedTwc.length);

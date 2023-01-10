@@ -1673,6 +1673,7 @@ public class AddAsetActivity extends AppCompatActivity {
                             Toast.makeText(getApplicationContext(),"nomor sap sudah ada",Toast.LENGTH_LONG).show();
                             return;
                         }
+
                         dialog.dismiss();
                         Toast.makeText(getApplicationContext(), "success", Toast.LENGTH_LONG).show();
                         startActivity(new Intent(AddAsetActivity.this, LonglistAsetActivity.class));
@@ -1772,7 +1773,7 @@ public class AddAsetActivity extends AppCompatActivity {
                 for (Afdelling at : dataAllSpinner.getAfdeling()){
                     if (at.getUnit_id() == (spinnerUnit.getSelectedItemId()+1)) {
                         mapSpinnerAfdeling.put(at.getAfdelling_id(), i);
-                        mapAfdeling.put(i, at.getAfdelling_desc());
+                        mapAfdelingSpinner.put(i, at.getAfdelling_id());
                         listSpinnerAfdeling.add(at.getAfdelling_desc());
                         i++;
                     }
@@ -1859,7 +1860,7 @@ public class AddAsetActivity extends AppCompatActivity {
 
                     if (listSpinnerAfdeling.size() != 0) {
 
-                        spinnerAfdeling.setSelection(mapAfdelingSpinner.get(afdeling_id));
+                        spinnerAfdeling.setSelection(mapAfdelingSpinner.get((afdeling_id-1)));
 
                     }
                 } catch (Exception e){
@@ -1912,6 +1913,7 @@ public class AddAsetActivity extends AppCompatActivity {
 
 
     public void setAfdelingAdapter(){
+        Integer afdeling_id = Integer.valueOf(sharedPreferences.getString("afdeling_id", "0"));
         List<String> afdelings = new ArrayList<>();
         Integer i = 1;
         for (Afdelling a:afdeling) {
@@ -1927,5 +1929,17 @@ public class AddAsetActivity extends AppCompatActivity {
                 android.R.layout.simple_spinner_item, afdelings);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerAfdeling.setAdapter(adapter);
+
+        try {
+
+            if (afdelings.size() != 0) {
+
+                spinnerAfdeling.setSelection(mapAfdelingSpinner.get((afdeling_id-1)));
+
+            }
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+
     }
 }
