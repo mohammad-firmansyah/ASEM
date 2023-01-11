@@ -177,20 +177,20 @@ public class Aset2Adapter  extends RecyclerView.Adapter<Aset2Adapter.ViewHolder>
                 sharedPreferences = context.getSharedPreferences(PREF_LOGIN, MODE_PRIVATE);
                 Integer hak_akses_id = Integer.valueOf(sharedPreferences.getString("hak_akses_id", "0"));
 
-                if (myPostData2.getStatusPosisiID() == 5 && hak_akses_id == 7) {
+                if (myPostData2.getFotoQr() != null) {
                     Intent intent = new Intent(context, UpdateFotoQrAsetActivity.class);
                     intent.putExtra("id",(myPostData2.getAsetId()));
                     context.startActivity(intent);
                     return;
                 }
 
-                if (myPostData2.getAsetFotoQrStatus() != null && hak_akses_id == 7){
-
-                    Intent intent = new Intent(context, UpdateFotoQrAsetActivity.class);
-                    intent.putExtra("id",(myPostData2.getAsetId()));
-                    context.startActivity(intent);
-                    return;
-                }
+//                if (myPostData2.getAsetFotoQrStatus() != null && hak_akses_id == 7){
+//
+//                    Intent intent = new Intent(context, UpdateFotoQrAsetActivity.class);
+//                    intent.putExtra("id",(myPostData2.getAsetId()));
+//                    context.startActivity(intent);
+//                    return;
+//                }
 
                 Intent intent = new Intent(context, UpdateAsetActivity.class);
                 intent.putExtra("id",(myPostData2.getAsetId()));

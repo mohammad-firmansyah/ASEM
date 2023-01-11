@@ -738,7 +738,7 @@ public class DetailAsetActivity extends AppCompatActivity {
                     inpNoInv.setText(String.valueOf(response.body().getData().getNoInv()));
                 };
 
-                qrurl = AsemApp.BASE_URL_API+"/"+response.body().getData().getFotoQr();
+                qrurl = AsemApp.BASE_URL_ASSET+"/"+response.body().getData().getFotoQr();
                 if (response.body().getData().getFotoQr() != null) {
                     qrDefault.getLayoutParams().height = 346;
                     Picasso.get().load(qrurl).resize(400,400).centerCrop().into(qrDefault);
