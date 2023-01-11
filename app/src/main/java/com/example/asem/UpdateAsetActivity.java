@@ -1647,11 +1647,11 @@ public class UpdateAsetActivity extends AppCompatActivity {
             String nilai_aset = String.valueOf(CurrencyToNumber(inpNilaiAsetSAP.getText().toString().trim()));
             String tgl_oleh = inpTglOleh.getText().toString().trim() + " 00:00:00";
             String masa_susut = inpMasaPenyusutan.getText().toString().trim();
-            String nomor_bast = inpMasaPenyusutan.getText().toString().trim();
+            String nomor_bast = inpNomorBAST.getText().toString().trim();
             String nilai_residu = String.valueOf(CurrencyToNumber(inpNilaiResidu.getText().toString().trim()));
             String keterangan = inpKeterangan.getText().toString().trim();
             String asetId = String.valueOf(aset.getAsetId());
-            String jumlahPohon = inpJumlahPohon.getText().toString();
+            String jumlahPohon = inpJumlahPohon.getText().toString().trim();
 
             MultipartBody.Part partBaFile = null;
 

@@ -707,7 +707,7 @@ public class DetailAsetActivity extends AppCompatActivity {
 
                 inpTglInput.setText(response.body().getData().getTglInput().split(" ")[0]);
                 inpTglOleh.setText(response.body().getData().getTglOleh().split(" ")[0]);
-                inpNoSAP.setText(String.valueOf(mapSpinnerSap.get(Long.parseLong(response.body().getData().getNomorSap()))));
+                inpNoSAP.setText(response.body().getData().getNomorSap());
                 inpNamaAset.setText(response.body().getData().getAsetName());
                 inpLuasAset.setText(String.valueOf(response.body().getData().getAsetLuas()));
                 inpNilaiAsetSAP.setText(String.valueOf(response.body().getData().getNilaiOleh()));
