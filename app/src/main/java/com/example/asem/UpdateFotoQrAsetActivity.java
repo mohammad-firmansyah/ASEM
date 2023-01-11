@@ -1354,7 +1354,7 @@ public class UpdateFotoQrAsetActivity extends AppCompatActivity {
 
             }else if("kayu".equals(String.valueOf(spinnerJenisAset.getSelectedItem()))) {
                 if (list == 1) {
-
+ 
                     geotag1 = url;
                 } else if (list == 2) {
 

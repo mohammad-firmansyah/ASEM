@@ -738,7 +738,8 @@ public class DetailAsetActivity extends AppCompatActivity {
                     inpNoInv.setText(String.valueOf(response.body().getData().getNoInv()));
                 };
 
-                qrurl = AsemApp.BASE_URL_ASSET+"/"+response.body().getData().getFotoQr();
+                qrurl = AsemApp.BASE_URL+"storage/app/public/qrcode/"+response.body().getData().getFotoQr();
+                Log.d("amanat17-qr",qrurl);
                 if (response.body().getData().getFotoQr() != null) {
                     qrDefault.getLayoutParams().height = 346;
                     Picasso.get().load(qrurl).resize(400,400).centerCrop().into(qrDefault);
@@ -794,7 +795,7 @@ public class DetailAsetActivity extends AppCompatActivity {
 
                 if (response.body().getData().getFotoAsetQr()!=null ){
 //                    fotoasetqrgroup.setVisibility(View.VISIBLE);
-                    String url = AsemApp.BASE_URL_ASSET + response.body().getData().getFotoAsetQr();
+                    String url = AsemApp.BASE_URL + response.body().getData().getFotoAsetQr();
                     fotoasetqr.getLayoutParams().width = 300;
                     fotoasetqr.getLayoutParams().height = 300;
                     Picasso.get().load(urlfotoasetqr).resize(300,300).centerCrop().into(fotoasetqr);

@@ -15,6 +15,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class AsemApp {
     public static String BASE_URL_API = "http://202.148.9.226:7710/mnj_aset_production/public/api/";
     public static String BASE_URL_ASSET = "http://202.148.9.226:7710/mnj_aset_production/public";
+    public static String BASE_URL = "http://202.148.9.226:7710/mnj_aset_production/";
     private static final String PREF_LOGIN = "LOGIN_PREF";
     private static final String LOGIN_CREDENTIALS = "LOGIN_CREDENTIALS";
 
