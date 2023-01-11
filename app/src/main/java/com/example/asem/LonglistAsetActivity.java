@@ -95,6 +95,7 @@ public class LonglistAsetActivity extends AppCompatActivity  { //implements Bott
     DatabaseHelper dbOffline;
     ArrayList<Aset> dataoffline;
     AsetHelper asetHelper;
+    List<Data2> asetList = new ArrayList<>();
 
     Button btnReport;
     Button btnFilter;
@@ -114,6 +115,9 @@ public class LonglistAsetActivity extends AppCompatActivity  { //implements Bott
 
     private AsetInterface asetInterface;
     private Dialog dialog;
+
+    boolean isLoading;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -146,7 +150,7 @@ public class LonglistAsetActivity extends AppCompatActivity  { //implements Bott
             }
         });
 
- btnSyncReset.setOnClickListener(new View.OnClickListener() {
+        btnSyncReset.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 dialog.show();
@@ -350,6 +354,7 @@ public class LonglistAsetActivity extends AppCompatActivity  { //implements Bott
         });
 
         getAllAset();
+//        initScrollListener();
     }
 
     // untuk load recycler 10 data dulu
@@ -581,5 +586,38 @@ public void getAllSpinnerData(){
         }
     });
 
-}
+    }
+
+//    //load data 10 per 10
+//    //thanks to https://www.digitalocean.com/community/tutorials/android-recyclerview-load-more-endless-scrolling
+//
+//    private void initScrollListener(){
+//        rcAset.addOnScrollListener(new RecyclerView.OnScrollListener() {
+//            @Override
+//            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
+//                super.onScrollStateChanged(recyclerView, newState);
+//            }
+//
+//            @Override
+//            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+//                super.onScrolled(recyclerView, dx, dy);
+//
+//                LinearLayoutManager linearLayoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
+//                if (!isLoading){
+////                    List<Data2> rowsArrayList = response.body();
+//                    if (linearLayoutManager != null && linearLayoutManager.findLastCompletelyVisibleItemPosition() == asetList.size() - 1) {
+//                        //bottom of list!
+//                        if (datalist.size() > 10){
+//                            loadMore();
+//                        } else{
+//                            Log.d("dataload","end scroll");
+//                        }
+//                        isLoading = true;
+//                    }
+//                }
+//            }
+//        });
+//    }
+//
+//    private void loadMore(){}
 }
