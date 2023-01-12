@@ -149,16 +149,16 @@ public class MainActivity extends AppCompatActivity {
                     }else{
                         dialog.dismiss();
                         if (response.toString().contains("code=500")){
-                            Toast.makeText(context,"Username atau Password anda salah", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(),"Username atau Password anda salah", Toast.LENGTH_SHORT).show();
                         }else {
-                            Toast.makeText(context,"Username atau Password anda salah", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(),"Username atau Password anda salah", Toast.LENGTH_SHORT).show();
 //                            Toast.makeText(MainActivity.this,response.toString(), Toast.LENGTH_SHORT).show();
                         }
                 }}
 
                 @Override
                 public void onFailure( @NonNull Call<LoginModel> call, @NonNull Throwable t) {
-                    Toast.makeText(context,"Username atau Password anda salah", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(),"Username atau Password anda salah", Toast.LENGTH_SHORT).show();
 //                        Log.d("fail", "onFailure: "+t);
 //                        Toast.makeText(MainActivity.this, "Gagal Terhubung ke Server", Toast.LENGTH_SHORT).show();
 //                        Toast.makeText(MainActivity.this, "Login Error : "+t.getMessage(), Toast.LENGTH_SHORT).show();
