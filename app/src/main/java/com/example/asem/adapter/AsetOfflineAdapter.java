@@ -22,6 +22,7 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.asem.AsemApp;
+import com.example.asem.AsetAddUpdateOfflineActivity;
 import com.example.asem.DetailAsetActivity;
 import com.example.asem.DetailAsetOfflineActivity;
 import com.example.asem.LonglistAsetActivity;
@@ -175,6 +176,11 @@ public class AsetOfflineAdapter extends RecyclerView.Adapter<AsetOfflineAdapter.
             holder.btnEdit.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    Intent intent = new Intent(context, AsetAddUpdateOfflineActivity.class);
+                    intent.putExtra("id",listAset.get(holder.getAdapterPosition()).getAsetId());
+                    intent.putExtra("aset",listAset.get(holder.getAdapterPosition()));
+                    context.startActivity(intent);
+                    Toast.makeText(context,"Masuk Detail Offline",Toast.LENGTH_SHORT).show();
 //                    sharedPreferences = context.getSharedPreferences(PREF_LOGIN, MODE_PRIVATE);
 //                    Integer hak_akses_id = Integer.valueOf(sharedPreferences.getString("hak_akses_id", "0"));
 //
@@ -249,6 +255,8 @@ public class AsetOfflineAdapter extends RecyclerView.Adapter<AsetOfflineAdapter.
                 bgCardView = v.findViewById(R.id.bgCardView);
             }
         }
+
+
 
 }
 

@@ -13,7 +13,6 @@
         android:id="@+id/upLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/switchoff"
         android:orientation="horizontal"
         android:gravity="center_horizontal"
         android:padding="10dp"
@@ -110,7 +109,7 @@
         android:layout_width="match_parent"
         android:layout_height="30dp"
         android:paddingTop="6dp"
-        android:visibility="gone"
+        android:layout_below="@+id/upLayout"
         >
 
         <androidx.appcompat.widget.SwitchCompat
@@ -150,7 +149,7 @@
         android:id="@+id/mainAset"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:gravity="center"
-        android:layout_below="@id/upLayout"
+        android:layout_below="@id/switchoff"
         android:layout_above="@+id/bottomnav"
         tools:context=".MainActivity">
 

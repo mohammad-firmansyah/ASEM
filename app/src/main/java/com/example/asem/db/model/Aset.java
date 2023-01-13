@@ -562,7 +562,6 @@ public class Aset implements Parcelable {
         dest.writeString(this.masaSusut);
         dest.writeString(this.nomorBast);
         dest.writeLong(this.nilaiResidu);
-        dest.writeInt(this.umurEkonomisInMonth);
         dest.writeString(this.keterangan);
     }
     public Aset() {

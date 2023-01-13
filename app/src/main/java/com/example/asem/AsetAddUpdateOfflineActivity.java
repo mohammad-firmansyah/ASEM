@@ -27,6 +27,7 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.location.Location;
@@ -83,6 +84,9 @@ import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
+import com.squareup.picasso.Picasso;
+
+import org.w3c.dom.Text;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -92,6 +96,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.lang.ref.WeakReference;
+import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -119,12 +124,12 @@ import retrofit2.Response;
 
 public class AsetAddUpdateOfflineActivity extends AppCompatActivity  implements LoadNotesCallback  {
     private boolean isEdit = false;
-    private Aset aset;
     private int position;
     private AsetHelper asetHelper;
     private AsetOfflineAdapter adapter;
 
     private static final String PREF_LOGIN = "LOGIN_PREF";
+    Integer id =0;
     SharedPreferences sharedPreferences;
     DataAllSpinner allSpinner;
     Button inpBtnMap;
@@ -180,6 +185,7 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity  implements 
     EditText inpLuasAset;
     EditText inpNilaiAsetSAP;
     EditText inpTglOleh;
+    EditText inpTglInput;
     EditText inpMasaPenyusutan;
     EditText inpNomorBAST;
     EditText inpNilaiResidu;
@@ -492,13 +498,12 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity  implements 
 //        Log.d("amanatsql", String.valueOf(asetAll));
 //        asetHelper.close();
 
-        aset = getIntent().getParcelableExtra(EXTRA_ASET);
-        if (aset != null) {
-            position = getIntent().getIntExtra(EXTRA_POSITION, 0);
+        id = getIntent().getIntExtra("id",0);
+//        Log.d("amanat17-update",aset.getAsetName());
+        if (id != 0) {
             isEdit = true;
-        } else {
-            aset = new Aset();
         }
+
 
         sharedPreferences = AsetAddUpdateOfflineActivity.this.getSharedPreferences(PREF_LOGIN, MODE_PRIVATE);
 
@@ -515,6 +520,7 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity  implements 
         getLastLocation(AsetAddUpdateOfflineActivity.this,getApplicationContext());
 
         inpTglOleh = findViewById(R.id.inpTglMasukAset);
+        inpTglInput = findViewById(R.id.inpTglInput);
         tvUploudBA = findViewById(R.id.tvUploudBA);
         spinnerTipeAset = findViewById(R.id.inpTipeAset);
         spinnerJenisAset = findViewById(R.id.inpJenisAset);
@@ -537,7 +543,15 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity  implements 
         inpJumlahPohon = findViewById(R.id.inpJmlhPohon);
         inpPersenKondisi = findViewById(R.id.inpPersenKondisi);
         inpHGU = findViewById(R.id.inpHGU);
-//        spinnerKomoditi = findViewById(R.id.inpKomoditi);
+
+        if (isEdit) {
+            TextView tvTglInput = findViewById(R.id.tvTglInput);
+            tvTglInput.setVisibility(View.VISIBLE);
+            inpTglInput.setVisibility(View.VISIBLE);
+            inpTglInput.setEnabled(false);
+            setValueInput();
+        }
+        //        spinnerKomoditi = findViewById(R.id.inpKomoditi);
 
 //        List<String> listSpinner = new ArrayList<>();
 //        listSpinner.add("excel");
@@ -970,6 +984,120 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity  implements 
 
 
 
+    private void setValueInput(){
+
+
+        try {
+            getAllSpinnerData();
+
+            asetHelper.open();
+            Cursor data = asetHelper.queryById(String.valueOf(id));
+            Aset aset = MappingHelper.mapCursorToArrayAset(data);
+//                if (aset.getBeritaAcara() != null ) {
+//
+//                    tvUploudBA.setText(aset.getBeritaAcara());
+//                }
+
+                inpTglInput.setText(aset.getTglInput());
+                inpTglOleh.setText(aset.getTglOleh().split(" ")[0]);
+                inpNoSAP.setText(aset.getNomorSap());
+                inpNamaAset.setText(aset.getAsetName());
+                inpLuasAset.setText(String.valueOf(aset.getAsetLuas()));
+                inpNilaiAsetSAP.setText(String.valueOf(aset.getNilaiOleh()));
+                inpMasaPenyusutan.setText(String.valueOf(aset.getMasaSusut()));
+                inpNomorBAST.setText(String.valueOf(aset.getNomorBast()));
+                inpNilaiResidu.setText(formatrupiah(Double.parseDouble(String.valueOf(aset.getNilaiResidu()))));
+                inpKeterangan.setText(aset.getKeterangan());
+//                inpUmrEkonomis.setText(utils.MonthToYear(aset.getUmurEkonomisInMonth()));
+                inpNilaiAsetSAP.setText(formatrupiah(Double.parseDouble(String.valueOf(aset.getNilaiOleh()))));
+                inpPersenKondisi.setText(String.valueOf(aset.getPersenKondisi()));
+                inpJumlahPohon.setText(String.valueOf(aset.getJumlahPohon()));
+                inpHGU.setText(String.valueOf(aset.getHgu()));
+                String ket_reject = aset.getKetReject();
+
+            spinnerTipeAset.setSelection(Integer.parseInt(aset.getAsetTipe())-1);
+            spinnerJenisAset.setSelection(Integer.parseInt(aset.getAsetJenis())-1);
+
+            spinnerAsetKondisi.setSelection(Integer.parseInt(aset.getAsetKondisi())-1);
+
+            spinnerSubUnit.setSelection(Integer.parseInt(aset.getAsetSubUnit())-1);
+
+            setAdapterAsetKode();
+            Log.d("amanat17-spinnerkode",aset.getAsetKode());
+            Log.d("amanat17-spinnerkode", String.valueOf(mapSpinnerkode.size()));
+            spinnerKodeAset.setSelection(mapKodeSpinner.get(Integer.parseInt(aset.getAsetKode())));
+
+                String url1 = "",url2 = "",url3 = "",url4 = "";
+                url1 = "file://" + aset.getFotoAset1();
+                url2 = "file://" + aset.getFotoAset2();
+                url3 = "file://" + aset.getFotoAset3();
+                url4 = "file://" + aset.getFotoAset4();
+
+        if (aset.getFotoAset1() == null ){
+            map1.setEnabled(false);
+            foto1rl.setEnabled(false);
+        } else {
+            URL url = new URL(url1);
+            Bitmap bmp = BitmapFactory.decodeStream(url.openConnection().getInputStream());
+            fotoimg1.getLayoutParams().width = 200;
+            fotoimg1.getLayoutParams().height = 200;
+            fotoimg1.setImageBitmap(bmp);
+            map1.setEnabled(true);
+        }
+
+        if (aset.getFotoAset2() == null ){
+            map2.setEnabled(false);
+            foto2rl.setEnabled(false);
+        } else {
+            URL url = new URL(url2);
+            Bitmap bmp = BitmapFactory.decodeStream(url.openConnection().getInputStream());
+            fotoimg2.getLayoutParams().width = 200;
+            fotoimg2.getLayoutParams().height = 200;
+            fotoimg2.setImageBitmap(bmp);
+            map2.setEnabled(true);
+        }
+
+        if (aset.getFotoAset3() == null ){
+            map3.setEnabled(false);
+            foto3rl.setEnabled(false);
+        } else {
+            URL url = new URL(url3);
+            Bitmap bmp = BitmapFactory.decodeStream(url.openConnection().getInputStream());
+            fotoimg3.getLayoutParams().width = 200;
+            fotoimg3.getLayoutParams().height = 200;
+            fotoimg3.setImageBitmap(bmp);
+            map3.setEnabled(true);
+        }
+
+        if (aset.getFotoAset4() == null ){
+            map4.setEnabled(false);
+            foto4rl.setEnabled(false);
+        } else {
+            URL url = new URL(url4);
+            Bitmap bmp = BitmapFactory.decodeStream(url.openConnection().getInputStream());
+            fotoimg4.getLayoutParams().width = 200;
+            fotoimg4.getLayoutParams().height = 200;
+            fotoimg4.setImageBitmap(bmp);
+            map4.setEnabled(true);
+        }
+
+                geotag1 = aset.getGeoTag1();
+                geotag2 = aset.getGeoTag2();
+                geotag3 = aset.getGeoTag3();
+                geotag4 = aset.getGeoTag4();
+
+
+//                set selection spinners
+
+
+
+                editVisibilityDynamic();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
 
     public String formatrupiah(Double number){
         Locale localeID = new Locale("IND","ID");
@@ -1541,6 +1669,7 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity  implements 
                         mapSpinnerAfdeling.put(at.getAfdelling_id(), i);
                         Log.d("amanat15", String.valueOf(mapAfdelingSpinner.get(i)));
                         mapAfdeling.put(i, at.getAfdelling_desc());
+                        mapAfdelingSpinner.put(at.getAfdelling_id(),i);
                         listSpinnerAfdeling.add(at.getAfdelling_desc());
                         i++;
                     }
@@ -2025,7 +2154,7 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity  implements 
             values.put("aset_luas",inpLuasAset.getText().toString().trim());
             values.put("persen_kondisi",inpPersenKondisi.getText().toString().trim());
             values.put("hgu",inpHGU.getText().toString().trim());
-//            values.put("nilai_oleh",utils.CurrencyToNumber(inpNilaiAsetSAP.getText().toString().trim()));
+            values.put("nilai_oleh",utils.CurrencyToNumber(inpNilaiAsetSAP.getText().toString().trim()));
             values.put("tgl_oleh",inpTglOleh.getText().toString().trim() + " 00:00:00");
             LocalDateTime currentTime = null;
             DateTimeFormatter formatter = null;
@@ -2039,7 +2168,7 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity  implements 
 
             values.put("tgl_input", String.valueOf(formattedDateTime));
             values.put("masa_susut",inpMasaPenyusutan.getText().toString().trim());
-//            values.put("nilai_residu",utils.CurrencyToNumber(inpNilaiResidu.getText().toString().trim()));
+            values.put("nilai_residu",utils.CurrencyToNumber(inpNilaiResidu.getText().toString().trim()));
             values.put("nomor_bast",inpNomorBAST.getText().toString().trim());
             values.put("jumlah_pohon",inpJumlahPohon.getText().toString().trim());
             values.put("keterangan",inpKeterangan.getText().toString().trim());
@@ -2065,41 +2194,219 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity  implements 
     }
 
 
-    private void saveImageInternal(File img,String name,int i){
+    public void editAset(){
+        dialog.show();
+
+        if ("non tanaman".equals(String.valueOf(spinnerJenisAset.getSelectedItem()))){
+            if ("normal".equals(String.valueOf(spinnerAsetKondisi.getSelectedItem()))){
+                if (img1 == null || img2 == null || img3 == null || img4 == null){
+                    Toast.makeText(getApplicationContext(), "Foto Wajib Diisi Lengkap!", Toast.LENGTH_SHORT).show();
+
+                    dialog.dismiss();
+                    return;
+                }
+            }
+        }
+
+        if ("non tanaman".equals(String.valueOf(spinnerJenisAset.getSelectedItem()))){
+            if ( "rusak".equals (String.valueOf(spinnerAsetKondisi.getSelectedItem()))){
+                if (img1 == null || img2 == null || img3 == null || img4 == null){
+                    Toast.makeText(getApplicationContext(), "Foto Wajib Diisi Lengkap!", Toast.LENGTH_SHORT).show();
+
+                    dialog.dismiss();
+                    return;
+                }
+            }
+        }
+
         try {
-            File dir = null,newDir = null;
-            Path source = null,target = null;
-            String fileName = name + String.valueOf(i) + ".png";
+            ContentValues values = new ContentValues();
+            values.put("aset_tipe", String.valueOf(1));
+            values.put("aset_jenis", String.valueOf(spinnerJenisAset.getSelectedItemId()));
+            values.put("aset_kondisi", String.valueOf(spinnerAsetKondisi.getSelectedItemId()));
+            values.put("aset_kode", String.valueOf(spinnerKodeAset.getSelectedItemId()));
+            values.put("unit_id", String.valueOf(spinnerUnit.getSelectedItemId()));
+            values.put("aset_sub_unit", String.valueOf(spinnerSubUnit.getSelectedItemId()));
+            values.put("afdeling_id", String.valueOf(spinnerAfdeling.getSelectedItemId()));
+            values.put("aset_name", inpNamaAset.getText().toString().trim());
 
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                source = Paths.get(img.getPath());
+            // Get the internal files directory
 
-                File dir2 = getFilesDir();
-                File newDir2 = new File(dir2, "amanat12");
-                newDir2.mkdir();
+            String namaAsetWithoutSpace = inpNamaAset.getText().toString().trim();
+            namaAsetWithoutSpace = namaAsetWithoutSpace.replace(" ", "");
 
-                target = Paths.get("amanat12/"+fileName);
-                Log.d("amanatpath", String.valueOf(target));
-                Log.d("amanatdir", String.valueOf(getFilesDir()));
-            } else {
+            // Create a new file in the internal files directory
+
+            File newImg1 = new File(getFilesDir(),namaAsetWithoutSpace +"1.png");
+            File newImg2 = new File(getFilesDir(),namaAsetWithoutSpace+"2.png");
+            File newImg3 = new File(getFilesDir(),namaAsetWithoutSpace+"3.png");
+            File newImg4 = new File(getFilesDir(),namaAsetWithoutSpace+"4.png");
+            File ba = new File(getFilesDir(),namaAsetWithoutSpace+"-ba.pdf");
+
+            if (img1 != null) {
+                FileInputStream in = new FileInputStream(img1);
+                FileOutputStream out = new FileOutputStream(newImg1);
+
+                // Copy the file
+                byte[] buffer = new byte[1024];
+                int read;
+                while ((read = in.read(buffer)) != -1) {
+                    out.write(buffer, 0, read);
+                }
+
+                // Close the streams
+                in.close();
+                out.flush();
+                out.close();
+
+                // Delete the original file
+                img1.delete();
+
+                values.put("foto_aset1",newImg1.getAbsolutePath());
+                values.put("geo_tag1",geotag1);
+
 
             }
 
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                Files.move(source, target, StandardCopyOption.REPLACE_EXISTING);
+            if (img2 != null) {
+                FileInputStream in = new FileInputStream(img2);
+                FileOutputStream out = new FileOutputStream(newImg2);
+
+                // Copy the file
+                byte[] buffer = new byte[1024];
+                int read;
+                while ((read = in.read(buffer)) != -1) {
+                    out.write(buffer, 0, read);
+                }
+
+                // Close the streams
+                in.close();
+                out.flush();
+                out.close();
+
+                // Delete the original file
+                img2.delete();
+                values.put("foto_aset2",newImg2.getAbsolutePath());
+                values.put("geo_tag2",geotag2);
+
+
             }
 
-//            File dir = getFilesDir();
-//            File file = new File(dir, "image.png");
-//            FileOutputStream fos = new FileOutputStream(file);
-//            bitmap.compress(Bitmap.CompressFormat.PNG, 100, fos);
-//            fos.flush();
-//            fos.close();
-        } catch (IOException e) {
+            if (img3 != null) {
+                FileInputStream in = new FileInputStream(img3);
+                FileOutputStream out = new FileOutputStream(newImg3);
+
+                // Copy the file
+                byte[] buffer = new byte[1024];
+                int read;
+                while ((read = in.read(buffer)) != -1) {
+                    out.write(buffer, 0, read);
+                }
+
+                // Close the streams
+                in.close();
+                out.flush();
+                out.close();
+
+                // Delete the original file
+                img3.delete();
+                values.put("foto_aset3",newImg3.getAbsolutePath());
+                values.put("geo_tag3",geotag3);
+
+
+            }
+
+            if (img4 != null) {
+                FileInputStream in = new FileInputStream(img4);
+                FileOutputStream out = new FileOutputStream(newImg4);
+
+                // Copy the file
+                byte[] buffer = new byte[1024];
+                int read;
+                while ((read = in.read(buffer)) != -1) {
+                    out.write(buffer, 0, read);
+                }
+
+                // Close the streams
+                in.close();
+                out.flush();
+                out.close();
+
+                // Delete the original file
+                img4.delete();
+                values.put("foto_aset4",newImg4.getAbsolutePath());
+                values.put("geo_tag4",geotag4);
+
+            }
+
+            if (bafile_file != null) {
+
+                FileInputStream in = new FileInputStream(bafile_file);
+                FileOutputStream out = new FileOutputStream(ba);
+
+                // Copy the file
+                byte[] buffer = new byte[1024];
+                int read;
+                while ((read = in.read(buffer)) != -1) {
+                    out.write(buffer, 0, read);
+                }
+
+                // Close the streams
+                in.close();
+                out.flush();
+                out.close();
+
+                // Delete the original file
+                bafile_file.delete();
+                values.put("berita_acara",ba.getAbsolutePath());
+
+            }
+
+            Integer nomor_aset_sap = mapSap.get(Long.parseLong(inpNoSAP.getText().toString().trim()));
+            values.put("nomor_sap",nomor_aset_sap);
+
+            values.put("aset_luas",inpLuasAset.getText().toString().trim());
+            values.put("persen_kondisi",inpPersenKondisi.getText().toString().trim());
+            values.put("hgu",inpHGU.getText().toString().trim());
+            values.put("nilai_oleh",utils.CurrencyToNumber(inpNilaiAsetSAP.getText().toString().trim()));
+            values.put("tgl_oleh",inpTglOleh.getText().toString().trim() + " 00:00:00");
+            LocalDateTime currentTime = null;
+            DateTimeFormatter formatter = null;
+            String formattedDateTime = null;
+
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+                currentTime = LocalDateTime.now();
+                formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm:ss");
+                formattedDateTime = currentTime.format(formatter);
+            }
+
+            values.put("tgl_input", String.valueOf(formattedDateTime));
+            values.put("masa_susut",inpMasaPenyusutan.getText().toString().trim());
+            values.put("nilai_residu",utils.CurrencyToNumber(inpNilaiResidu.getText().toString().trim()));
+            values.put("nomor_bast",inpNomorBAST.getText().toString().trim());
+            values.put("jumlah_pohon",inpJumlahPohon.getText().toString().trim());
+            values.put("keterangan",inpKeterangan.getText().toString().trim());
+
+            asetHelper.open();
+            asetHelper.update(String.valueOf(id),values);
+            asetHelper.close();
+            customDialogAddAset.dismiss();
+            dialog.dismiss();
+//            finish();
+            Intent intent = new Intent(AsetAddUpdateOfflineActivity.this, LonglistAsetActivity.class);
+            startActivity(intent);
+//            saveImageInternal(img1,inpNamaAset.getText().toString().trim(),1);
+        } catch(Exception e) {
+            customDialogAddAset.dismiss();
+            dialog.dismiss();
+            Toast.makeText(getApplicationContext(),"error : " + e.getMessage(),Toast.LENGTH_LONG).show();
             e.printStackTrace();
         }
-    }
 
+
+
+
+    }
 
 
     private static class LoadNotesAsync {
@@ -2124,6 +2431,7 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity  implements 
             });
         }
     }
+
 
 
 

@@ -83,14 +83,12 @@ public class DetailAsetOfflineActivity extends AppCompatActivity {
     String url2 = "";
     String url3 = "";
     String url4 = "";
-    String urlfotoasetqr = "";
     Map<Integer, Integer> mapAfdelingSpinner = new HashMap<Integer, Integer>();
     Map<Long, Integer> mapSap = new HashMap();
     Map<Integer, Long> mapSpinnerSap = new HashMap();
     List<String> listSpinnerSap = new ArrayList<>();
     Map<Integer,Integer> mapKodeSpinner = new HashMap();
     Map<Integer,Integer> mapSpinnerkode = new HashMap();
-    File asetqrfoto;
     DataAllSpinner allSpinner;
     Dialog customDialogApprove;
     Dialog customDialogReject;
@@ -103,16 +101,9 @@ public class DetailAsetOfflineActivity extends AppCompatActivity {
     Button map4;
     Button btnApprove;
     Button btnReject;
-    Button inpSimpanFotoQr;
-    Button downloadQr;
 
     EditText inpNoInv;
     EditText inpHGU;
-    ImageView fotoasetqr;
-    ViewGroup addNewFotoAsetAndQr;
-    LinearLayout fotoasetqrgroup;
-
-    String qrurl;
     Integer statusPosisi;
 
     Integer id;
@@ -140,7 +131,6 @@ public class DetailAsetOfflineActivity extends AppCompatActivity {
     EditText editText;
     EditText inpJumlahPohon;
     TextView tvUploudBA;
-    TextView tvFotoAsetQR;
     TextView tvKetReject;
     AsetModel asetModel;
     File source;
@@ -180,7 +170,6 @@ public class DetailAsetOfflineActivity extends AppCompatActivity {
     ImageView fotoimg2;
     ImageView fotoimg3;
     ImageView fotoimg4;
-    ImageView qrDefault;
 
 
     String photoname1 = "foto1.png";
@@ -241,8 +230,6 @@ public class DetailAsetOfflineActivity extends AppCompatActivity {
         listView=spinnerNoSap.findViewById(R.id.list_view);
         inpKetReject = findViewById(R.id.inpKetReject);
         inpKetReject.setEnabled(false);
-        inpNoInv = findViewById(R.id.inpNoInv);
-        inpNoInv.setEnabled(false);
         listBtnMap = findViewById(R.id.listMapButton);
         inpTglOleh = findViewById(R.id.inpTglMasukAset);
         inpTglOleh.setEnabled(false);
@@ -261,11 +248,8 @@ public class DetailAsetOfflineActivity extends AppCompatActivity {
         spinnerSubUnit.setEnabled(false);
         spinnerUnit = findViewById(R.id.inpUnit);
         spinnerUnit.setEnabled(false);
-        fotoasetqr = findViewById(R.id.fotoasetqr);
-        tvFotoAsetQR = findViewById(R.id.tvFotoAsetQR);
         tvKetReject = findViewById(R.id.tvKetReject);
 
-        addNewFotoAsetAndQr = findViewById(R.id.addNewFotoAsetAndQr);
         inpTglInput = findViewById(R.id.inpTglInput);
         inpTglInput.setEnabled(false);
         inpUmrEkonomis = findViewById(R.id.inpUmrEkonomis);
@@ -290,9 +274,6 @@ public class DetailAsetOfflineActivity extends AppCompatActivity {
         inpJumlahPohon.setEnabled(false);
         inpPersenKondisi = findViewById(R.id.inpPersenKondisi);
         inpPersenKondisi.setEnabled(false);
-        qrDefault = findViewById(R.id.qrDefault);
-        downloadQr = findViewById(R.id.downloadQr);
-        inpSimpanFotoQr = findViewById(R.id.inpSimpanFotoQr);
         inpHGU = findViewById(R.id.inpHGU);
         inpHGU.setEnabled(false);
 
@@ -311,41 +292,7 @@ public class DetailAsetOfflineActivity extends AppCompatActivity {
         fotoimg3 = findViewById(R.id.fotoimg3);
         fotoimg4 = findViewById(R.id.fotoimg4);
         inpBtnMap = findViewById(R.id.inpBtnMap);
-        btnApprove = findViewById(R.id.btnApprove);
-        btnReject = findViewById(R.id.btnReject);
 
-        downloadQr.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (qrurl != null) {
-                    Call<ReportModel> call = asetInterface.downloadQr(id);
-                    call.enqueue(new Callback<ReportModel>() {
-                        @Override
-                        public void onResponse(Call<ReportModel> call, Response<ReportModel> response) {
-                            if (!response.isSuccessful()){
-                                Toast.makeText(getApplicationContext(),"download gagal "+String.valueOf(response.code()),Toast.LENGTH_LONG).show();
-                                return;
-                            }
-
-
-                        }
-
-                        @Override
-                        public void onFailure(Call<ReportModel> call, Throwable t) {
-                            Toast.makeText(getApplicationContext(),"download gagal "+t.getMessage(),Toast.LENGTH_LONG).show();
-                        }
-                    });
-                }
-            }
-        });
-        inpSimpanFotoQr.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-//                Log.d("asetapix","clicked data");
-//                Toast.makeText(getApplicationContext(),"helo",Toast.LENGTH_LONG).show();
-                addFotoQrAset();
-            }
-        });
 
 
         spinnerSubUnit.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -435,19 +382,6 @@ public class DetailAsetOfflineActivity extends AppCompatActivity {
             }
         });
 
-        btnApprove.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                customDialogApprove.show();
-            }
-        });
-
-        btnReject.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                customDialogReject.show();
-            }
-        });
 
         inpBtnMap.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -494,14 +428,6 @@ public class DetailAsetOfflineActivity extends AppCompatActivity {
             }
         });
 
-        addNewFotoAsetAndQr.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(DetailAsetOfflineActivity.this,DetailImageActivity.class);
-                intent.putExtra("url",urlfotoasetqr);
-                startActivity(intent);
-            }
-        });
 
 
         inpNilaiAsetSAP.addTextChangedListener(new TextWatcher() {
@@ -644,8 +570,6 @@ public class DetailAsetOfflineActivity extends AppCompatActivity {
 
     private void setValueInput(){
         try {
-
-
 //        Call<AsetModel> call = asetInterface.getAset(id);
             asetHelper.open();
             Cursor cursor= asetHelper.queryById(String.valueOf(id));
@@ -689,23 +613,16 @@ public class DetailAsetOfflineActivity extends AppCompatActivity {
                     inpNoInv.setText(String.valueOf(aset.getNoInv()));
                 };
 
-                qrurl = AsemApp.BASE_URL_API+"/"+aset.getFotoQr();
-                if (aset.getFotoQr() != null) {
-                    qrDefault.getLayoutParams().height = 346;
-                    Picasso.get().load(qrurl).resize(400,400).centerCrop().into(qrDefault);
-                }
 
                 url1 = "file://" + aset.getFotoAset1();
-                url2 = AsemApp.BASE_URL_ASSET+aset.getFotoAset2();
-                url3 = AsemApp.BASE_URL_ASSET+aset.getFotoAset3();
-                url4 = AsemApp.BASE_URL_ASSET+aset.getFotoAset4();
-                urlfotoasetqr = AsemApp.BASE_URL_ASSET+aset.getFotoAsetQr();
+                url2 = "file://" + aset.getFotoAset2();
+                url3 = "file://" + aset.getFotoAset3();
+                url4 = "file://" + aset.getFotoAset4();
 
                 if (aset.getFotoAset1() == null ){
                     map1.setEnabled(false);
                     foto1rl.setEnabled(false);
                 } else {
-                    Log.d("amanat17-img",url1);
                     URL url = new URL(url1);
                     Bitmap bmp = BitmapFactory.decodeStream(url.openConnection().getInputStream());
                     fotoimg1.getLayoutParams().width = 200;
@@ -722,45 +639,38 @@ public class DetailAsetOfflineActivity extends AppCompatActivity {
                     map2.setEnabled(false);
                     foto2rl.setEnabled(false);
                 } else {
-                    map2.setEnabled(true);
+                    URL url = new URL(url2);
+                    Bitmap bmp = BitmapFactory.decodeStream(url.openConnection().getInputStream());
                     fotoimg2.getLayoutParams().width = 200;
                     fotoimg2.getLayoutParams().height = 200;
-                    Picasso.get().load(url2).resize(200,200).centerCrop().into(fotoimg2);
+                    fotoimg2.setImageBitmap(bmp);
+                    map2.setEnabled(true);
                 }
 
                 if (aset.getFotoAset3() == null ){
                     map3.setEnabled(false);
                     foto3rl.setEnabled(false);
                 } else {
-                    map3.setEnabled(true);
+                    URL url = new URL(url3);
+                    Bitmap bmp = BitmapFactory.decodeStream(url.openConnection().getInputStream());
                     fotoimg3.getLayoutParams().width = 200;
                     fotoimg3.getLayoutParams().height = 200;
-                    Picasso.get().load(url3).resize(200,200).centerCrop().into(fotoimg3);
+                    fotoimg3.setImageBitmap(bmp);
+                    map3.setEnabled(true);
                 }
 
                 if (aset.getFotoAset4() == null ){
                     map4.setEnabled(false);
                     foto4rl.setEnabled(false);
                 } else {
-                    map4.setEnabled(true);
+                    URL url = new URL(url4);
+                    Bitmap bmp = BitmapFactory.decodeStream(url.openConnection().getInputStream());
                     fotoimg4.getLayoutParams().width = 200;
                     fotoimg4.getLayoutParams().height = 200;
-                    Picasso.get().load(url4).resize(200,200).centerCrop().into(fotoimg4);
+                    fotoimg4.setImageBitmap(bmp);
+                    map4.setEnabled(true);
                 }
 
-//                Log.d("asetapix", aset.getFotoAsetQr());
-
-                if (aset.getFotoAsetQr()!=null ){
-//                    fotoasetqrgroup.setVisibility(View.VISIBLE);
-                    String url = AsemApp.BASE_URL_ASSET + aset.getFotoAsetQr();
-                    fotoasetqr.getLayoutParams().width = 300;
-                    fotoasetqr.getLayoutParams().height = 300;
-                    Picasso.get().load(urlfotoasetqr).resize(300,300).centerCrop().into(fotoasetqr);
-                }
-                else{
-                    tvFotoAsetQR.setVisibility(View.GONE);
-                    addNewFotoAsetAndQr.setVisibility(View.GONE);
-                }
 
                 geotag1 = aset.getGeoTag1();
                 geotag2 = aset.getGeoTag2();
@@ -1081,43 +991,6 @@ public class DetailAsetOfflineActivity extends AppCompatActivity {
     }
 
 
-    private void addFotoQrAset() {
-        dialog.show();
-        MultipartBody.Builder builder = new MultipartBody.Builder();
-        builder.addPart(MultipartBody.Part.createFormData("foto_aset_qr", asetqrfoto.getName(), RequestBody.create(MediaType.parse("image/*"), asetqrfoto)));
-
-
-        MultipartBody multipartBody = builder
-                .build();
-        String contentType = "multipart/form-data; charset=utf-8; boundary=" + multipartBody.boundary();
-
-
-        Call<AsetApproveModel> call = asetInterface.addFotoAsetQr(id, contentType, multipartBody);
-
-        call.enqueue(new Callback<AsetApproveModel>() {
-            @Override
-            public void onResponse(Call<AsetApproveModel> call, Response<AsetApproveModel> response) {
-                if (response.isSuccessful() && response.body() != null) {
-                    dialog.dismiss();
-                    startActivity(new Intent(DetailAsetOfflineActivity.this, LonglistAsetActivity.class));
-                    finish();
-                    return;
-                } else {
-                    dialog.dismiss();
-                    Toast.makeText(getApplicationContext(), "Error : mohon coba lagi", Toast.LENGTH_LONG).show();
-                    return;
-                }
-            }
-
-            @Override
-            public void onFailure(Call<AsetApproveModel> call, Throwable t) {
-                dialog.dismiss();
-                Toast.makeText(getApplicationContext(), "Error : " + t.getMessage(), Toast.LENGTH_LONG).show();
-                return;
-            }
-        });
-
-    }
 
     public String formatrupiah(Double number){
         Locale localeID = new Locale("IND","ID");
