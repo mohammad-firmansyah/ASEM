@@ -213,6 +213,7 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity  implements 
 
     Map<Integer,Integer> mapKodeSpinner = new HashMap();
     Map<Integer,Integer> mapSpinnerkode = new HashMap();
+    Map<String,Integer> mapSpinnerkodeCoba = new HashMap();
     String photoname1 = "foto1.png";
     String photoname2 = "foto2.png";
     String photoname3 = "foto3.png";
@@ -240,6 +241,7 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity  implements 
     String spinnerIdUnit;
 
     Dialog customDialogAddAset;
+    Dialog customDialogUpdateAset;
 
 
     /**
@@ -485,20 +487,6 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity  implements 
 
 
         asetHelper = AsetHelper.getInstance(getApplicationContext());
-//        asetHelper.open();
-
-//        Cursor dataCursor = asetHelper.queryAll();
-//        ArrayList<Aset> asetAll = MappingHelper.mapCursorToArrayList(dataCursor);
-//        Aset Data = new Aset(Integer.parseInt("1"),"2","3","4","5","6","7","8","9","10","11","12","13","14","15","16",17.0,"18","19", new Long(20),new Long(21),"22","23","24","25","26","27","28","29","30","31","32","33",Integer.parseInt("34"),Integer.parseInt("35"),36.0,37,"38","39","40");
-
-//        ContentValues values = new ContentValues();
-//        values.put("aset_name", "1");
-
-
-//        long result = asetHelper.insert(values);
-//        Log.d("amanatsql", String.valueOf(result));
-//        Log.d("amanatsql", String.valueOf(asetAll));
-//        asetHelper.close();
 
         id = getIntent().getIntExtra("id",0);
 //        Log.d("amanat17-update",aset.getAsetName());
@@ -509,7 +497,6 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity  implements 
 
         sharedPreferences = AsetAddUpdateOfflineActivity.this.getSharedPreferences(PREF_LOGIN, MODE_PRIVATE);
         afdeling_id = Integer.parseInt(sharedPreferences.getString("afdeling_id", "0"));
-        asetInterface = AsemApp.getApiClient().create(AsetInterface.class);
 
         dialog = new Dialog(AsetAddUpdateOfflineActivity.this,R.style.MyAlertDialogTheme);
         dialog.setContentView(R.layout.loading);
@@ -531,7 +518,7 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity  implements 
         spinnerAsetKondisi = findViewById(R.id.inpKndsAset);
         spinnerKodeAset = findViewById(R.id.inpKodeAset);
         spinnerAfdeling = findViewById(R.id.inpAfdeling);
-//        spinnerAfdeling.setEnabled(false);
+        spinnerAfdeling.setEnabled(false);
         spinnerSubUnit = findViewById(R.id.inpSubUnit);
         spinnerSubUnit.setEnabled(false);
         spinnerUnit = findViewById(R.id.inpUnit);
@@ -547,18 +534,6 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity  implements 
         inpJumlahPohon = findViewById(R.id.inpJmlhPohon);
         inpPersenKondisi = findViewById(R.id.inpPersenKondisi);
         inpHGU = findViewById(R.id.inpHGU);
-
-
-        //        spinnerKomoditi = findViewById(R.id.inpKomoditi);
-
-//        List<String> listSpinner = new ArrayList<>();
-//        listSpinner.add("excel");
-//        listSpinner.add("pdf");
-//        // Set hasil result json ke dalam adapter spinner
-//        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getApplicationContext(),
-//                android.R.layout.simple_spinner_item, listSpinner);
-//        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-//        spinnerKomoditi.setAdapter(adapter);
 
         foto1rl = findViewById(R.id.foto1);
         foto2rl = findViewById(R.id.foto2);
@@ -584,7 +559,16 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity  implements 
 //        handler
 
 
-        btnSubmit.setOnClickListener(v -> initDialogAddAset());
+        btnSubmit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (isEdit) {
+                    initDialogUpdateAset();
+                } else {
+                    initDialogAddAset();
+                }
+            }
+        });
 
         spinnerTipeAset.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -606,7 +590,7 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity  implements 
                 editVisibilityDynamic();
                 setAdapterAsetKode();
                 if (isEdit) {
-
+                    setAdapterAsetKodeEdit();
                     setValueInput();
                 }
             }
@@ -662,9 +646,8 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity  implements 
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 spinnerIdSubUnit = String.valueOf(position);
                 editVisibilityDynamic();
-//                setAfdelingAdapter();
+                setAfdelingAdapter();
                 if (isEdit) {
-                    setAdapterAsetKode();
                     setValueInput();
                 }
 //                getAllSpinnerData();
@@ -899,15 +882,7 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity  implements 
         btnYaKirim.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                if (!isEdit) {
-
-                    addAset();
-                } else {
-                    editAset();
-                }
-
-                //Toast.makeText(UpdateAsetActivity.this,"masuk", Toast.LENGTH_SHORT).show();
+                addAset();
             }
         });
 
@@ -915,6 +890,29 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity  implements 
             @Override
             public void onClick(View v) {
                 customDialogAddAset.dismiss();
+            }
+        });
+    }
+    void initDialogUpdateAset() {
+        customDialogUpdateAset = new Dialog(AsetAddUpdateOfflineActivity.this, R.style.MyAlertDialogTheme);
+        customDialogUpdateAset.setContentView(R.layout.dialog_submitupdate);
+        customDialogUpdateAset.setCanceledOnTouchOutside(false);
+        customDialogUpdateAset.getWindow().setBackgroundDrawable(new ColorDrawable(0));
+        btnYaKirim = customDialogUpdateAset.findViewById(R.id.btnYaKirim);
+        btnTidakKirim = customDialogUpdateAset.findViewById(R.id.btnTidakKirim);
+        customDialogUpdateAset.show();
+
+        btnYaKirim.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                editAset();
+            }
+        });
+
+        btnTidakKirim.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                customDialogUpdateAset.dismiss();
             }
         });
     }
@@ -929,13 +927,14 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity  implements 
     public void setAdapterAsetKode(){
         List<String> asetKode = new ArrayList<>();
         String aset_kode_temp;
-        Integer i = 0;
+        asetKode.add("pilih aset kode");
+        Integer i = 1;
         for (AsetKode2 a : asetKode2) {
-            if (a.getAsetJenis()-1 == spinnerJenisAset.getSelectedItemId()) {
+            if (a.getAsetJenis() == spinnerJenisAset.getSelectedItemId()) {
 
-                if ((a.getAsetJenis()) == 1 ) {
+                if (a.getAsetJenis() == 2 ) {
                     aset_kode_temp = a.getAsetClass() + "/" + a.getAsetDesc();
-                } else if ((a.getAsetJenis()) == 2) {
+                } else if (a.getAsetJenis() == 1) {
                     aset_kode_temp = a.getAsetClass() + "/" + a.getAsetGroup() + "/" + a.getAsetDesc();
                 } else {
                     aset_kode_temp = a.getAsetClass() + "/" + a.getAsetGroup() + "/" + a.getAsetDesc();
@@ -953,6 +952,36 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity  implements 
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerKodeAset.setAdapter(adapter);
 
+    }
+    public void setAdapterAsetKodeEdit(){
+        List<String> asetKode = new ArrayList<>();
+        String aset_kode_temp;
+        Integer i = 0;
+        for (AsetKode2 a : asetKode2) {
+            if (a.getAsetJenis() == spinnerJenisAset.getSelectedItemId()) {
+
+                if ((a.getAsetJenis()) == 1 ) {
+                    aset_kode_temp = a.getAsetClass() + "/" + a.getAsetDesc();
+                } else if ((a.getAsetJenis()) == 2) {
+                    aset_kode_temp = a.getAsetClass() + "/" + a.getAsetGroup() + "/" + a.getAsetDesc();
+                } else {
+                    aset_kode_temp = a.getAsetClass() + "/" + a.getAsetGroup() + "/" + a.getAsetDesc();
+                }
+
+                mapKodeSpinner.put(a.getAsetKodeId(),i);
+                Log.d("map-1", String.valueOf(mapKodeSpinner.get(i)));
+                mapSpinnerkode.put(i,a.getAsetKodeId());
+                mapSpinnerkodeCoba.put(aset_kode_temp,a.getAsetKodeId());
+                Log.d("map-2", String.valueOf(mapSpinnerkode.get(i)));
+
+                i++;
+                asetKode.add(aset_kode_temp);
+            }
+        }
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getApplicationContext(),
+                android.R.layout.simple_spinner_item, asetKode);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerKodeAset.setAdapter(adapter);
 
     }
 
@@ -1001,10 +1030,9 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity  implements 
             asetHelper.open();
             Cursor data = asetHelper.queryById(String.valueOf(id));
             aset = MappingHelper.mapCursorToArrayAset(data);
-//                if (aset.getBeritaAcara() != null ) {
-//
-//                    tvUploudBA.setText(aset.getBeritaAcara());
-//                }
+                if (aset.getBeritaAcara() != null ) {
+                    tvUploudBA.setText(aset.getBeritaAcara());
+                }
 
                 inpTglInput.setText(aset.getTglInput());
                 inpTglOleh.setText(aset.getTglOleh());
@@ -1025,19 +1053,29 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity  implements 
 
             spinnerTipeAset.setSelection(Integer.parseInt(aset.getAsetTipe()));
             spinnerJenisAset.setSelection(Integer.parseInt(aset.getAsetJenis()));
+            setAdapterAsetKodeEdit();
             spinnerAsetKondisi.setSelection(Integer.parseInt(aset.getAsetKondisi()));
             spinnerSubUnit.setSelection(Integer.parseInt(aset.getAsetSubUnit()));
 
-            if (aset.getAfdelingId() != null) {
+            try{
+                if (aset.getAfdelingId() != null) {
 
 //                mapAfdelingSpinner.put(185,1);
-                spinnerAfdeling.setSelection(mapAfdelingSpinner.get(afdeling_id-2));
+                    spinnerAfdeling.setSelection(mapAfdelingSpinner.get(afdeling_id-2));
 
+                }
+
+                Log.d("asetkode1", String.valueOf(aset.getAsetKode()));
+                Log.d("asetkode2", String.valueOf(mapKodeSpinner.get(Integer.parseInt(aset.getAsetKode()))));
+                Log.d("asetkode3", String.valueOf(mapKodeSpinner.size()));
+                if(mapKodeSpinner.size() != 0){
+
+                    Integer idspinner = getSpinnerKodeAset(Integer.parseInt(aset.getAsetJenis()),Integer.parseInt(aset.getAsetKode()));
+                    spinnerKodeAset.setSelection(idspinner);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
             }
-
-//            if(spinnerKodeAset)
-        Log.d("asetkode1", String.valueOf(aset.getAsetKode()));
-                spinnerKodeAset.setSelection(mapKodeSpinner.get(Integer.parseInt(aset.getAsetKode())));
 
 
 
@@ -1050,17 +1088,17 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity  implements 
                 try {
 
 
-        if (aset.getFotoAset1() == null ){
-            map1.setEnabled(false);
-            foto1rl.setEnabled(false);
-        } else {
-            URL url = new URL(url1);
-            Bitmap bmp = BitmapFactory.decodeStream(url.openConnection().getInputStream());
-            fotoimg1.getLayoutParams().width = 200;
-            fotoimg1.getLayoutParams().height = 200;
-            fotoimg1.setImageBitmap(bmp);
-            map1.setEnabled(true);
-        }
+                if (aset.getFotoAset1() == null ){
+                    map1.setEnabled(false);
+                    foto1rl.setEnabled(false);
+                } else {
+                    URL url = new URL(url1);
+                    Bitmap bmp = BitmapFactory.decodeStream(url.openConnection().getInputStream());
+                    fotoimg1.getLayoutParams().width = 200;
+                    fotoimg1.getLayoutParams().height = 200;
+                    fotoimg1.setImageBitmap(bmp);
+                    map1.setEnabled(true);
+                }
 
         if (aset.getFotoAset2() == null ){
             map2.setEnabled(false);
@@ -1854,12 +1892,12 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity  implements 
         Cursor asetTipe = asetHelper.getAllAsetTipe();
         Cursor asetJenis = asetHelper.getAllAsetJenis();
         Cursor asetKondisi = asetHelper.getAllAsetKondisi();
-        Cursor asetKode = asetHelper.getAllAsetKode();
+        Cursor asetKodeCursor = asetHelper.getAllAsetKode();
         Cursor unit = asetHelper.getAllUnit();
         Cursor subUnit = asetHelper.getAllSubUnit();
         Cursor afdeling = asetHelper.getAllAfdeling();
         Cursor sap = asetHelper.getAllSap();
-         DataAllSpinner dataAllSpinner = MappingHelper.mapCursorToArrayListSpinner(asetTipe,asetJenis,asetKondisi,asetKode,unit,subUnit,afdeling,sap);
+         DataAllSpinner dataAllSpinner = MappingHelper.mapCursorToArrayListSpinner(asetTipe,asetJenis,asetKondisi,asetKodeCursor,unit,subUnit,afdeling,sap);
 
         List<String> listSpinnerTipe = new ArrayList<>();
 
@@ -1867,7 +1905,6 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity  implements 
 
         List<String> listSpinnerKondisiAset = new ArrayList<>();
 
-        List<String> listSpinnerKodeAset = new ArrayList<>();
 
         List<String> listSpinnerUnit = new ArrayList<>();
 
@@ -1878,12 +1915,8 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity  implements 
 
 
         listSpinnerTipe.add("Pilih Tipe Aset");
-
         listSpinnerJenis.add("Pilih Jenis Aset");
-
         listSpinnerKondisiAset.add("Pilih Kondisi Aset");
-
-
         listSpinnerSubUnit.add("Pilih Sub Unit ");
         listSpinnerAfdeling.add("Pilih Afdeling ");
 
@@ -1915,9 +1948,14 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity  implements 
 
         // get kode aset
 
-        asetKode2 = dataAllSpinner.getAsetKode();
+       asetKode2 = dataAllSpinner.getAsetKode();
 
-        setAdapterAsetKode();
+        if (!isEdit) {
+            setAdapterAsetKode();
+
+        } else {
+            setAdapterAsetKodeEdit();
+        }
 
         // get unit
 
@@ -1983,11 +2021,7 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity  implements 
                 adapterKondisiAset.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 spinnerAsetKondisi.setAdapter(adapterKondisiAset);
 
-                // set adapter kode aset
-                ArrayAdapter<String> adapterKodeAset = new ArrayAdapter<String>(getApplicationContext(),
-                        android.R.layout.simple_spinner_item, listSpinnerKodeAset);
-                adapterKodeAset.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                spinnerKodeAset.setAdapter(adapterKodeAset);
+
 
                 // set adapter sap aset
 
@@ -2278,7 +2312,7 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity  implements 
                 if (img1 == null || img2 == null || img3 == null || img4 == null){
                     Toast.makeText(getApplicationContext(), "Foto Wajib Diisi Lengkap!", Toast.LENGTH_SHORT).show();
 
-                    dialog.dismiss();
+                        dialog.dismiss();
                     customDialogAddAset.dismiss();
                     return;
                 }
@@ -2287,21 +2321,20 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity  implements 
 
         try {
             ContentValues values = new ContentValues();
-            values.put("aset_tipe", String.valueOf(1));
+            values.put("aset_tipe", String.valueOf(spinnerTipeAset.getSelectedItemId()));
             values.put("aset_jenis", String.valueOf(spinnerJenisAset.getSelectedItemId()));
             values.put("aset_kondisi", String.valueOf(spinnerAsetKondisi.getSelectedItemId()));
-            Log.d("amanat18-asetkodex1", String.valueOf(spinnerKodeAset.getSelectedItemId()));
-            Integer s = mapSpinnerkode.get(spinnerKodeAset.getSelectedItemId());
-            Log.d("amanat18-asetkodex2", String.valueOf(s));
-            Log.d("amanat18-asetkodesize", String.valueOf(mapSpinnerkode.size()));
-            values.put("aset_kode", String.valueOf(spinnerKodeAset.getSelectedItemId()));
+
+            Integer idkodeaset = getAsetKodeId(Math.toIntExact(spinnerJenisAset.getSelectedItemId()), Math.toIntExact(spinnerKodeAset.getSelectedItemId()));
+            Log.d("amanat18-idkodeaset",String.valueOf(idkodeaset));
+            values.put("aset_kode", String.valueOf(idkodeaset));
+
             values.put("unit_id", String.valueOf(spinnerUnit.getSelectedItemId()+1));
             values.put("aset_sub_unit", String.valueOf(spinnerSubUnit.getSelectedItemId()));
             values.put("afdeling_id", String.valueOf(afdeling_id));
             values.put("aset_name", inpNamaAset.getText().toString().trim());
 
             // Get the internal files directory
-
             String namaAsetWithoutSpace = inpNamaAset.getText().toString().trim();
             namaAsetWithoutSpace = namaAsetWithoutSpace.replace(" ", "");
 
@@ -2480,7 +2513,6 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity  implements 
 
     public void editAset(){
         dialog.show();
-
         if ("non tanaman".equals(String.valueOf(spinnerJenisAset.getSelectedItem()))){
             if ("normal".equals(String.valueOf(spinnerAsetKondisi.getSelectedItem()))){
                 if (img1 == null || img2 == null || img3 == null || img4 == null){
@@ -2508,7 +2540,9 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity  implements 
             values.put("aset_tipe", String.valueOf(1));
             values.put("aset_jenis", String.valueOf(spinnerJenisAset.getSelectedItemId()));
             values.put("aset_kondisi", String.valueOf(spinnerAsetKondisi.getSelectedItemId()));
-            values.put("aset_kode", String.valueOf(spinnerKodeAset.getSelectedItemId()));
+
+            Integer idkode = getAsetKodeId(Math.toIntExact(spinnerJenisAset.getSelectedItemId()),Math.toIntExact(spinnerKodeAset.getSelectedItemId()));
+            values.put("aset_kode", String.valueOf(idkode+1));
             values.put("unit_id", String.valueOf(spinnerUnit.getSelectedItemId()));
             values.put("aset_sub_unit", String.valueOf(spinnerSubUnit.getSelectedItemId()));
             values.put("afdeling_id", String.valueOf(spinnerAfdeling.getSelectedItemId()));
@@ -2673,14 +2707,14 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity  implements 
             asetHelper.open();
             asetHelper.update(String.valueOf(id),values);
             asetHelper.close();
-            customDialogAddAset.dismiss();
+            customDialogUpdateAset.dismiss();
             dialog.dismiss();
 //            finish();
             Intent intent = new Intent(AsetAddUpdateOfflineActivity.this, LonglistAsetActivity.class);
             startActivity(intent);
 //            saveImageInternal(img1,inpNamaAset.getText().toString().trim(),1);
         } catch(Exception e) {
-            customDialogAddAset.dismiss();
+            customDialogUpdateAset.dismiss();
             dialog.dismiss();
             Toast.makeText(getApplicationContext(),"error : " + e.getMessage(),Toast.LENGTH_LONG).show();
             e.printStackTrace();
@@ -2691,6 +2725,39 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity  implements 
 
     }
 
+    private Integer getAsetKodeId(Integer asetJenis,Integer spinnerId) {
+        Integer i = 0;
+        for (AsetKode2 a : asetKode2){
+            if (a.getAsetJenis() == asetJenis) {
+                Log.d("aset-spinner", String.valueOf(spinnerId));
+                Log.d("aset-i", String.valueOf(i));
+                if (i == spinnerId) {
+                    return a.getAsetKodeId()-1;
+                }
+
+                i++;
+            }
+        }
+
+        return 0;
+    }
+
+    private Integer getSpinnerKodeAset(Integer asetJenis,Integer idkodeaset) {
+        Integer i = 0;
+        for (AsetKode2 a : asetKode2){
+            if (a.getAsetJenis() == asetJenis) {
+                Log.d("aset-spinner", String.valueOf(idkodeaset));
+                Log.d("aset-i", String.valueOf(a.getAsetKodeId()));
+                if (a.getAsetKodeId() == idkodeaset) {
+                    return i;
+                }
+
+                i++;
+            }
+        }
+
+        return 0;
+    }
 
     private static class LoadNotesAsync {
         private final WeakReference<Context> weakContext;
