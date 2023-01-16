@@ -796,6 +796,7 @@ public class DetailAsetActivity extends AppCompatActivity {
                 if (response.body().getData().getFotoAsetQr()!=null ){
 //                    fotoasetqrgroup.setVisibility(View.VISIBLE);
                     String url = AsemApp.BASE_URL + response.body().getData().getFotoAsetQr();
+                    Log.d("amanat-url",url);
                     fotoasetqr.getLayoutParams().width = 300;
                     fotoasetqr.getLayoutParams().height = 300;
                     Picasso.get().load(urlfotoasetqr).resize(300,300).centerCrop().into(fotoasetqr);

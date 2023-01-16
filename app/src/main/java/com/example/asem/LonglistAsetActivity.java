@@ -153,20 +153,13 @@ public class LonglistAsetActivity extends AppCompatActivity  { //implements Bott
         btnSyncReset.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                dialog.show();
+//                dialog.show();
                 AsetHelper asetHelper = AsetHelper.getInstance(getApplicationContext());
                 asetHelper.open();
-                asetHelper.deleteAsetJenis();
-                asetHelper.deleteAsetKode();
-                asetHelper.deleteAsetTpe();
-                asetHelper.deleteAsetKondisi();
-                asetHelper.deleteSap();
-                asetHelper.deleteAfdeling();
-                asetHelper.deleteUnit();
-                asetHelper.deleteSubUnit();
-                asetHelper.close();
-                dialog.dismiss();
+                asetHelper.truncate(); ;
                 Toast.makeText(getApplicationContext(),"success reset data spinner",Toast.LENGTH_LONG).show();
+                asetHelper.close();
+//                dialog.dismiss();
             }
         });
 

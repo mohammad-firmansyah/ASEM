@@ -583,7 +583,7 @@ public class DetailAsetOfflineActivity extends AppCompatActivity {
             }
             inpTglOleh.setText(aset.getTglOleh());
             inpTglInput.setText(aset.getTglInput());
-            inpNoSAP.setText(String.valueOf(mapSpinnerSap.get(Integer.parseInt(aset.getNomorSap()))));
+            inpNoSAP.setText(aset.getNomorSap());
                 inpLuasAset.setText(String.valueOf(aset.getAsetLuas()));
                 inpNilaiAsetSAP.setText(String.valueOf(aset.getNilaiOleh()));
                 inpMasaPenyusutan.setText(String.valueOf(aset.getMasaSusut()));
@@ -689,7 +689,6 @@ public class DetailAsetOfflineActivity extends AppCompatActivity {
                 try {
 
                     if (aset.getAfdelingId() != null) {
-//                        Log.d("afdeling_id", String.valueOf(aset.getAfdelingId()));
 
                         spinnerAfdeling.setSelection(mapAfdelingSpinner.get(aset.getAfdelingId()));
 
@@ -699,8 +698,6 @@ public class DetailAsetOfflineActivity extends AppCompatActivity {
 
                         spinnerKodeAset.setSelection(mapKodeSpinner.get(aset.getAsetKode()));
 
-//                        Log.d("amanat12", String.valueOf(spinnerKodeAset.getSelectedItemId()));
-//                        Log.d("amanat12", String.valueOf(mapKodeSpinner.get(aset.getAsetKode()-1)));
                     }
                 } catch (Exception e){
                     e.printStackTrace();
@@ -1019,6 +1016,8 @@ public class DetailAsetOfflineActivity extends AppCompatActivity {
                 mapKodeSpinner.put(a.getAsetKodeId(),i);
                 mapSpinnerkode.put(i,a.getAsetKodeId());
 
+                Log.d("amanat18-1", String.valueOf(mapKodeSpinner.get(i)));
+                Log.d("amanat18-2", String.valueOf(mapSpinnerkode.get(a.getAsetKodeId())));
                 i++;
                 asetKode.add(aset_kode_temp);
             }

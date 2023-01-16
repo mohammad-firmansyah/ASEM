@@ -1005,8 +1005,14 @@ public class UpdateFotoQrAsetActivity extends AppCompatActivity {
                                  Picasso.get().load(url4).resize(200,200).centerCrop().into(fotoimg4);
                              }
 
+                             if (response.body().getData().getFotoAsetQr()!=null ){
+                                 String url =  AsemApp.BASE_URL_ASSET + response.body().getData().getFotoAsetQr();
+                                 Log.d("amanat-url",url);
+                                 fotoasetqr.getLayoutParams().width = 300;
+                                 fotoasetqr.getLayoutParams().height = 300;
+                                 Picasso.get().load(url).resize(300,300).centerCrop().into(fotoasetqr);
+                             }
 
-//                Log.d("asetapix",url4 + " " + url1+ " " + url2+ " " + url3);
 
                              geotag1 = response.body().getData().getGeoTag1();
                              geotag2 = response.body().getData().getGeoTag2();
@@ -1839,6 +1845,8 @@ public class UpdateFotoQrAsetActivity extends AppCompatActivity {
 
                 mapKodeSpinner.put(a.getAsetKodeId(),i);
                 mapSpinnerkode.put(i,a.getAsetKodeId());
+
+                Log.d("amanat17-kodespinner", String.valueOf(mapKodeSpinner.get(i)));
 
                 i++;
                 asetKode.add(aset_kode_temp);

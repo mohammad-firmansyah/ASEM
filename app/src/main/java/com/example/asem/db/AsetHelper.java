@@ -3,12 +3,36 @@ package com.example.asem.db;
 import static android.provider.BaseColumns._ID;
 import static com.example.asem.db.DatabaseContractAset.*;
 import static com.example.asem.db.DatabaseContractAfdeling.*;
+import static com.example.asem.db.DatabaseHelper.SQL_CREATE_TABLE_AFDELING;
+import static com.example.asem.db.DatabaseHelper.SQL_CREATE_TABLE_ASET;
+import static com.example.asem.db.DatabaseHelper.SQL_CREATE_TABLE_ASET_JENIS;
+import static com.example.asem.db.DatabaseHelper.SQL_CREATE_TABLE_ASET_KODE;
+import static com.example.asem.db.DatabaseHelper.SQL_CREATE_TABLE_ASET_KONDISI;
+import static com.example.asem.db.DatabaseHelper.SQL_CREATE_TABLE_ASET_TIPE;
+import static com.example.asem.db.DatabaseHelper.SQL_CREATE_TABLE_HAK_AKSES;
+import static com.example.asem.db.DatabaseHelper.SQL_CREATE_TABLE_SAP;
+import static com.example.asem.db.DatabaseHelper.SQL_CREATE_TABLE_STATUS_POSISI;
+import static com.example.asem.db.DatabaseHelper.SQL_CREATE_TABLE_SUB_UNIT;
+import static com.example.asem.db.DatabaseHelper.SQL_CREATE_TABLE_UNIT;
+import static com.example.asem.db.DatabaseHelper.SQL_CREATE_TABLE_USERS;
+import static com.example.asem.db.DatabaseHelper.SQL_INSERT_TABLE_AFDELING;
+import static com.example.asem.db.DatabaseHelper.SQL_INSERT_TABLE_ASET_JENIS;
+import static com.example.asem.db.DatabaseHelper.SQL_INSERT_TABLE_ASET_KODE;
+import static com.example.asem.db.DatabaseHelper.SQL_INSERT_TABLE_ASET_KONDISI;
+import static com.example.asem.db.DatabaseHelper.SQL_INSERT_TABLE_ASET_TIPE;
+import static com.example.asem.db.DatabaseHelper.SQL_INSERT_TABLE_HAK_AKSES;
+import static com.example.asem.db.DatabaseHelper.SQL_INSERT_TABLE_STATUS_POSISI;
+import static com.example.asem.db.DatabaseHelper.SQL_INSERT_TABLE_SUB_UNIT;
+import static com.example.asem.db.DatabaseHelper.SQL_INSERT_TABLE_UNIT;
+import static com.example.asem.db.DatabaseHelper.SQL_INSERT_TABLE_USERS;
 
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
+
+import com.example.asem.api.model.Data;
 
 public class AsetHelper {
     private static AsetHelper INSTANCE;
@@ -53,10 +77,10 @@ public class AsetHelper {
                 null);
     }
 
-    public Cursor getAsetById(String id) {
-        return database.rawQuery("SELECT * FROM " + DatabaseContractAset.TABLE_NAME + "WHERE aset_id = ?", new String[]{String.valueOf("aset_id"),null});
-
-    }
+//    public Cursor getAsetById(String id) {
+//        return database.rawQuery("SELECT * FROM " + DatabaseContractAset.TABLE_NAME + "WHERE aset_id = ?", new String[]{String.valueOf("aset_id"),null});
+//
+//    }
 
     public Cursor getAllAfdeling() {
         return database.query(
@@ -267,4 +291,47 @@ public class AsetHelper {
     public int deleteById(String id) {
         return database.delete(DatabaseContractAset.TABLE_NAME, "aset_id" + " = " + id, null);
     }
+
+    public int truncate() {
+         database.execSQL("DROP TABLE if exists afdeling");
+        database.execSQL("DROP TABLE if exists unit");
+        database.execSQL("DROP TABLE if exists sub_unit");
+        database.execSQL("DROP TABLE if exists hak_akses");
+        database.execSQL("DROP TABLE if exists aset_jenis");
+        database.execSQL("DROP TABLE if exists aset_kode");
+        database.execSQL("DROP TABLE if exists aset_kondisi");
+        database.execSQL("DROP TABLE if exists status_posisi");
+        database.execSQL("DROP TABLE if exists aset_tipe");
+        database.execSQL("DROP TABLE if exists users");
+        database.execSQL("DROP TABLE  if exists sap");
+
+//
+        database.execSQL(SQL_CREATE_TABLE_AFDELING);
+
+        database.execSQL(SQL_CREATE_TABLE_ASET_JENIS);
+
+        database.execSQL(SQL_CREATE_TABLE_ASET_KODE);
+
+        database.execSQL(SQL_CREATE_TABLE_ASET_KONDISI);
+
+        database.execSQL(SQL_CREATE_TABLE_STATUS_POSISI);
+
+        database.execSQL(SQL_CREATE_TABLE_SUB_UNIT);
+
+        database.execSQL(SQL_CREATE_TABLE_ASET_TIPE);
+
+        database.execSQL(SQL_CREATE_TABLE_UNIT);
+
+        database.execSQL(SQL_CREATE_TABLE_USERS);
+
+        database.execSQL(SQL_CREATE_TABLE_SAP);
+
+        database.execSQL(SQL_CREATE_TABLE_HAK_AKSES);
+
+//        DatabaseHelper.DATABASE_VERSION += 1;
+        return 1;
+
+    }
+
+
 }

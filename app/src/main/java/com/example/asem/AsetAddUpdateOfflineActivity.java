@@ -125,9 +125,10 @@ import retrofit2.Response;
 public class AsetAddUpdateOfflineActivity extends AppCompatActivity  implements LoadNotesCallback  {
     private boolean isEdit = false;
     private int position;
+    Aset aset;
     private AsetHelper asetHelper;
     private AsetOfflineAdapter adapter;
-
+    Integer afdeling_id = 0;
     private static final String PREF_LOGIN = "LOGIN_PREF";
     Integer id =0;
     SharedPreferences sharedPreferences;
@@ -482,6 +483,7 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity  implements 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_aset_add_update_offline);
 
+
         asetHelper = AsetHelper.getInstance(getApplicationContext());
 //        asetHelper.open();
 
@@ -506,7 +508,7 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity  implements 
 
 
         sharedPreferences = AsetAddUpdateOfflineActivity.this.getSharedPreferences(PREF_LOGIN, MODE_PRIVATE);
-
+        afdeling_id = Integer.parseInt(sharedPreferences.getString("afdeling_id", "0"));
         asetInterface = AsemApp.getApiClient().create(AsetInterface.class);
 
         dialog = new Dialog(AsetAddUpdateOfflineActivity.this,R.style.MyAlertDialogTheme);
@@ -519,6 +521,8 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity  implements 
 
         getLastLocation(AsetAddUpdateOfflineActivity.this,getApplicationContext());
 
+        listBtnMap = findViewById(R.id.listMapButton);
+        inpBtnMap = findViewById(R.id.inpBtnMap);
         inpTglOleh = findViewById(R.id.inpTglMasukAset);
         inpTglInput = findViewById(R.id.inpTglInput);
         tvUploudBA = findViewById(R.id.tvUploudBA);
@@ -527,7 +531,7 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity  implements 
         spinnerAsetKondisi = findViewById(R.id.inpKndsAset);
         spinnerKodeAset = findViewById(R.id.inpKodeAset);
         spinnerAfdeling = findViewById(R.id.inpAfdeling);
-        spinnerAfdeling.setEnabled(false);
+//        spinnerAfdeling.setEnabled(false);
         spinnerSubUnit = findViewById(R.id.inpSubUnit);
         spinnerSubUnit.setEnabled(false);
         spinnerUnit = findViewById(R.id.inpUnit);
@@ -544,13 +548,7 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity  implements 
         inpPersenKondisi = findViewById(R.id.inpPersenKondisi);
         inpHGU = findViewById(R.id.inpHGU);
 
-        if (isEdit) {
-            TextView tvTglInput = findViewById(R.id.tvTglInput);
-            tvTglInput.setVisibility(View.VISIBLE);
-            inpTglInput.setVisibility(View.VISIBLE);
-            inpTglInput.setEnabled(false);
-            setValueInput();
-        }
+
         //        spinnerKomoditi = findViewById(R.id.inpKomoditi);
 
 //        List<String> listSpinner = new ArrayList<>();
@@ -566,6 +564,13 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity  implements 
         foto2rl = findViewById(R.id.foto2);
         foto3rl = findViewById(R.id.foto3);
         foto4rl = findViewById(R.id.foto4);
+
+        map1 = findViewById(R.id.map1);
+        map2 = findViewById(R.id.map2);
+        map3 = findViewById(R.id.map3);
+        map4 = findViewById(R.id.map4);
+
+
 
         fotoimg1 = findViewById(R.id.fotoimg1);
         fotoimg2 = findViewById(R.id.fotoimg2);
@@ -598,11 +603,12 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity  implements 
         spinnerJenisAset.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                spinnerIdJenisAset = String.valueOf(position);
-
                 editVisibilityDynamic();
                 setAdapterAsetKode();
-                Log.d("asetapix",spinnerIdJenisAset);
+                if (isEdit) {
+
+                    setValueInput();
+                }
             }
 
             @Override
@@ -656,7 +662,11 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity  implements 
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 spinnerIdSubUnit = String.valueOf(position);
                 editVisibilityDynamic();
-                setAfdelingAdapter();
+//                setAfdelingAdapter();
+                if (isEdit) {
+                    setAdapterAsetKode();
+                    setValueInput();
+                }
 //                getAllSpinnerData();
             }
 
@@ -669,7 +679,12 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity  implements 
         spinnerUnit.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                setAfdelingAdapter();
+                editVisibilityDynamic();
+//                setAfdelingAdapter();
+                if (isEdit) {
+
+                    setValueInput();
+                }
             }
 
             @Override
@@ -861,8 +876,15 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity  implements 
         });
 
 
-        initCalender();
         getAllSpinnerData();
+        initCalender();
+        if (isEdit) {
+            TextView tvTglInput = findViewById(R.id.tvTglInput);
+            tvTglInput.setVisibility(View.VISIBLE);
+            inpTglInput.setVisibility(View.VISIBLE);
+            inpTglInput.setEnabled(false);
+            setValueInput();
+        }
     }
 
     void initDialogAddAset() {
@@ -877,7 +899,13 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity  implements 
         btnYaKirim.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                addAset();
+
+                if (!isEdit) {
+
+                    addAset();
+                } else {
+                    editAset();
+                }
 
                 //Toast.makeText(UpdateAsetActivity.this,"masuk", Toast.LENGTH_SHORT).show();
             }
@@ -900,18 +928,14 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity  implements 
 
     public void setAdapterAsetKode(){
         List<String> asetKode = new ArrayList<>();
-        String aset_kode_temp = "";
-
-        asetKode.add("pilih aset kode");
-        Integer i = 1;
+        String aset_kode_temp;
+        Integer i = 0;
         for (AsetKode2 a : asetKode2) {
+            if (a.getAsetJenis()-1 == spinnerJenisAset.getSelectedItemId()) {
 
-
-            if (a.getAsetJenis() == spinnerJenisAset.getSelectedItemId()) {
-
-                if (a.getAsetJenis() == 2 ) {
+                if ((a.getAsetJenis()) == 1 ) {
                     aset_kode_temp = a.getAsetClass() + "/" + a.getAsetDesc();
-                } else if (a.getAsetJenis() == 1) {
+                } else if ((a.getAsetJenis()) == 2) {
                     aset_kode_temp = a.getAsetClass() + "/" + a.getAsetGroup() + "/" + a.getAsetDesc();
                 } else {
                     aset_kode_temp = a.getAsetClass() + "/" + a.getAsetGroup() + "/" + a.getAsetDesc();
@@ -928,41 +952,30 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity  implements 
                 android.R.layout.simple_spinner_item, asetKode);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerKodeAset.setAdapter(adapter);
-    }
 
+
+    }
 
     public void setAfdelingAdapter(){
-        List<String> afdelings = new ArrayList<>();
-        afdelings.add("pilih Afdeling");
-        Integer i = 1;
-        for (Afdelling a:afdeling2) {
-            if (a.getUnit_id() == (spinnerUnit.getSelectedItemId()+1)) {
-                mapAfdelingSpinner.put(a.getAfdelling_id(),i);
-                mapSpinnerAfdeling.put(i,a.getAfdelling_id());
-                afdelings.add(a.getAfdelling_desc());
-                i++;
-            }
-        }
+//        List<String> afdelings = new ArrayList<>();
+//        afdelings.add("pilih afdeling");
+//        Integer i = 1;
+//        for (Afdelling a:afdeling2) {
+//            if (a.getUnit_id() == (spinnerUnit.getSelectedItemId()+1)) {
+//                afdelings.add(a.getAfdelling_desc());
+//                mapAfdelingSpinner.put(a.getAfdelling_id(),i);
+//                i++;
+//            }
+//        }
+//
+//        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getApplicationContext(),
+//                android.R.layout.simple_spinner_item, afdelings);
+//        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+//        spinnerAfdeling.setAdapter(adapter);
 
-        // set adapter afedeling
-        Integer afdeling_id = Integer.parseInt(sharedPreferences.getString("afdeling_id", "0"));
-        ArrayAdapter<String> adapterAfdeling = new ArrayAdapter<String>(getApplicationContext(),
-                android.R.layout.simple_spinner_item, afdelings);
-        adapterAfdeling.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinnerAfdeling.setAdapter(adapterAfdeling);
-        try {
-
-            if (afdelings.size() != 0) {
-
-                Log.d("amanat14", String.valueOf(mapAfdelingSpinner.get(afdeling_id)));
-                spinnerAfdeling.setSelection(mapAfdelingSpinner.get(afdeling_id));
-
-
-            }
-        } catch (Exception e){
-        }
 
     }
+
     public void initCalender(){
         DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
 
@@ -985,21 +998,16 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity  implements 
 
 
     private void setValueInput(){
-
-
-        try {
-            getAllSpinnerData();
-
             asetHelper.open();
             Cursor data = asetHelper.queryById(String.valueOf(id));
-            Aset aset = MappingHelper.mapCursorToArrayAset(data);
+            aset = MappingHelper.mapCursorToArrayAset(data);
 //                if (aset.getBeritaAcara() != null ) {
 //
 //                    tvUploudBA.setText(aset.getBeritaAcara());
 //                }
 
                 inpTglInput.setText(aset.getTglInput());
-                inpTglOleh.setText(aset.getTglOleh().split(" ")[0]);
+                inpTglOleh.setText(aset.getTglOleh());
                 inpNoSAP.setText(aset.getNomorSap());
                 inpNamaAset.setText(aset.getAsetName());
                 inpLuasAset.setText(String.valueOf(aset.getAsetLuas()));
@@ -1015,23 +1023,32 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity  implements 
                 inpHGU.setText(String.valueOf(aset.getHgu()));
                 String ket_reject = aset.getKetReject();
 
-            spinnerTipeAset.setSelection(Integer.parseInt(aset.getAsetTipe())-1);
-            spinnerJenisAset.setSelection(Integer.parseInt(aset.getAsetJenis())-1);
+            spinnerTipeAset.setSelection(Integer.parseInt(aset.getAsetTipe()));
+            spinnerJenisAset.setSelection(Integer.parseInt(aset.getAsetJenis()));
+            spinnerAsetKondisi.setSelection(Integer.parseInt(aset.getAsetKondisi()));
+            spinnerSubUnit.setSelection(Integer.parseInt(aset.getAsetSubUnit()));
 
-            spinnerAsetKondisi.setSelection(Integer.parseInt(aset.getAsetKondisi())-1);
+            if (aset.getAfdelingId() != null) {
 
-            spinnerSubUnit.setSelection(Integer.parseInt(aset.getAsetSubUnit())-1);
+//                mapAfdelingSpinner.put(185,1);
+                spinnerAfdeling.setSelection(mapAfdelingSpinner.get(afdeling_id-2));
 
-            setAdapterAsetKode();
-            Log.d("amanat17-spinnerkode",aset.getAsetKode());
-            Log.d("amanat17-spinnerkode", String.valueOf(mapSpinnerkode.size()));
-            spinnerKodeAset.setSelection(mapKodeSpinner.get(Integer.parseInt(aset.getAsetKode())));
+            }
+
+//            if(spinnerKodeAset)
+        Log.d("asetkode1", String.valueOf(aset.getAsetKode()));
+                spinnerKodeAset.setSelection(mapKodeSpinner.get(Integer.parseInt(aset.getAsetKode())));
+
+
 
                 String url1 = "",url2 = "",url3 = "",url4 = "";
                 url1 = "file://" + aset.getFotoAset1();
                 url2 = "file://" + aset.getFotoAset2();
                 url3 = "file://" + aset.getFotoAset3();
                 url4 = "file://" + aset.getFotoAset4();
+
+                try {
+
 
         if (aset.getFotoAset1() == null ){
             map1.setEnabled(false);
@@ -1081,6 +1098,10 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity  implements 
             map4.setEnabled(true);
         }
 
+                }
+                catch (Exception e){
+                    e.printStackTrace();
+                }
                 geotag1 = aset.getGeoTag1();
                 geotag2 = aset.getGeoTag2();
                 geotag3 = aset.getGeoTag3();
@@ -1093,9 +1114,7 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity  implements 
 
                 editVisibilityDynamic();
 
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+
 
     }
 
@@ -1269,6 +1288,281 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity  implements 
             e.printStackTrace();
         }
     }
+//    public void editVisibilityDynamic(){
+//        TextView tvBa = findViewById(R.id.tvBa);
+//        TextView tvPohon = findViewById(R.id.tvPohon);
+//        TextView tvBast = findViewById(R.id.tvBast);
+//        TextView tvFoto = findViewById(R.id.tvFoto);
+//        TextView tvAfdeling = findViewById(R.id.tvAfdeling);
+//        Spinner inpAfdeling = findViewById(R.id.inpAfdeling);
+//        TextView tvLuasTanaman = findViewById(R.id.luasTanaman);
+//        TextView tvLuasNonTanaman = findViewById(R.id.luasNonTanaman);
+//        TextView tvPersenKondisi = findViewById(R.id.tvPersenKondisi);
+//
+//        HorizontalScrollView scrollPartition = findViewById(R.id.scrollPartition);
+////        Toast.makeText(getApplicationContext(),String.valueOf(spinnerSubUnit.getSelectedItemId()),Toast.LENGTH_LONG).show();
+//        if (spinnerTipeAset.getSelectedItemId() != 0) {
+//            inpNomorBAST.setVisibility(View.VISIBLE);
+//            tvBast.setVisibility(View.VISIBLE);
+//        } else {
+//            inpNomorBAST.setVisibility(View.GONE);
+//            tvBast.setVisibility(View.GONE);
+//        }
+//
+//        if (spinnerSubUnit.getSelectedItemId() == 2){
+//            inpAfdeling.setVisibility(View.VISIBLE);
+//            tvAfdeling.setVisibility(View.VISIBLE);
+////            Toast.makeText(getApplicationContext(),String.valueOf(spinnerSubUnit.getSelectedItemId()),Toast.LENGTH_LONG).show();
+//        } else {
+//            inpAfdeling.setVisibility(View.GONE);
+//            tvAfdeling.setVisibility(View.GONE);
+//        }
+//
+//        if ("tanaman".equals(String.valueOf(spinnerJenisAset.getSelectedItem())) && "normal".equals(String.valueOf(spinnerAsetKondisi.getSelectedItem()))) {
+////            listBtnMap.setVisibility(View.VISIBLE);
+//            inpJumlahPohon.setVisibility(View.VISIBLE);
+//            tvPohon.setVisibility(View.VISIBLE);
+////            inpKomoditi.setVisibility(View.VISIBLE);
+//
+//            inpNomorBAST.setVisibility(View.VISIBLE);
+//            tvBast.setVisibility(View.VISIBLE);
+//            tvUploudBA.setVisibility(View.GONE);
+//            tvBa.setVisibility(View.GONE);
+////            inpBtnMap.setVisibility(View.GONE);
+//            btnFile.setVisibility(View.GONE);
+//
+//            tvFoto.setVisibility(View.VISIBLE);
+//            scrollPartition.setVisibility(View.VISIBLE);
+//
+//            tvLuasTanaman.setVisibility(View.VISIBLE);
+//            tvLuasNonTanaman.setVisibility(View.GONE);
+//            inpLuasAset.setVisibility(View.VISIBLE);
+//
+//            inpPersenKondisi.setVisibility(View.GONE);
+//            tvPersenKondisi.setVisibility(View.GONE);
+//
+//        }
+//
+//        else if ("tanaman".equals(String.valueOf(spinnerJenisAset.getSelectedItem()))  && "rusak".equals(String.valueOf(spinnerAsetKondisi.getSelectedItem())) ) {
+////            listBtnMap.setVisibility(View.VISIBLE);
+//            tvBa.setVisibility(View.VISIBLE);
+//            inpJumlahPohon.setVisibility(View.VISIBLE);
+//            tvPohon.setVisibility(View.VISIBLE);
+//
+////            inpKomoditi.setVisibility(View.VISIBLE);
+//            inpNomorBAST.setVisibility(View.GONE);
+//            tvBast.setVisibility(View.GONE);
+//            tvUploudBA.setVisibility(View.VISIBLE);
+//            btnFile.setVisibility(View.VISIBLE);
+//
+////            inpBtnMap.setVisibility(View.GONE);
+//
+//            tvFoto.setVisibility(View.VISIBLE);
+//            scrollPartition.setVisibility(View.VISIBLE);
+//
+//            tvLuasTanaman.setVisibility(View.VISIBLE);
+//            tvLuasNonTanaman.setVisibility(View.GONE);
+//            inpLuasAset.setVisibility(View.VISIBLE);
+//
+//            inpPersenKondisi.setVisibility(View.GONE);
+//            tvPersenKondisi.setVisibility(View.GONE);
+//
+//        }
+//
+//
+//        else if ("tanaman".equals(String.valueOf(spinnerJenisAset.getSelectedItem()))  && "hilang".equals(String.valueOf(spinnerAsetKondisi.getSelectedItem()))) {
+//            tvUploudBA.setVisibility(View.VISIBLE);
+//            btnFile.setVisibility(View.VISIBLE);
+//            tvBa.setVisibility(View.VISIBLE);
+//            inpJumlahPohon.setVisibility(View.VISIBLE);
+//            tvPohon.setVisibility(View.VISIBLE);
+////            inpKomoditi.setVisibility(View.VISIBLE);
+//
+//            inpNomorBAST.setVisibility(View.GONE);
+//            tvBast.setVisibility(View.GONE);
+////            listBtnMap.setVisibility(View.GONE);
+////            inpBtnMap.setVisibility(View.GONE);
+//
+//            tvFoto.setVisibility(View.GONE);
+//            scrollPartition.setVisibility(View.GONE);
+//
+//            tvLuasTanaman.setVisibility(View.VISIBLE);
+//            tvLuasNonTanaman.setVisibility(View.GONE);
+//            inpLuasAset.setVisibility(View.VISIBLE);
+//
+//            inpPersenKondisi.setVisibility(View.GONE);
+//            tvPersenKondisi.setVisibility(View.GONE);
+//        }
+//
+//        else if ("kayu".equals(String.valueOf(spinnerJenisAset.getSelectedItem()))  && "normal".equals(String.valueOf(spinnerAsetKondisi.getSelectedItem())) ) {
+////            listBtnMap.setVisibility(View.VISIBLE);
+//            inpJumlahPohon.setVisibility(View.VISIBLE);
+////            inpKomoditi.setVisibility(View.VISIBLE);
+//            inpNomorBAST.setVisibility(View.VISIBLE);
+//            tvBast.setVisibility(View.VISIBLE);
+//            tvPohon.setVisibility(View.VISIBLE);
+//
+//            tvBa.setVisibility(View.GONE);
+//            tvUploudBA.setVisibility(View.GONE);
+////            inpBtnMap.setVisibility(View.GONE);
+//            btnFile.setVisibility(View.GONE);
+//
+//            tvFoto.setVisibility(View.VISIBLE);
+//            scrollPartition.setVisibility(View.VISIBLE);
+//
+//            tvLuasTanaman.setVisibility(View.VISIBLE);
+//            tvLuasNonTanaman.setVisibility(View.GONE);
+//            inpLuasAset.setVisibility(View.VISIBLE);
+//
+//            inpPersenKondisi.setVisibility(View.GONE);
+//            tvPersenKondisi.setVisibility(View.GONE);
+//
+//        }
+//
+//        else if ("kayu".equals(String.valueOf(spinnerJenisAset.getSelectedItem()))  && "rusak".equals(String.valueOf(spinnerAsetKondisi.getSelectedItem())) ) {
+////            listBtnMap.setVisibility(View.VISIBLE);
+//            tvPohon.setVisibility(View.VISIBLE);
+//            inpJumlahPohon.setVisibility(View.VISIBLE);
+//            tvBa.setVisibility(View.VISIBLE);
+//            tvUploudBA.setVisibility(View.VISIBLE);
+//            btnFile.setVisibility(View.VISIBLE);
+////            inpKomoditi.setVisibility(View.VISIBLE);
+//            tvPohon.setVisibility(View.VISIBLE);
+//
+//
+//            inpNomorBAST.setVisibility(View.GONE);
+//            tvBast.setVisibility(View.GONE);
+////            inpBtnMap.setVisibility(View.GONE);
+//
+//            tvFoto.setVisibility(View.VISIBLE);
+//            scrollPartition.setVisibility(View.VISIBLE);
+//
+//            tvLuasTanaman.setVisibility(View.VISIBLE);
+//            tvLuasNonTanaman.setVisibility(View.GONE);
+//            inpLuasAset.setVisibility(View.VISIBLE);
+//
+//            inpPersenKondisi.setVisibility(View.GONE);
+//            tvPersenKondisi.setVisibility(View.GONE);
+//
+//        }
+//
+//        else if ("kayu".equals(String.valueOf(spinnerJenisAset.getSelectedItem())) && "hilang".equals(String.valueOf(spinnerAsetKondisi.getSelectedItem()))) {
+//            tvBa.setVisibility(View.VISIBLE);
+//            btnFile.setVisibility(View.VISIBLE);
+//            tvUploudBA.setVisibility(View.VISIBLE);
+////            inpKomoditi.setVisibility(View.VISIBLE);
+//
+//            inpNomorBAST.setVisibility(View.GONE);
+//            tvBast.setVisibility(View.GONE);
+//            tvPohon.setVisibility(View.GONE);
+//            inpJumlahPohon.setVisibility(View.GONE);
+////            listBtnMap.setVisibility(View.GONE);
+//            inpJumlahPohon.setVisibility(View.GONE);
+////            inpBtnMap.setVisibility(View.GONE);
+//
+//            tvFoto.setVisibility(View.GONE);
+//            scrollPartition.setVisibility(View.GONE);
+//
+//            tvLuasTanaman.setVisibility(View.VISIBLE);
+//            tvLuasNonTanaman.setVisibility(View.GONE);
+//            inpLuasAset.setVisibility(View.VISIBLE);
+//
+//            inpPersenKondisi.setVisibility(View.GONE);
+//            tvPersenKondisi.setVisibility(View.GONE);
+//
+//        }
+//
+//        else if ("non tanaman".equals(String.valueOf(spinnerJenisAset.getSelectedItem())) && "normal".equals(String.valueOf(spinnerAsetKondisi.getSelectedItem()))) {
+////            inpBtnMap.setVisibility(View.VISIBLE);
+//            inpNomorBAST.setVisibility(View.VISIBLE);
+//            tvBast.setVisibility(View.VISIBLE);
+//
+////            inpKomoditi.setVisibility(View.GONE);
+//            tvUploudBA.setVisibility(View.GONE);
+////            listBtnMap.setVisibility(View.GONE);
+//            inpJumlahPohon.setVisibility(View.GONE);
+//            tvBa.setVisibility(View.GONE);
+//            tvPohon.setVisibility(View.GONE);
+//            btnFile.setVisibility(View.GONE);
+//
+//            tvFoto.setVisibility(View.VISIBLE);
+//            scrollPartition.setVisibility(View.VISIBLE);
+//
+//            tvLuasTanaman.setVisibility(View.GONE);
+//            tvLuasNonTanaman.setVisibility(View.VISIBLE);
+//            inpLuasAset.setVisibility(View.VISIBLE);
+//
+//            inpPersenKondisi.setVisibility(View.VISIBLE);
+//            tvPersenKondisi.setVisibility(View.VISIBLE);
+//        }
+//
+//        else if ("non tanaman".equals(String.valueOf(spinnerJenisAset.getSelectedItem())) &&"rusak".equals(String.valueOf(spinnerAsetKondisi.getSelectedItem()))) {
+//            tvBa.setVisibility(View.VISIBLE);
+//            btnFile.setVisibility(View.VISIBLE);
+//            tvUploudBA.setVisibility(View.VISIBLE);
+//            tvPohon.setVisibility(View.GONE);
+//            inpJumlahPohon.setVisibility(View.GONE);
+////            inpBtnMap.setVisibility(View.VISIBLE);
+//            inpNomorBAST.setVisibility(View.GONE);
+//            tvBast.setVisibility(View.GONE);
+//
+//            tvFoto.setVisibility(View.VISIBLE);
+//            scrollPartition.setVisibility(View.VISIBLE);
+//
+////            listBtnMap.setVisibility(View.GONE);
+//            tvLuasTanaman.setVisibility(View.GONE);
+//            tvLuasNonTanaman.setVisibility(View.VISIBLE);
+//            inpLuasAset.setVisibility(View.VISIBLE);
+//
+//            inpPersenKondisi.setVisibility(View.VISIBLE);
+//            tvPersenKondisi.setVisibility(View.VISIBLE);
+//
+//        }
+//
+//        else if ("non tanaman".equals(String.valueOf(spinnerJenisAset.getSelectedItem())) && "hilang".equals(String.valueOf(spinnerAsetKondisi.getSelectedItem()))) {
+//            tvBa.setVisibility(View.VISIBLE);
+//            btnFile.setVisibility(View.VISIBLE);
+//            tvUploudBA.setVisibility(View.VISIBLE);
+//
+////            inpKomoditi.setVisibility(View.GONE);
+//            tvPohon.setVisibility(View.GONE);
+//            inpJumlahPohon.setVisibility(View.GONE);
+////            listBtnMap.setVisibility(View.GONE);
+//            inpJumlahPohon.setVisibility(View.GONE);
+////            inpBtnMap.setVisibility(View.GONE);
+//            inpNomorBAST.setVisibility(View.GONE);
+//            tvBast.setVisibility(View.GONE);
+//
+//            tvFoto.setVisibility(View.GONE);
+//            scrollPartition.setVisibility(View.GONE);
+//
+//            tvLuasTanaman.setVisibility(View.GONE);
+//            tvLuasNonTanaman.setVisibility(View.VISIBLE);
+//            inpLuasAset.setVisibility(View.VISIBLE);
+//
+//            inpPersenKondisi.setVisibility(View.VISIBLE);
+//            tvPersenKondisi.setVisibility(View.VISIBLE);
+//
+//        } else {
+////            listBtnMap.setVisibility(View.GONE);
+//            inpJumlahPohon.setVisibility(View.GONE);
+//            tvFoto.setVisibility(View.GONE);
+//            scrollPartition.setVisibility(View.GONE);
+//            tvPohon.setVisibility(View.GONE);
+//            tvBa.setVisibility(View.GONE);
+//            tvUploudBA.setVisibility(View.GONE);
+////            inpBtnMap.setVisibility(View.GONE);
+//            btnFile.setVisibility(View.GONE);
+//
+//            tvLuasTanaman.setVisibility(View.GONE);
+//            tvLuasNonTanaman.setVisibility(View.GONE);
+//            inpLuasAset.setVisibility(View.GONE);
+//
+//            inpPersenKondisi.setVisibility(View.GONE);
+//            tvPersenKondisi.setVisibility(View.GONE);
+//        }
+//    }
+
     public void editVisibilityDynamic(){
         TextView tvBa = findViewById(R.id.tvBa);
         TextView tvPohon = findViewById(R.id.tvPohon);
@@ -1282,13 +1576,7 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity  implements 
 
         HorizontalScrollView scrollPartition = findViewById(R.id.scrollPartition);
 //        Toast.makeText(getApplicationContext(),String.valueOf(spinnerSubUnit.getSelectedItemId()),Toast.LENGTH_LONG).show();
-        if (spinnerTipeAset.getSelectedItemId() != 0) {
-            inpNomorBAST.setVisibility(View.VISIBLE);
-            tvBast.setVisibility(View.VISIBLE);
-        } else {
-            inpNomorBAST.setVisibility(View.GONE);
-            tvBast.setVisibility(View.GONE);
-        }
+
 
         if (spinnerSubUnit.getSelectedItemId() == 2){
             inpAfdeling.setVisibility(View.VISIBLE);
@@ -1300,7 +1588,7 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity  implements 
         }
 
         if ("tanaman".equals(String.valueOf(spinnerJenisAset.getSelectedItem())) && "normal".equals(String.valueOf(spinnerAsetKondisi.getSelectedItem()))) {
-//            listBtnMap.setVisibility(View.VISIBLE);
+            listBtnMap.setVisibility(View.VISIBLE);
             inpJumlahPohon.setVisibility(View.VISIBLE);
             tvPohon.setVisibility(View.VISIBLE);
 //            inpKomoditi.setVisibility(View.VISIBLE);
@@ -1309,7 +1597,7 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity  implements 
             tvBast.setVisibility(View.VISIBLE);
             tvUploudBA.setVisibility(View.GONE);
             tvBa.setVisibility(View.GONE);
-//            inpBtnMap.setVisibility(View.GONE);
+            inpBtnMap.setVisibility(View.GONE);
             btnFile.setVisibility(View.GONE);
 
             tvFoto.setVisibility(View.VISIBLE);
@@ -1325,9 +1613,9 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity  implements 
         }
 
         else if ("tanaman".equals(String.valueOf(spinnerJenisAset.getSelectedItem()))  && "rusak".equals(String.valueOf(spinnerAsetKondisi.getSelectedItem())) ) {
-//            listBtnMap.setVisibility(View.VISIBLE);
-            tvBa.setVisibility(View.VISIBLE);
+            listBtnMap.setVisibility(View.VISIBLE);
             inpJumlahPohon.setVisibility(View.VISIBLE);
+            tvBa.setVisibility(View.VISIBLE);
             tvPohon.setVisibility(View.VISIBLE);
 
 //            inpKomoditi.setVisibility(View.VISIBLE);
@@ -1336,7 +1624,7 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity  implements 
             tvUploudBA.setVisibility(View.VISIBLE);
             btnFile.setVisibility(View.VISIBLE);
 
-//            inpBtnMap.setVisibility(View.GONE);
+            inpBtnMap.setVisibility(View.GONE);
 
             tvFoto.setVisibility(View.VISIBLE);
             scrollPartition.setVisibility(View.VISIBLE);
@@ -1356,13 +1644,14 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity  implements 
             btnFile.setVisibility(View.VISIBLE);
             tvBa.setVisibility(View.VISIBLE);
             inpJumlahPohon.setVisibility(View.VISIBLE);
-            tvPohon.setVisibility(View.VISIBLE);
 //            inpKomoditi.setVisibility(View.VISIBLE);
 
             inpNomorBAST.setVisibility(View.GONE);
             tvBast.setVisibility(View.GONE);
-//            listBtnMap.setVisibility(View.GONE);
-//            inpBtnMap.setVisibility(View.GONE);
+            tvPohon.setVisibility(View.GONE);
+            listBtnMap.setVisibility(View.GONE);
+            inpJumlahPohon.setVisibility(View.GONE);
+            inpBtnMap.setVisibility(View.GONE);
 
             tvFoto.setVisibility(View.GONE);
             scrollPartition.setVisibility(View.GONE);
@@ -1376,7 +1665,7 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity  implements 
         }
 
         else if ("kayu".equals(String.valueOf(spinnerJenisAset.getSelectedItem()))  && "normal".equals(String.valueOf(spinnerAsetKondisi.getSelectedItem())) ) {
-//            listBtnMap.setVisibility(View.VISIBLE);
+            listBtnMap.setVisibility(View.VISIBLE);
             inpJumlahPohon.setVisibility(View.VISIBLE);
 //            inpKomoditi.setVisibility(View.VISIBLE);
             inpNomorBAST.setVisibility(View.VISIBLE);
@@ -1385,7 +1674,7 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity  implements 
 
             tvBa.setVisibility(View.GONE);
             tvUploudBA.setVisibility(View.GONE);
-//            inpBtnMap.setVisibility(View.GONE);
+            inpBtnMap.setVisibility(View.GONE);
             btnFile.setVisibility(View.GONE);
 
             tvFoto.setVisibility(View.VISIBLE);
@@ -1401,7 +1690,7 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity  implements 
         }
 
         else if ("kayu".equals(String.valueOf(spinnerJenisAset.getSelectedItem()))  && "rusak".equals(String.valueOf(spinnerAsetKondisi.getSelectedItem())) ) {
-//            listBtnMap.setVisibility(View.VISIBLE);
+            listBtnMap.setVisibility(View.VISIBLE);
             tvPohon.setVisibility(View.VISIBLE);
             inpJumlahPohon.setVisibility(View.VISIBLE);
             tvBa.setVisibility(View.VISIBLE);
@@ -1413,7 +1702,7 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity  implements 
 
             inpNomorBAST.setVisibility(View.GONE);
             tvBast.setVisibility(View.GONE);
-//            inpBtnMap.setVisibility(View.GONE);
+            inpBtnMap.setVisibility(View.GONE);
 
             tvFoto.setVisibility(View.VISIBLE);
             scrollPartition.setVisibility(View.VISIBLE);
@@ -1437,9 +1726,9 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity  implements 
             tvBast.setVisibility(View.GONE);
             tvPohon.setVisibility(View.GONE);
             inpJumlahPohon.setVisibility(View.GONE);
-//            listBtnMap.setVisibility(View.GONE);
+            listBtnMap.setVisibility(View.GONE);
             inpJumlahPohon.setVisibility(View.GONE);
-//            inpBtnMap.setVisibility(View.GONE);
+            inpBtnMap.setVisibility(View.GONE);
 
             tvFoto.setVisibility(View.GONE);
             scrollPartition.setVisibility(View.GONE);
@@ -1454,13 +1743,13 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity  implements 
         }
 
         else if ("non tanaman".equals(String.valueOf(spinnerJenisAset.getSelectedItem())) && "normal".equals(String.valueOf(spinnerAsetKondisi.getSelectedItem()))) {
-//            inpBtnMap.setVisibility(View.VISIBLE);
+            inpBtnMap.setVisibility(View.VISIBLE);
             inpNomorBAST.setVisibility(View.VISIBLE);
             tvBast.setVisibility(View.VISIBLE);
 
 //            inpKomoditi.setVisibility(View.GONE);
             tvUploudBA.setVisibility(View.GONE);
-//            listBtnMap.setVisibility(View.GONE);
+            listBtnMap.setVisibility(View.GONE);
             inpJumlahPohon.setVisibility(View.GONE);
             tvBa.setVisibility(View.GONE);
             tvPohon.setVisibility(View.GONE);
@@ -1483,14 +1772,14 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity  implements 
             tvUploudBA.setVisibility(View.VISIBLE);
             tvPohon.setVisibility(View.GONE);
             inpJumlahPohon.setVisibility(View.GONE);
-//            inpBtnMap.setVisibility(View.VISIBLE);
+            inpBtnMap.setVisibility(View.VISIBLE);
             inpNomorBAST.setVisibility(View.GONE);
             tvBast.setVisibility(View.GONE);
 
             tvFoto.setVisibility(View.VISIBLE);
             scrollPartition.setVisibility(View.VISIBLE);
 
-//            listBtnMap.setVisibility(View.GONE);
+            listBtnMap.setVisibility(View.GONE);
             tvLuasTanaman.setVisibility(View.GONE);
             tvLuasNonTanaman.setVisibility(View.VISIBLE);
             inpLuasAset.setVisibility(View.VISIBLE);
@@ -1508,9 +1797,9 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity  implements 
 //            inpKomoditi.setVisibility(View.GONE);
             tvPohon.setVisibility(View.GONE);
             inpJumlahPohon.setVisibility(View.GONE);
-//            listBtnMap.setVisibility(View.GONE);
+            listBtnMap.setVisibility(View.GONE);
             inpJumlahPohon.setVisibility(View.GONE);
-//            inpBtnMap.setVisibility(View.GONE);
+            inpBtnMap.setVisibility(View.GONE);
             inpNomorBAST.setVisibility(View.GONE);
             tvBast.setVisibility(View.GONE);
 
@@ -1525,14 +1814,14 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity  implements 
             tvPersenKondisi.setVisibility(View.VISIBLE);
 
         } else {
-//            listBtnMap.setVisibility(View.GONE);
+            listBtnMap.setVisibility(View.GONE);
             inpJumlahPohon.setVisibility(View.GONE);
             tvFoto.setVisibility(View.GONE);
             scrollPartition.setVisibility(View.GONE);
             tvPohon.setVisibility(View.GONE);
             tvBa.setVisibility(View.GONE);
             tvUploudBA.setVisibility(View.GONE);
-//            inpBtnMap.setVisibility(View.GONE);
+            inpBtnMap.setVisibility(View.GONE);
             btnFile.setVisibility(View.GONE);
 
             tvLuasTanaman.setVisibility(View.GONE);
@@ -1594,11 +1883,10 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity  implements 
 
         listSpinnerKondisiAset.add("Pilih Kondisi Aset");
 
-        listSpinnerKodeAset.add("Pilih Kode Aset");
 
         listSpinnerSubUnit.add("Pilih Sub Unit ");
+        listSpinnerAfdeling.add("Pilih Afdeling ");
 
-        listSpinnerAfdeling.add("Pilih Afdeling Aset");
                 // get data tipe aset
 
         for (AsetTipe at : dataAllSpinner.getAsetTipe()){
@@ -1629,7 +1917,7 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity  implements 
 
         asetKode2 = dataAllSpinner.getAsetKode();
 
-
+        setAdapterAsetKode();
 
         // get unit
 
@@ -1661,19 +1949,19 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity  implements 
                 spinnerUnit.setSelection(unit_id-1);
             } catch(Exception e){}
 
-                // get afdeling
-                Integer i=0;
-                    afdeling2 = dataAllSpinner.getAfdeling();
+//                // get afdeling
+                Integer i=1;
+                afdeling2 = dataAllSpinner.getAfdeling();
                 for (Afdelling at : dataAllSpinner.getAfdeling()){
                     if (at.getUnit_id() == (spinnerUnit.getSelectedItemId()+1)) {
-                        mapSpinnerAfdeling.put(at.getAfdelling_id(), i);
-                        Log.d("amanat15", String.valueOf(mapAfdelingSpinner.get(i)));
-                        mapAfdeling.put(i, at.getAfdelling_desc());
+                        mapSpinnerAfdeling.put(i,at.getAfdelling_id());
                         mapAfdelingSpinner.put(at.getAfdelling_id(),i);
+                        mapAfdeling.put(i, at.getAfdelling_desc());
                         listSpinnerAfdeling.add(at.getAfdelling_desc());
                         i++;
                     }
                 }
+
 
 
 
@@ -1738,10 +2026,7 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity  implements 
                         android.R.layout.simple_spinner_item, listSpinnerSubUnit);
                 adapterSubUnit.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 spinnerSubUnit.setAdapter(adapterSubUnit);
-                try {
-                    Integer sub_unit_id = Integer.valueOf(sharedPreferences.getString("sub_unit_id", "0"));
-                    spinnerSubUnit.setSelection(sub_unit_id);
-                } catch (Exception e){}
+
 
                 // set adapter afedeling
 
@@ -1749,18 +2034,13 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity  implements 
                         android.R.layout.simple_spinner_item, listSpinnerAfdeling);
                 adapterAfdeling.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 spinnerAfdeling.setAdapter(adapterAfdeling);
+
                 try {
+                    Integer sub_unit_id = Integer.valueOf(sharedPreferences.getString("sub_unit_id", "0"));
+                    spinnerSubUnit.setSelection(sub_unit_id);
+                } catch (Exception e){}
 
-                    if (listSpinnerAfdeling.size() != 0) {
-
-                        Integer afdeling_id = Integer.parseInt(sharedPreferences.getString("afdeling_id", "0"));
-                        Log.d("mapafd", String.valueOf(mapAfdelingSpinner));
-                        spinnerAfdeling.setSelection(mapAfdelingSpinner.get(afdeling_id));
-
-
-                    }
-                } catch (Exception e){
-                }
+                spinnerAfdeling.setSelection(mapAfdelingSpinner.get(afdeling_id-2));
 
                 asetHelper.close();
 
@@ -2010,10 +2290,14 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity  implements 
             values.put("aset_tipe", String.valueOf(1));
             values.put("aset_jenis", String.valueOf(spinnerJenisAset.getSelectedItemId()));
             values.put("aset_kondisi", String.valueOf(spinnerAsetKondisi.getSelectedItemId()));
+            Log.d("amanat18-asetkodex1", String.valueOf(spinnerKodeAset.getSelectedItemId()));
+            Integer s = mapSpinnerkode.get(spinnerKodeAset.getSelectedItemId());
+            Log.d("amanat18-asetkodex2", String.valueOf(s));
+            Log.d("amanat18-asetkodesize", String.valueOf(mapSpinnerkode.size()));
             values.put("aset_kode", String.valueOf(spinnerKodeAset.getSelectedItemId()));
-            values.put("unit_id", String.valueOf(spinnerUnit.getSelectedItemId()));
+            values.put("unit_id", String.valueOf(spinnerUnit.getSelectedItemId()+1));
             values.put("aset_sub_unit", String.valueOf(spinnerSubUnit.getSelectedItemId()));
-            values.put("afdeling_id", String.valueOf(spinnerAfdeling.getSelectedItemId()));
+            values.put("afdeling_id", String.valueOf(afdeling_id));
             values.put("aset_name", inpNamaAset.getText().toString().trim());
 
             // Get the internal files directory
@@ -2148,7 +2432,7 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity  implements 
 
             }
 
-            Integer nomor_aset_sap = mapSap.get(Long.parseLong(inpNoSAP.getText().toString().trim()));
+            String nomor_aset_sap = inpNoSAP.getText().toString().trim();
             values.put("nomor_sap",nomor_aset_sap);
 
             values.put("aset_luas",inpLuasAset.getText().toString().trim());
@@ -2362,9 +2646,8 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity  implements 
 
             }
 
-            Integer nomor_aset_sap = mapSap.get(Long.parseLong(inpNoSAP.getText().toString().trim()));
+            String nomor_aset_sap = inpNoSAP.getText().toString().trim();
             values.put("nomor_sap",nomor_aset_sap);
-
             values.put("aset_luas",inpLuasAset.getText().toString().trim());
             values.put("persen_kondisi",inpPersenKondisi.getText().toString().trim());
             values.put("hgu",inpHGU.getText().toString().trim());
