@@ -75,6 +75,7 @@ import retrofit2.Response;
 
 public class DetailAsetOfflineActivity extends AppCompatActivity {
     private AsetHelper asetHelper;
+    Aset aset;
     ListView listView;
     Dialog spinnerNoSap;
     Map<Integer, Integer> mapSpinnerAfdeling = new HashMap<Integer, Integer>();
@@ -300,7 +301,7 @@ public class DetailAsetOfflineActivity extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 spinnerIdSubUnit = String.valueOf(position);
                 editVisibilityDynamic();
-                setAfdelingAdapter();
+//                setAfdelingAdapter();
                 setValueInput();
 
             }
@@ -316,7 +317,7 @@ public class DetailAsetOfflineActivity extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
                 editVisibilityDynamic();
-                setAfdelingAdapter();
+//                setAfdelingAdapter();
                 setValueInput();
 
             }
@@ -573,7 +574,7 @@ public class DetailAsetOfflineActivity extends AppCompatActivity {
 //        Call<AsetModel> call = asetInterface.getAset(id);
             asetHelper.open();
             Cursor cursor= asetHelper.queryById(String.valueOf(id));
-            Aset aset = MappingHelper.mapCursorToArrayAset(cursor);
+            aset = MappingHelper.mapCursorToArrayAset(cursor);
 
             inpNamaAset.setText(aset.getAsetName());
             if (aset.getBeritaAcara() != null ) {
@@ -590,7 +591,8 @@ public class DetailAsetOfflineActivity extends AppCompatActivity {
                 inpNomorBAST.setText(String.valueOf(aset.getNomorBast()));
                 inpNilaiResidu.setText(formatrupiah(Double.parseDouble(String.valueOf(aset.getNilaiResidu()))));
                 inpKeterangan.setText(aset.getKeterangan());
-//                inpUmrEkonomis.setText(utils.MonthToYear(aset.getUmurEkonomisInMonth()));
+                Log.d("testing-masasusut", String.valueOf(utils.masaSusutToMonth(Integer.valueOf(aset.getMasaSusut()),aset.getTglOleh())));
+                inpUmrEkonomis.setText(utils.MonthToYear(utils.masaSusutToMonth(Integer.valueOf(aset.getMasaSusut()),aset.getTglOleh())));
                 inpNilaiAsetSAP.setText(formatrupiah(Double.parseDouble(String.valueOf(aset.getNilaiOleh()))));
                 inpPersenKondisi.setText(String.valueOf(aset.getPersenKondisi()));
                 inpJumlahPohon.setText(String.valueOf(aset.getJumlahPohon()));
@@ -682,7 +684,7 @@ public class DetailAsetOfflineActivity extends AppCompatActivity {
                 spinnerTipeAset.setSelection(Integer.valueOf(aset.getAsetTipe()));
                 spinnerJenisAset.setSelection(Integer.valueOf(aset.getAsetJenis()));
                 spinnerAsetKondisi.setSelection(Integer.valueOf(aset.getAsetKondisi()));
-                spinnerSubUnit.setSelection(Integer.valueOf(aset.getAsetSubUnit()));
+//                spinnerSubUnit.setSelection(Integer.valueOf(aset.getAsetSubUnit()));
 
 
 
@@ -690,15 +692,9 @@ public class DetailAsetOfflineActivity extends AppCompatActivity {
 
                     if (aset.getAfdelingId() != null) {
 
-                        spinnerAfdeling.setSelection(mapAfdelingSpinner.get(aset.getAfdelingId()));
-
+                        spinnerAfdeling.setSelection(mapAfdelingSpinner.get(Integer.parseInt(aset.getAfdelingId())-2));
                     }
 
-                    if (mapKodeSpinner.get(aset.getAsetKode()) != null) {
-
-                        spinnerKodeAset.setSelection(mapKodeSpinner.get(aset.getAsetKode()));
-
-                    }
                 } catch (Exception e){
                     e.printStackTrace();
                 }
@@ -1003,7 +999,7 @@ public class DetailAsetOfflineActivity extends AppCompatActivity {
         String aset_kode_temp;
         Integer i = 0;
         for (AsetKode2 a : asetKode2) {
-            if (a.getAsetJenis()-1 == spinnerJenisAset.getSelectedItemId()) {
+            if (a.getAsetJenis() == spinnerJenisAset.getSelectedItemId()) {
 
                 if ((a.getAsetJenis()) == 1 ) {
                     aset_kode_temp = a.getAsetClass() + "/" + a.getAsetDesc();
@@ -1016,8 +1012,9 @@ public class DetailAsetOfflineActivity extends AppCompatActivity {
                 mapKodeSpinner.put(a.getAsetKodeId(),i);
                 mapSpinnerkode.put(i,a.getAsetKodeId());
 
-                Log.d("amanat18-1", String.valueOf(mapKodeSpinner.get(i)));
-                Log.d("amanat18-2", String.valueOf(mapSpinnerkode.get(a.getAsetKodeId())));
+                Log.d("amanat18-1", String.valueOf(a.getAsetKodeId()));
+                Log.d("amanat18-1", String.valueOf(mapKodeSpinner.get(a.getAsetKodeId())));
+                Log.d("amanat18-2", String.valueOf(mapSpinnerkode.get(i)));
                 i++;
                 asetKode.add(aset_kode_temp);
             }
@@ -1027,6 +1024,9 @@ public class DetailAsetOfflineActivity extends AppCompatActivity {
                 android.R.layout.simple_spinner_item, asetKode);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerKodeAset.setAdapter(adapter);
+
+        Log.d("amanat18-asetkode1", String.valueOf(getSpinnerKodeAset(Integer.parseInt(aset.getAsetJenis()),Integer.parseInt(aset.getAsetKode()))));
+        spinnerKodeAset.setSelection(getSpinnerKodeAset(Integer.parseInt(aset.getAsetJenis()),Integer.parseInt(aset.getAsetKode())));
     }
 
     public void getAllSpinnerData(){
@@ -1100,7 +1100,6 @@ public class DetailAsetOfflineActivity extends AppCompatActivity {
         asetKode2 = dataAllSpinner.getAsetKode();
 
 
-
         // get unit
 
         for (Unit at : dataAllSpinner.getUnit()){
@@ -1132,13 +1131,15 @@ public class DetailAsetOfflineActivity extends AppCompatActivity {
         } catch(Exception e){}
 
         // get afdeling
-        Integer i=0;
+        Integer i=1;
             for (Afdelling at : dataAllSpinner.getAfdeling()){
             if (at.getUnit_id() == (spinnerUnit.getSelectedItemId()+1)) {
-                mapSpinnerAfdeling.put(at.getAfdelling_id(), i);
+                mapSpinnerAfdeling.put( i,at.getAfdelling_id());
+                mapAfdelingSpinner.put(at.getAfdelling_id(), i);
                 mapAfdeling.put(i, at.getAfdelling_desc());
                 listSpinnerAfdeling.add(at.getAfdelling_desc());
-                Log.d("amanat15",listSpinnerAfdeling.get(i));
+                Log.d("amanat18-afdspn", String.valueOf(mapAfdelingSpinner.get(at.getAfdelling_id())));
+                Log.d("amanat18-spnafd", String.valueOf(mapSpinnerAfdeling.get(i)));
                 i++;
             }
         }
@@ -1217,37 +1218,60 @@ public class DetailAsetOfflineActivity extends AppCompatActivity {
                 android.R.layout.simple_spinner_item, listSpinnerAfdeling);
         adapterAfdeling.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerAfdeling.setAdapter(adapterAfdeling);
-        try {
-
-            if (listSpinnerAfdeling.size() != 0) {
-
-                Log.d("amanat14", String.valueOf(mapAfdelingSpinner.get(afdeling_id)));
-                spinnerAfdeling.setSelection(mapAfdelingSpinner.get(afdeling_id));
-
-
-            }
-        } catch (Exception e){
-        }
-
         asetHelper.close();
 
     }
-    public void setAfdelingAdapter(){
-        List<String> afdelings = new ArrayList<>();
-        afdelings.add("pilih afdeling");
-        Integer i = 1;
-        for (Afdelling a:afdeling) {
-            if (a.getUnit_id() == (spinnerUnit.getSelectedItemId()+1)) {
-                afdelings.add(a.getAfdelling_desc());
-                mapAfdelingSpinner.put(a.getAfdelling_id(),i);
+//    public void setAfdelingAdapter(){
+//        List<String> afdelings = new ArrayList<>();
+//        afdelings.add("pilih afdeling");
+//        Integer i = 1;
+//        for (Afdelling a:afdeling) {
+//            if (a.getUnit_id() == (spinnerUnit.getSelectedItemId()+1)) {
+//                afdelings.add(a.getAfdelling_desc());
+//                mapAfdelingSpinner.put(a.getAfdelling_id(),i);
+//                i++;
+//            }
+//        }
+//
+//        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getApplicationContext(),
+//                android.R.layout.simple_spinner_item, afdelings);
+//        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+//        spinnerAfdeling.setAdapter(adapter);
+//        Log.d("asetapix", String.valueOf(spinnerIdAfdeling));
+//    }
+
+
+    private Integer getAsetKodeId(Integer asetJenis,Integer spinnerId) {
+        Integer i = 0;
+        for (AsetKode2 a : asetKode2){
+            if (a.getAsetJenis() == asetJenis) {
+                Log.d("aset-spinner", String.valueOf(spinnerId));
+                Log.d("aset-i", String.valueOf(i));
+                if (i == spinnerId) {
+                    return a.getAsetKodeId()-1;
+                }
+
                 i++;
             }
         }
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getApplicationContext(),
-                android.R.layout.simple_spinner_item, afdelings);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinnerAfdeling.setAdapter(adapter);
-        Log.d("asetapix", String.valueOf(spinnerIdAfdeling));
+        return 0;
+    }
+
+    private Integer getSpinnerKodeAset(Integer asetJenis,Integer idkodeaset) {
+        Integer i = 0;
+        for (AsetKode2 a : asetKode2){
+            if (a.getAsetJenis() == asetJenis) {
+                Log.d("aset-spinner", String.valueOf(idkodeaset));
+                Log.d("aset-i", String.valueOf(a.getAsetKodeId()));
+                if (a.getAsetKodeId() == idkodeaset) {
+                    return i;
+                }
+
+                i++;
+            }
+        }
+
+        return 0;
     }
 }

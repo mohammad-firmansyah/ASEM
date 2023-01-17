@@ -1005,6 +1005,7 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity  implements 
 
     }
 
+
     public void initCalender(){
         DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
 
@@ -1065,9 +1066,9 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity  implements 
 
                 }
 
-                Log.d("asetkode1", String.valueOf(aset.getAsetKode()));
-                Log.d("asetkode2", String.valueOf(mapKodeSpinner.get(Integer.parseInt(aset.getAsetKode()))));
-                Log.d("asetkode3", String.valueOf(mapKodeSpinner.size()));
+//                Log.d("asetkode1", String.valueOf(aset.getAsetKode()));
+//                Log.d("asetkode2", String.valueOf(mapKodeSpinner.get(Integer.parseInt(aset.getAsetKode()))));
+//                Log.d("asetkode3", String.valueOf(mapKodeSpinner.size()));
                 if(mapKodeSpinner.size() != 0){
 
                     Integer idspinner = getSpinnerKodeAset(Integer.parseInt(aset.getAsetJenis()),Integer.parseInt(aset.getAsetKode()));
@@ -2513,39 +2514,42 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity  implements 
 
     public void editAset(){
         dialog.show();
-        if ("non tanaman".equals(String.valueOf(spinnerJenisAset.getSelectedItem()))){
-            if ("normal".equals(String.valueOf(spinnerAsetKondisi.getSelectedItem()))){
-                if (img1 == null || img2 == null || img3 == null || img4 == null){
-                    Toast.makeText(getApplicationContext(), "Foto Wajib Diisi Lengkap!", Toast.LENGTH_SHORT).show();
+        spinnerValidation();
+//        if ("non tanaman".equals(String.valueOf(spinnerJenisAset.getSelectedItem()))){
+//            if ("normal".equals(String.valueOf(spinnerAsetKondisi.getSelectedItem()))){
+//                if (img1 == null || img2 == null || img3 == null || img4 == null){
+//                    Toast.makeText(getApplicationContext(), "Foto Wajib Diisi Lengkap!", Toast.LENGTH_SHORT).show();
+//
+//                    dialog.dismiss();
+//                    return;
+//                }
+//            }
+//        }
 
-                    dialog.dismiss();
-                    return;
-                }
-            }
-        }
-
-        if ("non tanaman".equals(String.valueOf(spinnerJenisAset.getSelectedItem()))){
-            if ( "rusak".equals (String.valueOf(spinnerAsetKondisi.getSelectedItem()))){
-                if (img1 == null || img2 == null || img3 == null || img4 == null){
-                    Toast.makeText(getApplicationContext(), "Foto Wajib Diisi Lengkap!", Toast.LENGTH_SHORT).show();
-
-                    dialog.dismiss();
-                    return;
-                }
-            }
-        }
+//        if ("non tanaman".equals(String.valueOf(spinnerJenisAset.getSelectedItem()))){
+//            if ( "rusak".equals (String.valueOf(spinnerAsetKondisi.getSelectedItem()))){
+//                if (img1 == null || img2 == null || img3 == null || img4 == null){
+//                    Toast.makeText(getApplicationContext(), "Foto Wajib Diisi Lengkap!", Toast.LENGTH_SHORT).show();
+//
+//                    dialog.dismiss();
+//                    return;
+//                }
+//            }
+//        }
 
         try {
             ContentValues values = new ContentValues();
-            values.put("aset_tipe", String.valueOf(1));
+            values.put("aset_tipe", String.valueOf(spinnerTipeAset.getSelectedItemId()));
             values.put("aset_jenis", String.valueOf(spinnerJenisAset.getSelectedItemId()));
             values.put("aset_kondisi", String.valueOf(spinnerAsetKondisi.getSelectedItemId()));
 
             Integer idkode = getAsetKodeId(Math.toIntExact(spinnerJenisAset.getSelectedItemId()),Math.toIntExact(spinnerKodeAset.getSelectedItemId()));
             values.put("aset_kode", String.valueOf(idkode+1));
-            values.put("unit_id", String.valueOf(spinnerUnit.getSelectedItemId()));
+
+            values.put("unit_id", String.valueOf(spinnerUnit.getSelectedItemId()+1));
             values.put("aset_sub_unit", String.valueOf(spinnerSubUnit.getSelectedItemId()));
-            values.put("afdeling_id", String.valueOf(spinnerAfdeling.getSelectedItemId()));
+            values.put("afdeling_id", String.valueOf(afdeling_id));
+
             values.put("aset_name", inpNamaAset.getText().toString().trim());
 
             // Get the internal files directory
@@ -2686,7 +2690,7 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity  implements 
             values.put("persen_kondisi",inpPersenKondisi.getText().toString().trim());
             values.put("hgu",inpHGU.getText().toString().trim());
             values.put("nilai_oleh",utils.CurrencyToNumber(inpNilaiAsetSAP.getText().toString().trim()));
-            values.put("tgl_oleh",inpTglOleh.getText().toString().trim() + " 00:00:00");
+            values.put("tgl_oleh",inpTglOleh.getText().toString().trim());
             LocalDateTime currentTime = null;
             DateTimeFormatter formatter = null;
             String formattedDateTime = null;

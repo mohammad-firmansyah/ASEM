@@ -1892,7 +1892,6 @@ public class AddAsetActivity extends AppCompatActivity {
         Integer i = 1;
         for (AsetKode2 a : asetKode2) {
 
-
             if (a.getAsetJenis() == spinnerJenisAset.getSelectedItemId()) {
 
                 if (a.getAsetJenis() == 2 ) {

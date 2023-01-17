@@ -8,6 +8,7 @@ import android.graphics.Matrix;
 import android.media.ExifInterface;
 import android.net.Uri;
 import android.os.Environment;
+import android.util.Log;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -19,7 +20,11 @@ import com.google.android.material.snackbar.Snackbar;
 import java.io.File;
 import java.math.BigInteger;
 import java.text.NumberFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Locale;
 
 import id.zelory.compressor.Compressor;
@@ -287,6 +292,36 @@ public class utils {
         // System.out.println(splitedTwc.length);
     }
 
+
+    public static Integer masaSusutToMonth(Integer masasusut,String tglinput) {
+
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        Date date = null;
+        try {
+            date = dateFormat.parse(tglinput);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        Date now = new Date();
+
+        Calendar cal1 = Calendar.getInstance();
+        cal1.setTime(now);
+
+
+        Calendar cal2 = Calendar.getInstance();
+        cal2.setTime(date);
+
+        Integer monthsDiff = (cal2.get(Calendar.YEAR) - cal1.get(Calendar.YEAR)) * 12 + (cal2.get(Calendar.MONTH) - cal1.get(Calendar.MONTH));
+        Log.d("debug-masasusut", String.valueOf(monthsDiff));
+        Log.d("debug-masasusut2", String.valueOf((masasusut*12) - monthsDiff));
+        if (monthsDiff < 0) {
+
+            return (masasusut*12) + monthsDiff;
+        }
+
+        return (masasusut*12) - monthsDiff;
+    }
 
 }
 

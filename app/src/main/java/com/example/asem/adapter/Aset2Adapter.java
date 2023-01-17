@@ -92,7 +92,7 @@ public class Aset2Adapter  extends RecyclerView.Adapter<Aset2Adapter.ViewHolder>
         holder.tvAsetName.setText(String.valueOf(myPostData2.getAsetName()));
 
         holder.tvNilaiAset.setText(utils.Formatrupiah(Double.parseDouble(String.valueOf(myPostData2.getNilaiOleh()))));
-        holder.tvUmurEkonomis.setText(String.valueOf(utils.MonthToYear(myPostData2.getUmurEkonomisInMonth())));
+        holder.tvUmurEkonomis.setText(utils.MonthToYear(myPostData2.getUmurEkonomisInMonth()));
         holder.tvStatusPosisi.setText(String.valueOf(myPostData2.getStatusPosisi()));
         if (myPostData2.getNoInv() != null) {
             holder.tvNoinv.setText(String.valueOf(myPostData2.getNoInv()));
@@ -208,7 +208,6 @@ public class Aset2Adapter  extends RecyclerView.Adapter<Aset2Adapter.ViewHolder>
                 int statpos = myPostData2.getStatusPosisiID();
                 if (statpos == 2 || statpos == 4 ||statpos == 6|| statpos==8|| statpos==10){ //init statpos pending
                     initDialogBelomApprove();
-                    //Toast.makeText(context, "masuk ga", Toast.LENGTH_SHORT).show();
                 } else if (statpos == 1 && myPostData2.getStatusReject()!=null){
                     initDataReject();
                 }
