@@ -1210,89 +1210,90 @@ public class DetailAsetActivity extends AppCompatActivity {
         call.enqueue(new Callback<AllSpinner>() {
             @Override
             public void onResponse(Call<AllSpinner> call, Response<AllSpinner> response) {
+                try {
+                    if (!response.isSuccessful() && response.body().getData() == null) {
+                        Toast.makeText(getApplicationContext(),response.code(),Toast.LENGTH_LONG).show();
+                        return;
 
-                if (!response.isSuccessful() && response.body().getData() == null) {
-                    Toast.makeText(getApplicationContext(),response.code(),Toast.LENGTH_LONG).show();
-                    return;
-                }
+                    }
+                    allSpinner = response.body().getData();
 
-                allSpinner = response.body().getData();
+                    DataAllSpinner dataAllSpinner = response.body().getData();
 
-                DataAllSpinner dataAllSpinner = response.body().getData();
-                List<String> listSpinnerTipe = new ArrayList<>();
-                List<String> listSpinnerJenis = new ArrayList<>();
-                List<String> listSpinnerKondisiAset = new ArrayList<>();
-                List<String> listSpinnerKodeAset = new ArrayList<>();
-                List<String> listSpinnerUnit = new ArrayList<>();
-                List<String> listSpinnerSubUnit = new ArrayList<>();
-                List<String> listSpinnerAfdeling = new ArrayList<>();
+                    List<String> listSpinnerTipe = new ArrayList<>();
+                    List<String> listSpinnerJenis = new ArrayList<>();
+                    List<String> listSpinnerKondisiAset = new ArrayList<>();
+                    List<String> listSpinnerKodeAset = new ArrayList<>();
+                    List<String> listSpinnerUnit = new ArrayList<>();
+                    List<String> listSpinnerSubUnit = new ArrayList<>();
+                    List<String> listSpinnerAfdeling = new ArrayList<>();
 
-                // get data tipe aset
-                for (AsetTipe at : dataAllSpinner.getAsetTipe()){
-                    listSpinnerTipe.add(at.getAset_tipe_desc());
-                }
+                    // get data tipe aset
+                    for (AsetTipe at : dataAllSpinner.getAsetTipe()){
+                        listSpinnerTipe.add(at.getAset_tipe_desc());
+                    }
 
-                // get data jenis
-                for (AsetJenis at : dataAllSpinner.getAsetJenis()){
-                    listSpinnerJenis.add(at.getAset_jenis_desc());
-                }
+                    // get data jenis
+                    for (AsetJenis at : dataAllSpinner.getAsetJenis()){
+                        listSpinnerJenis.add(at.getAset_jenis_desc());
+                    }
 
-                // get kondisi aset
-                for (AsetKondisi at : dataAllSpinner.getAsetKondisi()){
-                    listSpinnerKondisiAset.add(at.getAset_kondisi_desc());
-                }
+                    // get kondisi aset
+                    for (AsetKondisi at : dataAllSpinner.getAsetKondisi()){
+                        listSpinnerKondisiAset.add(at.getAset_kondisi_desc());
+                    }
 
-                // get kode aset
-                asetKode2 = dataAllSpinner.getAsetKode();
-                setAdapterAsetKode();
-
-
-                // get unit
-                for (Unit at : dataAllSpinner.getUnit()){
-                    listSpinnerUnit.add(at.getUnit_desc());
-                }
-
-                // get sub unit
-                for (SubUnit at : dataAllSpinner.getSubUnit()){
-                    listSpinnerSubUnit.add(at.getSub_unit_desc());
-                }
+                    // get kode aset
+                    asetKode2 = dataAllSpinner.getAsetKode();
+                    setAdapterAsetKode();
 
 
-                // get sap
-                for (Sap at : dataAllSpinner.getSap()){
-                    mapSap.put(Long.parseLong(at.getSap_desc()),at.getSap_id());
-                    mapSpinnerSap.put(at.getSap_id(),Long.parseLong(at.getSap_desc()));
-                    listSpinnerSap.add(at.getSap_desc());
-                }
+                    // get unit
+                    for (Unit at : dataAllSpinner.getUnit()){
+                        listSpinnerUnit.add(at.getUnit_desc());
+                    }
 
-                // get afdeling
-                afdeling = dataAllSpinner.getAfdeling();
-                for (Afdelling at : dataAllSpinner.getAfdeling()){
-                    listSpinnerUnit.add(at.getAfdelling_desc());
-                }
-
-                setAfdelingAdapter();
+                    // get sub unit
+                    for (SubUnit at : dataAllSpinner.getSubUnit()){
+                        listSpinnerSubUnit.add(at.getSub_unit_desc());
+                    }
 
 
+                    // get sap
+                    for (Sap at : dataAllSpinner.getSap()){
+                        mapSap.put(Long.parseLong(at.getSap_desc()),at.getSap_id());
+                        mapSpinnerSap.put(at.getSap_id(),Long.parseLong(at.getSap_desc()));
+                        listSpinnerSap.add(at.getSap_desc());
+                    }
+
+                    // get afdeling
+                    afdeling = dataAllSpinner.getAfdeling();
+                    for (Afdelling at : dataAllSpinner.getAfdeling()){
+                        listSpinnerUnit.add(at.getAfdelling_desc());
+                    }
+
+                    setAfdelingAdapter();
 
 
-                // set adapter tipe
-                ArrayAdapter<String> adapterTipe = new ArrayAdapter<String>(getApplicationContext(),
-                        android.R.layout.simple_spinner_item, listSpinnerTipe);
-                adapterTipe.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                spinnerTipeAset.setAdapter(adapterTipe);
 
-                // set adapter jenis
-                ArrayAdapter<String> adapterJenis = new ArrayAdapter<String>(getApplicationContext(),
-                        android.R.layout.simple_spinner_item, listSpinnerJenis);
-                adapterJenis.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                spinnerJenisAset.setAdapter(adapterJenis);
 
-                // set adapter kondisi aset
-                ArrayAdapter<String> adapterKondisiAset = new ArrayAdapter<String>(getApplicationContext(),
-                        android.R.layout.simple_spinner_item, listSpinnerKondisiAset);
-                adapterKondisiAset.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                spinnerAsetKondisi.setAdapter(adapterKondisiAset);
+                    // set adapter tipe
+                    ArrayAdapter<String> adapterTipe = new ArrayAdapter<String>(getApplicationContext(),
+                            android.R.layout.simple_spinner_item, listSpinnerTipe);
+                    adapterTipe.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    spinnerTipeAset.setAdapter(adapterTipe);
+
+                    // set adapter jenis
+                    ArrayAdapter<String> adapterJenis = new ArrayAdapter<String>(getApplicationContext(),
+                            android.R.layout.simple_spinner_item, listSpinnerJenis);
+                    adapterJenis.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    spinnerJenisAset.setAdapter(adapterJenis);
+
+                    // set adapter kondisi aset
+                    ArrayAdapter<String> adapterKondisiAset = new ArrayAdapter<String>(getApplicationContext(),
+                            android.R.layout.simple_spinner_item, listSpinnerKondisiAset);
+                    adapterKondisiAset.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    spinnerAsetKondisi.setAdapter(adapterKondisiAset);
 
 //                // set adapter kode aset
 //                ArrayAdapter<String> adapterKodeAset = new ArrayAdapter<String>(getApplicationContext(),
@@ -1300,26 +1301,34 @@ public class DetailAsetActivity extends AppCompatActivity {
 //                adapterKodeAset.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 //                spinnerKodeAset.setAdapter(adapterKodeAset);
 
-                // set adapter unit
-                ArrayAdapter<String> adapterUnit = new ArrayAdapter<String>(getApplicationContext(),
-                        android.R.layout.simple_spinner_item, listSpinnerUnit);
-                adapterUnit.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                spinnerUnit.setAdapter(adapterUnit);
-                Integer unit_id = Integer.valueOf(sharedPreferences.getString("unit_id", "0"));
-                spinnerUnit.setSelection(unit_id-1);
+                    // set adapter unit
+                    ArrayAdapter<String> adapterUnit = new ArrayAdapter<String>(getApplicationContext(),
+                            android.R.layout.simple_spinner_item, listSpinnerUnit);
+                    adapterUnit.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    spinnerUnit.setAdapter(adapterUnit);
+                    Integer unit_id = Integer.valueOf(sharedPreferences.getString("unit_id", "0"));
+                    spinnerUnit.setSelection(unit_id-1);
 
-                // set adapter sub unit
+                    // set adapter sub unit
 
-                ArrayAdapter<String> adapterSubUnit = new ArrayAdapter<String>(getApplicationContext(),
-                        android.R.layout.simple_spinner_item, listSpinnerSubUnit);
-                adapterSubUnit.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                spinnerSubUnit.setAdapter(adapterSubUnit);
+                    ArrayAdapter<String> adapterSubUnit = new ArrayAdapter<String>(getApplicationContext(),
+                            android.R.layout.simple_spinner_item, listSpinnerSubUnit);
+                    adapterSubUnit.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    spinnerSubUnit.setAdapter(adapterSubUnit);
 
-                // set adapter afedeling
-                ArrayAdapter<String> adapterAfdeling = new ArrayAdapter<String>(getApplicationContext(),
-                        android.R.layout.simple_spinner_item, listSpinnerAfdeling);
-                adapterAfdeling.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                spinnerAfdeling.setAdapter(adapterAfdeling);
+                    // set adapter afedeling
+                    ArrayAdapter<String> adapterAfdeling = new ArrayAdapter<String>(getApplicationContext(),
+                            android.R.layout.simple_spinner_item, listSpinnerAfdeling);
+                    adapterAfdeling.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    spinnerAfdeling.setAdapter(adapterAfdeling);
+                }catch(Exception e){
+                    e.printStackTrace();
+                }
+
+
+
+
+
             }
 
             @Override

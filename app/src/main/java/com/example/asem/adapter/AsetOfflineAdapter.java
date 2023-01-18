@@ -174,7 +174,7 @@ public class AsetOfflineAdapter extends RecyclerView.Adapter<AsetOfflineAdapter.
                     intent.putExtra("id",listAset.get(holder.getAdapterPosition()).getAsetId());
                     intent.putExtra("aset",listAset.get(holder.getAdapterPosition()));
                     context.startActivity(intent);
-                    Toast.makeText(context,"Masuk Detail Offline",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context,"Masuk Edit Offline",Toast.LENGTH_SHORT).show();
 //                    sharedPreferences = context.getSharedPreferences(PREF_LOGIN, MODE_PRIVATE);
 //                    Integer hak_akses_id = Integer.valueOf(sharedPreferences.getString("hak_akses_id", "0"));
 //
@@ -426,6 +426,21 @@ public class AsetOfflineAdapter extends RecyclerView.Adapter<AsetOfflineAdapter.
                     }else {
                         //cek image apakah sudah terfoto semua atau belum
                         //get response body data,if (url img 1-4 = adaa) then bisa kirim, else
+//                        sharedPreferences = context.getSharedPreferences(PREF_LOGIN, MODE_PRIVATE);
+//                        Integer aset_id = Integer.valueOf(sharedPreferences.getString("id", "-"));
+//
+//                        if ("tanaman".equals(String.valueOf (spinnerJenisAset.getSelectedItem()))){
+//                            if ( "normal".equals (String.valueOf(spinnerAsetKondisi.getSelectedItem()))){
+//                                if (img1 == null || img2 == null || img3 == null || img4 == null){
+//                                    Toast.makeText(context.getApplicationContext(), "Foto Wajib Diisi Lengkap!", Toast.LENGTH_SHORT).show();
+//
+//                                    dialog.dismiss();
+//                                    customDialogAddAset.dismiss();
+//                                    return;
+//                                }
+//                            }
+//                        }
+
                         context.startActivity(new Intent(context, LonglistAsetActivity.class));
                         Toast.makeText(context.getApplicationContext(), response.toString(), Toast.LENGTH_SHORT).show();
                     }

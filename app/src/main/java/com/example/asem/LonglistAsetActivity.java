@@ -154,11 +154,16 @@ public class LonglistAsetActivity extends AppCompatActivity  { //implements Bott
             @Override
             public void onClick(View view) {
 //                dialog.show();
-                AsetHelper asetHelper = AsetHelper.getInstance(getApplicationContext());
-                asetHelper.open();
-                asetHelper.truncate(); ;
-                Toast.makeText(getApplicationContext(),"success reset data spinner",Toast.LENGTH_LONG).show();
-                asetHelper.close();
+                sharedPreferences = getSharedPreferences(PREF_LOGIN,MODE_PRIVATE);
+                String hak_akses_id = sharedPreferences.getString("hak_akses_id", "-");
+                if (hak_akses_id.equals("7")){
+                    AsetHelper asetHelper = AsetHelper.getInstance(getApplicationContext());
+                    asetHelper.open();
+                    asetHelper.truncate(); ;
+                    Toast.makeText(getApplicationContext(),"success reset data spinner",Toast.LENGTH_LONG).show();
+                    asetHelper.close();
+                }
+
 //                dialog.dismiss();
             }
         });
@@ -229,7 +234,6 @@ public class LonglistAsetActivity extends AppCompatActivity  { //implements Bott
 //        dbOffline = new DatabaseHelper(this);
 
 
-
 //        Boolean switchState = switch_offline.isChecked();
         switch_offline.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -241,17 +245,15 @@ public class LonglistAsetActivity extends AppCompatActivity  { //implements Bott
                         startActivity(new Intent(LonglistAsetActivity.this, AddAsetActivity.class));
                     }
                 });
-                if(isChecked){
+                if(switch_offline.isChecked()){
                     dialog.show();
                     //aktifkan longlist offline
-                    if (switch_offline.isEmojiCompatEnabled()){
                         vwSync.setVisibility(View.VISIBLE);
 
                         dialog.dismiss();
                         switch_offline.setChecked(true);
                         rcAset.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
                         rcAset.setAdapter(offlineAdapter);
-                        getDataOffline();
                         searchView.setVisibility(View.GONE);
                         btnReport.setVisibility(View.GONE);
                         btnFilter.setVisibility(View.GONE);
@@ -273,7 +275,7 @@ public class LonglistAsetActivity extends AppCompatActivity  { //implements Bott
                                 rcAset.setAdapter(offlineAdapter);
                         }
                         asetHelper.close();
-                    }
+
                 }else {
                     dialog.dismiss();
                     vwSync.setVisibility(View.GONE);
@@ -350,17 +352,6 @@ public class LonglistAsetActivity extends AppCompatActivity  { //implements Bott
 //        initScrollListener();
     }
 
-    // untuk load recycler 10 data dulu
-//    private void populateData() {
-//        int i = 0;
-//        dataApiSize = Math.min(dataList.size(), 10);
-//        Log.d(TAG, "populateData: "+ dataApiSize);
-//        while (i < dataApiSize) {
-//            rowsArrayList.add(dataList.get(i));
-//            i++;
-//        }
-//    }
-
     private void getDataOffline(){
         Data[] allData = new Data[]{
 //                new Data(1,"tesoff",1,2,1,2,1,"6","fotoaset1","fotoaset2","fotoaset3","fotoaset4","geo","null","null","null", 999.0,"2023-01-03 10:11:23","2023-01-03 00:00:00",9,666,"nnn","1","-",null,null,null,1,16,185,null,"2023-01-03T03:11:23.000000Z","2023-01-03T03:11:23.000000Z",null,99,null,null,null,null,"jjj")
@@ -397,8 +388,7 @@ public class LonglistAsetActivity extends AppCompatActivity  { //implements Bott
     }
 
 
-    //fungsi search ini masih api, yg fungsi get nya belum
-//    public void getSearch{}
+    //fungsi search dibawah ini
 
     public void getData(String search, int userId) {
 
@@ -436,7 +426,6 @@ public class LonglistAsetActivity extends AppCompatActivity  { //implements Bott
             }
         });
     }
-    //getdata sorting list trhdp status posisi masing-masing
 
     public void onBackPressed() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -449,24 +438,7 @@ public class LonglistAsetActivity extends AppCompatActivity  { //implements Bott
         alert.show();
     }
 
-//    @Override
-//    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-//
-//        switch (item.getItemId())
-//        {
-//            case R.id.nav_beranda:
-//                startActivity(new Intent(getApplicationContext(),Home.class));
-//                overridePendingTransition(0,0);
-//                return true;
-//            case R.id.nav_longlist:
-//                return true;
-//            case R.id.nav_profil:
-//                startActivity(new Intent(getApplicationContext(),ProfilActivity.class));
-//                overridePendingTransition(0,0);
-//                return true;
-//        }
-//        return false;
-//    }
+
 public void getAllSpinnerData(){
         dialog.show();
 
@@ -580,6 +552,17 @@ public void getAllSpinnerData(){
     });
 
     }
+
+    // untuk load recycler 10 data dulu
+//    private void populateData() {
+//        int i = 0;
+//        dataApiSize = Math.min(dataList.size(), 10);
+//        Log.d(TAG, "populateData: "+ dataApiSize);
+//        while (i < dataApiSize) {
+//            rowsArrayList.add(dataList.get(i));
+//            i++;
+//        }
+//    }
 
 //    //load data 10 per 10
 //    //thanks to https://www.digitalocean.com/community/tutorials/android-recyclerview-load-more-endless-scrolling

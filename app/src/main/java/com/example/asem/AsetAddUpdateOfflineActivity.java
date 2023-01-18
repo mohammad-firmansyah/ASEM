@@ -927,7 +927,7 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity  implements 
     public void setAdapterAsetKode(){
         List<String> asetKode = new ArrayList<>();
         String aset_kode_temp;
-        asetKode.add("pilih aset kode");
+        asetKode.add("Pilih Kode Aset");
         Integer i = 1;
         for (AsetKode2 a : asetKode2) {
             if (a.getAsetJenis() == spinnerJenisAset.getSelectedItemId()) {
@@ -2714,7 +2714,9 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity  implements 
             customDialogUpdateAset.dismiss();
             dialog.dismiss();
 //            finish();
-            Intent intent = new Intent(AsetAddUpdateOfflineActivity.this, LonglistAsetActivity.class);
+            Intent intent = new Intent(this, LonglistAsetActivity.class);
+//            intent.setAction("isChecked");
+//                    new Intent(AsetAddUpdateOfflineActivity.this, LonglistAsetActivity.class);
             startActivity(intent);
 //            saveImageInternal(img1,inpNamaAset.getText().toString().trim(),1);
         } catch(Exception e) {

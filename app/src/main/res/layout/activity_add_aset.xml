@@ -234,8 +234,7 @@
                 android:background="@drawable/rounded_spinner"
                 android:paddingVertical="10dp"
                 android:text="Pilih Nomor SAP"
-                android:textSize="14sp"
-                android:textStyle="bold" />
+                android:textSize="14sp" />
 
             <TextView
                 android:id="@+id/tvBa"
@@ -554,7 +553,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="41dp"
                 android:background="@drawable/pickdate_background"
-                android:hint="tanggal perolehan"
+                android:hint="Tanggal Perolehan"
                 android:paddingVertical="10dp" />
 
 
