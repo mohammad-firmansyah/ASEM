@@ -154,11 +154,16 @@ public class LonglistAsetActivity extends AppCompatActivity  { //implements Bott
             @Override
             public void onClick(View view) {
 //                dialog.show();
-                AsetHelper asetHelper = AsetHelper.getInstance(getApplicationContext());
-                asetHelper.open();
-                asetHelper.truncate(); ;
-                Toast.makeText(getApplicationContext(),"success reset data spinner",Toast.LENGTH_LONG).show();
-                asetHelper.close();
+                sharedPreferences = getSharedPreferences(PREF_LOGIN,MODE_PRIVATE);
+                String hak_akses_id = sharedPreferences.getString("hak_akses_id", "-");
+                if (hak_akses_id.equals("7")){
+                    AsetHelper asetHelper = AsetHelper.getInstance(getApplicationContext());
+                    asetHelper.open();
+                    asetHelper.truncate(); ;
+                    Toast.makeText(getApplicationContext(),"success reset data spinner",Toast.LENGTH_LONG).show();
+                    asetHelper.close();
+                }
+
 //                dialog.dismiss();
             }
         });
@@ -345,11 +350,6 @@ public class LonglistAsetActivity extends AppCompatActivity  { //implements Bott
 
         getAllAset();
 //        initScrollListener();
-    }
-
-
-    public void umurEkonomis(){
-
     }
 
     private void getDataOffline(){
