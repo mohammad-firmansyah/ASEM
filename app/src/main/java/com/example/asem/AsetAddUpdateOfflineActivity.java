@@ -927,7 +927,7 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity  implements 
     public void setAdapterAsetKode(){
         List<String> asetKode = new ArrayList<>();
         String aset_kode_temp;
-        asetKode.add("pilih aset kode");
+        asetKode.add("Pilih Kode Aset");
         Integer i = 1;
         for (AsetKode2 a : asetKode2) {
             if (a.getAsetJenis() == spinnerJenisAset.getSelectedItemId()) {

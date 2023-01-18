@@ -229,7 +229,6 @@ public class LonglistAsetActivity extends AppCompatActivity  { //implements Bott
 //        dbOffline = new DatabaseHelper(this);
 
 
-
 //        Boolean switchState = switch_offline.isChecked();
         switch_offline.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -241,17 +240,15 @@ public class LonglistAsetActivity extends AppCompatActivity  { //implements Bott
                         startActivity(new Intent(LonglistAsetActivity.this, AddAsetActivity.class));
                     }
                 });
-                if(isChecked){
+                if(switch_offline.isChecked()){
                     dialog.show();
                     //aktifkan longlist offline
-                    if (switch_offline.isEmojiCompatEnabled()){
                         vwSync.setVisibility(View.VISIBLE);
 
                         dialog.dismiss();
                         switch_offline.setChecked(true);
                         rcAset.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
                         rcAset.setAdapter(offlineAdapter);
-                        getDataOffline();
                         searchView.setVisibility(View.GONE);
                         btnReport.setVisibility(View.GONE);
                         btnFilter.setVisibility(View.GONE);
@@ -273,7 +270,7 @@ public class LonglistAsetActivity extends AppCompatActivity  { //implements Bott
                                 rcAset.setAdapter(offlineAdapter);
                         }
                         asetHelper.close();
-                    }
+
                 }else {
                     dialog.dismiss();
                     vwSync.setVisibility(View.GONE);
@@ -350,16 +347,10 @@ public class LonglistAsetActivity extends AppCompatActivity  { //implements Bott
 //        initScrollListener();
     }
 
-    // untuk load recycler 10 data dulu
-//    private void populateData() {
-//        int i = 0;
-//        dataApiSize = Math.min(dataList.size(), 10);
-//        Log.d(TAG, "populateData: "+ dataApiSize);
-//        while (i < dataApiSize) {
-//            rowsArrayList.add(dataList.get(i));
-//            i++;
-//        }
-//    }
+
+    public void umurEkonomis(){
+
+    }
 
     private void getDataOffline(){
         Data[] allData = new Data[]{
@@ -397,8 +388,7 @@ public class LonglistAsetActivity extends AppCompatActivity  { //implements Bott
     }
 
 
-    //fungsi search ini masih api, yg fungsi get nya belum
-//    public void getSearch{}
+    //fungsi search dibawah ini
 
     public void getData(String search, int userId) {
 
@@ -436,7 +426,6 @@ public class LonglistAsetActivity extends AppCompatActivity  { //implements Bott
             }
         });
     }
-    //getdata sorting list trhdp status posisi masing-masing
 
     public void onBackPressed() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -449,24 +438,7 @@ public class LonglistAsetActivity extends AppCompatActivity  { //implements Bott
         alert.show();
     }
 
-//    @Override
-//    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-//
-//        switch (item.getItemId())
-//        {
-//            case R.id.nav_beranda:
-//                startActivity(new Intent(getApplicationContext(),Home.class));
-//                overridePendingTransition(0,0);
-//                return true;
-//            case R.id.nav_longlist:
-//                return true;
-//            case R.id.nav_profil:
-//                startActivity(new Intent(getApplicationContext(),ProfilActivity.class));
-//                overridePendingTransition(0,0);
-//                return true;
-//        }
-//        return false;
-//    }
+
 public void getAllSpinnerData(){
         dialog.show();
 
@@ -580,6 +552,17 @@ public void getAllSpinnerData(){
     });
 
     }
+
+    // untuk load recycler 10 data dulu
+//    private void populateData() {
+//        int i = 0;
+//        dataApiSize = Math.min(dataList.size(), 10);
+//        Log.d(TAG, "populateData: "+ dataApiSize);
+//        while (i < dataApiSize) {
+//            rowsArrayList.add(dataList.get(i));
+//            i++;
+//        }
+//    }
 
 //    //load data 10 per 10
 //    //thanks to https://www.digitalocean.com/community/tutorials/android-recyclerview-load-more-endless-scrolling

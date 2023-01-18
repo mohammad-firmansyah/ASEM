@@ -585,7 +585,7 @@ public class DetailAsetOfflineActivity extends AppCompatActivity {
             inpTglOleh.setText(aset.getTglOleh());
             inpTglInput.setText(aset.getTglInput());
             inpNoSAP.setText(aset.getNomorSap());
-                inpLuasAset.setText(String.valueOf(aset.getAsetLuas()));
+            inpLuasAset.setText(String.valueOf(aset.getAsetLuas()));
                 inpNilaiAsetSAP.setText(String.valueOf(aset.getNilaiOleh()));
                 inpMasaPenyusutan.setText(String.valueOf(aset.getMasaSusut()));
                 inpNomorBAST.setText(String.valueOf(aset.getNomorBast()));
