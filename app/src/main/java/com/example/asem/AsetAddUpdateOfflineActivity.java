@@ -2003,7 +2003,6 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity  implements 
 
 
 
-
                 // set adapter tipe
                 ArrayAdapter<String> adapterTipe = new ArrayAdapter<String>(getApplicationContext(),
                         android.R.layout.simple_spinner_item, listSpinnerTipe);

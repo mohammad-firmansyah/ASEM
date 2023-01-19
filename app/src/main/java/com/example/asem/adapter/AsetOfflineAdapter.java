@@ -74,7 +74,6 @@ public class AsetOfflineAdapter extends RecyclerView.Adapter<AsetOfflineAdapter.
         this.listAset = listAset;
         this.context = context;
         this.dbAset = new DatabaseHelper(context);
-        this.asetInterface = AsemApp.getApiClient().create(AsetInterface.class);
     }
 
     public ArrayList<Aset> getListAset() {
@@ -109,6 +108,7 @@ public class AsetOfflineAdapter extends RecyclerView.Adapter<AsetOfflineAdapter.
     }
         @Override
         public void onBindViewHolder(@NonNull AsetViewHolder holder, int position) {
+
             sharedPreferences = context.getSharedPreferences(PREF_LOGIN, MODE_PRIVATE);
             Aset aset = listAset.get(position);
             holder.tvTglInput.setText(aset.getTglInput());
@@ -174,7 +174,7 @@ public class AsetOfflineAdapter extends RecyclerView.Adapter<AsetOfflineAdapter.
                     intent.putExtra("id",listAset.get(holder.getAdapterPosition()).getAsetId());
                     intent.putExtra("aset",listAset.get(holder.getAdapterPosition()));
                     context.startActivity(intent);
-                    Toast.makeText(context,"Masuk Edit Offline",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context,"Masuk Detail Offline",Toast.LENGTH_SHORT).show();
 //                    sharedPreferences = context.getSharedPreferences(PREF_LOGIN, MODE_PRIVATE);
 //                    Integer hak_akses_id = Integer.valueOf(sharedPreferences.getString("hak_akses_id", "0"));
 //
@@ -200,11 +200,11 @@ public class AsetOfflineAdapter extends RecyclerView.Adapter<AsetOfflineAdapter.
                 }
             });
 
+            asetInterface = AsemApp.getApiClient().create(AsetInterface.class);
             holder.btnKirim.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-
-                        MultipartBody.Part img1Part = null, img2Part = null, img3Part = null, img4Part = null, partBaFile = null;
+                    MultipartBody.Part img1Part = null, img2Part = null, img3Part = null, img4Part = null, partBaFile = null;
 
 
                         RequestBody requestTipeAset = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(aset.getAsetTipe()));
@@ -316,6 +316,7 @@ public class AsetOfflineAdapter extends RecyclerView.Adapter<AsetOfflineAdapter.
                         Call<AsetModel2> call = asetInterface.addAset(contentType, multipartBody);
 
 
+
                         call.enqueue(new Callback<AsetModel2>() {
 
                             @Override
@@ -334,10 +335,14 @@ public class AsetOfflineAdapter extends RecyclerView.Adapter<AsetOfflineAdapter.
                                 }
 
 
-                                String user_id = sharedPreferences.getString("user_id", "-");
-                                showDialogKirim("Yakin Kirim Data?",
-                                        asetInterface.kirimDataAset(response.body().getData().getAsetId(), Integer.parseInt(user_id))
-                                );
+                                Log.d("amanat19-asetid2", String.valueOf(response.body().getData().getAsetId()));
+                                Log.d("amanat19-asetid2", String.valueOf(response.body().getData().getAsetJenis()));
+//                                try{
+                                    showDialogKirim(response.body().getData().getAsetId(),aset.getAsetId());
+//                                } catch (Exception e) {
+//                                    e.printStackTrace();
+//                                }
+
 
                                 return;
 
@@ -403,9 +408,10 @@ public class AsetOfflineAdapter extends RecyclerView.Adapter<AsetOfflineAdapter.
             }
         }
 
-    void showDialogKirim(String customtext,Call<AsetModel2> call) {
 
-        final Dialog dialog =new Dialog(context);
+    void showDialogKirim(Integer asetid,Integer asetIdOffline) {
+        asetInterface = AsemApp.getApiClient().create(AsetInterface.class);
+        Dialog dialog =new Dialog(context);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.ly_kirim_sukses);
         dialog.show();
@@ -417,38 +423,35 @@ public class AsetOfflineAdapter extends RecyclerView.Adapter<AsetOfflineAdapter.
         });
 
         kirim.setOnClickListener(view -> {
-            call.enqueue(new Callback<AsetModel2>() {
+            String user_id = sharedPreferences.getString("user_id", "0");
+            Log.d("amanat19-asetid", String.valueOf(asetid));
+            Log.d("amanat19-userid",user_id);
+            Log.d("amanat19-asetidoff", String.valueOf(asetIdOffline));
+            Call<AsetModel2> call = asetInterface.kirimDataAset(asetid, Integer.parseInt(user_id));
+            call.enqueue(new Callback<AsetModel2>(){
                 @Override
-                public void onResponse(@NotNull Call<AsetModel2> call, @NotNull Response<AsetModel2> response) {
-
+                public void onResponse(Call<AsetModel2> call, Response<AsetModel2> response) {
                     if (response.isSuccessful() && response.body() != null){
-                        Toast.makeText(context.getApplicationContext(), "berhasil mengirim data", Toast.LENGTH_LONG).show();
+                        AsetHelper asetHelper = AsetHelper.getInstance(context);
+                        asetHelper.open();
+                        asetHelper.deleteById(String.valueOf(asetIdOffline));
+                        asetHelper.close();
+                        Toast.makeText(context,"Terkirim",Toast.LENGTH_SHORT).show();
+                        return;
                     }else {
                         //cek image apakah sudah terfoto semua atau belum
                         //get response body data,if (url img 1-4 = adaa) then bisa kirim, else
-//                        sharedPreferences = context.getSharedPreferences(PREF_LOGIN, MODE_PRIVATE);
-//                        Integer aset_id = Integer.valueOf(sharedPreferences.getString("id", "-"));
-//
-//                        if ("tanaman".equals(String.valueOf (spinnerJenisAset.getSelectedItem()))){
-//                            if ( "normal".equals (String.valueOf(spinnerAsetKondisi.getSelectedItem()))){
-//                                if (img1 == null || img2 == null || img3 == null || img4 == null){
-//                                    Toast.makeText(context.getApplicationContext(), "Foto Wajib Diisi Lengkap!", Toast.LENGTH_SHORT).show();
-//
-//                                    dialog.dismiss();
-//                                    customDialogAddAset.dismiss();
-//                                    return;
-//                                }
-//                            }
-//                        }
-
-                        context.startActivity(new Intent(context, LonglistAsetActivity.class));
                         Toast.makeText(context.getApplicationContext(), response.toString(), Toast.LENGTH_SHORT).show();
+                        return;
                     }
+
+
                 }
+
                 @Override
-                public void onFailure(@NotNull Call<AsetModel2> call, @NotNull Throwable t) {
-                    Log.d(TAG, "onResponse: teskirim : "+t.getMessage());
-                    Toast.makeText(context.getApplicationContext(), "Gagal Terhubung ke Server", Toast.LENGTH_SHORT).show();
+                public void onFailure(Call<AsetModel2> call, Throwable t) {
+                    Toast.makeText(context,"error : "+t.getMessage(),Toast.LENGTH_LONG).show();
+                    return;
                 }
             });
             dialog.dismiss();
@@ -457,7 +460,6 @@ public class AsetOfflineAdapter extends RecyclerView.Adapter<AsetOfflineAdapter.
             context.startActivity(gas);
         });
     }
-
 
 }
 
