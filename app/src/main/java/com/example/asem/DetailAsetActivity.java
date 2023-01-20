@@ -114,6 +114,7 @@ public class DetailAsetActivity extends AppCompatActivity {
     Button btnReject;
     Button inpSimpanFotoQr;
     Button downloadQr;
+    Button downloadBa;
 
     EditText inpNoInv;
     EditText inpHGU;
@@ -204,7 +205,7 @@ public class DetailAsetActivity extends AppCompatActivity {
     String photoname4 = "foto4.png";
 
 
-
+    String urlBa;
     String geotag1;
     String geotag2;
     String geotag3;
@@ -273,6 +274,7 @@ public class DetailAsetActivity extends AppCompatActivity {
         tvFotoAsetQR = findViewById(R.id.tvFotoAsetQR);
         tvKetReject = findViewById(R.id.tvKetReject);
 
+        downloadBa = findViewById(R.id.inpDownloadBa);
         addNewFotoAsetAndQr = findViewById(R.id.addNewFotoAsetAndQr);
         inpTglInput = findViewById(R.id.inpTglInput);
         inpTglInput.setEnabled(false);
@@ -321,6 +323,13 @@ public class DetailAsetActivity extends AppCompatActivity {
         inpBtnMap = findViewById(R.id.inpBtnMap);
         btnApprove = findViewById(R.id.btnApprove);
         btnReject = findViewById(R.id.btnReject);
+
+        downloadBa.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                downloadBaFunc();
+            }
+        });
 
         downloadQr.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -700,9 +709,12 @@ public class DetailAsetActivity extends AppCompatActivity {
 
 
 //                aset = response.body().getData();
-                if (response.body().getData().getBeritaAcara() != null ) {
+                if (!response.body().getData().getBeritaAcara().equals("")) {
+                    Log.d("amanat19", String.valueOf(response.body().getData().getBeritaAcara().equals("")));
+                    tvUploudBA.setText(response.body().getData().getBeritaAcara().substring(0,10) + "...");
+                    downloadBa.setVisibility(View.VISIBLE);
 
-                    tvUploudBA.setText(response.body().getData().getBeritaAcara());
+                    btnFile.setVisibility(View.GONE);
                 }
 
                 inpTglInput.setText(response.body().getData().getTglInput().split(" ")[0]);
@@ -806,6 +818,8 @@ public class DetailAsetActivity extends AppCompatActivity {
                     addNewFotoAsetAndQr.setVisibility(View.GONE);
                 }
 
+                urlBa = response.body().getData().getBeritaAcara();
+
                 geotag1 = response.body().getData().getGeoTag1();
                 geotag2 = response.body().getData().getGeoTag2();
                 geotag3 = response.body().getData().getGeoTag3();
@@ -873,6 +887,20 @@ public class DetailAsetActivity extends AppCompatActivity {
         }
 
 
+        public void downloadBaFunc(){
+
+                String title = URLUtil.guessFileName(AsemApp.BASE_URL_ASSET + "/" + urlBa,null,null);
+
+                DownloadManager.Request request = new DownloadManager.Request(Uri.parse( AsemApp.BASE_URL_ASSET + "/" + urlBa));
+                request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS,title);
+                request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
+                request.allowScanningByMediaScanner();
+                DownloadManager downloadManager = (DownloadManager)getSystemService(DOWNLOAD_SERVICE);
+                downloadManager.enqueue(request);
+
+                Toast.makeText(this, "Download Dimulai" , Toast.LENGTH_SHORT).show();
+
+        }
 
     public void editVisibilityDynamic(){
         TextView tvBa = findViewById(R.id.tvBa);
@@ -887,6 +915,7 @@ public class DetailAsetActivity extends AppCompatActivity {
 
         HorizontalScrollView scrollPartition = findViewById(R.id.scrollPartition);
 //        Toast.makeText(getApplicationContext(),String.valueOf(spinnerSubUnit.getSelectedItemId()),Toast.LENGTH_LONG).show();
+
 
 
         if (spinnerSubUnit.getSelectedItemId() == 1){
@@ -933,7 +962,7 @@ public class DetailAsetActivity extends AppCompatActivity {
             inpNomorBAST.setVisibility(View.GONE);
             tvBast.setVisibility(View.GONE);
             tvUploudBA.setVisibility(View.VISIBLE);
-            btnFile.setVisibility(View.VISIBLE);
+
 
             inpBtnMap.setVisibility(View.GONE);
 
@@ -952,7 +981,6 @@ public class DetailAsetActivity extends AppCompatActivity {
 
         else if ("tanaman".equals(String.valueOf(spinnerJenisAset.getSelectedItem()))  && "hilang".equals(String.valueOf(spinnerAsetKondisi.getSelectedItem()))) {
             tvUploudBA.setVisibility(View.VISIBLE);
-            btnFile.setVisibility(View.VISIBLE);
             tvBa.setVisibility(View.VISIBLE);
             inpJumlahPohon.setVisibility(View.VISIBLE);
 //            inpKomoditi.setVisibility(View.VISIBLE);
@@ -1006,7 +1034,6 @@ public class DetailAsetActivity extends AppCompatActivity {
             inpJumlahPohon.setVisibility(View.VISIBLE);
             tvBa.setVisibility(View.VISIBLE);
             tvUploudBA.setVisibility(View.VISIBLE);
-            btnFile.setVisibility(View.VISIBLE);
 //            inpKomoditi.setVisibility(View.VISIBLE);
             tvPohon.setVisibility(View.VISIBLE);
 
@@ -1029,7 +1056,6 @@ public class DetailAsetActivity extends AppCompatActivity {
 
         else if ("kayu".equals(String.valueOf(spinnerJenisAset.getSelectedItem())) && "hilang".equals(String.valueOf(spinnerAsetKondisi.getSelectedItem()))) {
             tvBa.setVisibility(View.VISIBLE);
-            btnFile.setVisibility(View.VISIBLE);
             tvUploudBA.setVisibility(View.VISIBLE);
 //            inpKomoditi.setVisibility(View.VISIBLE);
 
@@ -1079,7 +1105,6 @@ public class DetailAsetActivity extends AppCompatActivity {
 
         else if ("non tanaman".equals(String.valueOf(spinnerJenisAset.getSelectedItem())) &&"rusak".equals(String.valueOf(spinnerAsetKondisi.getSelectedItem()))) {
             tvBa.setVisibility(View.VISIBLE);
-            btnFile.setVisibility(View.VISIBLE);
             tvUploudBA.setVisibility(View.VISIBLE);
             tvPohon.setVisibility(View.GONE);
             inpJumlahPohon.setVisibility(View.GONE);
@@ -1102,7 +1127,6 @@ public class DetailAsetActivity extends AppCompatActivity {
 
         else if ("non tanaman".equals(String.valueOf(spinnerJenisAset.getSelectedItem())) && "hilang".equals(String.valueOf(spinnerAsetKondisi.getSelectedItem()))) {
             tvBa.setVisibility(View.VISIBLE);
-            btnFile.setVisibility(View.VISIBLE);
             tvUploudBA.setVisibility(View.VISIBLE);
 
 //            inpKomoditi.setVisibility(View.GONE);

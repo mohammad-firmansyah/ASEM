@@ -141,6 +141,18 @@ public class Data2 {
     @Expose
     private String hgu;
 
+    @SerializedName("alat_pengankutan")
+    @Expose
+    private String alat_pengangkutan;
+
+    public String getAlat_pengangkutan() {
+        return alat_pengangkutan;
+    }
+
+    public void setAlat_pengangkutan(String alat_pengangkutan) {
+        this.alat_pengangkutan = alat_pengangkutan;
+    }
+
     public String getHgu() {
         return hgu;
     }

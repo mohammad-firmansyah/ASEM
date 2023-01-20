@@ -58,6 +58,7 @@ import android.widget.Toast;
 import com.example.asem.api.AsetInterface;
 import com.example.asem.api.model.Afdelling;
 import com.example.asem.api.model.AfdellingModel;
+import com.example.asem.api.model.AlatAngkut;
 import com.example.asem.api.model.AllSpinner;
 import com.example.asem.api.model.AsetJenis;
 import com.example.asem.api.model.AsetJenisModel;
@@ -153,6 +154,7 @@ public class AddAsetActivity extends AppCompatActivity {
     EditText editText;
     EditText inpJumlahPohon;
     TextView tvUploudBA;
+    TextView tvAlatAngkut;
     AsetModel asetModel;
     File source;
     private AsetInterface asetInterface;
@@ -164,6 +166,7 @@ public class AddAsetActivity extends AppCompatActivity {
     Spinner spinnerSubUnit;
     Spinner spinnerUnit;
     Spinner spinnerKomoditi;
+    Spinner spinnerAlatAngkut;
 
     EditText inpNamaAset;
     EditText inpHGU;
@@ -494,6 +497,8 @@ public class AddAsetActivity extends AppCompatActivity {
         inpJumlahPohon = findViewById(R.id.inpJmlhPohon);
         inpPersenKondisi = findViewById(R.id.inpPersenKondisi);
         inpHGU = findViewById(R.id.inpHGU);
+        spinnerAlatAngkut = findViewById(R.id.inpAlatAngkut);
+        tvAlatAngkut = findViewById(R.id.tvAlatAngkut);
 //        spinnerKomoditi = findViewById(R.id.inpKomoditi);
 
 //        List<String> listSpinner = new ArrayList<>();
@@ -556,6 +561,13 @@ public class AddAsetActivity extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 spinnerIdKodeAset = String.valueOf(position);
 //                editVisibilityDynamic();
+                if (spinnerKodeAset.getSelectedItem().equals("ZA08/Alat Pengangkutan")){
+                    spinnerAlatAngkut.setVisibility(View.VISIBLE);
+                    tvAlatAngkut.setVisibility(View.VISIBLE);
+                } else {
+                    spinnerAlatAngkut.setVisibility(View.GONE);
+                    tvAlatAngkut.setVisibility(View.GONE);
+                }
 
             }
 
@@ -1728,6 +1740,7 @@ public class AddAsetActivity extends AppCompatActivity {
                     List<String> listSpinnerUnit = new ArrayList<>();
                     List<String> listSpinnerSubUnit = new ArrayList<>();
                     List<String> listSpinnerAfdeling = new ArrayList<>();
+                    List<String> listSpinnerAlatAngkut = new ArrayList<>();
 
                     listSpinnerTipe.add("Pilih Tipe Aset");
                     listSpinnerJenis.add("Pilih Jenis Aset");
@@ -1735,6 +1748,8 @@ public class AddAsetActivity extends AppCompatActivity {
                     listSpinnerKodeAset.add("Pilih Kode Aset");
                     listSpinnerSubUnit.add("Pilih Sub Unit ");
                     listSpinnerAfdeling.add("Pilih Afdeling Aset");
+                    listSpinnerAlatAngkut.add("Pilih Alat Pengangkutan");
+
                     // get data tipe aset
                     for (AsetTipe at : dataAllSpinner.getAsetTipe()){
                         listSpinnerTipe.add(at.getAset_tipe_desc());
@@ -1757,6 +1772,11 @@ public class AddAsetActivity extends AppCompatActivity {
                     // get unit
                     for (Unit at : dataAllSpinner.getUnit()){
                         listSpinnerUnit.add(at.getUnit_desc());
+                    }
+
+                    // get alat angkut
+                    for (AlatAngkut at : dataAllSpinner.getAlatAngkut()){
+                        listSpinnerAlatAngkut.add(at.getAp_desc());
                     }
 
                     // get sub unit
@@ -1807,6 +1827,12 @@ public class AddAsetActivity extends AppCompatActivity {
                             android.R.layout.simple_spinner_item, listSpinnerKodeAset);
                     adapterKodeAset.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                     spinnerKodeAset.setAdapter(adapterKodeAset);
+
+                    // set adapter alat angkut
+                    ArrayAdapter<String> adapterAlatAngkut = new ArrayAdapter<String>(getApplicationContext(),
+                            android.R.layout.simple_spinner_item, listSpinnerAlatAngkut);
+                    adapterKodeAset.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    spinnerAlatAngkut.setAdapter(adapterAlatAngkut);
 
                     // set adapter sap aset
                     try{

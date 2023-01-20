@@ -34,6 +34,18 @@ public class DataAllSpinner {
     @Expose
     private List<Sap> sap = null;
 
+    @SerializedName("alat_pengangkutan")
+    @Expose
+    private List<AlatAngkut> alatAngkut = null;
+
+    public List<AlatAngkut> getAlatAngkut() {
+        return alatAngkut;
+    }
+
+    public void setAlatAngkut(List<AlatAngkut> alatAngkut) {
+        this.alatAngkut = alatAngkut;
+    }
+
     public List<Sap> getSap() {
         return sap;
     }
