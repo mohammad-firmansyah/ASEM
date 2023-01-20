@@ -170,6 +170,7 @@ public class DetailAsetActivity extends AppCompatActivity {
     Spinner spinnerSubUnit;
     Spinner spinnerUnit;
 
+    EditText spinnerLuasSatuan;
     EditText inpTglInput;
     EditText inpNamaAset;
     EditText inpNoSAP;
@@ -183,6 +184,8 @@ public class DetailAsetActivity extends AppCompatActivity {
     EditText inpUmrEkonomis;
     EditText inpPersenKondisi;
     EditText inpKetReject;
+    EditText inpAlatAngkut;
+    TextView tvAlatAngkut;
 
 
 
@@ -273,6 +276,11 @@ public class DetailAsetActivity extends AppCompatActivity {
         fotoasetqr = findViewById(R.id.fotoasetqr);
         tvFotoAsetQR = findViewById(R.id.tvFotoAsetQR);
         tvKetReject = findViewById(R.id.tvKetReject);
+        spinnerLuasSatuan = findViewById(R.id.inpLuasSatuan);
+        spinnerLuasSatuan.setEnabled(false);
+        tvAlatAngkut = findViewById(R.id.tvAlatAngkut);
+        inpAlatAngkut = findViewById(R.id.inpAlatAngkut);
+        inpAlatAngkut.setEnabled(false);
 
         downloadBa = findViewById(R.id.inpDownloadBa);
         addNewFotoAsetAndQr = findViewById(R.id.addNewFotoAsetAndQr);
@@ -433,6 +441,13 @@ public class DetailAsetActivity extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 spinnerIdKodeAset = String.valueOf(position+1);
 //                editVisibilityDynamic();
+                if (spinnerKodeAset.getSelectedItem().equals("ZA08/Alat Pengangkutan")){
+                    inpAlatAngkut.setVisibility(View.VISIBLE);
+                    tvAlatAngkut.setVisibility(View.VISIBLE);
+                } else {
+                    inpAlatAngkut.setVisibility(View.GONE);
+                    tvAlatAngkut.setVisibility(View.GONE);
+                }
 
             }
 
@@ -709,14 +724,16 @@ public class DetailAsetActivity extends AppCompatActivity {
 
 
 //                aset = response.body().getData();
-                if (response.body().getData().getBeritaAcara() != null) {
+                if (response.body().getData().getAlat_pengangkutan() != null) {
 
-                    if (!response.body().getData().getBeritaAcara().equals("")) {
-                        Log.d("amanat19", String.valueOf(response.body().getData().getBeritaAcara().equals("")));
-                        tvUploudBA.setText(response.body().getData().getBeritaAcara().substring(0,10) + "...");
-                        downloadBa.setVisibility(View.VISIBLE);
+                    if (!response.body().getData().getAlat_pengangkutan().equals("")) {
+                        inpAlatAngkut.setText(response.body().getData().getAlat_pengangkutan());
+                    }
+                }
+                if (response.body().getData().getSatuan_luas() != null) {
 
-                        btnFile.setVisibility(View.GONE);
+                    if (!response.body().getData().getSatuan_luas().equals("")) {
+                        spinnerLuasSatuan.setText(response.body().getData().getSatuan_luas());
                     }
                 }
 
@@ -754,7 +771,6 @@ public class DetailAsetActivity extends AppCompatActivity {
                 };
 
                 qrurl = AsemApp.BASE_URL+"storage/app/public/qrcode/"+response.body().getData().getFotoQr();
-                Log.d("amanat17-qr",qrurl);
                 if (response.body().getData().getFotoQr() != null) {
                     qrDefault.getLayoutParams().height = 346;
                     Picasso.get().load(qrurl).resize(400,400).centerCrop().into(qrDefault);
@@ -806,7 +822,6 @@ public class DetailAsetActivity extends AppCompatActivity {
                     Picasso.get().load(url4).resize(200,200).centerCrop().into(fotoimg4);
                 }
 
-//                Log.d("asetapix", response.body().getData().getFotoAsetQr());
 
                 if (response.body().getData().getFotoAsetQr()!=null ){
 //                    fotoasetqrgroup.setVisibility(View.VISIBLE);

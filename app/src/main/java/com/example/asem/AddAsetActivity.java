@@ -502,10 +502,9 @@ public class AddAsetActivity extends AppCompatActivity {
         tvAlatAngkut = findViewById(R.id.tvAlatAngkut);
         spinnerLuasSatuan = findViewById(R.id.inpLuasSatuan);
         List<String> listSpinnerSatuan = new ArrayList<>();
-        listSpinnerSatuan.add("cm");
-        listSpinnerSatuan.add("ha");
-        listSpinnerSatuan.add("m");
-        listSpinnerSatuan.add("item");
+        listSpinnerSatuan.add("Ha");
+        listSpinnerSatuan.add("m2");
+        listSpinnerSatuan.add("Item");
         ArrayAdapter<String> adapterLuasSatuan =new ArrayAdapter<>(AddAsetActivity.this, android.R.layout.simple_list_item_1,listSpinnerSatuan);
         spinnerLuasSatuan.setAdapter(adapterLuasSatuan);
 

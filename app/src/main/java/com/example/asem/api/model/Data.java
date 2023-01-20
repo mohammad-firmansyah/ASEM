@@ -146,6 +146,29 @@ public class Data {
     @Expose
     private String hgu;
 
+    @SerializedName("alat_pengangkutan")
+    @Expose
+    private String alat_pengangkutan;
+
+    @SerializedName("satuan_luas")
+    @Expose
+    private String satuan_luas;
+
+    public String getSatuan_luas() {
+        return satuan_luas;
+    }
+
+    public void setSatuan_luas(String satuan_luas) {
+        this.satuan_luas = satuan_luas;
+    }
+
+    public String getAlat_pengangkutan() {
+        return alat_pengangkutan;
+    }
+
+    public void setAlat_pengangkutan(String alat_pengangkutan) {
+        this.alat_pengangkutan = alat_pengangkutan;
+    }
 
     public String getHgu() {
         return hgu;
