@@ -709,12 +709,15 @@ public class DetailAsetActivity extends AppCompatActivity {
 
 
 //                aset = response.body().getData();
-                if (!response.body().getData().getBeritaAcara().equals("")) {
-                    Log.d("amanat19", String.valueOf(response.body().getData().getBeritaAcara().equals("")));
-                    tvUploudBA.setText(response.body().getData().getBeritaAcara().substring(0,10) + "...");
-                    downloadBa.setVisibility(View.VISIBLE);
+                if (response.body().getData().getBeritaAcara() != null) {
 
-                    btnFile.setVisibility(View.GONE);
+                    if (!response.body().getData().getBeritaAcara().equals("")) {
+                        Log.d("amanat19", String.valueOf(response.body().getData().getBeritaAcara().equals("")));
+                        tvUploudBA.setText(response.body().getData().getBeritaAcara().substring(0,10) + "...");
+                        downloadBa.setVisibility(View.VISIBLE);
+
+                        btnFile.setVisibility(View.GONE);
+                    }
                 }
 
                 inpTglInput.setText(response.body().getData().getTglInput().split(" ")[0]);

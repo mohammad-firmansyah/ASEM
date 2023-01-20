@@ -133,6 +133,7 @@
                 android:spinnerMode="dropdown" />
 
             <TextView
+                android:id="@+id/tvAlatAngkut"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
@@ -141,7 +142,6 @@
                 android:textSize="14sp"
                 android:textStyle="bold"
                 android:visibility="gone"
-                android:id="@+id/tvAlatAngkut"
 
                 />
 
@@ -150,9 +150,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="41dp"
                 android:layout_marginBottom="10dp"
-                android:visibility="gone"
                 android:background="@drawable/rounded_spinner"
-                android:spinnerMode="dropdown" />
+                android:spinnerMode="dropdown"
+                android:visibility="gone" />
 
 
             <TextView
@@ -475,7 +475,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="41dp"
                 android:layout_marginBottom="10dp"
-                android:background="@drawable/edit_text_spiner" />
+                android:background="@drawable/edit_text_spiner"
+
+                />
 
             <TextView
                 android:id="@+id/tvPersenKondisi"
@@ -523,17 +525,34 @@
                 android:textStyle="bold" />
 
 
-            <EditText
-
-                android:id="@+id/inpLuasAset"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="41dp"
-                android:layout_marginBottom="10dp"
-                android:background="@drawable/edit_text_spiner"
-                android:inputType="numberDecimal"
-                android:spinnerMode="dropdown"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
 
-                />
+                <EditText
+
+                    android:id="@+id/inpLuasAset"
+                    android:layout_width="0dp"
+                    android:layout_height="41dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_weight="0.7"
+                    android:background="@drawable/edit_text_spiner"
+                    android:inputType="numberDecimal"
+                    android:layout_marginRight="10dp"
+                    />
+
+                <Spinner
+
+                    android:id="@+id/inpLuasSatuan"
+                    android:layout_width="0dp"
+                    android:layout_height="41dp"
+                    android:layout_weight="0.3"
+                    android:background="@drawable/rounded_spinner"
+                    android:spinnerMode="dropdown"
+
+                    />
+            </LinearLayout>
 
 
             <TextView
