@@ -178,11 +178,15 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity  implements 
     Spinner spinnerAfdeling;
     Spinner spinnerSubUnit;
     Spinner spinnerUnit;
-    Spinner spinnerKomoditi;
+    Spinner spinnerAlatAngkut;
+    Spinner spinnerLuasSatuan;
+
+
+    TextView inpNoSAP;
+    TextView tvAlatAngkut;
 
     EditText inpNamaAset;
     EditText inpHGU;
-    TextView inpNoSAP;
     EditText inpLuasAset;
     EditText inpNilaiAsetSAP;
     EditText inpTglOleh;
@@ -489,7 +493,6 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity  implements 
         asetHelper = AsetHelper.getInstance(getApplicationContext());
 
         id = getIntent().getIntExtra("id",0);
-//        Log.d("amanat17-update",aset.getAsetName());
         if (id != 0) {
             isEdit = true;
         }
@@ -502,7 +505,6 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity  implements 
         dialog.setContentView(R.layout.loading);
         dialog.setCanceledOnTouchOutside(false);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(0));
-//        dialog.show();
 
         spinnerNoSap = new Dialog(AsetAddUpdateOfflineActivity.this);
 
@@ -534,6 +536,15 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity  implements 
         inpJumlahPohon = findViewById(R.id.inpJmlhPohon);
         inpPersenKondisi = findViewById(R.id.inpPersenKondisi);
         inpHGU = findViewById(R.id.inpHGU);
+        spinnerLuasSatuan = findViewById(R.id.inpLuasSatuan);
+        List<String> listSpinnerSatuan = new ArrayList<>();
+        listSpinnerSatuan.add("Ha");
+        listSpinnerSatuan.add("m2");
+        listSpinnerSatuan.add("Item");
+        ArrayAdapter<String> adapterLuasSatuan =new ArrayAdapter<>(AsetAddUpdateOfflineActivity.this, android.R.layout.simple_list_item_1,listSpinnerSatuan);
+        spinnerLuasSatuan.setAdapter(adapterLuasSatuan);
+        spinnerAlatAngkut = findViewById(R.id.inpAlatAngkut);
+        tvAlatAngkut = findViewById(R.id.tvAlatAngkut);
 
         foto1rl = findViewById(R.id.foto1);
         foto2rl = findViewById(R.id.foto2);
@@ -605,8 +616,14 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity  implements 
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 spinnerIdKodeAset = String.valueOf(position);
-//                editVisibilityDynamic();
 
+                if (spinnerKodeAset.getSelectedItem().equals("ZA08/Alat Pengangkutan")){
+                    spinnerAlatAngkut.setVisibility(View.VISIBLE);
+                    tvAlatAngkut.setVisibility(View.VISIBLE);
+                } else {
+                    spinnerAlatAngkut.setVisibility(View.GONE);
+                    tvAlatAngkut.setVisibility(View.GONE);
+                }
             }
 
             @Override
@@ -1631,7 +1648,7 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity  implements 
             inpJumlahPohon.setVisibility(View.VISIBLE);
             tvPohon.setVisibility(View.VISIBLE);
 //            inpKomoditi.setVisibility(View.VISIBLE);
-
+            spinnerLuasSatuan.setVisibility(View.GONE);
             inpNomorBAST.setVisibility(View.VISIBLE);
             tvBast.setVisibility(View.VISIBLE);
             tvUploudBA.setVisibility(View.GONE);
@@ -1648,6 +1665,7 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity  implements 
 
             inpPersenKondisi.setVisibility(View.GONE);
             tvPersenKondisi.setVisibility(View.GONE);
+            spinnerLuasSatuan.setVisibility(View.GONE);
 
         }
 
@@ -1656,7 +1674,7 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity  implements 
             inpJumlahPohon.setVisibility(View.VISIBLE);
             tvBa.setVisibility(View.VISIBLE);
             tvPohon.setVisibility(View.VISIBLE);
-
+            spinnerLuasSatuan.setVisibility(View.GONE);
 //            inpKomoditi.setVisibility(View.VISIBLE);
             inpNomorBAST.setVisibility(View.GONE);
             tvBast.setVisibility(View.GONE);
@@ -1674,6 +1692,7 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity  implements 
 
             inpPersenKondisi.setVisibility(View.GONE);
             tvPersenKondisi.setVisibility(View.GONE);
+            spinnerLuasSatuan.setVisibility(View.GONE);
 
         }
 
@@ -1684,7 +1703,7 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity  implements 
             tvBa.setVisibility(View.VISIBLE);
             inpJumlahPohon.setVisibility(View.VISIBLE);
 //            inpKomoditi.setVisibility(View.VISIBLE);
-
+            spinnerLuasSatuan.setVisibility(View.GONE);
             inpNomorBAST.setVisibility(View.GONE);
             tvBast.setVisibility(View.GONE);
             tvPohon.setVisibility(View.GONE);
@@ -1701,6 +1720,7 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity  implements 
 
             inpPersenKondisi.setVisibility(View.GONE);
             tvPersenKondisi.setVisibility(View.GONE);
+            spinnerLuasSatuan.setVisibility(View.GONE);
         }
 
         else if ("kayu".equals(String.valueOf(spinnerJenisAset.getSelectedItem()))  && "normal".equals(String.valueOf(spinnerAsetKondisi.getSelectedItem())) ) {
@@ -1710,7 +1730,7 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity  implements 
             inpNomorBAST.setVisibility(View.VISIBLE);
             tvBast.setVisibility(View.VISIBLE);
             tvPohon.setVisibility(View.VISIBLE);
-
+            spinnerLuasSatuan.setVisibility(View.GONE);
             tvBa.setVisibility(View.GONE);
             tvUploudBA.setVisibility(View.GONE);
             inpBtnMap.setVisibility(View.GONE);
@@ -1726,6 +1746,7 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity  implements 
             inpPersenKondisi.setVisibility(View.GONE);
             tvPersenKondisi.setVisibility(View.GONE);
 
+            spinnerLuasSatuan.setVisibility(View.GONE);
         }
 
         else if ("kayu".equals(String.valueOf(spinnerJenisAset.getSelectedItem()))  && "rusak".equals(String.valueOf(spinnerAsetKondisi.getSelectedItem())) ) {
@@ -1737,7 +1758,7 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity  implements 
             btnFile.setVisibility(View.VISIBLE);
 //            inpKomoditi.setVisibility(View.VISIBLE);
             tvPohon.setVisibility(View.VISIBLE);
-
+            spinnerLuasSatuan.setVisibility(View.GONE);
 
             inpNomorBAST.setVisibility(View.GONE);
             tvBast.setVisibility(View.GONE);
@@ -1752,6 +1773,7 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity  implements 
 
             inpPersenKondisi.setVisibility(View.GONE);
             tvPersenKondisi.setVisibility(View.GONE);
+            spinnerLuasSatuan.setVisibility(View.GONE);
 
         }
 
@@ -1760,7 +1782,7 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity  implements 
             btnFile.setVisibility(View.VISIBLE);
             tvUploudBA.setVisibility(View.VISIBLE);
 //            inpKomoditi.setVisibility(View.VISIBLE);
-
+            spinnerLuasSatuan.setVisibility(View.GONE);
             inpNomorBAST.setVisibility(View.GONE);
             tvBast.setVisibility(View.GONE);
             tvPohon.setVisibility(View.GONE);
@@ -1778,6 +1800,7 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity  implements 
 
             inpPersenKondisi.setVisibility(View.GONE);
             tvPersenKondisi.setVisibility(View.GONE);
+            spinnerLuasSatuan.setVisibility(View.GONE);
 
         }
 
@@ -1786,6 +1809,7 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity  implements 
             inpNomorBAST.setVisibility(View.VISIBLE);
             tvBast.setVisibility(View.VISIBLE);
 
+            spinnerLuasSatuan.setVisibility(View.VISIBLE);
 //            inpKomoditi.setVisibility(View.GONE);
             tvUploudBA.setVisibility(View.GONE);
             listBtnMap.setVisibility(View.GONE);
@@ -1814,7 +1838,7 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity  implements 
             inpBtnMap.setVisibility(View.VISIBLE);
             inpNomorBAST.setVisibility(View.GONE);
             tvBast.setVisibility(View.GONE);
-
+            spinnerLuasSatuan.setVisibility(View.VISIBLE);
             tvFoto.setVisibility(View.VISIBLE);
             scrollPartition.setVisibility(View.VISIBLE);
 
@@ -1832,7 +1856,7 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity  implements 
             tvBa.setVisibility(View.VISIBLE);
             btnFile.setVisibility(View.VISIBLE);
             tvUploudBA.setVisibility(View.VISIBLE);
-
+            spinnerLuasSatuan.setVisibility(View.VISIBLE);
 //            inpKomoditi.setVisibility(View.GONE);
             tvPohon.setVisibility(View.GONE);
             inpJumlahPohon.setVisibility(View.GONE);
@@ -1853,6 +1877,7 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity  implements 
             tvPersenKondisi.setVisibility(View.VISIBLE);
 
         } else {
+            spinnerLuasSatuan.setVisibility(View.GONE);
             listBtnMap.setVisibility(View.GONE);
             inpJumlahPohon.setVisibility(View.GONE);
             tvFoto.setVisibility(View.GONE);

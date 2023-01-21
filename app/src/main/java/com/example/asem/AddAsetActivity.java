@@ -1651,11 +1651,11 @@ public class AddAsetActivity extends AppCompatActivity {
 
                 }
 
-                if (spinnerAlatAngkut.getSelectedItem() != null) {
+                if (spinnerKodeAset.getSelectedItem().equals("ZA08/Alat Pengangkutan")){
                     RequestBody requestAlatAngkut = RequestBody.create(MediaType.parse("text/plain"), spinnerAlatAngkut.getSelectedItem().toString().trim());
-                    builder.addPart(MultipartBody.Part.createFormData("alat_pengangkutan", null, requestAlatAngkut));
-
+                    builder.addPart(MultipartBody.Part.createFormData("alat_angkut", null, requestAlatAngkut));
                 }
+
                 if (img1 != null) {
                     RequestBody requestGeoTag1 = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(geotag1));
                     builder.addPart(MultipartBody.Part.createFormData("foto_aset1", img1.getName(), RequestBody.create(MediaType.parse("image/*"), img1)));

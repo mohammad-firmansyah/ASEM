@@ -441,7 +441,7 @@ public class DetailAsetActivity extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 spinnerIdKodeAset = String.valueOf(position+1);
 //                editVisibilityDynamic();
-                if (spinnerKodeAset.getSelectedItem().equals("ZA08/Alat Pengangkutan")){
+                if (spinnerKodeAset.getSelectedItem().equals("ZA08/-/Alat Pengangkutan")){
                     inpAlatAngkut.setVisibility(View.VISIBLE);
                     tvAlatAngkut.setVisibility(View.VISIBLE);
                 } else {
