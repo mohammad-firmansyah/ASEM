@@ -211,8 +211,9 @@ public class Aset2Adapter  extends RecyclerView.Adapter<Aset2Adapter.ViewHolder>
                     initDialogBelomApprove();
                 } else if (statpos == 1 && myPostData2.getStatusReject()!=null){
                     initDataReject();
-                } else if (myPostData2.getFotoAset1() == null || myPostData2.getFotoAset2() == null || myPostData2.getFotoAset3() == null ||
-                myPostData2.getFotoAset4() == null || myPostData2.getFotoAset5() == null){
+                } else if ("tanaman".equals(String.valueOf(myPostData2.getAsetJenis())) && myPostData2.getFotoAset1() == null ||
+                        myPostData2.getFotoAset2() == null || myPostData2.getFotoAset3() == null || myPostData2.getFotoAset4() == null ||
+                        myPostData2.getFotoAset5() == null){
                     initDialogFotoBelomLengkap();
                 }
                 else{
