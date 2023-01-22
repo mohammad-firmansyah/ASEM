@@ -294,7 +294,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
-                android:text="UPLOUD BA :"
+                android:text="UPLOUAD BA :"
                 android:textColor="@color/main_grey"
                 android:textSize="14sp"
                 android:textStyle="bold" />
@@ -588,101 +588,7 @@
 
                 />
 
-            <TextView
-                android:id="@+id/popTotalIni"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginVertical="10dp"
-                android:text="POPULASI TOTAL SAAT INI :"
-                android:textColor="@color/main_grey"
-                android:textSize="14sp"
-                android:textStyle="bold"
-                android:visibility="gone"/>
 
-            <EditText
-
-                android:id="@+id/inpPopTotalIni"
-                android:layout_width="match_parent"
-                android:layout_height="41dp"
-                android:layout_marginBottom="10dp"
-                android:background="@drawable/tgl_spinner"
-                android:inputType="numberDecimal"
-                android:spinnerMode="dropdown"
-                android:visibility="gone"
-
-                />
-
-            <TextView
-                android:id="@+id/popTotalStd"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginVertical="10dp"
-                android:text="POPULASI TOTAL STANDAR :"
-                android:textColor="@color/main_grey"
-                android:textSize="14sp"
-                android:textStyle="bold"
-                android:visibility="gone"/>
-
-            <EditText
-
-                android:id="@+id/inpPopTotalStd"
-                android:layout_width="match_parent"
-                android:layout_height="41dp"
-                android:layout_marginBottom="10dp"
-                android:background="@drawable/tgl_spinner"
-                android:inputType="numberDecimal"
-                android:spinnerMode="dropdown"
-                android:visibility="gone"
-
-                />
-
-            <TextView
-                android:id="@+id/popHektarIni"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginVertical="10dp"
-                android:text="POPULASI HEKTAR SAAT INI :"
-                android:textColor="@color/main_grey"
-                android:textSize="14sp"
-                android:textStyle="bold"
-                android:visibility="gone" />
-
-            <EditText
-
-                android:id="@+id/inpPopHektarIni"
-                android:layout_width="match_parent"
-                android:layout_height="41dp"
-                android:layout_marginBottom="10dp"
-                android:background="@drawable/tgl_spinner"
-                android:inputType="numberDecimal"
-                android:spinnerMode="dropdown"
-                android:visibility="gone"
-
-                />
-
-            <TextView
-                android:id="@+id/popHektarStd"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginVertical="10dp"
-                android:text="POPULASI HEKTAR STANDAR :"
-                android:textColor="@color/main_grey"
-                android:textSize="14sp"
-                android:textStyle="bold"
-                android:visibility="gone" />
-
-            <EditText
-
-                android:id="@+id/inpPopHektarStd"
-                android:layout_width="match_parent"
-                android:layout_height="41dp"
-                android:layout_marginBottom="10dp"
-                android:background="@drawable/tgl_spinner"
-                android:inputType="numberDecimal"
-                android:spinnerMode="dropdown"
-                android:visibility="gone"
-
-                />
 
             <TextView
                 android:layout_width="match_parent"
@@ -737,7 +643,93 @@
                     />
             </LinearLayout>
 
+            <TextView
+                android:id="@+id/popTotalIni"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="10dp"
+                android:text="POPULASI TOTAL SAAT INI :"
+                android:textColor="@color/main_grey"
+                android:textSize="14sp"
+                android:textStyle="bold"/>
 
+            <EditText
+
+                android:id="@+id/inpPopTotalIni"
+                android:layout_width="match_parent"
+                android:layout_height="41dp"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/tgl_spinner"
+                android:inputType="numberDecimal"
+                android:spinnerMode="dropdown"
+
+                />
+
+            <TextView
+                android:id="@+id/popTotalStd"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="10dp"
+                android:text="POPULASI TOTAL STANDAR :"
+                android:textColor="@color/main_grey"
+                android:textSize="14sp"
+                android:textStyle="bold"/>
+
+            <EditText
+
+                android:id="@+id/inpPopTotalStd"
+                android:layout_width="match_parent"
+                android:layout_height="41dp"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/tgl_spinner"
+                android:inputType="numberDecimal"
+                android:spinnerMode="dropdown"
+
+                />
+
+            <TextView
+                android:id="@+id/popHektarIni"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="10dp"
+                android:text="POPULASI HEKTAR SAAT INI :"
+                android:textColor="@color/main_grey"
+                android:textSize="14sp"
+                android:textStyle="bold"/>
+
+            <EditText
+
+                android:id="@+id/inpPopHektarIni"
+                android:layout_width="match_parent"
+                android:layout_height="41dp"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/tgl_spinner"
+                android:inputType="numberDecimal"
+                android:spinnerMode="dropdown"
+
+                />
+
+            <TextView
+                android:id="@+id/popHektarStd"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="10dp"
+                android:text="POPULASI HEKTAR STANDAR :"
+                android:textColor="@color/main_grey"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+
+            <EditText
+
+                android:id="@+id/inpPopHektarStd"
+                android:layout_width="match_parent"
+                android:layout_height="41dp"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/tgl_spinner"
+                android:inputType="numberDecimal"
+                android:spinnerMode="dropdown"
+
+                />
 
 
 
