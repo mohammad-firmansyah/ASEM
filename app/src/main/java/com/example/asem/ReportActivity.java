@@ -122,7 +122,7 @@ public class ReportActivity extends AppCompatActivity {
 
         inpTglInput1 = findViewById(R.id.inpTglInput);
         inpTglInput2 = findViewById(R.id.inpTglInput2);
-        inpHGU = findViewById(R.id.inpTglInput2);
+        inpHGU = findViewById(R.id.inpHGU);
 
 
 
@@ -517,7 +517,7 @@ public class ReportActivity extends AppCompatActivity {
                 RequestBody requestQrCode = RequestBody.create(MediaType.parse("text/plain"), "true");
                 builder.addPart(MultipartBody.Part.createFormData("qrcode",null,requestQrCode));
 
-            } else {
+            }else {
                 RequestBody requestQrCode = RequestBody.create(MediaType.parse("text/plain"), "false");
                 builder.addPart(MultipartBody.Part.createFormData("qrcode",null,requestQrCode));
 
