@@ -1890,7 +1890,7 @@ public class AddAsetActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(Call<AsetModel2> call, Response<AsetModel2> response) {
                         if (!response.isSuccessful() && response.body() == null) {
-                            if (response.code() == 400) {
+                            if (response.code() >= 400 &&response.code() <  500 ) {
                                 dialog.dismiss();
                                 customDialogAddAset.dismiss();
                                 Toast.makeText(getApplicationContext(),"Nomor SAP sudah ada",Toast.LENGTH_LONG);
