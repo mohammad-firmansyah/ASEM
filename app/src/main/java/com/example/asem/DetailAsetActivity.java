@@ -1008,7 +1008,7 @@ public class DetailAsetActivity extends AppCompatActivity {
         if ("tanaman".equals(String.valueOf(spinnerJenisAset.getSelectedItem())) && "normal".equals(String.valueOf(spinnerAsetKondisi.getSelectedItem()))) {
             listBtnMap.setVisibility(View.VISIBLE);
             inpJumlahPohon.setVisibility(View.GONE);
-            tvPohon.setVisibility(View.VISIBLE);
+            tvPohon.setVisibility(View.GONE);
             downloadBa.setVisibility(View.GONE);
 //            inpKomoditi.setVisibility(View.VISIBLE);
 
@@ -1045,7 +1045,7 @@ public class DetailAsetActivity extends AppCompatActivity {
         else if ("tanaman".equals(String.valueOf(spinnerJenisAset.getSelectedItem()))  && "rusak".equals(String.valueOf(spinnerAsetKondisi.getSelectedItem())) ) {
             listBtnMap.setVisibility(View.VISIBLE);
             inpJumlahPohon.setVisibility(View.GONE);
-            tvPohon.setVisibility(View.VISIBLE);
+            tvPohon.setVisibility(View.GONE);
             downloadBa.setVisibility(View.VISIBLE);
             tvUploudBA.setVisibility(View.VISIBLE);
             btnFile.setVisibility(View.GONE);

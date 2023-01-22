@@ -211,12 +211,12 @@ public class Aset2Adapter  extends RecyclerView.Adapter<Aset2Adapter.ViewHolder>
                     initDialogBelomApprove();
                 } else if (statpos == 1 && myPostData2.getStatusReject()!=null){
                     initDataReject();
-                } else if ("tanaman".equals(String.valueOf(myPostData2.getAsetJenis())) && myPostData2.getFotoAset1() == null ||
-                        myPostData2.getFotoAset2() == null || myPostData2.getFotoAset3() == null || myPostData2.getFotoAset4() == null ||
-                        myPostData2.getFotoAset5() == null){
+                } else if (myPostData2.getAsetJenis().equals("tanaman") && (myPostData2.getFotoAset1() == null ||
+                        myPostData2.getFotoAset2() == null || myPostData2.getFotoAset3() == null ||
+                        myPostData2.getFotoAset4() == null || myPostData2.getFotoAset5() == null)){
                     initDialogFotoBelomLengkap();
                 }
-                else{
+                else {
                     sharedPreferences = context.getSharedPreferences(PREF_LOGIN, MODE_PRIVATE);
                     String user_id = sharedPreferences.getString("user_id", "-");
                     showDialogKirim("Yakin Kirim Data?",
@@ -392,6 +392,7 @@ public class Aset2Adapter  extends RecyclerView.Adapter<Aset2Adapter.ViewHolder>
         final Dialog dialog =new Dialog(context);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.ly_kirim_sukses);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(0));
         dialog.show();
         Button cancel = dialog.findViewById(R.id.btnTidakKirim);
         Button kirim = dialog.findViewById(R.id.btnYaKirim);
