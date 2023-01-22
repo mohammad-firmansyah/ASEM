@@ -868,7 +868,7 @@ public class AddAsetActivity extends AppCompatActivity {
 
                 Intent pickFile = new Intent(Intent.ACTION_GET_CONTENT);
                 pickFile.addCategory(Intent.CATEGORY_OPENABLE);
-                pickFile.setType("*/*");
+                pickFile.setType("application/pdf");
                 // Optionally, specify a URI for the file that should appear in the
                 // system file picker when it loads.
 
