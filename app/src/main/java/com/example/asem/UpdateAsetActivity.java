@@ -63,6 +63,7 @@ import com.example.asem.api.model.AsetModel;
 import com.example.asem.api.model.AsetModel2;
 import com.example.asem.api.model.AsetTipe;
 import com.example.asem.api.model.Data;
+import com.example.asem.api.model.Data2;
 import com.example.asem.api.model.DataAllSpinner;
 import com.example.asem.api.model.Sap;
 import com.example.asem.api.model.SubUnit;
@@ -660,8 +661,9 @@ public class UpdateAsetActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 spinnerIdJenisAset = String.valueOf(position+1);
-                setAdapterAsetKode();
                 editVisibilityDynamic();
+                setAdapterAsetKode();
+                setValueInput();
             }
 
             @Override

@@ -42,6 +42,9 @@ public class Data2 {
     @SerializedName("foto_aset4")
     @Expose
     private String fotoAset4;
+    @SerializedName("foto_aset5")
+    @Expose
+    private String fotoAset5;
     @SerializedName("geo_tag1")
     @Expose
     private String geoTag1;
@@ -54,6 +57,9 @@ public class Data2 {
     @SerializedName("geo_tag4")
     @Expose
     private String geoTag4;
+    @SerializedName("geo_tag5")
+    @Expose
+    private String geoTag5;
     @SerializedName("aset_luas")
     @Expose
     private Double asetLuas;
@@ -353,6 +359,22 @@ public class Data2 {
 
     public void setFotoAset4(String fotoAset4) {
         this.fotoAset4 = fotoAset4;
+    }
+
+    public String getFotoAset5() {
+        return fotoAset5;
+    }
+
+    public void setFotoAset5(String fotoAset5) {
+        this.fotoAset5 = fotoAset5;
+    }
+
+    public String getGeoTag5() {
+        return geoTag5;
+    }
+
+    public void setGeoTag5(String geoTag5) {
+        this.geoTag5 = geoTag5;
     }
 
     public String getGeoTag1() {

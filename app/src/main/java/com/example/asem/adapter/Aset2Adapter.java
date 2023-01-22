@@ -56,6 +56,7 @@ public class Aset2Adapter  extends RecyclerView.Adapter<Aset2Adapter.ViewHolder>
 
     private AsetInterface asetInterface;
     Dialog customDialogBelumApprove;
+    Dialog customDialogFotoBelumLengkap;
     Dialog customDialogCekDataReject;
 
     List<Data2> myAsetData;
@@ -210,6 +211,9 @@ public class Aset2Adapter  extends RecyclerView.Adapter<Aset2Adapter.ViewHolder>
                     initDialogBelomApprove();
                 } else if (statpos == 1 && myPostData2.getStatusReject()!=null){
                     initDataReject();
+                } else if (myPostData2.getFotoAset1() == null || myPostData2.getFotoAset2() == null || myPostData2.getFotoAset3() == null ||
+                myPostData2.getFotoAset4() == null || myPostData2.getFotoAset5() == null){
+                    initDialogFotoBelomLengkap();
                 }
                 else{
                     sharedPreferences = context.getSharedPreferences(PREF_LOGIN, MODE_PRIVATE);
@@ -418,6 +422,20 @@ public class Aset2Adapter  extends RecyclerView.Adapter<Aset2Adapter.ViewHolder>
             notifyDataSetChanged();
             Intent gas = new Intent(context, LonglistAsetActivity.class);
             context.startActivity(gas);
+        });
+    }
+
+    void initDialogFotoBelomLengkap(){
+        customDialogFotoBelumLengkap = new Dialog(context, R.style.MyAlertDialogTheme);
+        customDialogFotoBelumLengkap.setContentView(R.layout.dialog_foto);
+        customDialogFotoBelumLengkap.setCanceledOnTouchOutside(false);
+        customDialogFotoBelumLengkap.getWindow().setBackgroundDrawable(new ColorDrawable(0));
+        customDialogFotoBelumLengkap.show();
+
+        Button btnTutup = customDialogFotoBelumLengkap.findViewById(R.id.btnTutup);
+        btnTutup.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) { customDialogFotoBelumLengkap.dismiss();}
         });
     }
 
