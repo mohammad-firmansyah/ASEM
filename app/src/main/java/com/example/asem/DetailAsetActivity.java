@@ -53,6 +53,7 @@ import com.example.asem.api.model.AsetKondisi;
 import com.example.asem.api.model.AsetModel;
 import com.example.asem.api.model.AsetModel2;
 import com.example.asem.api.model.AsetTipe;
+import com.example.asem.api.model.Data;
 import com.example.asem.api.model.DataAllSpinner;
 import com.example.asem.api.model.ReportModel;
 import com.example.asem.api.model.Sap;
@@ -92,6 +93,7 @@ public class DetailAsetActivity extends AppCompatActivity {
     String url3 = "";
     String url4 = "";
 
+    Data aset;
     String urlfotoasetqr = "";
     Map<Integer, Integer> mapAfdelingSpinner = new HashMap<Integer, Integer>();
     Map<Long, Integer> mapSap = new HashMap();
@@ -647,9 +649,8 @@ public class DetailAsetActivity extends AppCompatActivity {
 
         initCalender();
         getAllSpinnerData();
-//        getSpinnerData();
+        setDataAset();
         setValueInput();
-
         initCustomDialog();
 
     }
@@ -698,204 +699,193 @@ public class DetailAsetActivity extends AppCompatActivity {
     }
 
 
-
-
-    private void setValueInput(){
-
+    private void setDataAset(){
         Call<AsetModel> call = asetInterface.getAset(id);
-
 
         call.enqueue(new Callback<AsetModel>() {
 
             @Override
             public void onResponse(Call<AsetModel> call, Response<AsetModel> response) {
-                Handler handler = new Handler();
-                handler.postDelayed(new Runnable() {
-                    public void run() {
-                        dialog.dismiss();
-                    }
-                }, 1500);
 
-                if (!response.isSuccessful() && response.body().getData() == null){
+                if (!response.isSuccessful() && response.body() == null){
                     Toast.makeText(getApplicationContext(),String.valueOf(response.code()),Toast.LENGTH_LONG).show();
                     return;
                 }
 
-
-
-//                aset = response.body().getData();
-                if (response.body().getData().getAlat_pengangkutan() != null) {
-
-                    if (!response.body().getData().getAlat_pengangkutan().equals("")) {
-                        inpAlatAngkut.setText(response.body().getData().getAlat_pengangkutan());
-                    }
-                }
-                if (response.body().getData().getSatuan_luas() != null) {
-
-                    if (!response.body().getData().getSatuan_luas().equals("")) {
-                        spinnerLuasSatuan.setText(response.body().getData().getSatuan_luas());
-                    }
-                }
-
-                inpTglInput.setText(response.body().getData().getTglInput().split(" ")[0]);
-                inpTglOleh.setText(response.body().getData().getTglOleh().split(" ")[0]);
-                inpNoSAP.setText(response.body().getData().getNomorSap());
-                inpNamaAset.setText(response.body().getData().getAsetName());
-                inpLuasAset.setText(String.valueOf(response.body().getData().getAsetLuas()));
-                inpNilaiAsetSAP.setText(String.valueOf(response.body().getData().getNilaiOleh()));
-                inpMasaPenyusutan.setText(String.valueOf(response.body().getData().getMasaSusut()));
-                inpNomorBAST.setText(String.valueOf(response.body().getData().getNomorBast()));
-                inpNilaiResidu.setText(formatrupiah(Double.parseDouble(String.valueOf(response.body().getData().getNilaiResidu()))));
-                inpKeterangan.setText(response.body().getData().getKeterangan());
-                inpUmrEkonomis.setText(utils.MonthToYear(response.body().getData().getUmurEkonomisInMonth()));
-                inpNilaiAsetSAP.setText(formatrupiah(Double.parseDouble(String.valueOf(response.body().getData().getNilaiOleh()))));
-                inpPersenKondisi.setText(String.valueOf(response.body().getData().getPersenKondisi()));
-                inpJumlahPohon.setText(String.valueOf(response.body().getData().getJumlahPohon()));
-                inpHGU.setText(String.valueOf(response.body().getData().getHgu()));
-                String ket_reject = response.body().getData().getKetReject();
-                if (ket_reject != null){
-                    inpKetReject.setVisibility(View.VISIBLE);
-                    inpKetReject.setEnabled(false);
-                    tvKetReject.setVisibility(View.VISIBLE);
-                    inpKetReject.setText(ket_reject);
-                } else {
-                    inpKetReject.setVisibility(View.GONE);
-                    tvKetReject.setVisibility(View.GONE);
-                }
-
-                statusPosisi = response.body().getData().getStatusPosisi();
-                id = response.body().getData().getAsetId();
-
-                if (response.body().getData().getNoInv() != null) {
-                    inpNoInv.setText(String.valueOf(response.body().getData().getNoInv()));
-                };
-
-                qrurl = AsemApp.BASE_URL+"storage/app/public/qrcode/"+response.body().getData().getFotoQr();
-                if (response.body().getData().getFotoQr() != null) {
-                    qrDefault.getLayoutParams().height = 346;
-                    Picasso.get().load(qrurl).resize(400,400).centerCrop().into(qrDefault);
-                }
-
-                url1 = AsemApp.BASE_URL_ASSET+response.body().getData().getFotoAset1();
-                url2 = AsemApp.BASE_URL_ASSET+response.body().getData().getFotoAset2();
-                url3 = AsemApp.BASE_URL_ASSET+response.body().getData().getFotoAset3();
-                url4 = AsemApp.BASE_URL_ASSET+response.body().getData().getFotoAset4();
-                urlfotoasetqr = AsemApp.BASE_URL_ASSET+response.body().getData().getFotoAsetQr();
-
-                if (response.body().getData().getFotoAset1() == null ){
-                    map1.setEnabled(false);
-                    foto1rl.setEnabled(false);
-                } else {
-                    map1.setEnabled(true);
-                    fotoimg1.getLayoutParams().width = 200;
-                    fotoimg1.getLayoutParams().height = 200;
-                    Picasso.get().load(url1).resize(200,200).centerCrop().into(fotoimg1);
-                }
-
-                if (response.body().getData().getFotoAset2() == null ){
-                    map2.setEnabled(false);
-                    foto2rl.setEnabled(false);
-                } else {
-                    map2.setEnabled(true);
-                    fotoimg2.getLayoutParams().width = 200;
-                    fotoimg2.getLayoutParams().height = 200;
-                    Picasso.get().load(url2).resize(200,200).centerCrop().into(fotoimg2);
-                }
-
-                if (response.body().getData().getFotoAset3() == null ){
-                    map3.setEnabled(false);
-                    foto3rl.setEnabled(false);
-                } else {
-                    map3.setEnabled(true);
-                    fotoimg3.getLayoutParams().width = 200;
-                    fotoimg3.getLayoutParams().height = 200;
-                    Picasso.get().load(url3).resize(200,200).centerCrop().into(fotoimg3);
-                }
-
-                if (response.body().getData().getFotoAset4() == null ){
-                    map4.setEnabled(false);
-                    foto4rl.setEnabled(false);
-                } else {
-                    map4.setEnabled(true);
-                    fotoimg4.getLayoutParams().width = 200;
-                    fotoimg4.getLayoutParams().height = 200;
-                    Picasso.get().load(url4).resize(200,200).centerCrop().into(fotoimg4);
-                }
-
-
-                if (response.body().getData().getFotoAsetQr()!=null ){
-//                    fotoasetqrgroup.setVisibility(View.VISIBLE);
-                    String url = AsemApp.BASE_URL + response.body().getData().getFotoAsetQr();
-                    Log.d("amanat-url",url);
-                    fotoasetqr.getLayoutParams().width = 300;
-                    fotoasetqr.getLayoutParams().height = 300;
-                    Picasso.get().load(urlfotoasetqr).resize(300,300).centerCrop().into(fotoasetqr);
-                }
-                else{
-                    tvFotoAsetQR.setVisibility(View.GONE);
-                    addNewFotoAsetAndQr.setVisibility(View.GONE);
-                }
-
-                urlBa = response.body().getData().getBeritaAcara();
-
-                geotag1 = response.body().getData().getGeoTag1();
-                geotag2 = response.body().getData().getGeoTag2();
-                geotag3 = response.body().getData().getGeoTag3();
-                geotag4 = response.body().getData().getGeoTag4();
-
-
-//                set selection spinners
-                spinnerTipeAset.setSelection(response.body().getData().getAsetTipe()-1);
-                spinnerJenisAset.setSelection(response.body().getData().getAsetJenis()-1);
-
-                spinnerAsetKondisi.setSelection(response.body().getData().getAsetKondisi()-1);
-
-                spinnerSubUnit.setSelection(response.body().getData().getAsetSubUnit()-1);
-
-
-                try {
-
-                    if (response.body().getData().getAfdelingId() != null) {
-//                        Log.d("afdeling_id", String.valueOf(response.body().getData().getAfdelingId()));
-
-                        spinnerAfdeling.setSelection(mapAfdelingSpinner.get(response.body().getData().getAfdelingId()));
-
-                    }
-
-                    if (mapKodeSpinner.get(response.body().getData().getAsetKode()) != null) {
-
-                        spinnerKodeAset.setSelection(mapKodeSpinner.get(response.body().getData().getAsetKode()));
-
-//                        Log.d("amanat12", String.valueOf(spinnerKodeAset.getSelectedItemId()));
-//                        Log.d("amanat12", String.valueOf(mapKodeSpinner.get(response.body().getData().getAsetKode()-1)));
-                    }
-                } catch (Exception e){
-                }
-
-
-                checkApproved();
-                checkQrCode();
-                editVisibilityDynamic();
-
-
+                aset = response.body().getData();
 
             }
 
             @Override
             public void onFailure(Call<AsetModel> call, Throwable t) {
-                Handler handler = new Handler();
-                handler.postDelayed(new Runnable() {
-                    public void run() {
-                        dialog.dismiss();
-                    }
-                }, 1500);
                 Toast.makeText(getApplicationContext(),t.getMessage(),Toast.LENGTH_LONG).show();
             }
-        });
 
+        });
     }
 
-        public String formatrupiah(Double number){
+
+
+    private void setValueInput(){
+
+        try {
+            if (aset.getAlat_pengangkutan() != null) {
+
+                if (!aset.getAlat_pengangkutan().equals("")) {
+                    inpAlatAngkut.setText(aset.getAlat_pengangkutan());
+                }
+            }
+            if (aset.getSatuan_luas() != null) {
+
+                if (!aset.getSatuan_luas().equals("")) {
+                    spinnerLuasSatuan.setText(aset.getSatuan_luas());
+                }
+            }
+
+            inpTglInput.setText(aset.getTglInput().split(" ")[0]);
+            inpTglOleh.setText(aset.getTglOleh().split(" ")[0]);
+            inpNoSAP.setText(aset.getNomorSap());
+            inpNamaAset.setText(aset.getAsetName());
+            inpLuasAset.setText(String.valueOf(aset.getAsetLuas()));
+            inpNilaiAsetSAP.setText(String.valueOf(aset.getNilaiOleh()));
+            inpMasaPenyusutan.setText(String.valueOf(aset.getMasaSusut()));
+            inpNomorBAST.setText(String.valueOf(aset.getNomorBast()));
+            inpNilaiResidu.setText(formatrupiah(Double.parseDouble(String.valueOf(aset.getNilaiResidu()))));
+            inpKeterangan.setText(aset.getKeterangan());
+            inpUmrEkonomis.setText(utils.MonthToYear(aset.getUmurEkonomisInMonth()));
+            inpNilaiAsetSAP.setText(formatrupiah(Double.parseDouble(String.valueOf(aset.getNilaiOleh()))));
+            inpPersenKondisi.setText(String.valueOf(aset.getPersenKondisi()));
+            inpJumlahPohon.setText(String.valueOf(aset.getJumlahPohon()));
+            inpHGU.setText(String.valueOf(aset.getHgu()));
+            String ket_reject = aset.getKetReject();
+            if (ket_reject != null){
+                inpKetReject.setVisibility(View.VISIBLE);
+                inpKetReject.setEnabled(false);
+                tvKetReject.setVisibility(View.VISIBLE);
+                inpKetReject.setText(ket_reject);
+            } else {
+                inpKetReject.setVisibility(View.GONE);
+                tvKetReject.setVisibility(View.GONE);
+            }
+
+            statusPosisi = aset.getStatusPosisi();
+            id = aset.getAsetId();
+
+            if (aset.getNoInv() != null) {
+                inpNoInv.setText(String.valueOf(aset.getNoInv()));
+            };
+
+            qrurl = AsemApp.BASE_URL+"storage/app/public/qrcode/"+aset.getFotoQr();
+            if (aset.getFotoQr() != null) {
+                qrDefault.getLayoutParams().height = 346;
+                Picasso.get().load(qrurl).resize(400,400).centerCrop().into(qrDefault);
+            }
+
+            url1 = AsemApp.BASE_URL_ASSET+aset.getFotoAset1();
+            url2 = AsemApp.BASE_URL_ASSET+aset.getFotoAset2();
+            url3 = AsemApp.BASE_URL_ASSET+aset.getFotoAset3();
+            url4 = AsemApp.BASE_URL_ASSET+aset.getFotoAset4();
+            urlfotoasetqr = AsemApp.BASE_URL_ASSET+aset.getFotoAsetQr();
+
+            if (aset.getFotoAset1() == null ){
+                map1.setEnabled(false);
+                foto1rl.setEnabled(false);
+            } else {
+                map1.setEnabled(true);
+                fotoimg1.getLayoutParams().width = 200;
+                fotoimg1.getLayoutParams().height = 200;
+                Picasso.get().load(url1).resize(200,200).centerCrop().into(fotoimg1);
+            }
+
+            if (aset.getFotoAset2() == null ){
+                map2.setEnabled(false);
+                foto2rl.setEnabled(false);
+            } else {
+                map2.setEnabled(true);
+                fotoimg2.getLayoutParams().width = 200;
+                fotoimg2.getLayoutParams().height = 200;
+                Picasso.get().load(url2).resize(200,200).centerCrop().into(fotoimg2);
+            }
+
+            if (aset.getFotoAset3() == null ){
+                map3.setEnabled(false);
+                foto3rl.setEnabled(false);
+            } else {
+                map3.setEnabled(true);
+                fotoimg3.getLayoutParams().width = 200;
+                fotoimg3.getLayoutParams().height = 200;
+                Picasso.get().load(url3).resize(200,200).centerCrop().into(fotoimg3);
+            }
+
+            if (aset.getFotoAset4() == null ){
+                map4.setEnabled(false);
+                foto4rl.setEnabled(false);
+            } else {
+                map4.setEnabled(true);
+                fotoimg4.getLayoutParams().width = 200;
+                fotoimg4.getLayoutParams().height = 200;
+                Picasso.get().load(url4).resize(200,200).centerCrop().into(fotoimg4);
+            }
+
+
+            if (aset.getFotoAsetQr()!=null ){
+//                    fotoasetqrgroup.setVisibility(View.VISIBLE);
+                String url = AsemApp.BASE_URL + aset.getFotoAsetQr();
+                Log.d("amanat-url",url);
+                fotoasetqr.getLayoutParams().width = 300;
+                fotoasetqr.getLayoutParams().height = 300;
+                Picasso.get().load(urlfotoasetqr).resize(300,300).centerCrop().into(fotoasetqr);
+            }
+            else{
+                tvFotoAsetQR.setVisibility(View.GONE);
+                addNewFotoAsetAndQr.setVisibility(View.GONE);
+            }
+
+            urlBa = aset.getBeritaAcara();
+
+            geotag1 = aset.getGeoTag1();
+            geotag2 = aset.getGeoTag2();
+            geotag3 = aset.getGeoTag3();
+            geotag4 = aset.getGeoTag4();
+
+
+//                set selection spinners
+            spinnerTipeAset.setSelection(aset.getAsetTipe()-1);
+            spinnerJenisAset.setSelection(aset.getAsetJenis()-1);
+
+            spinnerAsetKondisi.setSelection(aset.getAsetKondisi()-1);
+
+            spinnerSubUnit.setSelection(aset.getAsetSubUnit()-1);
+
+
+            try {
+
+                if (aset.getAfdelingId() != null) {
+//                        Log.d("afdeling_id", String.valueOf(aset.getAfdelingId()));
+
+                    spinnerAfdeling.setSelection(mapAfdelingSpinner.get(aset.getAfdelingId()));
+
+                }
+
+                if (mapKodeSpinner.get(aset.getAsetKode()) != null) {
+
+                    spinnerKodeAset.setSelection(mapKodeSpinner.get(aset.getAsetKode()));
+                }
+            } catch (Exception e){
+            }
+
+
+            checkApproved();
+            checkQrCode();
+            editVisibilityDynamic();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+
+            }
+
+    public String formatrupiah(Double number){
             Locale localeID = new Locale("IND","ID");
             NumberFormat numberFormat = NumberFormat.getCurrencyInstance(localeID);
             String formatRupiah =  numberFormat.format(number);
@@ -903,9 +893,7 @@ public class DetailAsetActivity extends AppCompatActivity {
             int length = split[0].length();
             return split[0].substring(0,2)+". "+split[0].substring(2,length);
         }
-
-
-        public void downloadBaFunc(){
+    public void downloadBaFunc(){
 
                 String title = URLUtil.guessFileName(AsemApp.BASE_URL_ASSET + "/" + urlBa,null,null);
 
@@ -1254,10 +1242,13 @@ public class DetailAsetActivity extends AppCompatActivity {
             public void onResponse(Call<AllSpinner> call, Response<AllSpinner> response) {
                 try {
                     if (!response.isSuccessful() && response.body().getData() == null) {
+                        dialog.dismiss();
                         Toast.makeText(getApplicationContext(),response.code(),Toast.LENGTH_LONG).show();
                         return;
 
                     }
+
+
                     allSpinner = response.body().getData();
 
                     DataAllSpinner dataAllSpinner = response.body().getData();
@@ -1363,6 +1354,7 @@ public class DetailAsetActivity extends AppCompatActivity {
                             android.R.layout.simple_spinner_item, listSpinnerAfdeling);
                     adapterAfdeling.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                     spinnerAfdeling.setAdapter(adapterAfdeling);
+                    dialog.dismiss();
                 }catch(Exception e){
                     e.printStackTrace();
                 }
@@ -1375,6 +1367,7 @@ public class DetailAsetActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<AllSpinner> call, Throwable t) {
+                dialog.dismiss();
                 Toast.makeText(getApplicationContext(),t.getMessage(),Toast.LENGTH_LONG).show();
                 return;
             }
