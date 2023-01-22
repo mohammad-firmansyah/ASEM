@@ -1004,8 +1004,8 @@ public class DetailAsetActivity extends AppCompatActivity {
 
             inpNomorBAST.setVisibility(View.VISIBLE);
             tvBast.setVisibility(View.VISIBLE);
-            tvUploudBA.setVisibility(View.VISIBLE);
-            tvBa.setVisibility(View.VISIBLE);
+            tvUploudBA.setVisibility(View.GONE);
+            tvBa.setVisibility(View.GONE);
             inpBtnMap.setVisibility(View.GONE);
             btnFile.setVisibility(View.GONE);
 
@@ -1035,14 +1035,15 @@ public class DetailAsetActivity extends AppCompatActivity {
         else if ("tanaman".equals(String.valueOf(spinnerJenisAset.getSelectedItem()))  && "rusak".equals(String.valueOf(spinnerAsetKondisi.getSelectedItem())) ) {
             listBtnMap.setVisibility(View.VISIBLE);
             inpJumlahPohon.setVisibility(View.VISIBLE);
-            tvBa.setVisibility(View.VISIBLE);
             tvPohon.setVisibility(View.VISIBLE);
+
+            tvUploudBA.setVisibility(View.VISIBLE);
+            btnFile.setVisibility(View.VISIBLE);
+            tvBa.setVisibility(View.VISIBLE);
 
 //            inpKomoditi.setVisibility(View.VISIBLE);
             inpNomorBAST.setVisibility(View.VISIBLE);
             tvBast.setVisibility(View.VISIBLE);
-            tvUploudBA.setVisibility(View.VISIBLE);
-            btnFile.setVisibility(View.VISIBLE);
 
             inpBtnMap.setVisibility(View.GONE);
 
@@ -1114,8 +1115,8 @@ public class DetailAsetActivity extends AppCompatActivity {
             tvBast.setVisibility(View.VISIBLE);
             tvPohon.setVisibility(View.VISIBLE);
 
-            tvBa.setVisibility(View.VISIBLE);
-            tvUploudBA.setVisibility(View.VISIBLE);
+            tvBa.setVisibility(View.GONE);
+            tvUploudBA.setVisibility(View.GONE);
             inpBtnMap.setVisibility(View.GONE);
             btnFile.setVisibility(View.GONE);
 
@@ -1223,10 +1224,10 @@ public class DetailAsetActivity extends AppCompatActivity {
             tvBast.setVisibility(View.VISIBLE);
 
 //            inpKomoditi.setVisibility(View.GONE);
-            tvUploudBA.setVisibility(View.VISIBLE);
+            tvUploudBA.setVisibility(View.GONE);
             listBtnMap.setVisibility(View.GONE);
             inpJumlahPohon.setVisibility(View.GONE);
-            tvBa.setVisibility(View.VISIBLE);
+            tvBa.setVisibility(View.GONE);
             tvPohon.setVisibility(View.GONE);
             btnFile.setVisibility(View.GONE);
 

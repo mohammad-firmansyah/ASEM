@@ -1283,18 +1283,16 @@ public class AddAsetActivity extends AppCompatActivity {
         }
 
         if ("tanaman".equals(String.valueOf(spinnerJenisAset.getSelectedItem())) && "normal".equals(String.valueOf(spinnerAsetKondisi.getSelectedItem()))) {
-//            listBtnMap.setVisibility(View.VISIBLE);
             inpJumlahPohon.setVisibility(View.VISIBLE);
             tvPohon.setVisibility(View.VISIBLE);
-//            inpKomoditi.setVisibility(View.VISIBLE);
 
             spinnerLuasSatuan.setVisibility(View.GONE);
             inpNomorBAST.setVisibility(View.VISIBLE);
             tvBast.setVisibility(View.VISIBLE);
-            tvUploudBA.setVisibility(View.VISIBLE);
-            tvBa.setVisibility(View.VISIBLE);
-//            inpBtnMap.setVisibility(View.GONE);
-            btnFile.setVisibility(View.VISIBLE);
+
+            tvUploudBA.setVisibility(View.GONE);
+            inpBtnMap.setVisibility(View.GONE);
+            btnFile.setVisibility(View.GONE);
 
             tvFoto.setVisibility(View.VISIBLE);
             scrollPartition.setVisibility(View.VISIBLE);
@@ -1321,13 +1319,14 @@ public class AddAsetActivity extends AppCompatActivity {
 
         else if ("tanaman".equals(String.valueOf(spinnerJenisAset.getSelectedItem()))  && "rusak".equals(String.valueOf(spinnerAsetKondisi.getSelectedItem())) ) {
 //            listBtnMap.setVisibility(View.VISIBLE);
-            tvBa.setVisibility(View.VISIBLE);
             inpJumlahPohon.setVisibility(View.VISIBLE);
             tvPohon.setVisibility(View.VISIBLE);
             spinnerLuasSatuan.setVisibility(View.GONE);
 //            inpKomoditi.setVisibility(View.VISIBLE);
             inpNomorBAST.setVisibility(View.VISIBLE);
             tvBast.setVisibility(View.VISIBLE);
+
+            tvBa.setVisibility(View.VISIBLE);
             tvUploudBA.setVisibility(View.VISIBLE);
             btnFile.setVisibility(View.VISIBLE);
 
@@ -1400,10 +1399,9 @@ public class AddAsetActivity extends AppCompatActivity {
             tvBast.setVisibility(View.VISIBLE);
             tvPohon.setVisibility(View.VISIBLE);
 
-            tvBa.setVisibility(View.VISIBLE);
-            tvUploudBA.setVisibility(View.VISIBLE);
-//            inpBtnMap.setVisibility(View.GONE);
-            btnFile.setVisibility(View.VISIBLE);
+            tvUploudBA.setVisibility(View.GONE);
+            inpBtnMap.setVisibility(View.GONE);
+            btnFile.setVisibility(View.GONE);
 
             tvFoto.setVisibility(View.VISIBLE);
             scrollPartition.setVisibility(View.VISIBLE);
@@ -1513,12 +1511,13 @@ public class AddAsetActivity extends AppCompatActivity {
             spinnerLuasSatuan.setVisibility(View.VISIBLE);
 
 //            inpKomoditi.setVisibility(View.GONE);
-            tvUploudBA.setVisibility(View.VISIBLE);
 //            listBtnMap.setVisibility(View.GONE);
             inpJumlahPohon.setVisibility(View.GONE);
-            tvBa.setVisibility(View.VISIBLE);
             tvPohon.setVisibility(View.GONE);
-            btnFile.setVisibility(View.VISIBLE);
+
+            tvUploudBA.setVisibility(View.GONE);
+            inpBtnMap.setVisibility(View.GONE);
+            btnFile.setVisibility(View.GONE);
 
             tvFoto.setVisibility(View.VISIBLE);
             scrollPartition.setVisibility(View.VISIBLE);
@@ -1612,7 +1611,6 @@ public class AddAsetActivity extends AppCompatActivity {
             inpPopHektarStandar.setVisibility(View.GONE);
 
         } else {
-//            listBtnMap.setVisibility(View.GONE);
             spinnerLuasSatuan.setVisibility(View.GONE);
             inpJumlahPohon.setVisibility(View.GONE);
             tvFoto.setVisibility(View.GONE);
@@ -1620,7 +1618,6 @@ public class AddAsetActivity extends AppCompatActivity {
             tvPohon.setVisibility(View.GONE);
             tvBa.setVisibility(View.GONE);
             tvUploudBA.setVisibility(View.GONE);
-//            inpBtnMap.setVisibility(View.GONE);
             btnFile.setVisibility(View.GONE);
 
             tvLuasTanaman.setVisibility(View.GONE);
