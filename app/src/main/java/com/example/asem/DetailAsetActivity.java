@@ -802,7 +802,7 @@ public class DetailAsetActivity extends AppCompatActivity {
             inpUmrEkonomis.setText(utils.MonthToYear(aset.getUmurEkonomisInMonth()));
             inpNilaiAsetSAP.setText(formatrupiah(Double.parseDouble(String.valueOf(aset.getNilaiOleh()))));
             inpPersenKondisi.setText(String.valueOf(aset.getPersenKondisi()));
-            inpJumlahPohon.setText(String.valueOf(aset.getJumlahPohon()));
+//            inpJumlahPohon.setText(String.valueOf(aset.getJumlahPohon()));
             inpHGU.setText(String.valueOf(aset.getHgu()));
             inpPopTotalSaatIni.setText(String.valueOf(aset.getPopTotalIni()));
             inpPopTotalStandar.setText(String.valueOf(aset.getPopTotalStd()));
@@ -1007,7 +1007,7 @@ public class DetailAsetActivity extends AppCompatActivity {
 
         if ("tanaman".equals(String.valueOf(spinnerJenisAset.getSelectedItem())) && "normal".equals(String.valueOf(spinnerAsetKondisi.getSelectedItem()))) {
             listBtnMap.setVisibility(View.VISIBLE);
-            inpJumlahPohon.setVisibility(View.VISIBLE);
+            inpJumlahPohon.setVisibility(View.GONE);
             tvPohon.setVisibility(View.VISIBLE);
             downloadBa.setVisibility(View.GONE);
 //            inpKomoditi.setVisibility(View.VISIBLE);
@@ -1044,7 +1044,7 @@ public class DetailAsetActivity extends AppCompatActivity {
 
         else if ("tanaman".equals(String.valueOf(spinnerJenisAset.getSelectedItem()))  && "rusak".equals(String.valueOf(spinnerAsetKondisi.getSelectedItem())) ) {
             listBtnMap.setVisibility(View.VISIBLE);
-            inpJumlahPohon.setVisibility(View.VISIBLE);
+            inpJumlahPohon.setVisibility(View.GONE);
             tvPohon.setVisibility(View.VISIBLE);
             downloadBa.setVisibility(View.VISIBLE);
             tvUploudBA.setVisibility(View.VISIBLE);
@@ -1085,14 +1085,13 @@ public class DetailAsetActivity extends AppCompatActivity {
             tvUploudBA.setVisibility(View.VISIBLE);
             btnFile.setVisibility(View.GONE);
             tvBa.setVisibility(View.VISIBLE);
-            inpJumlahPohon.setVisibility(View.VISIBLE);
+            inpJumlahPohon.setVisibility(View.GONE);
 //            inpKomoditi.setVisibility(View.VISIBLE);
             downloadBa.setVisibility(View.VISIBLE);
             inpNomorBAST.setVisibility(View.GONE);
             tvBast.setVisibility(View.GONE);
             tvPohon.setVisibility(View.GONE);
             listBtnMap.setVisibility(View.GONE);
-            inpJumlahPohon.setVisibility(View.GONE);
             inpBtnMap.setVisibility(View.GONE);
 
             tvFoto.setVisibility(View.GONE);
