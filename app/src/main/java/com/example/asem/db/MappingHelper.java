@@ -12,6 +12,7 @@ import static com.example.asem.db.DatabaseContractSap.SapColumns;
 import android.database.Cursor;
 
 import com.example.asem.api.model.Afdelling;
+import com.example.asem.api.model.AlatAngkut;
 import com.example.asem.api.model.AsetJenis;
 import com.example.asem.api.model.AsetKode2;
 import com.example.asem.api.model.AsetKondisi;
@@ -75,7 +76,7 @@ public class MappingHelper {
         return asetList;
     }
 
-    public static DataAllSpinner mapCursorToArrayListSpinner(Cursor asetTipe,Cursor asetJenis, Cursor asetKondisi,Cursor asetKode,Cursor unit,Cursor subUnit,Cursor afdeling, Cursor sap) {
+    public static DataAllSpinner mapCursorToArrayListSpinner(Cursor asetTipe,Cursor asetJenis, Cursor asetKondisi,Cursor asetKode,Cursor unit,Cursor subUnit,Cursor afdeling, Cursor sap,Cursor alatAngkut) {
         DataAllSpinner dataAllSpinner = new DataAllSpinner();
         ArrayList<AsetTipe> listAsetTipe = new ArrayList<>();
         ArrayList<AsetJenis> listAsetJenis = new ArrayList<>();
@@ -85,6 +86,7 @@ public class MappingHelper {
         ArrayList<SubUnit> listSubUnit = new ArrayList<>();
         ArrayList<Afdelling> listAfdeling = new ArrayList<>();
         ArrayList<Sap> listSap = new ArrayList<>();
+        ArrayList<AlatAngkut> listAlatAngkut = new ArrayList<>();
 
         while (asetTipe.moveToNext()) {
             Integer asetTipeId = asetTipe.getInt(asetTipe.getColumnIndexOrThrow(AsetTipeColumns.ASETTIPEID));
@@ -137,6 +139,12 @@ public class MappingHelper {
             listSap.add(new Sap(sapId,sapDesc));
         }
 
+        while (alatAngkut.moveToNext()) {
+            Integer apId = alatAngkut.getInt(alatAngkut.getColumnIndexOrThrow(DatabaseContractAlatPengangkutan.AlatPengangkutanColumns.APID));
+            String apDesc = alatAngkut.getString(alatAngkut.getColumnIndexOrThrow(DatabaseContractAlatPengangkutan.AlatPengangkutanColumns.APDESC));
+            listAlatAngkut.add(new AlatAngkut(apId,apDesc));
+        }
+
 
 
         dataAllSpinner.setAsetTipe(listAsetTipe);
@@ -147,6 +155,7 @@ public class MappingHelper {
         dataAllSpinner.setSubUnit(listSubUnit);
         dataAllSpinner.setAfdeling(listAfdeling);
         dataAllSpinner.setSap(listSap);
+        dataAllSpinner.setAlatAngkut(listAlatAngkut);
 
         return dataAllSpinner;
     }

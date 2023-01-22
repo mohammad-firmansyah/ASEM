@@ -1,6 +1,7 @@
 package com.example.asem.db.model;
 
 import com.example.asem.api.model.Afdelling;
+import com.example.asem.api.model.AlatAngkut;
 import com.example.asem.api.model.AsetJenis;
 import com.example.asem.api.model.AsetKode2;
 import com.example.asem.api.model.AsetKondisi;
@@ -14,7 +15,6 @@ import com.google.gson.annotations.SerializedName;
 import java.util.List;
 
 public class DataAllSpinner {
-
     @SerializedName("aset_tipe")
     @Expose
     private List<AsetTipe> asetTipe = null;
@@ -41,6 +41,18 @@ public class DataAllSpinner {
     @SerializedName("sap")
     @Expose
     private List<Sap> sap = null;
+
+    @SerializedName("alat_pengangkutan")
+    @Expose
+    private List<AlatAngkut> alatAngkut = null;
+
+    public List<AlatAngkut> getAlatAngkut() {
+        return alatAngkut;
+    }
+
+    public void setAlatAngkut(List<AlatAngkut> alatAngkut) {
+        this.alatAngkut = alatAngkut;
+    }
 
     public List<Sap> getSap() {
         return sap;

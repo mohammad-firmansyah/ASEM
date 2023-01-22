@@ -35,6 +35,7 @@ import com.example.asem.adapter.AsetOfflineAdapter;
 import com.example.asem.adapter.SearchAsetAdapter;
 import com.example.asem.api.AsetInterface;
 import com.example.asem.api.model.Afdelling;
+import com.example.asem.api.model.AlatAngkut;
 import com.example.asem.api.model.AllSpinner;
 import com.example.asem.api.model.AsetJenis;
 import com.example.asem.api.model.AsetKode;
@@ -535,6 +536,13 @@ public void getAllSpinnerData(){
                 ContentValues values = new ContentValues();
                 values.put("sap_desc",at.getSap_desc());
                 asetHelper.insertSap(values);
+            }
+
+            // get alat pengangkutan
+            for (AlatAngkut at : dataAllSpinner.getAlatAngkut()){
+                ContentValues values = new ContentValues();
+                values.put("ap_desc",at.getAp_desc());
+                asetHelper.insertAlatAngkut(values);
             }
 
             dialog.dismiss();

@@ -1040,7 +1040,8 @@ public class DetailAsetOfflineActivity extends AppCompatActivity {
         Cursor subUnit = asetHelper.getAllSubUnit();
         Cursor afdeling = asetHelper.getAllAfdeling();
         Cursor sap = asetHelper.getAllSap();
-        com.example.asem.db.model.DataAllSpinner dataAllSpinner = MappingHelper.mapCursorToArrayListSpinner(asetTipe,asetJenis,asetKondisi,asetKode,unit,subUnit,afdeling,sap);
+        Cursor alatAngkut = asetHelper.getAllAlatAngkut();
+        com.example.asem.db.model.DataAllSpinner dataAllSpinner = MappingHelper.mapCursorToArrayListSpinner(asetTipe,asetJenis,asetKondisi,asetKode,unit,subUnit,afdeling,sap,alatAngkut);
 
         List<String> listSpinnerTipe = new ArrayList<>();
 

@@ -62,6 +62,7 @@ import android.widget.Toast;
 import com.example.asem.adapter.AsetOfflineAdapter;
 import com.example.asem.api.AsetInterface;
 import com.example.asem.api.model.Afdelling;
+import com.example.asem.api.model.AlatAngkut;
 import com.example.asem.api.model.AllSpinner;
 import com.example.asem.api.model.AsetApproveModel;
 import com.example.asem.api.model.AsetJenis;
@@ -1923,7 +1924,8 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity  implements 
         Cursor subUnit = asetHelper.getAllSubUnit();
         Cursor afdeling = asetHelper.getAllAfdeling();
         Cursor sap = asetHelper.getAllSap();
-         DataAllSpinner dataAllSpinner = MappingHelper.mapCursorToArrayListSpinner(asetTipe,asetJenis,asetKondisi,asetKodeCursor,unit,subUnit,afdeling,sap);
+        Cursor alatAngkut = asetHelper.getAllAlatAngkut();
+         DataAllSpinner dataAllSpinner = MappingHelper.mapCursorToArrayListSpinner(asetTipe,asetJenis,asetKondisi,asetKodeCursor,unit,subUnit,afdeling,sap,alatAngkut);
 
         List<String> listSpinnerTipe = new ArrayList<>();
 
@@ -1937,6 +1939,7 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity  implements 
         List<String> listSpinnerSubUnit = new ArrayList<>();
 
         List<String> listSpinnerAfdeling = new ArrayList<>();
+        List<String> listSpinnerAlatAngkut = new ArrayList<>();
 
 
 
@@ -1945,6 +1948,7 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity  implements 
         listSpinnerKondisiAset.add("Pilih Kondisi Aset");
         listSpinnerSubUnit.add("Pilih Sub Unit ");
         listSpinnerAfdeling.add("Pilih Afdeling ");
+        listSpinnerAlatAngkut.add("Pilih Alat Angkut ");
 
                 // get data tipe aset
 
@@ -1968,6 +1972,14 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity  implements 
         for (AsetKondisi at : dataAllSpinner.getAsetKondisi()){
 
             listSpinnerKondisiAset.add(at.getAset_kondisi_desc());
+
+        }
+
+        // get alat angkut
+
+        for (AlatAngkut at : dataAllSpinner.getAlatAngkut()){
+
+            listSpinnerAlatAngkut.add(at.getAp_desc());
 
         }
 
@@ -2086,6 +2098,12 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity  implements 
                 adapterSubUnit.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 spinnerSubUnit.setAdapter(adapterSubUnit);
 
+
+                // alat angkut
+                ArrayAdapter<String> adapterAlatAngkut = new ArrayAdapter<String>(getApplicationContext(),
+                        android.R.layout.simple_spinner_item, listSpinnerAlatAngkut);
+                adapterAlatAngkut.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                spinnerAlatAngkut.setAdapter(adapterAlatAngkut);
 
                 // set adapter afedeling
 

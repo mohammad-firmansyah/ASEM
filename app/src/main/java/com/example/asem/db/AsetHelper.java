@@ -4,6 +4,7 @@ import static android.provider.BaseColumns._ID;
 import static com.example.asem.db.DatabaseContractAset.*;
 import static com.example.asem.db.DatabaseContractAfdeling.*;
 import static com.example.asem.db.DatabaseHelper.SQL_CREATE_TABLE_AFDELING;
+import static com.example.asem.db.DatabaseHelper.SQL_CREATE_TABLE_ALAT_PENGANGKUTAN;
 import static com.example.asem.db.DatabaseHelper.SQL_CREATE_TABLE_ASET;
 import static com.example.asem.db.DatabaseHelper.SQL_CREATE_TABLE_ASET_JENIS;
 import static com.example.asem.db.DatabaseHelper.SQL_CREATE_TABLE_ASET_KODE;
@@ -182,6 +183,18 @@ public class AsetHelper {
                 null,
                 null);
     }
+    public Cursor getAllAlatAngkut() {
+        return database.query(
+                "alat_pengangkutan",
+                null,
+                null,
+                null,
+                null,
+                null,
+                null);
+    }
+
+
 
     public Cursor getAllUnit() {
         return database.query(
@@ -224,6 +237,9 @@ public class AsetHelper {
 
     public void insertAsetTpe(ContentValues values) {
         database.insert(DatabaseContractAsetTipe.TABLE_NAME, null, values);
+    }
+    public void insertAlatAngkut(ContentValues values) {
+        database.insert(DatabaseContractAlatPengangkutan.TABLE_NAME, null, values);
     }
 
     public void deleteAsetTpe() {
@@ -304,9 +320,12 @@ public class AsetHelper {
         database.execSQL("DROP TABLE if exists aset_tipe");
         database.execSQL("DROP TABLE if exists users");
         database.execSQL("DROP TABLE  if exists sap");
+        database.execSQL("DROP TABLE  if exists alat_pengangkutan");
 
 //
         database.execSQL(SQL_CREATE_TABLE_AFDELING);
+
+        database.execSQL(SQL_CREATE_TABLE_ALAT_PENGANGKUTAN);
 
         database.execSQL(SQL_CREATE_TABLE_ASET_JENIS);
 
