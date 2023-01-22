@@ -336,6 +336,22 @@
                     android:textSize="10sp"
                     android:layout_toEndOf="@+id/tvUploudBA"
                     />
+                <Button
+
+                    android:id="@+id/inpDownloadBa"
+                    android:layout_width="0dp"
+                    android:layout_height="41dp"
+                    android:layout_weight="0.3"
+                    android:layout_marginBottom="10dp"
+                    android:background="@drawable/edit_text_spiner"
+                    android:spinnerMode="dropdown"
+                    android:text="DOWNLOAD"
+                    android:onClick="downloadBaFunc"
+                    android:layout_marginStart="5dp"
+                    android:textSize="9sp"
+                    android:visibility="gone"
+                    android:layout_toEndOf="@+id/tvUploudBA"
+                    />
             </LinearLayout>
 
 

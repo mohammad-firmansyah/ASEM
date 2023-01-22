@@ -1291,7 +1291,7 @@ public class AddAsetActivity extends AppCompatActivity {
             tvBast.setVisibility(View.VISIBLE);
 
             tvUploudBA.setVisibility(View.GONE);
-            inpBtnMap.setVisibility(View.GONE);
+//            inpBtnMap.setVisibility(View.GONE);
             btnFile.setVisibility(View.GONE);
 
             tvFoto.setVisibility(View.VISIBLE);
