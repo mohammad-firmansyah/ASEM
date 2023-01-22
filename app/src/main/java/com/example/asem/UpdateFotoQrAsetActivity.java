@@ -112,6 +112,7 @@ public class UpdateFotoQrAsetActivity extends AppCompatActivity {
     Button map2;
     Button map3;
     Button map4;
+    Button map5;
     double longitudeValue = 0;
     double latitudeValue = 0;
     Map<Integer,Integer> mapKodeSpinner = new HashMap();
@@ -170,23 +171,34 @@ public class UpdateFotoQrAsetActivity extends AppCompatActivity {
     EditText inpUmrEkonomis;
     EditText inpPersenKondisi;
     EditText inpKetReject;
+    EditText inpPopTotalSaatIni;
+    EditText inpPopTotalStandar;
+    EditText inpPopHektarSaatIni;
+    EditText inpPopHektarStandar;
+    TextView tvPopTotalSaatIni;
+    TextView tvPopTotalStandar;
+    TextView tvPopHektarSaatIni;
+    TextView tvPopHektarStandar;
 
     ViewGroup foto1rl;
     ViewGroup foto2rl;
     ViewGroup foto3rl;
     ViewGroup foto4rl;
+    ViewGroup foto5rl;
     ViewGroup listBtnMap;
 
     ImageView fotoimg1;
     ImageView fotoimg2;
     ImageView fotoimg3;
     ImageView fotoimg4;
+    ImageView fotoimg5;
 
 
     String photoname1 = "foto1.png";
     String photoname2 = "foto2.png";
     String photoname3 = "foto3.png";
     String photoname4 = "foto4.png";
+    String photoname5 = "foto5.png";
 
 
 
@@ -194,11 +206,13 @@ public class UpdateFotoQrAsetActivity extends AppCompatActivity {
     String geotag2;
     String geotag3;
     String geotag4;
+    String geotag5;
 
     File img1;
     File img2;
     File img3;
     File img4;
+    File img5;
     File bafile_file;
 
     String spinnerIdTipeAsset;
@@ -334,6 +348,26 @@ public class UpdateFotoQrAsetActivity extends AppCompatActivity {
                     }
             );
 
+    ActivityResultLauncher<Intent> activityCaptureFoto5 =
+            registerForActivityResult(
+                    new ActivityResultContracts.StartActivityForResult(),
+                    new ActivityResultCallback<ActivityResult>() {
+                        @Override
+                        public void onActivityResult(ActivityResult activityResult) {
+                            int resultCode = activityResult.getResultCode();
+                            if (resultCode== Activity.RESULT_OK){
+                                img5 = utils.savePictureResult(
+                                        UpdateFotoQrAsetActivity.this, photoname5, fotoimg5, true
+                                );
+                                setExifLocation(img5,4);
+                            } else if (resultCode == Activity.RESULT_CANCELED){
+                                android.widget.Toast.makeText(UpdateFotoQrAsetActivity.this, "Cancelled", Toast.LENGTH_SHORT).show();
+                            }
+
+                        }
+                    }
+            );
+
     ActivityResultLauncher<Intent> activityCaptureFotoAsetQr =
             registerForActivityResult(
                     new ActivityResultContracts.StartActivityForResult(),
@@ -413,21 +447,32 @@ public class UpdateFotoQrAsetActivity extends AppCompatActivity {
         inpHGU = findViewById(R.id.inpHGU);
         inpKetReject = findViewById(R.id.inpKetReject);
         tvKetReject = findViewById(R.id.tvKetReject);
+        inpPopTotalSaatIni = findViewById(R.id.inpPopTotalIni);
+        inpPopTotalStandar = findViewById(R.id.inpPopTotalStd);
+        inpPopHektarSaatIni = findViewById(R.id.inpPopHektarIni);
+        inpPopHektarStandar = findViewById(R.id.inpPopHektarStd);
+        tvPopTotalSaatIni = findViewById(R.id.popTotalIni);
+        tvPopTotalStandar = findViewById(R.id.popTotalStd);
+        tvPopHektarSaatIni = findViewById(R.id.popHektarIni);
+        tvPopHektarStandar = findViewById(R.id.popHektarStd);
 
         foto1rl = findViewById(R.id.foto1);
         foto2rl = findViewById(R.id.foto2);
         foto3rl = findViewById(R.id.foto3);
         foto4rl = findViewById(R.id.foto4);
+        foto5rl = findViewById(R.id.foto5);
 
         map1 = findViewById(R.id.map1);
         map2 = findViewById(R.id.map2);
         map3 = findViewById(R.id.map3);
         map4 = findViewById(R.id.map4);
+        map5 = findViewById(R.id.map5);
 
         fotoimg1 = findViewById(R.id.fotoimg1);
         fotoimg2 = findViewById(R.id.fotoimg2);
         fotoimg3 = findViewById(R.id.fotoimg3);
         fotoimg4 = findViewById(R.id.fotoimg4);
+        fotoimg5 = findViewById(R.id.fotoimg5);
         inpBtnMap = findViewById(R.id.inpBtnMap);
 //        btnSubmit = findViewById(R.id.btnSubmit);
 
@@ -571,6 +616,17 @@ public class UpdateFotoQrAsetActivity extends AppCompatActivity {
             }
         });
 
+        map5.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getLastLocation(UpdateFotoQrAsetActivity.this,getApplicationContext());
+                Log.d("asetapix",String.valueOf(latitudeValue) + " " + String.valueOf(longitudeValue));
+                Intent intent = new Intent(android.content.Intent.ACTION_VIEW,
+                        Uri.parse(geotag5));
+                startActivity(intent);
+            }
+        });
+
         spinnerSubUnit.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -685,6 +741,14 @@ public class UpdateFotoQrAsetActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 captureFotoQcLoses(photoname4,activityCaptureFoto4);
+
+            }
+        });
+
+        foto5rl.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                captureFotoQcLoses(photoname5,activityCaptureFoto5);
 
             }
         });
@@ -954,6 +1018,10 @@ public class UpdateFotoQrAsetActivity extends AppCompatActivity {
                              inpPersenKondisi.setText(String.valueOf(response.body().getData().getPersenKondisi()));
                              inpJumlahPohon.setText(String.valueOf(response.body().getData().getJumlahPohon()));
                              inpHGU.setText(String.valueOf(response.body().getData().getHgu()));
+                             inpPopTotalSaatIni.setText(String.valueOf(response.body().getData().getPopTotalIni()));
+                             inpPopTotalStandar.setText(String.valueOf(response.body().getData().getPopTotalStd()));
+                             inpPopHektarSaatIni.setText(String.valueOf(response.body().getData().getPopHektarIni()));
+                             inpPopHektarStandar.setText(String.valueOf(response.body().getData().getPopHektarStd()));
                              String ket_reject = response.body().getData().getKetReject();
                              if (ket_reject != null){
                                  inpKetReject.setVisibility(View.VISIBLE);
@@ -968,6 +1036,7 @@ public class UpdateFotoQrAsetActivity extends AppCompatActivity {
                              String url2 = AsemApp.BASE_URL_ASSET+response.body().getData().getFotoAset2();
                              String url3 = AsemApp.BASE_URL_ASSET+response.body().getData().getFotoAset3();
                              String url4 = AsemApp.BASE_URL_ASSET+response.body().getData().getFotoAset4();
+                             String url5 = AsemApp.BASE_URL_ASSET+response.body().getData().getFotoAset5();
 
                              if (response.body().getData().getFotoAset1() == null ){
                                  map1.setEnabled(false);
@@ -1005,6 +1074,15 @@ public class UpdateFotoQrAsetActivity extends AppCompatActivity {
                                  Picasso.get().load(url4).resize(200,200).centerCrop().into(fotoimg4);
                              }
 
+                             if (response.body().getData().getFotoAset4() == null ){
+                                 map5.setEnabled(false);
+                             } else {
+                                 map5.setEnabled(true);
+                                 fotoimg5.getLayoutParams().width = 200;
+                                 fotoimg5.getLayoutParams().height = 200;
+                                 Picasso.get().load(url4).resize(200,200).centerCrop().into(fotoimg5);
+                             }
+
                              if (response.body().getData().getFotoAsetQr()!=null ){
                                  String url =  AsemApp.BASE_URL_ASSET + response.body().getData().getFotoAsetQr();
                                  Log.d("amanat-url",url);
@@ -1018,6 +1096,7 @@ public class UpdateFotoQrAsetActivity extends AppCompatActivity {
                              geotag2 = response.body().getData().getGeoTag2();
                              geotag3 = response.body().getData().getGeoTag3();
                              geotag4 = response.body().getData().getGeoTag4();
+                             geotag5 = response.body().getData().getGeoTag5();
 
 
 //                set selection spinners
@@ -1356,6 +1435,9 @@ public class UpdateFotoQrAsetActivity extends AppCompatActivity {
                 } else if (list == 4) {
 
                     geotag4 = url;
+                }else if (list == 5) {
+
+                    geotag5 = url;
                 }
 
             }else if("kayu".equals(String.valueOf(spinnerJenisAset.getSelectedItem()))) {
@@ -1431,6 +1513,17 @@ public class UpdateFotoQrAsetActivity extends AppCompatActivity {
             inpPersenKondisi.setVisibility(View.GONE);
             tvPersenKondisi.setVisibility(View.GONE);
 
+            foto5rl.setVisibility(View.VISIBLE);
+
+            tvPopTotalSaatIni.setVisibility(View.VISIBLE);
+            tvPopTotalStandar.setVisibility(View.VISIBLE);
+            tvPopHektarSaatIni.setVisibility(View.VISIBLE);
+            tvPopHektarStandar.setVisibility(View.VISIBLE);
+            inpPopTotalSaatIni.setVisibility(View.VISIBLE);
+            inpPopTotalStandar.setVisibility(View.VISIBLE);
+            inpPopHektarSaatIni.setVisibility(View.VISIBLE);
+            inpPopHektarStandar.setVisibility(View.VISIBLE);
+
         }
 
         else if ("tanaman".equals(String.valueOf(spinnerJenisAset.getSelectedItem()))  && "rusak".equals(String.valueOf(spinnerAsetKondisi.getSelectedItem())) ) {
@@ -1456,6 +1549,17 @@ public class UpdateFotoQrAsetActivity extends AppCompatActivity {
 
             inpPersenKondisi.setVisibility(View.GONE);
             tvPersenKondisi.setVisibility(View.GONE);
+
+            foto5rl.setVisibility(View.VISIBLE);
+
+            tvPopTotalSaatIni.setVisibility(View.VISIBLE);
+            tvPopTotalStandar.setVisibility(View.VISIBLE);
+            tvPopHektarSaatIni.setVisibility(View.VISIBLE);
+            tvPopHektarStandar.setVisibility(View.VISIBLE);
+            inpPopTotalSaatIni.setVisibility(View.VISIBLE);
+            inpPopTotalStandar.setVisibility(View.VISIBLE);
+            inpPopHektarSaatIni.setVisibility(View.VISIBLE);
+            inpPopHektarStandar.setVisibility(View.VISIBLE);
 
         }
 
@@ -1483,6 +1587,17 @@ public class UpdateFotoQrAsetActivity extends AppCompatActivity {
 
             inpPersenKondisi.setVisibility(View.GONE);
             tvPersenKondisi.setVisibility(View.GONE);
+
+            foto5rl.setVisibility(View.VISIBLE);
+
+            tvPopTotalSaatIni.setVisibility(View.VISIBLE);
+            tvPopTotalStandar.setVisibility(View.VISIBLE);
+            tvPopHektarSaatIni.setVisibility(View.VISIBLE);
+            tvPopHektarStandar.setVisibility(View.VISIBLE);
+            inpPopTotalSaatIni.setVisibility(View.VISIBLE);
+            inpPopTotalStandar.setVisibility(View.VISIBLE);
+            inpPopHektarSaatIni.setVisibility(View.VISIBLE);
+            inpPopHektarStandar.setVisibility(View.VISIBLE);
         }
 
         else if ("kayu".equals(String.valueOf(spinnerJenisAset.getSelectedItem()))  && "normal".equals(String.valueOf(spinnerAsetKondisi.getSelectedItem())) ) {
@@ -1507,6 +1622,17 @@ public class UpdateFotoQrAsetActivity extends AppCompatActivity {
 
             inpPersenKondisi.setVisibility(View.GONE);
             tvPersenKondisi.setVisibility(View.GONE);
+
+            foto5rl.setVisibility(View.GONE);
+
+            tvPopTotalSaatIni.setVisibility(View.GONE);
+            tvPopTotalStandar.setVisibility(View.GONE);
+            tvPopHektarSaatIni.setVisibility(View.GONE);
+            tvPopHektarStandar.setVisibility(View.GONE);
+            inpPopTotalSaatIni.setVisibility(View.GONE);
+            inpPopTotalStandar.setVisibility(View.GONE);
+            inpPopHektarSaatIni.setVisibility(View.GONE);
+            inpPopHektarStandar.setVisibility(View.GONE);
 
         }
 
@@ -1535,6 +1661,17 @@ public class UpdateFotoQrAsetActivity extends AppCompatActivity {
             inpPersenKondisi.setVisibility(View.GONE);
             tvPersenKondisi.setVisibility(View.GONE);
 
+            foto5rl.setVisibility(View.GONE);
+
+            tvPopTotalSaatIni.setVisibility(View.GONE);
+            tvPopTotalStandar.setVisibility(View.GONE);
+            tvPopHektarSaatIni.setVisibility(View.GONE);
+            tvPopHektarStandar.setVisibility(View.GONE);
+            inpPopTotalSaatIni.setVisibility(View.GONE);
+            inpPopTotalStandar.setVisibility(View.GONE);
+            inpPopHektarSaatIni.setVisibility(View.GONE);
+            inpPopHektarStandar.setVisibility(View.GONE);
+
         }
 
         else if ("kayu".equals(String.valueOf(spinnerJenisAset.getSelectedItem())) && "hilang".equals(String.valueOf(spinnerAsetKondisi.getSelectedItem()))) {
@@ -1561,6 +1698,17 @@ public class UpdateFotoQrAsetActivity extends AppCompatActivity {
             inpPersenKondisi.setVisibility(View.GONE);
             tvPersenKondisi.setVisibility(View.GONE);
 
+            foto5rl.setVisibility(View.GONE);
+
+            tvPopTotalSaatIni.setVisibility(View.GONE);
+            tvPopTotalStandar.setVisibility(View.GONE);
+            tvPopHektarSaatIni.setVisibility(View.GONE);
+            tvPopHektarStandar.setVisibility(View.GONE);
+            inpPopTotalSaatIni.setVisibility(View.GONE);
+            inpPopTotalStandar.setVisibility(View.GONE);
+            inpPopHektarSaatIni.setVisibility(View.GONE);
+            inpPopHektarStandar.setVisibility(View.GONE);
+
         }
 
         else if ("non tanaman".equals(String.valueOf(spinnerJenisAset.getSelectedItem())) && "normal".equals(String.valueOf(spinnerAsetKondisi.getSelectedItem()))) {
@@ -1585,6 +1733,17 @@ public class UpdateFotoQrAsetActivity extends AppCompatActivity {
 
             inpPersenKondisi.setVisibility(View.VISIBLE);
             tvPersenKondisi.setVisibility(View.VISIBLE);
+
+            foto5rl.setVisibility(View.GONE);
+
+            tvPopTotalSaatIni.setVisibility(View.GONE);
+            tvPopTotalStandar.setVisibility(View.GONE);
+            tvPopHektarSaatIni.setVisibility(View.GONE);
+            tvPopHektarStandar.setVisibility(View.GONE);
+            inpPopTotalSaatIni.setVisibility(View.GONE);
+            inpPopTotalStandar.setVisibility(View.GONE);
+            inpPopHektarSaatIni.setVisibility(View.GONE);
+            inpPopHektarStandar.setVisibility(View.GONE);
         }
 
         else if ("non tanaman".equals(String.valueOf(spinnerJenisAset.getSelectedItem())) &&"rusak".equals(String.valueOf(spinnerAsetKondisi.getSelectedItem()))) {
@@ -1607,6 +1766,17 @@ public class UpdateFotoQrAsetActivity extends AppCompatActivity {
 
             inpPersenKondisi.setVisibility(View.VISIBLE);
             tvPersenKondisi.setVisibility(View.VISIBLE);
+
+            foto5rl.setVisibility(View.GONE);
+
+            tvPopTotalSaatIni.setVisibility(View.GONE);
+            tvPopTotalStandar.setVisibility(View.GONE);
+            tvPopHektarSaatIni.setVisibility(View.GONE);
+            tvPopHektarStandar.setVisibility(View.GONE);
+            inpPopTotalSaatIni.setVisibility(View.GONE);
+            inpPopTotalStandar.setVisibility(View.GONE);
+            inpPopHektarSaatIni.setVisibility(View.GONE);
+            inpPopHektarStandar.setVisibility(View.GONE);
 
         }
 
@@ -1634,6 +1804,17 @@ public class UpdateFotoQrAsetActivity extends AppCompatActivity {
             inpPersenKondisi.setVisibility(View.VISIBLE);
             tvPersenKondisi.setVisibility(View.VISIBLE);
 
+            foto5rl.setVisibility(View.GONE);
+
+            tvPopTotalSaatIni.setVisibility(View.GONE);
+            tvPopTotalStandar.setVisibility(View.GONE);
+            tvPopHektarSaatIni.setVisibility(View.GONE);
+            tvPopHektarStandar.setVisibility(View.GONE);
+            inpPopTotalSaatIni.setVisibility(View.GONE);
+            inpPopTotalStandar.setVisibility(View.GONE);
+            inpPopHektarSaatIni.setVisibility(View.GONE);
+            inpPopHektarStandar.setVisibility(View.GONE);
+
         } else {
             listBtnMap.setVisibility(View.GONE);
             inpJumlahPohon.setVisibility(View.GONE);
@@ -1651,6 +1832,17 @@ public class UpdateFotoQrAsetActivity extends AppCompatActivity {
 
             inpPersenKondisi.setVisibility(View.GONE);
             tvPersenKondisi.setVisibility(View.GONE);
+
+            foto5rl.setVisibility(View.GONE);
+
+            tvPopTotalSaatIni.setVisibility(View.GONE);
+            tvPopTotalStandar.setVisibility(View.GONE);
+            tvPopHektarSaatIni.setVisibility(View.GONE);
+            tvPopHektarStandar.setVisibility(View.GONE);
+            inpPopTotalSaatIni.setVisibility(View.GONE);
+            inpPopTotalStandar.setVisibility(View.GONE);
+            inpPopHektarSaatIni.setVisibility(View.GONE);
+            inpPopHektarStandar.setVisibility(View.GONE);
         }
     }
     public void editAset(){
@@ -1707,6 +1899,7 @@ public class UpdateFotoQrAsetActivity extends AppCompatActivity {
             RequestBody requestGeoTag2 = RequestBody.create(MediaType.parse("text/plain"),String.valueOf(geotag2));
             RequestBody requestGeoTag3 = RequestBody.create(MediaType.parse("text/plain"),String.valueOf(geotag3));
             RequestBody requestGeoTag4 = RequestBody.create(MediaType.parse("text/plain"),String.valueOf(geotag4));
+            RequestBody requestGeoTag5 = RequestBody.create(MediaType.parse("text/plain"),String.valueOf(geotag5));
 
             RequestBody requestLuasAset = RequestBody.create(MediaType.parse("text/plain"), luas_aset);
             RequestBody requestNilaiAsetSAP = RequestBody.create(MediaType.parse("text/plain"), nilai_aset);
@@ -1716,6 +1909,11 @@ public class UpdateFotoQrAsetActivity extends AppCompatActivity {
             RequestBody requestNilaiResidu = RequestBody.create(MediaType.parse("text/plain"), nilai_residu);
             RequestBody requestKeterangan = RequestBody.create(MediaType.parse("text/plain"), keterangan);
             RequestBody requestSubUnit = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(spinnerIdSubUnit));
+            RequestBody requestPopulasiTotalSaatIni = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(Double.parseDouble(inpPopTotalSaatIni.getText().toString().trim())));
+            RequestBody requestPopulasiTotalStandar = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(Double.parseDouble(inpPopTotalStandar.getText().toString().trim())));
+            RequestBody requestPopulasiHektarSaatIni = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(Double.parseDouble(inpPopHektarSaatIni.getText().toString().trim())));
+            RequestBody requestPopulasiHektarStandar = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(Double.parseDouble(inpPopHektarStandar.getText().toString().trim())));
+
             int afdelingId = (int) spinnerAfdeling.getSelectedItemId();
             RequestBody requestAfdeling = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(0));
             if (afdelingId != 0){
@@ -1749,6 +1947,11 @@ public class UpdateFotoQrAsetActivity extends AppCompatActivity {
             builder.addPart(MultipartBody.Part.createFormData("afdeling_id",null,requestAfdeling));
             builder.addPart(MultipartBody.Part.createFormData("unit_id",null,requestUnit));
             builder.addPart(MultipartBody.Part.createFormData("hgu",null,requestHGU));
+            builder.addPart(MultipartBody.Part.createFormData("pop_total_ini", null, requestPopulasiTotalSaatIni));
+            builder.addPart(MultipartBody.Part.createFormData("pop_total_std", null, requestPopulasiTotalStandar));
+            builder.addPart(MultipartBody.Part.createFormData("pop_hektar_ini", null, requestPopulasiHektarSaatIni));
+            builder.addPart(MultipartBody.Part.createFormData("pop_hektar_std", null, requestPopulasiHektarStandar));
+
 
             if (bafile_file != null){
                 RequestBody requestBaFile = RequestBody.create(MediaType.parse("multipart/form-file"), bafile_file);
@@ -1777,6 +1980,11 @@ public class UpdateFotoQrAsetActivity extends AppCompatActivity {
             if (img4 != null) {
                 builder.addPart(MultipartBody.Part.createFormData("foto_aset4",img4.getName(),RequestBody.create(MediaType.parse("image/*"),img4)));
                 builder.addPart(MultipartBody.Part.createFormData("geo_tag4",null,requestGeoTag4));
+            }
+
+            if (img5 != null) {
+                builder.addPart(MultipartBody.Part.createFormData("foto_aset5",img5.getName(),RequestBody.create(MediaType.parse("image/*"),img5)));
+                builder.addPart(MultipartBody.Part.createFormData("geo_tag5",null,requestGeoTag5));
             }
 
             MultipartBody multipartBody = builder

@@ -165,6 +165,54 @@ public class Data2 {
         this.alat_pengangkutan = alat_pengangkutan;
     }
 
+    @SerializedName("pop_total_ini")
+    @Expose
+    private Double popTotalIni;
+
+    @SerializedName("pop_total_std")
+    @Expose
+    private Double popTotalStd;
+
+    @SerializedName("pop_hektar_ini")
+    @Expose
+    private Double popHektarIni;
+
+    @SerializedName("pop_hektar_std")
+    @Expose
+    private Double popHektarStd;
+
+    public Double getPopTotalIni() {
+        return popTotalIni;
+    }
+
+    public void setPopTotalIni(Double popTotalIni) {
+        this.popTotalIni = popTotalIni;
+    }
+
+    public Double getPopTotalStd() {
+        return popTotalStd;
+    }
+
+    public void setPopTotalStd(Double popTotalStd) {
+        this.popTotalStd = popTotalStd;
+    }
+
+    public Double getPopHektarIni() {
+        return popHektarIni;
+    }
+
+    public void setPopHektarIni(Double popHektarIni) {
+        this.popHektarIni = popHektarIni;
+    }
+
+    public Double getPopHektarStd() {
+        return popHektarStd;
+    }
+
+    public void setPopHektarStd(Double popHektarStd) {
+        this.popHektarStd = popHektarStd;
+    }
+
     public String getHgu() {
         return hgu;
     }

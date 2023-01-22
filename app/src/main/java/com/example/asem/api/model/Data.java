@@ -54,6 +54,9 @@ public class Data {
     @SerializedName("foto_aset4")
     @Expose
     private String fotoAset4;
+    @SerializedName("foto_aset5")
+    @Expose
+    private String fotoAset5;
     @SerializedName("geo_tag1")
     @Expose
     private String geoTag1;
@@ -66,6 +69,9 @@ public class Data {
     @SerializedName("geo_tag4")
     @Expose
     private String geoTag4;
+    @SerializedName("geo_tag5")
+    @Expose
+    private String geoTag5;
     @SerializedName("aset_luas")
     @Expose
     private Double asetLuas;
@@ -137,6 +143,53 @@ public class Data {
     @Expose
     private String ketReject;
 
+    @SerializedName("pop_total_ini")
+    @Expose
+    private Double popTotalIni;
+
+    @SerializedName("pop_total_std")
+    @Expose
+    private Double popTotalStd;
+
+    @SerializedName("pop_hektar_ini")
+    @Expose
+    private Double popHektarIni;
+
+    @SerializedName("pop_hektar_std")
+    @Expose
+    private Double popHektarStd;
+
+    public Double getPopTotalIni() {
+        return popTotalIni;
+    }
+
+    public void setPopTotalIni(Double popTotalIni) {
+        this.popTotalIni = popTotalIni;
+    }
+
+    public Double getPopTotalStd() {
+        return popTotalStd;
+    }
+
+    public void setPopTotalStd(Double popTotalStd) {
+        this.popTotalStd = popTotalStd;
+    }
+
+    public Double getPopHektarIni() {
+        return popHektarIni;
+    }
+
+    public void setPopHektarIni(Double popHektarIni) {
+        this.popHektarIni = popHektarIni;
+    }
+
+    public Double getPopHektarStd() {
+        return popHektarStd;
+    }
+
+    public void setPopHektarStd(Double popHektarStd) {
+        this.popHektarStd = popHektarStd;
+    }
 
     @SerializedName("aset_foto_qr_status")
     @Expose
@@ -316,6 +369,14 @@ public class Data {
         this.fotoAset4 = fotoAset4;
     }
 
+    public String getFotoAset5() {
+        return fotoAset5;
+    }
+
+    public void setFotoAset5(String fotoAset5) {
+        this.fotoAset5 = fotoAset5;
+    }
+
     public String getGeoTag1() {
         return geoTag1;
     }
@@ -346,6 +407,14 @@ public class Data {
 
     public void setGeoTag4(String geoTag4) {
         this.geoTag4 = geoTag4;
+    }
+
+    public String getGeoTag5() {
+        return geoTag5;
+    }
+
+    public void setGeoTag5(String geoTag5) {
+        this.geoTag5 = geoTag5;
     }
 
     public Double getAsetLuas() {
