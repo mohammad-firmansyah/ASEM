@@ -1017,7 +1017,7 @@ public class UpdateAsetActivity extends AppCompatActivity {
                     map5.setEnabled(true);
                     fotoimg5.getLayoutParams().width = 200;
                     fotoimg5.getLayoutParams().height = 200;
-                    Picasso.get().load(url4).resize(200,200).centerCrop().into(fotoimg5);
+                    Picasso.get().load(url5).resize(200,200).centerCrop().into(fotoimg5);
                 }
 
 
@@ -1632,27 +1632,27 @@ public class UpdateAsetActivity extends AppCompatActivity {
     public void editAset(){
         dialog.show();
 
-        if ("non tanaman".equals(String.valueOf(spinnerJenisAset.getSelectedItem()))){
-            if ("normal".equals(String.valueOf(spinnerAsetKondisi.getSelectedItem()))){
-                if (img1 == null || img2 == null || img3 == null || img4 == null ){
-                    Toast.makeText(getApplicationContext(), "Foto Wajib Diisi Lengkap!", Toast.LENGTH_SHORT).show();
-
-                    dialog.dismiss();
-                    return;
-                }
-            }
-        }
-
-        if ("non tanaman".equals(String.valueOf(spinnerJenisAset.getSelectedItem()))){
-            if ( "rusak".equals (String.valueOf(spinnerAsetKondisi.getSelectedItem()))){
-                if (img1 == null || img2 == null || img3 == null || img4 == null ){
-                    Toast.makeText(getApplicationContext(), "Foto Wajib Diisi Lengkap!", Toast.LENGTH_SHORT).show();
-
-                    dialog.dismiss();
-                    return;
-                }
-            }
-        }
+//        if ("non tanaman".equals(String.valueOf(spinnerJenisAset.getSelectedItem()))){
+//            if ("normal".equals(String.valueOf(spinnerAsetKondisi.getSelectedItem()))){
+//                if (img1 == null || img2 == null || img3 == null || img4 == null ){
+//                    Toast.makeText(getApplicationContext(), "Foto Wajib Diisi Lengkap!", Toast.LENGTH_SHORT).show();
+//
+//                    dialog.dismiss();
+//                    return;
+//                }
+//            }
+//        }
+//
+//        if ("non tanaman".equals(String.valueOf(spinnerJenisAset.getSelectedItem()))){
+//            if ( "rusak".equals (String.valueOf(spinnerAsetKondisi.getSelectedItem()))){
+//                if (img1 == null || img2 == null || img3 == null || img4 == null ){
+//                    Toast.makeText(getApplicationContext(), "Foto Wajib Diisi Lengkap!", Toast.LENGTH_SHORT).show();
+//
+//                    dialog.dismiss();
+//                    return;
+//                }
+//            }
+//        }
 
         try{
 
