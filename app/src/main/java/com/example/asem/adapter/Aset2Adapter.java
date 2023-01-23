@@ -128,13 +128,8 @@ public class Aset2Adapter  extends RecyclerView.Adapter<Aset2Adapter.ViewHolder>
                 ya.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        AsetInterface asetInterface;
-                        Retrofit retrofit = new Retrofit.Builder()
-                                .baseUrl(AsemApp.BASE_URL_API)
-                                .addConverterFactory(GsonConverterFactory.create())
-                                .build();
 
-                        asetInterface = retrofit.create(AsetInterface.class);
+                        asetInterface = AsemApp.getApiClient().create(AsetInterface.class);
                         Call<DeleteModel> call = asetInterface.deleteReport(myPostData2.getAsetId());
 
                         call.enqueue(new Callback<DeleteModel>(){
