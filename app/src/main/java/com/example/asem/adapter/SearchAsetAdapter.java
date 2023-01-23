@@ -56,7 +56,7 @@ public class SearchAsetAdapter extends RecyclerView.Adapter<SearchAsetAdapter.Vi
     private static final String PREF_LOGIN = "LOGIN_PREF";
     private static final String TAG = "cekTAG";
 
-    Dialog customDialogBelumApprove, customDialogCekDataReject;
+    Dialog customDialogBelumApprove, customDialogCekDataReject, customDialogFotoBelumLengkap;
 
     public SearchAsetAdapter(List<Search> data, LonglistAsetActivity longlistAsetActivity) {
         this.dataSearch = data;
@@ -186,6 +186,10 @@ public class SearchAsetAdapter extends RecyclerView.Adapter<SearchAsetAdapter.Vi
                     initDialogBelomApprove();
                 } else if(statpos == 1 && mySearchData.getStatusReject()!=null){
                     initDataReject();
+                }else if (mySearchData.getAsetJenis().equals("tanaman") && (mySearchData.getFotoAset1() == null ||
+                        mySearchData.getFotoAset2() == null || mySearchData.getFotoAset3() == null ||
+                        mySearchData.getFotoAset4() == null || mySearchData.getFotoAset5() == null)){
+                    initDialogFotoBelomLengkap();
                 }else{
                     sharedPreferences = context.getSharedPreferences(PREF_LOGIN, MODE_PRIVATE);
                     String user_id = sharedPreferences.getString("user_id", "-");
@@ -300,6 +304,20 @@ public class SearchAsetAdapter extends RecyclerView.Adapter<SearchAsetAdapter.Vi
         }
 
 
+    }
+
+    void initDialogFotoBelomLengkap(){
+        customDialogFotoBelumLengkap = new Dialog(context, R.style.MyAlertDialogTheme);
+        customDialogFotoBelumLengkap.setContentView(R.layout.dialog_foto);
+        customDialogFotoBelumLengkap.setCanceledOnTouchOutside(false);
+        customDialogFotoBelumLengkap.getWindow().setBackgroundDrawable(new ColorDrawable(0));
+        customDialogFotoBelumLengkap.show();
+
+        Button btnTutup = customDialogFotoBelumLengkap.findViewById(R.id.btnTutup);
+        btnTutup.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) { customDialogFotoBelumLengkap.dismiss();}
+        });
     }
 
     void showDialogKirim(String customtext,Call<AsetModel2> call) {
