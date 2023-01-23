@@ -403,10 +403,11 @@ public class LonglistAsetActivity extends AppCompatActivity  { //implements Bott
         call.enqueue(new Callback<List<Search>>() {
                 @Override
                 public void onResponse(Call<List<Search>> call, Response<List<Search>> response) {
+                    dialog.dismiss();
                     if(!response.isSuccessful() && response.body() == null){
 //                    Toast.makeText(getApplicationContext(),String.valueOf(response.code()),Toast.LENGTH_SHORT).show();
                         Toast.makeText(getApplicationContext(), "Data Tidak Ditemukan", Toast.LENGTH_SHORT).show();
-                        dialog.dismiss();
+//                        dialog.dismiss();
                         return;
                     }
                     List<Search> dataS = response.body();
@@ -414,15 +415,16 @@ public class LonglistAsetActivity extends AppCompatActivity  { //implements Bott
                     rcAset2.setAdapter(adapter);
 //                    Log.d("ceksearch","bisa search :" +search);
 //                Toast.makeText(getApplicationContext(),"ini masuk kan", Toast.LENGTH_SHORT).show();
-                    adapter.notifyDataSetChanged();
-                    srlonglist.setRefreshing(false);
-
-                    dialog.dismiss();
+//                    adapter.notifyDataSetChanged();
+//                    srlonglist.setRefreshing(false);
+//
+//                    dialog.dismiss();
                 }
             public void onFailure(Call<List<Search>> call, Throwable t) {
-                Toast.makeText(getApplicationContext(),"Error :"+t.getMessage(),Toast.LENGTH_SHORT).show();
                 dialog.dismiss();
-                srlonglist.setRefreshing(false);
+                Toast.makeText(getApplicationContext(),"Error :"+t.getMessage(),Toast.LENGTH_LONG).show();
+                Log.d("search", "error message: "+t.getMessage());
+//                srlonglist.setRefreshing(false);
                 return;
             }
         });

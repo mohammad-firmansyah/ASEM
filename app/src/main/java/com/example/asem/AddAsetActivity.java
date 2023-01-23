@@ -1285,7 +1285,7 @@ public class AddAsetActivity extends AppCompatActivity {
         if ("tanaman".equals(String.valueOf(spinnerJenisAset.getSelectedItem())) && "normal".equals(String.valueOf(spinnerAsetKondisi.getSelectedItem()))) {
 //            listBtnMap.setVisibility(View.VISIBLE);
             inpJumlahPohon.setVisibility(View.GONE);
-            tvPohon.setVisibility(View.VISIBLE);
+            tvPohon.setVisibility(View.GONE);
 //            inpKomoditi.setVisibility(View.VISIBLE);
 
             spinnerLuasSatuan.setVisibility(View.GONE);
@@ -1323,7 +1323,7 @@ public class AddAsetActivity extends AppCompatActivity {
 //            listBtnMap.setVisibility(View.VISIBLE);
             tvBa.setVisibility(View.VISIBLE);
             inpJumlahPohon.setVisibility(View.GONE);
-            tvPohon.setVisibility(View.VISIBLE);
+            tvPohon.setVisibility(View.GONE);
             spinnerLuasSatuan.setVisibility(View.GONE);
 //            inpKomoditi.setVisibility(View.VISIBLE);
             inpNomorBAST.setVisibility(View.VISIBLE);
@@ -1363,7 +1363,7 @@ public class AddAsetActivity extends AppCompatActivity {
             btnFile.setVisibility(View.VISIBLE);
             tvBa.setVisibility(View.VISIBLE);
             inpJumlahPohon.setVisibility(View.GONE);
-            tvPohon.setVisibility(View.VISIBLE);
+            tvPohon.setVisibility(View.GONE);
 //            inpKomoditi.setVisibility(View.VISIBLE);
             spinnerLuasSatuan.setVisibility(View.GONE);
             inpNomorBAST.setVisibility(View.VISIBLE);
