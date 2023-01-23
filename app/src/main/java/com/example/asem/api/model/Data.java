@@ -159,6 +159,19 @@ public class Data {
     @Expose
     private Double popHektarStd;
 
+    @SerializedName("hgu")
+    @Expose
+    private String hgu;
+
+    @SerializedName("alat_pengangkutan")
+    @Expose
+    private String alat_pengangkutan;
+
+    @SerializedName("satuan_luas")
+    @Expose
+    private String satuan_luas;
+
+
     public Double getPopTotalIni() {
         return popTotalIni;
     }
@@ -195,17 +208,6 @@ public class Data {
     @Expose
     private String asetFotoQrStatus;
 
-    @SerializedName("hgu")
-    @Expose
-    private String hgu;
-
-    @SerializedName("alat_pengangkutan")
-    @Expose
-    private String alat_pengangkutan;
-
-    @SerializedName("satuan_luas")
-    @Expose
-    private String satuan_luas;
 
     public String getSatuan_luas() {
         return satuan_luas;

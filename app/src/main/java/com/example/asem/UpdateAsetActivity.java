@@ -17,6 +17,7 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.app.DownloadManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -37,6 +38,7 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.URLUtil;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -475,6 +477,12 @@ public class UpdateAsetActivity extends AppCompatActivity {
         inpBtnMap = findViewById(R.id.inpBtnMap);
         btnSubmit = findViewById(R.id.btnSubmit);
 
+        downloadBa.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                downloadBaFunc();
+            }
+        });
         inpNoSAP.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -922,12 +930,15 @@ public class UpdateAsetActivity extends AppCompatActivity {
 
                 try {
 
-                    if (aset.getSatuan_luas().equals("Ha")) {
-                        spinnerLuasSatuan.setSelection(0);
-                    } else if (aset.getSatuan_luas().equals("m2")) {
-                        spinnerLuasSatuan.setSelection(1);
-                    } else {
-                        spinnerLuasSatuan.setSelection(2);
+                    if (aset.getSatuan_luas() != null) {
+
+                        if (aset.getSatuan_luas().equals("Ha")) {
+                            spinnerLuasSatuan.setSelection(0);
+                        } else if (aset.getSatuan_luas().equals("m2")) {
+                            spinnerLuasSatuan.setSelection(1);
+                        } else {
+                            spinnerLuasSatuan.setSelection(2);
+                        }
                     }
 
                     if(aset.getAlat_pengangkutan() != null){
@@ -2013,6 +2024,21 @@ public class UpdateAsetActivity extends AppCompatActivity {
                 return;
             }
         });
+
+    }
+
+    public void downloadBaFunc(){
+
+        String title = URLUtil.guessFileName(AsemApp.BASE_URL_ASSET + "/" + urlBa,null,null);
+
+        DownloadManager.Request request = new DownloadManager.Request(Uri.parse( AsemApp.BASE_URL_ASSET + "/" + urlBa));
+        request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS,title);
+        request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
+        request.allowScanningByMediaScanner();
+        DownloadManager downloadManager = (DownloadManager)getSystemService(DOWNLOAD_SERVICE);
+        downloadManager.enqueue(request);
+
+        Toast.makeText(this, "Download Dimulai" , Toast.LENGTH_SHORT).show();
 
     }
 
