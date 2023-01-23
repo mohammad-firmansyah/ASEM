@@ -208,6 +208,7 @@
             android:textSize="14sp"
             android:textStyle="bold"
             android:id="@+id/tvHGU"
+            android:visibility="gone"
             />
 
 
