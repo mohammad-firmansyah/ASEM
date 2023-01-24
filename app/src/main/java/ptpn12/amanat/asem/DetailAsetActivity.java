@@ -352,31 +352,56 @@ public class DetailAsetActivity extends AppCompatActivity {
             }
         });
 
-        downloadQr.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (qrurl != null) {
-                    Call<ReportModel> call = asetInterface.downloadQr(id);
-                    call.enqueue(new Callback<ReportModel>() {
-                        @Override
-                        public void onResponse(Call<ReportModel> call, Response<ReportModel> response) {
-                            if (!response.isSuccessful()){
-                                Toast.makeText(getApplicationContext(),"download gagal "+String.valueOf(response.code()),Toast.LENGTH_LONG).show();
-                                return;
-                            }
+//        downloadQr.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                if (qrurl != null) {
+//                    Call<ReportModel> call = asetInterface.downloadQr(id);
+//                    call.enqueue(new Callback<ReportModel>() {
+//                        @Override
+//                        public void onResponse(Call<ReportModel> call, Response<ReportModel> response) {
+//                            if (!response.isSuccessful()){
+//                                Toast.makeText(getApplicationContext(),"download apa "+String.valueOf(response.code()),Toast.LENGTH_LONG).show();
+//                                return;
+//                            }
+//
+//                            downloadQrImage(AsemApp.BASE_URL_ASSET+"/qrcode.pdf");
+//
+//                        }
+//
+//                        @Override
+//                        public void onFailure(Call<ReportModel> call, Throwable t) {
+//                            Toast.makeText(getApplicationContext(),"download gagal "+t.getMessage(),Toast.LENGTH_LONG).show();
+//                            Log.d("qrgagal",t.getMessage());
+//                        }
+//                    });
+//                }
+//            }
+//        });
 
-                            downloadQrImage(AsemApp.BASE_URL_ASSET+"/qrcode.pdf");
+        try {
 
-                        }
 
-                        @Override
-                        public void onFailure(Call<ReportModel> call, Throwable t) {
-                            Toast.makeText(getApplicationContext(),"download gagal "+t.getMessage(),Toast.LENGTH_LONG).show();
-                        }
-                    });
+            downloadQr.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    DownloadManager.Request request = new DownloadManager.Request(Uri.parse("https://amanat.ptpn12.com/api/download-qr/" + aset.getAsetId()));
+//            String title = URLUtil.guessFileName(url,null,null);
+//            request.setTitle(title);
+//            request.setDescription("Sedang Mendownload Mohon Tunggu...");
+//            String cookie = CookieManager.getInstance().getCookie(url);
+//            request.addRequestHeader("cookie",cookie);
+                    request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, "qrcode.pdf");
+                    request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
+                    request.allowScanningByMediaScanner();
+                    DownloadManager downloadManager = (DownloadManager) getSystemService(DOWNLOAD_SERVICE);
+                    downloadManager.enqueue(request);
                 }
-            }
-        });
+            });
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+
         inpSimpanFotoQr.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -685,6 +710,9 @@ public class DetailAsetActivity extends AppCompatActivity {
     }
 
     private void downloadQrImage(String url) {
+
+        Log.d("qrgagal2",url);
+//        Log.d("qrgagal3",String.valueOf(request));
 
             DownloadManager.Request request = new DownloadManager.Request(Uri.parse(url));
 //            String title = URLUtil.guessFileName(url,null,null);
@@ -1013,6 +1041,7 @@ public class DetailAsetActivity extends AppCompatActivity {
             tvPersenKondisi.setVisibility(View.GONE);
 
             foto5rl.setVisibility(View.VISIBLE);
+            map5.setVisibility(View.VISIBLE);
 
             tvPopTotalSaatIni.setVisibility(View.VISIBLE);
             tvPopTotalStandar.setVisibility(View.VISIBLE);
@@ -1051,6 +1080,7 @@ public class DetailAsetActivity extends AppCompatActivity {
             tvPersenKondisi.setVisibility(View.GONE);
 
             foto5rl.setVisibility(View.VISIBLE);
+            map5.setVisibility(View.VISIBLE);
 
             tvPopTotalSaatIni.setVisibility(View.VISIBLE);
             tvPopTotalStandar.setVisibility(View.VISIBLE);
@@ -1088,6 +1118,7 @@ public class DetailAsetActivity extends AppCompatActivity {
             tvPersenKondisi.setVisibility(View.GONE);
 
             foto5rl.setVisibility(View.VISIBLE);
+            map5.setVisibility(View.VISIBLE);
 
             tvPopTotalSaatIni.setVisibility(View.VISIBLE);
             tvPopTotalStandar.setVisibility(View.VISIBLE);
@@ -1123,6 +1154,7 @@ public class DetailAsetActivity extends AppCompatActivity {
             tvPersenKondisi.setVisibility(View.GONE);
 
             foto5rl.setVisibility(View.GONE);
+            map5.setVisibility(View.GONE);
 
             tvPopTotalSaatIni.setVisibility(View.GONE);
             tvPopTotalStandar.setVisibility(View.GONE);
@@ -1161,6 +1193,7 @@ public class DetailAsetActivity extends AppCompatActivity {
             tvPersenKondisi.setVisibility(View.GONE);
 
             foto5rl.setVisibility(View.GONE);
+            map5.setVisibility(View.GONE);
 
             tvPopTotalSaatIni.setVisibility(View.GONE);
             tvPopTotalStandar.setVisibility(View.GONE);
@@ -1198,6 +1231,7 @@ public class DetailAsetActivity extends AppCompatActivity {
             tvPersenKondisi.setVisibility(View.GONE);
 
             foto5rl.setVisibility(View.GONE);
+            map5.setVisibility(View.GONE);
 
             tvPopTotalSaatIni.setVisibility(View.GONE);
             tvPopTotalStandar.setVisibility(View.GONE);
@@ -1234,6 +1268,7 @@ public class DetailAsetActivity extends AppCompatActivity {
             tvPersenKondisi.setVisibility(View.VISIBLE);
 
             foto5rl.setVisibility(View.GONE);
+            map5.setVisibility(View.GONE);
 
             tvPopTotalSaatIni.setVisibility(View.GONE);
             tvPopTotalStandar.setVisibility(View.GONE);
@@ -1267,6 +1302,7 @@ public class DetailAsetActivity extends AppCompatActivity {
             tvPersenKondisi.setVisibility(View.VISIBLE);
 
             foto5rl.setVisibility(View.GONE);
+            map5.setVisibility(View.GONE);
 
             tvPopTotalSaatIni.setVisibility(View.GONE);
             tvPopTotalStandar.setVisibility(View.GONE);
@@ -1304,6 +1340,7 @@ public class DetailAsetActivity extends AppCompatActivity {
             tvPersenKondisi.setVisibility(View.VISIBLE);
 
             foto5rl.setVisibility(View.GONE);
+            map5.setVisibility(View.GONE);
 
             tvPopTotalSaatIni.setVisibility(View.GONE);
             tvPopTotalStandar.setVisibility(View.GONE);
@@ -1333,6 +1370,7 @@ public class DetailAsetActivity extends AppCompatActivity {
             tvPersenKondisi.setVisibility(View.GONE);
 
             foto5rl.setVisibility(View.GONE);
+            map5.setVisibility(View.GONE);
 
             tvPopTotalSaatIni.setVisibility(View.GONE);
             tvPopTotalStandar.setVisibility(View.GONE);
