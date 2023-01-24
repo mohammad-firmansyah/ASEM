@@ -2187,7 +2187,7 @@ public class UpdateFotoQrAsetActivity extends AppCompatActivity {
                 adapterUnit.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 spinnerUnit.setAdapter(adapterUnit);
                 Integer unit_id = Integer.valueOf(sharedPreferences.getString("unit_id", "0"));
-                spinnerUnit.setSelection(unit_id-1);
+                spinnerUnit.setSelection(aset.getUnitId()-1);
 
 
                 // set adapter sub unit

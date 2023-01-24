@@ -1510,8 +1510,8 @@ public class DetailAsetActivity extends AppCompatActivity {
                             android.R.layout.simple_spinner_item, listSpinnerUnit);
                     adapterUnit.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                     spinnerUnit.setAdapter(adapterUnit);
-                    Integer unit_id = Integer.valueOf(sharedPreferences.getString("unit_id", "0"));
-                    spinnerUnit.setSelection(unit_id-1);
+//                    Integer unit_id = Integer.valueOf(sharedPreferences.getString("unit_id", "0"));
+                    spinnerUnit.setSelection(aset.getUnitId()-1);
 
                     // set adapter sub unit
 
