@@ -22,84 +22,84 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
-            android:name=".DetailAsetOfflineActivity"
+            android:name="ptpn12.amanat.asem.DetailAsetOfflineActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".AsetAddUpdateOfflineActivity"
+            android:name="ptpn12.amanat.asem.AsetAddUpdateOfflineActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".DetailImageActivity"
+            android:name="ptpn12.amanat.asem.DetailImageActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".UpdateFotoQrAsetActivity"
+            android:name="ptpn12.amanat.asem.UpdateFotoQrAsetActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".Home"
+            android:name="ptpn12.amanat.asem.Home"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".ProfilActivity"
+            android:name="ptpn12.amanat.asem.ProfilActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".ReportActivity"
+            android:name="ptpn12.amanat.asem.ReportActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".AddAsetActivity"
+            android:name="ptpn12.amanat.asem.AddAsetActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".UpdateAsetActivity"
+            android:name="ptpn12.amanat.asem.UpdateAsetActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".DetailAsetActivity"
+            android:name="ptpn12.amanat.asem.DetailAsetActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".LonglistAsetActivity"
+            android:name="ptpn12.amanat.asem.LonglistAsetActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="false" />
         </activity>
         <activity
-            android:name=".SplashScreen"
+            android:name="ptpn12.amanat.asem.SplashScreen"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -112,7 +112,7 @@
                 android:value="false" />
         </activity>
         <activity
-            android:name=".MainActivity"
+            android:name="ptpn12.amanat.asem.MainActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
