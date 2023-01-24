@@ -1847,27 +1847,27 @@ public class UpdateFotoQrAsetActivity extends AppCompatActivity {
     public void editAset(){
         dialog.show();
 
-        if ("non tanaman".equals(String.valueOf(spinnerJenisAset.getSelectedItem()))){
-            if ("normal".equals(String.valueOf(spinnerAsetKondisi.getSelectedItem()))){
-                if (img1 == null || img2 == null || img3 == null || img4 == null){
-                    Toast.makeText(getApplicationContext(), "Foto Wajib Diisi Lengkap!", Toast.LENGTH_SHORT).show();
-
-                    dialog.dismiss();
-                    return;
-                }
-            }
-        }
-
-        if ("non tanaman".equals(String.valueOf(spinnerJenisAset.getSelectedItem()))){
-            if ( "rusak".equals (String.valueOf(spinnerAsetKondisi.getSelectedItem()))){
-                if (img1 == null || img2 == null || img3 == null || img4 == null){
-                    Toast.makeText(getApplicationContext(), "Foto Wajib Diisi Lengkap!", Toast.LENGTH_SHORT).show();
-
-                    dialog.dismiss();
-                    return;
-                }
-            }
-        }
+//        if ("non tanaman".equals(String.valueOf(spinnerJenisAset.getSelectedItem()))){
+//            if ("normal".equals(String.valueOf(spinnerAsetKondisi.getSelectedItem()))){
+//                if (img1 == null || img2 == null || img3 == null || img4 == null){
+//                    Toast.makeText(getApplicationContext(), "Foto Wajib Diisi Lengkap!", Toast.LENGTH_SHORT).show();
+//
+//                    dialog.dismiss();
+//                    return;
+//                }
+//            }
+//        }
+//
+//        if ("non tanaman".equals(String.valueOf(spinnerJenisAset.getSelectedItem()))){
+//            if ( "rusak".equals (String.valueOf(spinnerAsetKondisi.getSelectedItem()))){
+//                if (img1 == null || img2 == null || img3 == null || img4 == null){
+//                    Toast.makeText(getApplicationContext(), "Foto Wajib Diisi Lengkap!", Toast.LENGTH_SHORT).show();
+//
+//                    dialog.dismiss();
+//                    return;
+//                }
+//            }
+//        }
 
         try{
 
@@ -1880,7 +1880,6 @@ public class UpdateFotoQrAsetActivity extends AppCompatActivity {
             String nomor_bast = inpNomorBAST.getText().toString().trim();
             String nilai_residu = String.valueOf(CurrencyToNumber(inpNilaiResidu.getText().toString().trim()));
             String keterangan = inpKeterangan.getText().toString().trim();
-            String jumlahPohon = inpJumlahPohon.getText().toString().trim();
             String asetId = String.valueOf(aset.getAsetId());
 
             MultipartBody.Part partBaFile = null;
@@ -1908,10 +1907,6 @@ public class UpdateFotoQrAsetActivity extends AppCompatActivity {
             RequestBody requestNilaiResidu = RequestBody.create(MediaType.parse("text/plain"), nilai_residu);
             RequestBody requestKeterangan = RequestBody.create(MediaType.parse("text/plain"), keterangan);
             RequestBody requestSubUnit = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(spinnerIdSubUnit));
-            RequestBody requestPopulasiTotalSaatIni = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(Double.parseDouble(inpPopTotalSaatIni.getText().toString().trim())));
-            RequestBody requestPopulasiTotalStandar = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(Double.parseDouble(inpPopTotalStandar.getText().toString().trim())));
-            RequestBody requestPopulasiHektarSaatIni = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(Double.parseDouble(inpPopHektarSaatIni.getText().toString().trim())));
-            RequestBody requestPopulasiHektarStandar = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(Double.parseDouble(inpPopHektarStandar.getText().toString().trim())));
 
             int afdelingId = (int) spinnerAfdeling.getSelectedItemId();
             RequestBody requestAfdeling = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(0));
@@ -1923,7 +1918,6 @@ public class UpdateFotoQrAsetActivity extends AppCompatActivity {
             }
             RequestBody requestUnit = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(Integer.parseInt(String.valueOf(spinnerUnit.getSelectedItemId())) +1));
             RequestBody requestHGU = RequestBody.create(MediaType.parse("text/plain"), inpHGU.getText().toString().trim());
-            RequestBody requestJumlahPohon = RequestBody.create(MediaType.parse("text/plain"), jumlahPohon);
 
             MultipartBody.Builder builder = new MultipartBody.Builder();
             builder.addPart(MultipartBody.Part.createFormData("aset_id",null,requestAsetId));
@@ -1942,16 +1936,22 @@ public class UpdateFotoQrAsetActivity extends AppCompatActivity {
 
             builder.addPart(MultipartBody.Part.createFormData("aset_sub_unit",null,requestSubUnit));
             builder.addPart(MultipartBody.Part.createFormData("nomor_bast",null,requestNomorBAST));
-            builder.addPart(MultipartBody.Part.createFormData("jumlah_pohon",null,requestJumlahPohon));
             builder.addPart(MultipartBody.Part.createFormData("afdeling_id",null,requestAfdeling));
             builder.addPart(MultipartBody.Part.createFormData("unit_id",null,requestUnit));
             builder.addPart(MultipartBody.Part.createFormData("hgu",null,requestHGU));
+
+
+            if (spinnerJenisAset.getSelectedItemId() == 0) {
+                RequestBody requestPopulasiTotalSaatIni = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(Double.parseDouble(inpPopTotalSaatIni.getText().toString().trim())));
+            RequestBody requestPopulasiTotalStandar = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(Double.parseDouble(inpPopTotalStandar.getText().toString().trim())));
+            RequestBody requestPopulasiHektarSaatIni = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(Double.parseDouble(inpPopHektarSaatIni.getText().toString().trim())));
+            RequestBody requestPopulasiHektarStandar = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(Double.parseDouble(inpPopHektarStandar.getText().toString().trim())));
+
             builder.addPart(MultipartBody.Part.createFormData("pop_total_ini", null, requestPopulasiTotalSaatIni));
             builder.addPart(MultipartBody.Part.createFormData("pop_total_std", null, requestPopulasiTotalStandar));
             builder.addPart(MultipartBody.Part.createFormData("pop_hektar_ini", null, requestPopulasiHektarSaatIni));
             builder.addPart(MultipartBody.Part.createFormData("pop_hektar_std", null, requestPopulasiHektarStandar));
-
-
+            }
             if (bafile_file != null){
                 RequestBody requestBaFile = RequestBody.create(MediaType.parse("multipart/form-file"), bafile_file);
                 partBaFile = MultipartBody.Part.createFormData("ba_file", bafile_file.getName(), requestBaFile);
@@ -2015,7 +2015,7 @@ public class UpdateFotoQrAsetActivity extends AppCompatActivity {
                     Log.d("asetapix",String.valueOf(call.request().body()));
                     Log.d("asetapix",String.valueOf(call.request().url()));
                     Log.d("asetapix",String.valueOf(response.code()));
-
+                    return;
                 }
 
                 @Override
@@ -2027,6 +2027,7 @@ public class UpdateFotoQrAsetActivity extends AppCompatActivity {
         }
         catch (Exception e ){
             Toast.makeText(getApplicationContext(),"gagal edit aset "+e.getMessage(),Toast.LENGTH_LONG).show();
+            Log.d("error-amant18",e.getMessage());
             e.printStackTrace();
         }
 
