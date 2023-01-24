@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@color/background_grey"
-    tools:context=".LonglistAsetActivity">
+    tools:context="ptpn12.amanat.asem.LonglistAsetActivity">
 
 
     <LinearLayout
@@ -152,7 +152,7 @@
         android:gravity="center"
         android:layout_below="@id/switchoff"
         android:layout_above="@+id/bottomnav"
-        tools:context=".MainActivity">
+        tools:context="ptpn12.amanat.asem.MainActivity">
 
         <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
             android:id="@+id/srlonglist"
@@ -162,7 +162,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            tools:context=".MainActivity"
+            tools:context="ptpn12.amanat.asem.MainActivity"
             android:orientation="vertical"
             android:id="@+id/asetGroup"
             >

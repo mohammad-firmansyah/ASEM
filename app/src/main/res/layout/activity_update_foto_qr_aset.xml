@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".UpdateFotoQrAsetActivity"
+    tools:context="ptpn12.amanat.asem.UpdateFotoQrAsetActivity"
     android:padding="18dp"
     android:background="@color/background_grey"
     >
@@ -273,7 +273,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
-                android:text="UPLOUD BA :"
+                android:text="UPLOAD BA :"
                 android:textColor="@color/main_grey"
                 android:textSize="14sp"
                 android:textStyle="bold" />

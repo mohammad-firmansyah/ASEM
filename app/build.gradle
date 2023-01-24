@@ -3,11 +3,11 @@ plugins {
 }
 
 android {
-    namespace 'com.example.asem'
+    namespace 'ptpn12.amanat.asem'
     compileSdk 32
 
     defaultConfig {
-        applicationId "com.example.asem"
+        applicationId "ptpn12.amanat.asem"
         minSdk 21
         targetSdk 32
         versionCode 1
