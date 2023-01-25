@@ -396,6 +396,8 @@ public class DetailAsetActivity extends AppCompatActivity {
                     request.allowScanningByMediaScanner();
                     DownloadManager downloadManager = (DownloadManager) getSystemService(DOWNLOAD_SERVICE);
                     downloadManager.enqueue(request);
+
+                    Toast.makeText(getApplicationContext(), "Download Dimulai" , Toast.LENGTH_SHORT).show();
                 }
             });
         } catch (Exception e){
