@@ -1295,6 +1295,7 @@ public class UpdateAsetActivity extends AppCompatActivity {
             tvPersenKondisi.setVisibility(View.GONE);
 
             foto5rl.setVisibility(View.VISIBLE);
+            map5.setVisibility(View.VISIBLE);
 
             tvPopTotalSaatIni.setVisibility(View.VISIBLE);
             tvPopTotalStandar.setVisibility(View.VISIBLE);
@@ -1334,6 +1335,7 @@ public class UpdateAsetActivity extends AppCompatActivity {
             tvPersenKondisi.setVisibility(View.GONE);
 
             foto5rl.setVisibility(View.VISIBLE);
+            map5.setVisibility(View.VISIBLE);
 
             tvPopTotalSaatIni.setVisibility(View.VISIBLE);
             tvPopTotalStandar.setVisibility(View.VISIBLE);
@@ -1373,6 +1375,7 @@ public class UpdateAsetActivity extends AppCompatActivity {
             tvPersenKondisi.setVisibility(View.GONE);
 
             foto5rl.setVisibility(View.VISIBLE);
+            map5.setVisibility(View.VISIBLE);
 
             tvPopTotalSaatIni.setVisibility(View.VISIBLE);
             tvPopTotalStandar.setVisibility(View.VISIBLE);
@@ -1409,6 +1412,7 @@ public class UpdateAsetActivity extends AppCompatActivity {
             tvPersenKondisi.setVisibility(View.GONE);
 
             foto5rl.setVisibility(View.GONE);
+            map5.setVisibility(View.GONE);
 
             tvPopTotalSaatIni.setVisibility(View.GONE);
             tvPopTotalStandar.setVisibility(View.GONE);
@@ -1448,6 +1452,7 @@ public class UpdateAsetActivity extends AppCompatActivity {
             tvPersenKondisi.setVisibility(View.GONE);
 
             foto5rl.setVisibility(View.GONE);
+            map5.setVisibility(View.GONE);
 
             tvPopTotalSaatIni.setVisibility(View.GONE);
             tvPopTotalStandar.setVisibility(View.GONE);
@@ -1486,6 +1491,7 @@ public class UpdateAsetActivity extends AppCompatActivity {
             tvPersenKondisi.setVisibility(View.GONE);
 
             foto5rl.setVisibility(View.GONE);
+            map5.setVisibility(View.GONE);
 
             tvPopTotalSaatIni.setVisibility(View.GONE);
             tvPopTotalStandar.setVisibility(View.GONE);
@@ -1524,6 +1530,7 @@ public class UpdateAsetActivity extends AppCompatActivity {
             tvPersenKondisi.setVisibility(View.VISIBLE);
 
             foto5rl.setVisibility(View.GONE);
+            map5.setVisibility(View.GONE);
 
             tvPopTotalSaatIni.setVisibility(View.GONE);
             tvPopTotalStandar.setVisibility(View.GONE);
@@ -1558,6 +1565,7 @@ public class UpdateAsetActivity extends AppCompatActivity {
             tvPersenKondisi.setVisibility(View.VISIBLE);
 
             foto5rl.setVisibility(View.GONE);
+            map5.setVisibility(View.GONE);
 
             tvPopTotalSaatIni.setVisibility(View.GONE);
             tvPopTotalStandar.setVisibility(View.GONE);
@@ -1595,6 +1603,7 @@ public class UpdateAsetActivity extends AppCompatActivity {
             tvPersenKondisi.setVisibility(View.VISIBLE);
 
             foto5rl.setVisibility(View.GONE);
+            map5.setVisibility(View.GONE);
 
             tvPopTotalSaatIni.setVisibility(View.GONE);
             tvPopTotalStandar.setVisibility(View.GONE);
@@ -1624,6 +1633,7 @@ public class UpdateAsetActivity extends AppCompatActivity {
             tvPersenKondisi.setVisibility(View.GONE);
 
             foto5rl.setVisibility(View.GONE);
+            map5.setVisibility(View.GONE);
 
             tvPopTotalSaatIni.setVisibility(View.GONE);
             tvPopTotalStandar.setVisibility(View.GONE);
