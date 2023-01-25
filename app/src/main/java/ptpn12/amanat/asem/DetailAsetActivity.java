@@ -30,7 +30,6 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import ptpn12.amanat.asem.R;
 
 import ptpn12.amanat.asem.api.AsetInterface;
 import ptpn12.amanat.asem.api.model.Afdelling;
@@ -48,6 +47,8 @@ import ptpn12.amanat.asem.api.model.Sap;
 import ptpn12.amanat.asem.api.model.SubUnit;
 import ptpn12.amanat.asem.api.model.Unit;
 import ptpn12.amanat.asem.utils.utils;
+
+import ptpn12.amanat.asem.*;
 import com.squareup.picasso.Picasso;
 
 import java.io.File;
@@ -379,13 +380,12 @@ public class DetailAsetActivity extends AppCompatActivity {
 //            }
 //        });
 
-        try {
 
 
             downloadQr.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    DownloadManager.Request request = new DownloadManager.Request(Uri.parse("https://amanat.ptpn12.com/api/download-qr/" + aset.getAsetId()));
+                    DownloadManager.Request request = new DownloadManager.Request(Uri.parse("https://amanat.ptpn12.com/api/download-qr/" + id));
 //            String title = URLUtil.guessFileName(url,null,null);
 //            request.setTitle(title);
 //            request.setDescription("Sedang Mendownload Mohon Tunggu...");
@@ -400,9 +400,6 @@ public class DetailAsetActivity extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(), "Download Dimulai" , Toast.LENGTH_SHORT).show();
                 }
             });
-        } catch (Exception e){
-            e.printStackTrace();
-        }
 
         inpSimpanFotoQr.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -922,7 +919,6 @@ public class DetailAsetActivity extends AppCompatActivity {
             if (urlBa != null ) {
                 tvUploudBA.setText(urlBa.substring(0,10)+"...");
             }
-
 
             geotag1 = aset.getGeoTag1();
 
