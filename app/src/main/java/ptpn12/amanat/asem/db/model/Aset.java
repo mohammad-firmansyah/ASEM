@@ -148,6 +148,72 @@ public class Aset implements Parcelable {
     @SerializedName("hgu")
     @Expose
     private String hgu;
+    @SerializedName("alat_pengangkutan")
+    @Expose
+    private String alat_pengangkutan;
+    @SerializedName("satuan_luas")
+    @Expose
+    private String satuan_luas;
+    @SerializedName("pop_total_ini")
+    @Expose
+    private String pop_total_ini;
+    @SerializedName("pop_total_std")
+    @Expose
+    private String pop_total_std;
+    @SerializedName("pop_hektar_ini")
+    @Expose
+    private String pop_hektar_ini;
+    @SerializedName("pop_hektar_std")
+    @Expose
+    private String pop_hektar_std;
+
+    public String getAlat_pengangkutan() {
+        return alat_pengangkutan;
+    }
+
+    public void setAlat_pengangkutan(String alat_pengangkutan) {
+        this.alat_pengangkutan = alat_pengangkutan;
+    }
+
+    public String getSatuan_luas() {
+        return satuan_luas;
+    }
+
+    public void setSatuan_luas(String satuan_luas) {
+        this.satuan_luas = satuan_luas;
+    }
+
+    public String getPop_total_ini() {
+        return pop_total_ini;
+    }
+
+    public void setPop_total_ini(String pop_total_ini) {
+        this.pop_total_ini = pop_total_ini;
+    }
+
+    public String getPop_total_std() {
+        return pop_total_std;
+    }
+
+    public void setPop_total_std(String pop_total_std) {
+        this.pop_total_std = pop_total_std;
+    }
+
+    public String getPop_hektar_ini() {
+        return pop_hektar_ini;
+    }
+
+    public void setPop_hektar_ini(String pop_hektar_ini) {
+        this.pop_hektar_ini = pop_hektar_ini;
+    }
+
+    public String getPop_hektar_std() {
+        return pop_hektar_std;
+    }
+
+    public void setPop_hektar_std(String pop_hektar_std) {
+        this.pop_hektar_std = pop_hektar_std;
+    }
 
     public String getBeritaAcara() {
         return beritaAcara;
@@ -483,7 +549,7 @@ public class Aset implements Parcelable {
         this.umurEkonomisInMonth = umurEkonomisInMonth;
     }
 
-    public Aset(Integer asetId, String asetName, String asetTipe, String asetJenis, String asetKondisi, String asetSubUnit, String asetKode, String nomorSap, String fotoAset1, String fotoAset2, String fotoAset3, String fotoAset4, String geoTag1, String geoTag2, String geoTag3, String geoTag4, Double asetLuas, String tglInput, String tglOleh, Long nilaiResidu, Long nilaiOleh, String nomorBast, String masaSusut, String keterangan, String fotoQr, String noInv, String fotoAsetQr, String statusPosisi, String unitId, String afdelingId, String userInputId, String createdAt, String updatedAt, Integer jumlahPohon, double persenKondisi, String statusReject, String ketReject, String asetFotoQrStatus,String hgu,String berita_acara) {
+    public Aset(Integer asetId, String asetName, String asetTipe, String asetJenis, String asetKondisi, String asetSubUnit, String asetKode, String nomorSap, String fotoAset1, String fotoAset2, String fotoAset3, String fotoAset4, String geoTag1, String geoTag2, String geoTag3, String geoTag4, Double asetLuas, String tglInput, String tglOleh, Long nilaiResidu, Long nilaiOleh, String nomorBast, String masaSusut, String keterangan, String fotoQr, String noInv, String fotoAsetQr, String statusPosisi, String unitId, String afdelingId, String userInputId, String createdAt, String updatedAt, Integer jumlahPohon, double persenKondisi, String statusReject, String ketReject, String asetFotoQrStatus,String hgu,String berita_acara,String alat_pengangkutan,String satuan_luas, String popTotalIni,String popTotalStd, String popHektarIni,String popHektarStd) {
         this.asetId = asetId;
         this.asetName = asetName;
         this.asetTipe = asetTipe;
@@ -526,6 +592,12 @@ public class Aset implements Parcelable {
         this.ketReject = ketReject;
         this.asetFotoQrStatus = asetFotoQrStatus;
         this.beritaAcara = berita_acara ;
+        this.alat_pengangkutan = alat_pengangkutan ;
+        this.satuan_luas = satuan_luas ;
+        this.pop_total_ini = popTotalIni ;
+        this.pop_total_std = popTotalStd ;
+        this.pop_hektar_ini = pop_hektar_ini ;
+        this.pop_hektar_std = pop_hektar_std ;
     }
 
     @Override

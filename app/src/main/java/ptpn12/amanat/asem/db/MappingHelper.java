@@ -62,7 +62,13 @@ public class MappingHelper {
             String statusreject = asetCursor.getString(asetCursor.getColumnIndexOrThrow(DatabaseContractAset.AsetColumns.STATUSREJECT));
             Double persenkondisi = asetCursor.getDouble(asetCursor.getColumnIndexOrThrow(String.valueOf(DatabaseContractAset.AsetColumns.PERSENKONDISI)));
             String beritaAcara = asetCursor.getString(asetCursor.getColumnIndexOrThrow(DatabaseContractAset.AsetColumns.BERITAACARA));
-            asetList.add(new Aset(asetid, asetname,asettipe,asetjenis,asetkondisi,asetsubunit,asetkode,nomorsap,fotoaset1,fotoaset2,fotoaset3,fotoaset4,geotag1,geotag2,geotag3,geotag4,asetluas,tglinput,tgloleh,nilairesidu,nilaioleh,nomorbast,masasusut,keterangan,fotoqr,noinv,fotoasetqr,statusposisi,unitid,afdelingid,userinputid,createdat,updatedat,jumlahpohon,persenkondisi,statusreject,ketreject,asetfotoqrstatus,hgu,beritaAcara));
+            String alat_pengangkutan = asetCursor.getString(asetCursor.getColumnIndexOrThrow(DatabaseContractAset.AsetColumns.ALATPENGANGKUTAN));
+            String satuan_luas = asetCursor.getString(asetCursor.getColumnIndexOrThrow(DatabaseContractAset.AsetColumns.SATUANLUAS));
+            String pop_total_ini = asetCursor.getString(asetCursor.getColumnIndexOrThrow(DatabaseContractAset.AsetColumns.POPTOTALINI));
+            String pop_total_std = asetCursor.getString(asetCursor.getColumnIndexOrThrow(DatabaseContractAset.AsetColumns.POPTOTALSTD));
+            String pop_hektar_ini = asetCursor.getString(asetCursor.getColumnIndexOrThrow(DatabaseContractAset.AsetColumns.POPHEKTARINI));
+            String pop_hektar_std = asetCursor.getString(asetCursor.getColumnIndexOrThrow(DatabaseContractAset.AsetColumns.POPHEKTARSTD));
+            asetList.add(new Aset(asetid, asetname,asettipe,asetjenis,asetkondisi,asetsubunit,asetkode,nomorsap,fotoaset1,fotoaset2,fotoaset3,fotoaset4,geotag1,geotag2,geotag3,geotag4,asetluas,tglinput,tgloleh,nilairesidu,nilaioleh,nomorbast,masasusut,keterangan,fotoqr,noinv,fotoasetqr,statusposisi,unitid,afdelingid,userinputid,createdat,updatedat,jumlahpohon,persenkondisi,statusreject,ketreject,asetfotoqrstatus,hgu,beritaAcara,alat_pengangkutan,satuan_luas,pop_total_ini,pop_total_std,pop_hektar_ini,pop_hektar_std));
         }
         return asetList;
     }
@@ -195,7 +201,13 @@ public class MappingHelper {
             String statusreject = asetCursor.getString(asetCursor.getColumnIndexOrThrow(DatabaseContractAset.AsetColumns.STATUSREJECT));
             Double persenkondisi = asetCursor.getDouble(asetCursor.getColumnIndexOrThrow(String.valueOf(DatabaseContractAset.AsetColumns.PERSENKONDISI)));
             String beritaAcara = asetCursor.getString(asetCursor.getColumnIndexOrThrow(String.valueOf(DatabaseContractAset.AsetColumns.BERITAACARA)));
-            asetList = new Aset(asetid, asetname,asettipe,asetjenis,asetkondisi,asetsubunit,asetkode,nomorsap,fotoaset1,fotoaset2,fotoaset3,fotoaset4,geotag1,geotag2,geotag3,geotag4,asetluas,tglinput,tgloleh,nilairesidu,nilaioleh,nomorbast,masasusut,keterangan,fotoqr,noinv,fotoasetqr,statusposisi,unitid,afdelingid,userinputid,createdat,updatedat,jumlahpohon,persenkondisi,statusreject,ketreject,asetfotoqrstatus,hgu,beritaAcara);
+            String alat_pengangkutan = asetCursor.getString(asetCursor.getColumnIndexOrThrow(DatabaseContractAset.AsetColumns.ALATPENGANGKUTAN));
+            String satuan_luas = asetCursor.getString(asetCursor.getColumnIndexOrThrow(DatabaseContractAset.AsetColumns.SATUANLUAS));
+            String pop_total_ini = asetCursor.getString(asetCursor.getColumnIndexOrThrow(DatabaseContractAset.AsetColumns.POPTOTALINI));
+            String pop_total_std = asetCursor.getString(asetCursor.getColumnIndexOrThrow(DatabaseContractAset.AsetColumns.POPTOTALSTD));
+            String pop_hektar_ini = asetCursor.getString(asetCursor.getColumnIndexOrThrow(DatabaseContractAset.AsetColumns.POPHEKTARINI));
+            String pop_hektar_std = asetCursor.getString(asetCursor.getColumnIndexOrThrow(DatabaseContractAset.AsetColumns.POPHEKTARSTD));
+            asetList = new Aset(asetid, asetname,asettipe,asetjenis,asetkondisi,asetsubunit,asetkode,nomorsap,fotoaset1,fotoaset2,fotoaset3,fotoaset4,geotag1,geotag2,geotag3,geotag4,asetluas,tglinput,tgloleh,nilairesidu,nilaioleh,nomorbast,masasusut,keterangan,fotoqr,noinv,fotoasetqr,statusposisi,unitid,afdelingid,userinputid,createdat,updatedat,jumlahpohon,persenkondisi,statusreject,ketreject,asetfotoqrstatus,hgu,beritaAcara,alat_pengangkutan,satuan_luas,pop_total_ini,pop_total_std,pop_hektar_ini,pop_hektar_std);
         }
         return asetList;
     }

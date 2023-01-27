@@ -49,12 +49,12 @@ public class DatabaseContractAset {
         static String PERSENKONDISI = "persen_kondisi";
         static String UMUREKONOMISINMONTH = "umur_ekonomis_in_month";
         static String BERITAACARA = "berita_acara";
-        private String ALATPENGANGKUTAN = "alat_pengangkutan";
-        private String SATUANLUAS = "satuan_luas";
-        private String POPTOTALINI = "pop_total_ini";
-        private String POPTOTALSTD = "pop_total_std";
-        private String POPHEKTARINI = "pop_hektar_ini";
-        private String POPHEKTARSTD = "pop_hektar_std";
+        static String ALATPENGANGKUTAN = "alat_pengangkutan";
+        static String SATUANLUAS = "satuan_luas";
+        static String POPTOTALINI = "pop_total_ini";
+        static String POPTOTALSTD = "pop_total_std";
+        static String POPHEKTARINI = "pop_hektar_ini";
+        static String POPHEKTARSTD = "pop_hektar_std";
 
 
     }
