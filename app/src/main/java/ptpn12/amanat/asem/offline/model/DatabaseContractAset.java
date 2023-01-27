@@ -1,9 +1,6 @@
-package ptpn12.amanat.asem.db;
+package ptpn12.amanat.asem.offline.model;
 
 import android.provider.BaseColumns;
-
-import com.google.gson.annotations.Expose;
-import com.google.gson.annotations.SerializedName;
 
 public class DatabaseContractAset {
     static String TABLE_NAME = "data_aset";

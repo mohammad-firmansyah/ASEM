@@ -1,23 +1,34 @@
-package ptpn12.amanat.asem.db;
+package ptpn12.amanat.asem.offline;
 
-import static ptpn12.amanat.asem.db.DatabaseHelper.SQL_CREATE_TABLE_AFDELING;
-import static ptpn12.amanat.asem.db.DatabaseHelper.SQL_CREATE_TABLE_ALAT_PENGANGKUTAN;
-import static ptpn12.amanat.asem.db.DatabaseHelper.SQL_CREATE_TABLE_ASET_JENIS;
-import static ptpn12.amanat.asem.db.DatabaseHelper.SQL_CREATE_TABLE_ASET_KODE;
-import static ptpn12.amanat.asem.db.DatabaseHelper.SQL_CREATE_TABLE_ASET_KONDISI;
-import static ptpn12.amanat.asem.db.DatabaseHelper.SQL_CREATE_TABLE_ASET_TIPE;
-import static ptpn12.amanat.asem.db.DatabaseHelper.SQL_CREATE_TABLE_HAK_AKSES;
-import static ptpn12.amanat.asem.db.DatabaseHelper.SQL_CREATE_TABLE_SAP;
-import static ptpn12.amanat.asem.db.DatabaseHelper.SQL_CREATE_TABLE_STATUS_POSISI;
-import static ptpn12.amanat.asem.db.DatabaseHelper.SQL_CREATE_TABLE_SUB_UNIT;
-import static ptpn12.amanat.asem.db.DatabaseHelper.SQL_CREATE_TABLE_UNIT;
-import static ptpn12.amanat.asem.db.DatabaseHelper.SQL_CREATE_TABLE_USERS;
+import static ptpn12.amanat.asem.offline.DatabaseHelper.SQL_CREATE_TABLE_AFDELING;
+import static ptpn12.amanat.asem.offline.DatabaseHelper.SQL_CREATE_TABLE_ALAT_PENGANGKUTAN;
+import static ptpn12.amanat.asem.offline.DatabaseHelper.SQL_CREATE_TABLE_ASET_JENIS;
+import static ptpn12.amanat.asem.offline.DatabaseHelper.SQL_CREATE_TABLE_ASET_KODE;
+import static ptpn12.amanat.asem.offline.DatabaseHelper.SQL_CREATE_TABLE_ASET_KONDISI;
+import static ptpn12.amanat.asem.offline.DatabaseHelper.SQL_CREATE_TABLE_ASET_TIPE;
+import static ptpn12.amanat.asem.offline.DatabaseHelper.SQL_CREATE_TABLE_HAK_AKSES;
+import static ptpn12.amanat.asem.offline.DatabaseHelper.SQL_CREATE_TABLE_SAP;
+import static ptpn12.amanat.asem.offline.DatabaseHelper.SQL_CREATE_TABLE_STATUS_POSISI;
+import static ptpn12.amanat.asem.offline.DatabaseHelper.SQL_CREATE_TABLE_SUB_UNIT;
+import static ptpn12.amanat.asem.offline.DatabaseHelper.SQL_CREATE_TABLE_UNIT;
+import static ptpn12.amanat.asem.offline.DatabaseHelper.SQL_CREATE_TABLE_USERS;
 
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
+
+import ptpn12.amanat.asem.offline.model.DatabaseContractAfdeling;
+import ptpn12.amanat.asem.offline.model.DatabaseContractAlatPengangkutan;
+import ptpn12.amanat.asem.offline.model.DatabaseContractAset;
+import ptpn12.amanat.asem.offline.model.DatabaseContractAsetJenis;
+import ptpn12.amanat.asem.offline.model.DatabaseContractAsetKode;
+import ptpn12.amanat.asem.offline.model.DatabaseContractAsetKondisi;
+import ptpn12.amanat.asem.offline.model.DatabaseContractAsetTipe;
+import ptpn12.amanat.asem.offline.model.DatabaseContractSap;
+import ptpn12.amanat.asem.offline.model.DatabaseContractSubUnit;
+import ptpn12.amanat.asem.offline.model.DatabaseContractUnit;
 
 public class AsetHelper {
     private static AsetHelper INSTANCE;

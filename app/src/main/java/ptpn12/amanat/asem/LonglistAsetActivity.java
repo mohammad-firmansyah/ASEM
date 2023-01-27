@@ -28,8 +28,6 @@ import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.Toast;
 
-import ptpn12.amanat.asem.R;
-
 import ptpn12.amanat.asem.adapter.Aset2Adapter;
 import ptpn12.amanat.asem.adapter.AsetOfflineAdapter;
 import ptpn12.amanat.asem.adapter.SearchAsetAdapter;
@@ -48,10 +46,10 @@ import ptpn12.amanat.asem.api.model.Sap;
 import ptpn12.amanat.asem.api.model.Search;
 import ptpn12.amanat.asem.api.model.SubUnit;
 import ptpn12.amanat.asem.api.model.Unit;
-import ptpn12.amanat.asem.db.AsetHelper;
-import ptpn12.amanat.asem.db.DatabaseHelper;
-import ptpn12.amanat.asem.db.MappingHelper;
-import ptpn12.amanat.asem.db.model.Aset;
+import ptpn12.amanat.asem.offline.AsetHelper;
+import ptpn12.amanat.asem.offline.DatabaseHelper;
+import ptpn12.amanat.asem.offline.MappingHelper;
+import ptpn12.amanat.asem.offline.model.Aset;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 

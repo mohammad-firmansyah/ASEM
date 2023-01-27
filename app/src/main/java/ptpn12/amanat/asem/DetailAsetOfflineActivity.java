@@ -30,8 +30,6 @@ import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import ptpn12.amanat.asem.R;
-
 import ptpn12.amanat.asem.api.AsetInterface;
 import ptpn12.amanat.asem.api.model.Afdelling;
 import ptpn12.amanat.asem.api.model.AsetJenis;
@@ -43,9 +41,9 @@ import ptpn12.amanat.asem.api.model.DataAllSpinner;
 import ptpn12.amanat.asem.api.model.Sap;
 import ptpn12.amanat.asem.api.model.SubUnit;
 import ptpn12.amanat.asem.api.model.Unit;
-import ptpn12.amanat.asem.db.AsetHelper;
-import ptpn12.amanat.asem.db.MappingHelper;
-import ptpn12.amanat.asem.db.model.Aset;
+import ptpn12.amanat.asem.offline.AsetHelper;
+import ptpn12.amanat.asem.offline.MappingHelper;
+import ptpn12.amanat.asem.offline.model.Aset;
 import ptpn12.amanat.asem.utils.utils;
 import com.google.android.gms.location.FusedLocationProviderClient;
 
@@ -1028,7 +1026,7 @@ public class DetailAsetOfflineActivity extends AppCompatActivity {
         Cursor afdeling = asetHelper.getAllAfdeling();
         Cursor sap = asetHelper.getAllSap();
         Cursor alatAngkut = asetHelper.getAllAlatAngkut();
-        ptpn12.amanat.asem.db.model.DataAllSpinner dataAllSpinner = MappingHelper.mapCursorToArrayListSpinner(asetTipe,asetJenis,asetKondisi,asetKode,unit,subUnit,afdeling,sap,alatAngkut);
+        ptpn12.amanat.asem.offline.model.DataAllSpinner dataAllSpinner = MappingHelper.mapCursorToArrayListSpinner(asetTipe,asetJenis,asetKondisi,asetKode,unit,subUnit,afdeling,sap,alatAngkut);
 
         List<String> listSpinnerTipe = new ArrayList<>();
 

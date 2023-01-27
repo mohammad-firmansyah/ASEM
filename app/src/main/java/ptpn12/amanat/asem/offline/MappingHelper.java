@@ -1,4 +1,4 @@
-package ptpn12.amanat.asem.db;
+package ptpn12.amanat.asem.offline;
 
 import android.database.Cursor;
 
@@ -11,8 +11,18 @@ import ptpn12.amanat.asem.api.model.AsetTipe;
 import ptpn12.amanat.asem.api.model.Sap;
 import ptpn12.amanat.asem.api.model.SubUnit;
 import ptpn12.amanat.asem.api.model.Unit;
-import ptpn12.amanat.asem.db.model.Aset;
-import ptpn12.amanat.asem.db.model.DataAllSpinner;
+import ptpn12.amanat.asem.offline.model.Aset;
+import ptpn12.amanat.asem.offline.model.DataAllSpinner;
+import ptpn12.amanat.asem.offline.model.DatabaseContractAfdeling;
+import ptpn12.amanat.asem.offline.model.DatabaseContractAlatPengangkutan;
+import ptpn12.amanat.asem.offline.model.DatabaseContractAset;
+import ptpn12.amanat.asem.offline.model.DatabaseContractAsetJenis;
+import ptpn12.amanat.asem.offline.model.DatabaseContractAsetKode;
+import ptpn12.amanat.asem.offline.model.DatabaseContractAsetKondisi;
+import ptpn12.amanat.asem.offline.model.DatabaseContractAsetTipe;
+import ptpn12.amanat.asem.offline.model.DatabaseContractSap;
+import ptpn12.amanat.asem.offline.model.DatabaseContractSubUnit;
+import ptpn12.amanat.asem.offline.model.DatabaseContractUnit;
 
 import java.util.ArrayList;
 

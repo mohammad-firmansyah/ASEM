@@ -1,4 +1,4 @@
-package ptpn12.amanat.asem.db.model;
+package ptpn12.amanat.asem.offline.model;
 
 import ptpn12.amanat.asem.api.model.Afdelling;
 import ptpn12.amanat.asem.api.model.AlatAngkut;

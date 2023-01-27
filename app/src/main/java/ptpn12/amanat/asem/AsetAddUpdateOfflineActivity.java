@@ -55,8 +55,6 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import ptpn12.amanat.asem.R;
-
 import ptpn12.amanat.asem.adapter.AsetOfflineAdapter;
 import ptpn12.amanat.asem.api.AsetInterface;
 import ptpn12.amanat.asem.api.model.Afdelling;
@@ -66,13 +64,13 @@ import ptpn12.amanat.asem.api.model.AsetKode2;
 import ptpn12.amanat.asem.api.model.AsetKondisi;
 import ptpn12.amanat.asem.api.model.AsetModel;
 import ptpn12.amanat.asem.api.model.AsetTipe;
-import ptpn12.amanat.asem.db.model.DataAllSpinner;
+import ptpn12.amanat.asem.offline.model.DataAllSpinner;
 import ptpn12.amanat.asem.api.model.Sap;
 import ptpn12.amanat.asem.api.model.SubUnit;
 import ptpn12.amanat.asem.api.model.Unit;
-import ptpn12.amanat.asem.db.AsetHelper;
-import ptpn12.amanat.asem.db.MappingHelper;
-import ptpn12.amanat.asem.db.model.Aset;
+import ptpn12.amanat.asem.offline.AsetHelper;
+import ptpn12.amanat.asem.offline.MappingHelper;
+import ptpn12.amanat.asem.offline.model.Aset;
 import ptpn12.amanat.asem.utils.GpsConverter;
 import ptpn12.amanat.asem.utils.utils;
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -166,6 +164,10 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity  implements 
 
     TextView inpNoSAP;
     TextView tvAlatAngkut;
+    TextView tvPopTotalIni;
+    TextView tvPopTotalStd;
+    TextView tvPopHektarIni;
+    TextView tvPopHektarStd;
 
     EditText inpNamaAset;
     EditText inpHGU;
@@ -180,6 +182,10 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity  implements 
     EditText inpUmrEkonomis;
     EditText inpPersenKondisi;
     EditText inpAfdelingET;
+    EditText inpPopTotalIni;
+    EditText inpPopTotalStd;
+    EditText inpPopHektarIni;
+    EditText inpPopHektarStd;
 
     ViewGroup foto1rl;
     ViewGroup foto2rl;
@@ -519,6 +525,17 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity  implements 
         inpPersenKondisi = findViewById(R.id.inpPersenKondisi);
         inpHGU = findViewById(R.id.inpHGU);
         spinnerLuasSatuan = findViewById(R.id.inpLuasSatuan);
+
+        tvPopTotalIni = findViewById(R.id.tvPopTotalIni);
+        tvPopTotalStd = findViewById(R.id.tvPopTotalStd);
+        tvPopHektarIni = findViewById(R.id.tvPopHektarIni);
+        tvPopHektarStd = findViewById(R.id.tvPopHektarStd);
+
+        inpPopTotalIni = findViewById(R.id.inpPopTotalIni);
+        inpPopTotalStd = findViewById(R.id.inpPopTotalStd);
+        inpPopHektarIni = findViewById(R.id.inpPopHektarIni);
+        inpPopHektarStd = findViewById(R.id.inpPopHektarStd);
+
         List<String> listSpinnerSatuan = new ArrayList<>();
         listSpinnerSatuan.add("Ha");
         listSpinnerSatuan.add("m2");

@@ -1,4 +1,4 @@
-package ptpn12.amanat.asem.db.model;
+package ptpn12.amanat.asem.offline.model;
 
 
 import android.os.Parcel;

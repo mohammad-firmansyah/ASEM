@@ -31,9 +31,9 @@ import ptpn12.amanat.asem.R;
 import ptpn12.amanat.asem.api.AsetInterface;
 import ptpn12.amanat.asem.api.model.AsetModel2;
 import ptpn12.amanat.asem.api.model.Data;
-import ptpn12.amanat.asem.db.AsetHelper;
-import ptpn12.amanat.asem.db.DatabaseHelper;
-import ptpn12.amanat.asem.db.model.Aset;
+import ptpn12.amanat.asem.offline.AsetHelper;
+import ptpn12.amanat.asem.offline.DatabaseHelper;
+import ptpn12.amanat.asem.offline.model.Aset;
 import ptpn12.amanat.asem.utils.utils;
 
 import java.io.File;

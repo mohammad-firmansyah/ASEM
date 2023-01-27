@@ -1,4 +1,4 @@
-package ptpn12.amanat.asem.db;
+package ptpn12.amanat.asem.offline.model;
 
 import android.provider.BaseColumns;
 
