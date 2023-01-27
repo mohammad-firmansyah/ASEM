@@ -843,6 +843,10 @@ public class DetailAsetActivity extends AppCompatActivity {
                 Picasso.get().load(qrurl).resize(400,400).centerCrop().into(qrDefault);
             }
 
+//           /storage/aset/GEo0wT85Y44MrYta0qRvDRXsCRjdgB90wZYYclKr.jpg
+//          /storage/fdvbtkkUlu3ktZCotWrHPwtWOkAAPsRCtS9tQwDE.jpg
+
+
             url1 = AsemApp.BASE_URL_ASSET+aset.getFotoAset1();
             url2 = AsemApp.BASE_URL_ASSET+aset.getFotoAset2();
             url3 = AsemApp.BASE_URL_ASSET+aset.getFotoAset3();
@@ -1441,6 +1445,17 @@ public class DetailAsetActivity extends AppCompatActivity {
 
     }
 
+    public void getFotoAsetUrl(String url){
+        String[] parts = url.split("/");
+        if (parts.length == 3) {
+
+        } else if (parts.length == 2 ) {
+
+        } else {
+
+        }
+
+    }
     public void getAllSpinnerData(){
         Call<AllSpinner> call = asetInterface.getAllSpinner();
 
