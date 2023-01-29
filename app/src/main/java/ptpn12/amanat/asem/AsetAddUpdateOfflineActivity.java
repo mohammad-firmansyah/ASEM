@@ -1666,6 +1666,15 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity  implements 
             tvPersenKondisi.setVisibility(View.GONE);
             spinnerLuasSatuan.setVisibility(View.GONE);
 
+            tvPopTotalIni.setVisibility(View.VISIBLE);
+            tvPopTotalStd.setVisibility(View.VISIBLE);
+            tvPopHektarStd.setVisibility(View.VISIBLE);
+            tvPopHektarIni.setVisibility(View.VISIBLE);
+            inpPopTotalIni.setVisibility(View.VISIBLE);
+            inpPopTotalStd.setVisibility(View.VISIBLE);
+            inpPopHektarIni.setVisibility(View.VISIBLE);
+            inpPopHektarStd.setVisibility(View.VISIBLE);
+
         }
 
         else if ("tanaman".equals(String.valueOf(spinnerJenisAset.getSelectedItem()))  && "rusak".equals(String.valueOf(spinnerAsetKondisi.getSelectedItem())) ) {
@@ -1692,6 +1701,15 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity  implements 
             inpPersenKondisi.setVisibility(View.GONE);
             tvPersenKondisi.setVisibility(View.GONE);
             spinnerLuasSatuan.setVisibility(View.GONE);
+
+            tvPopTotalIni.setVisibility(View.VISIBLE);
+            tvPopTotalStd.setVisibility(View.VISIBLE);
+            tvPopHektarStd.setVisibility(View.VISIBLE);
+            tvPopHektarIni.setVisibility(View.VISIBLE);
+            inpPopTotalIni.setVisibility(View.VISIBLE);
+            inpPopTotalStd.setVisibility(View.VISIBLE);
+            inpPopHektarIni.setVisibility(View.VISIBLE);
+            inpPopHektarStd.setVisibility(View.VISIBLE);
 
         }
 
@@ -1720,6 +1738,15 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity  implements 
             inpPersenKondisi.setVisibility(View.GONE);
             tvPersenKondisi.setVisibility(View.GONE);
             spinnerLuasSatuan.setVisibility(View.GONE);
+
+            tvPopTotalIni.setVisibility(View.VISIBLE);
+            tvPopTotalStd.setVisibility(View.VISIBLE);
+            tvPopHektarStd.setVisibility(View.VISIBLE);
+            tvPopHektarIni.setVisibility(View.VISIBLE);
+            inpPopTotalIni.setVisibility(View.VISIBLE);
+            inpPopTotalStd.setVisibility(View.VISIBLE);
+            inpPopHektarIni.setVisibility(View.VISIBLE);
+            inpPopHektarStd.setVisibility(View.VISIBLE);
         }
 
         else if ("kayu".equals(String.valueOf(spinnerJenisAset.getSelectedItem()))  && "normal".equals(String.valueOf(spinnerAsetKondisi.getSelectedItem())) ) {
@@ -1746,6 +1773,15 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity  implements 
             tvPersenKondisi.setVisibility(View.GONE);
 
             spinnerLuasSatuan.setVisibility(View.GONE);
+
+            tvPopTotalIni.setVisibility(View.GONE);
+            tvPopTotalStd.setVisibility(View.GONE);
+            tvPopHektarStd.setVisibility(View.GONE);
+            tvPopHektarIni.setVisibility(View.GONE);
+            inpPopTotalIni.setVisibility(View.GONE);
+            inpPopTotalStd.setVisibility(View.GONE);
+            inpPopHektarIni.setVisibility(View.GONE);
+            inpPopHektarStd.setVisibility(View.GONE);
         }
 
         else if ("kayu".equals(String.valueOf(spinnerJenisAset.getSelectedItem()))  && "rusak".equals(String.valueOf(spinnerAsetKondisi.getSelectedItem())) ) {
@@ -1774,6 +1810,15 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity  implements 
             tvPersenKondisi.setVisibility(View.GONE);
             spinnerLuasSatuan.setVisibility(View.GONE);
 
+            tvPopTotalIni.setVisibility(View.GONE);
+            tvPopTotalStd.setVisibility(View.GONE);
+            tvPopHektarStd.setVisibility(View.GONE);
+            tvPopHektarIni.setVisibility(View.GONE);
+            inpPopTotalIni.setVisibility(View.GONE);
+            inpPopTotalStd.setVisibility(View.GONE);
+            inpPopHektarIni.setVisibility(View.GONE);
+            inpPopHektarStd.setVisibility(View.GONE);
+
         }
 
         else if ("kayu".equals(String.valueOf(spinnerJenisAset.getSelectedItem())) && "hilang".equals(String.valueOf(spinnerAsetKondisi.getSelectedItem()))) {
@@ -1801,6 +1846,15 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity  implements 
             tvPersenKondisi.setVisibility(View.GONE);
             spinnerLuasSatuan.setVisibility(View.GONE);
 
+            tvPopTotalIni.setVisibility(View.GONE);
+            tvPopTotalStd.setVisibility(View.GONE);
+            tvPopHektarStd.setVisibility(View.GONE);
+            tvPopHektarIni.setVisibility(View.GONE);
+            inpPopTotalIni.setVisibility(View.GONE);
+            inpPopTotalStd.setVisibility(View.GONE);
+            inpPopHektarIni.setVisibility(View.GONE);
+            inpPopHektarStd.setVisibility(View.GONE);
+
         }
 
         else if ("non tanaman".equals(String.valueOf(spinnerJenisAset.getSelectedItem())) && "normal".equals(String.valueOf(spinnerAsetKondisi.getSelectedItem()))) {
@@ -1826,6 +1880,15 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity  implements 
 
             inpPersenKondisi.setVisibility(View.VISIBLE);
             tvPersenKondisi.setVisibility(View.VISIBLE);
+
+            tvPopTotalIni.setVisibility(View.GONE);
+            tvPopTotalStd.setVisibility(View.GONE);
+            tvPopHektarStd.setVisibility(View.GONE);
+            tvPopHektarIni.setVisibility(View.GONE);
+            inpPopTotalIni.setVisibility(View.GONE);
+            inpPopTotalStd.setVisibility(View.GONE);
+            inpPopHektarIni.setVisibility(View.GONE);
+            inpPopHektarStd.setVisibility(View.GONE);
         }
 
         else if ("non tanaman".equals(String.valueOf(spinnerJenisAset.getSelectedItem())) &&"rusak".equals(String.valueOf(spinnerAsetKondisi.getSelectedItem()))) {
@@ -1848,6 +1911,15 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity  implements 
 
             inpPersenKondisi.setVisibility(View.VISIBLE);
             tvPersenKondisi.setVisibility(View.VISIBLE);
+
+            tvPopTotalIni.setVisibility(View.GONE);
+            tvPopTotalStd.setVisibility(View.GONE);
+            tvPopHektarStd.setVisibility(View.GONE);
+            tvPopHektarIni.setVisibility(View.GONE);
+            inpPopTotalIni.setVisibility(View.GONE);
+            inpPopTotalStd.setVisibility(View.GONE);
+            inpPopHektarIni.setVisibility(View.GONE);
+            inpPopHektarStd.setVisibility(View.GONE);
 
         }
 
@@ -1875,6 +1947,15 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity  implements 
             inpPersenKondisi.setVisibility(View.VISIBLE);
             tvPersenKondisi.setVisibility(View.VISIBLE);
 
+            tvPopTotalIni.setVisibility(View.GONE);
+            tvPopTotalStd.setVisibility(View.GONE);
+            tvPopHektarStd.setVisibility(View.GONE);
+            tvPopHektarIni.setVisibility(View.GONE);
+            inpPopTotalIni.setVisibility(View.GONE);
+            inpPopTotalStd.setVisibility(View.GONE);
+            inpPopHektarIni.setVisibility(View.GONE);
+            inpPopHektarStd.setVisibility(View.GONE);
+
         } else {
             spinnerLuasSatuan.setVisibility(View.GONE);
             listBtnMap.setVisibility(View.GONE);
@@ -1893,6 +1974,14 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity  implements 
 
             inpPersenKondisi.setVisibility(View.GONE);
             tvPersenKondisi.setVisibility(View.GONE);
+            tvPopTotalIni.setVisibility(View.GONE);
+            tvPopTotalStd.setVisibility(View.GONE);
+            tvPopHektarStd.setVisibility(View.GONE);
+            tvPopHektarIni.setVisibility(View.GONE);
+            inpPopTotalIni.setVisibility(View.GONE);
+            inpPopTotalStd.setVisibility(View.GONE);
+            inpPopHektarIni.setVisibility(View.GONE);
+            inpPopHektarStd.setVisibility(View.GONE);
         }
     }
 
@@ -2367,7 +2456,6 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity  implements 
             values.put("aset_kondisi", String.valueOf(spinnerAsetKondisi.getSelectedItemId()));
 
             Integer idkodeaset = getAsetKodeId(Math.toIntExact(spinnerJenisAset.getSelectedItemId()), Math.toIntExact(spinnerKodeAset.getSelectedItemId()));
-            Log.d("amanat18-idkodeaset",String.valueOf(idkodeaset));
             values.put("aset_kode", String.valueOf(idkodeaset));
 
             values.put("unit_id", String.valueOf(spinnerUnit.getSelectedItemId()+1));
@@ -2514,6 +2602,19 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity  implements 
             values.put("hgu",inpHGU.getText().toString().trim());
             values.put("nilai_oleh",utils.CurrencyToNumber(inpNilaiAsetSAP.getText().toString().trim()));
             values.put("tgl_oleh",inpTglOleh.getText().toString().trim() + " 00:00:00");
+            if (spinnerAlatAngkut.getSelectedItem() != null) {
+
+                values.put("alat_pengangkutan",spinnerAlatAngkut.getSelectedItem().toString().trim());
+                values.put("satuan_luas",spinnerLuasSatuan.getSelectedItem().toString().trim());
+            }
+
+            if (spinnerJenisAset.getSelectedItem().equals("tanaman")) {
+                values.put("pop_total_ini",inpPopTotalIni.getText().toString().trim());
+                values.put("pop_total_std",inpPopTotalStd.getText().toString().trim());
+                values.put("pop_hektar_ini",inpPopHektarIni.getText().toString().trim());
+                values.put("pop_hektar_std",inpPopHektarStd.getText().toString().trim());
+            }
+
             LocalDateTime currentTime = null;
             DateTimeFormatter formatter = null;
             String formattedDateTime = null;
