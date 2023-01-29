@@ -19,6 +19,7 @@ import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 
+import ptpn12.amanat.asem.api.model.Data;
 import ptpn12.amanat.asem.offline.model.DatabaseContractAfdeling;
 import ptpn12.amanat.asem.offline.model.DatabaseContractAlatPengangkutan;
 import ptpn12.amanat.asem.offline.model.DatabaseContractAset;
