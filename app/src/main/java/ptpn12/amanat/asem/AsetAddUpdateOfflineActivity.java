@@ -112,6 +112,7 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity  implements 
     private static final String PREF_LOGIN = "LOGIN_PREF";
     Integer id =0;
     SharedPreferences sharedPreferences;
+    List<String> listSpinnerAlatAngkut = new ArrayList<>();
     DataAllSpinner allSpinner;
     Button inpBtnMap;
     Button btnFile;
@@ -1043,6 +1044,18 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity  implements 
 
 
 
+    private Integer getAlatAngkut(String alatAngkut) {
+        Integer i = 0;
+        for (String a : listSpinnerAlatAngkut) {
+            if (alatAngkut.equals(a)){
+
+                return i;
+            }
+            i++;
+        }
+        return 0;
+    }
+
     private void setValueInput(){
             asetHelper.open();
             Cursor data = asetHelper.queryById(String.valueOf(id));
@@ -1050,6 +1063,28 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity  implements 
                 if (aset.getBeritaAcara() != null ) {
                     tvUploudBA.setText(aset.getBeritaAcara());
                 }
+
+            if (aset.getAlat_pengangkutan() != null){
+                spinnerAlatAngkut.setSelection(getAlatAngkut(aset.getAlat_pengangkutan()));
+            }
+
+            if (aset.getSatuan_luas() != null) {
+                if (aset.getSatuan_luas().equals("Ha")) {
+                    spinnerLuasSatuan.setSelection(0);
+                } else if (aset.getSatuan_luas().equals("m2")) {
+                    spinnerLuasSatuan.setSelection(1);
+                } else {
+                    spinnerLuasSatuan.setSelection(2);
+                }
+            }
+
+            if (aset.getAsetJenis().equals("1")) {
+                inpPopTotalIni.setText(aset.getPop_total_ini());
+                inpPopTotalStd.setText(aset.getPop_total_std());
+                inpPopHektarIni.setText(aset.getPop_hektar_ini());
+                inpPopHektarStd.setText(aset.getPop_hektar_std());
+            }
+
 
                 inpTglInput.setText(aset.getTglInput());
                 inpTglOleh.setText(aset.getTglOleh());
@@ -2026,7 +2061,7 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity  implements 
         List<String> listSpinnerSubUnit = new ArrayList<>();
 
         List<String> listSpinnerAfdeling = new ArrayList<>();
-        List<String> listSpinnerAlatAngkut = new ArrayList<>();
+         listSpinnerAlatAngkut = new ArrayList<>();
 
 
 

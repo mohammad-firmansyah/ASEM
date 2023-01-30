@@ -1789,7 +1789,7 @@ public class AddAsetActivity extends AppCompatActivity {
                     builder.addPart(MultipartBody.Part.createFormData("afdeling_id", null, requestAfdeling));
                 }
 
-                if (spinnerJenisAset.getSelectedItemId() == 1 || spinnerJenisAset.getSelectedItemId() == 3) {
+                if (spinnerJenisAset.getSelectedItemId() == 3) {
                     RequestBody requestJumlahPohon = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(inpJumlahPohon.getText().toString()));
                     builder.addPart(MultipartBody.Part.createFormData("jumlah_pohon", null, requestJumlahPohon));
                 }
