@@ -680,7 +680,7 @@ public class UpdateAsetActivity extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 spinnerIdKodeAset = String.valueOf(position+1);
 
-                if (spinnerKodeAset.getSelectedItem().equals("ZA08/-/Alat Pengangkutan")){
+                if (spinnerKodeAset.getSelectedItem().equals("ZA08/Alat Pengangkutan")){
                     spinnerAlatAngkut.setVisibility(View.VISIBLE);
                     tvAlatAngkut.setVisibility(View.VISIBLE);
                 } else {
@@ -1859,9 +1859,9 @@ public class UpdateAsetActivity extends AppCompatActivity {
             if (a.getAsetJenis()-1 == spinnerJenisAset.getSelectedItemId()) {
                 Log.d("asetapix22",  "aset jenis dari spinner "+ String.valueOf(spinnerJenisAset.getSelectedItemId()));
 
-                if ((a.getAsetJenis()) == 1 ) {
+                if ((a.getAsetJenis()) == 2 ) {
                     aset_kode_temp = a.getAsetClass() + "/" + a.getAsetDesc();
-                } else if ((a.getAsetJenis()) == 2) {
+                } else if ((a.getAsetJenis()) == 1) {
                     aset_kode_temp = a.getAsetClass() + "/" + a.getAsetGroup() + "/" + a.getAsetDesc();
                 } else {
                     aset_kode_temp = a.getAsetClass() + "/" + a.getAsetGroup() + "/" + a.getAsetDesc();
