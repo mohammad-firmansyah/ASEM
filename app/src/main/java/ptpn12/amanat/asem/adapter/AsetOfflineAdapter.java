@@ -89,10 +89,11 @@ public class AsetOfflineAdapter extends RecyclerView.Adapter<AsetOfflineAdapter.
 //        notifyItemRemoved(position);
 //        notifyItemRangeChanged(position,listAset.size());
 //    }
-
+Dialog dialog;
     @NonNull
     @Override
     public AsetViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
+        dialog = new Dialog(context);
         View view = LayoutInflater.from(context).inflate(R.layout.ly_longlist_aset, viewGroup, false);
         return new AsetViewHolder(view);
     }
@@ -194,179 +195,7 @@ public class AsetOfflineAdapter extends RecyclerView.Adapter<AsetOfflineAdapter.
             holder.btnKirim.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    MultipartBody.Part img1Part = null, img2Part = null, img3Part = null, img4Part = null, partBaFile = null;
-
-
-                        RequestBody requestTipeAset = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(aset.getAsetTipe()));
-                        RequestBody requestJenisAset = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(aset.getAsetJenis()));
-                        RequestBody requestKondisiAset = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(aset.getAsetKondisi()));
-                        RequestBody requestKodeAset = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(aset.getAsetKode()));
-                        RequestBody requestNamaAset = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(aset.getAsetName()));
-                        RequestBody requestNomorAsetSAP = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(aset.getNomorSap()));
-
-                        RequestBody requestLuasAset = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(aset.getAsetLuas()));
-                        RequestBody requestNilaiAsetSAP = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(aset.getNilaiOleh()));
-                        RequestBody requestTglOleh = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(aset.getTglOleh()));
-                        RequestBody requestMasaSusut = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(aset.getMasaSusut()));
-                        RequestBody requestNomorBAST = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(aset.getNomorBast()));
-                        RequestBody requestNilaiResidu = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(aset.getNilaiResidu()));
-                        RequestBody requestHGU = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(aset.getHgu()));
-
-                        Integer unit = Integer.valueOf(sharedPreferences.getString("unit_id", "0"));
-                        Integer subUnit = Integer.valueOf(sharedPreferences.getString("sub_unit_id", "0"));
-                        Integer afdeling_id = Integer.valueOf(sharedPreferences.getString("afdeling_id", "0"));
-
-                        RequestBody requestSubUnit = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(subUnit));
-                            RequestBody requestUnit = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(unit));
-                        RequestBody requestAfdeling = RequestBody.create(MediaType.parse("text/plain"), String.valueOf((afdeling_id)));
-
-
-                        MultipartBody.Builder builder = new MultipartBody.Builder();
-                        builder.addPart(MultipartBody.Part.createFormData("aset_name", null, requestNamaAset));
-                        builder.addPart(MultipartBody.Part.createFormData("aset_tipe", null, requestTipeAset));
-                        builder.addPart(MultipartBody.Part.createFormData("aset_jenis", null, requestJenisAset));
-                        builder.addPart(MultipartBody.Part.createFormData("aset_kondisi", null, requestKondisiAset));
-                        builder.addPart(MultipartBody.Part.createFormData("aset_kode", null, requestKodeAset));
-                        builder.addPart(MultipartBody.Part.createFormData("nomor_sap", null, requestNomorAsetSAP));
-                        builder.addPart(MultipartBody.Part.createFormData("hgu", null, requestHGU));
-
-                        builder.addPart(MultipartBody.Part.createFormData("aset_luas", null, requestLuasAset));
-                        builder.addPart(MultipartBody.Part.createFormData("tgl_oleh", null, requestTglOleh));
-                        builder.addPart(MultipartBody.Part.createFormData("nilai_residu", null, requestNilaiResidu));
-                        builder.addPart(MultipartBody.Part.createFormData("nilai_oleh", null, requestNilaiAsetSAP));
-                        builder.addPart(MultipartBody.Part.createFormData("masa_susut", null, requestMasaSusut));
-                        builder.addPart(MultipartBody.Part.createFormData("aset_sub_unit", null, requestSubUnit));
-                        builder.addPart(MultipartBody.Part.createFormData("unit_id", null, requestUnit));
-                        builder.addPart(MultipartBody.Part.createFormData("nomor_bast", null, requestNomorBAST));
-
-                        if (aset.getAsetJenis().equals("1")){
-                            RequestBody requestPopulasiTotalSaatIni = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(Double.parseDouble(aset.getPop_total_ini())));
-                            RequestBody requestPopulasiTotalStandar = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(Double.parseDouble(aset.getPop_total_std())));
-                            RequestBody requestPopulasiHektarSaatIni = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(Double.parseDouble(aset.getPop_hektar_ini())));
-                            RequestBody requestPopulasiHektarStandar = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(Double.parseDouble(aset.getPop_hektar_std())));
-                            builder.addPart(MultipartBody.Part.createFormData("pop_total_ini", null, requestPopulasiTotalSaatIni));
-                            builder.addPart(MultipartBody.Part.createFormData("pop_total_std", null, requestPopulasiTotalStandar));
-                            builder.addPart(MultipartBody.Part.createFormData("pop_hektar_ini", null, requestPopulasiHektarSaatIni));
-                            builder.addPart(MultipartBody.Part.createFormData("pop_hektar_std", null, requestPopulasiHektarStandar));
-
-                        }
-
-                        if (aset.getAsetJenis().equals("2")) {
-                            RequestBody requestPersenKondisi = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(aset.getPersenKondisi()));
-                            builder.addPart(MultipartBody.Part.createFormData("persen_kondisi", null, requestPersenKondisi));
-                        }
-
-                        if (aset.getAsetJenis().equals("3")) {
-                            RequestBody requestJumlahPohon = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(aset.getJumlahPohon()));
-                            builder.addPart(MultipartBody.Part.createFormData("jumlah_pohon", null, requestJumlahPohon));
-                        }
-
-                        if (subUnit == 2) {
-                            builder.addPart(MultipartBody.Part.createFormData("afdeling_id", null, requestAfdeling));
-                        }
-
-                        if (aset.getAsetJenis().equals("3")) {
-                            RequestBody requestJumlahPohon = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(aset.getJumlahPohon()));
-                            builder.addPart(MultipartBody.Part.createFormData("jumlah_pohon", null, requestJumlahPohon));
-                        }
-
-                        if (aset.getAsetJenis().equals("2")) {
-                            RequestBody requestPersenKondisi = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(aset.getPersenKondisi()));
-                            builder.addPart(MultipartBody.Part.createFormData("persen_kondisi", null, requestPersenKondisi));
-                        }
-
-                        if (aset.getFotoAset1() != null) {
-
-                            File img = new File(aset.getFotoAset1());
-                            RequestBody requestGeoTag1 = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(aset.getGeoTag1()));
-                            builder.addPart(MultipartBody.Part.createFormData("foto_aset1", img.getName(), RequestBody.create(MediaType.parse("image/*"), img)));
-                            builder.addPart(MultipartBody.Part.createFormData("geo_tag1", null, requestGeoTag1));
-                        }
-
-                        if (aset.getFotoAset2() != null) {
-
-                            File img = new File(aset.getFotoAset2());
-                            RequestBody requestGeoTag2 = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(aset.getGeoTag2()));
-                            builder.addPart(MultipartBody.Part.createFormData("foto_aset2", img.getName(), RequestBody.create(MediaType.parse("image/*"), img)));
-                            builder.addPart(MultipartBody.Part.createFormData("geo_tag2", null, requestGeoTag2));
-                        }
-
-                        if (aset.getGeoTag3() != null) {
-
-                            File img = new File(aset.getFotoAset3());
-                            RequestBody requestGeoTag3 = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(aset.getGeoTag3()));
-                            builder.addPart(MultipartBody.Part.createFormData("foto_aset3", img.getName(), RequestBody.create(MediaType.parse("image/*"), img)));
-                            builder.addPart(MultipartBody.Part.createFormData("geo_tag3", null, requestGeoTag3));
-                        }
-
-                        if (aset.getGeoTag4() != null) {
-                            File img = new File(aset.getFotoAset4());
-                            RequestBody requestGeoTag4 = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(aset.getGeoTag4()));
-                            builder.addPart(MultipartBody.Part.createFormData("foto_aset4", img.getName(), RequestBody.create(MediaType.parse("image/*"), img)));
-                            builder.addPart(MultipartBody.Part.createFormData("geo_tag4", null, requestGeoTag4));
-                        }
-
-
-                        if (aset.getBeritaAcara() != null) {
-                            File bafile_file = new File(aset.getBeritaAcara());
-                            RequestBody requestBaFile = RequestBody.create(MediaType.parse("multipart/form-file"), bafile_file);
-                            partBaFile = MultipartBody.Part.createFormData("ba_file", bafile_file.getName(), requestBaFile);
-                            builder.addPart(partBaFile);
-                        }
-
-                        if (aset.getKeterangan() != null) {
-                            RequestBody requestKeterangan = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(aset.getKeterangan()));
-                            builder.addPart(MultipartBody.Part.createFormData("keterangan", null, requestKeterangan));
-                        }
-
-
-                        MultipartBody multipartBody = builder
-                                .build();
-                        String contentType = "multipart/form-data; charset=utf-8; boundary=" + multipartBody.boundary();
-
-
-                        Call<AsetModel2> call = asetInterface.addAset(contentType, multipartBody);
-
-
-
-                        call.enqueue(new Callback<AsetModel2>() {
-
-                            @Override
-                            public void onResponse(Call<AsetModel2> call, Response<AsetModel2> response) {
-                                if (!response.isSuccessful() && response.body() == null) {
-                                    if (response.code() == 401) {
-//                                        dialog.dismiss();
-//                                        customDialogAddAset.dismiss();
-//                                        inpNoSAP.setError("Nomor SAP sudah ada");
-//                                        inpNoSAP.requestFocus();
-                                        Toast.makeText(context,"data sap sudah ada tolong diubah",Toast.LENGTH_LONG).show();
-                                        return;
-                                    }
-                                    Toast.makeText(context,"error :" + response.message() + String.valueOf(response.code()),Toast.LENGTH_LONG).show();
-                                    return;
-                                }
-
-
-                                Log.d("amanat19-asetid2", String.valueOf(response.body().getData().getAsetId()));
-                                Log.d("amanat19-asetid2", String.valueOf(response.body().getData().getAsetJenis()));
-//                                try{
-                                    showDialogKirim(response.body().getData().getAsetId(),aset.getAsetId());
-//                                } catch (Exception e) {
-//                                    e.printStackTrace();
-//                                }
-
-
-                                return;
-
-                            }
-
-                            @Override
-                            public void onFailure(Call<AsetModel2> call, Throwable t) {
-                                Toast.makeText(context, "error " + t.getMessage(), Toast.LENGTH_LONG).show();
-                                return;
-                            }
-                        });
-
+                    showDialogKirim(aset);
                 }
             });
     }
@@ -421,9 +250,9 @@ public class AsetOfflineAdapter extends RecyclerView.Adapter<AsetOfflineAdapter.
         }
 
 
-    void showDialogKirim(Integer asetid,Integer asetIdOffline) {
+    void showDialogKirim(Aset aset) {
         asetInterface = AsemApp.getApiClient().create(AsetInterface.class);
-        Dialog dialog =new Dialog(context);
+
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.ly_kirim_sukses);
         dialog.show();
@@ -435,42 +264,216 @@ public class AsetOfflineAdapter extends RecyclerView.Adapter<AsetOfflineAdapter.
         });
 
         kirim.setOnClickListener(view -> {
-            String user_id = sharedPreferences.getString("user_id", "0");
-            Log.d("amanat19-asetid", String.valueOf(asetid));
-            Log.d("amanat19-userid",user_id);
-            Log.d("amanat19-asetidoff", String.valueOf(asetIdOffline));
-            Call<AsetModel2> call = asetInterface.kirimDataAset(asetid, Integer.parseInt(user_id));
-            call.enqueue(new Callback<AsetModel2>(){
-                @Override
-                public void onResponse(Call<AsetModel2> call, Response<AsetModel2> response) {
-                    if (response.isSuccessful() && response.body() != null){
-                        AsetHelper asetHelper = AsetHelper.getInstance(context);
-                        asetHelper.open();
-                        asetHelper.deleteById(String.valueOf(asetIdOffline));
-                        asetHelper.close();
-                        Toast.makeText(context,"Terkirim",Toast.LENGTH_SHORT).show();
-                        return;
-                    }else {
-                        //cek image apakah sudah terfoto semua atau belum
-                        //get response body data,if (url img 1-4 = adaa) then bisa kirim, else
-                        Toast.makeText(context.getApplicationContext(), response.toString(), Toast.LENGTH_SHORT).show();
+            kirimData(aset);
+        });
+    }
+
+    void kirimData(Aset aset) {
+        MultipartBody.Part img1Part = null, img2Part = null, img3Part = null, img4Part = null, partBaFile = null;
+
+
+        RequestBody requestTipeAset = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(aset.getAsetTipe()));
+        RequestBody requestJenisAset = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(aset.getAsetJenis()));
+        RequestBody requestKondisiAset = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(aset.getAsetKondisi()));
+        RequestBody requestKodeAset = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(aset.getAsetKode()));
+        RequestBody requestNamaAset = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(aset.getAsetName()));
+        RequestBody requestNomorAsetSAP = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(aset.getNomorSap()));
+
+        RequestBody requestLuasAset = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(aset.getAsetLuas()));
+        RequestBody requestNilaiAsetSAP = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(aset.getNilaiOleh()));
+        RequestBody requestTglOleh = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(aset.getTglOleh()));
+        RequestBody requestMasaSusut = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(aset.getMasaSusut()));
+        RequestBody requestNomorBAST = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(aset.getNomorBast()));
+        RequestBody requestNilaiResidu = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(aset.getNilaiResidu()));
+        RequestBody requestHGU = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(aset.getHgu()));
+
+        Integer unit = Integer.valueOf(sharedPreferences.getString("unit_id", "0"));
+        Integer subUnit = Integer.valueOf(sharedPreferences.getString("sub_unit_id", "0"));
+        Integer afdeling_id = Integer.valueOf(sharedPreferences.getString("afdeling_id", "0"));
+
+        RequestBody requestSubUnit = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(subUnit));
+        RequestBody requestUnit = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(unit));
+        RequestBody requestAfdeling = RequestBody.create(MediaType.parse("text/plain"), String.valueOf((afdeling_id)));
+
+
+        MultipartBody.Builder builder = new MultipartBody.Builder();
+        builder.addPart(MultipartBody.Part.createFormData("aset_name", null, requestNamaAset));
+        builder.addPart(MultipartBody.Part.createFormData("aset_tipe", null, requestTipeAset));
+        builder.addPart(MultipartBody.Part.createFormData("aset_jenis", null, requestJenisAset));
+        builder.addPart(MultipartBody.Part.createFormData("aset_kondisi", null, requestKondisiAset));
+        builder.addPart(MultipartBody.Part.createFormData("aset_kode", null, requestKodeAset));
+        builder.addPart(MultipartBody.Part.createFormData("nomor_sap", null, requestNomorAsetSAP));
+        builder.addPart(MultipartBody.Part.createFormData("hgu", null, requestHGU));
+
+        builder.addPart(MultipartBody.Part.createFormData("aset_luas", null, requestLuasAset));
+        builder.addPart(MultipartBody.Part.createFormData("tgl_oleh", null, requestTglOleh));
+        builder.addPart(MultipartBody.Part.createFormData("nilai_residu", null, requestNilaiResidu));
+        builder.addPart(MultipartBody.Part.createFormData("nilai_oleh", null, requestNilaiAsetSAP));
+        builder.addPart(MultipartBody.Part.createFormData("masa_susut", null, requestMasaSusut));
+        builder.addPart(MultipartBody.Part.createFormData("aset_sub_unit", null, requestSubUnit));
+        builder.addPart(MultipartBody.Part.createFormData("unit_id", null, requestUnit));
+        builder.addPart(MultipartBody.Part.createFormData("nomor_bast", null, requestNomorBAST));
+
+        if (aset.getAsetJenis().equals("1")){
+            RequestBody requestPopulasiTotalSaatIni = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(Double.parseDouble(aset.getPop_total_ini())));
+            RequestBody requestPopulasiTotalStandar = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(Double.parseDouble(aset.getPop_total_std())));
+            RequestBody requestPopulasiHektarSaatIni = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(Double.parseDouble(aset.getPop_hektar_ini())));
+            RequestBody requestPopulasiHektarStandar = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(Double.parseDouble(aset.getPop_hektar_std())));
+            builder.addPart(MultipartBody.Part.createFormData("pop_total_ini", null, requestPopulasiTotalSaatIni));
+            builder.addPart(MultipartBody.Part.createFormData("pop_total_std", null, requestPopulasiTotalStandar));
+            builder.addPart(MultipartBody.Part.createFormData("pop_hektar_ini", null, requestPopulasiHektarSaatIni));
+            builder.addPart(MultipartBody.Part.createFormData("pop_hektar_std", null, requestPopulasiHektarStandar));
+
+        }
+
+        if (aset.getAsetJenis().equals("2")) {
+            RequestBody requestPersenKondisi = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(aset.getPersenKondisi()));
+            builder.addPart(MultipartBody.Part.createFormData("persen_kondisi", null, requestPersenKondisi));
+        }
+
+        if (aset.getAsetJenis().equals("3")) {
+            RequestBody requestJumlahPohon = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(aset.getJumlahPohon()));
+            builder.addPart(MultipartBody.Part.createFormData("jumlah_pohon", null, requestJumlahPohon));
+        }
+
+        if (subUnit == 2) {
+            builder.addPart(MultipartBody.Part.createFormData("afdeling_id", null, requestAfdeling));
+        }
+
+        if (aset.getAsetJenis().equals("2")) {
+            RequestBody requestPersenKondisi = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(aset.getPersenKondisi()));
+            builder.addPart(MultipartBody.Part.createFormData("persen_kondisi", null, requestPersenKondisi));
+        }
+
+        if (aset.getFotoAset1() != null) {
+
+            File img = new File(aset.getFotoAset1());
+            RequestBody requestGeoTag1 = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(aset.getGeoTag1()));
+            builder.addPart(MultipartBody.Part.createFormData("foto_aset1", img.getName(), RequestBody.create(MediaType.parse("image/*"), img)));
+            builder.addPart(MultipartBody.Part.createFormData("geo_tag1", null, requestGeoTag1));
+        }
+
+        if (aset.getFotoAset2() != null) {
+
+            File img = new File(aset.getFotoAset2());
+            RequestBody requestGeoTag2 = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(aset.getGeoTag2()));
+            builder.addPart(MultipartBody.Part.createFormData("foto_aset2", img.getName(), RequestBody.create(MediaType.parse("image/*"), img)));
+            builder.addPart(MultipartBody.Part.createFormData("geo_tag2", null, requestGeoTag2));
+        }
+
+        if (aset.getFotoAset3() != null) {
+
+            File img = new File(aset.getFotoAset3());
+            RequestBody requestGeoTag3 = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(aset.getGeoTag3()));
+            builder.addPart(MultipartBody.Part.createFormData("foto_aset3", img.getName(), RequestBody.create(MediaType.parse("image/*"), img)));
+            builder.addPart(MultipartBody.Part.createFormData("geo_tag3", null, requestGeoTag3));
+        }
+
+        if (aset.getFotoAset4() != null) {
+            File img = new File(aset.getFotoAset4());
+            RequestBody requestGeoTag4 = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(aset.getGeoTag4()));
+            builder.addPart(MultipartBody.Part.createFormData("foto_aset4", img.getName(), RequestBody.create(MediaType.parse("image/*"), img)));
+            builder.addPart(MultipartBody.Part.createFormData("geo_tag4", null, requestGeoTag4));
+        }
+
+
+        if (aset.getAlat_pengangkutan() != null){
+            RequestBody requestAlatAngkut = RequestBody.create(MediaType.parse("text/plain"), aset.getAlat_pengangkutan());
+            builder.addPart(MultipartBody.Part.createFormData("alat_angkut", null, requestAlatAngkut));
+        }
+
+        if (aset.getSatuan_luas() != null) {
+            RequestBody requestSatuan = RequestBody.create(MediaType.parse("text/plain"), aset.getSatuan_luas());
+            builder.addPart(MultipartBody.Part.createFormData("satuan_luas", null, requestSatuan));
+
+        }
+
+
+        if (aset.getBeritaAcara() != null) {
+            File bafile_file = new File(aset.getBeritaAcara());
+            RequestBody requestBaFile = RequestBody.create(MediaType.parse("multipart/form-file"), bafile_file);
+            partBaFile = MultipartBody.Part.createFormData("ba_file", bafile_file.getName(), requestBaFile);
+            builder.addPart(partBaFile);
+        }
+
+        if (aset.getKeterangan() != null) {
+            RequestBody requestKeterangan = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(aset.getKeterangan()));
+            builder.addPart(MultipartBody.Part.createFormData("keterangan", null, requestKeterangan));
+        }
+
+
+        MultipartBody multipartBody = builder
+                .build();
+        String contentType = "multipart/form-data; charset=utf-8; boundary=" + multipartBody.boundary();
+
+
+        Call<AsetModel2> call = asetInterface.addAset(contentType, multipartBody);
+
+
+
+        call.enqueue(new Callback<AsetModel2>() {
+
+            @Override
+            public void onResponse(Call<AsetModel2> call, Response<AsetModel2> response) {
+                if (!response.isSuccessful() && response.body() == null) {
+                    if (response.code() == 401) {
+//                                        dialog.dismiss();
+//                                        customDialogAddAset.dismiss();
+//                                        inpNoSAP.setError("Nomor SAP sudah ada");
+//                                        inpNoSAP.requestFocus();
+                        Toast.makeText(context,"data sap sudah digunkan tolong diubah",Toast.LENGTH_LONG).show();
                         return;
                     }
-
-
-                }
-
-                @Override
-                public void onFailure(Call<AsetModel2> call, Throwable t) {
-                    Toast.makeText(context,"error : "+t.getMessage(),Toast.LENGTH_LONG).show();
+                    Toast.makeText(context,"error :" + response.message() + String.valueOf(response.code()),Toast.LENGTH_LONG).show();
                     return;
                 }
-            });
-            dialog.dismiss();
-            notifyDataSetChanged();
-            Intent gas = new Intent(context, LonglistAsetActivity.class);
-            context.startActivity(gas);
+
+
+                Log.d("amanat19-asetid2", String.valueOf(response.body().getData().getAsetId()));
+                Log.d("amanat19-asetid2", String.valueOf(response.body().getData().getAsetJenis()));
+                String user_id = sharedPreferences.getString("user_id", "0");
+                Call<AsetModel2> call2 = asetInterface.kirimDataAset(response.body().getData().getAsetId(), Integer.parseInt(user_id));
+                call2.enqueue(new Callback<AsetModel2>(){
+                    @Override
+                    public void onResponse(Call<AsetModel2> call, Response<AsetModel2> response) {
+                        if (response.isSuccessful() && response.body() != null){
+                            AsetHelper asetHelper = AsetHelper.getInstance(context);
+                            asetHelper.open();
+                            asetHelper.deleteById(String.valueOf(response.body().getData().getAsetId()));
+                            asetHelper.close();
+                            Toast.makeText(context,"Terkirim",Toast.LENGTH_SHORT).show();
+                            return;
+                        }else {
+                            //cek image apakah sudah terfoto semua atau belum
+                            //get response body data,if (url img 1-4 = adaa) then bisa kirim, else
+                            Toast.makeText(context.getApplicationContext(), response.toString(), Toast.LENGTH_SHORT).show();
+                            return;
+                        }
+
+
+                    }
+
+                    @Override
+                    public void onFailure(Call<AsetModel2> call, Throwable t) {
+                        Toast.makeText(context,"error : "+t.getMessage(),Toast.LENGTH_LONG).show();
+                        return;
+                    }
+                });
+                dialog.dismiss();
+                notifyDataSetChanged();
+                Intent gas = new Intent(context, LonglistAsetActivity.class);
+                context.startActivity(gas);
+                return;
+
+            }
+
+            @Override
+            public void onFailure(Call<AsetModel2> call, Throwable t) {
+                Toast.makeText(context, "error " + t.getMessage(), Toast.LENGTH_LONG).show();
+                return;
+            }
         });
+
     }
 
 }
