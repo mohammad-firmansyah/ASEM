@@ -98,6 +98,11 @@ import com.google.android.gms.location.LocationRequest;
 
 public class UpdateAsetActivity extends AppCompatActivity {
     Data aset;
+    String url1 = "";
+    String url2 = "";
+    String url3 = "";
+    String url4 = "";
+    String url5 = "";
     Button inpBtnMap;
     Button btnFile;
     Button btnSubmit;
@@ -982,11 +987,19 @@ public class UpdateAsetActivity extends AppCompatActivity {
                         inpKetReject.setVisibility(View.GONE);
                         tvKetReject.setVisibility(View.GONE);
                     }
-                    String url1 = AsemApp.BASE_URL+"/storage/app/public/aset/"+aset.getFotoAset1();
-                    String url2 = AsemApp.BASE_URL+"/storage/app/public/aset/"+aset.getFotoAset2();
-                    String url3 = AsemApp.BASE_URL+"/storage/app/public/aset/"+aset.getFotoAset3();
-                    String url4 = AsemApp.BASE_URL+"/storage/app/public/aset/"+aset.getFotoAset4();
-                    String url5 = AsemApp.BASE_URL+"/storage/app/public/aset/"+aset.getFotoAset5();
+                    url1 = AsemApp.BASE_URL_ASSET+"/storage/"+aset.getFotoAset1();
+                    url2 = AsemApp.BASE_URL_ASSET+"/storage/"+aset.getFotoAset2();
+                    url3 = AsemApp.BASE_URL_ASSET+"/storage/"+aset.getFotoAset3();
+                    url4 = AsemApp.BASE_URL_ASSET+"/storage/"+aset.getFotoAset4();
+                    url5 = AsemApp.BASE_URL_ASSET+"/storage/"+aset.getFotoAset5();
+
+                    if (aset.getFotoAset1().split("/").length > 1) {
+                        url1 = AsemApp.BASE_URL_ASSET+aset.getFotoAset1();
+                        url2 = AsemApp.BASE_URL_ASSET+aset.getFotoAset2();
+                        url3 = AsemApp.BASE_URL_ASSET+aset.getFotoAset3();
+                        url4 = AsemApp.BASE_URL_ASSET+aset.getFotoAset4();
+                        url5 = AsemApp.BASE_URL_ASSET+aset.getFotoAset5();
+                    }
 
                 if (aset.getFotoAset1() == null ){
                     map1.setEnabled(false);
