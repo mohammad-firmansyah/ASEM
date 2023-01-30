@@ -679,7 +679,14 @@ public class UpdateAsetActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 spinnerIdKodeAset = String.valueOf(position+1);
-//                editVisibilityDynamic();
+
+                if (spinnerKodeAset.getSelectedItem().equals("ZA08/-/Alat Pengangkutan")){
+                    spinnerAlatAngkut.setVisibility(View.VISIBLE);
+                    tvAlatAngkut.setVisibility(View.VISIBLE);
+                } else {
+                    spinnerAlatAngkut.setVisibility(View.GONE);
+                    tvAlatAngkut.setVisibility(View.GONE);
+                }
 
             }
 
@@ -975,11 +982,11 @@ public class UpdateAsetActivity extends AppCompatActivity {
                         inpKetReject.setVisibility(View.GONE);
                         tvKetReject.setVisibility(View.GONE);
                     }
-                    String url1 = AsemApp.BASE_URL_ASSET+aset.getFotoAset1();
-                    String url2 = AsemApp.BASE_URL_ASSET+aset.getFotoAset2();
-                    String url3 = AsemApp.BASE_URL_ASSET+aset.getFotoAset3();
-                    String url4 = AsemApp.BASE_URL_ASSET+aset.getFotoAset4();
-                    String url5 = AsemApp.BASE_URL_ASSET+aset.getFotoAset5();
+                    String url1 = AsemApp.BASE_URL_ASSET+"storage"+aset.getFotoAset1();
+                    String url2 = AsemApp.BASE_URL_ASSET+"storage"+aset.getFotoAset2();
+                    String url3 = AsemApp.BASE_URL_ASSET+"storage"+aset.getFotoAset3();
+                    String url4 = AsemApp.BASE_URL_ASSET+"storage"+aset.getFotoAset4();
+                    String url5 = AsemApp.BASE_URL_ASSET+"storage"+aset.getFotoAset5();
 
                 if (aset.getFotoAset1() == null ){
                     map1.setEnabled(false);
