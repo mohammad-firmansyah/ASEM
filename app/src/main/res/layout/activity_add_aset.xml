@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="ptpn12.amanat.asem.MainActivity"
+    tools:context="ptpn12.amanat.asem.AddAsetActivity"
     android:padding="18dp"
     android:background="@color/background_grey"
     >
@@ -23,7 +23,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
-                android:text="TIPE ASSET :"
+                android:text="TIPE ASET :"
                 android:textColor="@color/main_grey"
                 android:textSize="14sp"
                 android:textStyle="bold" />
@@ -44,7 +44,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
-                android:text="JENIS ASSET :"
+                android:text="JENIS ASET :"
                 android:textColor="@color/main_grey"
                 android:textSize="14sp"
                 android:textStyle="bold"
