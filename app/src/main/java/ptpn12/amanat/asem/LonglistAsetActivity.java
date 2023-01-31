@@ -26,6 +26,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CompoundButton;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import ptpn12.amanat.asem.adapter.Aset2Adapter;
@@ -92,6 +94,9 @@ public class LonglistAsetActivity extends AppCompatActivity  { //implements Bott
     AsetHelper asetHelper;
     List<Data2> asetList = new ArrayList<>();
 
+    LinearLayout addDataOffline;
+    TextView tvAddDataOffline;
+
     Button btnReport;
     Button btnFilter;
     Button btnSync;
@@ -137,6 +142,9 @@ public class LonglistAsetActivity extends AppCompatActivity  { //implements Bott
         srlonglist = findViewById(R.id.srlonglist);
         searchView = findViewById(R.id.svSearch);
         switch_offline = findViewById(R.id.switchoffline);
+        addDataOffline = findViewById(R.id.addDataOffline);
+        tvAddDataOffline = findViewById(R.id.tvAddDataOffline);
+
 
         btnSync.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -244,6 +252,7 @@ public class LonglistAsetActivity extends AppCompatActivity  { //implements Bott
                     dialog.show();
                     //aktifkan longlist offline
                         vwSync.setVisibility(View.VISIBLE);
+                        addDataOffline.setVisibility(View.VISIBLE);
 
                         dialog.dismiss();
                         switch_offline.setChecked(true);
@@ -274,6 +283,7 @@ public class LonglistAsetActivity extends AppCompatActivity  { //implements Bott
                 }else {
                     dialog.dismiss();
                     vwSync.setVisibility(View.GONE);
+                    addDataOffline.setVisibility(View.GONE);
                     srlonglist.setEnabled(true);
                     getAllAset();
                     btnReport.setVisibility(View.VISIBLE);
