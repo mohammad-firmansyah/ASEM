@@ -14,6 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import ptpn12.amanat.asem.R;
+import ptpn12.amanat.asem.offline.AsetHelper;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -21,6 +22,7 @@ public class ProfilActivity extends AppCompatActivity {
 
     private static final String PREF_LOGIN = "LOGIN_PREF";
 
+    AsetHelper asetHelper;
     TextView tvNIP,tvNama,tvHakAkses,tvJabatan,tvBagian,tvEmail;
     CardView resetPass, logOut;
 
@@ -30,7 +32,7 @@ public class ProfilActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profil);
-
+        asetHelper = AsetHelper.getInstance(getApplicationContext());
         tvNIP = findViewById(R.id.tvNIP);
         tvNama = findViewById(R.id.tvNama);
         tvHakAkses = findViewById(R.id.tvHakAkses);
@@ -121,6 +123,9 @@ public class ProfilActivity extends AppCompatActivity {
         SharedPreferences.Editor editor = getSharedPreferences(PREF_LOGIN, MODE_PRIVATE).edit().clear();
         editor.clear().apply();
         finishAffinity();
+        asetHelper.open();
+        asetHelper.deleteAllAset();
+        asetHelper.close();
         startActivity(new Intent(ProfilActivity.this, SplashScreen.class));
     }
 
