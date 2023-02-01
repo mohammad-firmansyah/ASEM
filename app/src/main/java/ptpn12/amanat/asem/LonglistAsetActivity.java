@@ -89,6 +89,7 @@ public class LonglistAsetActivity extends AppCompatActivity  { //implements Bott
     private static final String PREF_LOGIN = "LOGIN_PREF";
     SharedPreferences sharedPreferences;
     AsetOfflineAdapter offlineAdapter;
+    Aset2Adapter onlineAdapter;
     DatabaseHelper dbOffline;
     ArrayList<Aset> dataoffline;
     AsetHelper asetHelper;
@@ -297,6 +298,10 @@ public class LonglistAsetActivity extends AppCompatActivity  { //implements Bott
                     addDataOffline.setVisibility(View.GONE);
                     srlonglist.setEnabled(true);
                     getAllAset();
+//                    Aset2Adapter adapter = new Aset2Adapter(datas,LonglistAsetActivity.this);
+//                    rcAset.setAdapter(adapter);
+                    rcAset.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+                    rcAset.setAdapter(onlineAdapter);
                     btnReport.setVisibility(View.VISIBLE);
                     btnFilter.setVisibility(View.VISIBLE);
                     searchView.setVisibility(View.VISIBLE);
@@ -397,7 +402,9 @@ public class LonglistAsetActivity extends AppCompatActivity  { //implements Bott
             @Override
             public void onFailure(Call<List<Data2>> call, Throwable t) {
                 dialog.dismiss();
-                Toast.makeText(getApplicationContext(),t.getMessage(),Toast.LENGTH_LONG).show();
+//                Toast.makeText(getApplicationContext(),t.getMessage(),Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(),"Internet tidak terdeteksi. List Data Online tidak tertampil.",Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(),"Silahkan switch ke List Data Offline!",Toast.LENGTH_LONG).show();
                 return;
             }
         });
