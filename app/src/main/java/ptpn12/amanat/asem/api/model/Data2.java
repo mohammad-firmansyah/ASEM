@@ -158,6 +158,29 @@ public class Data2 {
     @SerializedName("satuan_luas")
     @Expose
     private String satuan_luas;
+    @SerializedName("berita_acara")
+    @Expose
+    private String beritaAcara;
+
+    @SerializedName("file_bast")
+    @Expose
+    private String fileBAST;
+
+    public String getBeritaAcara() {
+        return beritaAcara;
+    }
+
+    public void setBeritaAcara(String beritaAcara) {
+        this.beritaAcara = beritaAcara;
+    }
+
+    public String getFileBAST() {
+        return fileBAST;
+    }
+
+    public void setFileBAST(String fileBAST) {
+        this.fileBAST = fileBAST;
+    }
 
     public String getSatuan_luas() {
         return satuan_luas;

@@ -105,6 +105,7 @@ public class UpdateAsetActivity extends AppCompatActivity {
     String url5 = "";
     Button inpBtnMap;
     Button btnFile;
+    Button btnFileBAST;
     Button btnSubmit;
     Button btnYaKirim;
     Button btnTidakKirim;
@@ -114,7 +115,9 @@ public class UpdateAsetActivity extends AppCompatActivity {
     Button map4;
     Button map5;
     Button downloadBa;
+    Button downloadBAST;
     String urlBa;
+    String urlBAST;
     double longitudeValue = 0;
     double latitudeValue = 0;
     List<String> listSpinnerAlatAngkut = new ArrayList<>();
@@ -147,6 +150,7 @@ public class UpdateAsetActivity extends AppCompatActivity {
     EditText editText;
     EditText inpJumlahPohon;
     TextView tvUploudBA;
+    TextView tvUploadBAST;
     TextView tvKetReject;
     AsetModel asetModel;
 //    List<String> listSpinnerSap=new ArrayList<>();
@@ -223,6 +227,7 @@ public class UpdateAsetActivity extends AppCompatActivity {
     File img4;
     File img5;
     File bafile_file;
+    File file_bast;
 
     String spinnerIdTipeAsset;
     String spinnerIdJenisAset;
@@ -260,8 +265,10 @@ public class UpdateAsetActivity extends AppCompatActivity {
             Uri uri = data.getData();
             String path =  uri.getPath();
             bafile_file = new File(path);
+            file_bast = new File(path);
             Toast.makeText(getApplicationContext(),"sukses unggah berita acara",Toast.LENGTH_LONG).show();
             tvUploudBA.setText(bafile_file.getName());
+            tvUploadBAST.setText(file_bast.getName());
         }
 //        else {
 //            Toast.makeText(UpdateAsetActivity.this,"gagal unggah file",Toast.LENGTH_LONG).show();
@@ -415,10 +422,12 @@ public class UpdateAsetActivity extends AppCompatActivity {
         getLastLocation(UpdateAsetActivity.this,getApplicationContext());
 
         downloadBa = findViewById(R.id.inpDownloadBa);
+        downloadBAST = findViewById(R.id.inpDownloadBAST);
         id = getIntent().getIntExtra("id",0);
         listBtnMap = findViewById(R.id.listMapButton);
         inpTglOleh = findViewById(R.id.inpTglMasukAset);
         tvUploudBA = findViewById(R.id.tvUploudBA);
+        tvUploadBAST = findViewById(R.id.tvUploadFileBAST);
         spinnerTipeAset = findViewById(R.id.inpTipeAset);
         spinnerJenisAset = findViewById(R.id.inpJenisAset);
         spinnerAsetKondisi = findViewById(R.id.inpKndsAset);
@@ -485,10 +494,19 @@ public class UpdateAsetActivity extends AppCompatActivity {
         inpBtnMap = findViewById(R.id.inpBtnMap);
         btnSubmit = findViewById(R.id.btnSubmit);
 
+        btnFile = findViewById(R.id.inpUploudBA);
+        btnFileBAST = findViewById(R.id.inpUploadBAST);
+
         downloadBa.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 downloadBaFunc();
+            }
+        });
+        downloadBAST.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                downloadBASTFunc();
             }
         });
         inpNoSAP.setOnClickListener(new View.OnClickListener() {
@@ -834,14 +852,21 @@ public class UpdateAsetActivity extends AppCompatActivity {
             }
         });
 
-        btnFile = findViewById(R.id.inpUploudBA);
-
         getAllSpinnerData();
         initCalender();
         setDataAset();
         setValueInput();
 
         btnFile.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                openfilechoser();
+            }
+
+
+        });
+
+        btnFileBAST.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
                 openfilechoser();
@@ -958,11 +983,15 @@ public class UpdateAsetActivity extends AppCompatActivity {
 
                     if(aset.getAlat_pengangkutan() != null){
                         spinnerAlatAngkut.setSelection(getAlatAngkut(aset.getAlat_pengangkutan()));
-                        urlBa = aset.getBeritaAcara();
                     }
 
+                    urlBa = aset.getBeritaAcara();
                     if (urlBa != null ) {
                         tvUploudBA.setText(urlBa.substring(0,10)+"...");
+                    }
+                    urlBAST = aset.getFileBAST();
+                    if (urlBAST != null ) {
+                        tvUploadBAST.setText(urlBAST.substring(0,10)+"...");
                     }
 
                     inpTglInput.setText(aset.getTglInput().split(" ")[0]);
@@ -1282,10 +1311,20 @@ public class UpdateAsetActivity extends AppCompatActivity {
         TextView tvLuasTanaman = findViewById(R.id.luasTanaman);
         TextView tvLuasNonTanaman = findViewById(R.id.luasNonTanaman);
         TextView tvPersenKondisi = findViewById(R.id.tvPersenKondisi);
+        TextView tvFileBAST = findViewById(R.id.tvUploadFileBAST);
 
         HorizontalScrollView scrollPartition = findViewById(R.id.scrollPartition);
 //        Toast.makeText(getApplicationContext(),String.valueOf(spinnerSubUnit.getSelectedItemId()),Toast.LENGTH_LONG).show();
 
+        if (spinnerTipeAset.getSelectedItemId() == 1) {
+            //input PDF ba bast
+            btnFileBAST.setVisibility(View.VISIBLE);
+            tvFileBAST.setVisibility(View.VISIBLE);
+        } else {
+            //input PDF ba bast
+            btnFileBAST.setVisibility(View.GONE);
+            tvFileBAST.setVisibility(View.GONE);
+        }
 
         if (spinnerSubUnit.getSelectedItemId() == 1){
             inpAfdeling.setVisibility(View.VISIBLE);
@@ -1303,6 +1342,7 @@ public class UpdateAsetActivity extends AppCompatActivity {
 //            inpKomoditi.setVisibility(View.VISIBLE);
 
             downloadBa.setVisibility(View.GONE);
+            downloadBAST.setVisibility(View.VISIBLE);
             spinnerLuasSatuan.setVisibility(View.GONE);
             inpNomorBAST.setVisibility(View.VISIBLE);
             tvBast.setVisibility(View.VISIBLE);
@@ -1311,6 +1351,8 @@ public class UpdateAsetActivity extends AppCompatActivity {
             tvUploudBA.setVisibility(View.GONE);
             inpBtnMap.setVisibility(View.GONE);
             btnFile.setVisibility(View.GONE);
+            btnFileBAST.setVisibility(View.VISIBLE);
+            tvFileBAST.setVisibility(View.VISIBLE);
 
             tvFoto.setVisibility(View.VISIBLE);
             scrollPartition.setVisibility(View.VISIBLE);
@@ -1341,6 +1383,7 @@ public class UpdateAsetActivity extends AppCompatActivity {
             inpJumlahPohon.setVisibility(View.GONE);
             tvPohon.setVisibility(View.GONE);
             downloadBa.setVisibility(View.VISIBLE);
+            downloadBAST.setVisibility(View.GONE);
             spinnerLuasSatuan.setVisibility(View.GONE);
 //            inpKomoditi.setVisibility(View.VISIBLE);
             inpNomorBAST.setVisibility(View.VISIBLE);
@@ -1349,6 +1392,8 @@ public class UpdateAsetActivity extends AppCompatActivity {
             tvBa.setVisibility(View.VISIBLE);
             tvUploudBA.setVisibility(View.VISIBLE);
             btnFile.setVisibility(View.VISIBLE);
+            btnFileBAST.setVisibility(View.GONE);
+            tvFileBAST.setVisibility(View.GONE);
 
             inpBtnMap.setVisibility(View.GONE);
 
@@ -1382,6 +1427,7 @@ public class UpdateAsetActivity extends AppCompatActivity {
             tvUploudBA.setVisibility(View.VISIBLE);
             btnFile.setVisibility(View.VISIBLE);
             downloadBa.setVisibility(View.VISIBLE);
+            downloadBAST.setVisibility(View.GONE);
             inpJumlahPohon.setVisibility(View.GONE);
 //            inpKomoditi.setVisibility(View.VISIBLE);
             spinnerLuasSatuan.setVisibility(View.GONE);
@@ -1391,6 +1437,8 @@ public class UpdateAsetActivity extends AppCompatActivity {
             listBtnMap.setVisibility(View.GONE);
             inpJumlahPohon.setVisibility(View.GONE);
             inpBtnMap.setVisibility(View.GONE);
+            btnFileBAST.setVisibility(View.GONE);
+            tvFileBAST.setVisibility(View.GONE);
 
             tvFoto.setVisibility(View.GONE);
             scrollPartition.setVisibility(View.GONE);
@@ -1425,9 +1473,12 @@ public class UpdateAsetActivity extends AppCompatActivity {
             spinnerLuasSatuan.setVisibility(View.GONE);
             inpBtnMap.setVisibility(View.GONE);
             downloadBa.setVisibility(View.GONE);
+            downloadBAST.setVisibility(View.VISIBLE);
             tvBa.setVisibility(View.GONE);
             tvUploudBA.setVisibility(View.GONE);
             btnFile.setVisibility(View.GONE);
+            btnFileBAST.setVisibility(View.VISIBLE);
+            tvFileBAST.setVisibility(View.VISIBLE);
 
             tvFoto.setVisibility(View.VISIBLE);
             scrollPartition.setVisibility(View.VISIBLE);
@@ -1458,6 +1509,7 @@ public class UpdateAsetActivity extends AppCompatActivity {
             tvPohon.setVisibility(View.VISIBLE);
             inpJumlahPohon.setVisibility(View.VISIBLE);
             downloadBa.setVisibility(View.VISIBLE);
+            downloadBAST.setVisibility(View.GONE);
             tvBa.setVisibility(View.VISIBLE);
             tvUploudBA.setVisibility(View.VISIBLE);
             btnFile.setVisibility(View.VISIBLE);
@@ -1468,6 +1520,8 @@ public class UpdateAsetActivity extends AppCompatActivity {
             inpNomorBAST.setVisibility(View.VISIBLE);
             tvBast.setVisibility(View.VISIBLE);
             inpBtnMap.setVisibility(View.GONE);
+            btnFileBAST.setVisibility(View.GONE);
+            tvFileBAST.setVisibility(View.GONE);
 
             tvFoto.setVisibility(View.VISIBLE);
             scrollPartition.setVisibility(View.VISIBLE);
@@ -1498,6 +1552,7 @@ public class UpdateAsetActivity extends AppCompatActivity {
             btnFile.setVisibility(View.VISIBLE);
             tvUploudBA.setVisibility(View.VISIBLE);
             downloadBa.setVisibility(View.VISIBLE);
+            downloadBAST.setVisibility(View.GONE);
 //            inpKomoditi.setVisibility(View.VISIBLE);
             spinnerLuasSatuan.setVisibility(View.GONE);
             inpNomorBAST.setVisibility(View.VISIBLE);
@@ -1507,6 +1562,8 @@ public class UpdateAsetActivity extends AppCompatActivity {
             listBtnMap.setVisibility(View.GONE);
             inpJumlahPohon.setVisibility(View.GONE);
             inpBtnMap.setVisibility(View.GONE);
+            btnFileBAST.setVisibility(View.GONE);
+            tvFileBAST.setVisibility(View.GONE);
 
             tvFoto.setVisibility(View.GONE);
             scrollPartition.setVisibility(View.GONE);
@@ -1539,6 +1596,7 @@ public class UpdateAsetActivity extends AppCompatActivity {
             spinnerLuasSatuan.setVisibility(View.VISIBLE);
 //            inpKomoditi.setVisibility(View.GONE);
             downloadBa.setVisibility(View.GONE);
+            downloadBAST.setVisibility(View.VISIBLE);
             listBtnMap.setVisibility(View.GONE);
             inpJumlahPohon.setVisibility(View.GONE);
             tvPohon.setVisibility(View.GONE);
@@ -1546,6 +1604,8 @@ public class UpdateAsetActivity extends AppCompatActivity {
             tvBa.setVisibility(View.GONE);
             tvUploudBA.setVisibility(View.GONE);
             btnFile.setVisibility(View.GONE);
+            btnFileBAST.setVisibility(View.VISIBLE);
+            tvFileBAST.setVisibility(View.VISIBLE);
 
             tvFoto.setVisibility(View.VISIBLE);
             scrollPartition.setVisibility(View.VISIBLE);
@@ -1575,6 +1635,7 @@ public class UpdateAsetActivity extends AppCompatActivity {
             btnFile.setVisibility(View.VISIBLE);
             tvUploudBA.setVisibility(View.VISIBLE);
             downloadBa.setVisibility(View.VISIBLE);
+            downloadBAST.setVisibility(View.GONE);
             tvPohon.setVisibility(View.GONE);
             inpJumlahPohon.setVisibility(View.GONE);
             inpBtnMap.setVisibility(View.VISIBLE);
@@ -1583,6 +1644,8 @@ public class UpdateAsetActivity extends AppCompatActivity {
             spinnerLuasSatuan.setVisibility(View.VISIBLE);
             tvFoto.setVisibility(View.VISIBLE);
             scrollPartition.setVisibility(View.VISIBLE);
+            btnFileBAST.setVisibility(View.GONE);
+            tvFileBAST.setVisibility(View.GONE);
 
             listBtnMap.setVisibility(View.GONE);
             tvLuasTanaman.setVisibility(View.GONE);
@@ -1611,6 +1674,7 @@ public class UpdateAsetActivity extends AppCompatActivity {
             btnFile.setVisibility(View.VISIBLE);
             tvUploudBA.setVisibility(View.VISIBLE);
             downloadBa.setVisibility(View.VISIBLE);
+            downloadBAST.setVisibility(View.GONE);
             spinnerLuasSatuan.setVisibility(View.VISIBLE);
             tvPohon.setVisibility(View.GONE);
             inpJumlahPohon.setVisibility(View.GONE);
@@ -1619,6 +1683,8 @@ public class UpdateAsetActivity extends AppCompatActivity {
             inpBtnMap.setVisibility(View.GONE);
             inpNomorBAST.setVisibility(View.GONE);
             tvBast.setVisibility(View.GONE);
+            btnFileBAST.setVisibility(View.GONE);
+            tvFileBAST.setVisibility(View.GONE);
 
             tvFoto.setVisibility(View.GONE);
             scrollPartition.setVisibility(View.GONE);
@@ -1656,6 +1722,10 @@ public class UpdateAsetActivity extends AppCompatActivity {
             tvLuasTanaman.setVisibility(View.GONE);
             tvLuasNonTanaman.setVisibility(View.GONE);
             inpLuasAset.setVisibility(View.GONE);
+            btnFileBAST.setVisibility(View.GONE);
+            tvFileBAST.setVisibility(View.GONE);
+            downloadBa.setVisibility(View.GONE);
+            downloadBAST.setVisibility(View.GONE);
 
             inpPersenKondisi.setVisibility(View.GONE);
             tvPersenKondisi.setVisibility(View.GONE);
@@ -1712,7 +1782,7 @@ public class UpdateAsetActivity extends AppCompatActivity {
             String asetId = String.valueOf(aset.getAsetId());
             String jumlahPohon = inpJumlahPohon.getText().toString().trim();
 
-            MultipartBody.Part partBaFile = null;
+            MultipartBody.Part partBaFile = null, partBASTFile = null;
 
 
             RequestBody requestAsetId = RequestBody.create(MediaType.parse("text/plain"), asetId);
@@ -1788,6 +1858,11 @@ public class UpdateAsetActivity extends AppCompatActivity {
                 RequestBody requestBaFile = RequestBody.create(MediaType.parse("multipart/form-file"), bafile_file);
                 partBaFile = MultipartBody.Part.createFormData("ba_file", bafile_file.getName(), requestBaFile);
                 builder.addPart(partBaFile);
+            }
+            if (file_bast != null){
+                RequestBody requestBASTFile = RequestBody.create(MediaType.parse("multipart/form-file"), file_bast);
+                partBASTFile = MultipartBody.Part.createFormData("file_bast", file_bast.getName(), requestBASTFile);
+                builder.addPart(partBASTFile);
             }
 
             if (spinnerLuasSatuan.getSelectedItem() != null) {
@@ -2066,6 +2141,21 @@ public class UpdateAsetActivity extends AppCompatActivity {
         String title = URLUtil.guessFileName(AsemApp.BASE_URL_ASSET + "/" + urlBa,null,null);
 
         DownloadManager.Request request = new DownloadManager.Request(Uri.parse( AsemApp.BASE_URL_ASSET + "/" + urlBa));
+        request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS,title);
+        request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
+        request.allowScanningByMediaScanner();
+        DownloadManager downloadManager = (DownloadManager)getSystemService(DOWNLOAD_SERVICE);
+        downloadManager.enqueue(request);
+
+        Toast.makeText(this, "Download Dimulai" , Toast.LENGTH_SHORT).show();
+
+    }
+
+    public void downloadBASTFunc(){
+
+        String title = URLUtil.guessFileName(AsemApp.BASE_URL_ASSET + "/" + urlBAST,null,null);
+
+        DownloadManager.Request request = new DownloadManager.Request(Uri.parse( AsemApp.BASE_URL_ASSET + "/" + urlBAST));
         request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS,title);
         request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
         request.allowScanningByMediaScanner();

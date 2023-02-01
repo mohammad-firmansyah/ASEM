@@ -751,6 +751,54 @@
                 android:lines="1"
                 android:paddingVertical="10dp" />
 
+            <TextView
+                android:id="@+id/tvUploadBAST"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:text="UPLOAD BAST :"
+                android:textColor="@color/main_grey"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                >
+
+
+                <TextView
+                    android:id="@+id/tvUploadFileBAST"
+                    android:layout_width="0dp"
+                    android:layout_height="41dp"
+                    android:layout_weight=".70"
+                    android:background="@drawable/edit_text_spiner"
+                    android:gravity="center_vertical"
+                    android:text="Tidak Ada File"
+                    android:textColor="@color/main_grey"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+
+                <Button
+
+                    android:id="@+id/inpUploadBAST"
+                    android:layout_width="0dp"
+                    android:layout_height="41dp"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_toEndOf="@+id/tvUploadFileBAST"
+                    android:layout_weight="0.3"
+                    android:background="@drawable/edit_text_spiner"
+                    android:backgroundTint="@color/BlueDark"
+                    android:onClick="uploadImage"
+                    android:spinnerMode="dropdown"
+                    android:text="UPLOAD"
+                    android:textColor="@color/white"
+                    android:textSize="10sp"
+                    tools:ignore="HardcodedText" />
+            </LinearLayout>
+
 
             <TextView
                 android:layout_width="match_parent"
