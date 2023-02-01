@@ -124,6 +124,8 @@ public class LonglistAsetActivity extends AppCompatActivity  { //implements Bott
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_longlist_aset);
 
+        SharedPreferences.Editor editor = getSharedPreferences(PREF_LOGIN, MODE_PRIVATE).edit();
+        sharedPreferences = getSharedPreferences(PREF_LOGIN,MODE_PRIVATE);
         dialog = new Dialog(LonglistAsetActivity.this,R.style.MyAlertDialogTheme);
         dialog.setContentView(R.layout.loading);
         dialog.setCanceledOnTouchOutside(false);
@@ -136,7 +138,7 @@ public class LonglistAsetActivity extends AppCompatActivity  { //implements Bott
         rcAset2.setHasFixedSize(true);
         rcAset2.setLayoutManager(new LinearLayoutManager(this));
         vwSync = findViewById(R.id.btnsync);
-        btnSync = findViewById(R.id.btnSyncSpinner);
+//        btnSync = findViewById(R.id.btnSyncSpinner);
         btnSyncReset = findViewById(R.id.btnSyncSpinnerDelete);
         fab = findViewById(R.id.addAset);
         srlonglist = findViewById(R.id.srlonglist);
@@ -146,25 +148,28 @@ public class LonglistAsetActivity extends AppCompatActivity  { //implements Bott
         tvAddDataOffline = findViewById(R.id.tvAddDataOffline);
 
 
-        btnSync.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                getAllSpinnerData();
-            }
-        });
+//        btnSync.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                getAllSpinnerData();
+//            }
+//        });
 
         btnSyncReset.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 //                dialog.show();
-                sharedPreferences = getSharedPreferences(PREF_LOGIN,MODE_PRIVATE);
+
                 String hak_akses_id = sharedPreferences.getString("hak_akses_id", "-");
                 if (hak_akses_id.equals("7")){
                     AsetHelper asetHelper = AsetHelper.getInstance(getApplicationContext());
                     asetHelper.open();
                     asetHelper.truncate(); ;
-                    Toast.makeText(getApplicationContext(),"success reset data spinner",Toast.LENGTH_LONG).show();
                     asetHelper.close();
+                    editor.putBoolean("sync",true);
+                    editor.apply();
+                    getAllSpinnerData();
+//                    Toast.makeText(getApplicationContext(),"sukes sinkron data spinner",Toast.LENGTH_LONG).show();
                 }
 
 //                dialog.dismiss();
@@ -266,7 +271,13 @@ public class LonglistAsetActivity extends AppCompatActivity  { //implements Bott
                         fab.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                startActivity(new Intent(LonglistAsetActivity.this, AsetAddUpdateOfflineActivity.class));
+                                Boolean sync = sharedPreferences.getBoolean("sync",false);
+                                if (sync){
+
+                                    startActivity(new Intent(LonglistAsetActivity.this, AsetAddUpdateOfflineActivity.class));
+                                } else {
+                                    Toast.makeText(getApplicationContext(),"Sinkronkan Data Terlebih Dahulu",Toast.LENGTH_LONG).show();
+                                }
 
                             }
                         });
@@ -553,6 +564,8 @@ public void getAllSpinnerData(){
 
             dialog.dismiss();
             Toast.makeText(getApplicationContext(),"sikronasi data sukses",Toast.LENGTH_SHORT).show();
+
+
             return;
 
         }

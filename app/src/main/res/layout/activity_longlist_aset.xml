@@ -28,21 +28,6 @@
             android:visibility="gone"
             >
 
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/btnSyncSpinner"
-                android:layout_marginHorizontal="5dp"
-                android:layout_width="0dp"
-                android:layout_weight="0.3"
-                android:layout_height="wrap_content"
-                android:padding="10dp"
-                android:background="@drawable/bg_rounded_btn_sc"
-                android:text="Sinkronkan Data"
-                android:textStyle="bold"
-                android:gravity="center"
-                android:textColor="@color/white"
-                android:textSize="15sp"
-                android:paddingVertical="10dp"
-                />
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btnSyncSpinnerDelete"
@@ -52,7 +37,7 @@
                 android:layout_height="wrap_content"
                 android:padding="10dp"
                 android:background="@drawable/bg_rounded_btn_sc"
-                android:text="Reset Data"
+                android:text="SINKRON DATA"
                 android:textStyle="bold"
                 android:gravity="center"
                 android:textColor="@color/white"

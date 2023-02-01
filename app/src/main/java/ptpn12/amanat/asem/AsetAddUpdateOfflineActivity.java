@@ -476,6 +476,7 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity  implements 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_aset_add_update_offline);
 
 
@@ -2659,6 +2660,7 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity  implements 
                  formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm:ss");
                  formattedDateTime = currentTime.format(formatter);
             }
+
 
             values.put("tgl_input", String.valueOf(formattedDateTime));
             values.put("masa_susut",inpMasaPenyusutan.getText().toString().trim());

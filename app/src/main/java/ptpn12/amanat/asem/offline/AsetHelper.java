@@ -74,6 +74,10 @@ public class AsetHelper {
                 null);
     }
 
+    public void deleteAllAset() {
+        database.execSQL("delete from "+ DatabaseContractAset.TABLE_NAME);
+    }
+
 //    public Cursor getAsetById(String id) {
 //        return database.rawQuery("SELECT * FROM " + DatabaseContractAset.TABLE_NAME + "WHERE aset_id = ?", new String[]{String.valueOf("aset_id"),null});
 //
