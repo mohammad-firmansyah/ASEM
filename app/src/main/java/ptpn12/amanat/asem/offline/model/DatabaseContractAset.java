@@ -17,10 +17,12 @@ public class DatabaseContractAset {
         public static String FOTOASET2 = "foto_aset2";
         public static String FOTOASET3 = "foto_aset3";
         public static String FOTOASET4 = "foto_aset4";
+        public static String FOTOASET5 = "foto_aset5";
         public static String GEOTAG1 = "geo_tag1";
         public static String GEOTAG2 = "geo_tag2";
         public static String GEOTAG3 = "geo_tag3";
         public static String GEOTAG4 = "geo_tag4";
+        public static String GEOTAG5 = "geo_tag5";
         public static String ASETLUAS = "aset_luas";
         public static String TGLINPUT = "tgl_input";
         public static String TGLOLEH = "tgl_oleh";
@@ -46,6 +48,7 @@ public class DatabaseContractAset {
         public static String PERSENKONDISI = "persen_kondisi";
         public static String UMUREKONOMISINMONTH = "umur_ekonomis_in_month";
         public static String BERITAACARA = "berita_acara";
+        public static String FILEBAST = "file_bast";
         public static String ALATPENGANGKUTAN = "alat_pengangkutan";
         public static String SATUANLUAS = "satuan_luas";
         public static String POPTOTALINI = "pop_total_ini";
