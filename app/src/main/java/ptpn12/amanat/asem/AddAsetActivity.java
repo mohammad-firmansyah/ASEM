@@ -103,6 +103,7 @@ import retrofit2.Response;
 public class AddAsetActivity extends AppCompatActivity {
     Button inpBtnMap;
     Button btnFile;
+    Button btnFileBAST;
     Button btnSubmit;
     Button map1;
     Button map2;
@@ -142,6 +143,7 @@ public class AddAsetActivity extends AppCompatActivity {
     EditText editText;
     EditText inpJumlahPohon;
     TextView tvUploudBA;
+    TextView tvUploadBAST;
     TextView tvAlatAngkut;
     AsetModel asetModel;
     File source;
@@ -219,6 +221,7 @@ public class AddAsetActivity extends AppCompatActivity {
     File img4;
     File img5;
     File bafile_file;
+    File file_bast;
 
     String spinnerIdTipeAsset;
     String spinnerIdJenisAset;
@@ -285,18 +288,22 @@ public class AddAsetActivity extends AppCompatActivity {
             Uri urifile = data.getData();
             try {
                 bafile_file = getFile(this, urifile);
+                file_bast = getFile(this, urifile);
                 String docPath = bafile_file.getAbsolutePath();
+                String docPathBAST = file_bast.getAbsolutePath();
                 Log.d("asetapix", "onActivityResult: path doc : "+docPath);
                 Log.d("asetapix", "onActivityResult: masterpath : "+data.getData().getPath());
+                Log.d("asetapix", "onActivityResult: path doc BAST : "+docPathBAST);
+                Log.d("asetapix", "onActivityResult: masterpath BAST : "+data.getData().getPath());
 //                ExifInterface ei = new ExifInterface(bafile_file.getAbsolutePath());
                 tvUploudBA.setText(bafile_file.getAbsolutePath());
+                tvUploadBAST.setText(file_bast.getAbsolutePath());
             } catch (IOException e) {
                 e.printStackTrace();
             }
             Log.d("asetapix", "onActivityResult: "+ data.getData());
         }
     }
-
 
     ActivityResultLauncher<Intent> sActivityResultLauncher = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
@@ -320,6 +327,28 @@ public class AddAsetActivity extends AppCompatActivity {
                 }
             });
 
+    ActivityResultLauncher<Intent> BASTActivityResultLauncher = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(),
+            new ActivityResultCallback<ActivityResult>() {
+                @Override
+                public void onActivityResult(ActivityResult result) {
+                    if (result.getResultCode() == Activity.RESULT_OK) {
+                        Intent data = result.getData();
+                        Uri uri = data.getData();
+                        try {
+                            InputStream inputStream = getContentResolver().openInputStream(uri);
+                        } catch (FileNotFoundException e) {
+                            e.printStackTrace();
+                        }
+
+                        String path =  uri.getPath();
+                        file_bast = new File(Environment.getExternalStorageDirectory().getPath() + path);
+                        Log.d("asetapix",Environment.getExternalStorageDirectory().getPath() + path);
+                        tvUploadBAST.setText(file_bast.getAbsolutePath());
+                    }
+                }
+            });
+
     public void openFileDialog() {
         Intent data = new Intent(Intent.ACTION_OPEN_DOCUMENT);
         data.addCategory(Intent.CATEGORY_OPENABLE);
@@ -328,6 +357,7 @@ public class AddAsetActivity extends AppCompatActivity {
 //        data.putExtra(Intent.EXTRA_MIME_TYPES,mimetype);
         data = Intent.createChooser(data,"Pilih Berita Acara");
         sActivityResultLauncher.launch(data);
+        BASTActivityResultLauncher.launch(data);
     }
 //    public void openfilechoser(){
 ////        Intent intent = null;
@@ -566,6 +596,7 @@ public class AddAsetActivity extends AppCompatActivity {
 //        inpBtnMap = findViewById(R.id.inpBtnMap);
         btnSubmit = findViewById(R.id.btnSubmit);
         btnFile = findViewById(R.id.inpUploudBA);
+        btnFileBAST = findViewById(R.id.inpUploadBAST);
 
 //        handler
 
@@ -845,8 +876,6 @@ public class AddAsetActivity extends AppCompatActivity {
             }
         });
 
-        btnFile = findViewById(R.id.inpUploudBA);
-
         btnFile.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
@@ -854,6 +883,20 @@ public class AddAsetActivity extends AppCompatActivity {
 //                openFileDialog();
 //                Toast.makeText(getApplicationContext(),"hello from hell",Toast.LENGTH_LONG).show();
 
+                Intent pickFile = new Intent(Intent.ACTION_GET_CONTENT);
+                pickFile.addCategory(Intent.CATEGORY_OPENABLE);
+                pickFile.setType("application/pdf");
+                // Optionally, specify a URI for the file that should appear in the
+                // system file picker when it loads.
+
+                pickFile.putExtra(DocumentsContract.EXTRA_INITIAL_URI, docUri);
+                startActivityForResult(pickFile, 1);
+            }
+        });
+
+        btnFileBAST.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
                 Intent pickFile = new Intent(Intent.ACTION_GET_CONTENT);
                 pickFile.addCategory(Intent.CATEGORY_OPENABLE);
                 pickFile.setType("application/pdf");
@@ -1250,6 +1293,7 @@ public class AddAsetActivity extends AppCompatActivity {
         TextView tvLuasTanaman = findViewById(R.id.luasTanaman);
         TextView tvLuasNonTanaman = findViewById(R.id.luasNonTanaman);
         TextView tvPersenKondisi = findViewById(R.id.tvPersenKondisi);
+        TextView tvFileBAST = findViewById(R.id.tvUploadFileBAST);
 
         HorizontalScrollView scrollPartition = findViewById(R.id.scrollPartition);
 //        Toast.makeText(getApplicationContext(),String.valueOf(spinnerSubUnit.getSelectedItemId()),Toast.LENGTH_LONG).show();
@@ -1259,6 +1303,16 @@ public class AddAsetActivity extends AppCompatActivity {
         } else {
             inpNomorBAST.setVisibility(View.GONE);
             tvBast.setVisibility(View.GONE);
+        }
+
+        if (spinnerTipeAset.getSelectedItemId() == 1) {
+            //input PDF ba bast
+            btnFileBAST.setVisibility(View.VISIBLE);
+            tvFileBAST.setVisibility(View.VISIBLE);
+        } else {
+            //input PDF ba bast
+            btnFileBAST.setVisibility(View.GONE);
+            tvFileBAST.setVisibility(View.GONE);
         }
 
         if (spinnerSubUnit.getSelectedItemId() == 2){
@@ -1283,6 +1337,8 @@ public class AddAsetActivity extends AppCompatActivity {
             tvUploudBA.setVisibility(View.GONE);
 //            inpBtnMap.setVisibility(View.GONE);
             btnFile.setVisibility(View.GONE);
+            btnFileBAST.setVisibility(View.VISIBLE);
+            tvFileBAST.setVisibility(View.VISIBLE);
 
             tvFoto.setVisibility(View.VISIBLE);
             scrollPartition.setVisibility(View.VISIBLE);
@@ -1320,6 +1376,8 @@ public class AddAsetActivity extends AppCompatActivity {
             tvBa.setVisibility(View.VISIBLE);
             tvUploudBA.setVisibility(View.VISIBLE);
             btnFile.setVisibility(View.VISIBLE);
+            btnFileBAST.setVisibility(View.GONE);
+            tvFileBAST.setVisibility(View.GONE);
 
 //            inpBtnMap.setVisibility(View.GONE);
 
@@ -1356,6 +1414,8 @@ public class AddAsetActivity extends AppCompatActivity {
             spinnerLuasSatuan.setVisibility(View.GONE);
             inpNomorBAST.setVisibility(View.VISIBLE);
             tvBast.setVisibility(View.VISIBLE);
+            btnFileBAST.setVisibility(View.GONE);
+            tvFileBAST.setVisibility(View.GONE);
 //            listBtnMap.setVisibility(View.GONE);
 //            inpBtnMap.setVisibility(View.GONE);
 
@@ -1393,6 +1453,8 @@ public class AddAsetActivity extends AppCompatActivity {
             tvUploudBA.setVisibility(View.GONE);
 //            inpBtnMap.setVisibility(View.GONE);
             btnFile.setVisibility(View.GONE);
+            btnFileBAST.setVisibility(View.VISIBLE);
+            tvFileBAST.setVisibility(View.VISIBLE);
 
             tvFoto.setVisibility(View.VISIBLE);
             scrollPartition.setVisibility(View.VISIBLE);
@@ -1431,6 +1493,8 @@ public class AddAsetActivity extends AppCompatActivity {
 
             inpNomorBAST.setVisibility(View.VISIBLE);
             tvBast.setVisibility(View.VISIBLE);
+            btnFileBAST.setVisibility(View.GONE);
+            tvFileBAST.setVisibility(View.GONE);
 //            inpBtnMap.setVisibility(View.GONE);
 
             tvFoto.setVisibility(View.VISIBLE);
@@ -1470,6 +1534,8 @@ public class AddAsetActivity extends AppCompatActivity {
 //            listBtnMap.setVisibility(View.GONE);
             inpJumlahPohon.setVisibility(View.GONE);
 //            inpBtnMap.setVisibility(View.GONE);
+            btnFileBAST.setVisibility(View.GONE);
+            tvFileBAST.setVisibility(View.GONE);
 
             tvFoto.setVisibility(View.GONE);
             scrollPartition.setVisibility(View.GONE);
@@ -1509,6 +1575,8 @@ public class AddAsetActivity extends AppCompatActivity {
             tvUploudBA.setVisibility(View.GONE);
 //            inpBtnMap.setVisibility(View.GONE);
             btnFile.setVisibility(View.GONE);
+            btnFileBAST.setVisibility(View.VISIBLE);
+            tvFileBAST.setVisibility(View.VISIBLE);
 
             tvFoto.setVisibility(View.VISIBLE);
             scrollPartition.setVisibility(View.VISIBLE);
@@ -1544,6 +1612,8 @@ public class AddAsetActivity extends AppCompatActivity {
             spinnerLuasSatuan.setVisibility(View.VISIBLE);
             tvFoto.setVisibility(View.VISIBLE);
             scrollPartition.setVisibility(View.VISIBLE);
+            btnFileBAST.setVisibility(View.GONE);
+            tvFileBAST.setVisibility(View.GONE);
 
 //            listBtnMap.setVisibility(View.GONE);
             tvLuasTanaman.setVisibility(View.GONE);
@@ -1579,6 +1649,8 @@ public class AddAsetActivity extends AppCompatActivity {
 //            inpBtnMap.setVisibility(View.GONE);
             inpNomorBAST.setVisibility(View.GONE);
             tvBast.setVisibility(View.GONE);
+            btnFileBAST.setVisibility(View.GONE);
+            tvFileBAST.setVisibility(View.GONE);
 
             tvFoto.setVisibility(View.GONE);
             scrollPartition.setVisibility(View.GONE);
@@ -1612,6 +1684,8 @@ public class AddAsetActivity extends AppCompatActivity {
             tvUploudBA.setVisibility(View.GONE);
 //            inpBtnMap.setVisibility(View.GONE);
             btnFile.setVisibility(View.GONE);
+            btnFileBAST.setVisibility(View.GONE);
+            tvFileBAST.setVisibility(View.GONE);
 
             tvLuasTanaman.setVisibility(View.GONE);
             tvLuasNonTanaman.setVisibility(View.GONE);
@@ -1739,7 +1813,7 @@ public class AddAsetActivity extends AppCompatActivity {
                 String keterangan = inpKeterangan.getText().toString().trim();
 
 
-                MultipartBody.Part img1Part = null, img2Part = null, img3Part = null, img4Part = null, img5Part = null, partBaFile = null;
+                MultipartBody.Part img1Part = null, img2Part = null, img3Part = null, img4Part = null, img5Part = null, partBaFile = null, partBASTFile = null;
 
 
                 RequestBody requestTipeAset = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(spinnerIdTipeAsset));
@@ -1857,6 +1931,12 @@ public class AddAsetActivity extends AppCompatActivity {
                     RequestBody requestBaFile = RequestBody.create(MediaType.parse("multipart/form-file"), bafile_file);
                     partBaFile = MultipartBody.Part.createFormData("ba_file", bafile_file.getName(), requestBaFile);
                     builder.addPart(partBaFile);
+                }
+
+                if (file_bast != null) {
+                    RequestBody requestBASTFile = RequestBody.create(MediaType.parse("multipart/form-file"), file_bast);
+                    partBASTFile = MultipartBody.Part.createFormData("file_bast", file_bast.getName(), requestBASTFile);
+                    builder.addPart(partBASTFile);
                 }
 
                 if (inpKeterangan != null) {

@@ -129,6 +129,9 @@ public class Data {
     @SerializedName("berita_acara")
     @Expose
     private String beritaAcara;
+    @SerializedName("file_bast")
+    @Expose
+    private String fileBAST;
     @SerializedName("umur_ekonomis_in_month")
     @Expose
     private Integer umurEkonomisInMonth;
@@ -572,6 +575,14 @@ public class Data {
 
     public void setBeritaAcara(String baFile) {
         this.beritaAcara = baFile;
+    }
+
+    public String getFileBAST() {
+        return fileBAST;
+    }
+
+    public void setFileBAST(String fileBAST) {
+        this.fileBAST = fileBAST;
     }
 
     public Integer getUmurEkonomisInMonth() {
