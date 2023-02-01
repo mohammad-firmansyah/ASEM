@@ -80,6 +80,7 @@ public class DetailAsetActivity extends AppCompatActivity {
 
     Data aset;
     String urlfotoasetqr = "";
+    String urlfotoasetqr2 = "";
     Map<Integer, Integer> mapAfdelingSpinner = new HashMap<Integer, Integer>();
     Map<Long, Integer> mapSap = new HashMap();
     Map<Integer, Long> mapSpinnerSap = new HashMap();
@@ -107,7 +108,9 @@ public class DetailAsetActivity extends AppCompatActivity {
     EditText inpNoInv;
     EditText inpHGU;
     ImageView fotoasetqr;
+    ImageView fotoasetqr2;
     ViewGroup addNewFotoAsetAndQr;
+    ViewGroup addNewFotoAsetAndQr2;
     LinearLayout fotoasetqrgroup;
 
     String qrurl;
@@ -145,6 +148,7 @@ public class DetailAsetActivity extends AppCompatActivity {
     EditText inpJumlahPohon;
     TextView tvUploudBA;
     TextView tvFotoAsetQR;
+    TextView tvFotoAsetQR2;
     TextView tvKetReject;
     AsetModel asetModel;
     File source;
@@ -274,6 +278,8 @@ public class DetailAsetActivity extends AppCompatActivity {
         spinnerUnit.setEnabled(false);
         fotoasetqr = findViewById(R.id.fotoasetqr);
         tvFotoAsetQR = findViewById(R.id.tvFotoAsetQR);
+        fotoasetqr2 = findViewById(R.id.fotoasetqr2);
+        tvFotoAsetQR2 = findViewById(R.id.tvFotoAsetQR2);
         tvKetReject = findViewById(R.id.tvKetReject);
         spinnerLuasSatuan = findViewById(R.id.inpLuasSatuan);
         spinnerLuasSatuan.setEnabled(false);
@@ -283,6 +289,7 @@ public class DetailAsetActivity extends AppCompatActivity {
 
         downloadBa = findViewById(R.id.inpDownloadBa);
         addNewFotoAsetAndQr = findViewById(R.id.addNewFotoAsetAndQr);
+        addNewFotoAsetAndQr2 = findViewById(R.id.addNewFotoAsetAndQr2);
         inpTglInput = findViewById(R.id.inpTglInput);
         inpTglInput.setEnabled(false);
         inpUmrEkonomis = findViewById(R.id.inpUmrEkonomis);
@@ -583,6 +590,14 @@ public class DetailAsetActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+        addNewFotoAsetAndQr2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(DetailAsetActivity.this,DetailImageActivity.class);
+                intent.putExtra("url",urlfotoasetqr2);
+                startActivity(intent);
+            }
+        });
 
 
         inpNilaiAsetSAP.addTextChangedListener(new TextWatcher() {
@@ -861,6 +876,7 @@ public class DetailAsetActivity extends AppCompatActivity {
                 url5 = AsemApp.BASE_URL_ASSET+aset.getFotoAset5();
             }
             urlfotoasetqr = AsemApp.BASE_URL_ASSET+aset.getFotoAsetQr();
+            urlfotoasetqr2 = AsemApp.BASE_URL_ASSET+aset.getFotoAsetQr2();
 
             if (aset.getFotoAset1() == null ){
                 map1.setEnabled(false);
@@ -914,17 +930,25 @@ public class DetailAsetActivity extends AppCompatActivity {
 
 //                Log.d("asetapix", response.body().getData().getFotoAsetQr());
 
-            if (aset.getFotoAsetQr()!=null ){
+            if (aset.getFotoAsetQr()!=null && aset.getFotoAsetQr2()!=null){
 //                    fotoasetqrgroup.setVisibility(View.VISIBLE);
                 String url = AsemApp.BASE_URL + aset.getFotoAsetQr();
                 Log.d("amanat-url",url);
                 fotoasetqr.getLayoutParams().width = 300;
                 fotoasetqr.getLayoutParams().height = 300;
                 Picasso.get().load(urlfotoasetqr).resize(300,300).centerCrop().into(fotoasetqr);
+
+                String url2 = AsemApp.BASE_URL + aset.getFotoAsetQr2();
+                Log.d("amanat-url",url2);
+                fotoasetqr2.getLayoutParams().width = 300;
+                fotoasetqr2.getLayoutParams().height = 300;
+                Picasso.get().load(urlfotoasetqr2).resize(300,300).centerCrop().into(fotoasetqr2);
             }
             else{
                 tvFotoAsetQR.setVisibility(View.GONE);
+                tvFotoAsetQR2.setVisibility(View.GONE);
                 addNewFotoAsetAndQr.setVisibility(View.GONE);
+                addNewFotoAsetAndQr2.setVisibility(View.GONE);
             }
 
             urlBa = aset.getBeritaAcara();

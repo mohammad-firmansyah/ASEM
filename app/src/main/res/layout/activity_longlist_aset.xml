@@ -16,6 +16,7 @@
         android:orientation="horizontal"
         android:gravity="center_horizontal"
         android:padding="10dp"
+        android:layout_below="@id/switchoff"
         >
 
         <LinearLayout
@@ -109,7 +110,6 @@
         android:layout_width="match_parent"
         android:layout_height="30dp"
         android:paddingTop="6dp"
-        android:layout_below="@+id/upLayout"
         >
 
         <androidx.appcompat.widget.SwitchCompat
@@ -149,7 +149,7 @@
         android:id="@+id/mainAset"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:gravity="center"
-        android:layout_below="@id/switchoff"
+        android:layout_below="@id/upLayout"
         android:layout_above="@+id/bottomnav"
         tools:context="ptpn12.amanat.asem.MainActivity">
 
@@ -196,13 +196,32 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|right"
-            android:layout_margin="16dp"
+            android:layout_margin="20dp"
             android:contentDescription="add new data"
             android:backgroundTint="@color/black"
             android:src="@drawable/ic_baseline_add_24_2"
             app:fabSize="normal"
             app:elevation="5dp"
             />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/addDataOffline"
+            android:layout_gravity="bottom|right"
+            android:background="@drawable/bg_round_corner"
+            android:layout_marginRight="15dp"
+            android:visibility="gone"
+            >
+
+            <TextView
+                android:id="@+id/tvAddDataOffline"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="  OFFLINE  "
+                android:textColor="@color/white"/>
+
+        </LinearLayout>
 
 
 

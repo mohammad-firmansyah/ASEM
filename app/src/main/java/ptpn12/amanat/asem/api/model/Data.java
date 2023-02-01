@@ -105,6 +105,9 @@ public class Data {
     @SerializedName("foto_aset_qr")
     @Expose
     private String fotoAsetQr;
+    @SerializedName("foto_aset_qr_2")
+    @Expose
+    private String fotoAsetQr2;
     @SerializedName("status_posisi")
     @Expose
     private Integer statusPosisi;
@@ -505,6 +508,14 @@ public class Data {
 
     public void setFotoAsetQr(String fotoAsetQr) {
         this.fotoAsetQr = fotoAsetQr;
+    }
+
+    public String getFotoAsetQr2() {
+        return fotoAsetQr2;
+    }
+
+    public void setFotoAsetQr2(String fotoAsetQr2) {
+        this.fotoAsetQr2 = fotoAsetQr2;
     }
 
     public Integer getStatusPosisi() {

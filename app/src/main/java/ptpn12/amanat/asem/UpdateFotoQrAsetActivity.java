@@ -101,9 +101,12 @@ import com.google.android.gms.location.LocationRequest;
 
 public class UpdateFotoQrAsetActivity extends AppCompatActivity {
     ViewGroup addNewFotoAsetAndQr;
+    ViewGroup addNewFotoAsetAndQr2;
     ImageView fotoasetqr;
+    ImageView fotoasetqr2;
     Button inpSimpanFotoQr;
     File fotoAsetQrFile;
+    File fotoAsetQrFile2;
     Data aset;
     Button inpBtnMap;
     Button btnFile;
@@ -281,6 +284,8 @@ public class UpdateFotoQrAsetActivity extends AppCompatActivity {
                                 img1 = utils.savePictureResult(
                                         UpdateFotoQrAsetActivity.this, photoname1, fotoimg1, true
                                 );
+                                fotoimg1.getLayoutParams().width = 200;
+                                fotoimg1.getLayoutParams().height = 200;
                                 setExifLocation(img1,1);
                             } else if (resultCode == Activity.RESULT_CANCELED){
                                 android.widget.Toast.makeText(UpdateFotoQrAsetActivity.this, "Cancelled", Toast.LENGTH_SHORT).show();
@@ -301,6 +306,8 @@ public class UpdateFotoQrAsetActivity extends AppCompatActivity {
                                 img2 = utils.savePictureResult(
                                         UpdateFotoQrAsetActivity.this, photoname2, fotoimg2, true
                                 );
+                                fotoimg2.getLayoutParams().width = 200;
+                                fotoimg2.getLayoutParams().height = 200;
                                 setExifLocation(img2,2);
                             } else if (resultCode == Activity.RESULT_CANCELED){
                                 android.widget.Toast.makeText(UpdateFotoQrAsetActivity.this, "Cancelled", Toast.LENGTH_SHORT).show();
@@ -321,6 +328,8 @@ public class UpdateFotoQrAsetActivity extends AppCompatActivity {
                                 img3 = utils.savePictureResult(
                                         UpdateFotoQrAsetActivity.this, photoname3, fotoimg3, true
                                 );
+                                fotoimg3.getLayoutParams().width = 200;
+                                fotoimg3.getLayoutParams().height = 200;
                                 setExifLocation(img3,3);
                             } else if (resultCode == Activity.RESULT_CANCELED){
                                 android.widget.Toast.makeText(UpdateFotoQrAsetActivity.this, "Cancelled", Toast.LENGTH_SHORT).show();
@@ -341,6 +350,8 @@ public class UpdateFotoQrAsetActivity extends AppCompatActivity {
                                 img4 = utils.savePictureResult(
                                         UpdateFotoQrAsetActivity.this, photoname4, fotoimg4, true
                                 );
+                                fotoimg4.getLayoutParams().width = 200;
+                                fotoimg4.getLayoutParams().height = 200;
                                 setExifLocation(img4,4);
                             } else if (resultCode == Activity.RESULT_CANCELED){
                                 android.widget.Toast.makeText(UpdateFotoQrAsetActivity.this, "Cancelled", Toast.LENGTH_SHORT).show();
@@ -361,7 +372,9 @@ public class UpdateFotoQrAsetActivity extends AppCompatActivity {
                                 img5 = utils.savePictureResult(
                                         UpdateFotoQrAsetActivity.this, photoname5, fotoimg5, true
                                 );
-                                setExifLocation(img5,4);
+                                fotoimg5.getLayoutParams().width = 200;
+                                fotoimg5.getLayoutParams().height = 200;
+                                setExifLocation(img5,5);
                             } else if (resultCode == Activity.RESULT_CANCELED){
                                 android.widget.Toast.makeText(UpdateFotoQrAsetActivity.this, "Cancelled", Toast.LENGTH_SHORT).show();
                             }
@@ -380,6 +393,25 @@ public class UpdateFotoQrAsetActivity extends AppCompatActivity {
                             if (resultCode== Activity.RESULT_OK){
                                 fotoAsetQrFile = utils.savePictureResult(
                                         UpdateFotoQrAsetActivity.this, "fotoasetqr.png", fotoasetqr, true
+                                );
+                            } else if (resultCode == Activity.RESULT_CANCELED){
+                                android.widget.Toast.makeText(UpdateFotoQrAsetActivity.this, "Cancelled", Toast.LENGTH_SHORT).show();
+                            }
+
+                        }
+                    }
+            );
+
+    ActivityResultLauncher<Intent> activityCaptureFotoAsetQr2 =
+            registerForActivityResult(
+                    new ActivityResultContracts.StartActivityForResult(),
+                    new ActivityResultCallback<ActivityResult>() {
+                        @Override
+                        public void onActivityResult(ActivityResult activityResult) {
+                            int resultCode = activityResult.getResultCode();
+                            if (resultCode== Activity.RESULT_OK){
+                                fotoAsetQrFile2 = utils.savePictureResult(
+                                        UpdateFotoQrAsetActivity.this, "fotoasetqr2.png", fotoasetqr2, true
                                 );
                             } else if (resultCode == Activity.RESULT_CANCELED){
                                 android.widget.Toast.makeText(UpdateFotoQrAsetActivity.this, "Cancelled", Toast.LENGTH_SHORT).show();
@@ -480,12 +512,20 @@ public class UpdateFotoQrAsetActivity extends AppCompatActivity {
 
         inpSimpanFotoQr = findViewById(R.id.inpSimpanFotoQr);
         fotoasetqr = findViewById(R.id.fotoasetqr);
+        fotoasetqr2 = findViewById(R.id.fotoasetqr2);
         addNewFotoAsetAndQr = findViewById(R.id.addNewFotoAsetAndQr);
+        addNewFotoAsetAndQr2 = findViewById(R.id.addNewFotoAsetAndQr2);
 
         addNewFotoAsetAndQr.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 captureFotoQcLoses("fotoasetqr.png",activityCaptureFotoAsetQr);
+            }
+        });
+        addNewFotoAsetAndQr2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                captureFotoQcLoses("fotoasetqr2.png",activityCaptureFotoAsetQr2);
             }
         });
         inpNoSAP.setOnClickListener(new View.OnClickListener() {
@@ -556,7 +596,12 @@ public class UpdateFotoQrAsetActivity extends AppCompatActivity {
         inpSimpanFotoQr.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                initDialogEditAset();
+//                Toast.makeText(getApplicationContext(),"Mohon Lengkapi Foto Aset + QR!", Toast.LENGTH_SHORT).show();
+                if (activityCaptureFotoAsetQr==null && activityCaptureFotoAsetQr2==null){
+                    Toast.makeText(getApplicationContext(),"Mohon Lengkapi Foto Aset + QR!", Toast.LENGTH_SHORT).show();
+                }else{
+                    initDialogEditAset();
+                }
             }
         });
 
@@ -1076,13 +1121,13 @@ public class UpdateFotoQrAsetActivity extends AppCompatActivity {
                                  Picasso.get().load(url4).resize(200,200).centerCrop().into(fotoimg4);
                              }
 
-                             if (response.body().getData().getFotoAset4() == null ){
+                             if (response.body().getData().getFotoAset5() == null ){
                                  map5.setEnabled(false);
                              } else {
                                  map5.setEnabled(true);
                                  fotoimg5.getLayoutParams().width = 200;
                                  fotoimg5.getLayoutParams().height = 200;
-                                 Picasso.get().load(url4).resize(200,200).centerCrop().into(fotoimg5);
+                                 Picasso.get().load(url5).resize(200,200).centerCrop().into(fotoimg5);
                              }
 
                              if (response.body().getData().getFotoAsetQr()!=null ){
@@ -1091,6 +1136,13 @@ public class UpdateFotoQrAsetActivity extends AppCompatActivity {
                                  fotoasetqr.getLayoutParams().width = 300;
                                  fotoasetqr.getLayoutParams().height = 300;
                                  Picasso.get().load(url).resize(300,300).centerCrop().into(fotoasetqr);
+                             }
+                             if (response.body().getData().getFotoAsetQr2()!=null ){
+                                 String url =  AsemApp.BASE_URL_ASSET + response.body().getData().getFotoAsetQr2();
+                                 Log.d("amanat-url",url);
+                                 fotoasetqr2.getLayoutParams().width = 300;
+                                 fotoasetqr2.getLayoutParams().height = 300;
+                                 Picasso.get().load(url).resize(300,300).centerCrop().into(fotoasetqr2);
                              }
 
 
@@ -1976,6 +2028,9 @@ public class UpdateFotoQrAsetActivity extends AppCompatActivity {
             }
             if (fotoAsetQrFile != null) {
                 builder.addPart(MultipartBody.Part.createFormData("foto_aset_qr", fotoAsetQrFile.getName(), RequestBody.create(MediaType.parse("image/*"), fotoAsetQrFile)));
+            }
+            if (fotoAsetQrFile2 != null) {
+                builder.addPart(MultipartBody.Part.createFormData("foto_aset_qr_2", fotoAsetQrFile2.getName(), RequestBody.create(MediaType.parse("image/*"), fotoAsetQrFile2)));
             }
 
             if (img2 != null) {
