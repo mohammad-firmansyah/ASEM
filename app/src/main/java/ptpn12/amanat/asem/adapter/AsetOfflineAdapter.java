@@ -269,9 +269,8 @@ Dialog dialog;
     }
 
     void kirimData(Aset aset) {
+        dialog.show();
         MultipartBody.Part img1Part = null, img2Part = null, img3Part = null, img4Part = null, partBaFile = null;
-
-
         RequestBody requestTipeAset = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(aset.getAsetTipe()));
         RequestBody requestJenisAset = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(aset.getAsetJenis()));
         RequestBody requestKondisiAset = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(aset.getAsetKondisi()));
@@ -415,22 +414,20 @@ Dialog dialog;
 
             @Override
             public void onResponse(Call<AsetModel2> call, Response<AsetModel2> response) {
+                dialog.dismiss();
                 if (!response.isSuccessful() && response.body() == null) {
-                    if (response.code() == 401) {
-//                                        dialog.dismiss();
-//                                        customDialogAddAset.dismiss();
-//                                        inpNoSAP.setError("Nomor SAP sudah ada");
-//                                        inpNoSAP.requestFocus();
+                    if (response.code() >= 400 && response.code() < 500) {
                         Toast.makeText(context,"data sap sudah digunkan tolong diubah",Toast.LENGTH_LONG).show();
                         return;
                     }
-                    Toast.makeText(context,"error :" + response.message() + String.valueOf(response.code()),Toast.LENGTH_LONG).show();
+
+
+                    Toast.makeText(context,"Tidak ada Koneksi Internet " ,Toast.LENGTH_LONG).show();
                     return;
                 }
 
 
-                Log.d("amanat19-asetid2", String.valueOf(response.body().getData().getAsetId()));
-                Log.d("amanat19-asetid2", String.valueOf(response.body().getData().getAsetJenis()));
+                dialog.dismiss();
                 String user_id = sharedPreferences.getString("user_id", "0");
                 Call<AsetModel2> call2 = asetInterface.kirimDataAset(response.body().getData().getAsetId(), Integer.parseInt(user_id));
                 call2.enqueue(new Callback<AsetModel2>(){
@@ -446,7 +443,7 @@ Dialog dialog;
                         }else {
                             //cek image apakah sudah terfoto semua atau belum
                             //get response body data,if (url img 1-4 = adaa) then bisa kirim, else
-                            Toast.makeText(context.getApplicationContext(), response.toString(), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(context.getApplicationContext(), response.code(), Toast.LENGTH_SHORT).show();
                             return;
                         }
 
@@ -455,7 +452,8 @@ Dialog dialog;
 
                     @Override
                     public void onFailure(Call<AsetModel2> call, Throwable t) {
-                        Toast.makeText(context,"error : "+t.getMessage(),Toast.LENGTH_LONG).show();
+                        dialog.dismiss();
+                        Toast.makeText(context,"Tidak ada Koneksi Internet",Toast.LENGTH_LONG).show();
                         return;
                     }
                 });
