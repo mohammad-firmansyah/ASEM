@@ -103,8 +103,6 @@ public class LonglistAsetActivity extends AppCompatActivity  { //implements Bott
 
     Button btnReport;
     Button btnFilter;
-    Button btnSync;
-    Button btnSyncReset;
     ViewGroup vwSync;
     FloatingActionButton fab;
 
@@ -145,9 +143,6 @@ public class LonglistAsetActivity extends AppCompatActivity  { //implements Bott
         rcAset2 = findViewById(R.id.recView2);
         rcAset2.setHasFixedSize(true);
         rcAset2.setLayoutManager(new LinearLayoutManager(this));
-        vwSync = findViewById(R.id.btnsync);
-//        btnSync = findViewById(R.id.btnSyncSpinner);
-        btnSyncReset = findViewById(R.id.btnSyncSpinnerDelete);
         fab = findViewById(R.id.addAset);
         srlonglist = findViewById(R.id.srlonglist);
         searchView = findViewById(R.id.svSearch);
@@ -162,23 +157,6 @@ public class LonglistAsetActivity extends AppCompatActivity  { //implements Bott
         } else {
             switch_offline.setChecked(false);
         }
-
-//        btnSync.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                getAllSpinnerData();
-//            }
-//        });
-
-        btnSyncReset.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-//                dialog.show();
-
-//                dialog.dismiss();
-            }
-        });
-
         sharedPreferences = getSharedPreferences(PREF_LOGIN, MODE_PRIVATE);
         String hak_akses_id = sharedPreferences.getString("hak_akses_id", "-");
         if (hak_akses_id.equals("7")){
@@ -250,6 +228,7 @@ public class LonglistAsetActivity extends AppCompatActivity  { //implements Bott
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 srlonglist.setEnabled(false);
+                offline = true;
                 fab.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -260,7 +239,6 @@ public class LonglistAsetActivity extends AppCompatActivity  { //implements Bott
                 if(switch_offline.isChecked()){
                     dialog.show();
                     //aktifkan longlist offline
-                    vwSync.setVisibility(View.VISIBLE);
                     addDataOffline.setVisibility(View.VISIBLE);
 
                     dialog.dismiss();
@@ -271,6 +249,7 @@ public class LonglistAsetActivity extends AppCompatActivity  { //implements Bott
                     btnFilter.setVisibility(View.GONE);
                     switch_offline.setTrackTintList(ColorStateList.valueOf(getResources().getColor(R.color.MediumBlue)));
                     switch_offline.setThumbTintList(ColorStateList.valueOf(getResources().getColor(R.color.white)));
+
                     fab.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
@@ -354,7 +333,6 @@ public class LonglistAsetActivity extends AppCompatActivity  { //implements Bott
 
         }else {
             dialog.dismiss();
-            vwSync.setVisibility(View.GONE);
             addDataOffline.setVisibility(View.GONE);
             srlonglist.setEnabled(true);
             getAllAset();
@@ -509,30 +487,30 @@ public class LonglistAsetActivity extends AppCompatActivity  { //implements Bott
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        if (offline) {
-            getMenuInflater().inflate(R.menu.menu_main, menu);
-            return true;
-        } else {
-            return false;
-        }
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menu_sync:
-                String hak_akses_id = sharedPreferences.getString("hak_akses_id", "-");
-                if (hak_akses_id.equals("7")){
-                    AsetHelper asetHelper = AsetHelper.getInstance(getApplicationContext());
-                    asetHelper.open();
-                    asetHelper.truncate(); ;
-                    asetHelper.close();
-                    editor.putBoolean("sync",true);
-                    editor.apply();
-                    getAllSpinnerData();
-                    return true;
+                if (offline) {
+                    String hak_akses_id = sharedPreferences.getString("hak_akses_id", "-");
+                    if (hak_akses_id.equals("7")){
+                        AsetHelper asetHelper = AsetHelper.getInstance(getApplicationContext());
+                        asetHelper.open();
+                        asetHelper.truncate(); ;
+                        asetHelper.close();
+                        editor.putBoolean("sync",true);
+                        editor.apply();
+                        getAllSpinnerData();
+                        return true;
+                    }
+                } else {
+                    Toast.makeText(getApplicationContext(),"Hanya tersedia saat offline",Toast.LENGTH_LONG).show();
+                    break;
                 }
-            break;
         }
         return true;
     }

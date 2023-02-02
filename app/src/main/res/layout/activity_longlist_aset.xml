@@ -19,33 +19,6 @@
         android:layout_below="@id/switchoff"
         >
 
-        <LinearLayout
-            android:id="@+id/btnsync"
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:layout_below="@id/switchoff"
-            android:layout_marginHorizontal="10dp"
-            android:visibility="gone"
-            >
-
-
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/btnSyncSpinnerDelete"
-                android:layout_marginHorizontal="5dp"
-                android:layout_width="0dp"
-                android:layout_weight="0.3"
-                android:layout_height="wrap_content"
-                android:padding="10dp"
-                android:background="@drawable/bg_rounded_btn_sc"
-                android:text="SINKRON DATA"
-                android:textStyle="bold"
-                android:gravity="center"
-                android:textColor="@color/white"
-                android:textSize="15sp"
-                android:paddingVertical="10dp"
-                />
-        </LinearLayout>
-
         <androidx.appcompat.widget.SearchView
             android:layout_weight="0.7"
             android:id="@+id/svSearch"

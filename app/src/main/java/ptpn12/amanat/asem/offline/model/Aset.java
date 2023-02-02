@@ -633,6 +633,7 @@ public class Aset implements Parcelable {
         this.pop_total_std = popTotalStd ;
         this.pop_hektar_ini = popHektarIni ;
         this.pop_hektar_std = popHektarStd ;
+        this.fileBAST = fileBAST;
     }
 
     @Override

@@ -650,7 +650,7 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity  implements 
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 spinnerIdKodeAset = String.valueOf(position);
-
+//                setValueInput();
                 if (spinnerKodeAset.getSelectedItem().equals("ZA08/Alat Pengangkutan")){
                     spinnerAlatAngkut.setVisibility(View.VISIBLE);
                     tvAlatAngkut.setVisibility(View.VISIBLE);
@@ -2259,6 +2259,15 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity  implements 
             dialog.dismiss();
             customDialogAddAset.dismiss();
             inpNilaiResidu.setError("Nilai Residu harus diisi");
+            inpNilaiResidu.requestFocus();
+
+            return;
+        }
+
+        if (inpNoSAP.getText().toString().equals("")) {
+            dialog.dismiss();
+            customDialogAddAset.dismiss();
+            inpNilaiResidu.setError("Nilai Sap Harus Diisi");
             inpNilaiResidu.requestFocus();
 
             return;
