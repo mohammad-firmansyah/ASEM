@@ -19,6 +19,9 @@ public class Aset implements Parcelable {
     @SerializedName("berita_acara")
     @Expose
     private String beritaAcara;
+    @SerializedName("file_bast")
+    @Expose
+    private String fileBAST;
 
     @SerializedName("aset_tipe")
     @Expose
@@ -50,6 +53,9 @@ public class Aset implements Parcelable {
     @SerializedName("foto_aset4")
     @Expose
     private String fotoAset4;
+    @SerializedName("foto_aset5")
+    @Expose
+    private String fotoAset5;
     @SerializedName("geo_tag1")
     @Expose
     private String geoTag1;
@@ -62,6 +68,9 @@ public class Aset implements Parcelable {
     @SerializedName("geo_tag4")
     @Expose
     private String geoTag4;
+    @SerializedName("geo_tag5")
+    @Expose
+    private String geoTag5;
     @SerializedName("aset_luas")
     @Expose
     private Double asetLuas;
@@ -223,6 +232,14 @@ public class Aset implements Parcelable {
         this.beritaAcara = beritaAcara;
     }
 
+    public String getFileBAST() {
+        return fileBAST;
+    }
+
+    public void setFileBAST(String fileBAST) {
+        this.fileBAST = fileBAST;
+    }
+
     public String getHgu() {
         return hgu;
     }
@@ -365,6 +382,14 @@ public class Aset implements Parcelable {
         this.fotoAset4 = fotoAset4;
     }
 
+    public String getFotoAset5() {
+        return fotoAset5;
+    }
+
+    public void setFotoAset5(String fotoAset5) {
+        this.fotoAset5 = fotoAset5;
+    }
+
     public String getGeoTag1() {
         return geoTag1;
     }
@@ -395,6 +420,14 @@ public class Aset implements Parcelable {
 
     public void setGeoTag4(String geoTag4) {
         this.geoTag4 = geoTag4;
+    }
+
+    public String getGeoTag5() {
+        return geoTag5;
+    }
+
+    public void setGeoTag5(String geoTag5) {
+        this.geoTag5 = geoTag5;
     }
 
     public Double getAsetLuas() {
@@ -549,7 +582,7 @@ public class Aset implements Parcelable {
         this.umurEkonomisInMonth = umurEkonomisInMonth;
     }
 
-    public Aset(Integer asetId, String asetName, String asetTipe, String asetJenis, String asetKondisi, String asetSubUnit, String asetKode, String nomorSap, String fotoAset1, String fotoAset2, String fotoAset3, String fotoAset4, String geoTag1, String geoTag2, String geoTag3, String geoTag4, Double asetLuas, String tglInput, String tglOleh, Long nilaiResidu, Long nilaiOleh, String nomorBast, String masaSusut, String keterangan, String fotoQr, String noInv, String fotoAsetQr, String statusPosisi, String unitId, String afdelingId, String userInputId, String createdAt, String updatedAt, Integer jumlahPohon, double persenKondisi, String statusReject, String ketReject, String asetFotoQrStatus,String hgu,String berita_acara,String alat_pengangkutan,String satuan_luas, String popTotalIni,String popTotalStd, String popHektarIni,String popHektarStd) {
+    public Aset(Integer asetId, String asetName, String asetTipe, String asetJenis, String asetKondisi, String asetSubUnit, String asetKode, String nomorSap, String fotoAset1, String fotoAset2, String fotoAset3, String fotoAset4,String fotoAset5, String geoTag1, String geoTag2, String geoTag3, String geoTag4, String geoTag5, Double asetLuas, String tglInput, String tglOleh, Long nilaiResidu, Long nilaiOleh, String nomorBast, String masaSusut, String keterangan, String fotoQr, String noInv, String fotoAsetQr, String statusPosisi, String unitId, String afdelingId, String userInputId, String createdAt, String updatedAt, Integer jumlahPohon, double persenKondisi, String statusReject, String ketReject, String asetFotoQrStatus,String hgu,String berita_acara,String fileBAST,String alat_pengangkutan,String satuan_luas, String popTotalIni,String popTotalStd, String popHektarIni,String popHektarStd) {
         this.asetId = asetId;
         this.asetName = asetName;
         this.asetTipe = asetTipe;
@@ -562,10 +595,12 @@ public class Aset implements Parcelable {
         this.fotoAset2 = fotoAset2;
         this.fotoAset3 = fotoAset3;
         this.fotoAset4 = fotoAset4;
+        this.fotoAset5 = fotoAset5;
         this.geoTag1 = geoTag1;
         this.geoTag2 = geoTag2;
         this.geoTag3 = geoTag3;
         this.geoTag4 = geoTag4;
+        this.geoTag5 = geoTag5;
         this.asetLuas = asetLuas;
         this.tglInput = tglInput;
         this.tglOleh = tglOleh;
@@ -622,10 +657,12 @@ public class Aset implements Parcelable {
         dest.writeString(this.fotoAset2);
         dest.writeString(this.fotoAset3);
         dest.writeString(this.fotoAset4);
+        dest.writeString(this.fotoAset5);
         dest.writeString(this.geoTag1);
         dest.writeString(this.geoTag2);
         dest.writeString(this.geoTag3);
         dest.writeString(this.geoTag4);
+        dest.writeString(this.geoTag5);
         dest.writeString(this.hgu);
         dest.writeDouble(this.persenKondisi);
         dest.writeDouble(this.asetLuas);
@@ -656,10 +693,12 @@ public class Aset implements Parcelable {
         this.fotoAset2 = in.readString();
         this.fotoAset3 = in.readString();
         this.fotoAset4 = in.readString();
+        this.fotoAset5 = in.readString();
         this.geoTag1 = in.readString();
         this.geoTag2 = in.readString();
         this.geoTag3 = in.readString();
         this.geoTag4 = in.readString();
+        this.geoTag5 = in.readString();
         this.hgu = in.readString();
         this.persenKondisi = in.readInt();
         this.asetLuas = in.readDouble();
