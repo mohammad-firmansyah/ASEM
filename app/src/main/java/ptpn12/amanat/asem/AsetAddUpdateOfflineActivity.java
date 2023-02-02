@@ -121,6 +121,7 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity  implements 
     Button map2;
     Button map3;
     Button map4;
+    Button map5;
     Button btnYaKirim;
     Button btnTidakKirim;
 
@@ -192,12 +193,14 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity  implements 
     ViewGroup foto2rl;
     ViewGroup foto3rl;
     ViewGroup foto4rl;
+    ViewGroup foto5rl;
     ViewGroup listBtnMap;
 
     ImageView fotoimg1;
     ImageView fotoimg2;
     ImageView fotoimg3;
     ImageView fotoimg4;
+    ImageView fotoimg5;
 
     Map<Integer, Integer> mapAfdelingSpinner = new HashMap<Integer, Integer>();
     Map<Integer, Integer> mapSpinnerAfdeling = new HashMap<Integer, Integer>();
@@ -211,6 +214,7 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity  implements 
     String photoname2 = "foto2.png";
     String photoname3 = "foto3.png";
     String photoname4 = "foto4.png";
+    String photoname5 = "foto5.png";
 
 
 
@@ -218,11 +222,13 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity  implements 
     String geotag2;
     String geotag3;
     String geotag4;
+    String geotag5;
 
     File img1;
     File img2;
     File img3;
     File img4;
+    File img5;
     File bafile_file;
 
     String spinnerIdTipeAsset;
@@ -462,6 +468,30 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity  implements 
                         }
                     }
             );
+
+
+
+    ActivityResultLauncher<Intent> activityCaptureFoto5 =
+            registerForActivityResult(
+                    new ActivityResultContracts.StartActivityForResult(),
+                    new ActivityResultCallback<ActivityResult>() {
+                        @Override
+                        public void onActivityResult(ActivityResult activityResult) {
+                            int resultCode = activityResult.getResultCode();
+                            if (resultCode== Activity.RESULT_OK){
+                                img5 = utils.savePictureResult(
+                                        AsetAddUpdateOfflineActivity.this, photoname5, fotoimg5, true
+                                );
+                                fotoimg5.getLayoutParams().width = 200;
+                                fotoimg5.getLayoutParams().height = 200;
+                                setExifLocation(img5,4);
+                            } else if (resultCode == Activity.RESULT_CANCELED){
+                                android.widget.Toast.makeText(AsetAddUpdateOfflineActivity.this, "Cancelled", Toast.LENGTH_SHORT).show();
+                            }
+
+                        }
+                    }
+            );
     private Dialog dialog;
     ListView listView;
     EditText  editTextSap;
@@ -551,11 +581,13 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity  implements 
         foto2rl = findViewById(R.id.foto2);
         foto3rl = findViewById(R.id.foto3);
         foto4rl = findViewById(R.id.foto4);
+        foto5rl = findViewById(R.id.foto5);
 
         map1 = findViewById(R.id.map1);
         map2 = findViewById(R.id.map2);
         map3 = findViewById(R.id.map3);
         map4 = findViewById(R.id.map4);
+        map5 = findViewById(R.id.map5);
 
 
 
@@ -563,6 +595,7 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity  implements 
         fotoimg2 = findViewById(R.id.fotoimg2);
         fotoimg3 = findViewById(R.id.fotoimg3);
         fotoimg4 = findViewById(R.id.fotoimg4);
+        fotoimg5 = findViewById(R.id.fotoimg5);
 //        inpBtnMap = findViewById(R.id.inpBtnMap);
         btnSubmit = findViewById(R.id.btnSubmit);
         btnFile = findViewById(R.id.inpUploudBA);
@@ -783,6 +816,14 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity  implements 
             @Override
             public void onClick(View view) {
                 captureFotoQcLoses(photoname4,activityCaptureFoto4);
+
+            }
+        });
+
+        foto5rl.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                captureFotoQcLoses(photoname5,activityCaptureFoto5);
 
             }
         });
@@ -1061,9 +1102,9 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity  implements 
             asetHelper.open();
             Cursor data = asetHelper.queryById(String.valueOf(id));
             aset = MappingHelper.mapCursorToArrayAset(data);
-                if (aset.getBeritaAcara() != null ) {
-                    tvUploudBA.setText(aset.getBeritaAcara());
-                }
+            if (aset.getBeritaAcara() != null ) {
+                tvUploudBA.setText(aset.getBeritaAcara());
+            }
 
             if (aset.getAlat_pengangkutan() != null){
                 spinnerAlatAngkut.setSelection(getAlatAngkut(aset.getAlat_pengangkutan()));
@@ -1132,11 +1173,12 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity  implements 
 
 
 
-                String url1 = "",url2 = "",url3 = "",url4 = "";
+                String url1 = "",url2 = "",url3 = "",url4 = "",url5 = "";
                 url1 = "file://" + aset.getFotoAset1();
                 url2 = "file://" + aset.getFotoAset2();
                 url3 = "file://" + aset.getFotoAset3();
                 url4 = "file://" + aset.getFotoAset4();
+                url5 = "file://" + aset.getFotoAset5();
 
                 try {
 
@@ -1189,6 +1231,18 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity  implements 
             map4.setEnabled(true);
         }
 
+        if (aset.getFotoAset5() == null ){
+            map5.setEnabled(false);
+            foto5rl.setEnabled(false);
+        } else {
+            URL url = new URL(url5);
+            Bitmap bmp = BitmapFactory.decodeStream(url.openConnection().getInputStream());
+            fotoimg5.getLayoutParams().width = 200;
+            fotoimg5.getLayoutParams().height = 200;
+            fotoimg5.setImageBitmap(bmp);
+            map5.setEnabled(true);
+        }
+
                 }
                 catch (Exception e){
                     e.printStackTrace();
@@ -1197,6 +1251,7 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity  implements 
                 geotag2 = aset.getGeoTag2();
                 geotag3 = aset.getGeoTag3();
                 geotag4 = aset.getGeoTag4();
+                geotag5 = aset.getGeoTag5();
 
 
 //                set selection spinners
@@ -1351,6 +1406,9 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity  implements 
                 } else if (list == 4) {
 
                     geotag4 = url;
+                }else if (list == 5) {
+
+                    geotag5 = url;
                 }
 
             }else if("kayu".equals(String.valueOf(spinnerJenisAset.getSelectedItem()))) {
@@ -1379,280 +1437,6 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity  implements 
             e.printStackTrace();
         }
     }
-//    public void editVisibilityDynamic(){
-//        TextView tvBa = findViewById(R.id.tvBa);
-//        TextView tvPohon = findViewById(R.id.tvPohon);
-//        TextView tvBast = findViewById(R.id.tvBast);
-//        TextView tvFoto = findViewById(R.id.tvFoto);
-//        TextView tvAfdeling = findViewById(R.id.tvAfdeling);
-//        Spinner inpAfdeling = findViewById(R.id.inpAfdeling);
-//        TextView tvLuasTanaman = findViewById(R.id.luasTanaman);
-//        TextView tvLuasNonTanaman = findViewById(R.id.luasNonTanaman);
-//        TextView tvPersenKondisi = findViewById(R.id.tvPersenKondisi);
-//
-//        HorizontalScrollView scrollPartition = findViewById(R.id.scrollPartition);
-////        Toast.makeText(getApplicationContext(),String.valueOf(spinnerSubUnit.getSelectedItemId()),Toast.LENGTH_LONG).show();
-//        if (spinnerTipeAset.getSelectedItemId() != 0) {
-//            inpNomorBAST.setVisibility(View.VISIBLE);
-//            tvBast.setVisibility(View.VISIBLE);
-//        } else {
-//            inpNomorBAST.setVisibility(View.GONE);
-//            tvBast.setVisibility(View.GONE);
-//        }
-//
-//        if (spinnerSubUnit.getSelectedItemId() == 2){
-//            inpAfdeling.setVisibility(View.VISIBLE);
-//            tvAfdeling.setVisibility(View.VISIBLE);
-////            Toast.makeText(getApplicationContext(),String.valueOf(spinnerSubUnit.getSelectedItemId()),Toast.LENGTH_LONG).show();
-//        } else {
-//            inpAfdeling.setVisibility(View.GONE);
-//            tvAfdeling.setVisibility(View.GONE);
-//        }
-//
-//        if ("tanaman".equals(String.valueOf(spinnerJenisAset.getSelectedItem())) && "normal".equals(String.valueOf(spinnerAsetKondisi.getSelectedItem()))) {
-////            listBtnMap.setVisibility(View.VISIBLE);
-//            inpJumlahPohon.setVisibility(View.VISIBLE);
-//            tvPohon.setVisibility(View.VISIBLE);
-////            inpKomoditi.setVisibility(View.VISIBLE);
-//
-//            inpNomorBAST.setVisibility(View.VISIBLE);
-//            tvBast.setVisibility(View.VISIBLE);
-//            tvUploudBA.setVisibility(View.GONE);
-//            tvBa.setVisibility(View.GONE);
-////            inpBtnMap.setVisibility(View.GONE);
-//            btnFile.setVisibility(View.GONE);
-//
-//            tvFoto.setVisibility(View.VISIBLE);
-//            scrollPartition.setVisibility(View.VISIBLE);
-//
-//            tvLuasTanaman.setVisibility(View.VISIBLE);
-//            tvLuasNonTanaman.setVisibility(View.GONE);
-//            inpLuasAset.setVisibility(View.VISIBLE);
-//
-//            inpPersenKondisi.setVisibility(View.GONE);
-//            tvPersenKondisi.setVisibility(View.GONE);
-//
-//        }
-//
-//        else if ("tanaman".equals(String.valueOf(spinnerJenisAset.getSelectedItem()))  && "rusak".equals(String.valueOf(spinnerAsetKondisi.getSelectedItem())) ) {
-////            listBtnMap.setVisibility(View.VISIBLE);
-//            tvBa.setVisibility(View.VISIBLE);
-//            inpJumlahPohon.setVisibility(View.VISIBLE);
-//            tvPohon.setVisibility(View.VISIBLE);
-//
-////            inpKomoditi.setVisibility(View.VISIBLE);
-//            inpNomorBAST.setVisibility(View.GONE);
-//            tvBast.setVisibility(View.GONE);
-//            tvUploudBA.setVisibility(View.VISIBLE);
-//            btnFile.setVisibility(View.VISIBLE);
-//
-////            inpBtnMap.setVisibility(View.GONE);
-//
-//            tvFoto.setVisibility(View.VISIBLE);
-//            scrollPartition.setVisibility(View.VISIBLE);
-//
-//            tvLuasTanaman.setVisibility(View.VISIBLE);
-//            tvLuasNonTanaman.setVisibility(View.GONE);
-//            inpLuasAset.setVisibility(View.VISIBLE);
-//
-//            inpPersenKondisi.setVisibility(View.GONE);
-//            tvPersenKondisi.setVisibility(View.GONE);
-//
-//        }
-//
-//
-//        else if ("tanaman".equals(String.valueOf(spinnerJenisAset.getSelectedItem()))  && "hilang".equals(String.valueOf(spinnerAsetKondisi.getSelectedItem()))) {
-//            tvUploudBA.setVisibility(View.VISIBLE);
-//            btnFile.setVisibility(View.VISIBLE);
-//            tvBa.setVisibility(View.VISIBLE);
-//            inpJumlahPohon.setVisibility(View.VISIBLE);
-//            tvPohon.setVisibility(View.VISIBLE);
-////            inpKomoditi.setVisibility(View.VISIBLE);
-//
-//            inpNomorBAST.setVisibility(View.GONE);
-//            tvBast.setVisibility(View.GONE);
-////            listBtnMap.setVisibility(View.GONE);
-////            inpBtnMap.setVisibility(View.GONE);
-//
-//            tvFoto.setVisibility(View.GONE);
-//            scrollPartition.setVisibility(View.GONE);
-//
-//            tvLuasTanaman.setVisibility(View.VISIBLE);
-//            tvLuasNonTanaman.setVisibility(View.GONE);
-//            inpLuasAset.setVisibility(View.VISIBLE);
-//
-//            inpPersenKondisi.setVisibility(View.GONE);
-//            tvPersenKondisi.setVisibility(View.GONE);
-//        }
-//
-//        else if ("kayu".equals(String.valueOf(spinnerJenisAset.getSelectedItem()))  && "normal".equals(String.valueOf(spinnerAsetKondisi.getSelectedItem())) ) {
-////            listBtnMap.setVisibility(View.VISIBLE);
-//            inpJumlahPohon.setVisibility(View.VISIBLE);
-////            inpKomoditi.setVisibility(View.VISIBLE);
-//            inpNomorBAST.setVisibility(View.VISIBLE);
-//            tvBast.setVisibility(View.VISIBLE);
-//            tvPohon.setVisibility(View.VISIBLE);
-//
-//            tvBa.setVisibility(View.GONE);
-//            tvUploudBA.setVisibility(View.GONE);
-////            inpBtnMap.setVisibility(View.GONE);
-//            btnFile.setVisibility(View.GONE);
-//
-//            tvFoto.setVisibility(View.VISIBLE);
-//            scrollPartition.setVisibility(View.VISIBLE);
-//
-//            tvLuasTanaman.setVisibility(View.VISIBLE);
-//            tvLuasNonTanaman.setVisibility(View.GONE);
-//            inpLuasAset.setVisibility(View.VISIBLE);
-//
-//            inpPersenKondisi.setVisibility(View.GONE);
-//            tvPersenKondisi.setVisibility(View.GONE);
-//
-//        }
-//
-//        else if ("kayu".equals(String.valueOf(spinnerJenisAset.getSelectedItem()))  && "rusak".equals(String.valueOf(spinnerAsetKondisi.getSelectedItem())) ) {
-////            listBtnMap.setVisibility(View.VISIBLE);
-//            tvPohon.setVisibility(View.VISIBLE);
-//            inpJumlahPohon.setVisibility(View.VISIBLE);
-//            tvBa.setVisibility(View.VISIBLE);
-//            tvUploudBA.setVisibility(View.VISIBLE);
-//            btnFile.setVisibility(View.VISIBLE);
-////            inpKomoditi.setVisibility(View.VISIBLE);
-//            tvPohon.setVisibility(View.VISIBLE);
-//
-//
-//            inpNomorBAST.setVisibility(View.GONE);
-//            tvBast.setVisibility(View.GONE);
-////            inpBtnMap.setVisibility(View.GONE);
-//
-//            tvFoto.setVisibility(View.VISIBLE);
-//            scrollPartition.setVisibility(View.VISIBLE);
-//
-//            tvLuasTanaman.setVisibility(View.VISIBLE);
-//            tvLuasNonTanaman.setVisibility(View.GONE);
-//            inpLuasAset.setVisibility(View.VISIBLE);
-//
-//            inpPersenKondisi.setVisibility(View.GONE);
-//            tvPersenKondisi.setVisibility(View.GONE);
-//
-//        }
-//
-//        else if ("kayu".equals(String.valueOf(spinnerJenisAset.getSelectedItem())) && "hilang".equals(String.valueOf(spinnerAsetKondisi.getSelectedItem()))) {
-//            tvBa.setVisibility(View.VISIBLE);
-//            btnFile.setVisibility(View.VISIBLE);
-//            tvUploudBA.setVisibility(View.VISIBLE);
-////            inpKomoditi.setVisibility(View.VISIBLE);
-//
-//            inpNomorBAST.setVisibility(View.GONE);
-//            tvBast.setVisibility(View.GONE);
-//            tvPohon.setVisibility(View.GONE);
-//            inpJumlahPohon.setVisibility(View.GONE);
-////            listBtnMap.setVisibility(View.GONE);
-//            inpJumlahPohon.setVisibility(View.GONE);
-////            inpBtnMap.setVisibility(View.GONE);
-//
-//            tvFoto.setVisibility(View.GONE);
-//            scrollPartition.setVisibility(View.GONE);
-//
-//            tvLuasTanaman.setVisibility(View.VISIBLE);
-//            tvLuasNonTanaman.setVisibility(View.GONE);
-//            inpLuasAset.setVisibility(View.VISIBLE);
-//
-//            inpPersenKondisi.setVisibility(View.GONE);
-//            tvPersenKondisi.setVisibility(View.GONE);
-//
-//        }
-//
-//        else if ("non tanaman".equals(String.valueOf(spinnerJenisAset.getSelectedItem())) && "normal".equals(String.valueOf(spinnerAsetKondisi.getSelectedItem()))) {
-////            inpBtnMap.setVisibility(View.VISIBLE);
-//            inpNomorBAST.setVisibility(View.VISIBLE);
-//            tvBast.setVisibility(View.VISIBLE);
-//
-////            inpKomoditi.setVisibility(View.GONE);
-//            tvUploudBA.setVisibility(View.GONE);
-////            listBtnMap.setVisibility(View.GONE);
-//            inpJumlahPohon.setVisibility(View.GONE);
-//            tvBa.setVisibility(View.GONE);
-//            tvPohon.setVisibility(View.GONE);
-//            btnFile.setVisibility(View.GONE);
-//
-//            tvFoto.setVisibility(View.VISIBLE);
-//            scrollPartition.setVisibility(View.VISIBLE);
-//
-//            tvLuasTanaman.setVisibility(View.GONE);
-//            tvLuasNonTanaman.setVisibility(View.VISIBLE);
-//            inpLuasAset.setVisibility(View.VISIBLE);
-//
-//            inpPersenKondisi.setVisibility(View.VISIBLE);
-//            tvPersenKondisi.setVisibility(View.VISIBLE);
-//        }
-//
-//        else if ("non tanaman".equals(String.valueOf(spinnerJenisAset.getSelectedItem())) &&"rusak".equals(String.valueOf(spinnerAsetKondisi.getSelectedItem()))) {
-//            tvBa.setVisibility(View.VISIBLE);
-//            btnFile.setVisibility(View.VISIBLE);
-//            tvUploudBA.setVisibility(View.VISIBLE);
-//            tvPohon.setVisibility(View.GONE);
-//            inpJumlahPohon.setVisibility(View.GONE);
-////            inpBtnMap.setVisibility(View.VISIBLE);
-//            inpNomorBAST.setVisibility(View.GONE);
-//            tvBast.setVisibility(View.GONE);
-//
-//            tvFoto.setVisibility(View.VISIBLE);
-//            scrollPartition.setVisibility(View.VISIBLE);
-//
-////            listBtnMap.setVisibility(View.GONE);
-//            tvLuasTanaman.setVisibility(View.GONE);
-//            tvLuasNonTanaman.setVisibility(View.VISIBLE);
-//            inpLuasAset.setVisibility(View.VISIBLE);
-//
-//            inpPersenKondisi.setVisibility(View.VISIBLE);
-//            tvPersenKondisi.setVisibility(View.VISIBLE);
-//
-//        }
-//
-//        else if ("non tanaman".equals(String.valueOf(spinnerJenisAset.getSelectedItem())) && "hilang".equals(String.valueOf(spinnerAsetKondisi.getSelectedItem()))) {
-//            tvBa.setVisibility(View.VISIBLE);
-//            btnFile.setVisibility(View.VISIBLE);
-//            tvUploudBA.setVisibility(View.VISIBLE);
-//
-////            inpKomoditi.setVisibility(View.GONE);
-//            tvPohon.setVisibility(View.GONE);
-//            inpJumlahPohon.setVisibility(View.GONE);
-////            listBtnMap.setVisibility(View.GONE);
-//            inpJumlahPohon.setVisibility(View.GONE);
-////            inpBtnMap.setVisibility(View.GONE);
-//            inpNomorBAST.setVisibility(View.GONE);
-//            tvBast.setVisibility(View.GONE);
-//
-//            tvFoto.setVisibility(View.GONE);
-//            scrollPartition.setVisibility(View.GONE);
-//
-//            tvLuasTanaman.setVisibility(View.GONE);
-//            tvLuasNonTanaman.setVisibility(View.VISIBLE);
-//            inpLuasAset.setVisibility(View.VISIBLE);
-//
-//            inpPersenKondisi.setVisibility(View.VISIBLE);
-//            tvPersenKondisi.setVisibility(View.VISIBLE);
-//
-//        } else {
-////            listBtnMap.setVisibility(View.GONE);
-//            inpJumlahPohon.setVisibility(View.GONE);
-//            tvFoto.setVisibility(View.GONE);
-//            scrollPartition.setVisibility(View.GONE);
-//            tvPohon.setVisibility(View.GONE);
-//            tvBa.setVisibility(View.GONE);
-//            tvUploudBA.setVisibility(View.GONE);
-////            inpBtnMap.setVisibility(View.GONE);
-//            btnFile.setVisibility(View.GONE);
-//
-//            tvLuasTanaman.setVisibility(View.GONE);
-//            tvLuasNonTanaman.setVisibility(View.GONE);
-//            inpLuasAset.setVisibility(View.GONE);
-//
-//            inpPersenKondisi.setVisibility(View.GONE);
-//            tvPersenKondisi.setVisibility(View.GONE);
-//        }
-//    }
 
     public void editVisibilityDynamic(){
         TextView tvBa = findViewById(R.id.tvBa);
@@ -1702,6 +1486,8 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity  implements 
             tvPersenKondisi.setVisibility(View.GONE);
             spinnerLuasSatuan.setVisibility(View.GONE);
 
+            foto5rl.setVisibility(View.VISIBLE);
+
             tvPopTotalIni.setVisibility(View.VISIBLE);
             tvPopTotalStd.setVisibility(View.VISIBLE);
             tvPopHektarStd.setVisibility(View.VISIBLE);
@@ -1737,6 +1523,8 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity  implements 
             inpPersenKondisi.setVisibility(View.GONE);
             tvPersenKondisi.setVisibility(View.GONE);
             spinnerLuasSatuan.setVisibility(View.GONE);
+
+            foto5rl.setVisibility(View.VISIBLE);
 
             tvPopTotalIni.setVisibility(View.VISIBLE);
             tvPopTotalStd.setVisibility(View.VISIBLE);
@@ -1775,6 +1563,8 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity  implements 
             tvPersenKondisi.setVisibility(View.GONE);
             spinnerLuasSatuan.setVisibility(View.GONE);
 
+            foto5rl.setVisibility(View.VISIBLE);
+
             tvPopTotalIni.setVisibility(View.VISIBLE);
             tvPopTotalStd.setVisibility(View.VISIBLE);
             tvPopHektarStd.setVisibility(View.VISIBLE);
@@ -1809,6 +1599,8 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity  implements 
             tvPersenKondisi.setVisibility(View.GONE);
 
             spinnerLuasSatuan.setVisibility(View.GONE);
+
+            foto5rl.setVisibility(View.GONE);
 
             tvPopTotalIni.setVisibility(View.GONE);
             tvPopTotalStd.setVisibility(View.GONE);
@@ -1846,6 +1638,8 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity  implements 
             tvPersenKondisi.setVisibility(View.GONE);
             spinnerLuasSatuan.setVisibility(View.GONE);
 
+            foto5rl.setVisibility(View.GONE);
+
             tvPopTotalIni.setVisibility(View.GONE);
             tvPopTotalStd.setVisibility(View.GONE);
             tvPopHektarStd.setVisibility(View.GONE);
@@ -1882,6 +1676,8 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity  implements 
             tvPersenKondisi.setVisibility(View.GONE);
             spinnerLuasSatuan.setVisibility(View.GONE);
 
+            foto5rl.setVisibility(View.GONE);
+
             tvPopTotalIni.setVisibility(View.GONE);
             tvPopTotalStd.setVisibility(View.GONE);
             tvPopHektarStd.setVisibility(View.GONE);
@@ -1917,6 +1713,8 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity  implements 
             inpPersenKondisi.setVisibility(View.VISIBLE);
             tvPersenKondisi.setVisibility(View.VISIBLE);
 
+            foto5rl.setVisibility(View.GONE);
+
             tvPopTotalIni.setVisibility(View.GONE);
             tvPopTotalStd.setVisibility(View.GONE);
             tvPopHektarStd.setVisibility(View.GONE);
@@ -1947,6 +1745,8 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity  implements 
 
             inpPersenKondisi.setVisibility(View.VISIBLE);
             tvPersenKondisi.setVisibility(View.VISIBLE);
+
+            foto5rl.setVisibility(View.GONE);
 
             tvPopTotalIni.setVisibility(View.GONE);
             tvPopTotalStd.setVisibility(View.GONE);
@@ -1983,6 +1783,8 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity  implements 
             inpPersenKondisi.setVisibility(View.VISIBLE);
             tvPersenKondisi.setVisibility(View.VISIBLE);
 
+            foto5rl.setVisibility(View.GONE);
+
             tvPopTotalIni.setVisibility(View.GONE);
             tvPopTotalStd.setVisibility(View.GONE);
             tvPopHektarStd.setVisibility(View.GONE);
@@ -2007,6 +1809,8 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity  implements 
             tvLuasTanaman.setVisibility(View.GONE);
             tvLuasNonTanaman.setVisibility(View.GONE);
             inpLuasAset.setVisibility(View.GONE);
+
+            foto5rl.setVisibility(View.GONE);
 
             inpPersenKondisi.setVisibility(View.GONE);
             tvPersenKondisi.setVisibility(View.GONE);
@@ -2509,6 +2313,7 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity  implements 
             File newImg2 = new File(getFilesDir(),namaAsetWithoutSpace+"2.png");
             File newImg3 = new File(getFilesDir(),namaAsetWithoutSpace+"3.png");
             File newImg4 = new File(getFilesDir(),namaAsetWithoutSpace+"4.png");
+            File newImg5 = new File(getFilesDir(),namaAsetWithoutSpace+"5.png");
             File ba = new File(getFilesDir(),namaAsetWithoutSpace+"-ba.pdf");
 
             if (img1 != null) {
@@ -2604,6 +2409,29 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity  implements 
                 img4.delete();
                 values.put("foto_aset4",newImg4.getAbsolutePath());
                 values.put("geo_tag4",geotag4);
+
+            }
+
+            if (img5 != null) {
+                FileInputStream in = new FileInputStream(img5);
+                FileOutputStream out = new FileOutputStream(newImg5);
+
+                // Copy the file
+                byte[] buffer = new byte[1024];
+                int read;
+                while ((read = in.read(buffer)) != -1) {
+                    out.write(buffer, 0, read);
+                }
+
+                // Close the streams
+                in.close();
+                out.flush();
+                out.close();
+
+                // Delete the original file
+                img5.delete();
+                values.put("foto_aset5",newImg5.getAbsolutePath());
+                values.put("geo_tag5",geotag5);
 
             }
 
@@ -2742,6 +2570,7 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity  implements 
             File newImg2 = new File(getFilesDir(),namaAsetWithoutSpace+"2.png");
             File newImg3 = new File(getFilesDir(),namaAsetWithoutSpace+"3.png");
             File newImg4 = new File(getFilesDir(),namaAsetWithoutSpace+"4.png");
+            File newImg5 = new File(getFilesDir(),namaAsetWithoutSpace+"5.png");
             File ba = new File(getFilesDir(),namaAsetWithoutSpace+"-ba.pdf");
 
             if (img1 != null) {
@@ -2837,6 +2666,29 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity  implements 
                 img4.delete();
                 values.put("foto_aset4",newImg4.getAbsolutePath());
                 values.put("geo_tag4",geotag4);
+
+            }
+
+            if (img5 != null) {
+                FileInputStream in = new FileInputStream(img5);
+                FileOutputStream out = new FileOutputStream(newImg5);
+
+                // Copy the file
+                byte[] buffer = new byte[1024];
+                int read;
+                while ((read = in.read(buffer)) != -1) {
+                    out.write(buffer, 0, read);
+                }
+
+                // Close the streams
+                in.close();
+                out.flush();
+                out.close();
+
+                // Delete the original file
+                img5.delete();
+                values.put("foto_aset5",newImg5.getAbsolutePath());
+                values.put("geo_tag5",geotag5);
 
             }
 
