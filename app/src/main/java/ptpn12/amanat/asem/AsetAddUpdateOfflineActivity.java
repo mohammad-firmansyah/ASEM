@@ -116,6 +116,7 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity  implements 
     DataAllSpinner allSpinner;
     Button inpBtnMap;
     Button btnFile;
+    Button btnFileBAST;
     Button btnSubmit;
     Button map1;
     Button map2;
@@ -150,6 +151,7 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity  implements 
     EditText editText;
     EditText inpJumlahPohon;
     TextView tvUploudBA;
+    TextView tvUploadFileBAST;
     AsetModel asetModel;
     File source;
     private AsetInterface asetInterface;
@@ -230,6 +232,7 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity  implements 
     File img4;
     File img5;
     File bafile_file;
+    File file_bast;
 
     String spinnerIdTipeAsset;
     String spinnerIdJenisAset;
@@ -297,11 +300,13 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity  implements 
             Uri urifile = data.getData();
             try {
                 bafile_file = getFile(this, urifile);
+                file_bast = getFile(this, urifile);
                 String docPath = bafile_file.getAbsolutePath();
                 Log.d("asetapix", "onActivityResult: path doc : "+docPath);
                 Log.d("asetapix", "onActivityResult: masterpath : "+data.getData().getPath());
 //                ExifInterface ei = new ExifInterface(bafile_file.getAbsolutePath());
                 tvUploudBA.setText(bafile_file.getAbsolutePath());
+                tvUploadFileBAST.setText(file_bast.getAbsolutePath());
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -331,6 +336,27 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity  implements 
                     }
                 }
             });
+    ActivityResultLauncher<Intent> BASTActivityResultLauncher = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(),
+            new ActivityResultCallback<ActivityResult>() {
+                @Override
+                public void onActivityResult(ActivityResult result) {
+                    if (result.getResultCode() == Activity.RESULT_OK) {
+                        Intent data = result.getData();
+                        Uri uri = data.getData();
+                        try {
+                            InputStream inputStream = getContentResolver().openInputStream(uri);
+                        } catch (FileNotFoundException e) {
+                            e.printStackTrace();
+                        }
+
+                        String path =  uri.getPath();
+                        file_bast = new File(Environment.getExternalStorageDirectory().getPath() + path);
+                        Log.d("asetapix",Environment.getExternalStorageDirectory().getPath() + path);
+                        tvUploadFileBAST.setText(file_bast.getAbsolutePath());
+                    }
+                }
+            });
 
     public void openFileDialog() {
         Intent data = new Intent(Intent.ACTION_OPEN_DOCUMENT);
@@ -340,6 +366,7 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity  implements 
 //        data.putExtra(Intent.EXTRA_MIME_TYPES,mimetype);
         data = Intent.createChooser(data,"Pilih Berita Acara");
         sActivityResultLauncher.launch(data);
+        BASTActivityResultLauncher.launch(data);
     }
 //    public void openfilechoser(){
 ////        Intent intent = null;
@@ -599,6 +626,7 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity  implements 
 //        inpBtnMap = findViewById(R.id.inpBtnMap);
         btnSubmit = findViewById(R.id.btnSubmit);
         btnFile = findViewById(R.id.inpUploudBA);
+        btnFileBAST = findViewById(R.id.inpUploadBAST);
 
 
 //        handler
@@ -897,8 +925,6 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity  implements 
             }
         });
 
-        btnFile = findViewById(R.id.inpUploudBA);
-
         btnFile.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
@@ -908,7 +934,25 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity  implements 
 
                 Intent pickFile = new Intent(Intent.ACTION_GET_CONTENT);
                 pickFile.addCategory(Intent.CATEGORY_OPENABLE);
-                pickFile.setType("*/*");
+                pickFile.setType("application/pdf");
+                // Optionally, specify a URI for the file that should appear in the
+                // system file picker when it loads.
+
+                pickFile.putExtra(DocumentsContract.EXTRA_INITIAL_URI, docUri);
+                startActivityForResult(pickFile, 1);
+            }
+        });
+
+        btnFileBAST.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+//                openfilechoser();
+//                openFileDialog();
+//                Toast.makeText(getApplicationContext(),"hello from hell",Toast.LENGTH_LONG).show();
+
+                Intent pickFile = new Intent(Intent.ACTION_GET_CONTENT);
+                pickFile.addCategory(Intent.CATEGORY_OPENABLE);
+                pickFile.setType("application/pdf");
                 // Optionally, specify a URI for the file that should appear in the
                 // system file picker when it loads.
 
@@ -1448,10 +1492,20 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity  implements 
         TextView tvLuasTanaman = findViewById(R.id.luasTanaman);
         TextView tvLuasNonTanaman = findViewById(R.id.luasNonTanaman);
         TextView tvPersenKondisi = findViewById(R.id.tvPersenKondisi);
+        TextView tvFileBAST = findViewById(R.id.tvUploadFileBAST);
 
         HorizontalScrollView scrollPartition = findViewById(R.id.scrollPartition);
 //        Toast.makeText(getApplicationContext(),String.valueOf(spinnerSubUnit.getSelectedItemId()),Toast.LENGTH_LONG).show();
 
+        if (spinnerTipeAset.getSelectedItemId() == 1) {
+            //input PDF ba bast
+            btnFileBAST.setVisibility(View.VISIBLE);
+            tvFileBAST.setVisibility(View.VISIBLE);
+        } else {
+            //input PDF ba bast
+            btnFileBAST.setVisibility(View.GONE);
+            tvFileBAST.setVisibility(View.GONE);
+        }
 
         if (spinnerSubUnit.getSelectedItemId() == 2){
             inpAfdeling.setVisibility(View.VISIBLE);
@@ -1474,6 +1528,8 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity  implements 
             tvBa.setVisibility(View.GONE);
             inpBtnMap.setVisibility(View.GONE);
             btnFile.setVisibility(View.GONE);
+            btnFileBAST.setVisibility(View.VISIBLE);
+            tvFileBAST.setVisibility(View.VISIBLE);
 
             tvFoto.setVisibility(View.VISIBLE);
             scrollPartition.setVisibility(View.VISIBLE);
@@ -1510,6 +1566,8 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity  implements 
             tvBast.setVisibility(View.GONE);
             tvUploudBA.setVisibility(View.VISIBLE);
             btnFile.setVisibility(View.VISIBLE);
+            btnFileBAST.setVisibility(View.GONE);
+            tvFileBAST.setVisibility(View.GONE);
 
             inpBtnMap.setVisibility(View.GONE);
 
@@ -1551,6 +1609,8 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity  implements 
             listBtnMap.setVisibility(View.GONE);
             inpJumlahPohon.setVisibility(View.GONE);
             inpBtnMap.setVisibility(View.GONE);
+            btnFileBAST.setVisibility(View.GONE);
+            tvFileBAST.setVisibility(View.GONE);
 
             tvFoto.setVisibility(View.GONE);
             scrollPartition.setVisibility(View.GONE);
@@ -1587,6 +1647,8 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity  implements 
             tvUploudBA.setVisibility(View.GONE);
             inpBtnMap.setVisibility(View.GONE);
             btnFile.setVisibility(View.GONE);
+            btnFileBAST.setVisibility(View.VISIBLE);
+            tvFileBAST.setVisibility(View.VISIBLE);
 
             tvFoto.setVisibility(View.VISIBLE);
             scrollPartition.setVisibility(View.VISIBLE);
@@ -1622,6 +1684,8 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity  implements 
 //            inpKomoditi.setVisibility(View.VISIBLE);
             tvPohon.setVisibility(View.VISIBLE);
             spinnerLuasSatuan.setVisibility(View.GONE);
+            btnFileBAST.setVisibility(View.GONE);
+            tvFileBAST.setVisibility(View.GONE);
 
             inpNomorBAST.setVisibility(View.GONE);
             tvBast.setVisibility(View.GONE);
@@ -1664,6 +1728,8 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity  implements 
             listBtnMap.setVisibility(View.GONE);
             inpJumlahPohon.setVisibility(View.GONE);
             inpBtnMap.setVisibility(View.GONE);
+            btnFileBAST.setVisibility(View.GONE);
+            tvFileBAST.setVisibility(View.GONE);
 
             tvFoto.setVisibility(View.GONE);
             scrollPartition.setVisibility(View.GONE);
@@ -1702,6 +1768,8 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity  implements 
             tvBa.setVisibility(View.GONE);
             tvPohon.setVisibility(View.GONE);
             btnFile.setVisibility(View.GONE);
+            btnFileBAST.setVisibility(View.VISIBLE);
+            tvFileBAST.setVisibility(View.VISIBLE);
 
             tvFoto.setVisibility(View.VISIBLE);
             scrollPartition.setVisibility(View.VISIBLE);
@@ -1737,6 +1805,8 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity  implements 
             spinnerLuasSatuan.setVisibility(View.VISIBLE);
             tvFoto.setVisibility(View.VISIBLE);
             scrollPartition.setVisibility(View.VISIBLE);
+            btnFileBAST.setVisibility(View.GONE);
+            tvFileBAST.setVisibility(View.GONE);
 
             listBtnMap.setVisibility(View.GONE);
             tvLuasTanaman.setVisibility(View.GONE);
@@ -1772,6 +1842,8 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity  implements 
             inpBtnMap.setVisibility(View.GONE);
             inpNomorBAST.setVisibility(View.GONE);
             tvBast.setVisibility(View.GONE);
+            btnFileBAST.setVisibility(View.GONE);
+            tvFileBAST.setVisibility(View.GONE);
 
             tvFoto.setVisibility(View.GONE);
             scrollPartition.setVisibility(View.GONE);
@@ -1805,6 +1877,8 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity  implements 
             tvUploudBA.setVisibility(View.GONE);
             inpBtnMap.setVisibility(View.GONE);
             btnFile.setVisibility(View.GONE);
+            btnFileBAST.setVisibility(View.GONE);
+            tvFileBAST.setVisibility(View.GONE);
 
             tvLuasTanaman.setVisibility(View.GONE);
             tvLuasNonTanaman.setVisibility(View.GONE);
@@ -2323,6 +2397,7 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity  implements 
             File newImg4 = new File(getFilesDir(),namaAsetWithoutSpace+"4.png");
             File newImg5 = new File(getFilesDir(),namaAsetWithoutSpace+"5.png");
             File ba = new File(getFilesDir(),namaAsetWithoutSpace+"-ba.pdf");
+            File BAST = new File(getFilesDir(),namaAsetWithoutSpace+"-bast.pdf");
 
             if (img1 != null) {
                 FileInputStream in = new FileInputStream(img1);
@@ -2463,6 +2538,29 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity  implements 
                 // Delete the original file
                 bafile_file.delete();
                 values.put("berita_acara",ba.getAbsolutePath());
+
+            }
+
+            if (file_bast != null) {
+
+                FileInputStream in = new FileInputStream(file_bast);
+                FileOutputStream out = new FileOutputStream(BAST);
+
+                // Copy the file
+                byte[] buffer = new byte[1024];
+                int read;
+                while ((read = in.read(buffer)) != -1) {
+                    out.write(buffer, 0, read);
+                }
+
+                // Close the streams
+                in.close();
+                out.flush();
+                out.close();
+
+                // Delete the original file
+                file_bast.delete();
+                values.put("file_bast",BAST.getAbsolutePath());
 
             }
 
@@ -2580,6 +2678,7 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity  implements 
             File newImg4 = new File(getFilesDir(),namaAsetWithoutSpace+"4.png");
             File newImg5 = new File(getFilesDir(),namaAsetWithoutSpace+"5.png");
             File ba = new File(getFilesDir(),namaAsetWithoutSpace+"-ba.pdf");
+            File BAST = new File(getFilesDir(),namaAsetWithoutSpace+"-bast.pdf");
 
             if (img1 != null) {
                 FileInputStream in = new FileInputStream(img1);
@@ -2720,6 +2819,29 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity  implements 
                 // Delete the original file
                 bafile_file.delete();
                 values.put("berita_acara",ba.getAbsolutePath());
+
+            }
+
+            if (file_bast != null) {
+
+                FileInputStream in = new FileInputStream(file_bast);
+                FileOutputStream out = new FileOutputStream(BAST);
+
+                // Copy the file
+                byte[] buffer = new byte[1024];
+                int read;
+                while ((read = in.read(buffer)) != -1) {
+                    out.write(buffer, 0, read);
+                }
+
+                // Close the streams
+                in.close();
+                out.flush();
+                out.close();
+
+                // Delete the original file
+                file_bast.delete();
+                values.put("file_bast",BAST.getAbsolutePath());
 
             }
 
