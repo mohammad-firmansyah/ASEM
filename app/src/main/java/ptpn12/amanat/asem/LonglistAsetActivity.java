@@ -21,6 +21,7 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -71,6 +72,7 @@ public class LonglistAsetActivity extends AppCompatActivity  { //implements Bott
 
     DataAllSpinner allSpinner;
     Context context;
+    Boolean offline;
     List<String> listSpinnerSap=new ArrayList<>();
     List<AsetKode2> asetKode2 = new ArrayList<>();
     List<Afdelling> afdeling = new ArrayList<>();
@@ -95,6 +97,7 @@ public class LonglistAsetActivity extends AppCompatActivity  { //implements Bott
     AsetHelper asetHelper;
     List<Data2> asetList = new ArrayList<>();
 
+    SharedPreferences.Editor editor;
     LinearLayout addDataOffline;
     TextView tvAddDataOffline;
 
@@ -126,7 +129,7 @@ public class LonglistAsetActivity extends AppCompatActivity  { //implements Bott
         setContentView(R.layout.activity_longlist_aset);
 
         asetInterface = AsemApp.getApiClient().create(AsetInterface.class);
-        SharedPreferences.Editor editor = getSharedPreferences(PREF_LOGIN, MODE_PRIVATE).edit();
+        editor = getSharedPreferences(PREF_LOGIN, MODE_PRIVATE).edit();
         sharedPreferences = getSharedPreferences(PREF_LOGIN,MODE_PRIVATE);
         dialog = new Dialog(LonglistAsetActivity.this,R.style.MyAlertDialogTheme);
         dialog.setContentView(R.layout.loading);
@@ -153,7 +156,7 @@ public class LonglistAsetActivity extends AppCompatActivity  { //implements Bott
         tvAddDataOffline = findViewById(R.id.tvAddDataOffline);
 
         Intent intent = getIntent();
-        Boolean offline = intent.getBooleanExtra("offline",false);
+         offline = intent.getBooleanExtra("offline",false);
         if(offline) {
             switch_offline.setChecked(true);
         } else {
@@ -171,18 +174,6 @@ public class LonglistAsetActivity extends AppCompatActivity  { //implements Bott
             @Override
             public void onClick(View view) {
 //                dialog.show();
-
-                String hak_akses_id = sharedPreferences.getString("hak_akses_id", "-");
-                if (hak_akses_id.equals("7")){
-                    AsetHelper asetHelper = AsetHelper.getInstance(getApplicationContext());
-                    asetHelper.open();
-                    asetHelper.truncate(); ;
-                    asetHelper.close();
-                    editor.putBoolean("sync",true);
-                    editor.apply();
-                    getAllSpinnerData();
-//                    Toast.makeText(getApplicationContext(),"sukes sinkron data spinner",Toast.LENGTH_LONG).show();
-                }
 
 //                dialog.dismiss();
             }
@@ -516,6 +507,35 @@ public class LonglistAsetActivity extends AppCompatActivity  { //implements Bott
         });
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        if (offline) {
+            getMenuInflater().inflate(R.menu.menu_main, menu);
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.menu_sync:
+                String hak_akses_id = sharedPreferences.getString("hak_akses_id", "-");
+                if (hak_akses_id.equals("7")){
+                    AsetHelper asetHelper = AsetHelper.getInstance(getApplicationContext());
+                    asetHelper.open();
+                    asetHelper.truncate(); ;
+                    asetHelper.close();
+                    editor.putBoolean("sync",true);
+                    editor.apply();
+                    getAllSpinnerData();
+                    return true;
+                }
+            break;
+        }
+        return true;
+    }
     public void onBackPressed() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Keluar");

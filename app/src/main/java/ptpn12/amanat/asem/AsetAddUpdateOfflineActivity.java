@@ -2214,7 +2214,6 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity  implements 
             customDialogAddAset.dismiss();
             inpNoSAP.setError("nomor SAP harus diisi");
             inpNoSAP.requestFocus();
-
             return;
         }
 
