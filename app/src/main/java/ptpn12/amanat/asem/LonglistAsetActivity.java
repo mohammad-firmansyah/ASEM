@@ -124,12 +124,16 @@ public class LonglistAsetActivity extends AppCompatActivity  { //implements Bott
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_longlist_aset);
 
+        asetInterface = AsemApp.getApiClient().create(AsetInterface.class);
         SharedPreferences.Editor editor = getSharedPreferences(PREF_LOGIN, MODE_PRIVATE).edit();
         sharedPreferences = getSharedPreferences(PREF_LOGIN,MODE_PRIVATE);
         dialog = new Dialog(LonglistAsetActivity.this,R.style.MyAlertDialogTheme);
         dialog.setContentView(R.layout.loading);
         dialog.setCanceledOnTouchOutside(false);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(0));
+
+        btnReport = findViewById(R.id.btnReport);
+        btnFilter = findViewById(R.id.btnFilter);
 
         rcAset = findViewById(R.id.asetAll);
         rcAset.setHasFixedSize(true);
@@ -147,6 +151,13 @@ public class LonglistAsetActivity extends AppCompatActivity  { //implements Bott
         addDataOffline = findViewById(R.id.addDataOffline);
         tvAddDataOffline = findViewById(R.id.tvAddDataOffline);
 
+        Intent intent = getIntent();
+        Boolean offline = intent.getBooleanExtra("offline",false);
+        if(offline) {
+            switch_offline.setChecked(true);
+        } else {
+            switch_offline.setChecked(false);
+        }
 
 //        btnSync.setOnClickListener(new View.OnClickListener() {
 //            @Override
@@ -253,43 +264,43 @@ public class LonglistAsetActivity extends AppCompatActivity  { //implements Bott
                         startActivity(new Intent(LonglistAsetActivity.this, AddAsetActivity.class));
                     }
                 });
+
                 if(switch_offline.isChecked()){
                     dialog.show();
                     //aktifkan longlist offline
-                        vwSync.setVisibility(View.VISIBLE);
-                        addDataOffline.setVisibility(View.VISIBLE);
+                    vwSync.setVisibility(View.VISIBLE);
+                    addDataOffline.setVisibility(View.VISIBLE);
 
-                        dialog.dismiss();
-                        switch_offline.setChecked(true);
-                        rcAset.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
-                        rcAset.setAdapter(offlineAdapter);
-                        searchView.setVisibility(View.GONE);
-                        btnReport.setVisibility(View.GONE);
-                        btnFilter.setVisibility(View.GONE);
-                        switch_offline.setTrackTintList(ColorStateList.valueOf(getResources().getColor(R.color.MediumBlue)));
-                        switch_offline.setThumbTintList(ColorStateList.valueOf(getResources().getColor(R.color.white)));
-                        fab.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                Boolean sync = sharedPreferences.getBoolean("sync",false);
-                                if (sync){
+                    dialog.dismiss();
+                    rcAset.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+                    rcAset.setAdapter(offlineAdapter);
+                    searchView.setVisibility(View.GONE);
+                    btnReport.setVisibility(View.GONE);
+                    btnFilter.setVisibility(View.GONE);
+                    switch_offline.setTrackTintList(ColorStateList.valueOf(getResources().getColor(R.color.MediumBlue)));
+                    switch_offline.setThumbTintList(ColorStateList.valueOf(getResources().getColor(R.color.white)));
+                    fab.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Boolean sync = sharedPreferences.getBoolean("sync",false);
+                            if (sync){
 
-                                    startActivity(new Intent(LonglistAsetActivity.this, AsetAddUpdateOfflineActivity.class));
-                                } else {
-                                    Toast.makeText(getApplicationContext(),"Sinkronkan Data Terlebih Dahulu",Toast.LENGTH_LONG).show();
-                                }
-
+                                startActivity(new Intent(LonglistAsetActivity.this, AsetAddUpdateOfflineActivity.class));
+                            } else {
+                                Toast.makeText(getApplicationContext(),"Sinkronkan Data Terlebih Dahulu",Toast.LENGTH_LONG).show();
                             }
-                        });
-                        asetHelper = AsetHelper.getInstance(getApplicationContext());
-                        asetHelper.open();
-                        Cursor dataoffline = asetHelper.queryAll();
-                        if (hak_akses_id.equals("7")){
-                            ArrayList<Aset> listAset = MappingHelper.mapCursorToArrayListAset(dataoffline);
-                            offlineAdapter = new AsetOfflineAdapter(LonglistAsetActivity.this, listAset);
-                                rcAset.setAdapter(offlineAdapter);
+
                         }
-                        asetHelper.close();
+                    });
+                    asetHelper = AsetHelper.getInstance(getApplicationContext());
+                    asetHelper.open();
+                    Cursor dataoffline = asetHelper.queryAll();
+                    if (hak_akses_id.equals("7")){
+                        ArrayList<Aset> listAset = MappingHelper.mapCursorToArrayListAset(dataoffline);
+                        offlineAdapter = new AsetOfflineAdapter(LonglistAsetActivity.this, listAset);
+                        rcAset.setAdapter(offlineAdapter);
+                    }
+                    asetHelper.close();
 
                 }else {
                     dialog.dismiss();
@@ -303,8 +314,60 @@ public class LonglistAsetActivity extends AppCompatActivity  { //implements Bott
                     switch_offline.setTrackTintList(ColorStateList.valueOf(Color.GRAY));
                     switch_offline.setThumbTintList(ColorStateList.valueOf(Color.WHITE));
                 }
+
             }
         });
+
+        if(switch_offline.isChecked()){
+            dialog.show();
+            //aktifkan longlist offline
+            vwSync.setVisibility(View.VISIBLE);
+            addDataOffline.setVisibility(View.VISIBLE);
+
+            dialog.dismiss();
+            switch_offline.setChecked(true);
+            rcAset.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+            rcAset.setAdapter(offlineAdapter);
+            searchView.setVisibility(View.GONE);
+            btnReport.setVisibility(View.GONE);
+            btnFilter.setVisibility(View.GONE);
+            switch_offline.setTrackTintList(ColorStateList.valueOf(getResources().getColor(R.color.MediumBlue)));
+            switch_offline.setThumbTintList(ColorStateList.valueOf(getResources().getColor(R.color.white)));
+            fab.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Boolean sync = sharedPreferences.getBoolean("sync",false);
+                    if (sync){
+
+                        startActivity(new Intent(LonglistAsetActivity.this, AsetAddUpdateOfflineActivity.class));
+                    } else {
+                        Toast.makeText(getApplicationContext(),"Sinkronkan Data Terlebih Dahulu",Toast.LENGTH_LONG).show();
+                    }
+
+                }
+            });
+            asetHelper = AsetHelper.getInstance(getApplicationContext());
+            asetHelper.open();
+            Cursor dataoffline = asetHelper.queryAll();
+            if (hak_akses_id.equals("7")){
+                ArrayList<Aset> listAset = MappingHelper.mapCursorToArrayListAset(dataoffline);
+                offlineAdapter = new AsetOfflineAdapter(LonglistAsetActivity.this, listAset);
+                rcAset.setAdapter(offlineAdapter);
+            }
+            asetHelper.close();
+
+        }else {
+            dialog.dismiss();
+            vwSync.setVisibility(View.GONE);
+            addDataOffline.setVisibility(View.GONE);
+            srlonglist.setEnabled(true);
+            getAllAset();
+            btnReport.setVisibility(View.VISIBLE);
+            btnFilter.setVisibility(View.VISIBLE);
+            searchView.setVisibility(View.VISIBLE);
+            switch_offline.setTrackTintList(ColorStateList.valueOf(Color.GRAY));
+            switch_offline.setThumbTintList(ColorStateList.valueOf(Color.WHITE));
+        }
 
         btnReport = findViewById(R.id.btnReport);
         btnFilter = findViewById(R.id.btnFilter);
@@ -325,7 +388,7 @@ public class LonglistAsetActivity extends AppCompatActivity  { //implements Bott
         });
 
 
-        asetInterface = AsemApp.getApiClient().create(AsetInterface.class);
+
 //        allData = new Data[]{};
 //        AsetAdapter adapter = new AsetAdapter(allData,LonglistAsetActivity.this);
 //        rcAset.setAdapter(adapter);
@@ -334,9 +397,10 @@ public class LonglistAsetActivity extends AppCompatActivity  { //implements Bott
 
         srlonglist.setOnRefreshListener(() ->{
             srlonglist.setRefreshing(false);
-            Intent intent = new Intent(LonglistAsetActivity.this, LonglistAsetActivity.class);
-            startActivity(intent);
+            Intent intentToLonglist = new Intent(LonglistAsetActivity.this, LonglistAsetActivity.class);
+            startActivity(intentToLonglist);
             finish();
+
         });
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottomnav);
@@ -364,7 +428,7 @@ public class LonglistAsetActivity extends AppCompatActivity  { //implements Bott
             }
         });
 
-        getAllAset();
+
 //        initScrollListener();
     }
 

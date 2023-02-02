@@ -2676,6 +2676,7 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity  implements 
             dialog.dismiss();
 //            finish();
             Intent intent = new Intent(AsetAddUpdateOfflineActivity.this, LonglistAsetActivity.class);
+            intent.putExtra("offline",true);
             startActivity(intent);
 //            saveImageInternal(img1,inpNamaAset.getText().toString().trim(),1);
         } catch(Exception e) {
