@@ -69,6 +69,7 @@ public class DetailAsetOfflineActivity extends AppCompatActivity {
     String url2 = "";
     String url3 = "";
     String url4 = "";
+    String url5 = "";
     Map<Integer, Integer> mapAfdelingSpinner = new HashMap<Integer, Integer>();
     Map<Long, Integer> mapSap = new HashMap();
     Map<Integer, Long> mapSpinnerSap = new HashMap();
@@ -85,6 +86,7 @@ public class DetailAsetOfflineActivity extends AppCompatActivity {
     Button map2;
     Button map3;
     Button map4;
+    Button map5;
     Button btnApprove;
     Button btnReject;
 
@@ -165,18 +167,21 @@ public class DetailAsetOfflineActivity extends AppCompatActivity {
     ViewGroup foto2rl;
     ViewGroup foto3rl;
     ViewGroup foto4rl;
+    ViewGroup foto5rl;
     ViewGroup listBtnMap;
 
     ImageView fotoimg1;
     ImageView fotoimg2;
     ImageView fotoimg3;
     ImageView fotoimg4;
+    ImageView fotoimg5;
 
 
     String photoname1 = "foto1.png";
     String photoname2 = "foto2.png";
     String photoname3 = "foto3.png";
     String photoname4 = "foto4.png";
+    String photoname5 = "foto5.png";
 
 
 
@@ -184,11 +189,13 @@ public class DetailAsetOfflineActivity extends AppCompatActivity {
     String geotag2;
     String geotag3;
     String geotag4;
+    String geotag5;
 
     File img1;
     File img2;
     File img3;
     File img4;
+    File img5;
     File bafile_file;
 
     String spinnerIdTipeAsset;
@@ -303,16 +310,19 @@ public class DetailAsetOfflineActivity extends AppCompatActivity {
         map2 = findViewById(R.id.map2);
         map3 = findViewById(R.id.map3);
         map4 = findViewById(R.id.map4);
+        map5 = findViewById(R.id.map5);
 
         foto1rl = findViewById(R.id.foto1);
         foto2rl = findViewById(R.id.foto2);
         foto3rl = findViewById(R.id.foto3);
         foto4rl = findViewById(R.id.foto4);
+        foto5rl = findViewById(R.id.foto5);
 
         fotoimg1 = findViewById(R.id.fotoimg1);
         fotoimg2 = findViewById(R.id.fotoimg2);
         fotoimg3 = findViewById(R.id.fotoimg3);
         fotoimg4 = findViewById(R.id.fotoimg4);
+        fotoimg5 = findViewById(R.id.fotoimg5);
         inpBtnMap = findViewById(R.id.inpBtnMap);
 
 
@@ -450,6 +460,15 @@ public class DetailAsetOfflineActivity extends AppCompatActivity {
             }
         });
 
+        foto5rl.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(DetailAsetOfflineActivity.this,DetailImageActivity.class);
+                intent.putExtra("url",url5);
+                startActivity(intent);
+            }
+        });
+
 
 
         inpNilaiAsetSAP.addTextChangedListener(new TextWatcher() {
@@ -554,6 +573,15 @@ public class DetailAsetOfflineActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(android.content.Intent.ACTION_VIEW,
                         Uri.parse(geotag4));
+                startActivity(intent);
+            }
+        });
+
+        map5.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(android.content.Intent.ACTION_VIEW,
+                        Uri.parse(geotag5));
                 startActivity(intent);
             }
         });
@@ -707,12 +735,24 @@ public class DetailAsetOfflineActivity extends AppCompatActivity {
                     fotoimg4.setImageBitmap(bmp);
                     map4.setEnabled(true);
                 }
+                if (aset.getFotoAset5() == null ){
+                    map5.setEnabled(false);
+                    foto5rl.setEnabled(false);
+                } else {
+                    URL url = new URL(url5);
+                    Bitmap bmp = BitmapFactory.decodeStream(url.openConnection().getInputStream());
+                    fotoimg5.getLayoutParams().width = 200;
+                    fotoimg5.getLayoutParams().height = 200;
+                    fotoimg5.setImageBitmap(bmp);
+                    map5.setEnabled(true);
+                }
 
 
                 geotag1 = aset.getGeoTag1();
                 geotag2 = aset.getGeoTag2();
                 geotag3 = aset.getGeoTag3();
                 geotag4 = aset.getGeoTag4();
+                geotag5 = aset.getGeoTag5();
 
                 if (aset.getSatuan_luas() != null) {
                     inpSatuanLuas.setText(aset.getSatuan_luas());
@@ -803,6 +843,8 @@ public class DetailAsetOfflineActivity extends AppCompatActivity {
 
             inpSatuanLuas.setVisibility(View.GONE);
 
+            foto5rl.setVisibility(View.VISIBLE);
+
             tvPopTotalIni.setVisibility(View.VISIBLE);
             tvPopTotalStd.setVisibility(View.VISIBLE);
             tvPopHektarStd.setVisibility(View.VISIBLE);
@@ -838,10 +880,21 @@ public class DetailAsetOfflineActivity extends AppCompatActivity {
             inpPersenKondisi.setVisibility(View.GONE);
             tvPersenKondisi.setVisibility(View.GONE);
 
-
             tvAlatAngkut.setVisibility(View.GONE);
             spinnerAlatAngkut.setVisibility(View.GONE);
             inpSatuanLuas.setVisibility(View.GONE);
+
+            foto5rl.setVisibility(View.VISIBLE);
+
+            tvPopTotalIni.setVisibility(View.VISIBLE);
+            tvPopTotalStd.setVisibility(View.VISIBLE);
+            tvPopHektarStd.setVisibility(View.VISIBLE);
+            tvPopHektarIni.setVisibility(View.VISIBLE);
+            inpPopTotalIni.setVisibility(View.VISIBLE);
+            inpPopTotalStd.setVisibility(View.VISIBLE);
+            inpPopHektarIni.setVisibility(View.VISIBLE);
+            inpPopHektarStd.setVisibility(View.VISIBLE);
+
         }
 
 
@@ -873,6 +926,8 @@ public class DetailAsetOfflineActivity extends AppCompatActivity {
             tvAlatAngkut.setVisibility(View.GONE);
             spinnerAlatAngkut.setVisibility(View.GONE);
             inpSatuanLuas.setVisibility(View.GONE);
+
+            foto5rl.setVisibility(View.VISIBLE);
 
             tvPopTotalIni.setVisibility(View.VISIBLE);
             tvPopTotalStd.setVisibility(View.VISIBLE);
@@ -912,6 +967,8 @@ public class DetailAsetOfflineActivity extends AppCompatActivity {
             tvAlatAngkut.setVisibility(View.GONE);
             spinnerAlatAngkut.setVisibility(View.GONE);
             inpSatuanLuas.setVisibility(View.GONE);
+
+            foto5rl.setVisibility(View.GONE);
 
             tvPopTotalIni.setVisibility(View.GONE);
             tvPopTotalStd.setVisibility(View.GONE);
@@ -955,6 +1012,8 @@ public class DetailAsetOfflineActivity extends AppCompatActivity {
             spinnerAlatAngkut.setVisibility(View.GONE);
             inpSatuanLuas.setVisibility(View.GONE);
 
+            foto5rl.setVisibility(View.GONE);
+
             tvPopTotalIni.setVisibility(View.GONE);
             tvPopTotalStd.setVisibility(View.GONE);
             tvPopHektarStd.setVisibility(View.GONE);
@@ -995,6 +1054,8 @@ public class DetailAsetOfflineActivity extends AppCompatActivity {
             spinnerAlatAngkut.setVisibility(View.GONE);
             inpSatuanLuas.setVisibility(View.GONE);
 
+            foto5rl.setVisibility(View.GONE);
+
             tvPopTotalIni.setVisibility(View.GONE);
             tvPopTotalStd.setVisibility(View.GONE);
             tvPopHektarStd.setVisibility(View.GONE);
@@ -1033,6 +1094,8 @@ public class DetailAsetOfflineActivity extends AppCompatActivity {
             spinnerAlatAngkut.setVisibility(View.VISIBLE);
             inpSatuanLuas.setVisibility(View.VISIBLE);
 
+            foto5rl.setVisibility(View.GONE);
+
             tvPopTotalIni.setVisibility(View.GONE);
             tvPopTotalStd.setVisibility(View.GONE);
             tvPopHektarStd.setVisibility(View.GONE);
@@ -1068,6 +1131,8 @@ public class DetailAsetOfflineActivity extends AppCompatActivity {
             tvAlatAngkut.setVisibility(View.VISIBLE);
             spinnerAlatAngkut.setVisibility(View.VISIBLE);
             inpSatuanLuas.setVisibility(View.VISIBLE);
+
+            foto5rl.setVisibility(View.GONE);
 
             tvPopTotalIni.setVisibility(View.GONE);
             tvPopTotalStd.setVisibility(View.GONE);
@@ -1108,6 +1173,8 @@ public class DetailAsetOfflineActivity extends AppCompatActivity {
             spinnerAlatAngkut.setVisibility(View.VISIBLE);
             inpSatuanLuas.setVisibility(View.VISIBLE);
 
+            foto5rl.setVisibility(View.GONE);
+
             tvPopTotalIni.setVisibility(View.GONE);
             tvPopTotalStd.setVisibility(View.GONE);
             tvPopHektarStd.setVisibility(View.GONE);
@@ -1140,6 +1207,8 @@ public class DetailAsetOfflineActivity extends AppCompatActivity {
 
             tvAlatAngkut.setVisibility(View.GONE);
             spinnerAlatAngkut.setVisibility(View.GONE);
+
+            foto5rl.setVisibility(View.GONE);
 
             tvPopTotalIni.setVisibility(View.GONE);
             tvPopTotalStd.setVisibility(View.GONE);
