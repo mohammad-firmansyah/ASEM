@@ -7,11 +7,16 @@
     android:background="@color/background_grey"
     tools:context="ptpn12.amanat.asem.ProfilActivity">
 
+    <include
+        android:id="@+id/appbar"
+        layout="@layout/appbar"/>
+
     <LinearLayout
         android:id="@+id/content"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:layout_below="@id/appbar">
 
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"

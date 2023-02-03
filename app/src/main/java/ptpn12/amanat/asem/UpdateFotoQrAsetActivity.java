@@ -527,6 +527,11 @@ public class UpdateFotoQrAsetActivity extends AppCompatActivity {
         addNewFotoAsetAndQr = findViewById(R.id.addNewFotoAsetAndQr);
         addNewFotoAsetAndQr2 = findViewById(R.id.addNewFotoAsetAndQr2);
 
+        // globally
+        TextView tvTitle = findViewById(R.id.tvTitle);
+        //in your OnCreate() method
+        tvTitle.setText("UPDATE DATA");
+
         addNewFotoAsetAndQr.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

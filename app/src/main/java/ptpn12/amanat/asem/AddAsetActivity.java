@@ -605,7 +605,12 @@ public class AddAsetActivity extends AppCompatActivity {
         btnFile = findViewById(R.id.inpUploudBA);
         btnFileBAST = findViewById(R.id.inpUploadBAST);
 
-//        handler
+
+
+        // globally
+        TextView tvTitle = findViewById(R.id.tvTitle);
+        //in your OnCreate() method
+        tvTitle.setText("TAMBAH DATA");
 
 
         btnSubmit.setOnClickListener(v -> initDialogAddAset());
