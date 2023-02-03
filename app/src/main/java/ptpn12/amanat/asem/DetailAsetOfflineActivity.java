@@ -129,6 +129,7 @@ public class DetailAsetOfflineActivity extends AppCompatActivity {
     EditText inpJumlahPohon;
     TextView tvUploudBA;
     TextView tvUploudBast;
+    TextView tvUploadFileBAST;
     TextView tvKetReject;
     TextView tvAlatAngkut;
 
@@ -254,6 +255,7 @@ public class DetailAsetOfflineActivity extends AppCompatActivity {
         inpTglOleh.setEnabled(false);
         tvUploudBA = findViewById(R.id.tvUploudBA);
         tvUploudBast = findViewById(R.id.tvUploadBAST);
+        tvUploadFileBAST = findViewById(R.id.tvUploadFileBAST);
         spinnerTipeAset = findViewById(R.id.inpTipeAset);
         spinnerTipeAset.setEnabled(false);
         spinnerJenisAset = findViewById(R.id.inpJenisAset);
@@ -688,6 +690,11 @@ public class DetailAsetOfflineActivity extends AppCompatActivity {
             if (aset.getBeritaAcara() != null ) {
 
                 tvUploudBA.setText(aset.getBeritaAcara());
+
+            }
+            if (aset.getFileBAST() != null ) {
+
+                tvUploadFileBAST.setText(aset.getFileBAST());
 
             }
 

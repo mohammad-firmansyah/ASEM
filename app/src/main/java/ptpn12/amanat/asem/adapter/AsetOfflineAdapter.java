@@ -252,7 +252,7 @@ public class AsetOfflineAdapter extends RecyclerView.Adapter<AsetOfflineAdapter.
 
     void showDialogKirim(Aset aset) {
         asetInterface = AsemApp.getApiClient().create(AsetInterface.class);
-
+        Dialog dialog =new Dialog(context);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.ly_kirim_sukses);
         dialog.show();
@@ -269,6 +269,7 @@ public class AsetOfflineAdapter extends RecyclerView.Adapter<AsetOfflineAdapter.
     }
 
     void kirimData(Aset aset) {
+        dialog.dismiss();
         dialog = new Dialog(context,R.style.MyAlertDialogTheme);
         dialog.setContentView(R.layout.loading);
         dialog.setCanceledOnTouchOutside(false);
@@ -406,7 +407,7 @@ public class AsetOfflineAdapter extends RecyclerView.Adapter<AsetOfflineAdapter.
 
         MultipartBody multipartBody = builder
                 .build();
-        String contentType = "multipart/form-data; charset=utf-8; boundary=" + multipartBody.boundary();
+        String contentType = "multipart/form-data; charset=utf-8; bound ary=" + multipartBody.boundary();
 
 
         Call<AsetModel2> call = asetInterface.addAset(contentType, multipartBody);
@@ -418,6 +419,7 @@ public class AsetOfflineAdapter extends RecyclerView.Adapter<AsetOfflineAdapter.
             @Override
             public void onResponse(Call<AsetModel2> call, Response<AsetModel2> response) {
                 if (!response.isSuccessful() && response.body() == null) {
+                    dialog.dismiss();
                     if (response.code() >= 400 && response.code() < 500) {
                         Toast.makeText(context,"data sap sudah digunkan",Toast.LENGTH_LONG).show();
                         return;
@@ -466,6 +468,7 @@ public class AsetOfflineAdapter extends RecyclerView.Adapter<AsetOfflineAdapter.
 
             @Override
             public void onFailure(Call<AsetModel2> call, Throwable t) {
+                dialog.dismiss();
                 Toast.makeText(context, "Tidak Ada Koneksi Internet", Toast.LENGTH_LONG).show();
                 return;
             }

@@ -103,7 +103,6 @@ public class LonglistAsetActivity extends AppCompatActivity  { //implements Bott
 
     Button btnReport;
     Button btnFilter;
-    ViewGroup vwSync;
     FloatingActionButton fab;
 
     RecyclerView rcAset; //untuk aset utama
@@ -275,7 +274,6 @@ public class LonglistAsetActivity extends AppCompatActivity  { //implements Bott
 
                 }else {
                     dialog.dismiss();
-                    vwSync.setVisibility(View.GONE);
                     addDataOffline.setVisibility(View.GONE);
                     srlonglist.setEnabled(true);
                     getAllAset();
@@ -296,7 +294,6 @@ public class LonglistAsetActivity extends AppCompatActivity  { //implements Bott
         if(switch_offline.isChecked()){
             dialog.show();
             //aktifkan longlist offline
-            vwSync.setVisibility(View.VISIBLE);
             addDataOffline.setVisibility(View.VISIBLE);
 
             dialog.dismiss();

@@ -301,17 +301,26 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity  implements 
             Uri urifile = data.getData();
             try {
                 bafile_file = getFile(this, urifile);
-                file_bast = getFile(this, urifile);
+//                file_bast = getFile(this, urifile);
                 String docPath = bafile_file.getAbsolutePath();
                 Log.d("asetapix", "onActivityResult: path doc : "+docPath);
                 Log.d("asetapix", "onActivityResult: masterpath : "+data.getData().getPath());
 //                ExifInterface ei = new ExifInterface(bafile_file.getAbsolutePath());
                 tvUploudBA.setText(bafile_file.getAbsolutePath());
-                tvUploadFileBAST.setText(file_bast.getAbsolutePath());
+//                tvUploadFileBAST.setText(file_bast.getAbsolutePath());
             } catch (IOException e) {
                 e.printStackTrace();
             }
             Log.d("asetapix", "onActivityResult: "+ data.getData());
+        } else if(requestCode == 2 && resultCode == Activity.RESULT_OK){
+            assert data != null;
+            Uri urifile = data.getData();
+            try {
+                file_bast = getFile(this, urifile);
+                tvUploadFileBAST.setText(file_bast.getAbsolutePath());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 
@@ -564,6 +573,7 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity  implements 
         inpTglOleh = findViewById(R.id.inpTglMasukAset);
         inpTglInput = findViewById(R.id.inpTglInput);
         tvUploudBA = findViewById(R.id.tvUploudBA);
+        tvUploadFileBAST = findViewById(R.id.tvUploadFileBAST);
         spinnerTipeAset = findViewById(R.id.inpTipeAset);
         spinnerJenisAset = findViewById(R.id.inpJenisAset);
         spinnerAsetKondisi = findViewById(R.id.inpKndsAset);
@@ -959,7 +969,7 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity  implements 
                 // system file picker when it loads.
 
                 pickFile.putExtra(DocumentsContract.EXTRA_INITIAL_URI, docUri);
-                startActivityForResult(pickFile, 1);
+                startActivityForResult(pickFile, 2);
             }
         });
 
@@ -1150,6 +1160,10 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity  implements 
             aset = MappingHelper.mapCursorToArrayAset(data);
             if (aset.getBeritaAcara() != null ) {
                 tvUploudBA.setText(aset.getBeritaAcara());
+            }
+
+            if (aset.getFileBAST() != null ) {
+                tvUploadFileBAST.setText(aset.getFileBAST());
             }
 
             if (aset.getAlat_pengangkutan() != null){
@@ -2329,8 +2343,7 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity  implements 
         if (inpNoSAP.getText().toString().equals("Pilih Nomor SAP")) {
             dialog.dismiss();
             customDialogAddAset.dismiss();
-            inpNilaiResidu.setError("Nilai Sap Harus Diisi");
-            inpNilaiResidu.requestFocus();
+            Toast.makeText(getApplicationContext(), "Nomor SAP Wajib diisi!", Toast.LENGTH_SHORT).show();
             return;
         }
 
@@ -2533,7 +2546,7 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity  implements 
                 FileOutputStream out = new FileOutputStream(BAST);
 
                 // Copy the file
-                byte[] buffer = new byte[1024];
+                byte[] buffer = new byte[9999];
                 int read;
                 while ((read = in.read(buffer)) != -1) {
                     out.write(buffer, 0, read);
