@@ -272,7 +272,7 @@
         <RadioButton android:id="@+id/yesWithFoto"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="foto + QRcode"
+            android:text="Foto+QRcode"
             android:backgroundTint="@color/main_grey"
             android:layout_marginRight="10dp"
             android:buttonTint="@color/main_grey"

@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.DownloadManager;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
@@ -74,7 +75,7 @@ public class ReportActivity extends AppCompatActivity {
 
     Button btnSubmit;
     ImageView imgBack;
-
+    String urlReportv3;
     TextView tvUnit;
     RadioGroup radioGroup;
     EditText inpTglInput1;
@@ -477,6 +478,11 @@ public class ReportActivity extends AppCompatActivity {
 
         try{
 
+            int selectedId = radioGroup.getCheckedRadioButtonId();
+            RadioButton radioButton = (RadioButton) findViewById(selectedId);
+
+            urlReportv3 = AsemApp.BASE_URL +  "/aset/report3?tipe_aset=" + String.valueOf(spinnerTipeAset.getSelectedItemId()) + "?jenis_aset=" + String.valueOf(spinnerJenisAset.getSelectedItemId()) + "?kondisi_aset=" + String.valueOf(spinnerAsetKondisi.getSelectedItemId()) + "?kode_aset=" + String.valueOf(spinnerKodeAset.getSelectedItemId()) + "?tgl_input1=" +String.valueOf(inpTglInput1.getText()) + "?tgl_input2=" + String.valueOf(inpTglInput2.getText()) + "?jenis_report=" + spinnerJenisReport.getSelectedItem() + "?qrcode=" + radioButton.getText().toString();
+
             RequestBody requestTipeAset = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(spinnerIdTipeAsset));
             RequestBody requestJenisAset = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(spinnerIdJenisAset));
             RequestBody requestKondisiAset = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(spinnerIdAsetKondisi));
@@ -503,14 +509,20 @@ public class ReportActivity extends AppCompatActivity {
             builder.addPart(MultipartBody.Part.createFormData("unit_id",null,requestUnit));
             builder.addPart(MultipartBody.Part.createFormData("hgu",null,requestHGU));
 
-            int selectedId = radioGroup.getCheckedRadioButtonId();
-            RadioButton radioButton = (RadioButton) findViewById(selectedId);
 
-            if ("ya".equals(radioButton.getText().toString())) {
+
+            if ("QRcode".equals(radioButton.getText().toString())) {
                 RequestBody requestQrCode = RequestBody.create(MediaType.parse("text/plain"), "true");
                 builder.addPart(MultipartBody.Part.createFormData("qrcode",null,requestQrCode));
 
-            }else {
+
+            } else if("Foto+QRcode".equals(radioButton.getText().toString())) {
+
+                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(urlReportv3));
+                startActivity(browserIntent);
+                return;
+
+            } else {
                 RequestBody requestQrCode = RequestBody.create(MediaType.parse("text/plain"), "false");
                 builder.addPart(MultipartBody.Part.createFormData("qrcode",null,requestQrCode));
 
