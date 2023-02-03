@@ -22,6 +22,7 @@
             android:paddingEnd="16dp"
             android:src="@drawable/ic_baseline_arrow_back_24"
             app:tint="@color/white"
+            android:visibility="gone"
             tools:ignore="ContentDescription,RtlSymmetry" />
 
         <TextView
@@ -65,16 +66,6 @@
             tools:ignore="ContentDescription" />
 
         <ImageView
-            android:id="@+id/imgRefresh"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_marginEnd="40dp"
-            android:src="@drawable/ic_sync"
-            android:visibility="gone"
-            tools:ignore="ContentDescription" />
-
-        <ImageView
             android:id="@+id/imgReport"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -82,6 +73,34 @@
             android:layout_marginEnd="30dp"
             android:visibility="gone"
             app:srcCompat="@drawable/ic_baseline_arrow_downward_24" />
+
+        <ImageView
+            android:id="@+id/btnSync"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="5dp"
+            android:src="@drawable/ic_baseline_repeat_24"
+            tools:ignore="ContentDescription" />
+
+        <ImageView
+            android:id="@+id/imgWifiON"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="50dp"
+            android:visibility="gone"
+            android:src="@drawable/ic_baseline_wifi_24" />
+
+
+        <ImageView
+            android:id="@+id/imgWifiOFF"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="50dp"
+            android:visibility="gone"
+            android:src="@drawable/ic_baseline_wifi_off_24" />
 
     </RelativeLayout>
 

@@ -8,4 +8,16 @@
         app:showAsAction="always"
         android:title="Sinkron Data"
         />
+    <item
+        android:id="@+id/menu_wifi_off"
+        android:icon="@drawable/ic_baseline_wifi_off_24"
+        app:showAsAction="always"
+        android:title="WIFI OFF"
+        />
+    <item
+        android:id="@+id/menu_wifi_on"
+        android:icon="@drawable/ic_baseline_wifi_24"
+        app:showAsAction="always"
+        android:title="WIFI ON"
+        />
 </menu>

@@ -9,6 +9,8 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import ptpn12.amanat.asem.R;
@@ -19,6 +21,7 @@ public class Home extends AppCompatActivity {
     SharedPreferences sharedPreferences;
     CardView cvHome;
     TextView tvWelcome, tvNama, tvHakAkses, tvBagian;
+    ImageView btnSync;
     MenuItem nav_beranda, nav_profil, nav_longlist;
     Dialog dialog;
 
@@ -37,6 +40,10 @@ public class Home extends AppCompatActivity {
         tvWelcome = findViewById(R.id.tvWelcome);
         tvNama = findViewById(R.id.tvNama);
         tvHakAkses = findViewById(R.id.tvHakAkses);
+        btnSync = findViewById(R.id.btnSync);
+
+        btnSync.setVisibility(View.GONE);
+
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottomnav);
 
