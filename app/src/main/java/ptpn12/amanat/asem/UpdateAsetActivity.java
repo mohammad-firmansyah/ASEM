@@ -22,6 +22,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.location.Location;
@@ -31,6 +32,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.os.Looper;
 import android.provider.MediaStore;
+import android.provider.OpenableColumns;
 import android.provider.Settings;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -75,6 +77,10 @@ import com.google.android.gms.location.LocationServices;
 import com.squareup.picasso.Picasso;
 
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -241,39 +247,65 @@ public class UpdateAsetActivity extends AppCompatActivity {
 
 
     Integer id;
+
+    public File getFile(Context context, Uri uri) throws IOException {
+        // save file to directory Documents di package aplikasi
+        File destinationFilename = new File(context.getExternalFilesDir(Environment.DIRECTORY_PICTURES).getPath() + File.separatorChar + queryName(context, uri));
+        try (InputStream ins = context.getContentResolver().openInputStream(uri)) {
+            createFileFromStream(ins, destinationFilename);
+        } catch (Exception ex) {
+            Toast.makeText(UpdateAsetActivity.this, "File tidak dapat dimuat", Toast.LENGTH_LONG).show();
+            Log.e("Save File", ex.getMessage());
+            ex.printStackTrace();
+        }
+        return destinationFilename;
+    }
+
+    // file yang dipilih akan di copy ke directory aplikasi
+    public void createFileFromStream(InputStream ins, File destination) {
+        try (OutputStream os = new FileOutputStream(destination)) {
+            byte[] buffer = new byte[4096];
+            int length;
+            while ((length = ins.read(buffer)) > 0) {
+                os.write(buffer, 0, length);
+            }
+            os.flush();
+        } catch (Exception ex) {
+            Log.e("Save File", ex.getMessage());
+            ex.printStackTrace();
+        }
+    }
+
+    private String queryName(Context context, Uri uri) {
+        Cursor returnCursor =
+                context.getContentResolver().query(uri, null, null, null, null);
+        assert returnCursor != null;
+        int nameIndex = returnCursor.getColumnIndex(OpenableColumns.DISPLAY_NAME);
+        returnCursor.moveToFirst();
+        String name = returnCursor.getString(nameIndex);
+        returnCursor.close();
+        return name;
+    }
     public void onActivityResult(int requestCode,int resultCode,@Nullable Intent data){
         super.onActivityResult(requestCode,resultCode,data);
-
-//        if (resultCode == RESULT_OK && data != null ) {
-//            ArrayList<MediaFile> mediaFiles = data.getParcelableArrayListExtra(
-//                    FilePickerActivity.MEDIA_FILES
-//            );
-//            String path =  mediaFiles.get(0).getPath();
-//            bafile_file = new File(path);
-//
-//            switch (requestCode) {
-//                case 102:
-//                    Toast.makeText(getApplicationContext(),"success uploud berita acara",Toast.LENGTH_LONG).show();
-//                    tvUploudBA.setText(bafile_file.getName());
-//                    break;
-//
-//            }
-//        }
 
         if (requestCode == 1 && resultCode == RESULT_OK && data != null ) {
 
             Uri uri = data.getData();
             String path =  uri.getPath();
             bafile_file = new File(path);
-            file_bast = new File(path);
             Toast.makeText(getApplicationContext(),"sukses unggah berita acara",Toast.LENGTH_LONG).show();
             tvUploudBA.setText(bafile_file.getName());
-            tvUploadBAST.setText(file_bast.getName());
+        }else if (requestCode == 2 && resultCode == Activity.RESULT_OK && data != null){
+            Uri uri = data.getData();
+            try {
+                file_bast = getFile(this, uri);
+//                Toast.makeText(getApplicationContext(),"sukses unggah berita acara",Toast.LENGTH_LONG).show();
+                tvUploadBAST.setText(file_bast.getName());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
-//        else {
-//            Toast.makeText(UpdateAsetActivity.this,"gagal unggah file",Toast.LENGTH_LONG).show();
-//            return;
-//        }
     }
 
     public void openfilechoser(){
@@ -281,6 +313,12 @@ public class UpdateAsetActivity extends AppCompatActivity {
         intent.setType(".pdf -> application/pdf");
         intent.addCategory(Intent.CATEGORY_OPENABLE);
         startActivityForResult(intent,1);
+    }
+    public void openfilechoserBAST(){
+        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+        intent.setType("application/pdf");
+        intent.addCategory(Intent.CATEGORY_OPENABLE);
+        startActivityForResult(intent,2);
     }
 
 
@@ -869,7 +907,7 @@ public class UpdateAsetActivity extends AppCompatActivity {
         btnFileBAST.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
-                openfilechoser();
+                openfilechoserBAST();
             }
 
 
