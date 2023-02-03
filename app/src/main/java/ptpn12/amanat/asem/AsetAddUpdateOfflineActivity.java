@@ -105,6 +105,7 @@ import java.util.concurrent.Executors;
 public class AsetAddUpdateOfflineActivity extends AppCompatActivity  implements LoadNotesCallback  {
     private boolean isEdit = false;
     private int position;
+    ViewGroup vwBast;
     Aset aset;
     private AsetHelper asetHelper;
     private AsetOfflineAdapter adapter;
@@ -557,6 +558,7 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity  implements 
 
         getLastLocation(AsetAddUpdateOfflineActivity.this,getApplicationContext());
 
+        vwBast = findViewById(R.id.vwBast);
         listBtnMap = findViewById(R.id.listMapButton);
         inpBtnMap = findViewById(R.id.inpBtnMap);
         inpTglOleh = findViewById(R.id.inpTglMasukAset);
@@ -1497,14 +1499,10 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity  implements 
         HorizontalScrollView scrollPartition = findViewById(R.id.scrollPartition);
 //        Toast.makeText(getApplicationContext(),String.valueOf(spinnerSubUnit.getSelectedItemId()),Toast.LENGTH_LONG).show();
 
-        if (spinnerTipeAset.getSelectedItemId() == 1) {
-            //input PDF ba bast
-            btnFileBAST.setVisibility(View.VISIBLE);
-            tvFileBAST.setVisibility(View.VISIBLE);
-        } else {
-            //input PDF ba bast
-            btnFileBAST.setVisibility(View.GONE);
-            tvFileBAST.setVisibility(View.GONE);
+        if(spinnerTipeAset.getSelectedItem().equals("baru") && spinnerAsetKondisi.getSelectedItem().equals("normal")){
+            vwBast.setVisibility(View.VISIBLE);
+        }else{
+            vwBast.setVisibility(View.GONE);
         }
 
         if (spinnerSubUnit.getSelectedItemId() == 2){

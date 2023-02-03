@@ -65,6 +65,7 @@ import java.util.Map;
 public class DetailAsetOfflineActivity extends AppCompatActivity {
     private AsetHelper asetHelper;
     Aset aset;
+    ViewGroup vwBast;
     ListView listView;
     Dialog spinnerNoSap;
     Map<Integer, Integer> mapSpinnerAfdeling = new HashMap<Integer, Integer>();
@@ -88,7 +89,7 @@ public class DetailAsetOfflineActivity extends AppCompatActivity {
     Dialog customDialogApprove;
     Dialog customDialogReject;
     Button inpBtnMap;
-    Button btnFile;
+//    Button btnFile;
     Button btnSubmit;
     Button map1;
     Button map2;
@@ -127,6 +128,7 @@ public class DetailAsetOfflineActivity extends AppCompatActivity {
     EditText editText;
     EditText inpJumlahPohon;
     TextView tvUploudBA;
+    TextView tvUploudBast;
     TextView tvKetReject;
     TextView tvAlatAngkut;
 
@@ -236,6 +238,7 @@ public class DetailAsetOfflineActivity extends AppCompatActivity {
         dialog.setCanceledOnTouchOutside(false);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(0));
 //        dialog.show();
+        vwBast = findViewById(R.id.vwBast);
         spinnerNoSap = new Dialog(DetailAsetOfflineActivity.this);
         spinnerNoSap.dismiss();
         spinnerNoSap.setContentView(R.layout.searchable_spinner);
@@ -250,6 +253,7 @@ public class DetailAsetOfflineActivity extends AppCompatActivity {
         inpTglOleh = findViewById(R.id.inpTglMasukAset);
         inpTglOleh.setEnabled(false);
         tvUploudBA = findViewById(R.id.tvUploudBA);
+        tvUploudBast = findViewById(R.id.tvUploadBAST);
         spinnerTipeAset = findViewById(R.id.inpTipeAset);
         spinnerTipeAset.setEnabled(false);
         spinnerJenisAset = findViewById(R.id.inpJenisAset);
@@ -562,7 +566,7 @@ public class DetailAsetOfflineActivity extends AppCompatActivity {
             }
         });
 
-        btnFile = findViewById(R.id.inpUploudBA);
+//        btnFile = findViewById(R.id.inpUploudBA);
 
         map1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -861,6 +865,12 @@ public class DetailAsetOfflineActivity extends AppCompatActivity {
 //        Toast.makeText(getApplicationContext(),String.valueOf(spinnerSubUnit.getSelectedItemId()),Toast.LENGTH_LONG).show();
 
 
+        if(spinnerTipeAset.getSelectedItem().equals("baru") && spinnerAsetKondisi.getSelectedItem().equals("normal")){
+            vwBast.setVisibility(View.VISIBLE);
+        }else{
+            vwBast.setVisibility(View.GONE);
+        }
+
         if (spinnerSubUnit.getSelectedItemId() == 2){
             inpAfdeling.setVisibility(View.VISIBLE);
             tvAfdeling.setVisibility(View.VISIBLE);
@@ -881,7 +891,7 @@ public class DetailAsetOfflineActivity extends AppCompatActivity {
             tvUploudBA.setVisibility(View.GONE);
             tvBa.setVisibility(View.GONE);
             inpBtnMap.setVisibility(View.GONE);
-            btnFile.setVisibility(View.GONE);
+//            btnFile.setVisibility(View.GONE);
 
             tvFoto.setVisibility(View.VISIBLE);
             scrollPartition.setVisibility(View.VISIBLE);
@@ -922,7 +932,7 @@ public class DetailAsetOfflineActivity extends AppCompatActivity {
             inpNomorBAST.setVisibility(View.GONE);
             tvBast.setVisibility(View.GONE);
             tvUploudBA.setVisibility(View.VISIBLE);
-            btnFile.setVisibility(View.VISIBLE);
+//            btnFile.setVisibility(View.VISIBLE);
 
             inpBtnMap.setVisibility(View.GONE);
 
@@ -956,7 +966,7 @@ public class DetailAsetOfflineActivity extends AppCompatActivity {
 
         else if ("tanaman".equals(String.valueOf(spinnerJenisAset.getSelectedItem()))  && "hilang".equals(String.valueOf(spinnerAsetKondisi.getSelectedItem()))) {
             tvUploudBA.setVisibility(View.VISIBLE);
-            btnFile.setVisibility(View.VISIBLE);
+//            btnFile.setVisibility(View.VISIBLE);
             tvBa.setVisibility(View.VISIBLE);
             inpJumlahPohon.setVisibility(View.VISIBLE);
 //            inpKomoditi.setVisibility(View.VISIBLE);
@@ -1007,7 +1017,7 @@ public class DetailAsetOfflineActivity extends AppCompatActivity {
             tvBa.setVisibility(View.GONE);
             tvUploudBA.setVisibility(View.GONE);
             inpBtnMap.setVisibility(View.GONE);
-            btnFile.setVisibility(View.GONE);
+//            btnFile.setVisibility(View.GONE);
 
             tvFoto.setVisibility(View.VISIBLE);
             scrollPartition.setVisibility(View.VISIBLE);
@@ -1044,7 +1054,7 @@ public class DetailAsetOfflineActivity extends AppCompatActivity {
             inpJumlahPohon.setVisibility(View.VISIBLE);
             tvBa.setVisibility(View.VISIBLE);
             tvUploudBA.setVisibility(View.VISIBLE);
-            btnFile.setVisibility(View.VISIBLE);
+//            btnFile.setVisibility(View.VISIBLE);
             downloadBa.setVisibility(View.VISIBLE);
 //            inpKomoditi.setVisibility(View.VISIBLE);
             tvPohon.setVisibility(View.VISIBLE);
@@ -1084,7 +1094,7 @@ public class DetailAsetOfflineActivity extends AppCompatActivity {
 
         else if ("kayu".equals(String.valueOf(spinnerJenisAset.getSelectedItem())) && "hilang".equals(String.valueOf(spinnerAsetKondisi.getSelectedItem()))) {
             tvBa.setVisibility(View.VISIBLE);
-            btnFile.setVisibility(View.VISIBLE);
+//            btnFile.setVisibility(View.VISIBLE);
             tvUploudBA.setVisibility(View.VISIBLE);
 //            inpKomoditi.setVisibility(View.VISIBLE);
             downloadBa.setVisibility(View.VISIBLE);
@@ -1135,7 +1145,7 @@ public class DetailAsetOfflineActivity extends AppCompatActivity {
             inpJumlahPohon.setVisibility(View.GONE);
             tvBa.setVisibility(View.GONE);
             tvPohon.setVisibility(View.GONE);
-            btnFile.setVisibility(View.GONE);
+//            btnFile.setVisibility(View.GONE);
 
             tvFoto.setVisibility(View.VISIBLE);
             scrollPartition.setVisibility(View.VISIBLE);
@@ -1166,7 +1176,7 @@ public class DetailAsetOfflineActivity extends AppCompatActivity {
 
         else if ("non tanaman".equals(String.valueOf(spinnerJenisAset.getSelectedItem())) &&"rusak".equals(String.valueOf(spinnerAsetKondisi.getSelectedItem()))) {
             tvBa.setVisibility(View.VISIBLE);
-            btnFile.setVisibility(View.VISIBLE);
+//            btnFile.setVisibility(View.VISIBLE);
             tvUploudBA.setVisibility(View.VISIBLE);
             tvPohon.setVisibility(View.GONE);
             inpJumlahPohon.setVisibility(View.GONE);
@@ -1204,7 +1214,7 @@ public class DetailAsetOfflineActivity extends AppCompatActivity {
 
         else if ("non tanaman".equals(String.valueOf(spinnerJenisAset.getSelectedItem())) && "hilang".equals(String.valueOf(spinnerAsetKondisi.getSelectedItem()))) {
             tvBa.setVisibility(View.VISIBLE);
-            btnFile.setVisibility(View.VISIBLE);
+//            btnFile.setVisibility(View.VISIBLE);
             tvUploudBA.setVisibility(View.VISIBLE);
             downloadBa.setVisibility(View.VISIBLE);
 //            inpKomoditi.setVisibility(View.GONE);
@@ -1251,7 +1261,7 @@ public class DetailAsetOfflineActivity extends AppCompatActivity {
             tvBa.setVisibility(View.GONE);
             tvUploudBA.setVisibility(View.GONE);
             inpBtnMap.setVisibility(View.GONE);
-            btnFile.setVisibility(View.GONE);
+//            btnFile.setVisibility(View.GONE);
 
             downloadBa.setVisibility(View.GONE);
             tvLuasTanaman.setVisibility(View.GONE);

@@ -316,21 +316,6 @@
                     android:textColor="@color/main_grey"
                     android:textSize="14sp"
                     android:textStyle="bold" />
-                <Button
-
-                    android:id="@+id/inpUploudBA"
-                    android:layout_width="0dp"
-                    android:layout_height="41dp"
-                    android:layout_weight="0.3"
-                    android:layout_marginBottom="10dp"
-                    android:background="@drawable/edit_text_spiner"
-                    android:spinnerMode="dropdown"
-                    android:text="UPLOAD"
-                    android:onClick="uploadImage"
-                    android:layout_marginStart="5dp"
-                    android:textSize="10sp"
-                    android:layout_toEndOf="@+id/tvUploudBA"
-                    />
 
                     <Button
 
@@ -657,7 +642,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="41dp"
                 android:layout_marginBottom="10dp"
-                android:background="@drawable/bg_not_clickable_spinner"
+                android:background="@drawable/tgl_spinner"
                 android:inputType="numberDecimal"
                 android:spinnerMode="dropdown"
 
@@ -679,7 +664,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="41dp"
                 android:layout_marginBottom="10dp"
-                android:background="@drawable/bg_not_clickable_spinner"
+                android:background="@drawable/tgl_spinner"
                 android:inputType="numberDecimal"
                 android:spinnerMode="dropdown"
 
@@ -701,7 +686,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="41dp"
                 android:layout_marginBottom="10dp"
-                android:background="@drawable/bg_not_clickable_spinner"
+                android:background="@drawable/tgl_spinner"
                 android:inputType="numberDecimal"
                 android:spinnerMode="dropdown"
 
@@ -723,7 +708,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="41dp"
                 android:layout_marginBottom="10dp"
-                android:background="@drawable/bg_not_clickable_spinner"
+                android:background="@drawable/tgl_spinner"
                 android:inputType="numberDecimal"
                 android:spinnerMode="dropdown"
 
@@ -807,82 +792,102 @@
                 android:background="@drawable/tgl_spinner"
                 />
 
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="NOMOR BAST :"
-                android:textSize="14sp"
-                android:textStyle="bold"
-                android:id="@+id/tvBast"
-                android:textColor="@color/main_grey"
-                android:layout_marginVertical="10dp"
-
-                />
-
-
-            <EditText
-                android:layout_width="match_parent"
-                android:id="@+id/inpNmrBAST"
-                android:layout_marginBottom="10dp"
-                android:layout_height="50dp"
-                android:paddingVertical="10dp"
-                android:lines="1"
-                android:inputType="numberDecimal"
-                android:background="@drawable/tgl_spinner"
-                />
-
             <LinearLayout
+                android:id="@+id/vwBast"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="gone"
                 >
 
 
                 <TextView
-                    android:id="@+id/tvUploadFileBAST"
-                    android:layout_width="0dp"
-                    android:layout_height="41dp"
-                    android:layout_weight=".70"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="NOMOR BAST :"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    android:id="@+id/tvBast"
+                    android:textColor="@color/main_grey"
+                    android:layout_marginVertical="10dp"
+
+                    />
+
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:id="@+id/inpNmrBAST"
+                    android:layout_marginBottom="10dp"
+                    android:layout_height="50dp"
+                    android:paddingVertical="10dp"
+                    android:lines="1"
+                    android:inputType="numberDecimal"
                     android:background="@drawable/tgl_spinner"
-                    android:gravity="center_vertical"
-                    android:text="Tidak Ada File"
+                    />
+
+                <TextView
+                    android:id="@+id/tvUploadBAST"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:text="UPLOAD BAST :"
                     android:textColor="@color/main_grey"
                     android:textSize="14sp"
                     android:textStyle="bold" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    >
 
-                <Button
 
-                    android:id="@+id/inpUploadBAST"
-                    android:layout_width="0dp"
-                    android:layout_height="41dp"
-                    android:layout_marginStart="5dp"
-                    android:layout_marginBottom="10dp"
-                    android:layout_toEndOf="@+id/tvUploadFileBAST"
-                    android:layout_weight="0.3"
-                    android:background="@drawable/edit_text_spiner"
-                    android:backgroundTint="@color/BlueDark"
-                    android:onClick="uploadImage"
-                    android:spinnerMode="dropdown"
-                    android:text="UPLOAD"
-                    android:textColor="@color/white"
-                    android:textSize="10sp"
-                    tools:ignore="HardcodedText" />
-                <Button
+                    <TextView
+                        android:id="@+id/tvUploadFileBAST"
+                        android:layout_width="0dp"
+                        android:layout_height="41dp"
+                        android:layout_weight=".70"
+                        android:background="@drawable/tgl_spinner"
+                        android:gravity="center_vertical"
+                        android:text="Tidak Ada File"
+                        android:textColor="@color/main_grey"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
 
-                    android:id="@+id/inpDownloadBAST"
-                    android:layout_width="0dp"
-                    android:layout_height="41dp"
-                    android:layout_weight="0.3"
-                    android:layout_marginBottom="10dp"
-                    android:background="@drawable/edit_text_spiner"
-                    android:spinnerMode="dropdown"
-                    android:text="DOWNLOAD"
-                    android:onClick="downloadBaFunc"
-                    android:layout_marginStart="5dp"
-                    android:textSize="7sp"
-                    android:layout_toEndOf="@+id/tvUploudBA"
-                    />
+<!--                    <Button-->
+
+<!--                        android:id="@+id/inpUploadBAST"-->
+<!--                        android:layout_width="0dp"-->
+<!--                        android:layout_height="41dp"-->
+<!--                        android:layout_marginStart="5dp"-->
+<!--                        android:layout_marginBottom="10dp"-->
+<!--                        android:layout_toEndOf="@+id/tvUploadFileBAST"-->
+<!--                        android:layout_weight="0.3"-->
+<!--                        android:background="@drawable/edit_text_spiner"-->
+<!--                        android:backgroundTint="@color/BlueDark"-->
+<!--                        android:onClick="uploadImage"-->
+<!--                        android:spinnerMode="dropdown"-->
+<!--                        android:text="UPLOAD"-->
+<!--                        android:textColor="@color/white"-->
+<!--                        android:textSize="10sp"-->
+<!--                        tools:ignore="HardcodedText" />-->
+                    <Button
+
+                        android:id="@+id/inpDownloadBAST"
+                        android:layout_width="0dp"
+                        android:layout_height="41dp"
+                        android:layout_weight="0.3"
+                        android:layout_marginBottom="10dp"
+                        android:background="@drawable/edit_text_spiner"
+                        android:spinnerMode="dropdown"
+                        android:text="DOWNLOAD"
+                        android:layout_marginStart="5dp"
+                        android:textSize="7sp"
+                        android:layout_toEndOf="@+id/tvUploudBA"
+                        />
+                </LinearLayout>
+
+
             </LinearLayout>
+
 
 
             <TextView
