@@ -862,7 +862,7 @@
                     android:layout_width="0dp"
                     android:layout_height="41dp"
                     android:layout_weight=".70"
-                    android:background="@drawable/edit_text_spiner"
+                    android:background="@drawable/tgl_spinner"
                     android:gravity="center_vertical"
                     android:text="Tidak Ada File"
                     android:textColor="@color/main_grey"

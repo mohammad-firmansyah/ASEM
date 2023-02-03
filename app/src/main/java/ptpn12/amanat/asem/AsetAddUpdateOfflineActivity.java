@@ -549,9 +549,18 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity  implements 
 
         asetHelper = AsetHelper.getInstance(getApplicationContext());
 
+        TextView tvTitle = findViewById(R.id.tvTitle);
+        // globally
+        //in your OnCreate() method
+        tvTitle.setText("TAMBAH DATA OFFLINE");
+
         id = getIntent().getIntExtra("id",0);
         if (id != 0) {
             isEdit = true;
+
+                // globally
+                //in your OnCreate() method
+                tvTitle.setText("EDIT DATA OFFLINE");
         }
 
 
@@ -635,7 +644,7 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity  implements 
         fotoimg3 = findViewById(R.id.fotoimg3);
         fotoimg4 = findViewById(R.id.fotoimg4);
         fotoimg5 = findViewById(R.id.fotoimg5);
-//        inpBtnMap = findViewById(R.id.inpBtnMap);
+        inpBtnMap = findViewById(R.id.inpBtnMap);
         btnSubmit = findViewById(R.id.btnSubmit);
         btnFile = findViewById(R.id.inpUploudBA);
         btnFileBAST = findViewById(R.id.inpUploadBAST);
@@ -643,10 +652,6 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity  implements 
 
 //        handler
 
-        // globally
-        TextView tvTitle = findViewById(R.id.tvTitle);
-        //in your OnCreate() method
-        tvTitle.setText("TAMBAH DATA OFFLINE");
 
 
         btnSubmit.setOnClickListener(new View.OnClickListener() {

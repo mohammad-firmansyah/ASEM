@@ -240,20 +240,6 @@ public class LonglistAsetActivity extends AppCompatActivity  { //implements Bott
         });
 
         //-------fungsi offline dibawah ini-------//
-//        dbTebu = new DatabaseTebu.DataTmaTebuOfflineDbHelper(this);
-//        datamandor = new ArrayList<>();
-//
-//        if (sharedPreferences.getString("jabatan","-").equals("MANDOR")){
-//            datamandor = dbTebu.readDataTmaTebu();
-//            adapterOffline = new AdapterLonglistOffline(LonglistTebu.this,datamandor);
-//        }
-//
-//        List<Data2> datas = response.body();
-//        Aset2Adapter adapter = new Aset2Adapter(datas,LonglistAsetActivity.this);
-//        rcAset.setAdapter(adapter);
-
-//        dbOffline = new DatabaseHelper(this);
-
 
 //        Boolean switchState = switch_offline.isChecked();
         switch_offline.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -311,6 +297,8 @@ public class LonglistAsetActivity extends AppCompatActivity  { //implements Bott
                     btnSync.setVisibility(View.GONE);
                     addDataOffline.setVisibility(View.GONE);
                     srlonglist.setEnabled(true);
+                    rcAset.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+                    rcAset.setAdapter(onlineAdapter);
                     getAllAset();
 //                    Aset2Adapter adapter = new Aset2Adapter(datas,LonglistAsetActivity.this);
 //                    rcAset.setAdapter(adapter);
@@ -364,7 +352,7 @@ public class LonglistAsetActivity extends AppCompatActivity  { //implements Bott
             }
             asetHelper.close();
 
-        }else {
+        } else {
             btnSync.setVisibility(View.GONE);
             dialog.dismiss();
             addDataOffline.setVisibility(View.GONE);
@@ -473,8 +461,7 @@ public class LonglistAsetActivity extends AppCompatActivity  { //implements Bott
             public void onFailure(Call<List<Data2>> call, Throwable t) {
                 dialog.dismiss();
 //                Toast.makeText(getApplicationContext(),t.getMessage(),Toast.LENGTH_LONG).show();
-                Toast.makeText(getApplicationContext(),"Internet tidak terdeteksi. List Data Online tidak tertampil.",Toast.LENGTH_LONG).show();
-                Toast.makeText(getApplicationContext(),"Silahkan switch ke List Data Offline!",Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(),"Internet tidak terdeteksi.\nSilahkan switch ke List Data Offline!",Toast.LENGTH_LONG).show();
 
                 // fungsi icon wifi
                 wifiOFF.setVisibility(View.VISIBLE);

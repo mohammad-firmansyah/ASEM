@@ -246,10 +246,10 @@ public class AsetOfflineAdapter extends RecyclerView.Adapter<AsetOfflineAdapter.
                 cvKirimSukses = v.findViewById(R.id.cvKirimSukses);
                 cvAset = v.findViewById(R.id.cvAset);
                 bgCardView = v.findViewById(R.id.bgCardView);
-                // globally
-                TextView tvTitle = v.findViewById(R.id.tvTitle);
-                //in your OnCreate() method
-                tvTitle.setText("EDIT DATA OFFLINE");
+//                // globally
+//                TextView tvTitle = v.findViewById(R.id.tvTitle);
+//                //in your OnCreate() method
+//                tvTitle.setText("EDIT DATA OFFLINE");
             }
         }
 
@@ -258,6 +258,7 @@ public class AsetOfflineAdapter extends RecyclerView.Adapter<AsetOfflineAdapter.
         asetInterface = AsemApp.getApiClient().create(AsetInterface.class);
         Dialog dialog =new Dialog(context);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(0));
         dialog.setContentView(R.layout.ly_kirim_sukses);
         dialog.show();
         Button cancel = dialog.findViewById(R.id.btnTidakKirim);
