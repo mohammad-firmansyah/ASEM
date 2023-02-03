@@ -246,6 +246,10 @@ public class AsetOfflineAdapter extends RecyclerView.Adapter<AsetOfflineAdapter.
                 cvKirimSukses = v.findViewById(R.id.cvKirimSukses);
                 cvAset = v.findViewById(R.id.cvAset);
                 bgCardView = v.findViewById(R.id.bgCardView);
+                // globally
+                TextView tvTitle = v.findViewById(R.id.tvTitle);
+                //in your OnCreate() method
+                tvTitle.setText("EDIT DATA OFFLINE");
             }
         }
 
