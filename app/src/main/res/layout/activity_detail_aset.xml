@@ -6,13 +6,18 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="ptpn12.amanat.asem.DetailAsetActivity"
-    android:padding="18dp"
+    android:orientation="vertical"
     android:background="@color/background_grey"
     >
 
+    <include
+        android:id="@+id/appbar"
+        layout="@layout/appbar"/>
+
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:padding="18dp">
 
         <LinearLayout
             android:layout_width="match_parent"

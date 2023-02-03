@@ -42,6 +42,12 @@ public class ProfilActivity extends AppCompatActivity {
 
         resetPass = findViewById(R.id.resetPass);
         logOut = findViewById(R.id.logOut);
+
+        // globally
+        TextView tvTitle = (TextView)findViewById(R.id.tvTitle);
+        //in your OnCreate() method
+        tvTitle.setText("PROFIL");
+
         resetPass.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

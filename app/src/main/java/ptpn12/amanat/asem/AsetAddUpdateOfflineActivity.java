@@ -643,6 +643,11 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity  implements 
 
 //        handler
 
+        // globally
+        TextView tvTitle = findViewById(R.id.tvTitle);
+        //in your OnCreate() method
+        tvTitle.setText("TAMBAH DATA OFFLINE");
+
 
         btnSubmit.setOnClickListener(new View.OnClickListener() {
             @Override

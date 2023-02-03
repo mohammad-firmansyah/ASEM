@@ -42,7 +42,10 @@ public class Home extends AppCompatActivity {
         tvHakAkses = findViewById(R.id.tvHakAkses);
         btnSync = findViewById(R.id.btnSync);
 
-        btnSync.setVisibility(View.GONE);
+        // globally
+        TextView tvTitle = (TextView)findViewById(R.id.tvTitle);
+        //in your OnCreate() method
+        tvTitle.setText("BERANDA");
 
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottomnav);

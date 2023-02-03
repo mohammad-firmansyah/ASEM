@@ -158,6 +158,11 @@ public class LonglistAsetActivity extends AppCompatActivity  { //implements Bott
         wifiON = findViewById(R.id.imgWifiON);
         btnSync = findViewById(R.id.btnSync);
 
+        // globally
+        TextView tvTitle = (TextView)findViewById(R.id.tvTitle);
+        //in your OnCreate() method
+        tvTitle.setText("LIST DATA");
+
         Intent intent = getIntent();
          offline = intent.getBooleanExtra("offline",false);
         switch_offline.setChecked(offline);

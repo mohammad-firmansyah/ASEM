@@ -535,6 +535,12 @@ public class UpdateAsetActivity extends AppCompatActivity {
         btnFile = findViewById(R.id.inpUploudBA);
         btnFileBAST = findViewById(R.id.inpUploadBAST);
 
+
+        // globally
+        TextView tvTitle = findViewById(R.id.tvTitle);
+        //in your OnCreate() method
+        tvTitle.setText("UPDATE DATA");
+
         downloadBa.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
