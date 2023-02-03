@@ -284,25 +284,31 @@ public class AddAsetActivity extends AppCompatActivity {
     public void onActivityResult(int requestCode,int resultCode,@Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 1 && resultCode == Activity.RESULT_OK){
-            assert data != null;
-            Uri urifile = data.getData();
-            try {
-                bafile_file = getFile(this, urifile);
-                file_bast = getFile(this, urifile);
-                String docPath = bafile_file.getAbsolutePath();
-                String docPathBAST = file_bast.getAbsolutePath();
-                Log.d("asetapix", "onActivityResult: path doc : "+docPath);
-                Log.d("asetapix", "onActivityResult: masterpath : "+data.getData().getPath());
-                Log.d("asetapix", "onActivityResult: path doc BAST : "+docPathBAST);
-                Log.d("asetapix", "onActivityResult: masterpath BAST : "+data.getData().getPath());
+                assert data != null;
+                Uri urifile = data.getData();
+                try {
+                    bafile_file = getFile(this, urifile);
+                    String docPath = bafile_file.getAbsolutePath();
+                    Log.d("asetapix", "onActivityResult: path doc : "+docPath);
+                    Log.d("asetapix", "onActivityResult: masterpath : "+data.getData().getPath());
 //                ExifInterface ei = new ExifInterface(bafile_file.getAbsolutePath());
-                tvUploudBA.setText(bafile_file.getAbsolutePath());
-                tvUploadBAST.setText(file_bast.getAbsolutePath());
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            Log.d("asetapix", "onActivityResult: "+ data.getData());
-        }
+                    tvUploudBA.setText(bafile_file.getAbsolutePath());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                Log.d("asetapix", "onActivityResult: "+ data.getData());
+        } else if (requestCode == 2 && resultCode == Activity.RESULT_OK){
+        assert data !=null;
+        Uri urifile = data.getData();
+        try{
+            file_bast = getFile(this, urifile);
+            String docPathBAST = file_bast.getAbsolutePath();
+            Log.d("asetapix", "onActivityResult: path doc BAST : "+docPathBAST);
+            Log.d("asetapix", "onActivityResult: masterpath BAST : "+data.getData().getPath());
+            tvUploadBAST.setText(file_bast.getAbsolutePath());
+        }catch(IOException e){
+            e.printStackTrace();
+        }}
     }
 
     ActivityResultLauncher<Intent> sActivityResultLauncher = registerForActivityResult(
@@ -498,7 +504,7 @@ public class AddAsetActivity extends AppCompatActivity {
                                 );
                                 fotoimg5.getLayoutParams().width = 200;
                                 fotoimg5.getLayoutParams().height = 200;
-                                setExifLocation(img5,4);
+                                setExifLocation(img5,5);
                             } else if (resultCode == Activity.RESULT_CANCELED){
                                 android.widget.Toast.makeText(AddAsetActivity.this, "Cancelled", Toast.LENGTH_SHORT).show();
                             }
@@ -532,6 +538,7 @@ public class AddAsetActivity extends AppCompatActivity {
 
         inpTglOleh = findViewById(R.id.inpTglMasukAset);
         tvUploudBA = findViewById(R.id.tvUploudBA);
+        tvUploadBAST = findViewById(R.id.tvUploadFileBAST);
         spinnerTipeAset = findViewById(R.id.inpTipeAset);
         spinnerJenisAset = findViewById(R.id.inpJenisAset);
         spinnerAsetKondisi = findViewById(R.id.inpKndsAset);
@@ -904,7 +911,7 @@ public class AddAsetActivity extends AppCompatActivity {
                 // system file picker when it loads.
 
                 pickFile.putExtra(DocumentsContract.EXTRA_INITIAL_URI, docUri);
-                startActivityForResult(pickFile, 1);
+                startActivityForResult(pickFile, 2);
             }
         });
 

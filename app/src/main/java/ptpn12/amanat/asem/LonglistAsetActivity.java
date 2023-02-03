@@ -281,8 +281,8 @@ public class LonglistAsetActivity extends AppCompatActivity  { //implements Bott
                     getAllAset();
 //                    Aset2Adapter adapter = new Aset2Adapter(datas,LonglistAsetActivity.this);
 //                    rcAset.setAdapter(adapter);
-                    rcAset.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
-                    rcAset.setAdapter(onlineAdapter);
+//                    rcAset.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+//                    rcAset.setAdapter(onlineAdapter);
                     btnReport.setVisibility(View.VISIBLE);
                     btnFilter.setVisibility(View.VISIBLE);
                     searchView.setVisibility(View.VISIBLE);
