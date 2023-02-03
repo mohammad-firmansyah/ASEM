@@ -341,6 +341,12 @@ public class DetailAsetOfflineActivity extends AppCompatActivity {
         fotoimg5 = findViewById(R.id.fotoimg5);
         inpBtnMap = findViewById(R.id.inpBtnMap);
 
+
+        // globally
+        TextView tvTitle = findViewById(R.id.tvTitle);
+        //in your OnCreate() method
+        tvTitle.setText("DETAIL DATA");
+
         downloadBa.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
