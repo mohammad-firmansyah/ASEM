@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.Manifest;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.app.DownloadManager;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
@@ -14,11 +15,13 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.URLUtil;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -29,6 +32,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import ptpn12.amanat.asem.api.AsetInterface;
 import ptpn12.amanat.asem.api.model.Afdelling;
@@ -70,6 +74,8 @@ public class DetailAsetOfflineActivity extends AppCompatActivity {
     String url3 = "";
     String url4 = "";
     String url5 = "";
+    String urlBa;
+    Button downloadBa;
     Map<Integer, Integer> mapAfdelingSpinner = new HashMap<Integer, Integer>();
     Map<Long, Integer> mapSap = new HashMap();
     Map<Integer, Long> mapSpinnerSap = new HashMap();
@@ -262,6 +268,7 @@ public class DetailAsetOfflineActivity extends AppCompatActivity {
         spinnerAlatAngkut.setEnabled(false);
         inpSatuanLuas = findViewById(R.id.inpLuasSatuan);
         inpSatuanLuas.setEnabled(false);
+        downloadBa = findViewById(R.id.inpDownloadBa);
 
         inpTglInput = findViewById(R.id.inpTglInput);
         inpTglInput.setEnabled(false);
@@ -325,6 +332,12 @@ public class DetailAsetOfflineActivity extends AppCompatActivity {
         fotoimg5 = findViewById(R.id.fotoimg5);
         inpBtnMap = findViewById(R.id.inpBtnMap);
 
+        downloadBa.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                downloadBaFunc();
+            }
+        });
 
 
         spinnerSubUnit.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -618,6 +631,21 @@ public class DetailAsetOfflineActivity extends AppCompatActivity {
         });
     }
 
+    public void downloadBaFunc(){
+
+        String title = URLUtil.guessFileName("file://"  + urlBa,null,null);
+
+        DownloadManager.Request request = new DownloadManager.Request(Uri.parse( "file://"  + urlBa));
+        request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS,title);
+        request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
+        request.allowScanningByMediaScanner();
+        DownloadManager downloadManager = (DownloadManager)getSystemService(DOWNLOAD_SERVICE);
+        downloadManager.enqueue(request);
+
+        Toast.makeText(this, "Download Dimulai" , Toast.LENGTH_SHORT).show();
+
+    }
+
     private void setValueInput(){
         try {
 //        Call<AsetModel> call = asetInterface.getAset(id);
@@ -642,6 +670,8 @@ public class DetailAsetOfflineActivity extends AppCompatActivity {
                 inpPopHektarIni.setText(aset.getPop_hektar_ini());
                 inpPopHektarStd.setText(aset.getPop_hektar_std());
             }
+
+            urlBa = aset.getBeritaAcara();
             inpTglOleh.setText(aset.getTglOleh());
             inpTglInput.setText(aset.getTglInput());
             inpNoSAP.setText(aset.getNomorSap());
@@ -820,7 +850,7 @@ public class DetailAsetOfflineActivity extends AppCompatActivity {
             inpJumlahPohon.setVisibility(View.VISIBLE);
             tvPohon.setVisibility(View.VISIBLE);
 //            inpKomoditi.setVisibility(View.VISIBLE);
-
+            downloadBa.setVisibility(View.GONE);
             inpNomorBAST.setVisibility(View.VISIBLE);
             tvBast.setVisibility(View.VISIBLE);
             tvUploudBA.setVisibility(View.GONE);
@@ -862,6 +892,7 @@ public class DetailAsetOfflineActivity extends AppCompatActivity {
             tvBa.setVisibility(View.VISIBLE);
             tvPohon.setVisibility(View.VISIBLE);
 
+            downloadBa.setVisibility(View.VISIBLE);
 //            inpKomoditi.setVisibility(View.VISIBLE);
             inpNomorBAST.setVisibility(View.GONE);
             tvBast.setVisibility(View.GONE);
@@ -904,7 +935,7 @@ public class DetailAsetOfflineActivity extends AppCompatActivity {
             tvBa.setVisibility(View.VISIBLE);
             inpJumlahPohon.setVisibility(View.VISIBLE);
 //            inpKomoditi.setVisibility(View.VISIBLE);
-
+            downloadBa.setVisibility(View.VISIBLE);
             inpNomorBAST.setVisibility(View.GONE);
             tvBast.setVisibility(View.GONE);
             tvPohon.setVisibility(View.GONE);
@@ -947,7 +978,7 @@ public class DetailAsetOfflineActivity extends AppCompatActivity {
             inpNomorBAST.setVisibility(View.VISIBLE);
             tvBast.setVisibility(View.VISIBLE);
             tvPohon.setVisibility(View.VISIBLE);
-
+            downloadBa.setVisibility(View.GONE);
             tvBa.setVisibility(View.GONE);
             tvUploudBA.setVisibility(View.GONE);
             inpBtnMap.setVisibility(View.GONE);
@@ -989,6 +1020,7 @@ public class DetailAsetOfflineActivity extends AppCompatActivity {
             tvBa.setVisibility(View.VISIBLE);
             tvUploudBA.setVisibility(View.VISIBLE);
             btnFile.setVisibility(View.VISIBLE);
+            downloadBa.setVisibility(View.VISIBLE);
 //            inpKomoditi.setVisibility(View.VISIBLE);
             tvPohon.setVisibility(View.VISIBLE);
 
@@ -1030,6 +1062,7 @@ public class DetailAsetOfflineActivity extends AppCompatActivity {
             btnFile.setVisibility(View.VISIBLE);
             tvUploudBA.setVisibility(View.VISIBLE);
 //            inpKomoditi.setVisibility(View.VISIBLE);
+            downloadBa.setVisibility(View.VISIBLE);
 
             inpNomorBAST.setVisibility(View.GONE);
             tvBast.setVisibility(View.GONE);
@@ -1070,7 +1103,7 @@ public class DetailAsetOfflineActivity extends AppCompatActivity {
             inpBtnMap.setVisibility(View.VISIBLE);
             inpNomorBAST.setVisibility(View.VISIBLE);
             tvBast.setVisibility(View.VISIBLE);
-
+            downloadBa.setVisibility(View.GONE);
 //            inpKomoditi.setVisibility(View.GONE);
             tvUploudBA.setVisibility(View.GONE);
             listBtnMap.setVisibility(View.GONE);
@@ -1115,7 +1148,7 @@ public class DetailAsetOfflineActivity extends AppCompatActivity {
             inpBtnMap.setVisibility(View.VISIBLE);
             inpNomorBAST.setVisibility(View.GONE);
             tvBast.setVisibility(View.GONE);
-
+            downloadBa.setVisibility(View.VISIBLE);
             tvFoto.setVisibility(View.VISIBLE);
             scrollPartition.setVisibility(View.VISIBLE);
 
@@ -1148,7 +1181,7 @@ public class DetailAsetOfflineActivity extends AppCompatActivity {
             tvBa.setVisibility(View.VISIBLE);
             btnFile.setVisibility(View.VISIBLE);
             tvUploudBA.setVisibility(View.VISIBLE);
-
+            downloadBa.setVisibility(View.VISIBLE);
 //            inpKomoditi.setVisibility(View.GONE);
             tvPohon.setVisibility(View.GONE);
             inpJumlahPohon.setVisibility(View.GONE);
@@ -1195,6 +1228,7 @@ public class DetailAsetOfflineActivity extends AppCompatActivity {
             inpBtnMap.setVisibility(View.GONE);
             btnFile.setVisibility(View.GONE);
 
+            downloadBa.setVisibility(View.GONE);
             tvLuasTanaman.setVisibility(View.GONE);
             tvLuasNonTanaman.setVisibility(View.GONE);
             inpLuasAset.setVisibility(View.GONE);
