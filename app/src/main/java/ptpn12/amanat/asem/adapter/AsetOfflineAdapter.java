@@ -440,8 +440,6 @@ Dialog dialog;
                             Toast.makeText(context,"Terkirim",Toast.LENGTH_SHORT).show();
                             return;
                         }else {
-                            //cek image apakah sudah terfoto semua atau belum
-                            //get response body data,if (url img 1-4 = adaa) then bisa kirim, else
                             Toast.makeText(context.getApplicationContext(), response.code(), Toast.LENGTH_SHORT).show();
                             return;
                         }

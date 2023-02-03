@@ -2283,14 +2283,6 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity  implements 
             return;
         }
 
-        if (inpNoSAP.getText().toString().equals("")) {
-            dialog.dismiss();
-            customDialogAddAset.dismiss();
-            inpNoSAP.setError("nomor SAP harus diisi");
-            inpNoSAP.requestFocus();
-            return;
-        }
-
         if (spinnerJenisAset.getSelectedItemId() == 2) {
             if (Integer.parseInt(inpPersenKondisi.getText().toString()) > 100 || Integer.parseInt(inpPersenKondisi.getText().toString()) < 0) {
                 dialog.dismiss();
@@ -2325,7 +2317,6 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity  implements 
             customDialogAddAset.dismiss();
             inpMasaPenyusutan.setError("Masa Penyusutan harus diisi");
             inpMasaPenyusutan.requestFocus();
-
             return;
         }
 
@@ -2334,16 +2325,14 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity  implements 
             customDialogAddAset.dismiss();
             inpNilaiResidu.setError("Nilai Residu harus diisi");
             inpNilaiResidu.requestFocus();
-
             return;
         }
 
-        if (inpNoSAP.getText().toString().equals("")) {
+        if (inpNoSAP.getText().toString().equals("Pilih Nomor SAP")) {
             dialog.dismiss();
             customDialogAddAset.dismiss();
             inpNilaiResidu.setError("Nilai Sap Harus Diisi");
             inpNilaiResidu.requestFocus();
-
             return;
         }
 
@@ -2351,7 +2340,6 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity  implements 
             if ("normal".equals(String.valueOf(spinnerAsetKondisi.getSelectedItem()))){
                 if (img1 == null || img2 == null || img3 == null || img4 == null){
                     Toast.makeText(getApplicationContext(), "Foto Wajib Diisi Lengkap!", Toast.LENGTH_SHORT).show();
-
                     dialog.dismiss();
                     customDialogAddAset.dismiss();
                     return;
