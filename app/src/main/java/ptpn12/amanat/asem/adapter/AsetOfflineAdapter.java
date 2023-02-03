@@ -424,7 +424,7 @@ public class AsetOfflineAdapter extends RecyclerView.Adapter<AsetOfflineAdapter.
                         Toast.makeText(context,"data sap sudah digunkan",Toast.LENGTH_LONG).show();
                         return;
                     }
-                    Toast.makeText(context,"Tidak ada Koneksi Internet 2" ,Toast.LENGTH_LONG).show();
+                    Toast.makeText(context,"Tidak ada Koneksi Internet , Gagal Kirim Data" ,Toast.LENGTH_LONG).show();
                     return;
                 }
 
@@ -452,7 +452,7 @@ public class AsetOfflineAdapter extends RecyclerView.Adapter<AsetOfflineAdapter.
                     @Override
                     public void onFailure(Call<AsetModel2> call, Throwable t) {
                         dialog.dismiss();
-                        Toast.makeText(context,"Tidak ada Koneksi Internet 1",Toast.LENGTH_LONG).show();
+                        Toast.makeText(context,"Tidak ada Koneksi Internet , Gagal Kirim Data",Toast.LENGTH_LONG).show();
                         return;
                     }
                 });

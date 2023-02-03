@@ -1194,7 +1194,7 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity  implements 
 
 
                 inpTglInput.setText(aset.getTglInput());
-                inpTglOleh.setText(aset.getTglOleh());
+                inpTglOleh.setText(aset.getTglOleh().split(" ")[0]);
                 inpNoSAP.setText(aset.getNomorSap());
                 inpNamaAset.setText(aset.getAsetName());
                 inpLuasAset.setText(String.valueOf(aset.getAsetLuas()));
