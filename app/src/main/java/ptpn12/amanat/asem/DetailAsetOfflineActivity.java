@@ -341,6 +341,9 @@ public class DetailAsetOfflineActivity extends AppCompatActivity {
         fotoimg5 = findViewById(R.id.fotoimg5);
         inpBtnMap = findViewById(R.id.inpBtnMap);
 
+        downloadBa.setEnabled(false);
+        downloadBast.setEnabled(false);
+
         downloadBa.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
