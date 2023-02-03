@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Aplikasi Manajemen Aset Terpadu N12</string>
+    <string name="app_name">AMANAT12</string>
     <string-array name="inp_tipe_asset">
         <item>Aset Baru</item>
         <item>Aset Lama</item>
