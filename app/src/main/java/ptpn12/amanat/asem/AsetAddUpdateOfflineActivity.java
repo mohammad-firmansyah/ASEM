@@ -1194,7 +1194,7 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity  implements 
 
 
                 inpTglInput.setText(aset.getTglInput());
-                inpTglOleh.setText(aset.getTglOleh());
+                inpTglOleh.setText(aset.getTglOleh().split(" ")[0]);
                 inpNoSAP.setText(aset.getNomorSap());
                 inpNamaAset.setText(aset.getAsetName());
                 inpLuasAset.setText(String.valueOf(aset.getAsetLuas()));
@@ -1535,8 +1535,8 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity  implements 
 
         if ("tanaman".equals(String.valueOf(spinnerJenisAset.getSelectedItem())) && "normal".equals(String.valueOf(spinnerAsetKondisi.getSelectedItem()))) {
             listBtnMap.setVisibility(View.VISIBLE);
-            inpJumlahPohon.setVisibility(View.VISIBLE);
-            tvPohon.setVisibility(View.VISIBLE);
+            inpJumlahPohon.setVisibility(View.GONE);
+            tvPohon.setVisibility(View.GONE);
 //            inpKomoditi.setVisibility(View.VISIBLE);
             spinnerLuasSatuan.setVisibility(View.GONE);
             inpNomorBAST.setVisibility(View.VISIBLE);
@@ -1574,9 +1574,9 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity  implements 
 
         else if ("tanaman".equals(String.valueOf(spinnerJenisAset.getSelectedItem()))  && "rusak".equals(String.valueOf(spinnerAsetKondisi.getSelectedItem())) ) {
             listBtnMap.setVisibility(View.VISIBLE);
-            inpJumlahPohon.setVisibility(View.VISIBLE);
+            inpJumlahPohon.setVisibility(View.GONE);
             tvBa.setVisibility(View.VISIBLE);
-            tvPohon.setVisibility(View.VISIBLE);
+            tvPohon.setVisibility(View.GONE);
             spinnerLuasSatuan.setVisibility(View.GONE);
 //            inpKomoditi.setVisibility(View.VISIBLE);
             inpNomorBAST.setVisibility(View.GONE);
@@ -1617,7 +1617,7 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity  implements 
             tvUploudBA.setVisibility(View.VISIBLE);
             btnFile.setVisibility(View.VISIBLE);
             tvBa.setVisibility(View.VISIBLE);
-            inpJumlahPohon.setVisibility(View.VISIBLE);
+            inpJumlahPohon.setVisibility(View.GONE);
 //            inpKomoditi.setVisibility(View.VISIBLE);
             spinnerLuasSatuan.setVisibility(View.GONE);
             inpNomorBAST.setVisibility(View.GONE);
@@ -2604,8 +2604,11 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity  implements 
             values.put("masa_susut",inpMasaPenyusutan.getText().toString().trim());
             values.put("nilai_residu",utils.CurrencyToNumber(inpNilaiResidu.getText().toString().trim()));
             values.put("nomor_bast",inpNomorBAST.getText().toString().trim());
-            values.put("jumlah_pohon",inpJumlahPohon.getText().toString().trim());
             values.put("keterangan",inpKeterangan.getText().toString().trim());
+
+            if (spinnerJenisAset.getSelectedItem().equals("kayu")) {
+                values.put("jumlah_pohon",inpJumlahPohon.getText().toString().trim());
+            }
 
             asetHelper.open();
             asetHelper.insert(values);

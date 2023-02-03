@@ -341,11 +341,8 @@ public class DetailAsetOfflineActivity extends AppCompatActivity {
         fotoimg5 = findViewById(R.id.fotoimg5);
         inpBtnMap = findViewById(R.id.inpBtnMap);
 
-
-        // globally
-        TextView tvTitle = findViewById(R.id.tvTitle);
-        //in your OnCreate() method
-        tvTitle.setText("DETAIL DATA");
+        downloadBa.setEnabled(false);
+        downloadBast.setEnabled(false);
 
         downloadBa.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -427,6 +424,13 @@ public class DetailAsetOfflineActivity extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 spinnerIdKodeAset = String.valueOf(position+1);
 //                editVisibilityDynamic();
+                if (spinnerKodeAset.getSelectedItem().equals("ZA08/Alat Pengangkutan")){
+                    spinnerAlatAngkut.setVisibility(View.VISIBLE);
+                    tvAlatAngkut.setVisibility(View.VISIBLE);
+                } else {
+                    spinnerAlatAngkut.setVisibility(View.GONE);
+                    tvAlatAngkut.setVisibility(View.GONE);
+                }
 
             }
 
@@ -714,7 +718,7 @@ public class DetailAsetOfflineActivity extends AppCompatActivity {
 
             urlBa = aset.getBeritaAcara();
             urlBast = aset.getFileBAST();
-            inpTglOleh.setText(aset.getTglOleh());
+            inpTglOleh.setText(aset.getTglOleh().split(" ")[0]);
             inpTglInput.setText(aset.getTglInput());
             inpNoSAP.setText(aset.getNomorSap());
             inpLuasAset.setText(String.valueOf(aset.getAsetLuas()));
@@ -1300,6 +1304,9 @@ public class DetailAsetOfflineActivity extends AppCompatActivity {
             inpPopTotalStd.setVisibility(View.GONE);
             inpPopHektarIni.setVisibility(View.GONE);
             inpPopHektarStd.setVisibility(View.GONE);
+
+            spinnerAlatAngkut.setVisibility(View.GONE);
+            tvAlatAngkut.setVisibility(View.GONE);
         }
     }
 
