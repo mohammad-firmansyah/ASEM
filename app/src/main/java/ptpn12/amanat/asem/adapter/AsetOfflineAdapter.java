@@ -89,7 +89,8 @@ public class AsetOfflineAdapter extends RecyclerView.Adapter<AsetOfflineAdapter.
 //        notifyItemRemoved(position);
 //        notifyItemRangeChanged(position,listAset.size());
 //    }
-Dialog dialog;
+    Dialog dialog;
+
     @NonNull
     @Override
     public AsetViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
@@ -268,6 +269,10 @@ Dialog dialog;
     }
 
     void kirimData(Aset aset) {
+        dialog = new Dialog(context,R.style.MyAlertDialogTheme);
+        dialog.setContentView(R.layout.loading);
+        dialog.setCanceledOnTouchOutside(false);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(0));
         dialog.show();
         MultipartBody.Part img1Part = null, img2Part = null, img3Part = null, img4Part = null, partBaFile = null;
         RequestBody requestTipeAset = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(aset.getAsetTipe()));
@@ -321,7 +326,6 @@ Dialog dialog;
             builder.addPart(MultipartBody.Part.createFormData("pop_total_std", null, requestPopulasiTotalStandar));
             builder.addPart(MultipartBody.Part.createFormData("pop_hektar_ini", null, requestPopulasiHektarSaatIni));
             builder.addPart(MultipartBody.Part.createFormData("pop_hektar_std", null, requestPopulasiHektarStandar));
-
         }
 
         if (aset.getAsetJenis().equals("2")) {
@@ -415,7 +419,7 @@ Dialog dialog;
             public void onResponse(Call<AsetModel2> call, Response<AsetModel2> response) {
                 if (!response.isSuccessful() && response.body() == null) {
                     if (response.code() >= 400 && response.code() < 500) {
-                        Toast.makeText(context,"data sap sudah digunkan tolong diubah",Toast.LENGTH_LONG).show();
+                        Toast.makeText(context,"data sap sudah digunkan",Toast.LENGTH_LONG).show();
                         return;
                     }
 
@@ -435,9 +439,11 @@ Dialog dialog;
                             asetHelper.open();
                             asetHelper.deleteById(String.valueOf(response.body().getData().getAsetId()));
                             asetHelper.close();
+                            dialog.dismiss();
                             Toast.makeText(context,"Terkirim",Toast.LENGTH_SHORT).show();
                             return;
                         }else {
+                            dialog.dismiss();
                             Toast.makeText(context.getApplicationContext(), response.code(), Toast.LENGTH_SHORT).show();
                             return;
                         }
@@ -460,7 +466,7 @@ Dialog dialog;
 
             @Override
             public void onFailure(Call<AsetModel2> call, Throwable t) {
-                Toast.makeText(context, "error " + t.getMessage(), Toast.LENGTH_LONG).show();
+                Toast.makeText(context, "Tidak Ada Koneksi Internet", Toast.LENGTH_LONG).show();
                 return;
             }
         });
