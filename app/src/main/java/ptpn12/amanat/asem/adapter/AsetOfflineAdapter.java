@@ -141,8 +141,13 @@ public class AsetOfflineAdapter extends RecyclerView.Adapter<AsetOfflineAdapter.
                             AsetHelper asetHelper = AsetHelper.getInstance(context);
                             asetHelper.open();
                             asetHelper.deleteById(String.valueOf(aset.getAsetId()));
-                            context.startActivity(new Intent(context,LonglistAsetActivity.class));
+                            Intent intent = new Intent(context, LonglistAsetActivity.class);
+                            intent.putExtra("offline",true);
+                            context.startActivity(intent);
+
+//                            context.startActivity(new Intent(context,LonglistAsetActivity.class));
                             asetHelper.close();
+
                             dialog.dismiss();
                             return;
                         }
@@ -246,10 +251,6 @@ public class AsetOfflineAdapter extends RecyclerView.Adapter<AsetOfflineAdapter.
                 cvKirimSukses = v.findViewById(R.id.cvKirimSukses);
                 cvAset = v.findViewById(R.id.cvAset);
                 bgCardView = v.findViewById(R.id.bgCardView);
-//                // globally
-//                TextView tvTitle = v.findViewById(R.id.tvTitle);
-//                //in your OnCreate() method
-//                tvTitle.setText("EDIT DATA OFFLINE");
             }
         }
 
