@@ -1080,7 +1080,7 @@ public class DetailAsetActivity extends AppCompatActivity {
 
         if (spinnerTipeAset.getSelectedItemId() == 1) {
             //input PDF ba bast
-            btnFileBAST.setVisibility(View.VISIBLE);
+            btnFileBAST.setVisibility(View.GONE);
             tvFileBAST.setVisibility(View.VISIBLE);
         } else {
             //input PDF ba bast
@@ -1111,7 +1111,7 @@ public class DetailAsetActivity extends AppCompatActivity {
             tvBa.setVisibility(View.GONE);
             inpBtnMap.setVisibility(View.GONE);
             btnFile.setVisibility(View.GONE);
-            btnFileBAST.setVisibility(View.VISIBLE);
+            btnFileBAST.setVisibility(View.GONE);
             tvFileBAST.setVisibility(View.VISIBLE);
 
             tvFoto.setVisibility(View.VISIBLE);
@@ -1229,7 +1229,7 @@ public class DetailAsetActivity extends AppCompatActivity {
             tvUploudBA.setVisibility(View.GONE);
             inpBtnMap.setVisibility(View.GONE);
             btnFile.setVisibility(View.GONE);
-            btnFileBAST.setVisibility(View.VISIBLE);
+            btnFileBAST.setVisibility(View.GONE);
             tvFileBAST.setVisibility(View.VISIBLE);
 
             tvFoto.setVisibility(View.VISIBLE);
@@ -1348,7 +1348,7 @@ public class DetailAsetActivity extends AppCompatActivity {
             tvBa.setVisibility(View.GONE);
             tvPohon.setVisibility(View.GONE);
             btnFile.setVisibility(View.GONE);
-            btnFileBAST.setVisibility(View.VISIBLE);
+            btnFileBAST.setVisibility(View.GONE);
             tvFileBAST.setVisibility(View.VISIBLE);
 
             tvFoto.setVisibility(View.VISIBLE);
