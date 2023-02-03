@@ -891,7 +891,6 @@
                     android:background="@drawable/edit_text_spiner"
                     android:spinnerMode="dropdown"
                     android:text="DOWNLOAD"
-                    android:onClick="downloadBASTFunc"
                     android:layout_marginStart="5dp"
                     android:textSize="10sp"
                     android:visibility="gone"

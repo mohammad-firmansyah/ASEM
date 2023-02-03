@@ -75,7 +75,9 @@ public class DetailAsetOfflineActivity extends AppCompatActivity {
     String url4 = "";
     String url5 = "";
     String urlBa;
+    String urlBast;
     Button downloadBa;
+    Button downloadBast;
     Map<Integer, Integer> mapAfdelingSpinner = new HashMap<Integer, Integer>();
     Map<Long, Integer> mapSap = new HashMap();
     Map<Integer, Long> mapSpinnerSap = new HashMap();
@@ -269,6 +271,7 @@ public class DetailAsetOfflineActivity extends AppCompatActivity {
         inpSatuanLuas = findViewById(R.id.inpLuasSatuan);
         inpSatuanLuas.setEnabled(false);
         downloadBa = findViewById(R.id.inpDownloadBa);
+        downloadBast = findViewById(R.id.inpDownloadBAST);
 
         inpTglInput = findViewById(R.id.inpTglInput);
         inpTglInput.setEnabled(false);
@@ -336,6 +339,13 @@ public class DetailAsetOfflineActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 downloadBaFunc();
+            }
+        });
+
+        downloadBast.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                downloadBastFunc();
             }
         });
 
@@ -645,6 +655,20 @@ public class DetailAsetOfflineActivity extends AppCompatActivity {
         Toast.makeText(this, "Download Dimulai" , Toast.LENGTH_SHORT).show();
 
     }
+    public void downloadBastFunc(){
+
+        String title = URLUtil.guessFileName("file://"  + urlBast,null,null);
+
+        DownloadManager.Request request = new DownloadManager.Request(Uri.parse( "file://"  + urlBast));
+        request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS,title);
+        request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
+        request.allowScanningByMediaScanner();
+        DownloadManager downloadManager = (DownloadManager)getSystemService(DOWNLOAD_SERVICE);
+        downloadManager.enqueue(request);
+
+        Toast.makeText(this, "Download Dimulai" , Toast.LENGTH_SHORT).show();
+
+    }
 
     private void setValueInput(){
         try {
@@ -672,6 +696,7 @@ public class DetailAsetOfflineActivity extends AppCompatActivity {
             }
 
             urlBa = aset.getBeritaAcara();
+            urlBast = aset.getFileBAST();
             inpTglOleh.setText(aset.getTglOleh());
             inpTglInput.setText(aset.getTglInput());
             inpNoSAP.setText(aset.getNomorSap());
