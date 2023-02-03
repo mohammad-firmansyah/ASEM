@@ -1718,11 +1718,12 @@ public class AddAsetActivity extends AppCompatActivity {
             return;
         }
 
-        if (inpNoSAP.getText().toString().equals("")) {
-            customDialogAddAset.dismiss();
+
+        if (inpNoSAP.getText().toString().equals("Pilih Nomor SAP")) {
             dialog.dismiss();
-            inpNoSAP.setError("nomor SAP harus diisi");
-            inpNoSAP.requestFocus();
+            customDialogAddAset.dismiss();
+            inpNilaiResidu.setError("Nilai Sap Harus Diisi");
+            inpNilaiResidu.requestFocus();
             return;
         }
 

@@ -413,7 +413,6 @@ Dialog dialog;
 
             @Override
             public void onResponse(Call<AsetModel2> call, Response<AsetModel2> response) {
-                dialog.dismiss();
                 if (!response.isSuccessful() && response.body() == null) {
                     if (response.code() >= 400 && response.code() < 500) {
                         Toast.makeText(context,"data sap sudah digunkan tolong diubah",Toast.LENGTH_LONG).show();
@@ -426,7 +425,6 @@ Dialog dialog;
                 }
 
 
-                dialog.dismiss();
                 String user_id = sharedPreferences.getString("user_id", "0");
                 Call<AsetModel2> call2 = asetInterface.kirimDataAset(response.body().getData().getAsetId(), Integer.parseInt(user_id));
                 call2.enqueue(new Callback<AsetModel2>(){
@@ -443,8 +441,6 @@ Dialog dialog;
                             Toast.makeText(context.getApplicationContext(), response.code(), Toast.LENGTH_SHORT).show();
                             return;
                         }
-
-
                     }
 
                     @Override
