@@ -263,7 +263,16 @@
         <RadioButton android:id="@+id/yes"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="ya"
+            android:text="QRcode"
+            android:backgroundTint="@color/main_grey"
+            android:layout_marginRight="10dp"
+            android:buttonTint="@color/main_grey"
+            />
+
+        <RadioButton android:id="@+id/yesWithFoto"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="foto + QRcode"
             android:backgroundTint="@color/main_grey"
             android:layout_marginRight="10dp"
             android:buttonTint="@color/main_grey"
@@ -274,7 +283,7 @@
             android:id="@+id/no"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="tidak"
+            android:text="Tanpa QrCode"
             android:buttonTint="@color/main_grey"
             android:checked="true"
             />
