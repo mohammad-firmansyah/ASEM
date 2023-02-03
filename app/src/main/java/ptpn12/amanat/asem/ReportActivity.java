@@ -116,11 +116,13 @@ public class ReportActivity extends AppCompatActivity {
         inpHGU = findViewById(R.id.inpHGU);
 
 
+        // globally
+        TextView tvTitle = findViewById(R.id.tvTitle);
+        //in your OnCreate() method
+        tvTitle.setText("REPORT DATA");
 
 
 
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.hide();
         imgBack.setVisibility(View.GONE);
 
 
