@@ -1306,6 +1306,7 @@ public class AddAsetActivity extends AppCompatActivity {
         TextView tvLuasNonTanaman = findViewById(R.id.luasNonTanaman);
         TextView tvPersenKondisi = findViewById(R.id.tvPersenKondisi);
         TextView tvFileBAST = findViewById(R.id.tvUploadFileBAST);
+        TextView tvUploadBAST = findViewById(R.id.tvUploadBAST);
 
         HorizontalScrollView scrollPartition = findViewById(R.id.scrollPartition);
 //        Toast.makeText(getApplicationContext(),String.valueOf(spinnerSubUnit.getSelectedItemId()),Toast.LENGTH_LONG).show();
@@ -1317,14 +1318,17 @@ public class AddAsetActivity extends AppCompatActivity {
             tvBast.setVisibility(View.GONE);
         }
 
-        if (spinnerTipeAset.getSelectedItemId() == 1) {
+//        if (spinnerTipeAset.getSelectedItemId() == 1 ) {
+        if ("baru".equals(String.valueOf(spinnerTipeAset.getSelectedItem())) ) {
             //input PDF ba bast
             btnFileBAST.setVisibility(View.VISIBLE);
             tvFileBAST.setVisibility(View.VISIBLE);
+            tvUploadBAST.setVisibility(View.VISIBLE);
         } else {
             //input PDF ba bast
             btnFileBAST.setVisibility(View.GONE);
             tvFileBAST.setVisibility(View.GONE);
+            tvUploadBAST.setVisibility(View.GONE);
         }
 
         if (spinnerSubUnit.getSelectedItemId() == 2){
@@ -1349,8 +1353,13 @@ public class AddAsetActivity extends AppCompatActivity {
             tvUploudBA.setVisibility(View.GONE);
 //            inpBtnMap.setVisibility(View.GONE);
             btnFile.setVisibility(View.GONE);
-            btnFileBAST.setVisibility(View.VISIBLE);
-            tvFileBAST.setVisibility(View.VISIBLE);
+
+            if ("baru".equals(String.valueOf(spinnerTipeAset.getSelectedItem())) ) {
+                //input PDF ba bast
+                btnFileBAST.setVisibility(View.VISIBLE);
+                tvFileBAST.setVisibility(View.VISIBLE);
+                tvUploadBAST.setVisibility(View.VISIBLE);
+            }
 
             tvFoto.setVisibility(View.VISIBLE);
             scrollPartition.setVisibility(View.VISIBLE);
@@ -1390,6 +1399,7 @@ public class AddAsetActivity extends AppCompatActivity {
             btnFile.setVisibility(View.VISIBLE);
             btnFileBAST.setVisibility(View.GONE);
             tvFileBAST.setVisibility(View.GONE);
+            tvUploadBAST.setVisibility(View.GONE);
 
 //            inpBtnMap.setVisibility(View.GONE);
 
@@ -1428,6 +1438,7 @@ public class AddAsetActivity extends AppCompatActivity {
             tvBast.setVisibility(View.VISIBLE);
             btnFileBAST.setVisibility(View.GONE);
             tvFileBAST.setVisibility(View.GONE);
+            tvUploadBAST.setVisibility(View.GONE);
 //            listBtnMap.setVisibility(View.GONE);
 //            inpBtnMap.setVisibility(View.GONE);
 
@@ -1465,8 +1476,13 @@ public class AddAsetActivity extends AppCompatActivity {
             tvUploudBA.setVisibility(View.GONE);
 //            inpBtnMap.setVisibility(View.GONE);
             btnFile.setVisibility(View.GONE);
-            btnFileBAST.setVisibility(View.VISIBLE);
-            tvFileBAST.setVisibility(View.VISIBLE);
+
+            if ("baru".equals(String.valueOf(spinnerTipeAset.getSelectedItem())) ) {
+                //input PDF ba bast
+                btnFileBAST.setVisibility(View.VISIBLE);
+                tvFileBAST.setVisibility(View.VISIBLE);
+                tvUploadBAST.setVisibility(View.VISIBLE);
+            }
 
             tvFoto.setVisibility(View.VISIBLE);
             scrollPartition.setVisibility(View.VISIBLE);
@@ -1507,6 +1523,7 @@ public class AddAsetActivity extends AppCompatActivity {
             tvBast.setVisibility(View.VISIBLE);
             btnFileBAST.setVisibility(View.GONE);
             tvFileBAST.setVisibility(View.GONE);
+            tvUploadBAST.setVisibility(View.GONE);
 //            inpBtnMap.setVisibility(View.GONE);
 
             tvFoto.setVisibility(View.VISIBLE);
@@ -1548,6 +1565,7 @@ public class AddAsetActivity extends AppCompatActivity {
 //            inpBtnMap.setVisibility(View.GONE);
             btnFileBAST.setVisibility(View.GONE);
             tvFileBAST.setVisibility(View.GONE);
+            tvUploadBAST.setVisibility(View.GONE);
 
             tvFoto.setVisibility(View.GONE);
             scrollPartition.setVisibility(View.GONE);
@@ -1587,8 +1605,13 @@ public class AddAsetActivity extends AppCompatActivity {
             tvUploudBA.setVisibility(View.GONE);
 //            inpBtnMap.setVisibility(View.GONE);
             btnFile.setVisibility(View.GONE);
-            btnFileBAST.setVisibility(View.VISIBLE);
-            tvFileBAST.setVisibility(View.VISIBLE);
+
+            if ("baru".equals(String.valueOf(spinnerTipeAset.getSelectedItem())) ) {
+                //input PDF ba bast
+                btnFileBAST.setVisibility(View.VISIBLE);
+                tvFileBAST.setVisibility(View.VISIBLE);
+                tvUploadBAST.setVisibility(View.VISIBLE);
+            }
 
             tvFoto.setVisibility(View.VISIBLE);
             scrollPartition.setVisibility(View.VISIBLE);
@@ -1626,6 +1649,7 @@ public class AddAsetActivity extends AppCompatActivity {
             scrollPartition.setVisibility(View.VISIBLE);
             btnFileBAST.setVisibility(View.GONE);
             tvFileBAST.setVisibility(View.GONE);
+            tvUploadBAST.setVisibility(View.GONE);
 
 //            listBtnMap.setVisibility(View.GONE);
             tvLuasTanaman.setVisibility(View.GONE);
@@ -1663,6 +1687,7 @@ public class AddAsetActivity extends AppCompatActivity {
             tvBast.setVisibility(View.GONE);
             btnFileBAST.setVisibility(View.GONE);
             tvFileBAST.setVisibility(View.GONE);
+            tvUploadBAST.setVisibility(View.GONE);
 
             tvFoto.setVisibility(View.GONE);
             scrollPartition.setVisibility(View.GONE);
@@ -1698,6 +1723,9 @@ public class AddAsetActivity extends AppCompatActivity {
             btnFile.setVisibility(View.GONE);
             btnFileBAST.setVisibility(View.GONE);
             tvFileBAST.setVisibility(View.GONE);
+            tvUploadBAST.setVisibility(View.GONE);
+            inpNomorBAST.setVisibility(View.GONE);
+            tvBast.setVisibility(View.GONE);
 
             tvLuasTanaman.setVisibility(View.GONE);
             tvLuasNonTanaman.setVisibility(View.GONE);
