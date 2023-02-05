@@ -1518,7 +1518,8 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity  implements 
         TextView tvLuasTanaman = findViewById(R.id.luasTanaman);
         TextView tvLuasNonTanaman = findViewById(R.id.luasNonTanaman);
         TextView tvPersenKondisi = findViewById(R.id.tvPersenKondisi);
-        TextView tvFileBAST = findViewById(R.id.tvUploadFileBAST);
+        TextView tvFileBAST = findViewById(R.id.tvUploadBAST);
+        tvUploadFileBAST = findViewById(R.id.tvUploadFileBAST);
 
         HorizontalScrollView scrollPartition = findViewById(R.id.scrollPartition);
 //        Toast.makeText(getApplicationContext(),String.valueOf(spinnerSubUnit.getSelectedItemId()),Toast.LENGTH_LONG).show();
@@ -2834,28 +2835,28 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity  implements 
 
             }
 
-            if (file_bast != null) {
-
-                FileInputStream in = new FileInputStream(file_bast);
-                FileOutputStream out = new FileOutputStream(BAST);
-
-                // Copy the file
-                byte[] buffer = new byte[1024];
-                int read;
-                while ((read = in.read(buffer)) != -1) {
-                    out.write(buffer, 0, read);
-                }
-
-                // Close the streams
-                in.close();
-                out.flush();
-                out.close();
-
-                // Delete the original file
-                file_bast.delete();
-                values.put("file_bast",BAST.getAbsolutePath());
-
-            }
+//            if (file_bast != null) {
+//
+//                FileInputStream in = new FileInputStream(file_bast);
+//                FileOutputStream out = new FileOutputStream(BAST);
+//
+//                // Copy the file
+//                byte[] buffer = new byte[1024];
+//                int read;
+//                while ((read = in.read(buffer)) != -1) {
+//                    out.write(buffer, 0, read);
+//                }
+//
+//                // Close the streams
+//                in.close();
+//                out.flush();
+//                out.close();
+//
+//                // Delete the original file
+//                file_bast.delete();
+//                values.put("file_bast",BAST.getAbsolutePath());
+//
+//            }
 
             String nomor_aset_sap = inpNoSAP.getText().toString().trim();
             values.put("nomor_sap",nomor_aset_sap);

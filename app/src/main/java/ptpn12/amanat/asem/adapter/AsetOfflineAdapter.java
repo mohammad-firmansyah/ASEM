@@ -89,8 +89,7 @@ public class AsetOfflineAdapter extends RecyclerView.Adapter<AsetOfflineAdapter.
 //        notifyItemRemoved(position);
 //        notifyItemRangeChanged(position,listAset.size());
 //    }
-    Dialog dialog;
-
+Dialog dialog;
     @NonNull
     @Override
     public AsetViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
@@ -141,13 +140,8 @@ public class AsetOfflineAdapter extends RecyclerView.Adapter<AsetOfflineAdapter.
                             AsetHelper asetHelper = AsetHelper.getInstance(context);
                             asetHelper.open();
                             asetHelper.deleteById(String.valueOf(aset.getAsetId()));
-                            Intent intent = new Intent(context, LonglistAsetActivity.class);
-                            intent.putExtra("offline",true);
-                            context.startActivity(intent);
-
-//                            context.startActivity(new Intent(context,LonglistAsetActivity.class));
+                            context.startActivity(new Intent(context,LonglistAsetActivity.class));
                             asetHelper.close();
-
                             dialog.dismiss();
                             return;
                         }
@@ -257,9 +251,8 @@ public class AsetOfflineAdapter extends RecyclerView.Adapter<AsetOfflineAdapter.
 
     void showDialogKirim(Aset aset) {
         asetInterface = AsemApp.getApiClient().create(AsetInterface.class);
-        Dialog dialog =new Dialog(context);
+
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(0));
         dialog.setContentView(R.layout.ly_kirim_sukses);
         dialog.show();
         Button cancel = dialog.findViewById(R.id.btnTidakKirim);
@@ -275,11 +268,6 @@ public class AsetOfflineAdapter extends RecyclerView.Adapter<AsetOfflineAdapter.
     }
 
     void kirimData(Aset aset) {
-        dialog.dismiss();
-        dialog = new Dialog(context,R.style.MyAlertDialogTheme);
-        dialog.setContentView(R.layout.loading);
-        dialog.setCanceledOnTouchOutside(false);
-        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(0));
         dialog.show();
         MultipartBody.Part img1Part = null, img2Part = null, img3Part = null, img4Part = null, partBaFile = null;
         RequestBody requestTipeAset = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(aset.getAsetTipe()));
@@ -333,6 +321,7 @@ public class AsetOfflineAdapter extends RecyclerView.Adapter<AsetOfflineAdapter.
             builder.addPart(MultipartBody.Part.createFormData("pop_total_std", null, requestPopulasiTotalStandar));
             builder.addPart(MultipartBody.Part.createFormData("pop_hektar_ini", null, requestPopulasiHektarSaatIni));
             builder.addPart(MultipartBody.Part.createFormData("pop_hektar_std", null, requestPopulasiHektarStandar));
+
         }
 
         if (aset.getAsetJenis().equals("2")) {
@@ -424,17 +413,20 @@ public class AsetOfflineAdapter extends RecyclerView.Adapter<AsetOfflineAdapter.
 
             @Override
             public void onResponse(Call<AsetModel2> call, Response<AsetModel2> response) {
+                dialog.dismiss();
                 if (!response.isSuccessful() && response.body() == null) {
-                    dialog.dismiss();
                     if (response.code() >= 400 && response.code() < 500) {
-                        Toast.makeText(context,"data sap sudah digunkan",Toast.LENGTH_LONG).show();
+                        Toast.makeText(context,"data sap sudah digunkan tolong diubah",Toast.LENGTH_LONG).show();
                         return;
                     }
-                    Toast.makeText(context,"Tidak ada Koneksi Internet , Gagal Kirim Data" ,Toast.LENGTH_LONG).show();
+
+
+                    Toast.makeText(context,"Tidak ada Koneksi Internet " ,Toast.LENGTH_LONG).show();
                     return;
                 }
 
 
+                dialog.dismiss();
                 String user_id = sharedPreferences.getString("user_id", "0");
                 Call<AsetModel2> call2 = asetInterface.kirimDataAset(response.body().getData().getAsetId(), Integer.parseInt(user_id));
                 call2.enqueue(new Callback<AsetModel2>(){
@@ -443,24 +435,24 @@ public class AsetOfflineAdapter extends RecyclerView.Adapter<AsetOfflineAdapter.
                         if (response.isSuccessful() && response.body() != null){
                             AsetHelper asetHelper = AsetHelper.getInstance(context);
                             asetHelper.open();
-                            deleteFotoOffline(aset);
-                            asetHelper.deleteById(String.valueOf(aset.getAsetId()));
-
+                            asetHelper.deleteById(String.valueOf(response.body().getData().getAsetId()));
                             asetHelper.close();
-                            dialog.dismiss();
                             Toast.makeText(context,"Terkirim",Toast.LENGTH_SHORT).show();
                             return;
                         }else {
-                            dialog.dismiss();
+                            //cek image apakah sudah terfoto semua atau belum
+                            //get response body data,if (url img 1-4 = adaa) then bisa kirim, else
                             Toast.makeText(context.getApplicationContext(), response.code(), Toast.LENGTH_SHORT).show();
                             return;
                         }
+
+
                     }
 
                     @Override
                     public void onFailure(Call<AsetModel2> call, Throwable t) {
                         dialog.dismiss();
-                        Toast.makeText(context,"Tidak ada Koneksi Internet , Gagal Kirim Data",Toast.LENGTH_LONG).show();
+                        Toast.makeText(context,"Tidak ada Koneksi Internet",Toast.LENGTH_LONG).show();
                         return;
                     }
                 });
@@ -474,37 +466,10 @@ public class AsetOfflineAdapter extends RecyclerView.Adapter<AsetOfflineAdapter.
 
             @Override
             public void onFailure(Call<AsetModel2> call, Throwable t) {
-                dialog.dismiss();
-                Toast.makeText(context, "error "+  t.getMessage(), Toast.LENGTH_LONG).show();
+                Toast.makeText(context, "error " + t.getMessage(), Toast.LENGTH_LONG).show();
                 return;
             }
         });
-
-    }
-
-    public void deleteFotoOffline(Aset aset) {
-        if (aset.getFotoAset1() != null){
-            File img1 = new File("file://"+aset.getFotoAset1());
-            img1.delete();
-        }
-
-        if (aset.getFotoAset2() != null){
-            File img2 = new File("file://"+aset.getFotoAset2());
-            img2.delete();
-        }
-
-        if (aset.getFotoAset3() != null) {
-            File img3 = new File("file://"+aset.getFotoAset3());
-            img3.delete();
-        }
-        if (aset.getFotoAset4() != null) {
-            File img4 = new File("file://"+aset.getFotoAset4());
-            img4.delete();
-        }
-        if (aset.getFotoAset5() != null) {
-            File img5 = new File("file://"+aset.getFotoAset5());
-            img5.delete();
-        }
 
     }
 

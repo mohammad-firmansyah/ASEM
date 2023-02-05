@@ -481,7 +481,7 @@ public class ReportActivity extends AppCompatActivity {
             int selectedId = radioGroup.getCheckedRadioButtonId();
             RadioButton radioButton = (RadioButton) findViewById(selectedId);
 
-            urlReportv3 = AsemApp.BASE_URL +  "aset/report3?tipe_aset=" + String.valueOf(spinnerTipeAset.getSelectedItemId()) + "?jenis_aset=" + String.valueOf(spinnerJenisAset.getSelectedItemId()) + "?kondisi_aset=" + String.valueOf(spinnerAsetKondisi.getSelectedItemId()) + "?kode_aset=" + String.valueOf(spinnerKodeAset.getSelectedItemId()) + "?tgl_input1=" +String.valueOf(inpTglInput1.getText()) + "?tgl_input2=" + String.valueOf(inpTglInput2.getText()) + "?jenis_report=" + spinnerJenisReport.getSelectedItem() + "?qrcode=" + radioButton.getText().toString();
+            urlReportv3 = AsemApp.BASE_URL +  "report3?tipe_aset=" + String.valueOf(spinnerTipeAset.getSelectedItemId()) + "?jenis_aset=" + String.valueOf(spinnerJenisAset.getSelectedItemId()) + "?kondisi_aset=" + String.valueOf(spinnerAsetKondisi.getSelectedItemId()) + "?kode_aset=" + String.valueOf(spinnerKodeAset.getSelectedItemId()) + "?tgl_input1=" +String.valueOf(inpTglInput1.getText()) + "?tgl_input2=" + String.valueOf(inpTglInput2.getText()) + "?jenis_report=" + spinnerJenisReport.getSelectedItem() + "?qrcode=" + radioButton.getText().toString();
 
             RequestBody requestTipeAset = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(spinnerIdTipeAsset));
             RequestBody requestJenisAset = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(spinnerIdJenisAset));

@@ -19,7 +19,6 @@ import android.content.res.ColorStateList;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -28,7 +27,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CompoundButton;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -75,7 +73,6 @@ public class LonglistAsetActivity extends AppCompatActivity  { //implements Bott
     DataAllSpinner allSpinner;
     Context context;
     Boolean offline;
-    ImageView btnSync;
     List<String> listSpinnerSap=new ArrayList<>();
     List<AsetKode2> asetKode2 = new ArrayList<>();
     List<Afdelling> afdeling = new ArrayList<>();
@@ -103,8 +100,6 @@ public class LonglistAsetActivity extends AppCompatActivity  { //implements Bott
     SharedPreferences.Editor editor;
     LinearLayout addDataOffline;
     TextView tvAddDataOffline;
-    ImageView wifiOFF;
-    ImageView wifiON;
 
     Button btnReport;
     Button btnFilter;
@@ -141,7 +136,6 @@ public class LonglistAsetActivity extends AppCompatActivity  { //implements Bott
         btnReport = findViewById(R.id.btnReport);
         btnFilter = findViewById(R.id.btnFilter);
 
-
         rcAset = findViewById(R.id.asetAll);
         rcAset.setHasFixedSize(true);
         rcAset.setLayoutManager(new LinearLayoutManager(this));
@@ -154,50 +148,23 @@ public class LonglistAsetActivity extends AppCompatActivity  { //implements Bott
         switch_offline = findViewById(R.id.switchoffline);
         addDataOffline = findViewById(R.id.addDataOffline);
         tvAddDataOffline = findViewById(R.id.tvAddDataOffline);
-        wifiOFF = findViewById(R.id.imgWifiOFF);
-        wifiON = findViewById(R.id.imgWifiON);
-        btnSync = findViewById(R.id.btnSync);
-
-        // globally
-        TextView tvTitle = (TextView)findViewById(R.id.tvTitle);
-        //in your OnCreate() method
-        tvTitle.setText("LIST DATA");
 
         Intent intent = getIntent();
          offline = intent.getBooleanExtra("offline",false);
-        switch_offline.setChecked(offline);
+        if(offline) {
+            switch_offline.setChecked(true);
+        } else {
+            switch_offline.setChecked(false);
+        }
         sharedPreferences = getSharedPreferences(PREF_LOGIN, MODE_PRIVATE);
         String hak_akses_id = sharedPreferences.getString("hak_akses_id", "-");
         if (hak_akses_id.equals("7")){
             fab.setVisibility(View.VISIBLE);
-
         }else {
             fab.setVisibility(View.GONE);
         }
 
         user_id = Integer.parseInt(sharedPreferences.getString("user_id", "0"));
-
-        btnSync.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (offline) {
-                    String hak_akses_id = sharedPreferences.getString("hak_akses_id", "-");
-                    if (hak_akses_id.equals("7")){
-                        AsetHelper asetHelper = AsetHelper.getInstance(getApplicationContext());
-                        asetHelper.open();
-                        asetHelper.truncate();
-                        asetHelper.close();
-                        editor.putBoolean("sync",true);
-                        editor.apply();
-                        getAllSpinnerData();
-                    }
-                } else {
-                    Toast.makeText(getApplicationContext(),"Hanya tersedia saat offline",Toast.LENGTH_LONG).show();
-
-                }
-            }
-        });
-
 
 
         //fab.setBackgroundTintList(ColorStateList.valueOf(Color.rgb(10, 50, 50)));
@@ -240,6 +207,20 @@ public class LonglistAsetActivity extends AppCompatActivity  { //implements Bott
         });
 
         //-------fungsi offline dibawah ini-------//
+//        dbTebu = new DatabaseTebu.DataTmaTebuOfflineDbHelper(this);
+//        datamandor = new ArrayList<>();
+//
+//        if (sharedPreferences.getString("jabatan","-").equals("MANDOR")){
+//            datamandor = dbTebu.readDataTmaTebu();
+//            adapterOffline = new AdapterLonglistOffline(LonglistTebu.this,datamandor);
+//        }
+//
+//        List<Data2> datas = response.body();
+//        Aset2Adapter adapter = new Aset2Adapter(datas,LonglistAsetActivity.this);
+//        rcAset.setAdapter(adapter);
+
+//        dbOffline = new DatabaseHelper(this);
+
 
 //        Boolean switchState = switch_offline.isChecked();
         switch_offline.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -256,7 +237,6 @@ public class LonglistAsetActivity extends AppCompatActivity  { //implements Bott
 
                 if(switch_offline.isChecked()){
                     dialog.show();
-                    btnSync.setVisibility(View.VISIBLE);
                     //aktifkan longlist offline
                     addDataOffline.setVisibility(View.VISIBLE);
 
@@ -294,16 +274,13 @@ public class LonglistAsetActivity extends AppCompatActivity  { //implements Bott
 
                 }else {
                     dialog.dismiss();
-                    btnSync.setVisibility(View.GONE);
                     addDataOffline.setVisibility(View.GONE);
                     srlonglist.setEnabled(true);
-                    rcAset.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
-                    rcAset.setAdapter(onlineAdapter);
                     getAllAset();
 //                    Aset2Adapter adapter = new Aset2Adapter(datas,LonglistAsetActivity.this);
 //                    rcAset.setAdapter(adapter);
-//                    rcAset.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
-//                    rcAset.setAdapter(onlineAdapter);
+                    rcAset.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+                    rcAset.setAdapter(onlineAdapter);
                     btnReport.setVisibility(View.VISIBLE);
                     btnFilter.setVisibility(View.VISIBLE);
                     searchView.setVisibility(View.VISIBLE);
@@ -316,7 +293,6 @@ public class LonglistAsetActivity extends AppCompatActivity  { //implements Bott
 
         if(switch_offline.isChecked()){
             dialog.show();
-            btnSync.setVisibility(View.VISIBLE);
             //aktifkan longlist offline
             addDataOffline.setVisibility(View.VISIBLE);
 
@@ -352,8 +328,7 @@ public class LonglistAsetActivity extends AppCompatActivity  { //implements Bott
             }
             asetHelper.close();
 
-        } else {
-            btnSync.setVisibility(View.GONE);
+        }else {
             dialog.dismiss();
             addDataOffline.setVisibility(View.GONE);
             srlonglist.setEnabled(true);
@@ -452,21 +427,14 @@ public class LonglistAsetActivity extends AppCompatActivity  { //implements Bott
                 List<Data2> datas = response.body();
                 Aset2Adapter adapter = new Aset2Adapter(datas,LonglistAsetActivity.this);
                 rcAset.setAdapter(adapter);
-
-                wifiOFF.setVisibility(View.GONE);
-                wifiON.setVisibility(View.VISIBLE);
             }
 
             @Override
             public void onFailure(Call<List<Data2>> call, Throwable t) {
                 dialog.dismiss();
 //                Toast.makeText(getApplicationContext(),t.getMessage(),Toast.LENGTH_LONG).show();
-                Toast.makeText(getApplicationContext(),"Internet tidak terdeteksi.\nSilahkan switch ke List Data Offline!",Toast.LENGTH_LONG).show();
-
-                // fungsi icon wifi
-                wifiOFF.setVisibility(View.VISIBLE);
-                wifiON.setVisibility(View.GONE);
-
+                Toast.makeText(getApplicationContext(),"Internet tidak terdeteksi. List Data Online tidak tertampil.",Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(),"Silahkan switch ke List Data Offline!",Toast.LENGTH_LONG).show();
                 return;
             }
         });
@@ -529,7 +497,7 @@ public class LonglistAsetActivity extends AppCompatActivity  { //implements Bott
                     if (hak_akses_id.equals("7")){
                         AsetHelper asetHelper = AsetHelper.getInstance(getApplicationContext());
                         asetHelper.open();
-                        asetHelper.truncate();
+                        asetHelper.truncate(); ;
                         asetHelper.close();
                         editor.putBoolean("sync",true);
                         editor.apply();
@@ -543,66 +511,6 @@ public class LonglistAsetActivity extends AppCompatActivity  { //implements Bott
         }
         return true;
     }
-//    public static void checkServerToDisplayWifiIcon(String token, ImageView wifion, ImageView wifioff){
-//        try {
-//            AppInterface appInterface = ApiClient.getApiClient().create(AppInterface.class);
-//            Call<Model> call = appInterface.checkToken("Bearer "+token);
-//            call.enqueue(new Callback<Model>() {
-//                @Override
-//                public void onResponse(@NotNull Call<Model> call, @NotNull Response<Model> response) {
-//                    if (response.body() != null && response.isSuccessful()){
-//                        if (response.body().getSuccess()){
-//                            Log.d("checkoss", "onResponse: Check server connected");
-//                            return;
-//                        }
-//
-//                        wifioff.setVisibility(View.VISIBLE);
-//                        wifion.setVisibility(View.GONE);
-//                    }
-//                }
-//
-//                @Override
-//                public void onFailure(@NotNull Call<Model> call, @NotNull Throwable t) {
-//                    t.printStackTrace();
-//                    wifioff.setVisibility(View.VISIBLE);
-//                    wifion.setVisibility(View.GONE);
-//                }
-//            });
-//
-//        } catch (Exception e){
-//            e.printStackTrace();
-//        }
-//    }
-
-    Aset2Adapter aset2Adapter;
-    @Override
-    public boolean onPrepareOptionsMenu(Menu menu) {
-
-//        if (aset2Adapter != null){
-//            menu.findItem(R.id.menu_wifi_off).setVisible(false);
-//            menu.findItem(R.id.menu_wifi_on).setVisible(true);
-//        } else if(aset2Adapter == null){
-//            menu.findItem(R.id.menu_wifi_on).setVisible(false);
-//            menu.findItem(R.id.menu_wifi_off).setVisible(true);
-//        }
-//        menu.findItem(R.id.MENU_HOVER_TEXT).
-//                setVisible(comicDef.hasAltText());
-//        menu.findItem(R.id.MENU_COMIC_LINK).
-//                setVisible(comicInfo.getLink() != null);
-//        menu.findItem(R.id.MENU_EXPLAIN).
-//                setVisible(provider.getExplainUrl(comicInfo) != null);
-
-        if (rcAset == null){
-            menu.findItem(R.id.menu_wifi_on).setVisible(false);
-            menu.findItem(R.id.menu_wifi_off).setVisible(true);
-        } else {
-            menu.findItem(R.id.menu_wifi_off).setVisible(false);
-            menu.findItem(R.id.menu_wifi_on).setVisible(true);
-        }
-
-        return super.onPrepareOptionsMenu(menu);
-    }
-
     public void onBackPressed() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Keluar");
