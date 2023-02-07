@@ -326,7 +326,7 @@ public class LonglistAsetActivity extends AppCompatActivity  { //implements Bott
 //                    Aset2Adapter adapter = new Aset2Adapter(datas,LonglistAsetActivity.this);
 //                    rcAset.setAdapter(adapter);
                     rcAset.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
-                    rcAset.setAdapter(onlineAdapter);
+//                    rcAset.setAdapter(onlineAdapter);
                     btnReport.setVisibility(View.VISIBLE);
                     btnFilter.setVisibility(View.VISIBLE);
                     searchView.setVisibility(View.VISIBLE);
@@ -381,6 +381,7 @@ public class LonglistAsetActivity extends AppCompatActivity  { //implements Bott
             addDataOffline.setVisibility(View.GONE);
             srlonglist.setEnabled(true);
             getAllAset();
+            rcAset.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
             btnReport.setVisibility(View.VISIBLE);
             btnFilter.setVisibility(View.VISIBLE);
             searchView.setVisibility(View.VISIBLE);
