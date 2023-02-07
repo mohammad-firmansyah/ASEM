@@ -20,13 +20,16 @@ import android.database.Cursor;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.Button;
 import android.widget.CompoundButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -55,6 +58,8 @@ import ptpn12.amanat.asem.offline.MappingHelper;
 import ptpn12.amanat.asem.offline.model.Aset;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -101,6 +106,10 @@ public class LonglistAsetActivity extends AppCompatActivity  { //implements Bott
     LinearLayout addDataOffline;
     TextView tvAddDataOffline;
 
+    ImageView wifiOFF;
+    ImageView wifiON;
+    ImageView btnSync;
+
     Button btnReport;
     Button btnFilter;
     FloatingActionButton fab;
@@ -118,6 +127,8 @@ public class LonglistAsetActivity extends AppCompatActivity  { //implements Bott
     private Dialog dialog;
 
     boolean isLoading;
+    int dataApiSize;
+    LinearLayoutManager manager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -136,9 +147,12 @@ public class LonglistAsetActivity extends AppCompatActivity  { //implements Bott
         btnReport = findViewById(R.id.btnReport);
         btnFilter = findViewById(R.id.btnFilter);
 
+//        manager = new LinearLayoutManager(this);
         rcAset = findViewById(R.id.asetAll);
         rcAset.setHasFixedSize(true);
-        rcAset.setLayoutManager(new LinearLayoutManager(this));
+//        onlineAdapter = new Aset2Adapter(asetList, this);
+//        rcAset.setAdapter(onlineAdapter);
+//        rcAset.setLayoutManager(manager);
         rcAset2 = findViewById(R.id.recView2);
         rcAset2.setHasFixedSize(true);
         rcAset2.setLayoutManager(new LinearLayoutManager(this));
@@ -148,6 +162,14 @@ public class LonglistAsetActivity extends AppCompatActivity  { //implements Bott
         switch_offline = findViewById(R.id.switchoffline);
         addDataOffline = findViewById(R.id.addDataOffline);
         tvAddDataOffline = findViewById(R.id.tvAddDataOffline);
+        wifiOFF = findViewById(R.id.imgWifiOFF);
+        wifiON = findViewById(R.id.imgWifiON);
+        btnSync = findViewById(R.id.btnSync);
+
+        // globally
+        TextView tvTitle = (TextView)findViewById(R.id.tvTitle);
+        //in your OnCreate() method
+        tvTitle.setText("LIST DATA");
 
         Intent intent = getIntent();
          offline = intent.getBooleanExtra("offline",false);
@@ -165,6 +187,28 @@ public class LonglistAsetActivity extends AppCompatActivity  { //implements Bott
         }
 
         user_id = Integer.parseInt(sharedPreferences.getString("user_id", "0"));
+
+        btnSync.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (offline) {
+                    String hak_akses_id = sharedPreferences.getString("hak_akses_id", "-");
+                    if (hak_akses_id.equals("7")){
+                        AsetHelper asetHelper = AsetHelper.getInstance(getApplicationContext());
+                        asetHelper.open();
+                        asetHelper.truncate();
+                        asetHelper.close();
+                        editor.putBoolean("sync",true);
+                        editor.apply();
+                        getAllSpinnerData();
+                    }
+                } else {
+                    Toast.makeText(getApplicationContext(),"Hanya tersedia saat offline",Toast.LENGTH_LONG).show();
+
+                }
+            }
+        });
+
 
 
         //fab.setBackgroundTintList(ColorStateList.valueOf(Color.rgb(10, 50, 50)));
@@ -237,6 +281,7 @@ public class LonglistAsetActivity extends AppCompatActivity  { //implements Bott
 
                 if(switch_offline.isChecked()){
                     dialog.show();
+                    btnSync.setVisibility(View.VISIBLE);
                     //aktifkan longlist offline
                     addDataOffline.setVisibility(View.VISIBLE);
 
@@ -274,6 +319,7 @@ public class LonglistAsetActivity extends AppCompatActivity  { //implements Bott
 
                 }else {
                     dialog.dismiss();
+                    btnSync.setVisibility(View.GONE);
                     addDataOffline.setVisibility(View.GONE);
                     srlonglist.setEnabled(true);
                     getAllAset();
@@ -293,6 +339,7 @@ public class LonglistAsetActivity extends AppCompatActivity  { //implements Bott
 
         if(switch_offline.isChecked()){
             dialog.show();
+            btnSync.setVisibility(View.VISIBLE);
             //aktifkan longlist offline
             addDataOffline.setVisibility(View.VISIBLE);
 
@@ -330,6 +377,7 @@ public class LonglistAsetActivity extends AppCompatActivity  { //implements Bott
 
         }else {
             dialog.dismiss();
+            btnSync.setVisibility(View.GONE);
             addDataOffline.setVisibility(View.GONE);
             srlonglist.setEnabled(true);
             getAllAset();
@@ -357,14 +405,6 @@ public class LonglistAsetActivity extends AppCompatActivity  { //implements Bott
 
             }
         });
-
-
-
-//        allData = new Data[]{};
-//        AsetAdapter adapter = new AsetAdapter(allData,LonglistAsetActivity.this);
-//        rcAset.setAdapter(adapter);
-
-
 
         srlonglist.setOnRefreshListener(() ->{
             srlonglist.setRefreshing(false);
@@ -403,15 +443,6 @@ public class LonglistAsetActivity extends AppCompatActivity  { //implements Bott
 //        initScrollListener();
     }
 
-    private void getDataOffline(){
-        Data[] allData = new Data[]{
-//                new Data(1,"tesoff",1,2,1,2,1,"6","fotoaset1","fotoaset2","fotoaset3","fotoaset4","geo","null","null","null", 999.0,"2023-01-03 10:11:23","2023-01-03 00:00:00",9,666,"nnn","1","-",null,null,null,1,16,185,null,"2023-01-03T03:11:23.000000Z","2023-01-03T03:11:23.000000Z",null,99,null,null,null,null,"jjj")
-        };
-//
-//        AsetOfflineAdapter asetOfflineAdapter = new AsetOfflineAdapter(listAset,LonglistAsetActivity.this);
-//        rcAset.setAdapter(asetOfflineAdapter);
-    }
-
     private void getAllAset(){
         dialog.show();
         Call<List<Data2>> call = asetInterface.getAllAset(user_id);
@@ -427,14 +458,21 @@ public class LonglistAsetActivity extends AppCompatActivity  { //implements Bott
                 List<Data2> datas = response.body();
                 Aset2Adapter adapter = new Aset2Adapter(datas,LonglistAsetActivity.this);
                 rcAset.setAdapter(adapter);
+
+                wifiOFF.setVisibility(View.GONE);
+                wifiON.setVisibility(View.VISIBLE);
             }
 
             @Override
             public void onFailure(Call<List<Data2>> call, Throwable t) {
                 dialog.dismiss();
 //                Toast.makeText(getApplicationContext(),t.getMessage(),Toast.LENGTH_LONG).show();
-                Toast.makeText(getApplicationContext(),"Internet tidak terdeteksi. List Data Online tidak tertampil.",Toast.LENGTH_LONG).show();
-                Toast.makeText(getApplicationContext(),"Silahkan switch ke List Data Offline!",Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(),"Internet tidak terdeteksi. Silahkan switch ke List Data Offline!",Toast.LENGTH_LONG).show();
+
+                // fungsi icon wifi
+                wifiOFF.setVisibility(View.VISIBLE);
+                wifiON.setVisibility(View.GONE);
+
                 return;
             }
         });
@@ -650,43 +688,112 @@ public void getAllSpinnerData(){
 //    private void populateData() {
 //        int i = 0;
 //        dataApiSize = Math.min(dataList.size(), 10);
-//        Log.d(TAG, "populateData: "+ dataApiSize);
+//        Log.d("populate", "populateData: "+ dataApiSize);
 //        while (i < dataApiSize) {
 //            rowsArrayList.add(dataList.get(i));
 //            i++;
 //        }
 //    }
 
-//    //load data 10 per 10
+//    //load data 10 per 10 (lazyloading)
 //    //thanks to https://www.digitalocean.com/community/tutorials/android-recyclerview-load-more-endless-scrolling
 //
+//    int currentItems, totalItems, scrollOutItems;
+//    boolean isScrolling = false;
 //    private void initScrollListener(){
 //        rcAset.addOnScrollListener(new RecyclerView.OnScrollListener() {
 //            @Override
 //            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
 //                super.onScrollStateChanged(recyclerView, newState);
+//                if(newState == AbsListView.OnScrollListener.SCROLL_STATE_TOUCH_SCROLL){
+//                    isScrolling = true;
+//                }
 //            }
 //
 //            @Override
 //            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
 //                super.onScrolled(recyclerView, dx, dy);
+//                currentItems = manager.getChildCount();
+//                totalItems = manager.getItemCount();
+//                scrollOutItems = manager.findFirstCompletelyVisibleItemPosition();
 //
-//                LinearLayoutManager linearLayoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
-//                if (!isLoading){
-////                    List<Data2> rowsArrayList = response.body();
-//                    if (linearLayoutManager != null && linearLayoutManager.findLastCompletelyVisibleItemPosition() == asetList.size() - 1) {
-//                        //bottom of list!
-//                        if (datalist.size() > 10){
-//                            loadMore();
-//                        } else{
-//                            Log.d("dataload","end scroll");
-//                        }
-//                        isLoading = true;
-//                    }
+//                if (isScrolling && (currentItems + scrollOutItems == totalItems)){
+//                    //load more data
+//                    isScrolling = false;
+//                    loadMore();
 //                }
+//
+////                LinearLayoutManager linearLayoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
+////                if (!isLoading){
+//////                    List<Data2> rowsArrayList = response.body();
+////                    if (linearLayoutManager != null && linearLayoutManager.findLastCompletelyVisibleItemPosition() == asetList.size() - 1) {
+////                        //bottom of list!
+////                        if (datalist.size() > 10){
+////                            loadMore();
+////                        } else{
+////                            Log.d("dataload","end scroll");
+////                        }
+////                        isLoading = true;
+////                    }
+////                }
 //            }
 //        });
 //    }
 //
-//    private void loadMore(){}
+////    //load more data
+//    private void loadMore(){
+//
+//        new Handler().postDelayed(new Runnable() {
+//            @Override
+//            public void run() {
+//                for (int i=0;i<5;i++){
+//                    asetList.add(Math.floor(Math.random()*100) + "");
+////                    Math.min(asetList.size(), 10);
+//
+//;                    onlineAdapter.notifyDataSetChanged();
+//                }
+//            }
+//        }, 5000);
+
+//        rowsArrayList.add(null);
+//        adapter.notifyItemInserted(rowsArrayList.size() - 1);
+//
+//        Handler handler = new Handler();
+//        handler.postDelayed(new Runnable() {
+//            @Override
+//            public void run() {
+//                dataApiSize = Math.min(dataList.size(), 10);
+//                rowsArrayList.remove(rowsArrayList.size() - 1);
+//                int scrollPosition = rowsArrayList.size();
+//                adapter.notifyItemRemoved(scrollPosition);
+//                int currentSize = scrollPosition;
+//                int nextLimit = currentSize + dataApiSize;
+//
+//                try {
+//                    while (currentSize - 1 < nextLimit) {
+//                        rowsArrayList.add(dataList.get(currentSize));
+//                        sizerowrray = rowsArrayList.size();
+//                        currentSize++;
+//                        if (currentSize >= dataList.size()){
+//                            Toast.makeText(LonglistTebu.this, "Data Sudah yang paling Akhir", Toast.LENGTH_SHORT).show();
+//                            return;
+//                        }
+//                    }
+//                } catch (Exception e){
+//                    Toast.makeText(LonglistTebu.this, "error", Toast.LENGTH_LONG).show();
+//                }
+//                Log.d("crsize", String.valueOf(currentSize));
+//                Log.d("crsize", String.valueOf(rowsArrayList.size()));
+//                Log.d("limit", String.valueOf(nextLimit));
+//                Log.d("datalist data", String.valueOf(dataList.size()));
+//
+////                if ( rowsArrayList.add(dataList.get(currentSize).)
+//
+//                adapter.notifyDataSetChanged();
+//                isLoading = false;
+//            }
+//        }, 2000);
+
+
+//    }
 }
