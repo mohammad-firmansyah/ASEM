@@ -188,6 +188,28 @@ public class LonglistAsetActivity extends AppCompatActivity  { //implements Bott
 
         user_id = Integer.parseInt(sharedPreferences.getString("user_id", "0"));
 
+        btnSync.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (offline) {
+                    String hak_akses_id = sharedPreferences.getString("hak_akses_id", "-");
+                    if (hak_akses_id.equals("7")){
+                        AsetHelper asetHelper = AsetHelper.getInstance(getApplicationContext());
+                        asetHelper.open();
+                        asetHelper.truncate();
+                        asetHelper.close();
+                        editor.putBoolean("sync",true);
+                        editor.apply();
+                        getAllSpinnerData();
+                    }
+                } else {
+                    Toast.makeText(getApplicationContext(),"Hanya tersedia saat offline",Toast.LENGTH_LONG).show();
+
+                }
+            }
+        });
+
+
 
         //fab.setBackgroundTintList(ColorStateList.valueOf(Color.rgb(10, 50, 50)));
 
@@ -259,6 +281,7 @@ public class LonglistAsetActivity extends AppCompatActivity  { //implements Bott
 
                 if(switch_offline.isChecked()){
                     dialog.show();
+                    btnSync.setVisibility(View.VISIBLE);
                     //aktifkan longlist offline
                     addDataOffline.setVisibility(View.VISIBLE);
 
@@ -296,6 +319,7 @@ public class LonglistAsetActivity extends AppCompatActivity  { //implements Bott
 
                 }else {
                     dialog.dismiss();
+                    btnSync.setVisibility(View.GONE);
                     addDataOffline.setVisibility(View.GONE);
                     srlonglist.setEnabled(true);
                     getAllAset();
@@ -315,6 +339,7 @@ public class LonglistAsetActivity extends AppCompatActivity  { //implements Bott
 
         if(switch_offline.isChecked()){
             dialog.show();
+            btnSync.setVisibility(View.VISIBLE);
             //aktifkan longlist offline
             addDataOffline.setVisibility(View.VISIBLE);
 
@@ -352,6 +377,7 @@ public class LonglistAsetActivity extends AppCompatActivity  { //implements Bott
 
         }else {
             dialog.dismiss();
+            btnSync.setVisibility(View.GONE);
             addDataOffline.setVisibility(View.GONE);
             srlonglist.setEnabled(true);
             getAllAset();
@@ -379,14 +405,6 @@ public class LonglistAsetActivity extends AppCompatActivity  { //implements Bott
 
             }
         });
-
-
-
-//        allData = new Data[]{};
-//        AsetAdapter adapter = new AsetAdapter(allData,LonglistAsetActivity.this);
-//        rcAset.setAdapter(adapter);
-
-
 
         srlonglist.setOnRefreshListener(() ->{
             srlonglist.setRefreshing(false);
@@ -423,15 +441,6 @@ public class LonglistAsetActivity extends AppCompatActivity  { //implements Bott
 
 
 //        initScrollListener();
-    }
-
-    private void getDataOffline(){
-        Data[] allData = new Data[]{
-//                new Data(1,"tesoff",1,2,1,2,1,"6","fotoaset1","fotoaset2","fotoaset3","fotoaset4","geo","null","null","null", 999.0,"2023-01-03 10:11:23","2023-01-03 00:00:00",9,666,"nnn","1","-",null,null,null,1,16,185,null,"2023-01-03T03:11:23.000000Z","2023-01-03T03:11:23.000000Z",null,99,null,null,null,null,"jjj")
-        };
-//
-//        AsetOfflineAdapter asetOfflineAdapter = new AsetOfflineAdapter(listAset,LonglistAsetActivity.this);
-//        rcAset.setAdapter(asetOfflineAdapter);
     }
 
     private void getAllAset(){
