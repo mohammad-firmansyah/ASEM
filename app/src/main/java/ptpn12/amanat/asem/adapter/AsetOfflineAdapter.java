@@ -53,11 +53,9 @@ public class AsetOfflineAdapter extends RecyclerView.Adapter<AsetOfflineAdapter.
     private static final String PREF_LOGIN = "LOGIN_PREF";
     private static final String TAG = "KirimTAG";
 
-    ArrayList<Aset> listAset;// = new ArrayList<>();
+    ArrayList<Aset> listAset;
     DatabaseHelper dbAset;
     AsetInterface asetInterface;
-
-    Data[] myAsetData;
 
 
     public AsetOfflineAdapter(Context context, ArrayList<Aset> listAset) {
@@ -75,21 +73,8 @@ public class AsetOfflineAdapter extends RecyclerView.Adapter<AsetOfflineAdapter.
         }
         this.listAset.addAll(listAset);
     }
-//
-//    public void addItem(Aset note) {
-//        this.listAset.add(note);
-//        notifyItemInserted(listAset.size() - 1);
-//    }
-//    public void updateItem(int position, Aset note) {
-//        this.listAset.set(position, note);
-//        notifyItemChanged(position, note);
-//    }
-//    public void removeItem(int position) {
-//        this.listAset.remove(position);
-//        notifyItemRemoved(position);
-//        notifyItemRangeChanged(position,listAset.size());
-//    }
-Dialog dialog;
+
+    Dialog dialog;
     @NonNull
     @Override
     public AsetViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
@@ -254,6 +239,7 @@ Dialog dialog;
 
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.ly_kirim_sukses);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(0));
         dialog.show();
         Button cancel = dialog.findViewById(R.id.btnTidakKirim);
         Button kirim = dialog.findViewById(R.id.btnYaKirim);
@@ -269,7 +255,7 @@ Dialog dialog;
 
     void kirimData(Aset aset) {
         dialog.show();
-        MultipartBody.Part img1Part = null, img2Part = null, img3Part = null, img4Part = null, partBaFile = null;
+        MultipartBody.Part img1Part = null, img2Part = null, img3Part = null, img4Part = null,img5Part = null, partBaFile = null, partBASTFile = null;
         RequestBody requestTipeAset = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(aset.getAsetTipe()));
         RequestBody requestJenisAset = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(aset.getAsetJenis()));
         RequestBody requestKondisiAset = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(aset.getAsetKondisi()));
@@ -375,6 +361,14 @@ Dialog dialog;
         }
 
 
+        if (aset.getFotoAset5() != null) {
+            File img = new File(aset.getFotoAset5());
+            RequestBody requestGeoTag5 = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(aset.getGeoTag5()));
+            builder.addPart(MultipartBody.Part.createFormData("foto_aset5", img.getName(), RequestBody.create(MediaType.parse("image/*"), img)));
+            builder.addPart(MultipartBody.Part.createFormData("geo_tag5", null, requestGeoTag5));
+        }
+
+
         if (aset.getAlat_pengangkutan() != null){
             RequestBody requestAlatAngkut = RequestBody.create(MediaType.parse("text/plain"), aset.getAlat_pengangkutan());
             builder.addPart(MultipartBody.Part.createFormData("alat_angkut", null, requestAlatAngkut));
@@ -392,6 +386,13 @@ Dialog dialog;
             RequestBody requestBaFile = RequestBody.create(MediaType.parse("multipart/form-file"), bafile_file);
             partBaFile = MultipartBody.Part.createFormData("ba_file", bafile_file.getName(), requestBaFile);
             builder.addPart(partBaFile);
+        }
+
+        if (aset.getFileBAST() != null) {
+            File file_bast = new File(aset.getBeritaAcara());
+            RequestBody requestBASTFile = RequestBody.create(MediaType.parse("multipart/form-file"), file_bast);
+            partBASTFile = MultipartBody.Part.createFormData("file_bast", file_bast.getName(), requestBASTFile);
+            builder.addPart(partBASTFile);
         }
 
         if (aset.getKeterangan() != null) {

@@ -354,22 +354,6 @@ public class Aset2Adapter  extends RecyclerView.Adapter<Aset2Adapter.ViewHolder>
             }
         }
 
-
-
-//        switch (myPostData2.getStatusReject()){
-//            case :
-//            case posisi reject:
-//                holder.cvAset.setBackgroundResource(R.drawable.bg_border_cancel);
-//                break;
-//            default:
-//                holder.cvAset.setBackgroundResource(R.drawable.bg_border);
-//                // bikin bg cardview longlist aset reject
-//                if (!myPostData2.getAsetId().equals("0")){
-//                    holder.cvAset.setBackgroundResource(R.color.Khaki);
-//                }
-//                break;
-//        }
-
     }
 
     void showDialogKirim(String customtext,Call<AsetModel2> call) {
