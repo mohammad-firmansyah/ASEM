@@ -1765,8 +1765,8 @@ public class AddAsetActivity extends AppCompatActivity {
         if (inpNoSAP.getText().toString().equals("Pilih Nomor SAP")) {
             dialog.dismiss();
             customDialogAddAset.dismiss();
-            inpNilaiResidu.setError("Nilai Sap Harus Diisi");
-            inpNilaiResidu.requestFocus();
+            inpNoSAP.setError("Nilai Sap Harus Diisi");
+            inpNoSAP.requestFocus();
             return;
         }
 
