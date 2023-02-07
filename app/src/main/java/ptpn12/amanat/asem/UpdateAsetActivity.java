@@ -539,7 +539,7 @@ public class UpdateAsetActivity extends AppCompatActivity {
         // globally
         TextView tvTitle = findViewById(R.id.tvTitle);
         //in your OnCreate() method
-        tvTitle.setText("UPDATE DATA");
+        tvTitle.setText("EDIT DATA");
 
         downloadBa.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -1537,7 +1537,6 @@ public class UpdateAsetActivity extends AppCompatActivity {
             spinnerLuasSatuan.setVisibility(View.GONE);
             inpBtnMap.setVisibility(View.GONE);
             downloadBa.setVisibility(View.GONE);
-            downloadBAST.setVisibility(View.VISIBLE);
             tvBa.setVisibility(View.GONE);
             tvUploudBA.setVisibility(View.GONE);
             btnFile.setVisibility(View.GONE);
@@ -1625,8 +1624,8 @@ public class UpdateAsetActivity extends AppCompatActivity {
             downloadBa.setVisibility(View.VISIBLE);
 //            inpKomoditi.setVisibility(View.VISIBLE);
             spinnerLuasSatuan.setVisibility(View.GONE);
-            inpNomorBAST.setVisibility(View.GONE);
-            tvBast.setVisibility(View.GONE);
+            inpNomorBAST.setVisibility(View.VISIBLE);
+            tvBast.setVisibility(View.VISIBLE);
             tvPohon.setVisibility(View.GONE);
             inpJumlahPohon.setVisibility(View.GONE);
             listBtnMap.setVisibility(View.GONE);
@@ -1668,7 +1667,6 @@ public class UpdateAsetActivity extends AppCompatActivity {
             spinnerLuasSatuan.setVisibility(View.VISIBLE);
 //            inpKomoditi.setVisibility(View.GONE);
             downloadBa.setVisibility(View.GONE);
-            downloadBAST.setVisibility(View.VISIBLE);
             listBtnMap.setVisibility(View.GONE);
             inpJumlahPohon.setVisibility(View.GONE);
             tvPohon.setVisibility(View.GONE);
@@ -1716,8 +1714,8 @@ public class UpdateAsetActivity extends AppCompatActivity {
             tvPohon.setVisibility(View.GONE);
             inpJumlahPohon.setVisibility(View.GONE);
             inpBtnMap.setVisibility(View.VISIBLE);
-            inpNomorBAST.setVisibility(View.GONE);
-            tvBast.setVisibility(View.GONE);
+            inpNomorBAST.setVisibility(View.VISIBLE);
+            tvBast.setVisibility(View.VISIBLE);
             spinnerLuasSatuan.setVisibility(View.VISIBLE);
             tvFoto.setVisibility(View.VISIBLE);
             scrollPartition.setVisibility(View.VISIBLE);
@@ -1759,8 +1757,8 @@ public class UpdateAsetActivity extends AppCompatActivity {
             listBtnMap.setVisibility(View.GONE);
             inpJumlahPohon.setVisibility(View.GONE);
             inpBtnMap.setVisibility(View.GONE);
-            inpNomorBAST.setVisibility(View.GONE);
-            tvBast.setVisibility(View.GONE);
+            inpNomorBAST.setVisibility(View.VISIBLE);
+            tvBast.setVisibility(View.VISIBLE);
             btnFileBAST.setVisibility(View.GONE);
             tvFileBAST.setVisibility(View.GONE);
             tvUploadBAST.setVisibility(View.GONE);

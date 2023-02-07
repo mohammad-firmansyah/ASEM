@@ -1337,8 +1337,8 @@ public class DetailAsetActivity extends AppCompatActivity {
             tvUploudBA.setVisibility(View.VISIBLE);
 //            inpKomoditi.setVisibility(View.VISIBLE);
             downloadBa.setVisibility(View.VISIBLE);
-            inpNomorBAST.setVisibility(View.GONE);
-            tvBast.setVisibility(View.GONE);
+            inpNomorBAST.setVisibility(View.VISIBLE);
+            tvBast.setVisibility(View.VISIBLE);
             tvPohon.setVisibility(View.GONE);
             inpJumlahPohon.setVisibility(View.GONE);
             listBtnMap.setVisibility(View.GONE);
@@ -1424,8 +1424,8 @@ public class DetailAsetActivity extends AppCompatActivity {
             tvPohon.setVisibility(View.GONE);
             inpJumlahPohon.setVisibility(View.GONE);
             inpBtnMap.setVisibility(View.VISIBLE);
-            inpNomorBAST.setVisibility(View.GONE);
-            tvBast.setVisibility(View.GONE);
+            inpNomorBAST.setVisibility(View.VISIBLE);
+            tvBast.setVisibility(View.VISIBLE);
             downloadBa.setVisibility(View.VISIBLE);
             tvFoto.setVisibility(View.VISIBLE);
             scrollPartition.setVisibility(View.VISIBLE);
@@ -1467,8 +1467,8 @@ public class DetailAsetActivity extends AppCompatActivity {
             listBtnMap.setVisibility(View.GONE);
             inpJumlahPohon.setVisibility(View.GONE);
             inpBtnMap.setVisibility(View.GONE);
-            inpNomorBAST.setVisibility(View.GONE);
-            tvBast.setVisibility(View.GONE);
+            inpNomorBAST.setVisibility(View.VISIBLE);
+            tvBast.setVisibility(View.VISIBLE);
             btnFileBAST.setVisibility(View.GONE);
             tvFileBAST.setVisibility(View.GONE);
             tvUploadBAST.setVisibility(View.GONE);
