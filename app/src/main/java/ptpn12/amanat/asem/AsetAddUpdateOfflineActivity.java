@@ -2303,7 +2303,7 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity  implements 
             // menampilkan alert dialog
             alertDialog.show();
             dialog.dismiss();
-            customDialogAddAset.dismiss();
+//            customDialogAddAset.dismiss();
             return;
         }
         if (spinnerSubUnit.getSelectedItemId()== 0) {
@@ -2879,28 +2879,28 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity  implements 
 
             }
 
-//            if (file_bast != null) {
-//
-//                FileInputStream in = new FileInputStream(file_bast);
-//                FileOutputStream out = new FileOutputStream(BAST);
-//
-//                // Copy the file
-//                byte[] buffer = new byte[1024];
-//                int read;
-//                while ((read = in.read(buffer)) != -1) {
-//                    out.write(buffer, 0, read);
-//                }
-//
-//                // Close the streams
-//                in.close();
-//                out.flush();
-//                out.close();
-//
-//                // Delete the original file
-//                file_bast.delete();
-//                values.put("file_bast",BAST.getAbsolutePath());
-//
-//            }
+            if (file_bast != null) {
+
+                FileInputStream in = new FileInputStream(file_bast);
+                FileOutputStream out = new FileOutputStream(BAST);
+
+                // Copy the file
+                byte[] buffer = new byte[1024];
+                int read;
+                while ((read = in.read(buffer)) != -1) {
+                    out.write(buffer, 0, read);
+                }
+
+                // Close the streams
+                in.close();
+                out.flush();
+                out.close();
+
+                // Delete the original file
+                file_bast.delete();
+                values.put("file_bast",BAST.getAbsolutePath());
+
+            }
 
             String nomor_aset_sap = inpNoSAP.getText().toString().trim();
             values.put("nomor_sap",nomor_aset_sap);
@@ -2932,11 +2932,14 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity  implements 
             customDialogUpdateAset.dismiss();
             dialog.dismiss();
 //            finish();
-            Intent intent = new Intent(this, LonglistAsetActivity.class);
-//            intent.setAction("isChecked");
-//                    new Intent(AsetAddUpdateOfflineActivity.this, LonglistAsetActivity.class);
+
+//            Intent intent = new Intent(this, LonglistAsetActivity.class);
+//            startActivity(intent);
+
+            Intent intent = new Intent(AsetAddUpdateOfflineActivity.this, LonglistAsetActivity.class);
+            intent.putExtra("offline",true);
             startActivity(intent);
-//            saveImageInternal(img1,inpNamaAset.getText().toString().trim(),1);
+
         } catch(Exception e) {
             customDialogUpdateAset.dismiss();
             dialog.dismiss();
