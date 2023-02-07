@@ -1353,6 +1353,7 @@ public class AddAsetActivity extends AppCompatActivity {
             tvUploudBA.setVisibility(View.GONE);
 //            inpBtnMap.setVisibility(View.GONE);
             btnFile.setVisibility(View.GONE);
+            tvBa.setVisibility(View.GONE);
 
             if ("baru".equals(String.valueOf(spinnerTipeAset.getSelectedItem())) ) {
                 //input PDF ba bast
@@ -1476,6 +1477,7 @@ public class AddAsetActivity extends AppCompatActivity {
             tvUploudBA.setVisibility(View.GONE);
 //            inpBtnMap.setVisibility(View.GONE);
             btnFile.setVisibility(View.GONE);
+            tvBa.setVisibility(View.GONE);
 
             if ("baru".equals(String.valueOf(spinnerTipeAset.getSelectedItem())) ) {
                 //input PDF ba bast
@@ -1605,6 +1607,7 @@ public class AddAsetActivity extends AppCompatActivity {
             tvUploudBA.setVisibility(View.GONE);
 //            inpBtnMap.setVisibility(View.GONE);
             btnFile.setVisibility(View.GONE);
+            tvBa.setVisibility(View.GONE);
 
             if ("baru".equals(String.valueOf(spinnerTipeAset.getSelectedItem())) ) {
                 //input PDF ba bast

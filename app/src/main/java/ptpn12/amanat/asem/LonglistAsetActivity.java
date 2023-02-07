@@ -326,7 +326,7 @@ public class LonglistAsetActivity extends AppCompatActivity  { //implements Bott
 //                    Aset2Adapter adapter = new Aset2Adapter(datas,LonglistAsetActivity.this);
 //                    rcAset.setAdapter(adapter);
                     rcAset.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
-//                    rcAset.setAdapter(onlineAdapter);
+                    rcAset.setAdapter(onlineAdapter);
                     btnReport.setVisibility(View.VISIBLE);
                     btnFilter.setVisibility(View.VISIBLE);
                     searchView.setVisibility(View.VISIBLE);
@@ -382,6 +382,7 @@ public class LonglistAsetActivity extends AppCompatActivity  { //implements Bott
             srlonglist.setEnabled(true);
             getAllAset();
             rcAset.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+            rcAset.setAdapter(onlineAdapter);
             btnReport.setVisibility(View.VISIBLE);
             btnFilter.setVisibility(View.VISIBLE);
             searchView.setVisibility(View.VISIBLE);
@@ -468,7 +469,7 @@ public class LonglistAsetActivity extends AppCompatActivity  { //implements Bott
             public void onFailure(Call<List<Data2>> call, Throwable t) {
                 dialog.dismiss();
 //                Toast.makeText(getApplicationContext(),t.getMessage(),Toast.LENGTH_LONG).show();
-                Toast.makeText(getApplicationContext(),"Internet tidak terdeteksi. Silahkan switch ke List Data Offline!",Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(),"Internet tidak terdeteksi.\nSilahkan switch ke Offline!",Toast.LENGTH_LONG).show();
 
                 // fungsi icon wifi
                 wifiOFF.setVisibility(View.VISIBLE);
