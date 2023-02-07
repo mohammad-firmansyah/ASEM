@@ -78,7 +78,7 @@ public class DetailAsetOfflineActivity extends AppCompatActivity {
     String urlBa;
     String urlBast;
     Button downloadBa;
-    Button downloadBast;
+    Button downloadBAST;
     Map<Integer, Integer> mapAfdelingSpinner = new HashMap<Integer, Integer>();
     Map<Long, Integer> mapSap = new HashMap();
     Map<Integer, Long> mapSpinnerSap = new HashMap();
@@ -277,7 +277,7 @@ public class DetailAsetOfflineActivity extends AppCompatActivity {
         inpSatuanLuas = findViewById(R.id.inpLuasSatuan);
         inpSatuanLuas.setEnabled(false);
         downloadBa = findViewById(R.id.inpDownloadBa);
-        downloadBast = findViewById(R.id.inpDownloadBAST);
+        downloadBAST = findViewById(R.id.inpDownloadBAST);
 
         inpTglInput = findViewById(R.id.inpTglInput);
         inpTglInput.setEnabled(false);
@@ -354,10 +354,10 @@ public class DetailAsetOfflineActivity extends AppCompatActivity {
             }
         });
 
-        downloadBast.setOnClickListener(new View.OnClickListener() {
+        downloadBAST.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                downloadBastFunc();
+                downloadBASTFunc();
             }
         });
 
@@ -674,7 +674,7 @@ public class DetailAsetOfflineActivity extends AppCompatActivity {
         Toast.makeText(this, "Download Dimulai" , Toast.LENGTH_SHORT).show();
 
     }
-    public void downloadBastFunc(){
+    public void downloadBASTFunc(){
 
         String title = URLUtil.guessFileName("file://"  + urlBast,null,null);
 
@@ -880,15 +880,37 @@ public class DetailAsetOfflineActivity extends AppCompatActivity {
         TextView tvLuasTanaman = findViewById(R.id.luasTanaman);
         TextView tvLuasNonTanaman = findViewById(R.id.luasNonTanaman);
         TextView tvPersenKondisi = findViewById(R.id.tvPersenKondisi);
+        TextView tvUploadBAST = findViewById(R.id.tvUploadBAST);
+        TextView tvFileBAST = findViewById(R.id.tvUploadFileBAST);
 
         HorizontalScrollView scrollPartition = findViewById(R.id.scrollPartition);
 //        Toast.makeText(getApplicationContext(),String.valueOf(spinnerSubUnit.getSelectedItemId()),Toast.LENGTH_LONG).show();
 
 
-        if(spinnerTipeAset.getSelectedItem().equals("baru") && spinnerAsetKondisi.getSelectedItem().equals("normal")){
-            vwBast.setVisibility(View.VISIBLE);
-        }else{
-            vwBast.setVisibility(View.GONE);
+//        if(spinnerTipeAset.getSelectedItem().equals("baru") && spinnerAsetKondisi.getSelectedItem().equals("normal")){
+//            vwBast.setVisibility(View.VISIBLE);
+//        }else{
+//            vwBast.setVisibility(View.GONE);
+//        }
+        if (spinnerTipeAset.getSelectedItemId() != 0) {
+            inpNomorBAST.setVisibility(View.VISIBLE);
+            tvBast.setVisibility(View.VISIBLE);
+        } else {
+            inpNomorBAST.setVisibility(View.GONE);
+            tvBast.setVisibility(View.GONE);
+        }
+
+//        if (spinnerTipeAset.getSelectedItemId() == 1 ) {
+        if ("baru".equals(String.valueOf(spinnerTipeAset.getSelectedItem())) ) {
+            //input PDF ba bast
+            downloadBAST.setVisibility(View.VISIBLE);
+            tvFileBAST.setVisibility(View.VISIBLE);
+            tvUploadBAST.setVisibility(View.VISIBLE);
+        } else {
+            //input PDF ba bast
+            downloadBAST.setVisibility(View.GONE);
+            tvFileBAST.setVisibility(View.GONE);
+            tvUploadBAST.setVisibility(View.GONE);
         }
 
         if (spinnerSubUnit.getSelectedItemId() == 2){
@@ -912,6 +934,12 @@ public class DetailAsetOfflineActivity extends AppCompatActivity {
             tvBa.setVisibility(View.GONE);
             inpBtnMap.setVisibility(View.GONE);
 //            btnFile.setVisibility(View.GONE);
+            if ("baru".equals(String.valueOf(spinnerTipeAset.getSelectedItem())) ) {
+                //input PDF ba bast
+                downloadBAST.setVisibility(View.VISIBLE);
+                tvFileBAST.setVisibility(View.VISIBLE);
+                tvUploadBAST.setVisibility(View.VISIBLE);
+            }
 
             tvFoto.setVisibility(View.VISIBLE);
             scrollPartition.setVisibility(View.VISIBLE);
@@ -949,10 +977,13 @@ public class DetailAsetOfflineActivity extends AppCompatActivity {
 
             downloadBa.setVisibility(View.VISIBLE);
 //            inpKomoditi.setVisibility(View.VISIBLE);
-            inpNomorBAST.setVisibility(View.GONE);
-            tvBast.setVisibility(View.GONE);
+            inpNomorBAST.setVisibility(View.VISIBLE);
+            tvBast.setVisibility(View.VISIBLE);
             tvUploudBA.setVisibility(View.VISIBLE);
 //            btnFile.setVisibility(View.VISIBLE);
+            tvFileBAST.setVisibility(View.GONE);
+            tvUploadBAST.setVisibility(View.GONE);
+            downloadBAST.setVisibility(View.GONE);
 
             inpBtnMap.setVisibility(View.GONE);
 
@@ -991,12 +1022,15 @@ public class DetailAsetOfflineActivity extends AppCompatActivity {
             inpJumlahPohon.setVisibility(View.VISIBLE);
 //            inpKomoditi.setVisibility(View.VISIBLE);
             downloadBa.setVisibility(View.VISIBLE);
-            inpNomorBAST.setVisibility(View.GONE);
-            tvBast.setVisibility(View.GONE);
+            inpNomorBAST.setVisibility(View.VISIBLE);
+            tvBast.setVisibility(View.VISIBLE);
             tvPohon.setVisibility(View.GONE);
             listBtnMap.setVisibility(View.GONE);
             inpJumlahPohon.setVisibility(View.GONE);
             inpBtnMap.setVisibility(View.GONE);
+            tvFileBAST.setVisibility(View.GONE);
+            tvUploadBAST.setVisibility(View.GONE);
+            downloadBAST.setVisibility(View.GONE);
 
             tvFoto.setVisibility(View.GONE);
             scrollPartition.setVisibility(View.GONE);
@@ -1038,6 +1072,12 @@ public class DetailAsetOfflineActivity extends AppCompatActivity {
             tvUploudBA.setVisibility(View.GONE);
             inpBtnMap.setVisibility(View.GONE);
 //            btnFile.setVisibility(View.GONE);
+            if ("baru".equals(String.valueOf(spinnerTipeAset.getSelectedItem())) ) {
+                //input PDF ba bast
+                downloadBAST.setVisibility(View.VISIBLE);
+                tvFileBAST.setVisibility(View.VISIBLE);
+                tvUploadBAST.setVisibility(View.VISIBLE);
+            }
 
             tvFoto.setVisibility(View.VISIBLE);
             scrollPartition.setVisibility(View.VISIBLE);
@@ -1080,9 +1120,12 @@ public class DetailAsetOfflineActivity extends AppCompatActivity {
             tvPohon.setVisibility(View.VISIBLE);
 
 
-            inpNomorBAST.setVisibility(View.GONE);
-            tvBast.setVisibility(View.GONE);
+            inpNomorBAST.setVisibility(View.VISIBLE);
+            tvBast.setVisibility(View.VISIBLE);
             inpBtnMap.setVisibility(View.GONE);
+            tvFileBAST.setVisibility(View.GONE);
+            tvUploadBAST.setVisibility(View.GONE);
+            downloadBAST.setVisibility(View.GONE);
 
             tvFoto.setVisibility(View.VISIBLE);
             scrollPartition.setVisibility(View.VISIBLE);
@@ -1119,13 +1162,16 @@ public class DetailAsetOfflineActivity extends AppCompatActivity {
 //            inpKomoditi.setVisibility(View.VISIBLE);
             downloadBa.setVisibility(View.VISIBLE);
 
-            inpNomorBAST.setVisibility(View.GONE);
-            tvBast.setVisibility(View.GONE);
+            inpNomorBAST.setVisibility(View.VISIBLE);
+            tvBast.setVisibility(View.VISIBLE);
             tvPohon.setVisibility(View.GONE);
             inpJumlahPohon.setVisibility(View.GONE);
             listBtnMap.setVisibility(View.GONE);
             inpJumlahPohon.setVisibility(View.GONE);
             inpBtnMap.setVisibility(View.GONE);
+            tvFileBAST.setVisibility(View.GONE);
+            tvUploadBAST.setVisibility(View.GONE);
+            downloadBAST.setVisibility(View.GONE);
 
             tvFoto.setVisibility(View.GONE);
             scrollPartition.setVisibility(View.GONE);
@@ -1166,6 +1212,12 @@ public class DetailAsetOfflineActivity extends AppCompatActivity {
             tvBa.setVisibility(View.GONE);
             tvPohon.setVisibility(View.GONE);
 //            btnFile.setVisibility(View.GONE);
+            if ("baru".equals(String.valueOf(spinnerTipeAset.getSelectedItem())) ) {
+                //input PDF ba bast
+                downloadBAST.setVisibility(View.VISIBLE);
+                tvFileBAST.setVisibility(View.VISIBLE);
+                tvUploadBAST.setVisibility(View.VISIBLE);
+            }
 
             tvFoto.setVisibility(View.VISIBLE);
             scrollPartition.setVisibility(View.VISIBLE);
@@ -1201,11 +1253,14 @@ public class DetailAsetOfflineActivity extends AppCompatActivity {
             tvPohon.setVisibility(View.GONE);
             inpJumlahPohon.setVisibility(View.GONE);
             inpBtnMap.setVisibility(View.VISIBLE);
-            inpNomorBAST.setVisibility(View.GONE);
-            tvBast.setVisibility(View.GONE);
+            inpNomorBAST.setVisibility(View.VISIBLE);
+            tvBast.setVisibility(View.VISIBLE);
             downloadBa.setVisibility(View.VISIBLE);
             tvFoto.setVisibility(View.VISIBLE);
             scrollPartition.setVisibility(View.VISIBLE);
+            tvFileBAST.setVisibility(View.GONE);
+            tvUploadBAST.setVisibility(View.GONE);
+            downloadBAST.setVisibility(View.GONE);
 
             listBtnMap.setVisibility(View.GONE);
             tvLuasTanaman.setVisibility(View.GONE);
@@ -1243,8 +1298,11 @@ public class DetailAsetOfflineActivity extends AppCompatActivity {
             listBtnMap.setVisibility(View.GONE);
             inpJumlahPohon.setVisibility(View.GONE);
             inpBtnMap.setVisibility(View.GONE);
-            inpNomorBAST.setVisibility(View.GONE);
-            tvBast.setVisibility(View.GONE);
+            inpNomorBAST.setVisibility(View.VISIBLE);
+            tvBast.setVisibility(View.VISIBLE);
+            tvFileBAST.setVisibility(View.GONE);
+            tvUploadBAST.setVisibility(View.GONE);
+            downloadBAST.setVisibility(View.GONE);
 
             tvFoto.setVisibility(View.GONE);
             scrollPartition.setVisibility(View.GONE);
@@ -1282,6 +1340,11 @@ public class DetailAsetOfflineActivity extends AppCompatActivity {
             tvUploudBA.setVisibility(View.GONE);
             inpBtnMap.setVisibility(View.GONE);
 //            btnFile.setVisibility(View.GONE);
+            inpNomorBAST.setVisibility(View.GONE);
+            tvBast.setVisibility(View.GONE);
+            tvFileBAST.setVisibility(View.GONE);
+            tvUploadBAST.setVisibility(View.GONE);
+            downloadBAST.setVisibility(View.GONE);
 
             downloadBa.setVisibility(View.GONE);
             tvLuasTanaman.setVisibility(View.GONE);
