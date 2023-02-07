@@ -7,6 +7,7 @@ import androidx.cardview.widget.CardView;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -23,7 +24,7 @@ public class ProfilActivity extends AppCompatActivity {
     private static final String PREF_LOGIN = "LOGIN_PREF";
 
     AsetHelper asetHelper;
-    TextView tvNIP,tvNama,tvHakAkses,tvJabatan,tvBagian,tvEmail;
+    TextView tvNIP,tvNama,tvHakAkses,tvJabatan,tvBagian,tvEmail, tvVersionName, tvVersionCode;
     CardView resetPass, logOut;
 
     SharedPreferences sharedPreferences;
@@ -46,7 +47,18 @@ public class ProfilActivity extends AppCompatActivity {
         // globally
         TextView tvTitle = (TextView)findViewById(R.id.tvTitle);
         //in your OnCreate() method
-        tvTitle.setText("PROFIL");
+        tvTitle.setText(R.string.profil);
+
+        int versionCode = BuildConfig.VERSION_CODE;
+        String versionName = BuildConfig.VERSION_NAME;
+
+        // Set the version to a TextView
+        tvVersionCode = findViewById(R.id.tvVersionCode);
+        tvVersionCode.setText("Version : "+(versionCode));
+
+        tvVersionName = findViewById(R.id.tvVersionName);
+        tvVersionName.setText("   v"+versionName);
+
 
         resetPass.setOnClickListener(new View.OnClickListener() {
             @Override

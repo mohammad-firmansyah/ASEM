@@ -257,6 +257,36 @@
 
     </LinearLayout>
 
+    <LinearLayout
+        android:id="@+id/versionGroup"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/bottomnav"
+        android:orientation="horizontal"
+        >
+
+        <TextView
+            android:id="@+id/tvVersionCode"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.5"
+            android:paddingBottom="20dp"
+            android:gravity="end|right"
+            />
+
+        <TextView
+            android:id="@+id/tvVersionName"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.5"
+            android:paddingBottom="20dp"
+            android:gravity="end|left"
+            />
+
+
+    </LinearLayout>
+
+
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomnav"
         android:layout_width="match_parent"
