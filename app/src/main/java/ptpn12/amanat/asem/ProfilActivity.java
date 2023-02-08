@@ -57,7 +57,7 @@ public class ProfilActivity extends AppCompatActivity {
         tvVersionCode.setText("Version : "+(versionCode));
 
         tvVersionName = findViewById(R.id.tvVersionName);
-        tvVersionName.setText("   v"+versionName);
+        tvVersionName.setText(" || v"+versionName);
 
 
         resetPass.setOnClickListener(new View.OnClickListener() {

@@ -20,6 +20,7 @@ import ptpn12.amanat.asem.api.model.UnitModel;
 import java.util.List;
 
 import okhttp3.MultipartBody;
+import ptpn12.amanat.asem.api.model.VersionModel;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;
@@ -120,5 +121,13 @@ public interface AsetInterface {
             @Field("userId") int userID
     );
 
+    // ---------- Update Versi Aplikasi ---------- //
+
+    @FormUrlEncoded
+    @POST("check/update")
+    Call<VersionModel> checkUpdate(
+            @Field("versionCode") Integer versionCode,
+            @Field("versionName") String versionName
+    );
 
 }
