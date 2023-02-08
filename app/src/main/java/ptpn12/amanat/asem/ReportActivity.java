@@ -21,6 +21,7 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
@@ -30,22 +31,32 @@ import android.widget.Toast;
 import ptpn12.amanat.asem.R;
 
 import ptpn12.amanat.asem.api.AsetInterface;
+import ptpn12.amanat.asem.api.model.Afdelling;
+import ptpn12.amanat.asem.api.model.AlatAngkut;
+import ptpn12.amanat.asem.api.model.AllSpinner;
+import ptpn12.amanat.asem.api.model.AsetJenis;
 import ptpn12.amanat.asem.api.model.AsetJenisModel;
 import ptpn12.amanat.asem.api.model.AsetKode2;
 import ptpn12.amanat.asem.api.model.AsetKodeModel2;
 import ptpn12.amanat.asem.api.model.AsetKondisi;
 import ptpn12.amanat.asem.api.model.AsetTipe;
+import ptpn12.amanat.asem.api.model.DataAllSpinner;
 import ptpn12.amanat.asem.api.model.ReportModel;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
+import ptpn12.amanat.asem.api.model.Sap;
+import ptpn12.amanat.asem.api.model.SubUnit;
+import ptpn12.amanat.asem.api.model.Unit;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -54,6 +65,20 @@ public class ReportActivity extends AppCompatActivity {
     DatePickerDialog.OnDateSetListener date;
     DatePickerDialog.OnDateSetListener date2;
     Integer unit_id = 0;
+    ListView listView;
+    DataAllSpinner allSpinner;
+    Map<Integer, Integer> mapAfdelingSpinner = new HashMap<Integer, Integer>();
+    Map<Integer, Integer> mapSpinnerAfdeling = new HashMap<Integer, Integer>();
+    Map<Integer, String> mapAfdeling = new HashMap();
+    Map<Long, Integer> mapSap = new HashMap();
+
+    Map<Integer,Integer> mapKodeSpinner = new HashMap();
+    Map<Integer,Integer> mapSpinnerkode = new HashMap();
+
+    List<String> listSpinnerSap=new ArrayList<>();
+    List<AsetKode2> asetKode2 = new ArrayList<>();
+    List<Afdelling> afdeling = new ArrayList<>();
+
     private AsetInterface asetInterface;
     final Calendar myCalendar1= Calendar.getInstance();
     final Calendar myCalendar2= Calendar.getInstance();
@@ -93,9 +118,11 @@ public class ReportActivity extends AppCompatActivity {
         asetInterface = AsemApp.getApiClient().create(AsetInterface.class);
 
         unit_id = Integer.valueOf(sharedPreferences.getString("unit_id", "0"));
+        Log.d("amanat19", String.valueOf(unit_id));
         dialog = new Dialog(ReportActivity.this,R.style.MyAlertDialogTheme);
         dialog.setContentView(R.layout.loading);
         dialog.setCanceledOnTouchOutside(false);
+        dialog.setCancelable(false);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(0));
 //        dialog.show();
 
@@ -128,7 +155,7 @@ public class ReportActivity extends AppCompatActivity {
 
 
 
-        getSpinnerData();
+        getAllSpinnerData();
         initCalender();
         initCalender2();
 
@@ -138,7 +165,7 @@ public class ReportActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 spinnerIdTipeAsset = String.valueOf(position);
-//                setVisibilityDynamic();
+                editVisibilityDynamic();
 
             }
 
@@ -152,7 +179,7 @@ public class ReportActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 spinnerIdJenisAset = String.valueOf(position);
-//                setVisibilityDynamic();
+                editVisibilityDynamic();
 
             }
 
@@ -166,7 +193,7 @@ public class ReportActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 spinnerIdAsetKondisi = String.valueOf(position);
-//                setVisibilityDynamic();
+                editVisibilityDynamic();
 
             }
 
@@ -180,7 +207,7 @@ public class ReportActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 spinnerIdKodeAset = String.valueOf(position);
-//                setVisibilityDynamic();
+                editVisibilityDynamic();
 
             }
 
@@ -194,7 +221,7 @@ public class ReportActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 getSpinnerIdJenisReport = String.valueOf(position);
-//                setVisibilityDynamic();
+                editVisibilityDynamic();
             }
 
             @Override
@@ -204,6 +231,17 @@ public class ReportActivity extends AppCompatActivity {
         });
 
 
+        spinnerUnit.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
 //        inpTglInput2.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View view) {
@@ -213,7 +251,7 @@ public class ReportActivity extends AppCompatActivity {
 //            }
 //        });
 
-//        setVisibilityDynamic();
+//        editVisibilityDynamic();
     }
 
     private void getTipeAset(){
@@ -430,6 +468,124 @@ public class ReportActivity extends AppCompatActivity {
 
     }
 
+    public void getAllSpinnerData(){
+        dialog.show();
+        Call<AllSpinner> call = asetInterface.getAllSpinner();
+        try {
+
+            call.enqueue(new Callback<AllSpinner>() {
+                @Override
+                public void onResponse(Call<AllSpinner> call, Response<AllSpinner> response) {
+                    try {
+
+
+                        if (!response.isSuccessful() && response.body().getData() == null) {
+                            Toast.makeText(getApplicationContext(),response.code(),Toast.LENGTH_LONG).show();
+                            dialog.dismiss();
+                            return;
+                        }
+                        dialog.dismiss();
+                        allSpinner = response.body().getData();
+
+                        DataAllSpinner dataAllSpinner = response.body().getData();
+                        List<String> listSpinnerTipe = new ArrayList<>();
+                        List<String> listSpinnerJenis = new ArrayList<>();
+                        List<String> listSpinnerKondisiAset = new ArrayList<>();
+                        List<String> listSpinnerKodeAset = new ArrayList<>();
+                        List<String> listSpinnerUnit = new ArrayList<>();
+
+                        listSpinnerTipe.add("Semua");
+                        listSpinnerJenis.add("Semua");
+                        listSpinnerKondisiAset.add("Semua");
+                        listSpinnerKodeAset.add("Semua");
+                        listSpinnerUnit.add("Semua");
+
+                        // get data tipe aset
+                        for (AsetTipe at : dataAllSpinner.getAsetTipe()){
+                            listSpinnerTipe.add(at.getAset_tipe_desc());
+                        }
+
+                        // get data jenis
+                        for (AsetJenis at : dataAllSpinner.getAsetJenis()){
+                            listSpinnerJenis.add(at.getAset_jenis_desc());
+                        }
+
+                        // get kondisi aset
+                        for (AsetKondisi at : dataAllSpinner.getAsetKondisi()){
+                            listSpinnerKondisiAset.add(at.getAset_kondisi_desc());
+                        }
+
+                        // get kode aset
+                        asetKode2 = dataAllSpinner.getAsetKode();
+
+
+                        // get unit
+                        for (Unit at : dataAllSpinner.getUnit()){
+                            listSpinnerUnit.add(at.getUnit_desc());
+                        }
+
+
+                        // set adapter tipe
+                        ArrayAdapter<String> adapterTipe = new ArrayAdapter<String>(getApplicationContext(),
+                                android.R.layout.simple_spinner_item, listSpinnerTipe);
+                        adapterTipe.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                        spinnerTipeAset.setAdapter(adapterTipe);
+
+                        // set adapter jenis
+                        ArrayAdapter<String> adapterJenis = new ArrayAdapter<String>(getApplicationContext(),
+                                android.R.layout.simple_spinner_item, listSpinnerJenis);
+                        adapterJenis.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                        spinnerJenisAset.setAdapter(adapterJenis);
+
+                        // set adapter kondisi aset
+                        ArrayAdapter<String> adapterKondisiAset = new ArrayAdapter<String>(getApplicationContext(),
+                                android.R.layout.simple_spinner_item, listSpinnerKondisiAset);
+                        adapterKondisiAset.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                        spinnerAsetKondisi.setAdapter(adapterKondisiAset);
+
+                        // set adapter kode aset
+                        ArrayAdapter<String> adapterKodeAset = new ArrayAdapter<String>(getApplicationContext(),
+                                android.R.layout.simple_spinner_item, listSpinnerKodeAset);
+                        adapterKodeAset.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                        spinnerKodeAset.setAdapter(adapterKodeAset);
+
+
+                        // set adapter unit
+                        ArrayAdapter<String> adapterUnit = new ArrayAdapter<String>(getApplicationContext(),
+                                android.R.layout.simple_spinner_item, listSpinnerUnit);
+                        adapterUnit.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                        spinnerUnit.setAdapter(adapterUnit);
+
+                        List<String> listSpinner = new ArrayList<>();
+                        listSpinner.add("excel");
+                        listSpinner.add("pdf");
+                        // Set hasil result json ke dalam adapter spinner
+                        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getApplicationContext(),
+                                android.R.layout.simple_spinner_item, listSpinner);
+                        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                        spinnerJenisReport.setAdapter(adapter);
+
+                    }catch(Exception e) {
+                        e.printStackTrace();
+                    }
+                    editVisibilityDynamic();
+                    dialog.dismiss();
+                }
+
+                @Override
+                public void onFailure(Call<AllSpinner> call, Throwable t) {
+                    dialog.dismiss();
+                    Toast.makeText(getApplicationContext(),t.getMessage(),Toast.LENGTH_LONG).show();
+                    return;
+                }
+            });
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+
+    }
+
 
     private void downloadReport(String url){
 
@@ -494,6 +650,7 @@ public class ReportActivity extends AppCompatActivity {
 
 
             RequestBody requestUnit = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(unit_id));
+            RequestBody requestUnitKasi = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(spinnerUnit.getSelectedItemId()));
             RequestBody requestHGU = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(inpHGU.getText().toString().trim()));
 
 
@@ -507,25 +664,19 @@ public class ReportActivity extends AppCompatActivity {
             builder.addPart(MultipartBody.Part.createFormData("tgl_input1",null,requestTglInput1));
             builder.addPart(MultipartBody.Part.createFormData("tgl_input2",null,requestTglInput2));
             builder.addPart(MultipartBody.Part.createFormData("unit_id",null,requestUnit));
-            builder.addPart(MultipartBody.Part.createFormData("hgu",null,requestHGU));
-
-
+            builder.addPart(MultipartBody.Part.createFormData("unit_id_kasi",null,requestUnitKasi));
+//            builder.addPart(MultipartBody.Part.createFormData("hgu",null,requestHGU));
 
             if ("QRcode".equals(radioButton.getText().toString())) {
                 RequestBody requestQrCode = RequestBody.create(MediaType.parse("text/plain"), "true");
                 builder.addPart(MultipartBody.Part.createFormData("qrcode",null,requestQrCode));
-
-
             } else if("Foto+QRcode".equals(radioButton.getText().toString())) {
-
                 Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(urlReportv3));
                 startActivity(browserIntent);
                 return;
-
             } else {
                 RequestBody requestQrCode = RequestBody.create(MediaType.parse("text/plain"), "false");
                 builder.addPart(MultipartBody.Part.createFormData("qrcode",null,requestQrCode));
-
             }
 
             MultipartBody multipartBody = builder
@@ -570,17 +721,19 @@ public class ReportActivity extends AppCompatActivity {
 
 }
 
-public void setVisibilityDynamic(){
+public void editVisibilityDynamic(){
 
         TextView tvHgu = findViewById(R.id.tvHGU);
         tvHgu.setVisibility(View.GONE);
 
-//        if (unit_id == 0) {
-//            spinnerUnit.setVisibility(View.VISIBLE);
-//        } else {
-//            spinnerUnit.setVisibility(View.GONE);
-//            tvUnit.setVisibility(View.GONE);
-//        }
+
+        if (unit_id == 20) {
+            spinnerUnit.setVisibility(View.VISIBLE);
+            tvUnit.setVisibility(View.VISIBLE);
+        } else {
+            spinnerUnit.setVisibility(View.GONE);
+            tvUnit.setVisibility(View.GONE);
+        }
 //
 //        if (spinnerJenisAset.getSelectedItemId() != 0 || spinnerKodeAset.getSelectedItemId() != 0 || spinnerAsetKondisi.getSelectedItemId() != 0 || spinnerTipeAset.getSelectedItemId() != 0) {
 //           inpHGU.setEnabled(false);
