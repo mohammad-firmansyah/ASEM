@@ -13,6 +13,7 @@ import android.Manifest;
 import android.app.Dialog;
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.ColorStateList;
@@ -140,6 +141,7 @@ public class LonglistAsetActivity extends AppCompatActivity  { //implements Bott
         editor = getSharedPreferences(PREF_LOGIN, MODE_PRIVATE).edit();
         sharedPreferences = getSharedPreferences(PREF_LOGIN,MODE_PRIVATE);
         dialog = new Dialog(LonglistAsetActivity.this,R.style.MyAlertDialogTheme);
+        dialog.setCancelable(false);
         dialog.setContentView(R.layout.loading);
         dialog.setCanceledOnTouchOutside(false);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(0));
@@ -281,6 +283,7 @@ public class LonglistAsetActivity extends AppCompatActivity  { //implements Bott
 
                 if(switch_offline.isChecked()){
                     dialog.show();
+
                     btnSync.setVisibility(View.VISIBLE);
                     //aktifkan longlist offline
                     addDataOffline.setVisibility(View.VISIBLE);
