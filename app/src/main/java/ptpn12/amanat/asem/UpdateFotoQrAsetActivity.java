@@ -1106,11 +1106,11 @@ public class UpdateFotoQrAsetActivity extends AppCompatActivity {
                                  inpKetReject.setVisibility(View.GONE);
                                  tvKetReject.setVisibility(View.GONE);
                              }
-                             String url1 = AsemApp.BASE_URL_ASSET+aset.getFotoAset1();
-                             String url2 = AsemApp.BASE_URL_ASSET+aset.getFotoAset2();
-                             String url3 = AsemApp.BASE_URL_ASSET+aset.getFotoAset3();
-                             String url4 = AsemApp.BASE_URL_ASSET+aset.getFotoAset4();
-                             String url5 = AsemApp.BASE_URL_ASSET+aset.getFotoAset5();
+                             String url1 = AsemApp.BASE_URL_ASSET+"/storage/app/public/aset/"+aset.getFotoAset1();
+                             String url2 = AsemApp.BASE_URL_ASSET+"/storage/app/public/aset/"+aset.getFotoAset2();
+                             String url3 = AsemApp.BASE_URL_ASSET+"/storage/app/public/aset/"+aset.getFotoAset3();
+                             String url4 = AsemApp.BASE_URL_ASSET+"/storage/app/public/aset/"+aset.getFotoAset4();
+                             String url5 = AsemApp.BASE_URL_ASSET+"/storage/app/public/aset/"+aset.getFotoAset5();
 
                              if (aset.getFotoAset1() == null ){
                                  map1.setEnabled(false);

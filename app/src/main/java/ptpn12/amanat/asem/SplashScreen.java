@@ -51,7 +51,7 @@ public class SplashScreen extends AppCompatActivity {
         versionName = BuildConfig.VERSION_NAME;
         versionCode = BuildConfig.VERSION_CODE;
 
-        new Handler().postDelayed(this::running, 2000);
+        new Handler().postDelayed(this::checkLogin, 2000);
     }
 
     private void checkLogin() {
@@ -72,122 +72,122 @@ public class SplashScreen extends AppCompatActivity {
     }
 
     //check android version
-    private void running() {
-        checkUpdate();
-    }
-
-    private void checkUpdate(){
-        Call<VersionModel> call = asetInterface.checkUpdate(versionCode, versionName);
-        call.enqueue(new Callback<VersionModel>() {
-            @Override
-            public void onResponse(@NonNull Call<VersionModel> call, @NonNull Response<VersionModel> response) {
-                if (response.isSuccessful() && response.body() != null) {
-                    if (response.body().getSuccess()){
-                        Boolean updateAvailable = response.body().getUpdateAvailable();
-                        Boolean updateNeeded = response.body().getUpdateNeeded();
-                        String aplikasiId = response.body().getAplikasiId();
-                        String pesan1 = response.body().getPesan1();
-                        String pesan2 = response.body().getPesan2();
-                        isUpdate(updateAvailable, updateNeeded, aplikasiId, pesan1, pesan2);
-                    }else{
-                        AlertDialog dialog = new AlertDialog.Builder(SplashScreen.this)
-                                .setTitle("Error[1]")
-                                .setMessage("Response : "+response.message())
-                                .setPositiveButton("Coba Lagi", (arg0, arg1) -> running())
-                                .show();
-                        dialog.setCanceledOnTouchOutside(false);
-                        dialog.setCancelable(false);
-                    }
-                }else{
-                    AlertDialog dialog = new AlertDialog.Builder(SplashScreen.this)
-                            .setTitle("Error[2]")
-                            .setMessage("Response : "+response.code()+" "+response.message())
-                            .setPositiveButton("Coba Lagi", (arg0, arg1) -> running())
-                            .show();
-                    dialog.setCanceledOnTouchOutside(false);
-                    dialog.setCancelable(false);
-                }
-            }
-
-            @Override
-            public void onFailure(@NonNull Call<VersionModel> call, @NonNull Throwable t) {
-
-                String username = sharedPreferences.getString("nama","-");
-
-                if (!username.equals("-")){
-                    Toast.makeText(getApplicationContext(),"Anda dalam mode Offline",Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(SplashScreen.this, Home.class);
-                    startActivity(intent);
-                }else {
-                    Toast.makeText(getApplicationContext(),"Anda belum login",Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(SplashScreen.this, MainActivity.class);
-                    startActivity(intent);
-                }
-            }
-        });
-    }
-
-    private void isUpdate(Boolean updateAvailable, Boolean updateNeeded, String aplikasiId, String pesan1, String pesan2){
-        if (updateAvailable){
-            AlertDialog dialog;
-            if (updateNeeded){
-                SharedPreferences.Editor editor = sharedPreferences.edit();
-                editor.clear();
-                editor.apply();
-                dialog = new AlertDialog.Builder(SplashScreen.this)
-                        .setTitle("Update Aplikasi Tersedia")
-                        .setMessage(pesan2)
-                        .setNegativeButton("Update Aplikasi", (dialogInterface, i) -> {
-                            Intent intent = new Intent(Intent.ACTION_VIEW);
-                            intent.setData(Uri.parse("https://play.google.com/store/apps/details?id=" + aplikasiId));
-                            startActivity(intent);
-                            finish();
-                        }).show();
-            }else{
-                dialog = new AlertDialog.Builder(SplashScreen.this)
-                        .setTitle("Update Aplikasi Tersedia")
-                        .setMessage(pesan1)
-                        .setNegativeButton("Update Sekarang", (dialogInterface, i) -> {
-                            Intent intent = new Intent(Intent.ACTION_VIEW);
-                            intent.setData(Uri.parse("https://play.google.com/store/apps/details?id=" + aplikasiId));
-                            startActivity(intent);
-                            finish();
-                        })
-                        .setPositiveButton("Update Nanti", (arg0, arg1) -> {
-                            if (sharedPreferences.contains(LOGIN_CREDENTIALS)) {
-                                String loginToken = sharedPreferences.getString(LOGIN_CREDENTIALS, "");
-                                if (loginToken.equals("")) {
-                                    Intent intent = new Intent(SplashScreen.this, MainActivity.class);
-                                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                                    startActivity(intent);
-                                } else {
-                                    checkLogin();
-                                }
-                            } else {
-                                Intent intent = new Intent(SplashScreen.this, MainActivity.class);
-                                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                                startActivity(intent);
-                            }
-                        }).show();
-            }
-            dialog.setCanceledOnTouchOutside(false);
-            dialog.setCancelable(false);
-        }else{
-            if(sharedPreferences.contains(LOGIN_CREDENTIALS)){
-                String loginToken = sharedPreferences.getString(LOGIN_CREDENTIALS, "");
-                if (loginToken.equals("")) {
-                    Intent intent = new Intent(SplashScreen.this, MainActivity.class);
-                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                    startActivity(intent);
-                } else {
-                    checkLogin();
-                }
-            }else{
-                Intent intent = new Intent(SplashScreen.this, MainActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                startActivity(intent);
-            }
-        }
-    }
+//    private void running() {
+//        checkUpdate();
+//    }
+//
+//    private void checkUpdate(){
+//        Call<VersionModel> call = asetInterface.checkUpdate(versionCode, versionName);
+//        call.enqueue(new Callback<VersionModel>() {
+//            @Override
+//            public void onResponse(@NonNull Call<VersionModel> call, @NonNull Response<VersionModel> response) {
+//                if (response.isSuccessful() && response.body() != null) {
+//                    if (response.body().getSuccess()){
+//                        Boolean updateAvailable = response.body().getUpdateAvailable();
+//                        Boolean updateNeeded = response.body().getUpdateNeeded();
+//                        String aplikasiId = response.body().getAplikasiId();
+//                        String pesan1 = response.body().getPesan1();
+//                        String pesan2 = response.body().getPesan2();
+//                        isUpdate(updateAvailable, updateNeeded, aplikasiId, pesan1, pesan2);
+//                    }else{
+//                        AlertDialog dialog = new AlertDialog.Builder(SplashScreen.this)
+//                                .setTitle("Error[1]")
+//                                .setMessage("Response : "+response.message())
+//                                .setPositiveButton("Coba Lagi", (arg0, arg1) -> running())
+//                                .show();
+//                        dialog.setCanceledOnTouchOutside(false);
+//                        dialog.setCancelable(false);
+//                    }
+//                }else{
+//                    AlertDialog dialog = new AlertDialog.Builder(SplashScreen.this)
+//                            .setTitle("Error[2]")
+//                            .setMessage("Response : "+response.code()+" "+response.message())
+//                            .setPositiveButton("Coba Lagi", (arg0, arg1) -> running())
+//                            .show();
+//                    dialog.setCanceledOnTouchOutside(false);
+//                    dialog.setCancelable(false);
+//                }
+//            }
+//
+//            @Override
+//            public void onFailure(@NonNull Call<VersionModel> call, @NonNull Throwable t) {
+//
+//                String username = sharedPreferences.getString("nama","-");
+//
+//                if (!username.equals("-")){
+//                    Toast.makeText(getApplicationContext(),"Anda dalam mode Offline",Toast.LENGTH_SHORT).show();
+//                    Intent intent = new Intent(SplashScreen.this, Home.class);
+//                    startActivity(intent);
+//                }else {
+//                    Toast.makeText(getApplicationContext(),"Anda belum login",Toast.LENGTH_SHORT).show();
+//                    Intent intent = new Intent(SplashScreen.this, MainActivity.class);
+//                    startActivity(intent);
+//                }
+//            }
+//        });
+//    }
+//
+//    private void isUpdate(Boolean updateAvailable, Boolean updateNeeded, String aplikasiId, String pesan1, String pesan2){
+//        if (updateAvailable){
+//            AlertDialog dialog;
+//            if (updateNeeded){
+//                SharedPreferences.Editor editor = sharedPreferences.edit();
+//                editor.clear();
+//                editor.apply();
+//                dialog = new AlertDialog.Builder(SplashScreen.this)
+//                        .setTitle("Update Aplikasi Tersedia")
+//                        .setMessage(pesan2)
+//                        .setNegativeButton("Update Aplikasi", (dialogInterface, i) -> {
+//                            Intent intent = new Intent(Intent.ACTION_VIEW);
+//                            intent.setData(Uri.parse("https://play.google.com/store/apps/details?id=" + aplikasiId));
+//                            startActivity(intent);
+//                            finish();
+//                        }).show();
+//            }else{
+//                dialog = new AlertDialog.Builder(SplashScreen.this)
+//                        .setTitle("Update Aplikasi Tersedia")
+//                        .setMessage(pesan1)
+//                        .setNegativeButton("Update Sekarang", (dialogInterface, i) -> {
+//                            Intent intent = new Intent(Intent.ACTION_VIEW);
+//                            intent.setData(Uri.parse("https://play.google.com/store/apps/details?id=" + aplikasiId));
+//                            startActivity(intent);
+//                            finish();
+//                        })
+//                        .setPositiveButton("Update Nanti", (arg0, arg1) -> {
+//                            if (sharedPreferences.contains(LOGIN_CREDENTIALS)) {
+//                                String loginToken = sharedPreferences.getString(LOGIN_CREDENTIALS, "");
+//                                if (loginToken.equals("")) {
+//                                    Intent intent = new Intent(SplashScreen.this, MainActivity.class);
+//                                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+//                                    startActivity(intent);
+//                                } else {
+//                                    checkLogin();
+//                                }
+//                            } else {
+//                                Intent intent = new Intent(SplashScreen.this, MainActivity.class);
+//                                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+//                                startActivity(intent);
+//                            }
+//                        }).show();
+//            }
+//            dialog.setCanceledOnTouchOutside(false);
+//            dialog.setCancelable(false);
+//        }else{
+//            if(sharedPreferences.contains(LOGIN_CREDENTIALS)){
+//                String loginToken = sharedPreferences.getString(LOGIN_CREDENTIALS, "");
+//                if (loginToken.equals("")) {
+//                    Intent intent = new Intent(SplashScreen.this, MainActivity.class);
+//                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+//                    startActivity(intent);
+//                } else {
+//                    checkLogin();
+//                }
+//            }else{
+//                Intent intent = new Intent(SplashScreen.this, MainActivity.class);
+//                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+//                startActivity(intent);
+//            }
+//        }
+//    }
 
 }

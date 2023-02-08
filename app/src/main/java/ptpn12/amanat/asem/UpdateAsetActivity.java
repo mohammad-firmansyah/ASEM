@@ -1068,19 +1068,19 @@ public class UpdateAsetActivity extends AppCompatActivity {
                         inpKetReject.setVisibility(View.GONE);
                         tvKetReject.setVisibility(View.GONE);
                     }
-                    url1 = AsemApp.BASE_URL_ASSET+"/storage/"+aset.getFotoAset1();
-                    url2 = AsemApp.BASE_URL_ASSET+"/storage/"+aset.getFotoAset2();
-                    url3 = AsemApp.BASE_URL_ASSET+"/storage/"+aset.getFotoAset3();
-                    url4 = AsemApp.BASE_URL_ASSET+"/storage/"+aset.getFotoAset4();
-                    url5 = AsemApp.BASE_URL_ASSET+"/storage/"+aset.getFotoAset5();
+                    url1 = AsemApp.BASE_URL_ASSET+"/storage/app/public/aset/"+aset.getFotoAset1();
+                    url2 = AsemApp.BASE_URL_ASSET+"/storage/app/public/aset/"+aset.getFotoAset2();
+                    url3 = AsemApp.BASE_URL_ASSET+"/storage/app/public/aset/"+aset.getFotoAset3();
+                    url4 = AsemApp.BASE_URL_ASSET+"/storage/app/public/aset/"+aset.getFotoAset4();
+                    url5 = AsemApp.BASE_URL_ASSET+"/storage/app/public/aset/"+aset.getFotoAset5();
 
-                    if (aset.getFotoAset1().split("/").length > 1) {
-                        url1 = AsemApp.BASE_URL_ASSET+aset.getFotoAset1();
-                        url2 = AsemApp.BASE_URL_ASSET+aset.getFotoAset2();
-                        url3 = AsemApp.BASE_URL_ASSET+aset.getFotoAset3();
-                        url4 = AsemApp.BASE_URL_ASSET+aset.getFotoAset4();
-                        url5 = AsemApp.BASE_URL_ASSET+aset.getFotoAset5();
-                    }
+//                    if (aset.getFotoAset1().split("/").length > 1) {
+//                        url1 = AsemApp.BASE_URL_ASSET+aset.getFotoAset1();
+//                        url2 = AsemApp.BASE_URL_ASSET+aset.getFotoAset2();
+//                        url3 = AsemApp.BASE_URL_ASSET+aset.getFotoAset3();
+//                        url4 = AsemApp.BASE_URL_ASSET+aset.getFotoAset4();
+//                        url5 = AsemApp.BASE_URL_ASSET+aset.getFotoAset5();
+//                    }
 
                 if (aset.getFotoAset1() == null ){
                     map1.setEnabled(false);
