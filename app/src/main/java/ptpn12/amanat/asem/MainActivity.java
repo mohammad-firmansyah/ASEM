@@ -70,6 +70,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     public void loginProses(){
+        dialog.show();
         username = etNIP.getText().toString();
         user_pass = etPass.getText().toString();
 
@@ -142,7 +143,6 @@ public class MainActivity extends AppCompatActivity {
                             Log.d(TAG, "onResponse: Login bre");
                             Toast.makeText(MainActivity.this, response.body().getMessage(), Toast.LENGTH_LONG).show();
                         }
-                        dialog.show();
                     }else{
                         dialog.dismiss();
                         if (response.toString().contains("code=500")){

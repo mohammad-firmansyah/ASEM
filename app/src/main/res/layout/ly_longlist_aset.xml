@@ -4,219 +4,236 @@
     android:id="@+id/cvRuang"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="@color/white"
     app:cardCornerRadius="10dp"
     app:cardElevation="6dp"
-    app:cardUseCompatPadding="true"
-    android:background="@color/white">
+    app:cardUseCompatPadding="true">
 
     <RelativeLayout
         android:id="@+id/bgCardView"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
-
-
-    <LinearLayout
-        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="end"
-        android:layout_marginEnd="5dp"
-        android:layout_marginTop="3dp"
-        >
-
-        <View
-            android:id="@+id/btnQR"
-            android:layout_width="25dp"
-            android:layout_height="25dp"
-            android:visibility="gone"
-            android:layout_marginRight="7dp"
-            android:background="@drawable/ic_baseline_qr_code_2_24"/>
-
-        <View
-            android:id="@+id/btnQRijo"
-            android:layout_width="25dp"
-            android:layout_height="25dp"
-            android:visibility="gone"
-            android:layout_marginRight="7dp"
-            android:background="@drawable/ic_baseline_qr_code_green_24"/>
-
-        <View
-            android:id="@+id/btn_delete"
-            android:visibility="gone"
-            android:layout_width="25dp"
-            android:layout_height="25dp"
-            android:background="@drawable/ic_outline_close_24" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/baris1"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="5dp">
-        <TextView
-            android:id="@+id/tv_tgl_input"
-            android:layout_height="wrap_content"
-            android:layout_width="match_parent"
-            android:text="tgl_input"
-            android:textColor="@color/black"
-            android:layout_weight="1">
-        </TextView>
-        <TextView
-            android:id="@+id/tv_aset_name"
-            android:layout_height="wrap_content"
-            android:layout_width="match_parent"
-            android:textColor="@color/black"
-            android:text="aset_name"
-            android:layout_weight="1"
-            android:layout_marginLeft="10dp">
-        </TextView>
-    </LinearLayout>
-    <LinearLayout
-        android:id="@+id/baris2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="5dp">
-        <TextView
-            android:id="@+id/tv_nomor_sap"
-            android:layout_height="wrap_content"
-            android:layout_width="match_parent"
-            android:text="nomor_sap"
-            android:textColor="@color/black"
-            android:layout_weight="1"
-            android:layout_marginTop="30dp">
-        </TextView>
-        <TextView
-            android:id="@+id/tv_nilai"
-            android:layout_height="wrap_content"
-            android:layout_width="match_parent"
-            android:textColor="@color/black"
-            android:text="nilai"
-            android:layout_weight="1"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="30dp">
-        </TextView>
-    </LinearLayout>
+        android:padding="7dp">
 
         <LinearLayout
-            android:id="@+id/baris3"
+            android:id="@+id/dataatas"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="5dp">
+            android:orientation="horizontal"
+            android:weightSum="15">
 
-            <TextView
-                android:id="@+id/tv_aset_jenis"
-                android:layout_width="match_parent"
+            <LinearLayout
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="60dp"
-                android:layout_weight="1"
-                android:text="aset_jenis"
-                android:textColor="@color/black"/>
+                android:layout_weight="15"
+                android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/tv_umur_ekonomis"
-                android:layout_width="match_parent"
+                <LinearLayout
+                    android:id="@+id/baris1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="5dp"
+                    android:weightSum="2">
+
+                    <TextView
+                        android:id="@+id/tv_tgl_input"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="tgl_input"
+                        android:textColor="@color/black"></TextView>
+
+                    <TextView
+                        android:id="@+id/tv_aset_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_weight="1"
+                        android:text="aset_name"
+                        android:textColor="@color/black"></TextView>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/baris2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="5dp"
+                    android:weightSum="2">
+
+                    <TextView
+                        android:id="@+id/tv_nomor_sap"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="nomor_sap"
+                        android:textColor="@color/black"></TextView>
+
+                    <TextView
+                        android:id="@+id/tv_nilai"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_weight="1"
+                        android:text="nilai"
+                        android:textColor="@color/black"></TextView>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/baris3"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="5dp"
+                    android:weightSum="2">
+
+                    <TextView
+                        android:id="@+id/tv_aset_jenis"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="aset_jenis"
+                        android:textColor="@color/black" />
+
+                    <TextView
+                        android:id="@+id/tv_umur_ekonomis"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_weight="1"
+                        android:text="umur_ekonomis"
+                        android:textColor="@color/black" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/baris4"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="5dp"
+                    android:weightSum="2">
+
+                    <TextView
+                        android:id="@+id/tv_afdeling"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="afdeling"
+                        android:textColor="@color/black"></TextView>
+
+                    <TextView
+                        android:id="@+id/tv_no_inv"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginBottom="5dp"
+                        android:layout_weight="1"
+                        android:text="no_inv"
+                        android:textColor="@color/black"></TextView>
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="60dp"
-                android:layout_weight="1"
-                android:text="umur_ekonomis"
-                android:textColor="@color/black"/>
+                android:layout_weight="1">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="3dp"
+                    android:layout_marginEnd="5dp"
+                    android:gravity="center_vertical"
+                    android:orientation="vertical">
+
+                    <View
+                        android:id="@+id/btn_delete"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:background="@drawable/ic_outline_close_24"
+                        android:visibility="gone" />
+
+                    <View
+                        android:id="@+id/btnQR"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:layout_marginRight="7dp"
+                        android:background="@drawable/ic_baseline_qr_code_2_24"
+                        android:visibility="gone" />
+
+                    <View
+                        android:id="@+id/btnQRijo"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:layout_marginRight="7dp"
+                        android:background="@drawable/ic_baseline_qr_code_green_24"
+                        android:visibility="gone" />
+
+
+                </LinearLayout>
+            </LinearLayout>
+
         </LinearLayout>
 
+
         <LinearLayout
-        android:id="@+id/baris4"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="5dp"
-            android:layout_marginBottom="5dp">
-        <TextView
-            android:id="@+id/tv_afdeling"
-            android:layout_height="wrap_content"
+            android:id="@+id/cvAset"
             android:layout_width="match_parent"
-            android:text="afdeling"
-            android:textColor="@color/black"
-            android:layout_weight="1"
-            android:layout_marginTop="90dp">
-        </TextView>
-        <TextView
-            android:id="@+id/tv_no_inv"
             android:layout_height="wrap_content"
-            android:layout_width="match_parent"
-            android:textColor="@color/black"
-            android:text="no_inv"
-            android:layout_weight="1"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="90dp"
-            android:layout_marginBottom="5dp">
-        </TextView>
-    </LinearLayout>
+            android:layout_below="@id/dataatas">
 
+            <Button
+                android:id="@+id/btn_detail"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_marginLeft="5dp"
+                android:layout_weight=".25"
+                android:backgroundTint="@color/BlueDark"
+                android:text="Detail"
+                android:textColor="@color/white"
+                android:textSize="9sp"></Button>
 
+            <Button
+                android:id="@+id/btn_edit"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_toRightOf="@+id/btn_detail"
+                android:layout_weight=".25"
+                android:backgroundTint="@color/BlueDark"
+                android:text="edit"
+                android:textColor="@color/white"
+                android:textSize="10sp"></Button>
 
-    <LinearLayout
-        android:id="@+id/cvAset"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/status_posisi"
+                android:layout_width="0dp"
+                android:layout_height="30dp"
+                android:layout_marginRight="5dp"
+                android:layout_toRightOf="@+id/btn_edit"
+                android:layout_weight=".30"
+                android:background="@drawable/edit_text_spiner"
+                android:fontFamily="sans-serif-black"
+                android:gravity="center"
+                android:text="status_posisi"
+                android:textColor="@color/DarkSlateGray"
+                android:textSize="9sp"
+                android:textStyle="italic"></TextView>
 
-        <Button
-            android:id="@+id/btn_detail"
-            android:layout_width="0dp"
-            android:layout_height="40dp"
-            android:layout_weight=".25"
-            android:text="Detail"
-            android:textSize="9sp"
-            android:textColor="@color/white"
-            android:layout_marginTop="120dp"
-            android:layout_marginLeft="5dp"
-            android:backgroundTint="@color/BlueDark">
-        </Button>
-        <Button
-            android:id="@+id/btn_edit"
-            android:layout_width="0dp"
-            android:layout_height="40dp"
-            android:layout_weight=".25"
-            android:text="edit"
-            android:textSize="10sp"
-            android:textColor="@color/white"
-            android:layout_toRightOf="@+id/btn_detail"
-            android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp"
-            android:layout_marginTop="120dp"
-            android:backgroundTint="@color/BlueDark">
-        </Button>
-        <TextView
-            android:id="@+id/status_posisi"
-            android:layout_width="0dp"
-            android:layout_height="30dp"
-            android:layout_weight=".30"
-            android:text="status_posisi"
-            android:textColor="@color/DarkSlateGray"
-            android:fontFamily="sans-serif-black"
-            android:textStyle="italic"
-            android:textSize="11sp"
-            android:layout_toRightOf="@+id/btn_edit"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginTop="120dp"
-            android:gravity="center"
-            android:background="@drawable/edit_text_spiner">
-        </TextView>
+            <Button
+                android:id="@+id/btn_kirim"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_marginEnd="5dp"
+                android:layout_toRightOf="@+id/status_posisi"
+                android:layout_weight=".25"
+                android:autoSizeTextType="uniform"
+                android:backgroundTint="@color/yellow"
+                android:text="kirim"
+                android:textColor="@color/white"
+                android:textSize="10sp"></Button>
 
-        <Button
-            android:id="@+id/btn_kirim"
-            android:layout_width="0dp"
-            android:layout_height="40dp"
-            android:layout_weight=".25"
-            android:text="kirim"
-            android:textColor="@color/white"
-            android:textSize="10sp"
-            android:backgroundTint="@color/yellow"
-            android:layout_marginTop="120dp"
-            android:layout_marginEnd="5dp"
-            android:autoSizeTextType="uniform"
-            android:layout_toRightOf="@+id/status_posisi">
-        </Button>
-
-    </LinearLayout>
+        </LinearLayout>
 
 
     </RelativeLayout>

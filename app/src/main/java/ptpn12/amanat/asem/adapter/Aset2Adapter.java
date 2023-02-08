@@ -76,7 +76,7 @@ public class Aset2Adapter  extends RecyclerView.Adapter<Aset2Adapter.ViewHolder>
         asetInterface = AsemApp.getApiClient().create(AsetInterface.class);
         final Data2 myPostData2 = myAsetData.get(position);
 
-        holder.tvTglInput.setText(myPostData2.getTglInput());
+        holder.tvTglInput.setText(myPostData2.getTglInput().split(" ")[0]);
         holder.tvNoSAP.setText(String.valueOf(String.valueOf(myPostData2.getNomorSap())));
         holder.tvAsetJenis.setText(String.valueOf(myPostData2.getAsetJenis()));
         holder.tvAfdeling.setText(String.valueOf(myPostData2.getAfdelingId()));

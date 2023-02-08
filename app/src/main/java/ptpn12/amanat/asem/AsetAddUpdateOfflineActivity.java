@@ -2929,8 +2929,9 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity  implements 
             asetHelper.open();
             asetHelper.update(String.valueOf(id),values);
             asetHelper.close();
-            customDialogUpdateAset.dismiss();
+
             dialog.dismiss();
+            customDialogUpdateAset.dismiss();
 //            finish();
 
 //            Intent intent = new Intent(this, LonglistAsetActivity.class);
@@ -2941,8 +2942,8 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity  implements 
             startActivity(intent);
 
         } catch(Exception e) {
-            customDialogUpdateAset.dismiss();
             dialog.dismiss();
+            customDialogUpdateAset.dismiss();
             Toast.makeText(getApplicationContext(),"error : " + e.getMessage(),Toast.LENGTH_LONG).show();
             e.printStackTrace();
         }
