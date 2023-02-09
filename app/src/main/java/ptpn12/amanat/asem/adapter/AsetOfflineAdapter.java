@@ -78,7 +78,12 @@ public class AsetOfflineAdapter extends RecyclerView.Adapter<AsetOfflineAdapter.
     @NonNull
     @Override
     public AsetViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        dialog = new Dialog(context);
+
+        dialog =new Dialog(context);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.loading);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(0));
+
         View view = LayoutInflater.from(context).inflate(R.layout.ly_longlist_aset, viewGroup, false);
         return new AsetViewHolder(view);
     }
@@ -237,6 +242,7 @@ public class AsetOfflineAdapter extends RecyclerView.Adapter<AsetOfflineAdapter.
     void showDialogKirim(Aset aset) {
         asetInterface = AsemApp.getApiClient().create(AsetInterface.class);
 
+        final Dialog dialog =new Dialog(context);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.ly_kirim_sukses);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(0));
@@ -389,7 +395,7 @@ public class AsetOfflineAdapter extends RecyclerView.Adapter<AsetOfflineAdapter.
         }
 
         if (aset.getFileBAST() != null) {
-            File file_bast = new File(aset.getBeritaAcara());
+            File file_bast = new File(aset.getFileBAST());
             RequestBody requestBASTFile = RequestBody.create(MediaType.parse("multipart/form-file"), file_bast);
             partBASTFile = MultipartBody.Part.createFormData("file_bast", file_bast.getName(), requestBASTFile);
             builder.addPart(partBASTFile);

@@ -568,6 +568,7 @@ public class LonglistAsetActivity extends AppCompatActivity  { //implements Bott
 
 public void getAllSpinnerData(){
         dialog.show();
+        dialog.setCancelable(false);
 
     Call<AllSpinner> call = asetInterface.getAllSpinner();
 
