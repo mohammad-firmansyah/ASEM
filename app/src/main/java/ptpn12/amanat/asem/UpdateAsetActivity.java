@@ -1049,7 +1049,6 @@ public class UpdateAsetActivity extends AppCompatActivity {
                     inpNilaiResidu.setText(formatrupiah(Double.parseDouble(String.valueOf(aset.getNilaiResidu()))));
                     inpKeterangan.setText(aset.getKeterangan());
                     inpUmrEkonomis.setText(utils.MonthToYear(aset.getUmurEkonomisInMonth()));
-//                inpNilaiAsetSAP.setText(formatrupiah(Double.parseDouble(String.valueOf(aset.getUmurEkonomisInMonth()))));
                     inpPersenKondisi.setText(String.valueOf(aset.getPersenKondisi()));
                     inpJumlahPohon.setText(String.valueOf(aset.getJumlahPohon()));
                     inpHGU.setText(String.valueOf(aset.getHgu()));

@@ -129,6 +129,7 @@ public class AsetOfflineAdapter extends RecyclerView.Adapter<AsetOfflineAdapter.
                         public void onClick(View view) {
                             AsetHelper asetHelper = AsetHelper.getInstance(context);
                             asetHelper.open();
+                            deleteFotoOffline(aset);
                             asetHelper.deleteById(String.valueOf(aset.getAsetId()));
                             context.startActivity(new Intent(context,LonglistAsetActivity.class));
                             asetHelper.close();
@@ -237,6 +238,32 @@ public class AsetOfflineAdapter extends RecyclerView.Adapter<AsetOfflineAdapter.
                 bgCardView = v.findViewById(R.id.bgCardView);
             }
         }
+
+    public void deleteFotoOffline(Aset aset) {
+        if (aset.getFotoAset1() != null){
+            File img1 = new File("file://"+aset.getFotoAset1());
+            img1.delete();
+        }
+
+        if (aset.getFotoAset2() != null){
+            File img2 = new File("file://"+aset.getFotoAset2());
+            img2.delete();
+        }
+
+        if (aset.getFotoAset3() != null) {
+            File img3 = new File("file://"+aset.getFotoAset3());
+            img3.delete();
+        }
+        if (aset.getFotoAset4() != null) {
+            File img4 = new File("file://"+aset.getFotoAset4());
+            img4.delete();
+        }
+        if (aset.getFotoAset5() != null) {
+            File img5 = new File("file://"+aset.getFotoAset5());
+            img5.delete();
+        }
+
+    }
 
 
     void showDialogKirim(Aset aset) {
@@ -442,14 +469,15 @@ public class AsetOfflineAdapter extends RecyclerView.Adapter<AsetOfflineAdapter.
                         if (response.isSuccessful() && response.body() != null){
                             AsetHelper asetHelper = AsetHelper.getInstance(context);
                             asetHelper.open();
-                            asetHelper.deleteById(String.valueOf(response.body().getData().getAsetId()));
+                            asetHelper.deleteById(String.valueOf(aset.getAsetId()));
                             asetHelper.close();
                             Toast.makeText(context,"Terkirim",Toast.LENGTH_SHORT).show();
                             return;
                         }else {
                             //cek image apakah sudah terfoto semua atau belum
                             //get response body data,if (url img 1-4 = adaa) then bisa kirim, else
-                            Toast.makeText(context.getApplicationContext(), response.code(), Toast.LENGTH_SHORT).show();
+//                            Toast.makeText(context.getApplicationContext(), response.code(), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(context,"Tidak ada Koneksi Internet",Toast.LENGTH_LONG).show();
                             return;
                         }
 

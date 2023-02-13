@@ -894,8 +894,8 @@ public class DetailAsetActivity extends AppCompatActivity {
 //                url5 = AsemApp.BASE_URL_ASSET+aset.getFotoAset5();
 //            }
 
-            urlfotoasetqr = AsemApp.BASE_URL_ASSET+"/storage/app/public/aset/"+aset.getFotoAsetQr();
-            urlfotoasetqr2 = AsemApp.BASE_URL_ASSET+"/storage/app/public/aset/"+aset.getFotoAsetQr2();
+            urlfotoasetqr = AsemApp.BASE_URL_ASSET+"/storage/app/public/qrcode-foto/"+aset.getFotoAsetQr();
+            urlfotoasetqr2 = AsemApp.BASE_URL_ASSET+"/storage/app/public/qrcode-foto/"+aset.getFotoAsetQr2();
 
             if (aset.getFotoAset1() == null ){
                 map1.setEnabled(false);
