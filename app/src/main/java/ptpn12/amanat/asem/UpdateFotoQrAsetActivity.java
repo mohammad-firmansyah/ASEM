@@ -1158,14 +1158,14 @@ public class UpdateFotoQrAsetActivity extends AppCompatActivity {
                              }
 
                              if (aset.getFotoAsetQr()!=null ){
-                                 String url =  AsemApp.BASE_URL_ASSET + aset.getFotoAsetQr();
+                                 String url =  AsemApp.BASE_URL_ASSET+"/storage/app/public/qrcode-foto/"+aset.getFotoAsetQr();
                                  Log.d("amanat-url",url);
                                  fotoasetqr.getLayoutParams().width = 300;
                                  fotoasetqr.getLayoutParams().height = 300;
                                  Picasso.get().load(url).resize(300,300).centerCrop().into(fotoasetqr);
                              }
                              if (aset.getFotoAsetQr2()!=null ){
-                                 String url =  AsemApp.BASE_URL_ASSET + aset.getFotoAsetQr2();
+                                 String url =  AsemApp.BASE_URL_ASSET+"/storage/app/public/qrcode-foto/"+aset.getFotoAsetQr2();
                                  Log.d("amanat-url",url);
                                  fotoasetqr2.getLayoutParams().width = 300;
                                  fotoasetqr2.getLayoutParams().height = 300;

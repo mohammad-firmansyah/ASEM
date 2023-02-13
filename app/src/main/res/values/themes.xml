@@ -13,6 +13,13 @@
         <!-- Status bar color. -->
         <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
+
+        <!-- Active thumb color & Active track color(30% transparency) -->
+        <item name="colorControlActivated">@color/MediumBlue</item>
+        <!-- Inactive thumb color -->
+        <item name="colorSwitchThumbNormal">@color/white</item>
+        <!-- Inactive track color(30% transparency) -->
+        <item name="android:colorForeground">@color/grey</item>
     </style>
 
     <style name="Theme.ASEM.NoActionBar">

@@ -27,11 +27,14 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.AbsListView;
 import android.widget.Button;
 import android.widget.CompoundButton;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -58,6 +61,7 @@ import ptpn12.amanat.asem.offline.DatabaseHelper;
 import ptpn12.amanat.asem.offline.MappingHelper;
 import ptpn12.amanat.asem.offline.model.Aset;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
@@ -399,6 +403,7 @@ public class LonglistAsetActivity extends AppCompatActivity  { //implements Bott
         btnFilter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+//                filterSheet();
                 Toast.makeText(LonglistAsetActivity.this, "Filter Belum Tersedia", Toast.LENGTH_SHORT).show();
             }
         });
@@ -446,6 +451,29 @@ public class LonglistAsetActivity extends AppCompatActivity  { //implements Bott
 
 
 //        initScrollListener();
+    }
+
+    private void filterSheet() {
+
+//        BottomSheetDialog sheetDialog = new BottomSheetDialog(this);
+        final BottomSheetDialog sheetDialog = new BottomSheetDialog(this,R.style.BottomSheetDialog);
+        sheetDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        sheetDialog.setContentView(R.layout.sheet_filter);
+
+        TextView tvUnit = findViewById(R.id.tvUnit);
+        Spinner spinnerUnit = findViewById(R.id.spinnerUnit);
+        Spinner spinnerJenisReport = findViewById(R.id.spinnerReport);
+        Spinner spinnerTipeAset = findViewById(R.id.inpTipeAset);
+        Spinner spinnerJenisAset = findViewById(R.id.inpJenisAset);
+        Spinner spinnerAsetKondisi = findViewById(R.id.inpKndsAset);
+        Spinner spinnerKodeAset = findViewById(R.id.inpKodeAset);
+        EditText inpTglInput1 = findViewById(R.id.inpTglInput);
+        EditText inpTglInput2 = findViewById(R.id.inpTglInput2);
+
+        sheetDialog.show();
+        sheetDialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.WRAP_CONTENT);
+        sheetDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
     }
 
     private void getAllAset(){
@@ -673,7 +701,7 @@ public void getAllSpinnerData(){
             }
 
             dialog.dismiss();
-            Toast.makeText(getApplicationContext(),"sikronasi data sukses",Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(),"Sinkron data sukses",Toast.LENGTH_SHORT).show();
 
 
             return;

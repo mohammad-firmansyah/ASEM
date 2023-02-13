@@ -636,8 +636,22 @@ public class ReportActivity extends AppCompatActivity {
 
             int selectedId = radioGroup.getCheckedRadioButtonId();
             RadioButton radioButton = (RadioButton) findViewById(selectedId);
+            sharedPreferences = ReportActivity.this.getSharedPreferences(PREF_LOGIN, MODE_PRIVATE);
 
-            urlReportv3 = AsemApp.BASE_URL +  "report3?tipe_aset=" + String.valueOf(spinnerTipeAset.getSelectedItemId()) + "?jenis_aset=" + String.valueOf(spinnerJenisAset.getSelectedItemId()) + "?kondisi_aset=" + String.valueOf(spinnerAsetKondisi.getSelectedItemId()) + "?kode_aset=" + String.valueOf(spinnerKodeAset.getSelectedItemId()) + "?tgl_input1=" +String.valueOf(inpTglInput1.getText()) + "?tgl_input2=" + String.valueOf(inpTglInput2.getText()) + "?jenis_report=" + spinnerJenisReport.getSelectedItem() + "?qrcode=" + radioButton.getText().toString();
+            urlReportv3 = AsemApp.BASE_URL + "report3?tipe_aset=" + String.valueOf(spinnerTipeAset.getSelectedItemId()) +
+                    "&jenis_aset=" + String.valueOf(spinnerJenisAset.getSelectedItemId()) +
+                    "&kondisi_aset=" + String.valueOf(spinnerAsetKondisi.getSelectedItemId()) +
+                    "&kode_aset=" + String.valueOf(spinnerKodeAset.getSelectedItemId()) +
+                    "&hak_akses_id=" + String.valueOf(sharedPreferences.getString("hak_akses_id", "-")) +
+                    "&unit=" + String.valueOf(sharedPreferences.getString("unit_id", "-")) +
+                    "&sub_unit=" + String.valueOf(sharedPreferences.getString("sub_unit_id","-")) +
+                    "&afdeling=" + String.valueOf(sharedPreferences.getString("afdeling_id","-")) +
+                    "&tgl_input1=" +String.valueOf(inpTglInput1.getText()) +
+                    "&tgl_input2=" + String.valueOf(inpTglInput2.getText()) +
+                    "&jenis_report=" + spinnerJenisReport.getSelectedItem() +
+                    "&qrcode=" + radioButton.getText().toString();
+
+//            urlReportv3 = AsemApp.BASE_URL + Uri.encode(query); untuk encode url by android
 
             RequestBody requestTipeAset = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(spinnerIdTipeAsset));
             RequestBody requestJenisAset = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(spinnerIdJenisAset));
