@@ -2,12 +2,16 @@ package ptpn12.amanat.asem;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 
+import android.Manifest;
+import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.DownloadManager;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
@@ -64,6 +68,15 @@ import retrofit2.Response;
 public class ReportActivity extends AppCompatActivity {
     DatePickerDialog.OnDateSetListener date;
     DatePickerDialog.OnDateSetListener date2;
+
+    private static final String[] PERMISSIONS_LOCATION_AND_STORAGE = {
+            Manifest.permission.ACCESS_COARSE_LOCATION,
+            Manifest.permission.ACCESS_FINE_LOCATION,
+            Manifest.permission.READ_EXTERNAL_STORAGE,
+            Manifest.permission.WRITE_EXTERNAL_STORAGE
+    };
+    private static final int LOCATION_PERMISSION_AND_STORAGE = 33;
+
     Integer unit_id = 0;
     ListView listView;
     DataAllSpinner allSpinner;
@@ -155,7 +168,9 @@ public class ReportActivity extends AppCompatActivity {
 
 
 
-        getAllSpinnerData();
+//        getAllSpinnerData();
+        getSpinnerData();
+        verifyStorageAndLocationPermissions(this);
         initCalender();
         initCalender2();
 
@@ -285,6 +300,21 @@ public class ReportActivity extends AppCompatActivity {
             }
         });
     }
+
+    public void verifyStorageAndLocationPermissions(Activity activity) {
+        // Check if we have write permission
+        int permission = ActivityCompat.checkSelfPermission(activity, Manifest.permission.WRITE_EXTERNAL_STORAGE);
+
+        if (permission != PackageManager.PERMISSION_GRANTED || !checkPermissions()) {
+            // We don't have permission so prompt the user
+            ActivityCompat.requestPermissions(
+                    activity,
+                    PERMISSIONS_LOCATION_AND_STORAGE,
+                    LOCATION_PERMISSION_AND_STORAGE
+            );
+        }
+    }
+
 
     private void getAsetKondisi(){
         Call<List<AsetKondisi>> call = asetInterface.getAsetKondisi();
@@ -587,10 +617,17 @@ public class ReportActivity extends AppCompatActivity {
     }
 
 
+    public boolean checkPermissions() {
+        return ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED
+                && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED;
+    }
+
     private void downloadReport(String url){
 
-//        DownloadManager.Request request = new DownloadManager.Request(Uri.parse(url));
-        String title = URLUtil.guessFileName(url,null,null);
+        Log.d("amanat20-url",url);
+
+        try {
+            String title = URLUtil.guessFileName(url,null,null);
 //        request.setTitle(title);
 //        request.setDescription("Downloading File Please Wait.....");
 //        String cookie = CookieManager.getInstance().getCookie(url);
@@ -604,14 +641,19 @@ public class ReportActivity extends AppCompatActivity {
 
 
 
-        DownloadManager.Request request = new DownloadManager.Request(Uri.parse(url));
-        request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS,title);
-        request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
-        request.allowScanningByMediaScanner();
-        DownloadManager downloadManager = (DownloadManager)getSystemService(DOWNLOAD_SERVICE);
-        downloadManager.enqueue(request);
+            DownloadManager.Request request = new DownloadManager.Request(Uri.parse(url));
+            request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS,title);
+            request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
+            request.allowScanningByMediaScanner();
+            DownloadManager downloadManager = (DownloadManager)getSystemService(DOWNLOAD_SERVICE);
+            downloadManager.enqueue(request);
 
-        Toast.makeText(this, "Download Dimulai" , Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Download Dimulai" , Toast.LENGTH_SHORT).show();
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
+//        DownloadManager.Request request = new DownloadManager.Request(Uri.parse(url));
+
 
     }
 
@@ -687,6 +729,7 @@ public class ReportActivity extends AppCompatActivity {
             } else if("Foto+QRcode".equals(radioButton.getText().toString())) {
                 Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(urlReportv3));
                 startActivity(browserIntent);
+                dialog.dismiss();
                 return;
             } else {
                 RequestBody requestQrCode = RequestBody.create(MediaType.parse("text/plain"), "false");
@@ -705,25 +748,19 @@ public class ReportActivity extends AppCompatActivity {
                 @Override
                 public void onResponse(Call<ReportModel> call, Response<ReportModel> response) {
                     if (response.isSuccessful() && response.body() != null){
-                        dialog.hide();
-                        Log.d("asetData",String.valueOf(response.body().getData()));
-                        if ("laporan.pdf".equals(String.valueOf(response.body().getData()))) {
-
-                            downloadReport(AsemApp.BASE_URL_ASSET + "/" + String.valueOf(response.body().getData()));
-
-                        } else {
-                            downloadReport(AsemApp.BASE_URL_ASSET+String.valueOf(response.body().getData()));
-                        }
+                        dialog.dismiss();
+                        downloadReport(AsemApp.BASE_URL_ASSET+"/"+response.body().getData());
                         return;
                     }
 
                     dialog.dismiss();
-
-
+                    Toast.makeText(getApplicationContext(),"error " + response.code(),Toast.LENGTH_LONG).show();
+                    return;
                 }
 
                 @Override
                 public void onFailure(Call<ReportModel> call, Throwable t) {
+
                     dialog.dismiss();
                     Toast.makeText(getApplicationContext(),"error " + t.getMessage(),Toast.LENGTH_LONG).show();
                 }
