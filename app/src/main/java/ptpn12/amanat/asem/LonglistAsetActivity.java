@@ -110,6 +110,7 @@ public class LonglistAsetActivity extends AppCompatActivity  { //implements Bott
     SharedPreferences.Editor editor;
     LinearLayout addDataOffline;
     TextView tvAddDataOffline;
+    TextView tvListDataOffline;
 
     ImageView wifiOFF;
     ImageView wifiON;
@@ -118,6 +119,7 @@ public class LonglistAsetActivity extends AppCompatActivity  { //implements Bott
     Button btnReport;
     Button btnFilter;
     FloatingActionButton fab;
+    LinearLayout layoutSwitchOFF;
 
     RecyclerView rcAset; //untuk aset utama
     RecyclerView rcAset2; // untuk search dan filter
@@ -166,6 +168,8 @@ public class LonglistAsetActivity extends AppCompatActivity  { //implements Bott
         srlonglist = findViewById(R.id.srlonglist);
         searchView = findViewById(R.id.svSearch);
         switch_offline = findViewById(R.id.switchoffline);
+        tvListDataOffline = findViewById(R.id.tvSwitchOffline);
+        layoutSwitchOFF = findViewById(R.id.switchoff);
         addDataOffline = findViewById(R.id.addDataOffline);
         tvAddDataOffline = findViewById(R.id.tvAddDataOffline);
         wifiOFF = findViewById(R.id.imgWifiOFF);
@@ -273,6 +277,11 @@ public class LonglistAsetActivity extends AppCompatActivity  { //implements Bott
 
 
 //        Boolean switchState = switch_offline.isChecked();
+        if (hak_akses_id.equals("7")){
+            layoutSwitchOFF.setVisibility(View.VISIBLE);
+        }else{
+            layoutSwitchOFF.setVisibility(View.GONE);
+        }
         switch_offline.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {

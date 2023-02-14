@@ -54,6 +54,7 @@ import ptpn12.amanat.asem.R;
 import ptpn12.amanat.asem.api.AsetInterface;
 import ptpn12.amanat.asem.api.model.Afdelling;
 import ptpn12.amanat.asem.api.model.AfdellingModel;
+import ptpn12.amanat.asem.api.model.AlatAngkut;
 import ptpn12.amanat.asem.api.model.AllSpinner;
 import ptpn12.amanat.asem.api.model.AsetJenis;
 import ptpn12.amanat.asem.api.model.AsetJenisModel;
@@ -121,6 +122,7 @@ public class UpdateFotoQrAsetActivity extends AppCompatActivity {
     Button map5;
     double longitudeValue = 0;
     double latitudeValue = 0;
+    List<String> listSpinnerAlatAngkut = new ArrayList<>();
     Map<Integer,Integer> mapKodeSpinner = new HashMap();
     Map<Integer,Integer> mapSpinnerkode = new HashMap();
     Map<Long, Integer> mapSap = new HashMap();
@@ -163,10 +165,13 @@ public class UpdateFotoQrAsetActivity extends AppCompatActivity {
     Spinner spinnerSubUnit;
     Spinner spinnerUnit;
     Spinner spinnerAfdeling;
+    Spinner spinnerAlatAngkut;
+    Spinner spinnerLuasSatuan;
 
     EditText inpTglInput;
     EditText inpNamaAset;
     TextView inpNoSAP;
+    TextView tvAlatAngkut;
     EditText inpLuasAset;
     EditText inpNilaiAsetSAP;
     EditText inpTglOleh;
@@ -498,6 +503,16 @@ public class UpdateFotoQrAsetActivity extends AppCompatActivity {
         tvPopHektarSaatIni = findViewById(R.id.popHektarIni);
         tvPopHektarStandar = findViewById(R.id.popHektarStd);
 
+        spinnerLuasSatuan = findViewById(R.id.inpLuasSatuan);
+        List<String> listSpinnerSatuan = new ArrayList<>();
+        listSpinnerSatuan.add("Ha");
+        listSpinnerSatuan.add("m2");
+        listSpinnerSatuan.add("Item");
+        ArrayAdapter<String> adapterLuasSatuan =new ArrayAdapter<>(UpdateFotoQrAsetActivity.this, android.R.layout.simple_list_item_1,listSpinnerSatuan);
+        spinnerLuasSatuan.setAdapter(adapterLuasSatuan);
+        spinnerAlatAngkut = findViewById(R.id.inpAlatAngkut);
+        tvAlatAngkut = findViewById(R.id.tvAlatAngkut);
+
         foto1rl = findViewById(R.id.foto1);
         foto2rl = findViewById(R.id.foto2);
         foto3rl = findViewById(R.id.foto3);
@@ -750,7 +765,14 @@ public class UpdateFotoQrAsetActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 spinnerIdKodeAset = String.valueOf(position+1);
-//                editVisibilityDynamic();
+
+                if (spinnerKodeAset.getSelectedItem().equals("ZA08/Alat Pengangkutan")){
+                    spinnerAlatAngkut.setVisibility(View.VISIBLE);
+                    tvAlatAngkut.setVisibility(View.VISIBLE);
+                } else {
+                    spinnerAlatAngkut.setVisibility(View.GONE);
+                    tvAlatAngkut.setVisibility(View.GONE);
+                }
 
             }
 
@@ -1045,6 +1067,18 @@ public class UpdateFotoQrAsetActivity extends AppCompatActivity {
             }
         });
     }
+
+    private Integer getAlatAngkut(String alatAngkut) {
+        Integer i = 0;
+        for (String a : listSpinnerAlatAngkut) {
+            if (alatAngkut.equals(a)){
+
+                return i;
+            }
+            i++;
+        }
+        return 0;
+    }
     private void setValueInput(){
         Call<AsetModel> call = asetInterface.getAset(id);
 
@@ -1074,6 +1108,21 @@ public class UpdateFotoQrAsetActivity extends AppCompatActivity {
                              urlBAST = aset.getFileBAST();
                              if (urlBAST != null ) {
                                  tvUploadBAST.setText(urlBAST.substring(0,10)+"...");
+                             }
+
+                             if(aset.getAlat_pengangkutan() != null){
+                                 spinnerAlatAngkut.setSelection(getAlatAngkut(aset.getAlat_pengangkutan()));
+                             }
+
+                             if (aset.getSatuan_luas() != null) {
+
+                                 if (aset.getSatuan_luas().equals("Ha")) {
+                                     spinnerLuasSatuan.setSelection(0);
+                                 } else if (aset.getSatuan_luas().equals("m2")) {
+                                     spinnerLuasSatuan.setSelection(1);
+                                 } else {
+                                     spinnerLuasSatuan.setSelection(2);
+                                 }
                              }
 
                              inpTglInput.setText(aset.getTglInput().split(" ")[0]);
@@ -1598,7 +1647,7 @@ public class UpdateFotoQrAsetActivity extends AppCompatActivity {
             tvPohon.setVisibility(View.GONE);
 //            inpKomoditi.setVisibility(View.VISIBLE);
 
-//            spinnerLuasSatuan.setVisibility(View.GONE);
+            spinnerLuasSatuan.setVisibility(View.GONE);
             inpNomorBAST.setVisibility(View.VISIBLE);
             tvBast.setVisibility(View.VISIBLE);
             tvBa.setVisibility(View.GONE);
@@ -1642,7 +1691,7 @@ public class UpdateFotoQrAsetActivity extends AppCompatActivity {
             listBtnMap.setVisibility(View.VISIBLE);
             inpJumlahPohon.setVisibility(View.GONE);
             tvPohon.setVisibility(View.GONE);
-//            spinnerLuasSatuan.setVisibility(View.GONE);
+            spinnerLuasSatuan.setVisibility(View.GONE);
 //            inpKomoditi.setVisibility(View.VISIBLE);
             inpNomorBAST.setVisibility(View.VISIBLE);
             tvBast.setVisibility(View.VISIBLE);
@@ -1687,7 +1736,7 @@ public class UpdateFotoQrAsetActivity extends AppCompatActivity {
             btnFile.setVisibility(View.VISIBLE);
             inpJumlahPohon.setVisibility(View.GONE);
 //            inpKomoditi.setVisibility(View.VISIBLE);
-//            spinnerLuasSatuan.setVisibility(View.GONE);
+            spinnerLuasSatuan.setVisibility(View.GONE);
             inpNomorBAST.setVisibility(View.VISIBLE);
             tvBast.setVisibility(View.VISIBLE);
             tvPohon.setVisibility(View.GONE);
@@ -1728,7 +1777,7 @@ public class UpdateFotoQrAsetActivity extends AppCompatActivity {
             inpNomorBAST.setVisibility(View.VISIBLE);
             tvBast.setVisibility(View.VISIBLE);
             tvPohon.setVisibility(View.VISIBLE);
-//            spinnerLuasSatuan.setVisibility(View.GONE);
+            spinnerLuasSatuan.setVisibility(View.GONE);
             inpBtnMap.setVisibility(View.GONE);
             tvBa.setVisibility(View.GONE);
             tvUploudBA.setVisibility(View.GONE);
@@ -1775,7 +1824,7 @@ public class UpdateFotoQrAsetActivity extends AppCompatActivity {
 
             tvPohon.setVisibility(View.VISIBLE);
 
-//            spinnerLuasSatuan.setVisibility(View.GONE);
+            spinnerLuasSatuan.setVisibility(View.GONE);
             inpNomorBAST.setVisibility(View.VISIBLE);
             tvBast.setVisibility(View.VISIBLE);
             inpBtnMap.setVisibility(View.GONE);
@@ -1812,7 +1861,7 @@ public class UpdateFotoQrAsetActivity extends AppCompatActivity {
             btnFile.setVisibility(View.VISIBLE);
             tvUploudBA.setVisibility(View.VISIBLE);
 //            inpKomoditi.setVisibility(View.VISIBLE);
-//            spinnerLuasSatuan.setVisibility(View.GONE);
+            spinnerLuasSatuan.setVisibility(View.GONE);
             inpNomorBAST.setVisibility(View.VISIBLE);
             tvBast.setVisibility(View.VISIBLE);
             tvPohon.setVisibility(View.GONE);
@@ -1852,7 +1901,7 @@ public class UpdateFotoQrAsetActivity extends AppCompatActivity {
             inpBtnMap.setVisibility(View.VISIBLE);
             inpNomorBAST.setVisibility(View.VISIBLE);
             tvBast.setVisibility(View.VISIBLE);
-//            spinnerLuasSatuan.setVisibility(View.VISIBLE);
+            spinnerLuasSatuan.setVisibility(View.VISIBLE);
             listBtnMap.setVisibility(View.GONE);
             inpJumlahPohon.setVisibility(View.GONE);
             tvPohon.setVisibility(View.GONE);
@@ -1900,7 +1949,7 @@ public class UpdateFotoQrAsetActivity extends AppCompatActivity {
             inpBtnMap.setVisibility(View.VISIBLE);
             inpNomorBAST.setVisibility(View.VISIBLE);
             tvBast.setVisibility(View.VISIBLE);
-//            spinnerLuasSatuan.setVisibility(View.VISIBLE);
+            spinnerLuasSatuan.setVisibility(View.VISIBLE);
             tvFoto.setVisibility(View.VISIBLE);
             scrollPartition.setVisibility(View.VISIBLE);
             btnFileBAST.setVisibility(View.GONE);
@@ -1933,7 +1982,7 @@ public class UpdateFotoQrAsetActivity extends AppCompatActivity {
             tvBa.setVisibility(View.VISIBLE);
             btnFile.setVisibility(View.VISIBLE);
             tvUploudBA.setVisibility(View.VISIBLE);
-//            spinnerLuasSatuan.setVisibility(View.VISIBLE);
+            spinnerLuasSatuan.setVisibility(View.VISIBLE);
             tvPohon.setVisibility(View.GONE);
             inpJumlahPohon.setVisibility(View.GONE);
             listBtnMap.setVisibility(View.GONE);
@@ -1977,7 +2026,7 @@ public class UpdateFotoQrAsetActivity extends AppCompatActivity {
             tvUploudBA.setVisibility(View.GONE);
             inpBtnMap.setVisibility(View.GONE);
             btnFile.setVisibility(View.GONE);
-//            spinnerLuasSatuan.setVisibility(View.GONE);
+            spinnerLuasSatuan.setVisibility(View.GONE);
             tvLuasTanaman.setVisibility(View.GONE);
             tvLuasNonTanaman.setVisibility(View.GONE);
             inpLuasAset.setVisibility(View.GONE);
@@ -2122,6 +2171,16 @@ public class UpdateFotoQrAsetActivity extends AppCompatActivity {
                 builder.addPart(partBASTFile);
             }
 
+            if (spinnerLuasSatuan.getSelectedItem() != null) {
+                RequestBody requestSatuan = RequestBody.create(MediaType.parse("text/plain"), spinnerLuasSatuan.getSelectedItem().toString().trim());
+                builder.addPart(MultipartBody.Part.createFormData("satuan_luas", null, requestSatuan));
+            }
+
+            if (spinnerKodeAset.getSelectedItem().equals("ZA08/-/Alat Pengangkutan")){
+                RequestBody requestAlatAngkut = RequestBody.create(MediaType.parse("text/plain"), spinnerAlatAngkut.getSelectedItem().toString().trim());
+                builder.addPart(MultipartBody.Part.createFormData("alat_angkut", null, requestAlatAngkut));
+            }
+
             if (img1 != null) {
                 builder.addPart(MultipartBody.Part.createFormData("foto_aset1", img1.getName(), RequestBody.create(MediaType.parse("image/*"), img1)));
                 builder.addPart(MultipartBody.Part.createFormData("geo_tag1",null,requestGeoTag1));
@@ -2261,6 +2320,7 @@ public class UpdateFotoQrAsetActivity extends AppCompatActivity {
             public void onResponse(Call<AllSpinner> call, Response<AllSpinner> response) {
                 if (!response.isSuccessful() && response.body().getData() == null) {
                     Toast.makeText(getApplicationContext(),response.code(),Toast.LENGTH_LONG).show();
+                    dialog.dismiss();
                     return;
                 }
 
@@ -2274,11 +2334,16 @@ public class UpdateFotoQrAsetActivity extends AppCompatActivity {
                 List<String> listSpinnerUnit = new ArrayList<>();
                 List<String> listSpinnerSubUnit = new ArrayList<>();
                 List<String> listSpinnerAfdeling = new ArrayList<>();
-
+                listSpinnerAlatAngkut = new ArrayList<>();
 
                 // get data tipe aset
                 for (AsetTipe at : dataAllSpinner.getAsetTipe()){
                     listSpinnerTipe.add(at.getAset_tipe_desc());
+                }
+
+                // get alat angkut
+                for (AlatAngkut at : dataAllSpinner.getAlatAngkut()){
+                    listSpinnerAlatAngkut.add(at.getAp_desc());
                 }
 
                 // get data jenis
@@ -2354,6 +2419,11 @@ public class UpdateFotoQrAsetActivity extends AppCompatActivity {
                 Integer unit_id = Integer.valueOf(sharedPreferences.getString("unit_id", "0"));
                 spinnerUnit.setSelection(aset.getUnitId()-1);
 
+                // set adapter alat angkut
+                ArrayAdapter<String> adapterAlatAngkut = new ArrayAdapter<String>(getApplicationContext(),
+                        android.R.layout.simple_spinner_item, listSpinnerAlatAngkut);
+                adapterKodeAset.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                spinnerAlatAngkut.setAdapter(adapterAlatAngkut);
 
                 // set adapter sub unit
                 ArrayAdapter<String> adapterSubUnit = new ArrayAdapter<String>(getApplicationContext(),

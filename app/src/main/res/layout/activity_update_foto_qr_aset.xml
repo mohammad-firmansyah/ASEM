@@ -165,6 +165,29 @@
                 android:layout_height="41dp"
                 android:background="@drawable/rounded_spinner"
                 android:spinnerMode="dropdown" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="ALAT PENGANGKUTAN :"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:id="@+id/tvAlatAngkut"
+                android:textColor="@color/main_grey"
+                android:layout_marginBottom="10dp"
+                android:visibility="gone"
+                />
+
+            <Spinner
+                android:id="@+id/inpAlatAngkut"
+                android:layout_width="match_parent"
+                android:layout_height="41dp"
+                android:background="@drawable/rounded_spinner"
+                android:spinnerMode="dropdown"
+                android:layout_marginBottom="10dp"
+                android:visibility="gone"
+                />
+
             <TextView
 
                 android:layout_width="match_parent"
