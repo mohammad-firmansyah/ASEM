@@ -1560,7 +1560,7 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity  implements 
         }
 
         if ("tanaman".equals(String.valueOf(spinnerJenisAset.getSelectedItem())) && "normal".equals(String.valueOf(spinnerAsetKondisi.getSelectedItem()))) {
-            listBtnMap.setVisibility(View.VISIBLE);
+            listBtnMap.setVisibility(View.GONE);
             inpJumlahPohon.setVisibility(View.GONE);
             tvPohon.setVisibility(View.GONE);
 //            inpKomoditi.setVisibility(View.VISIBLE);
@@ -1604,7 +1604,7 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity  implements 
         }
 
         else if ("tanaman".equals(String.valueOf(spinnerJenisAset.getSelectedItem()))  && "rusak".equals(String.valueOf(spinnerAsetKondisi.getSelectedItem())) ) {
-            listBtnMap.setVisibility(View.VISIBLE);
+            listBtnMap.setVisibility(View.GONE);
             inpJumlahPohon.setVisibility(View.GONE);
             tvBa.setVisibility(View.VISIBLE);
             tvPohon.setVisibility(View.GONE);
@@ -1686,7 +1686,7 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity  implements 
         }
 
         else if ("kayu".equals(String.valueOf(spinnerJenisAset.getSelectedItem()))  && "normal".equals(String.valueOf(spinnerAsetKondisi.getSelectedItem())) ) {
-            listBtnMap.setVisibility(View.VISIBLE);
+            listBtnMap.setVisibility(View.GONE);
             inpJumlahPohon.setVisibility(View.VISIBLE);
 //            inpKomoditi.setVisibility(View.VISIBLE);
             inpNomorBAST.setVisibility(View.VISIBLE);
@@ -1730,7 +1730,7 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity  implements 
         }
 
         else if ("kayu".equals(String.valueOf(spinnerJenisAset.getSelectedItem()))  && "rusak".equals(String.valueOf(spinnerAsetKondisi.getSelectedItem())) ) {
-            listBtnMap.setVisibility(View.VISIBLE);
+            listBtnMap.setVisibility(View.GONE);
             tvPohon.setVisibility(View.VISIBLE);
             inpJumlahPohon.setVisibility(View.VISIBLE);
             tvBa.setVisibility(View.VISIBLE);
