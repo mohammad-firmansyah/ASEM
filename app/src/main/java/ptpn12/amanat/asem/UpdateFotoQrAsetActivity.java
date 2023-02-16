@@ -2269,9 +2269,9 @@ public class UpdateFotoQrAsetActivity extends AppCompatActivity {
             if (a.getAsetJenis()-1 == spinnerJenisAset.getSelectedItemId()) {
                 Log.d("asetapix22",  "aset jenis dari spinner "+ String.valueOf(spinnerJenisAset.getSelectedItemId()));
 
-                if ((a.getAsetJenis()) == 1 ) {
+                if ((a.getAsetJenis()) == 2 ) {
                     aset_kode_temp = a.getAsetClass() + "/" + a.getAsetDesc();
-                } else if ((a.getAsetJenis()) == 2) {
+                } else if ((a.getAsetJenis()) == 1) {
                     aset_kode_temp = a.getAsetClass() + "/" + a.getAsetGroup() + "/" + a.getAsetDesc();
                 } else {
                     aset_kode_temp = a.getAsetClass() + "/" + a.getAsetGroup() + "/" + a.getAsetDesc();

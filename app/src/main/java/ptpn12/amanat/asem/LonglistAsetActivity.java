@@ -261,22 +261,7 @@ public class LonglistAsetActivity extends AppCompatActivity  { //implements Bott
         });
 
         //-------fungsi offline dibawah ini-------//
-//        dbTebu = new DatabaseTebu.DataTmaTebuOfflineDbHelper(this);
-//        datamandor = new ArrayList<>();
-//
-//        if (sharedPreferences.getString("jabatan","-").equals("MANDOR")){
-//            datamandor = dbTebu.readDataTmaTebu();
-//            adapterOffline = new AdapterLonglistOffline(LonglistTebu.this,datamandor);
-//        }
-//
-//        List<Data2> datas = response.body();
-//        Aset2Adapter adapter = new Aset2Adapter(datas,LonglistAsetActivity.this);
-//        rcAset.setAdapter(adapter);
 
-//        dbOffline = new DatabaseHelper(this);
-
-
-//        Boolean switchState = switch_offline.isChecked();
         if (hak_akses_id.equals("7")){
             layoutSwitchOFF.setVisibility(View.VISIBLE);
         }else{
