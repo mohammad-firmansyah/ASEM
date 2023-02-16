@@ -61,6 +61,7 @@ import okhttp3.RequestBody;
 import ptpn12.amanat.asem.api.model.Sap;
 import ptpn12.amanat.asem.api.model.SubUnit;
 import ptpn12.amanat.asem.api.model.Unit;
+import ptpn12.amanat.asem.api.model.UnitModel;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -479,12 +480,49 @@ public class ReportActivity extends AppCompatActivity {
         });
     }
 
+    private void getUnit(){
+        Call<UnitModel> call = asetInterface.getUnit();
+        call.enqueue(new Callback<UnitModel>() {
+            @Override
+            public void onResponse(Call<UnitModel> call, Response<UnitModel> response) {
+                if (!response.isSuccessful()){
+                    Toast.makeText(getApplicationContext(),String.valueOf(response.code()),Toast.LENGTH_LONG).show();
+                    return;
+                }
+
+                List<Unit> unit = response.body().getData();
+                List<String> listSpinner = new ArrayList<>();
+                listSpinner.add("Semua");
+
+
+                for ( Unit a : unit ){
+
+                    listSpinner.add(a.getUnit_desc());
+                }
+
+                ArrayAdapter<String> adapter = new ArrayAdapter<String>(getApplicationContext(),
+                        android.R.layout.simple_spinner_item, listSpinner);
+                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                spinnerUnit.setAdapter(adapter);
+            }
+
+            @Override
+            public void onFailure(Call<UnitModel> call, Throwable t) {
+                Toast.makeText(getApplicationContext(),t.getMessage(),Toast.LENGTH_LONG).show();
+                return;
+            }
+        });
+    }
+
+
 
     private void getSpinnerData(){
+        dialog.show();
         getAsetKondisi();
         getKodeAset();
         getTipeAset();
         getAsetJenis();
+        getUnit();
 
 //        set spinner jenis report
         List<String> listSpinner = new ArrayList<>();
@@ -496,6 +534,7 @@ public class ReportActivity extends AppCompatActivity {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerJenisReport.setAdapter(adapter);
 
+        dialog.dismiss();
     }
 
     public void getAllSpinnerData(){
