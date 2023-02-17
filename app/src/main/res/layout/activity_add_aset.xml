@@ -705,6 +705,10 @@
                 android:id="@+id/inpTglMasukAset"
                 android:layout_width="match_parent"
                 android:layout_height="41dp"
+                android:clickable="false"
+                android:cursorVisible="false"
+                android:focusable="false"
+                android:focusableInTouchMode="false"
                 android:background="@drawable/pickdate_background"
                 android:hint="Tanggal Perolehan"
                 android:paddingVertical="10dp" />

@@ -92,7 +92,7 @@ public class AsetOfflineAdapter extends RecyclerView.Adapter<AsetOfflineAdapter.
 
             sharedPreferences = context.getSharedPreferences(PREF_LOGIN, MODE_PRIVATE);
             Aset aset = listAset.get(position);
-            holder.tvTglInput.setText(aset.getTglInput());
+            holder.tvTglInput.setText(aset.getTglInput().split(" ")[0]);
             holder.tvNoSAP.setText(String.valueOf(aset.getNomorSap()));
             holder.tvAsetJenis.setText(String.valueOf(aset.getAsetJenis()));
             holder.tvAfdeling.setText(String.valueOf(aset.getAfdelingId()));
