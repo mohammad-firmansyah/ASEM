@@ -48,7 +48,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
-                        android:layout_weight="1"
+                        android:layout_weighsqt="1"
                         android:text="aset_name"
                         android:textColor="@color/black"></TextView>
                 </LinearLayout>
@@ -156,7 +156,6 @@
                         android:id="@+id/btnQR"
                         android:layout_width="25dp"
                         android:layout_height="25dp"
-                        android:layout_marginRight="7dp"
                         android:background="@drawable/ic_baseline_qr_code_2_24"
                         android:visibility="gone" />
 
@@ -164,7 +163,6 @@
                         android:id="@+id/btnQRijo"
                         android:layout_width="25dp"
                         android:layout_height="25dp"
-                        android:layout_marginRight="7dp"
                         android:background="@drawable/ic_baseline_qr_code_green_24"
                         android:visibility="gone" />
 
@@ -184,7 +182,7 @@
             <Button
                 android:id="@+id/btn_detail"
                 android:layout_width="0dp"
-                android:layout_height="40dp"
+                android:layout_height="43dp"
                 android:layout_marginLeft="5dp"
                 android:layout_weight=".25"
                 android:backgroundTint="@color/BlueDark"
@@ -195,9 +193,8 @@
             <Button
                 android:id="@+id/btn_edit"
                 android:layout_width="0dp"
-                android:layout_height="40dp"
+                android:layout_height="43dp"
                 android:layout_marginLeft="5dp"
-                android:layout_marginRight="5dp"
                 android:layout_toRightOf="@+id/btn_detail"
                 android:layout_weight=".25"
                 android:backgroundTint="@color/BlueDark"
@@ -208,10 +205,11 @@
             <TextView
                 android:id="@+id/status_posisi"
                 android:layout_width="0dp"
-                android:layout_height="30dp"
+                android:layout_height="33dp"
+                android:layout_marginLeft="5dp"
                 android:layout_marginRight="5dp"
                 android:layout_toRightOf="@+id/btn_edit"
-                android:layout_weight=".30"
+                android:layout_weight=".32"
                 android:background="@drawable/edit_text_spiner"
                 android:fontFamily="sans-serif-black"
                 android:gravity="center"
@@ -224,10 +222,9 @@
                 android:id="@+id/btn_kirim"
                 android:layout_width="0dp"
                 android:layout_height="40dp"
-                android:layout_marginEnd="5dp"
+                android:layout_marginRight="5dp"
                 android:layout_toRightOf="@+id/status_posisi"
                 android:layout_weight=".25"
-                android:autoSizeTextType="uniform"
                 android:backgroundTint="@color/yellow"
                 android:text="kirim"
                 android:textColor="@color/white"
