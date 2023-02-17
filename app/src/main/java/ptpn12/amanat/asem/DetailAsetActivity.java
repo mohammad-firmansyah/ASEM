@@ -3,6 +3,7 @@ package ptpn12.amanat.asem;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.DownloadManager;
@@ -815,6 +816,7 @@ public class DetailAsetActivity extends AppCompatActivity {
 
 
 
+    @SuppressLint("SetTextI18n")
     private void setValueInput(){
 
         try {

@@ -3,6 +3,7 @@ package ptpn12.amanat.asem;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.DownloadManager;
@@ -158,6 +159,7 @@ public class DetailAsetOfflineActivity extends AppCompatActivity {
 
     EditText inpSatuanLuas;
     EditText spinnerAlatAngkut;
+    EditText inpAlatAngkut;
     EditText inpTglInput;
     EditText inpNamaAset;
     EditText inpNoSAP;
@@ -272,8 +274,8 @@ public class DetailAsetOfflineActivity extends AppCompatActivity {
         spinnerUnit.setEnabled(false);
         tvKetReject = findViewById(R.id.tvKetReject);
         tvAlatAngkut = findViewById(R.id.tvAlatAngkut);
-        spinnerAlatAngkut = findViewById(R.id.inpAlatAngkut);
-        spinnerAlatAngkut.setEnabled(false);
+        inpAlatAngkut = findViewById(R.id.inpAlatAngkut);
+        inpAlatAngkut.setEnabled(false);
         inpSatuanLuas = findViewById(R.id.inpLuasSatuan);
         inpSatuanLuas.setEnabled(false);
         downloadBa = findViewById(R.id.inpDownloadBa);
@@ -427,12 +429,15 @@ public class DetailAsetOfflineActivity extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 spinnerIdKodeAset = String.valueOf(position+1);
 //                editVisibilityDynamic();
-                if (spinnerKodeAset.getSelectedItem().equals("ZA08/Alat Pengangkutan")){
-                    spinnerAlatAngkut.setVisibility(View.VISIBLE);
-                    tvAlatAngkut.setVisibility(View.VISIBLE);
-                } else {
-                    spinnerAlatAngkut.setVisibility(View.GONE);
-                    tvAlatAngkut.setVisibility(View.GONE);
+                try {
+                    if (spinnerKodeAset.getSelectedItem().equals("ZA08/-/Alat Pengangkutan")){
+                        inpAlatAngkut.setVisibility(View.VISIBLE);
+                        tvAlatAngkut.setVisibility(View.VISIBLE);
+                    } else {
+                        inpAlatAngkut.setVisibility(View.GONE);
+                        tvAlatAngkut.setVisibility(View.GONE);
+                    }
+                } catch (Exception e){
                 }
 
             }
@@ -689,6 +694,7 @@ public class DetailAsetOfflineActivity extends AppCompatActivity {
 
     }
 
+    @SuppressLint("SetTextI18n")
     private void setValueInput(){
         try {
 //        Call<AsetModel> call = asetInterface.getAset(id);
@@ -702,12 +708,12 @@ public class DetailAsetOfflineActivity extends AppCompatActivity {
             inpNamaAset.setText(aset.getAsetName());
             if (aset.getBeritaAcara() != null ) {
 
-                tvUploudBA.setText(aset.getBeritaAcara());
+                tvUploudBA.setText(aset.getBeritaAcara().substring(0,10)+"...");
 
             }
             if (aset.getFileBAST() != null ) {
 
-                tvUploadFileBAST.setText(aset.getFileBAST());
+                tvUploadFileBAST.setText(aset.getFileBAST().substring(0,10)+"...");
 
             }
 
@@ -799,10 +805,6 @@ public class DetailAsetOfflineActivity extends AppCompatActivity {
                     map3.setEnabled(true);
                 }
 
-
-                if (aset.getAlat_pengangkutan() != null ) {
-                    spinnerAlatAngkut.setText(aset.getAlat_pengangkutan());
-                }
                 if (aset.getFotoAset4() == null ){
                     map4.setEnabled(false);
                     foto4rl.setEnabled(false);
@@ -837,6 +839,12 @@ public class DetailAsetOfflineActivity extends AppCompatActivity {
                     inpSatuanLuas.setText(aset.getSatuan_luas());
                 }
 
+                if (aset.getAlat_pengangkutan() != null ) {
+                    if (!aset.getAlat_pengangkutan().equals("")) {
+                        inpAlatAngkut.setText(aset.getAlat_pengangkutan());
+                    }
+                }
+
 //                set selection spinners
                 spinnerTipeAset.setSelection(Integer.valueOf(aset.getAsetTipe()));
                 spinnerJenisAset.setSelection(Integer.valueOf(aset.getAsetJenis()));
@@ -852,6 +860,10 @@ public class DetailAsetOfflineActivity extends AppCompatActivity {
                         spinnerAfdeling.setSelection(mapAfdelingSpinner.get(Integer.parseInt(aset.getAfdelingId())-2));
                     }
 
+
+                    if (mapKodeSpinner.get(aset.getAsetKode()) != null) {
+                        spinnerKodeAset.setSelection(getSpinnerKodeAset(Integer.parseInt(aset.getAsetJenis()),Integer.parseInt(aset.getAsetKode())));
+                    }
                 } catch (Exception e){
                     e.printStackTrace();
                 }
@@ -951,8 +963,6 @@ public class DetailAsetOfflineActivity extends AppCompatActivity {
             inpPersenKondisi.setVisibility(View.GONE);
             tvPersenKondisi.setVisibility(View.GONE);
 
-            tvAlatAngkut.setVisibility(View.GONE);
-            spinnerAlatAngkut.setVisibility(View.GONE);
 
             inpSatuanLuas.setVisibility(View.GONE);
 
@@ -997,8 +1007,6 @@ public class DetailAsetOfflineActivity extends AppCompatActivity {
             inpPersenKondisi.setVisibility(View.GONE);
             tvPersenKondisi.setVisibility(View.GONE);
 
-            tvAlatAngkut.setVisibility(View.GONE);
-            spinnerAlatAngkut.setVisibility(View.GONE);
             inpSatuanLuas.setVisibility(View.GONE);
 
             foto5rl.setVisibility(View.VISIBLE);
@@ -1043,8 +1051,6 @@ public class DetailAsetOfflineActivity extends AppCompatActivity {
             tvPersenKondisi.setVisibility(View.GONE);
 
 
-            tvAlatAngkut.setVisibility(View.GONE);
-            spinnerAlatAngkut.setVisibility(View.GONE);
             inpSatuanLuas.setVisibility(View.GONE);
 
             foto5rl.setVisibility(View.VISIBLE);
@@ -1090,8 +1096,6 @@ public class DetailAsetOfflineActivity extends AppCompatActivity {
             tvPersenKondisi.setVisibility(View.GONE);
 
 
-            tvAlatAngkut.setVisibility(View.GONE);
-            spinnerAlatAngkut.setVisibility(View.GONE);
             inpSatuanLuas.setVisibility(View.GONE);
 
             foto5rl.setVisibility(View.GONE);
@@ -1138,8 +1142,6 @@ public class DetailAsetOfflineActivity extends AppCompatActivity {
             tvPersenKondisi.setVisibility(View.GONE);
 
 
-            tvAlatAngkut.setVisibility(View.GONE);
-            spinnerAlatAngkut.setVisibility(View.GONE);
             inpSatuanLuas.setVisibility(View.GONE);
 
             foto5rl.setVisibility(View.GONE);
@@ -1184,8 +1186,6 @@ public class DetailAsetOfflineActivity extends AppCompatActivity {
             tvPersenKondisi.setVisibility(View.GONE);
 
 
-            tvAlatAngkut.setVisibility(View.GONE);
-            spinnerAlatAngkut.setVisibility(View.GONE);
             inpSatuanLuas.setVisibility(View.GONE);
 
             foto5rl.setVisibility(View.GONE);
@@ -1230,8 +1230,6 @@ public class DetailAsetOfflineActivity extends AppCompatActivity {
             tvPersenKondisi.setVisibility(View.VISIBLE);
 
 
-            tvAlatAngkut.setVisibility(View.VISIBLE);
-            spinnerAlatAngkut.setVisibility(View.VISIBLE);
             inpSatuanLuas.setVisibility(View.VISIBLE);
 
             foto5rl.setVisibility(View.GONE);
@@ -1270,9 +1268,6 @@ public class DetailAsetOfflineActivity extends AppCompatActivity {
             inpPersenKondisi.setVisibility(View.VISIBLE);
             tvPersenKondisi.setVisibility(View.VISIBLE);
 
-
-            tvAlatAngkut.setVisibility(View.VISIBLE);
-            spinnerAlatAngkut.setVisibility(View.VISIBLE);
             inpSatuanLuas.setVisibility(View.VISIBLE);
 
             foto5rl.setVisibility(View.GONE);
@@ -1314,9 +1309,6 @@ public class DetailAsetOfflineActivity extends AppCompatActivity {
             inpPersenKondisi.setVisibility(View.VISIBLE);
             tvPersenKondisi.setVisibility(View.VISIBLE);
 
-
-            tvAlatAngkut.setVisibility(View.VISIBLE);
-            spinnerAlatAngkut.setVisibility(View.VISIBLE);
             inpSatuanLuas.setVisibility(View.VISIBLE);
 
             foto5rl.setVisibility(View.GONE);
@@ -1357,9 +1349,6 @@ public class DetailAsetOfflineActivity extends AppCompatActivity {
             inpSatuanLuas.setVisibility(View.GONE);
 
 
-            tvAlatAngkut.setVisibility(View.GONE);
-            spinnerAlatAngkut.setVisibility(View.GONE);
-
             foto5rl.setVisibility(View.GONE);
 
             tvPopTotalIni.setVisibility(View.GONE);
@@ -1371,8 +1360,6 @@ public class DetailAsetOfflineActivity extends AppCompatActivity {
             inpPopHektarIni.setVisibility(View.GONE);
             inpPopHektarStd.setVisibility(View.GONE);
 
-            spinnerAlatAngkut.setVisibility(View.GONE);
-            tvAlatAngkut.setVisibility(View.GONE);
         }
     }
 

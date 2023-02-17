@@ -766,18 +766,6 @@ public class AddAsetActivity extends AppCompatActivity {
                         }
                     });
 
-
-//                }
-
-
-
-
-
-
-
-
-
-
             }
         });
         foto1rl.setOnClickListener(new View.OnClickListener() {
@@ -2021,7 +2009,8 @@ public class AddAsetActivity extends AppCompatActivity {
                             if (response.code() >= 400 &&response.code() <  500 ) {
                                 dialog.dismiss();
                                 customDialogAddAset.dismiss();
-                                Toast.makeText(getApplicationContext(),"Nomor SAP sudah ada",Toast.LENGTH_LONG);
+                                Toast.makeText(getApplicationContext(),"Nomor SAP sudah ada",Toast.LENGTH_LONG).show();
+//                                Toast.makeText(getApplicationContext(),"error :" + response.message() + String.valueOf(response.code()),Toast.LENGTH_LONG).show();
                                 return;
                             }
                             dialog.dismiss();
@@ -2047,14 +2036,7 @@ public class AddAsetActivity extends AppCompatActivity {
                 dialog.dismiss();
                 Toast.makeText(getApplicationContext(), "error " + e.getMessage(), Toast.LENGTH_LONG).show();
                 e.printStackTrace();
-//            startActivity(new Intent(AddAsetActivity.this,LonglistAsetActivity.class));
             }
-
-
-//            if (ba_file != "isi.pdf"){
-//                RequestBody requestBaFile = RequestBody.create(MediaType.parse("multipart/form-file"), source);
-//                MultipartBody.Part partBaFile = MultipartBody.Part.createFormData("foto_tunggak", source.getName(), requestBaFile);
-//            }
 
         }
 
@@ -2176,7 +2158,7 @@ public class AddAsetActivity extends AppCompatActivity {
                     // set adapter alat angkut
                     ArrayAdapter<String> adapterAlatAngkut = new ArrayAdapter<String>(getApplicationContext(),
                             android.R.layout.simple_spinner_item, listSpinnerAlatAngkut);
-                    adapterKodeAset.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    adapterAlatAngkut.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                     spinnerAlatAngkut.setAdapter(adapterAlatAngkut);
 
                     // set adapter sap aset
