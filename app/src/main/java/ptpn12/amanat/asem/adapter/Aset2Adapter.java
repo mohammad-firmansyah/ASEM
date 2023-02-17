@@ -228,6 +228,7 @@ public class Aset2Adapter  extends RecyclerView.Adapter<Aset2Adapter.ViewHolder>
                 holder.btnEdit.setVisibility(View.VISIBLE);
                 holder.btnDetail.setVisibility(View.VISIBLE);
                 holder.btnKirim.setVisibility(View.GONE);
+                holder.btnHapus.setVisibility(View.GONE);
                 if (myPostData2.getFotoAsetQr() != null){
                     //tombol edit hilang, karna fotoasetqr sudah terisi
                     holder.btnEdit.setVisibility(View.GONE);
@@ -244,6 +245,7 @@ public class Aset2Adapter  extends RecyclerView.Adapter<Aset2Adapter.ViewHolder>
                 holder.btnDetail.setVisibility(View.VISIBLE);
                 holder.btnQR.setVisibility(View.GONE);
                 holder.btnQRijo.setVisibility(View.GONE);
+                holder.btnHapus.setVisibility(View.GONE);
             }
         } else if(hak_akses_id.equals("6")){ //asisten
             if(myPostData2.getStatusPosisiID()==2 ){ //if status posisi pending dan asisten
