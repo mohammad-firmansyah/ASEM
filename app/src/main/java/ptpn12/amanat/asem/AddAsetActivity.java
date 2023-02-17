@@ -1104,7 +1104,23 @@ public class AddAsetActivity extends AppCompatActivity {
             exif.setAttribute(ExifInterface.TAG_GPS_LONGITUDE, GpsConverter.convert(longitudeValue));
             exif.setAttribute(ExifInterface.TAG_GPS_LONGITUDE_REF, GpsConverter.latitudeRef(longitudeValue));
             exif.saveAttributes();
-            String url = "https://www.google.com/maps/search/?api=1&query="+String.valueOf(latitudeValue)+"%2C"+String.valueOf(longitudeValue);
+
+            String url = "";
+            if (latitudeValue != 0.0 || longitudeValue != 0.0){
+
+                url = "https://www.google.com/maps/search/?api=1&query="+String.valueOf(latitudeValue)+"%2C"+String.valueOf(longitudeValue);
+            } else {
+
+                getLastLocation(AddAsetActivity.this,getApplicationContext());
+                exif = new ExifInterface(fileImage.getAbsoluteFile().getAbsolutePath());
+                exif.setAttribute(ExifInterface.TAG_GPS_LATITUDE, GpsConverter.convert(latitudeValue));
+                exif.setAttribute(ExifInterface.TAG_GPS_LATITUDE_REF, GpsConverter.latitudeRef(latitudeValue));
+                exif.setAttribute(ExifInterface.TAG_GPS_LONGITUDE, GpsConverter.convert(longitudeValue));
+                exif.setAttribute(ExifInterface.TAG_GPS_LONGITUDE_REF, GpsConverter.latitudeRef(longitudeValue));
+                exif.saveAttributes();
+
+                url =  "https://www.google.com/maps/search/?api=1&query="+String.valueOf(latitudeValue)+"%2C"+String.valueOf(longitudeValue);
+            }
             if ("tanaman".equals(String.valueOf(spinnerJenisAset.getSelectedItem()))) {
                 if (list == 1) {
 
