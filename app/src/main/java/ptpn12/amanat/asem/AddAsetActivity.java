@@ -1814,6 +1814,16 @@ public class AddAsetActivity extends AppCompatActivity {
             return;
         }
 
+        if (spinnerJenisAset.getSelectedItemId() == 3){
+            if (inpJumlahPohon.getText().toString().equals("")) {
+                customDialogAddAset.dismiss();
+                dialog.dismiss();
+                inpJumlahPohon.setError("Jumlah Pohon harus diisi");
+                inpJumlahPohon.requestFocus();
+                return;
+            }
+        }
+
         if ("non tanaman".equals(String.valueOf(spinnerJenisAset.getSelectedItem()))){
             if ("normal".equals(String.valueOf(spinnerAsetKondisi.getSelectedItem()))){
                 if (img1 == null || img2 == null || img3 == null || img4 == null){
