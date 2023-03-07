@@ -484,9 +484,11 @@ public class UpdateAsetActivity extends AppCompatActivity {
         inpNoSAP = findViewById(R.id.inpNmrSAP);
         inpLuasAset = findViewById(R.id.inpLuasAset);
         inpNilaiAsetSAP = findViewById(R.id.inpNilaiAsetSAP);
+        inpNilaiAsetSAP.setEnabled(false);
         inpMasaPenyusutan = findViewById(R.id.inpMasaPenyusutan);
         inpNomorBAST = findViewById(R.id.inpNmrBAST);
         inpNilaiResidu = findViewById(R.id.inpNmrResidu);
+        inpNilaiResidu.setEnabled(false);
         inpKeterangan = findViewById(R.id.inpKeterangan);
         inpJumlahPohon = findViewById(R.id.inpJmlhPohon);
         inpPersenKondisi = findViewById(R.id.inpPersenKondisi);

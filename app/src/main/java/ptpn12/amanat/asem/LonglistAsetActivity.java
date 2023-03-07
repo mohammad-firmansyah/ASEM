@@ -10,10 +10,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
+import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.ContentValues;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.ColorStateList;
@@ -21,16 +22,16 @@ import android.database.Cursor;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.os.Handler;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
-import android.view.Window;
-import android.widget.AbsListView;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CompoundButton;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -49,7 +50,6 @@ import ptpn12.amanat.asem.api.model.AsetJenis;
 import ptpn12.amanat.asem.api.model.AsetKode2;
 import ptpn12.amanat.asem.api.model.AsetKondisi;
 import ptpn12.amanat.asem.api.model.AsetTipe;
-import ptpn12.amanat.asem.api.model.Data;
 import ptpn12.amanat.asem.api.model.Data2;
 import ptpn12.amanat.asem.api.model.DataAllSpinner;
 import ptpn12.amanat.asem.api.model.Sap;
@@ -61,16 +61,18 @@ import ptpn12.amanat.asem.offline.DatabaseHelper;
 import ptpn12.amanat.asem.offline.MappingHelper;
 import ptpn12.amanat.asem.offline.model.Aset;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import retrofit2.Call;
@@ -130,6 +132,23 @@ public class LonglistAsetActivity extends AppCompatActivity  { //implements Bott
 
     Integer user_id;
 
+    BottomSheetBehavior sheetBehavior;
+    BottomSheetDialog sheetDialog;
+    String date1;
+    DatePickerDialog datePickerDialog;
+    DatePickerDialog datePickerDialog2;
+    EditText inpTglInput;
+    EditText inpTglInput2;
+    Spinner spinnerTipeAset;
+
+    String spinnerIdTipeAset;
+    String spinnerIdJenisAset;
+    String spinnerIdAsetKondisi;
+    String spinnerIdKodeAset;
+
+    final Calendar myCalendar1= Calendar.getInstance();
+    final Calendar myCalendar2= Calendar.getInstance();
+
     private AsetInterface asetInterface;
     private Dialog dialog;
 
@@ -175,6 +194,8 @@ public class LonglistAsetActivity extends AppCompatActivity  { //implements Bott
         wifiOFF = findViewById(R.id.imgWifiOFF);
         wifiON = findViewById(R.id.imgWifiON);
         btnSync = findViewById(R.id.btnSync);
+//        inpTglInput1 = findViewById(R.id.inpTglInput);
+//        inpTglInput2 = findViewById(R.id.inpTglInput2);
 
         // globally
         TextView tvTitle = (TextView)findViewById(R.id.tvTitle);
@@ -394,14 +415,6 @@ public class LonglistAsetActivity extends AppCompatActivity  { //implements Bott
         btnReport = findViewById(R.id.btnReport);
         btnFilter = findViewById(R.id.btnFilter);
 
-        btnFilter.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-//                filterSheet();
-                Toast.makeText(LonglistAsetActivity.this, "Filter Belum Tersedia", Toast.LENGTH_SHORT).show();
-            }
-        });
-
         btnReport.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -443,32 +456,368 @@ public class LonglistAsetActivity extends AppCompatActivity  { //implements Bott
             }
         });
 
+        btnFilter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+//                filterSheet();
+                Toast.makeText(LonglistAsetActivity.this, "Filter Belum Tersedia", Toast.LENGTH_SHORT).show();
+
+//                startActivity(new Intent(LonglistAsetActivity.this,FilterActivity.class));
+            }
+        });
 
 //        initScrollListener();
     }
 
+
+    boolean isExpanded;
+
     private void filterSheet() {
 
-//        BottomSheetDialog sheetDialog = new BottomSheetDialog(this);
-        final BottomSheetDialog sheetDialog = new BottomSheetDialog(this,R.style.BottomSheetDialog);
-        sheetDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        sheetDialog.setContentView(R.layout.sheet_filter);
+        @SuppressLint("InflateParams")
+        View view = LayoutInflater.from(getApplicationContext())
+                .inflate(R.layout.sheet_filter,null);
+        sheetDialog = new BottomSheetDialog(this, R.style.BottomSheetDialog);
+
+        if (isExpanded) {
+            sheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+        } else {
+            sheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+        }
+        isExpanded = !isExpanded;
 
         TextView tvUnit = findViewById(R.id.tvUnit);
         Spinner spinnerUnit = findViewById(R.id.spinnerUnit);
-        Spinner spinnerJenisReport = findViewById(R.id.spinnerReport);
-        Spinner spinnerTipeAset = findViewById(R.id.inpTipeAset);
-        Spinner spinnerJenisAset = findViewById(R.id.inpJenisAset);
-        Spinner spinnerAsetKondisi = findViewById(R.id.inpKndsAset);
-        Spinner spinnerKodeAset = findViewById(R.id.inpKodeAset);
-        EditText inpTglInput1 = findViewById(R.id.inpTglInput);
-        EditText inpTglInput2 = findViewById(R.id.inpTglInput2);
+        Spinner spinnerTipeAset = view.findViewById(R.id.inpTipeAset);
+        Spinner spinnerJenisAset = view.findViewById(R.id.inpJenisAset);
+        Spinner spinnerAsetKondisi = view.findViewById(R.id.inpKndsAset);
+        Spinner spinnerKodeAset = view.findViewById(R.id.inpKodeAset);
+//        EditText tgl1 = view.findViewById(R.id.inpTglInput);
+        inpTglInput = view.findViewById(R.id.inpTglInput);
+//        inpTglInput2 = view.findViewById(R.id.inpTglInput2);
+        EditText tgl2 = view.findViewById(R.id.inpTglInput2);
+//        Button btnSubmit = view.findViewById(R.id.btnSubmit);
 
+
+        initCalender();
+        initCalender2(tgl2);
+
+//        initDatePicker1(tgl1);
+//        date1 = "";
+
+        getTipeAset(spinnerTipeAset);
+
+        spinnerTipeAset.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                spinnerIdTipeAset = String.valueOf(position);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+        spinnerJenisAset.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                spinnerIdJenisAset = String.valueOf(position);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+        spinnerKodeAset.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                spinnerIdKodeAset = String.valueOf(position);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+        spinnerAsetKondisi.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                spinnerIdAsetKondisi = String.valueOf(position);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+        view.findViewById(R.id.btnSubmit).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(LonglistAsetActivity.this, "p", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+
+//        sheetDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        sheetDialog.setContentView(R.layout.sheet_filter);
         sheetDialog.show();
-        sheetDialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.WRAP_CONTENT);
-        sheetDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-
+//        sheetDialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.WRAP_CONTENT);
+//        sheetDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
     }
+
+//    private void initDatePicker1(TextView tgl1){
+//        DatePickerDialog.OnDateSetListener dateSetListener = (view, year, month, day) -> {
+//            month = month+1;
+//            date1 = year+"-"+month+"-"+day;
+//            tgl1.setText(day+"-"+month+"-"+year);
+//        };
+//
+//        Calendar cal = Calendar.getInstance();
+//        int year = cal.get(Calendar.YEAR);
+//        int month = cal.get(Calendar.MONTH);
+//        int day = cal.get(Calendar.DAY_OF_MONTH);
+//
+//        int style = android.app.AlertDialog.THEME_HOLO_LIGHT;
+//
+//        datePickerDialog = new DatePickerDialog(LonglistAsetActivity.this, style, dateSetListener, year, month, day);
+//    }
+//    public void openDatePicker1(View view) {
+//        datePickerDialog.show();
+//    }
+
+
+    public void initCalender(){
+        String myFormat="yyyy-MM-dd";
+        SimpleDateFormat dateFormat=new SimpleDateFormat(myFormat, Locale.US);
+        DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
+
+            @Override
+            public void onDateSet(DatePicker view, int year, int month, int day) {
+                myCalendar1.set(Calendar.YEAR, year);
+                myCalendar1.set(Calendar.MONTH,month);
+                myCalendar1.set(Calendar.DAY_OF_MONTH,day);
+                inpTglInput.setText(dateFormat.format(myCalendar1.getTime()));
+            }
+        };
+
+        datePickerDialog = new DatePickerDialog(LonglistAsetActivity.this, date,
+                myCalendar1.get(Calendar.YEAR),
+                myCalendar1.get(Calendar.MONTH),
+                myCalendar1.get(Calendar.DAY_OF_MONTH));
+
+//        tgl1.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                new DatePickerDialog(getApplicationContext(),date,
+//                        myCalendar1.get(Calendar.YEAR),
+//                        myCalendar1.get(Calendar.MONTH),
+//                        myCalendar1.get(Calendar.DAY_OF_MONTH)).show();
+//            }
+//        });
+    }
+
+    public void openDatePicker1(View view) {
+        datePickerDialog.show();
+    }
+
+
+    private void updateLabel2(EditText tgl2){
+        String myFormat="yyyy-MM-dd";
+        SimpleDateFormat dateFormat=new SimpleDateFormat(myFormat, Locale.US);
+        tgl2.setText(dateFormat.format(myCalendar2.getTime()));
+    }
+    public void initCalender2(EditText tgl2){
+//        String myFormat="yyyy-MM-dd";
+//        SimpleDateFormat dateFormat=new SimpleDateFormat(myFormat, Locale.US);
+        DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
+
+            @Override
+            public void onDateSet(DatePicker view, int year, int month, int day) {
+                myCalendar2.set(Calendar.YEAR, year);
+                myCalendar2.set(Calendar.MONTH,month);
+                myCalendar2.set(Calendar.DAY_OF_MONTH,day);
+//                tgl2.setText(dateFormat.format(myCalendar2.getTime()));
+                updateLabel2(tgl2);
+            }
+        };
+
+        datePickerDialog2 = new DatePickerDialog(LonglistAsetActivity.this, date,
+                myCalendar2.get(Calendar.YEAR),
+                myCalendar2.get(Calendar.MONTH),
+                myCalendar2.get(Calendar.DAY_OF_MONTH));
+//        inpTglInput2.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                new DatePickerDialog(LonglistAsetActivity.this,date,
+//                        myCalendar2.get(Calendar.YEAR),
+//                        myCalendar2.get(Calendar.MONTH),
+//                        myCalendar2.get(Calendar.DAY_OF_MONTH)).show();
+//            }
+//        });
+//        DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
+//
+//            @Override
+//            public void onDateSet(DatePicker view, int year, int month, int day) {
+//                String myFormat="yyyy-MM-dd";
+//                SimpleDateFormat dateFormat=new SimpleDateFormat(myFormat, Locale.US);
+//                tgl2.setText(dateFormat.format(myCalendar2.getTime()));
+//            }
+//        };
+//        tgl2.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                new DatePickerDialog(getApplicationContext(),date,
+//                        myCalendar2.get(Calendar.YEAR),
+//                        myCalendar2.get(Calendar.MONTH),
+//                        myCalendar2.get(Calendar.DAY_OF_MONTH)).show();
+//            }
+//        });
+    }
+
+    public void openDatePicker2(View view) {
+        datePickerDialog2.show();
+    }
+
+    private void getTipeAset(Spinner spinner){
+        Call<List<AsetTipe>> call = asetInterface.getAsetTipe();
+        call.enqueue(new Callback<List<AsetTipe>>() {
+            @Override
+            public void onResponse(Call<List<AsetTipe>> call, Response<List<AsetTipe>> response) {
+                if (!response.isSuccessful()){
+                    Toast.makeText(getApplicationContext(),String.valueOf(response.code()),Toast.LENGTH_LONG).show();
+                    return;
+                }
+                List<String> listSpinner = new ArrayList<>();
+                listSpinner.add("Semua");
+
+                for (int i=0;i<response.body().size();i++){
+                    listSpinner.add(response.body().get(i).getAset_tipe_desc());
+                }
+                Log.d("asetapi", listSpinner.get(0));
+
+                // Set hasil result json ke dalam adapter spinner
+                ArrayAdapter<String> adapter = new ArrayAdapter<String>(LonglistAsetActivity.this,
+                        android.R.layout.simple_spinner_item, listSpinner);
+                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                spinner.setAdapter(adapter);
+            }
+
+            @Override
+            public void onFailure(Call<List<AsetTipe>> call, Throwable t) {
+                Toast.makeText(getApplicationContext(),t.getMessage(),Toast.LENGTH_LONG).show();
+            }
+        });
+    }
+
+//    private void getAllSpinnerDataFilter(){
+//        dialog.show();
+//        Call<AllSpinner> call = asetInterface.getAllSpinner();
+//        try {
+//
+//            call.enqueue(new Callback<AllSpinner>() {
+//                @Override
+//                public void onResponse(Call<AllSpinner> call, Response<AllSpinner> response) {
+//                    try {
+//
+//
+//                        if (!response.isSuccessful() && response.body().getData() == null) {
+//                            Toast.makeText(getApplicationContext(),response.code(),Toast.LENGTH_LONG).show();
+//                            dialog.dismiss();
+//                            return;
+//                        }
+//                        dialog.dismiss();
+//                        allSpinner = response.body().getData();
+//
+//                        DataAllSpinner dataAllSpinner = response.body().getData();
+//                        List<String> listSpinnerTipe = new ArrayList<>();
+//                        List<String> listSpinnerJenis = new ArrayList<>();
+//                        List<String> listSpinnerKondisiAset = new ArrayList<>();
+//                        List<String> listSpinnerKodeAset = new ArrayList<>();
+//                        List<String> listSpinnerUnit = new ArrayList<>();
+//
+//                        listSpinnerTipe.add("Semua");
+//                        listSpinnerJenis.add("Semua");
+//                        listSpinnerKondisiAset.add("Semua");
+//                        listSpinnerKodeAset.add("Semua");
+//                        listSpinnerUnit.add("Semua");
+//
+//                        // get data tipe aset
+//                        for (AsetTipe at : dataAllSpinner.getAsetTipe()){
+//                            listSpinnerTipe.add(at.getAset_tipe_desc());
+//                        }
+//
+//                        // get data jenis
+//                        for (AsetJenis at : dataAllSpinner.getAsetJenis()){
+//                            listSpinnerJenis.add(at.getAset_jenis_desc());
+//                        }
+//
+//                        // get kondisi aset
+//                        for (AsetKondisi at : dataAllSpinner.getAsetKondisi()){
+//                            listSpinnerKondisiAset.add(at.getAset_kondisi_desc());
+//                        }
+//
+//                        // get kode aset
+//                        asetKode2 = dataAllSpinner.getAsetKode();
+//
+//
+//                        // get unit
+//                        for (Unit at : dataAllSpinner.getUnit()){
+//                            listSpinnerUnit.add(at.getUnit_desc());
+//                        }
+//
+//
+//                        // set adapter tipe
+//                        ArrayAdapter<String> adapterTipe = new ArrayAdapter<String>(getApplicationContext(),
+//                                android.R.layout.simple_spinner_item, listSpinnerTipe);
+//                        adapterTipe.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+//                        spinnerTipeAset.setAdapter(adapterTipe);
+//
+//                        // set adapter jenis
+//                        ArrayAdapter<String> adapterJenis = new ArrayAdapter<String>(getApplicationContext(),
+//                                android.R.layout.simple_spinner_item, listSpinnerJenis);
+//                        adapterJenis.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+//                        spinnerJenisAset.setAdapter(adapterJenis);
+//
+//                        // set adapter kondisi aset
+//                        ArrayAdapter<String> adapterKondisiAset = new ArrayAdapter<String>(getApplicationContext(),
+//                                android.R.layout.simple_spinner_item, listSpinnerKondisiAset);
+//                        adapterKondisiAset.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+//                        spinnerAsetKondisi.setAdapter(adapterKondisiAset);
+//
+//                        // set adapter kode aset
+//                        ArrayAdapter<String> adapterKodeAset = new ArrayAdapter<String>(getApplicationContext(),
+//                                android.R.layout.simple_spinner_item, listSpinnerKodeAset);
+//                        adapterKodeAset.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+//                        spinnerKodeAset.setAdapter(adapterKodeAset);
+//
+//
+//                        // set adapter unit
+//                        ArrayAdapter<String> adapterUnit = new ArrayAdapter<String>(getApplicationContext(),
+//                                android.R.layout.simple_spinner_item, listSpinnerUnit);
+//                        adapterUnit.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+//                        spinnerUnit.setAdapter(adapterUnit);
+//
+//                    }catch(Exception e) {
+//                        e.printStackTrace();
+//                    }
+//                    dialog.dismiss();
+//                }
+//
+//                @Override
+//                public void onFailure(Call<AllSpinner> call, Throwable t) {
+//                    dialog.dismiss();
+//                    Toast.makeText(getApplicationContext(),t.getMessage(),Toast.LENGTH_LONG).show();
+//                    return;
+//                }
+//            });
+//        }
+//        catch (Exception e){
+//            e.printStackTrace();
+//        }
+//
+//    }
 
     private void getAllAset(){
         dialog.show();
@@ -516,7 +865,6 @@ public class LonglistAsetActivity extends AppCompatActivity  { //implements Bott
     }
 
     private void getDataApiSearch(@NotNull Call<List<Search>> call){
-//        call = asetInterface.searchAset();
         call.enqueue(new Callback<List<Search>>() {
                 @Override
                 public void onResponse(Call<List<Search>> call, Response<List<Search>> response) {
@@ -524,24 +872,17 @@ public class LonglistAsetActivity extends AppCompatActivity  { //implements Bott
                     if(!response.isSuccessful() && response.body() == null){
 //                    Toast.makeText(getApplicationContext(),String.valueOf(response.code()),Toast.LENGTH_SHORT).show();
                         Toast.makeText(getApplicationContext(), "Data Tidak Ditemukan", Toast.LENGTH_SHORT).show();
-//                        dialog.dismiss();
                         return;
                     }
                     List<Search> dataS = response.body();
                     SearchAsetAdapter adapter = new SearchAsetAdapter(dataS, LonglistAsetActivity.this);
                     rcAset2.setAdapter(adapter);
-//                    Log.d("ceksearch","bisa search :" +search);
-//                Toast.makeText(getApplicationContext(),"ini masuk kan", Toast.LENGTH_SHORT).show();
-//                    adapter.notifyDataSetChanged();
-//                    srlonglist.setRefreshing(false);
-//
-//                    dialog.dismiss();
+
                 }
             public void onFailure(Call<List<Search>> call, Throwable t) {
                 dialog.dismiss();
                 Toast.makeText(getApplicationContext(),"Error :"+t.getMessage(),Toast.LENGTH_LONG).show();
                 Log.d("search", "error message: "+t.getMessage());
-//                srlonglist.setRefreshing(false);
                 return;
             }
         });
