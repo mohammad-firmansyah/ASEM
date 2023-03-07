@@ -684,6 +684,10 @@ public void getAllSpinnerData(){
 //                asetHelper.deleteSap();
                 ContentValues values = new ContentValues();
                 values.put("sap_desc",at.getSap_desc());
+                values.put("sap_name",at.getSap_name());
+                values.put("unit_id",at.getUnit_id());
+                values.put("nilai_oleh",at.getNilai_oleh());
+                values.put("nilai_residu",at.getNilai_residu());
                 asetHelper.insertSap(values);
             }
 

@@ -107,7 +107,7 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity {
     private int position;
     ViewGroup vwBast;
     Aset aset;
-    List<Sap> sapAll;
+    List<Sap> sapAll = new ArrayList<>();
     private AsetHelper asetHelper;
     private AsetOfflineAdapter adapter;
     Integer afdeling_id = 0;
