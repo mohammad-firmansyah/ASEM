@@ -5,12 +5,32 @@ public class Sap {
     private String sap_desc;
     private String sap_name;
     private Integer unit_id;
+    private Long nilai_oleh;
+    private Long nilai_residu;
 
-    public Sap(Integer sap_id, String sap_desc) {
+    public Sap(Integer sap_id, String sap_desc, String sap_name, Integer unit_id, Long nilai_oleh, Long nilai_residu) {
         this.sap_id = sap_id;
         this.sap_desc = sap_desc;
-//        this.sap_name = sap_name;
-//        this.unit_id = unit_id;
+        this.sap_name = sap_name;
+        this.unit_id = unit_id;
+        this.nilai_oleh = nilai_oleh;
+        this.nilai_residu = nilai_residu;
+    }
+
+    public Long getNilai_oleh() {
+        return nilai_oleh;
+    }
+
+    public void setNilai_oleh(Long nilai_oleh) {
+        this.nilai_oleh = nilai_oleh;
+    }
+
+    public Long getNilai_residu() {
+        return nilai_residu;
+    }
+
+    public void setNilai_residu(Long nilai_residu) {
+        this.nilai_residu = nilai_residu;
     }
 
     public String getSap_name() {

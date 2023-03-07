@@ -103,6 +103,7 @@ import retrofit2.Response;
 public class AddAsetActivity extends AppCompatActivity {
     Button inpBtnMap;
     Button btnFile;
+    List<Sap> sap;
     Button btnFileBAST;
     Button btnSubmit;
     Button map1;
@@ -732,7 +733,7 @@ public class AddAsetActivity extends AppCompatActivity {
                 ArrayAdapter<String> adapterSap =new ArrayAdapter<>(AddAsetActivity.this, android.R.layout.simple_list_item_1,listSpinnerSap);
                 listView.setAdapter(adapterSap);
 
-                //                 Initialize array adapter
+                // Initialize array adapter
 
                 // set adapter
                 listView.setAdapter(adapterSap);
@@ -745,6 +746,7 @@ public class AddAsetActivity extends AppCompatActivity {
 
                         @Override
                         public void onTextChanged(CharSequence s, int start, int before, int count) {
+
                             adapterSap.getFilter().filter(s);
                         }
 
@@ -2124,6 +2126,7 @@ public class AddAsetActivity extends AppCompatActivity {
                     // get sap
                     for (Sap at : dataAllSpinner.getSap()){
                         mapSap.put(Long.parseLong(at.getSap_desc()),at.getSap_id());
+                        sap.add(at);
                         listSpinnerSap.add(at.getSap_desc());
                     }
 
@@ -2253,6 +2256,15 @@ public class AddAsetActivity extends AppCompatActivity {
 
     }
 
+    public String getIdOfAfdeling(String afdDesc) {
+        for(Sap at : sap){
+            if (at.getSap_desc().equals(afdDesc)){
+                return String.valueOf(at.getSap_id());
+            }
+        }
+
+        return "0";
+    }
 
 
     public void setAdapterAsetKode(){

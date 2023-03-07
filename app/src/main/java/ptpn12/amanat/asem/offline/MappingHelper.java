@@ -148,9 +148,11 @@ public class MappingHelper {
         while (sap.moveToNext()) {
             Integer sapId = sap.getInt(sap.getColumnIndexOrThrow(DatabaseContractSap.SapColumns.SAPID));
             String sapDesc = sap.getString(sap.getColumnIndexOrThrow(DatabaseContractSap.SapColumns.SAPDESC));
-//            String sapName = sap.getString(sap.getColumnIndexOrThrow(SapColumns.SAPNAME));
-//            Integer unitId = sap.getInt(sap.getColumnIndexOrThrow(SapColumns.UNITID));
-            listSap.add(new Sap(sapId,sapDesc));
+            String sapName = sap.getString(sap.getColumnIndexOrThrow(DatabaseContractSap.SapColumns.SAPNAME));
+            Integer unitId = sap.getInt(sap.getColumnIndexOrThrow(DatabaseContractSap.SapColumns.UNITID));
+            Long nilaiOleh = sap.getLong(sap.getColumnIndexOrThrow(DatabaseContractSap.SapColumns.NILAIOLEH));
+            Long nilaiResidu = sap.getLong(sap.getColumnIndexOrThrow(DatabaseContractSap.SapColumns.NILAIRESIDU));
+            listSap.add(new Sap(sapId,sapDesc,sapName,unitId,nilaiOleh,nilaiResidu));
         }
 
         while (alatAngkut.moveToNext()) {
