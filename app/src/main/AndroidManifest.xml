@@ -23,84 +23,87 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
-            android:name="ptpn12.amanat.asem.DetailAsetOfflineActivity"
+            android:name=".FilterActivity"
+            android:exported="false" />
+        <activity
+            android:name=".DetailAsetOfflineActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name="ptpn12.amanat.asem.AsetAddUpdateOfflineActivity"
+            android:name=".AsetAddUpdateOfflineActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name="ptpn12.amanat.asem.DetailImageActivity"
+            android:name=".DetailImageActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name="ptpn12.amanat.asem.UpdateFotoQrAsetActivity"
+            android:name=".UpdateFotoQrAsetActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name="ptpn12.amanat.asem.Home"
+            android:name=".Home"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name="ptpn12.amanat.asem.ProfilActivity"
+            android:name=".ProfilActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name="ptpn12.amanat.asem.ReportActivity"
+            android:name=".ReportActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name="ptpn12.amanat.asem.AddAsetActivity"
+            android:name=".AddAsetActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name="ptpn12.amanat.asem.UpdateAsetActivity"
+            android:name=".UpdateAsetActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name="ptpn12.amanat.asem.DetailAsetActivity"
+            android:name=".DetailAsetActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name="ptpn12.amanat.asem.LonglistAsetActivity"
+            android:name=".LonglistAsetActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="false" />
         </activity>
         <activity
-            android:name="ptpn12.amanat.asem.SplashScreen"
+            android:name=".SplashScreen"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -113,7 +116,7 @@
                 android:value="false" />
         </activity>
         <activity
-            android:name="ptpn12.amanat.asem.MainActivity"
+            android:name=".MainActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"

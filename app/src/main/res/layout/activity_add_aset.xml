@@ -683,7 +683,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="41dp"
                 android:layout_marginBottom="10dp"
-                android:background="@drawable/edit_text_spiner"
+                android:background="@drawable/tgl_spinner"
                 android:inputType="numberDecimal"
                 android:lines="1"
                 android:paddingVertical="10dp" />
@@ -826,7 +826,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="41dp"
                 android:layout_marginBottom="10dp"
-                android:background="@drawable/edit_text_spiner"
+                android:background="@drawable/tgl_spinner"
                 android:inputType="numberDecimal"
                 android:lines="1"
                 android:paddingVertical="10dp" />

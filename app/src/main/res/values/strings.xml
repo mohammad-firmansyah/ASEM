@@ -15,7 +15,7 @@
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
     <string name="baseUrl">http://202.148.9.226:7710/mnj_aset_production/public/api/</string>
 
-<!--    class name -->
+    <!--    class name -->
     <string name="profil">PROFIL</string>
     <string name="beranda">BERANDA</string>
     <string name="listData">LIST DATA</string>

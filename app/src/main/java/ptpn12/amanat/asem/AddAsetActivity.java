@@ -103,7 +103,7 @@ import retrofit2.Response;
 public class AddAsetActivity extends AppCompatActivity {
     Button inpBtnMap;
     Button btnFile;
-    List<Sap> sap;
+    List<Sap> sapAll = new ArrayList<>();
     Button btnFileBAST;
     Button btnSubmit;
     Button map1;
@@ -554,9 +554,11 @@ public class AddAsetActivity extends AppCompatActivity {
         inpNoSAP = findViewById(R.id.inpNmrSAP);
         inpLuasAset = findViewById(R.id.inpLuasAset);
         inpNilaiAsetSAP = findViewById(R.id.inpNilaiAsetSAP);
+        inpNilaiAsetSAP.setEnabled(false);
         inpMasaPenyusutan = findViewById(R.id.inpMasaPenyusutan);
         inpNomorBAST = findViewById(R.id.inpNmrBAST);
         inpNilaiResidu = findViewById(R.id.inpNmrResidu);
+        inpNilaiResidu.setEnabled(false);
         inpKeterangan = findViewById(R.id.inpKeterangan);
         inpJumlahPohon = findViewById(R.id.inpJmlhPohon);
         inpPersenKondisi = findViewById(R.id.inpPersenKondisi);
@@ -762,6 +764,7 @@ public class AddAsetActivity extends AppCompatActivity {
                             // when item selected from list
                             // set selected item on textView
                             inpNoSAP.setText(adapterSap.getItem(position));
+                            setNilaiAsetSAP(adapterSap.getItem(position));
 
                             // Dismiss dialog
                             spinnerNoSap.dismiss();
@@ -1786,12 +1789,6 @@ public class AddAsetActivity extends AppCompatActivity {
             }
         }
 
-        if (inpNilaiAsetSAP.getText().toString().equals("")) {
-            inpNilaiAsetSAP.setError("Nilai Perolehan Aset harus diisi");
-            inpNilaiAsetSAP.requestFocus();
-            dialog.dismiss();
-            return;
-        }
 
         if (inpTglOleh.getText().toString().equals("")) {
             inpTglOleh.setError("Tanggal Perolehan harus diisi");
@@ -1808,13 +1805,6 @@ public class AddAsetActivity extends AppCompatActivity {
             return;
         }
 
-        if (inpNilaiResidu.getText().toString().equals("")) {
-            customDialogAddAset.dismiss();
-            dialog.dismiss();
-            inpNilaiResidu.setError("Nilai Residu harus diisi");
-            inpNilaiResidu.requestFocus();
-            return;
-        }
 
         if (spinnerJenisAset.getSelectedItemId() == 3){
             if (inpJumlahPohon.getText().toString().equals("")) {
@@ -2126,7 +2116,7 @@ public class AddAsetActivity extends AppCompatActivity {
                     // get sap
                     for (Sap at : dataAllSpinner.getSap()){
                         mapSap.put(Long.parseLong(at.getSap_desc()),at.getSap_id());
-                        sap.add(at);
+                        sapAll.add(at);
                         listSpinnerSap.add(at.getSap_desc());
                     }
 
@@ -2257,7 +2247,7 @@ public class AddAsetActivity extends AppCompatActivity {
     }
 
     public String getIdOfAfdeling(String afdDesc) {
-        for(Sap at : sap){
+        for(Sap at : sapAll){
             if (at.getSap_desc().equals(afdDesc)){
                 return String.valueOf(at.getSap_id());
             }
@@ -2328,5 +2318,21 @@ public class AddAsetActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
+    }
+
+    private void setNilaiAsetSAP (String sap){
+        for (Sap it : sapAll) {
+
+            Log.d("sap",sap);
+            Log.d("sap2",it.getSap_id()+ "=" + it.getNilai_oleh());
+
+            if (it.getSap_desc().equals(sap)){
+
+                Log.d("sapdes", String.valueOf(it.getNilai_oleh()));
+
+                inpNilaiAsetSAP.setText(String.valueOf((it.getNilai_oleh() != null) ? it.getNilai_oleh() : 0 ));
+                inpNilaiResidu.setText(String.valueOf((it.getNilai_residu() != null) ? it.getNilai_residu() : 0 ));
+            }
+        }
     }
 }
