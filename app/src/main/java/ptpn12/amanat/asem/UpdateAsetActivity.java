@@ -196,10 +196,10 @@ public class UpdateAsetActivity extends AppCompatActivity {
     EditText inpPopTotalStdMaster;
     EditText inpPopPerHA;
     EditText inpPresentasePopPerHA;
-    TextView tvPopTotalSaatIni;
-    TextView tvPopTotalStandar;
-    TextView tvPopHektarSaatIni;
-    TextView tvPopHektarStandar;
+    TextView tvPopTotalPohonSaatIni;
+    TextView tvPopTotalStdMaster;
+    TextView tvPopPerHA;
+    TextView tvPresentasePopPerHA;
 
     ViewGroup foto1rl;
     ViewGroup foto2rl;
@@ -501,11 +501,13 @@ public class UpdateAsetActivity extends AppCompatActivity {
         inpPopTotalPohonSaatIni = findViewById(R.id.inpPopTotalIni);
         inpPopTotalStdMaster = findViewById(R.id.inpPopTotalStd);
         inpPopPerHA = findViewById(R.id.inpPopHektarIni);
+        inpPopPerHA.setEnabled(false);
         inpPresentasePopPerHA = findViewById(R.id.inpPopHektarStd);
-        tvPopTotalSaatIni = findViewById(R.id.popTotalIni);
-        tvPopTotalStandar = findViewById(R.id.popTotalStd);
-        tvPopHektarSaatIni = findViewById(R.id.popHektarIni);
-        tvPopHektarStandar = findViewById(R.id.popHektarStd);
+        inpPresentasePopPerHA.setEnabled(false);
+        tvPopTotalPohonSaatIni = findViewById(R.id.popTotalIni);
+        tvPopTotalStdMaster = findViewById(R.id.popTotalStd);
+        tvPopPerHA = findViewById(R.id.popHektarIni);
+        tvPresentasePopPerHA = findViewById(R.id.popHektarStd);
 
         spinnerLuasSatuan = findViewById(R.id.inpLuasSatuan);
         List<String> listSpinnerSatuan = new ArrayList<>();
@@ -1439,10 +1441,10 @@ public class UpdateAsetActivity extends AppCompatActivity {
             foto5rl.setVisibility(View.VISIBLE);
             map5.setVisibility(View.VISIBLE);
 
-            tvPopTotalSaatIni.setVisibility(View.VISIBLE);
-            tvPopTotalStandar.setVisibility(View.VISIBLE);
-            tvPopHektarSaatIni.setVisibility(View.VISIBLE);
-            tvPopHektarStandar.setVisibility(View.VISIBLE);
+            tvPopTotalPohonSaatIni.setVisibility(View.VISIBLE);
+            tvPopTotalStdMaster.setVisibility(View.VISIBLE);
+            tvPopPerHA.setVisibility(View.VISIBLE);
+            tvPresentasePopPerHA.setVisibility(View.VISIBLE);
             inpPopTotalPohonSaatIni.setVisibility(View.VISIBLE);
             inpPopTotalStdMaster.setVisibility(View.VISIBLE);
             inpPopPerHA.setVisibility(View.VISIBLE);
@@ -1483,10 +1485,10 @@ public class UpdateAsetActivity extends AppCompatActivity {
             foto5rl.setVisibility(View.VISIBLE);
             map5.setVisibility(View.VISIBLE);
 
-            tvPopTotalSaatIni.setVisibility(View.VISIBLE);
-            tvPopTotalStandar.setVisibility(View.VISIBLE);
-            tvPopHektarSaatIni.setVisibility(View.VISIBLE);
-            tvPopHektarStandar.setVisibility(View.VISIBLE);
+            tvPopTotalPohonSaatIni.setVisibility(View.VISIBLE);
+            tvPopTotalStdMaster.setVisibility(View.VISIBLE);
+            tvPopPerHA.setVisibility(View.VISIBLE);
+            tvPresentasePopPerHA.setVisibility(View.VISIBLE);
             inpPopTotalPohonSaatIni.setVisibility(View.VISIBLE);
             inpPopTotalStdMaster.setVisibility(View.VISIBLE);
             inpPopPerHA.setVisibility(View.VISIBLE);
@@ -1527,10 +1529,10 @@ public class UpdateAsetActivity extends AppCompatActivity {
             foto5rl.setVisibility(View.VISIBLE);
             map5.setVisibility(View.VISIBLE);
 
-            tvPopTotalSaatIni.setVisibility(View.VISIBLE);
-            tvPopTotalStandar.setVisibility(View.VISIBLE);
-            tvPopHektarSaatIni.setVisibility(View.VISIBLE);
-            tvPopHektarStandar.setVisibility(View.VISIBLE);
+            tvPopTotalPohonSaatIni.setVisibility(View.VISIBLE);
+            tvPopTotalStdMaster.setVisibility(View.VISIBLE);
+            tvPopPerHA.setVisibility(View.VISIBLE);
+            tvPresentasePopPerHA.setVisibility(View.VISIBLE);
             inpPopTotalPohonSaatIni.setVisibility(View.VISIBLE);
             inpPopTotalStdMaster.setVisibility(View.VISIBLE);
             inpPopPerHA.setVisibility(View.VISIBLE);
@@ -1572,10 +1574,10 @@ public class UpdateAsetActivity extends AppCompatActivity {
             foto5rl.setVisibility(View.GONE);
             map5.setVisibility(View.GONE);
 
-            tvPopTotalSaatIni.setVisibility(View.GONE);
-            tvPopTotalStandar.setVisibility(View.GONE);
-            tvPopHektarSaatIni.setVisibility(View.GONE);
-            tvPopHektarStandar.setVisibility(View.GONE);
+            tvPopTotalPohonSaatIni.setVisibility(View.GONE);
+            tvPopTotalStdMaster.setVisibility(View.GONE);
+            tvPopPerHA.setVisibility(View.GONE);
+            tvPresentasePopPerHA.setVisibility(View.GONE);
             inpPopTotalPohonSaatIni.setVisibility(View.GONE);
             inpPopTotalStdMaster.setVisibility(View.GONE);
             inpPopPerHA.setVisibility(View.GONE);
@@ -1616,10 +1618,10 @@ public class UpdateAsetActivity extends AppCompatActivity {
             foto5rl.setVisibility(View.GONE);
             map5.setVisibility(View.GONE);
 
-            tvPopTotalSaatIni.setVisibility(View.GONE);
-            tvPopTotalStandar.setVisibility(View.GONE);
-            tvPopHektarSaatIni.setVisibility(View.GONE);
-            tvPopHektarStandar.setVisibility(View.GONE);
+            tvPopTotalPohonSaatIni.setVisibility(View.GONE);
+            tvPopTotalStdMaster.setVisibility(View.GONE);
+            tvPopPerHA.setVisibility(View.GONE);
+            tvPresentasePopPerHA.setVisibility(View.GONE);
             inpPopTotalPohonSaatIni.setVisibility(View.GONE);
             inpPopTotalStdMaster.setVisibility(View.GONE);
             inpPopPerHA.setVisibility(View.GONE);
@@ -1659,10 +1661,10 @@ public class UpdateAsetActivity extends AppCompatActivity {
             foto5rl.setVisibility(View.GONE);
             map5.setVisibility(View.GONE);
 
-            tvPopTotalSaatIni.setVisibility(View.GONE);
-            tvPopTotalStandar.setVisibility(View.GONE);
-            tvPopHektarSaatIni.setVisibility(View.GONE);
-            tvPopHektarStandar.setVisibility(View.GONE);
+            tvPopTotalPohonSaatIni.setVisibility(View.GONE);
+            tvPopTotalStdMaster.setVisibility(View.GONE);
+            tvPopPerHA.setVisibility(View.GONE);
+            tvPresentasePopPerHA.setVisibility(View.GONE);
             inpPopTotalPohonSaatIni.setVisibility(View.GONE);
             inpPopTotalStdMaster.setVisibility(View.GONE);
             inpPopPerHA.setVisibility(View.GONE);
@@ -1706,10 +1708,10 @@ public class UpdateAsetActivity extends AppCompatActivity {
             foto5rl.setVisibility(View.GONE);
             map5.setVisibility(View.GONE);
 
-            tvPopTotalSaatIni.setVisibility(View.GONE);
-            tvPopTotalStandar.setVisibility(View.GONE);
-            tvPopHektarSaatIni.setVisibility(View.GONE);
-            tvPopHektarStandar.setVisibility(View.GONE);
+            tvPopTotalPohonSaatIni.setVisibility(View.GONE);
+            tvPopTotalStdMaster.setVisibility(View.GONE);
+            tvPopPerHA.setVisibility(View.GONE);
+            tvPresentasePopPerHA.setVisibility(View.GONE);
             inpPopTotalPohonSaatIni.setVisibility(View.GONE);
             inpPopTotalStdMaster.setVisibility(View.GONE);
             inpPopPerHA.setVisibility(View.GONE);
@@ -1745,10 +1747,10 @@ public class UpdateAsetActivity extends AppCompatActivity {
             foto5rl.setVisibility(View.GONE);
             map5.setVisibility(View.GONE);
 
-            tvPopTotalSaatIni.setVisibility(View.GONE);
-            tvPopTotalStandar.setVisibility(View.GONE);
-            tvPopHektarSaatIni.setVisibility(View.GONE);
-            tvPopHektarStandar.setVisibility(View.GONE);
+            tvPopTotalPohonSaatIni.setVisibility(View.GONE);
+            tvPopTotalStdMaster.setVisibility(View.GONE);
+            tvPopPerHA.setVisibility(View.GONE);
+            tvPresentasePopPerHA.setVisibility(View.GONE);
             inpPopTotalPohonSaatIni.setVisibility(View.GONE);
             inpPopTotalStdMaster.setVisibility(View.GONE);
             inpPopPerHA.setVisibility(View.GONE);
@@ -1787,10 +1789,10 @@ public class UpdateAsetActivity extends AppCompatActivity {
             foto5rl.setVisibility(View.GONE);
             map5.setVisibility(View.GONE);
 
-            tvPopTotalSaatIni.setVisibility(View.GONE);
-            tvPopTotalStandar.setVisibility(View.GONE);
-            tvPopHektarSaatIni.setVisibility(View.GONE);
-            tvPopHektarStandar.setVisibility(View.GONE);
+            tvPopTotalPohonSaatIni.setVisibility(View.GONE);
+            tvPopTotalStdMaster.setVisibility(View.GONE);
+            tvPopPerHA.setVisibility(View.GONE);
+            tvPresentasePopPerHA.setVisibility(View.GONE);
             inpPopTotalPohonSaatIni.setVisibility(View.GONE);
             inpPopTotalStdMaster.setVisibility(View.GONE);
             inpPopPerHA.setVisibility(View.GONE);
@@ -1826,10 +1828,10 @@ public class UpdateAsetActivity extends AppCompatActivity {
             foto5rl.setVisibility(View.GONE);
             map5.setVisibility(View.GONE);
 
-            tvPopTotalSaatIni.setVisibility(View.GONE);
-            tvPopTotalStandar.setVisibility(View.GONE);
-            tvPopHektarSaatIni.setVisibility(View.GONE);
-            tvPopHektarStandar.setVisibility(View.GONE);
+            tvPopTotalPohonSaatIni.setVisibility(View.GONE);
+            tvPopTotalStdMaster.setVisibility(View.GONE);
+            tvPopPerHA.setVisibility(View.GONE);
+            tvPresentasePopPerHA.setVisibility(View.GONE);
             inpPopTotalPohonSaatIni.setVisibility(View.GONE);
             inpPopTotalStdMaster.setVisibility(View.GONE);
             inpPopPerHA.setVisibility(View.GONE);
