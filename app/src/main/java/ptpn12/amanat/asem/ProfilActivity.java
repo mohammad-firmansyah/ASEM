@@ -64,10 +64,10 @@ public class ProfilActivity extends AppCompatActivity {
         resetPass.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(AsemApp.BASE_URL + "reset-password/"));
-                startActivity(browserIntent);
+//                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(AsemApp.BASE_URL + "reset-password/"));
+//                startActivity(browserIntent);
+                Toast.makeText(ProfilActivity.this, "Fitur Belum Berfungsi", Toast.LENGTH_SHORT).show();
                 return;
-//                Toast.makeText(ProfilActivity.this, "Fitur Belum Berfungsi", Toast.LENGTH_SHORT).show();
             }
         });
         logOut.setOnClickListener(new View.OnClickListener() {

@@ -128,6 +128,7 @@ public class UpdateFotoQrAsetActivity extends AppCompatActivity {
     Map<Long, Integer> mapSap = new HashMap();
     Map<Integer, Long> mapSpinnerSap = new HashMap();
     List<String> listSpinnerSap = new ArrayList<>();
+    List<Sap> sapAll = new ArrayList<>();
 
     DataAllSpinner allSpinner;
     Map<Integer, Integer> mapAfdelingSpinner = new HashMap<Integer, Integer>();
@@ -485,9 +486,11 @@ public class UpdateFotoQrAsetActivity extends AppCompatActivity {
         inpNoSAP = findViewById(R.id.inpNmrSAP);
         inpLuasAset = findViewById(R.id.inpLuasAset);
         inpNilaiAsetSAP = findViewById(R.id.inpNilaiAsetSAP);
+        inpNilaiAsetSAP.setEnabled(false);
         inpMasaPenyusutan = findViewById(R.id.inpMasaPenyusutan);
         inpNomorBAST = findViewById(R.id.inpNmrBAST);
         inpNilaiResidu = findViewById(R.id.inpNmrResidu);
+        inpNilaiResidu.setEnabled(false);
         inpKeterangan = findViewById(R.id.inpKeterangan);
         inpJumlahPohon = findViewById(R.id.inpJmlhPohon);
         inpPersenKondisi = findViewById(R.id.inpPersenKondisi);
@@ -603,6 +606,7 @@ public class UpdateFotoQrAsetActivity extends AppCompatActivity {
                         // when item selected from list
                         // set selected item on textView
                         inpNoSAP.setText(adapterSap.getItem(position));
+                        setNilaiAsetSAP(adapterSap.getItem(position));
 
                         // Dismiss dialog
                         spinnerNoSap.dismiss();
@@ -1130,11 +1134,11 @@ public class UpdateFotoQrAsetActivity extends AppCompatActivity {
                              inpNoSAP.setText(aset.getNomorSap());
                              inpNamaAset.setText(aset.getAsetName());
                              inpLuasAset.setText(String.valueOf(Double.parseDouble(String.valueOf(aset.getAsetLuas()))));
-                             inpNilaiAsetSAP.setText(formatrupiah(Double.parseDouble(String.valueOf(aset.getNilaiOleh()))));
-                             Log.d("asetapix",formatrupiah(Double.parseDouble(String.valueOf(aset.getNilaiOleh()))) );
+                             inpNilaiAsetSAP.setText(formatrupiah(Double.valueOf((aset.getNilaiOleh() != null) ? aset.getNilaiOleh() : 0 )));
+//                             Log.d("asetapix",formatrupiah(Double.parseDouble(String.valueOf(aset.getNilaiOleh()))) );
                              inpMasaPenyusutan.setText(String.valueOf(aset.getMasaSusut()));
                              inpNomorBAST.setText(String.valueOf(aset.getNomorBast()));
-                             inpNilaiResidu.setText(formatrupiah(Double.parseDouble(String.valueOf(aset.getNilaiResidu()))));
+                             inpNilaiResidu.setText(formatrupiah(Double.valueOf((aset.getNilaiResidu() != null) ? aset.getNilaiResidu() : 0 )));
                              inpKeterangan.setText(aset.getKeterangan());
                              inpUmrEkonomis.setText(utils.MonthToYear(aset.getUmurEkonomisInMonth()));
 //                inpNilaiAsetSAP.setText(formatrupiah(Double.parseDouble(String.valueOf(aset.getUmurEkonomisInMonth()))));
@@ -2234,6 +2238,8 @@ public class UpdateFotoQrAsetActivity extends AppCompatActivity {
                         finish();
 
                         return;
+                    }if (response.code() >= 400 && response.code() < 500){
+                        Toast.makeText(getApplicationContext(), "Nomor SAP sudah ada", Toast.LENGTH_SHORT).show();
                     }
 
                     dialog.dismiss();
@@ -2376,6 +2382,7 @@ public class UpdateFotoQrAsetActivity extends AppCompatActivity {
                     mapSap.put(Long.parseLong(at.getSap_desc()),at.getSap_id());
                     mapSpinnerSap.put(at.getSap_id(),Long.parseLong(at.getSap_desc()));
                     listSpinnerSap.add(at.getSap_desc());
+                    sapAll.add(at);
                 }
 
                 // get afdeling
@@ -2456,6 +2463,22 @@ public class UpdateFotoQrAsetActivity extends AppCompatActivity {
         getAfdeling();
         getSubUnit();
         getUnit();
+    }
+
+    private void setNilaiAsetSAP (String sap){
+        for (Sap it : sapAll) {
+
+            Log.d("sap",sap);
+            Log.d("sap2",it.getSap_id()+ "=" + it.getNilai_oleh());
+
+            if (it.getSap_desc().equals(sap)){
+
+                Log.d("sapdes", String.valueOf(it.getNilai_oleh()));
+
+                inpNilaiAsetSAP.setText(String.valueOf((it.getNilai_oleh() != null) ? it.getNilai_oleh() : 0 ));
+                inpNilaiResidu.setText(String.valueOf((it.getNilai_residu() != null) ? it.getNilai_residu() : 0 ));
+            }
+        }
     }
 
 }

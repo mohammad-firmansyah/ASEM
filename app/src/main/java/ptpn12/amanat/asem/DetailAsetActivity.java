@@ -839,13 +839,12 @@ public class DetailAsetActivity extends AppCompatActivity {
             inpNoSAP.setText(aset.getNomorSap());
             inpNamaAset.setText(aset.getAsetName());
             inpLuasAset.setText(String.valueOf(aset.getAsetLuas()));
-            inpNilaiAsetSAP.setText(String.valueOf(aset.getNilaiOleh()));
             inpMasaPenyusutan.setText(String.valueOf(aset.getMasaSusut()));
             inpNomorBAST.setText(String.valueOf(aset.getNomorBast()));
-            inpNilaiResidu.setText(formatrupiah(Double.parseDouble(String.valueOf(aset.getNilaiResidu()))));
+            inpNilaiResidu.setText(formatrupiah(Double.valueOf((aset.getNilaiResidu() != null) ? aset.getNilaiResidu() : 0 )));
             inpKeterangan.setText(aset.getKeterangan());
             inpUmrEkonomis.setText(utils.MonthToYear(aset.getUmurEkonomisInMonth()));
-            inpNilaiAsetSAP.setText(formatrupiah(Double.parseDouble(String.valueOf(aset.getNilaiOleh()))));
+            inpNilaiAsetSAP.setText(formatrupiah(Double.valueOf((aset.getNilaiOleh() != null) ? aset.getNilaiOleh() : 0 )));
             inpPersenKondisi.setText(String.valueOf(aset.getPersenKondisi()));
             inpJumlahPohon.setText(String.valueOf(aset.getJumlahPohon()));
             inpHGU.setText(String.valueOf(aset.getHgu()));
