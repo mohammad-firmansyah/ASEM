@@ -169,6 +169,28 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:text="TAHUN TANAM :"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:textColor="@color/main_grey"
+                android:layout_marginBottom="10dp"
+                android:id="@+id/tvTahunTanam"
+
+
+                />
+
+            <EditText
+
+                android:id="@+id/inpTahunTanam"
+                android:layout_marginBottom="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="41dp"
+                android:background="@drawable/tgl_spinner"
+                android:spinnerMode="dropdown" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:text="ALAT PENGANGKUTAN :"
                 android:textSize="14sp"
                 android:textStyle="bold"
@@ -653,7 +675,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginVertical="10dp"
-                android:text="POPULASI TOTAL SAAT INI :"
+                android:text="POPULASI POHON SAAT INI :"
                 android:textColor="@color/main_grey"
                 android:textSize="14sp"
                 android:textStyle="bold"/>
@@ -675,7 +697,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginVertical="10dp"
-                android:text="POPULASI TOTAL STANDAR :"
+                android:text="POPULASI STANDAR (master) :"
                 android:textColor="@color/main_grey"
                 android:textSize="14sp"
                 android:textStyle="bold"/>
@@ -688,7 +710,6 @@
                 android:layout_marginBottom="10dp"
                 android:background="@drawable/tgl_spinner"
                 android:inputType="numberDecimal"
-                android:spinnerMode="dropdown"
 
                 />
 
@@ -697,7 +718,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginVertical="10dp"
-                android:text="POPULASI HEKTAR SAAT INI :"
+                android:text="POPULASI PER HA:"
                 android:textColor="@color/main_grey"
                 android:textSize="14sp"
                 android:textStyle="bold"/>
@@ -710,7 +731,6 @@
                 android:layout_marginBottom="10dp"
                 android:background="@drawable/tgl_spinner"
                 android:inputType="numberDecimal"
-                android:spinnerMode="dropdown"
 
                 />
 
@@ -719,7 +739,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginVertical="10dp"
-                android:text="POPULASI HEKTAR STANDAR :"
+                android:text="PRESENTASE HEKTAR PER HA:"
                 android:textColor="@color/main_grey"
                 android:textSize="14sp"
                 android:textStyle="bold" />

@@ -180,14 +180,15 @@ public class DetailAsetActivity extends AppCompatActivity {
     EditText inpUmrEkonomis;
     EditText inpPersenKondisi;
     EditText inpKetReject;
-    EditText inpPopTotalSaatIni;
-    EditText inpPopTotalStandar;
-    EditText inpPopHektarSaatIni;
-    EditText inpPopHektarStandar;
-    TextView tvPopTotalSaatIni;
-    TextView tvPopTotalStandar;
-    TextView tvPopHektarSaatIni;
-    TextView tvPopHektarStandar;
+    EditText inpPopTotalPohonSaatIni;
+    EditText inpPopTotalStdMaster;
+    EditText inpPopPerHA;
+    EditText inpTahunTanam;
+    EditText inpPresentasePopPerHA;
+    TextView tvPopTotalPohonSaatIni;
+    TextView tvPopTotalStdMaster;
+    TextView tvPopPerHA;
+    TextView tvPresentasePopPerHA;
     EditText inpAlatAngkut;
     TextView tvAlatAngkut;
 
@@ -266,6 +267,8 @@ public class DetailAsetActivity extends AppCompatActivity {
         listBtnMap = findViewById(R.id.listMapButton);
         inpTglOleh = findViewById(R.id.inpTglMasukAset);
         inpTglOleh.setEnabled(false);
+        inpTahunTanam = findViewById(R.id.inpTahunTanam);
+        inpTahunTanam.setEnabled(false);
         tvUploudBA = findViewById(R.id.tvUploudBA);
         tvUploadFileBAST = findViewById(R.id.tvUploadFileBAST);
         spinnerTipeAset = findViewById(R.id.inpTipeAset);
@@ -326,18 +329,18 @@ public class DetailAsetActivity extends AppCompatActivity {
         inpSimpanFotoQr = findViewById(R.id.inpSimpanFotoQr);
         inpHGU = findViewById(R.id.inpHGU);
         inpHGU.setEnabled(false);
-        inpPopTotalSaatIni = findViewById(R.id.inpPopTotalIni);
-        inpPopTotalSaatIni.setEnabled(false);
-        inpPopTotalStandar = findViewById(R.id.inpPopTotalStd);
-        inpPopTotalStandar.setEnabled(false);
-        inpPopHektarSaatIni = findViewById(R.id.inpPopHektarIni);
-        inpPopHektarSaatIni.setEnabled(false);
-        inpPopHektarStandar = findViewById(R.id.inpPopHektarStd);
-        inpPopHektarStandar.setEnabled(false);
-        tvPopTotalSaatIni = findViewById(R.id.popTotalIni);
-        tvPopTotalStandar = findViewById(R.id.popTotalStd);
-        tvPopHektarSaatIni = findViewById(R.id.popHektarIni);
-        tvPopHektarStandar = findViewById(R.id.popHektarStd);
+        inpPopTotalPohonSaatIni = findViewById(R.id.inpPopTotalIni);
+        inpPopTotalPohonSaatIni.setEnabled(false);
+        inpPopTotalStdMaster = findViewById(R.id.inpPopTotalStd);
+        inpPopTotalStdMaster.setEnabled(false);
+        inpPopPerHA = findViewById(R.id.inpPopHektarIni);
+        inpPopPerHA.setEnabled(false);
+        inpPresentasePopPerHA = findViewById(R.id.inpPopHektarStd);
+        inpPresentasePopPerHA.setEnabled(false);
+        tvPopTotalPohonSaatIni = findViewById(R.id.popTotalIni);
+        tvPopTotalStdMaster = findViewById(R.id.popTotalStd);
+        tvPopPerHA = findViewById(R.id.popHektarIni);
+        tvPresentasePopPerHA = findViewById(R.id.popHektarStd);
 
         map1 = findViewById(R.id.map1);
         map2 = findViewById(R.id.map2);
@@ -848,11 +851,13 @@ public class DetailAsetActivity extends AppCompatActivity {
             inpPersenKondisi.setText(String.valueOf(aset.getPersenKondisi()));
             inpJumlahPohon.setText(String.valueOf(aset.getJumlahPohon()));
             inpHGU.setText(String.valueOf(aset.getHgu()));
-            inpPopTotalSaatIni.setText(String.valueOf(aset.getPopTotalIni()));
-            inpPopTotalStandar.setText(String.valueOf(aset.getPopTotalStd()));
-            inpPopHektarSaatIni.setText(String.valueOf(aset.getPopHektarIni()));
-            inpPopHektarStandar.setText(String.valueOf(aset.getPopHektarStd()));
+            inpPopTotalPohonSaatIni.setText(String.valueOf(aset.getPopPohonSaatIni()));
+            inpPopTotalStdMaster.setText(String.valueOf(aset.getPopStandar()));
+            inpPopPerHA.setText(String.valueOf(aset.getPopPerHa()));
+            inpPresentasePopPerHA.setText(String.valueOf(aset.getPrentasePopPerHa()));
+
             String ket_reject = aset.getKetReject();
+
             if (ket_reject != null){
                 inpKetReject.setVisibility(View.VISIBLE);
                 inpKetReject.setEnabled(false);
@@ -1148,14 +1153,14 @@ public class DetailAsetActivity extends AppCompatActivity {
             foto5rl.setVisibility(View.VISIBLE);
             map5.setVisibility(View.VISIBLE);
 
-            tvPopTotalSaatIni.setVisibility(View.VISIBLE);
-            tvPopTotalStandar.setVisibility(View.VISIBLE);
-            tvPopHektarSaatIni.setVisibility(View.VISIBLE);
-            tvPopHektarStandar.setVisibility(View.VISIBLE);
-            inpPopTotalSaatIni.setVisibility(View.VISIBLE);
-            inpPopTotalStandar.setVisibility(View.VISIBLE);
-            inpPopHektarSaatIni.setVisibility(View.VISIBLE);
-            inpPopHektarStandar.setVisibility(View.VISIBLE);
+            tvPopTotalPohonSaatIni.setVisibility(View.VISIBLE);
+            tvPopTotalStdMaster.setVisibility(View.VISIBLE);
+            tvPopPerHA.setVisibility(View.VISIBLE);
+            tvPresentasePopPerHA.setVisibility(View.VISIBLE);
+            inpPopTotalPohonSaatIni.setVisibility(View.VISIBLE);
+            inpPopTotalStdMaster.setVisibility(View.VISIBLE);
+            inpPopPerHA.setVisibility(View.VISIBLE);
+            inpPresentasePopPerHA.setVisibility(View.VISIBLE);
 
         }
 
@@ -1191,14 +1196,14 @@ public class DetailAsetActivity extends AppCompatActivity {
             foto5rl.setVisibility(View.VISIBLE);
             map5.setVisibility(View.VISIBLE);
 
-            tvPopTotalSaatIni.setVisibility(View.VISIBLE);
-            tvPopTotalStandar.setVisibility(View.VISIBLE);
-            tvPopHektarSaatIni.setVisibility(View.VISIBLE);
-            tvPopHektarStandar.setVisibility(View.VISIBLE);
-            inpPopTotalSaatIni.setVisibility(View.VISIBLE);
-            inpPopTotalStandar.setVisibility(View.VISIBLE);
-            inpPopHektarSaatIni.setVisibility(View.VISIBLE);
-            inpPopHektarStandar.setVisibility(View.VISIBLE);
+            tvPopTotalPohonSaatIni.setVisibility(View.VISIBLE);
+            tvPopTotalStdMaster.setVisibility(View.VISIBLE);
+            tvPopPerHA.setVisibility(View.VISIBLE);
+            tvPresentasePopPerHA.setVisibility(View.VISIBLE);
+            inpPopTotalPohonSaatIni.setVisibility(View.VISIBLE);
+            inpPopTotalStdMaster.setVisibility(View.VISIBLE);
+            inpPopPerHA.setVisibility(View.VISIBLE);
+            inpPresentasePopPerHA.setVisibility(View.VISIBLE);
 
         }
 
@@ -1233,14 +1238,14 @@ public class DetailAsetActivity extends AppCompatActivity {
             foto5rl.setVisibility(View.VISIBLE);
             map5.setVisibility(View.VISIBLE);
 
-            tvPopTotalSaatIni.setVisibility(View.VISIBLE);
-            tvPopTotalStandar.setVisibility(View.VISIBLE);
-            tvPopHektarSaatIni.setVisibility(View.VISIBLE);
-            tvPopHektarStandar.setVisibility(View.VISIBLE);
-            inpPopTotalSaatIni.setVisibility(View.VISIBLE);
-            inpPopTotalStandar.setVisibility(View.VISIBLE);
-            inpPopHektarSaatIni.setVisibility(View.VISIBLE);
-            inpPopHektarStandar.setVisibility(View.VISIBLE);
+            tvPopTotalPohonSaatIni.setVisibility(View.VISIBLE);
+            tvPopTotalStdMaster.setVisibility(View.VISIBLE);
+            tvPopPerHA.setVisibility(View.VISIBLE);
+            tvPresentasePopPerHA.setVisibility(View.VISIBLE);
+            inpPopTotalPohonSaatIni.setVisibility(View.VISIBLE);
+            inpPopTotalStdMaster.setVisibility(View.VISIBLE);
+            inpPopPerHA.setVisibility(View.VISIBLE);
+            inpPresentasePopPerHA.setVisibility(View.VISIBLE);
         }
 
         else if ("kayu".equals(String.valueOf(spinnerJenisAset.getSelectedItem()))  && "normal".equals(String.valueOf(spinnerAsetKondisi.getSelectedItem())) ) {
@@ -1278,14 +1283,14 @@ public class DetailAsetActivity extends AppCompatActivity {
             foto5rl.setVisibility(View.GONE);
             map5.setVisibility(View.GONE);
 
-            tvPopTotalSaatIni.setVisibility(View.GONE);
-            tvPopTotalStandar.setVisibility(View.GONE);
-            tvPopHektarSaatIni.setVisibility(View.GONE);
-            tvPopHektarStandar.setVisibility(View.GONE);
-            inpPopTotalSaatIni.setVisibility(View.GONE);
-            inpPopTotalStandar.setVisibility(View.GONE);
-            inpPopHektarSaatIni.setVisibility(View.GONE);
-            inpPopHektarStandar.setVisibility(View.GONE);
+            tvPopTotalPohonSaatIni.setVisibility(View.GONE);
+            tvPopTotalStdMaster.setVisibility(View.GONE);
+            tvPopPerHA.setVisibility(View.GONE);
+            tvPresentasePopPerHA.setVisibility(View.GONE);
+            inpPopTotalPohonSaatIni.setVisibility(View.GONE);
+            inpPopTotalStdMaster.setVisibility(View.GONE);
+            inpPopPerHA.setVisibility(View.GONE);
+            inpPresentasePopPerHA.setVisibility(View.GONE);
 
         }
 
@@ -1321,14 +1326,14 @@ public class DetailAsetActivity extends AppCompatActivity {
             foto5rl.setVisibility(View.GONE);
             map5.setVisibility(View.GONE);
 
-            tvPopTotalSaatIni.setVisibility(View.GONE);
-            tvPopTotalStandar.setVisibility(View.GONE);
-            tvPopHektarSaatIni.setVisibility(View.GONE);
-            tvPopHektarStandar.setVisibility(View.GONE);
-            inpPopTotalSaatIni.setVisibility(View.GONE);
-            inpPopTotalStandar.setVisibility(View.GONE);
-            inpPopHektarSaatIni.setVisibility(View.GONE);
-            inpPopHektarStandar.setVisibility(View.GONE);
+            tvPopTotalPohonSaatIni.setVisibility(View.GONE);
+            tvPopTotalStdMaster.setVisibility(View.GONE);
+            tvPopPerHA.setVisibility(View.GONE);
+            tvPresentasePopPerHA.setVisibility(View.GONE);
+            inpPopTotalPohonSaatIni.setVisibility(View.GONE);
+            inpPopTotalStdMaster.setVisibility(View.GONE);
+            inpPopPerHA.setVisibility(View.GONE);
+            inpPresentasePopPerHA.setVisibility(View.GONE);
 
         }
 
@@ -1363,14 +1368,14 @@ public class DetailAsetActivity extends AppCompatActivity {
             foto5rl.setVisibility(View.GONE);
             map5.setVisibility(View.GONE);
 
-            tvPopTotalSaatIni.setVisibility(View.GONE);
-            tvPopTotalStandar.setVisibility(View.GONE);
-            tvPopHektarSaatIni.setVisibility(View.GONE);
-            tvPopHektarStandar.setVisibility(View.GONE);
-            inpPopTotalSaatIni.setVisibility(View.GONE);
-            inpPopTotalStandar.setVisibility(View.GONE);
-            inpPopHektarSaatIni.setVisibility(View.GONE);
-            inpPopHektarStandar.setVisibility(View.GONE);
+            tvPopTotalPohonSaatIni.setVisibility(View.GONE);
+            tvPopTotalStdMaster.setVisibility(View.GONE);
+            tvPopPerHA.setVisibility(View.GONE);
+            tvPresentasePopPerHA.setVisibility(View.GONE);
+            inpPopTotalPohonSaatIni.setVisibility(View.GONE);
+            inpPopTotalStdMaster.setVisibility(View.GONE);
+            inpPopPerHA.setVisibility(View.GONE);
+            inpPresentasePopPerHA.setVisibility(View.GONE);
 
         }
 
@@ -1408,14 +1413,14 @@ public class DetailAsetActivity extends AppCompatActivity {
             foto5rl.setVisibility(View.GONE);
             map5.setVisibility(View.GONE);
 
-            tvPopTotalSaatIni.setVisibility(View.GONE);
-            tvPopTotalStandar.setVisibility(View.GONE);
-            tvPopHektarSaatIni.setVisibility(View.GONE);
-            tvPopHektarStandar.setVisibility(View.GONE);
-            inpPopTotalSaatIni.setVisibility(View.GONE);
-            inpPopTotalStandar.setVisibility(View.GONE);
-            inpPopHektarSaatIni.setVisibility(View.GONE);
-            inpPopHektarStandar.setVisibility(View.GONE);
+            tvPopTotalPohonSaatIni.setVisibility(View.GONE);
+            tvPopTotalStdMaster.setVisibility(View.GONE);
+            tvPopPerHA.setVisibility(View.GONE);
+            tvPresentasePopPerHA.setVisibility(View.GONE);
+            inpPopTotalPohonSaatIni.setVisibility(View.GONE);
+            inpPopTotalStdMaster.setVisibility(View.GONE);
+            inpPopPerHA.setVisibility(View.GONE);
+            inpPresentasePopPerHA.setVisibility(View.GONE);
         }
 
         else if ("non tanaman".equals(String.valueOf(spinnerJenisAset.getSelectedItem())) &&"rusak".equals(String.valueOf(spinnerAsetKondisi.getSelectedItem()))) {
@@ -1446,14 +1451,14 @@ public class DetailAsetActivity extends AppCompatActivity {
             foto5rl.setVisibility(View.GONE);
             map5.setVisibility(View.GONE);
 
-            tvPopTotalSaatIni.setVisibility(View.GONE);
-            tvPopTotalStandar.setVisibility(View.GONE);
-            tvPopHektarSaatIni.setVisibility(View.GONE);
-            tvPopHektarStandar.setVisibility(View.GONE);
-            inpPopTotalSaatIni.setVisibility(View.GONE);
-            inpPopTotalStandar.setVisibility(View.GONE);
-            inpPopHektarSaatIni.setVisibility(View.GONE);
-            inpPopHektarStandar.setVisibility(View.GONE);
+            tvPopTotalPohonSaatIni.setVisibility(View.GONE);
+            tvPopTotalStdMaster.setVisibility(View.GONE);
+            tvPopPerHA.setVisibility(View.GONE);
+            tvPresentasePopPerHA.setVisibility(View.GONE);
+            inpPopTotalPohonSaatIni.setVisibility(View.GONE);
+            inpPopTotalStdMaster.setVisibility(View.GONE);
+            inpPopPerHA.setVisibility(View.GONE);
+            inpPresentasePopPerHA.setVisibility(View.GONE);
 
         }
 
@@ -1488,14 +1493,14 @@ public class DetailAsetActivity extends AppCompatActivity {
             foto5rl.setVisibility(View.GONE);
             map5.setVisibility(View.GONE);
 
-            tvPopTotalSaatIni.setVisibility(View.GONE);
-            tvPopTotalStandar.setVisibility(View.GONE);
-            tvPopHektarSaatIni.setVisibility(View.GONE);
-            tvPopHektarStandar.setVisibility(View.GONE);
-            inpPopTotalSaatIni.setVisibility(View.GONE);
-            inpPopTotalStandar.setVisibility(View.GONE);
-            inpPopHektarSaatIni.setVisibility(View.GONE);
-            inpPopHektarStandar.setVisibility(View.GONE);
+            tvPopTotalPohonSaatIni.setVisibility(View.GONE);
+            tvPopTotalStdMaster.setVisibility(View.GONE);
+            tvPopPerHA.setVisibility(View.GONE);
+            tvPresentasePopPerHA.setVisibility(View.GONE);
+            inpPopTotalPohonSaatIni.setVisibility(View.GONE);
+            inpPopTotalStdMaster.setVisibility(View.GONE);
+            inpPopPerHA.setVisibility(View.GONE);
+            inpPresentasePopPerHA.setVisibility(View.GONE);
 
         } else {
             listBtnMap.setVisibility(View.GONE);
@@ -1524,14 +1529,14 @@ public class DetailAsetActivity extends AppCompatActivity {
             foto5rl.setVisibility(View.GONE);
             map5.setVisibility(View.GONE);
 
-            tvPopTotalSaatIni.setVisibility(View.GONE);
-            tvPopTotalStandar.setVisibility(View.GONE);
-            tvPopHektarSaatIni.setVisibility(View.GONE);
-            tvPopHektarStandar.setVisibility(View.GONE);
-            inpPopTotalSaatIni.setVisibility(View.GONE);
-            inpPopTotalStandar.setVisibility(View.GONE);
-            inpPopHektarSaatIni.setVisibility(View.GONE);
-            inpPopHektarStandar.setVisibility(View.GONE);
+            tvPopTotalPohonSaatIni.setVisibility(View.GONE);
+            tvPopTotalStdMaster.setVisibility(View.GONE);
+            tvPopPerHA.setVisibility(View.GONE);
+            tvPresentasePopPerHA.setVisibility(View.GONE);
+            inpPopTotalPohonSaatIni.setVisibility(View.GONE);
+            inpPopTotalStdMaster.setVisibility(View.GONE);
+            inpPopPerHA.setVisibility(View.GONE);
+            inpPresentasePopPerHA.setVisibility(View.GONE);
         }
     }
 

@@ -739,7 +739,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginVertical="10dp"
-                android:text="POPULASI HEKTAR SAAT INI :"
+                android:text="POPULASI PER HA :"
                 android:textColor="@color/main_grey"
                 android:textSize="14sp"
                 android:textStyle="bold" />
@@ -761,7 +761,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginVertical="10dp"
-                android:text="POPULASI HEKTAR STANDAR :"
+                android:text="PRESENTASE POP PER HA :"
                 android:textColor="@color/main_grey"
                 android:textSize="14sp"
                 android:textStyle="bold" />
