@@ -628,11 +628,16 @@ public class AddAsetActivity extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                if (inpPopTotalPohonSaatIni.getText() != null && inpLuasAset.getText() != null ){
+                if (!inpPopTotalPohonSaatIni.getText().equals("") && !inpLuasAset.getText().equals("")){
 
-                    Double popPerHa =  Double.parseDouble(String.valueOf(inpPopTotalPohonSaatIni.getText()))/Double.parseDouble(String.valueOf(inpLuasAset.getText()));
-                    Log.d("amanat19", String.valueOf(popPerHa));
-                    inpPopPerHA.setText(String.valueOf(popPerHa));
+                    try{
+
+                        Double popPerHa =  Double.parseDouble(String.valueOf(inpPopTotalPohonSaatIni.getText()))/Double.parseDouble(String.valueOf(inpLuasAset.getText()));
+                        Log.d("amanat19", String.valueOf(popPerHa));
+                        inpPopPerHA.setText(String.valueOf(popPerHa));
+                    } catch (Exception e){
+                        e.printStackTrace();
+                    }
 //                    Double presentase = popPerHa / Double.parseDouble(String.valueOf(inpPopTotalStdMaster.getText())) * 100;
 //                    inpPresentasePopPerHA.setText(String.valueOf(presentase));
                 }
@@ -653,11 +658,15 @@ public class AddAsetActivity extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                if (inpPopTotalStdMaster.getText() != null){
+                if (!inpPopTotalStdMaster.equals("")){
+                    try {
 
-                    Double popPerHa =  Double.parseDouble(String.valueOf(inpPopTotalPohonSaatIni.getText()))/Double.parseDouble(String.valueOf(inpLuasAset.getText()));
-                    Double presentase = popPerHa / Double.parseDouble(String.valueOf(inpPopTotalStdMaster.getText())) * 100;
-                    inpPresentasePopPerHA.setText(String.valueOf(presentase));
+                        Double popPerHa =  Double.parseDouble(String.valueOf(inpPopTotalPohonSaatIni.getText()))/Double.parseDouble(String.valueOf(inpLuasAset.getText()));
+                        Double presentase = popPerHa / Double.parseDouble(String.valueOf(inpPopTotalStdMaster.getText())) * 100;
+                        inpPresentasePopPerHA.setText(String.valueOf(presentase));
+                    } catch (Exception e){
+                        e.printStackTrace();
+                    }
                 }
             }
 
