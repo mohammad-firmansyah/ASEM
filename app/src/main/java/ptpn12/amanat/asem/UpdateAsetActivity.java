@@ -1074,6 +1074,10 @@ public class UpdateAsetActivity extends AppCompatActivity {
                         tvKetReject.setVisibility(View.GONE);
                     }
 
+                    if (aset.getTahunTanam() != null) {
+                        inpTahunTanam.setText(aset.getTahunTanam());
+                    }
+
                     url1 = AsemApp.BASE_URL_ASSET+"/storage/app/public/aset/"+aset.getFotoAset1();
                     url2 = AsemApp.BASE_URL_ASSET+"/storage/app/public/aset/"+aset.getFotoAset2();
                     url3 = AsemApp.BASE_URL_ASSET+"/storage/app/public/aset/"+aset.getFotoAset3();
