@@ -149,21 +149,21 @@ public class Data {
     @Expose
     private String ketReject;
 
-    @SerializedName("pop_total_ini")
+    @SerializedName("pop_pohon_saat_ini")
     @Expose
-    private Double popTotalIni;
+    private Double popPohonSaatIni;
 
-    @SerializedName("pop_total_std")
+    @SerializedName("pop_standar")
     @Expose
-    private Double popTotalStd;
+    private Double popStandar;
 
-    @SerializedName("pop_hektar_ini")
+    @SerializedName("pop_per_ha")
     @Expose
-    private Double popHektarIni;
+    private Double popPerHa;
 
-    @SerializedName("pop_hektar_std")
+    @SerializedName("prentase_pop_per_ha")
     @Expose
-    private Double popHektarStd;
+    private Double prentasePopPerHa;
 
     @SerializedName("hgu")
     @Expose
@@ -178,42 +178,41 @@ public class Data {
     private String satuan_luas;
 
 
-    public Double getPopTotalIni() {
-        return popTotalIni;
-    }
-
-    public void setPopTotalIni(Double popTotalIni) {
-        this.popTotalIni = popTotalIni;
-    }
-
-    public Double getPopTotalStd() {
-        return popTotalStd;
-    }
-
-    public void setPopTotalStd(Double popTotalStd) {
-        this.popTotalStd = popTotalStd;
-    }
-
-    public Double getPopHektarIni() {
-        return popHektarIni;
-    }
-
-    public void setPopHektarIni(Double popHektarIni) {
-        this.popHektarIni = popHektarIni;
-    }
-
-    public Double getPopHektarStd() {
-        return popHektarStd;
-    }
-
-    public void setPopHektarStd(Double popHektarStd) {
-        this.popHektarStd = popHektarStd;
-    }
-
     @SerializedName("aset_foto_qr_status")
     @Expose
     private String asetFotoQrStatus;
 
+    public Double getPopPohonSaatIni() {
+        return popPohonSaatIni;
+    }
+
+    public void setPopPohonSaatIni(Double popPohonSaatIni) {
+        this.popPohonSaatIni = popPohonSaatIni;
+    }
+
+    public Double getPopStandar() {
+        return popStandar;
+    }
+
+    public void setPopStandar(Double popStandar) {
+        this.popStandar = popStandar;
+    }
+
+    public Double getPopPerHa() {
+        return popPerHa;
+    }
+
+    public void setPopPerHa(Double popPerHa) {
+        this.popPerHa = popPerHa;
+    }
+
+    public Double getPrentasePopPerHa() {
+        return prentasePopPerHa;
+    }
+
+    public void setPrentasePopPerHa(Double prentasePopPerHa) {
+        this.prentasePopPerHa = prentasePopPerHa;
+    }
 
     public String getSatuan_luas() {
         return satuan_luas;
