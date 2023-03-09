@@ -182,6 +182,19 @@ public class Data {
     @Expose
     private String asetFotoQrStatus;
 
+    @SerializedName("tahun_tanam")
+    @Expose
+    private String tahunTanam;
+
+
+    public String getTahunTanam() {
+        return tahunTanam;
+    }
+
+    public void setTahunTanam(String tahunTanam) {
+        this.tahunTanam = tahunTanam;
+    }
+
     public Double getPopPohonSaatIni() {
         return popPohonSaatIni;
     }
