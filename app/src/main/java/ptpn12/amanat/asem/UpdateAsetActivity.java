@@ -1058,10 +1058,10 @@ public class UpdateAsetActivity extends AppCompatActivity {
                     inpPersenKondisi.setText(String.valueOf(aset.getPersenKondisi()));
                     inpJumlahPohon.setText(String.valueOf(aset.getJumlahPohon()));
                     inpHGU.setText(String.valueOf(aset.getHgu()));
-                    inpPopTotalPohonSaatIni.setText(String.valueOf(aset.getPopTotalIni()));
-                    inpPopTotalStdMaster.setText(String.valueOf(aset.getPopTotalStd()));
-                    inpPopPerHA.setText(String.valueOf(aset.getPopHektarIni()));
-                    inpPresentasePopPerHA.setText(String.valueOf(aset.getPopHektarStd()));
+                    inpPopTotalPohonSaatIni.setText(String.valueOf(aset.getPopPohonSaatIni()));
+                    inpPopTotalStdMaster.setText(String.valueOf(aset.getPopStandar()));
+                    inpPopPerHA.setText(String.valueOf(aset.getPopPerHa()));
+                    inpPresentasePopPerHA.setText(String.valueOf(aset.getPrentasePopPerHa()));
 
                     String ket_reject = aset.getKetReject();
                     if (ket_reject != null){
