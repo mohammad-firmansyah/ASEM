@@ -757,7 +757,7 @@
                 android:paddingVertical="10dp"
                 android:lines="1"
                 android:inputType="numberDecimal"
-                android:background="@drawable/edit_text_spiner"
+                android:background="@drawable/tgl_spinner"
                 />
 
 
@@ -919,7 +919,7 @@
                 android:paddingVertical="10dp"
                 android:lines="1"
                 android:inputType="numberDecimal"
-                android:background="@drawable/edit_text_spiner"
+                android:background="@drawable/tgl_spinner"
                 />
 
 

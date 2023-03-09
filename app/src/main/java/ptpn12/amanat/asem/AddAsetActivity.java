@@ -2031,12 +2031,14 @@ public class AddAsetActivity extends AppCompatActivity {
                     @Override
                     public void onFailure(Call<AsetModel2> call, Throwable t) {
                         dialog.dismiss();
-                        Toast.makeText(getApplicationContext(), "error " + t.getMessage(), Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(), "error " + t.getMessage(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), "Periksa kembali kolom isian dengan benar!" , Toast.LENGTH_SHORT).show();
                     }
                 });
             } catch (Exception e) {
                 dialog.dismiss();
-                Toast.makeText(getApplicationContext(), "error " + e.getMessage(), Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "error " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "Periksa kembali kolom isian dengan benar!" , Toast.LENGTH_SHORT).show();
                 e.printStackTrace();
             }
 
