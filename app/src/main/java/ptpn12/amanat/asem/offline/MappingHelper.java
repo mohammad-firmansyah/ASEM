@@ -81,11 +81,12 @@ public class MappingHelper {
             String pop_total_std = asetCursor.getString(asetCursor.getColumnIndexOrThrow(DatabaseContractAset.AsetColumns.POPTOTALSTD));
             String pop_hektar_ini = asetCursor.getString(asetCursor.getColumnIndexOrThrow(DatabaseContractAset.AsetColumns.POPHEKTARINI));
             String pop_hektar_std = asetCursor.getString(asetCursor.getColumnIndexOrThrow(DatabaseContractAset.AsetColumns.POPHEKTARSTD));
+            Integer tahun_tanam = asetCursor.getInt(asetCursor.getColumnIndexOrThrow(DatabaseContractAset.AsetColumns.TAHUNTANAM));
             asetList.add(new Aset(asetid, asetname,asettipe,asetjenis,asetkondisi,asetsubunit,asetkode,nomorsap,fotoaset1,fotoaset2,
                     fotoaset3,fotoaset4,fotoaset5,geotag1,geotag2,geotag3,geotag4,geotag5,asetluas,tglinput,tgloleh,nilairesidu,nilaioleh,nomorbast,
                     masasusut,keterangan,fotoqr,noinv,fotoasetqr,statusposisi,unitid,afdelingid,userinputid,createdat,updatedat,
                     jumlahpohon,persenkondisi,statusreject,ketreject,asetfotoqrstatus,hgu,beritaAcara,fileBAST,alat_pengangkutan,satuan_luas,
-                    pop_total_ini,pop_total_std,pop_hektar_ini,pop_hektar_std));
+                    pop_total_ini,pop_total_std,pop_hektar_ini,pop_hektar_std,tahun_tanam));
         }
         return asetList;
     }
@@ -229,11 +230,13 @@ public class MappingHelper {
             String pop_total_std = asetCursor.getString(asetCursor.getColumnIndexOrThrow(DatabaseContractAset.AsetColumns.POPTOTALSTD));
             String pop_hektar_ini = asetCursor.getString(asetCursor.getColumnIndexOrThrow(DatabaseContractAset.AsetColumns.POPHEKTARINI));
             String pop_hektar_std = asetCursor.getString(asetCursor.getColumnIndexOrThrow(DatabaseContractAset.AsetColumns.POPHEKTARSTD));
+            Integer tahun_tanam = asetCursor.getInt(asetCursor.getColumnIndexOrThrow(DatabaseContractAset.AsetColumns.TAHUNTANAM));
+
             asetList = new Aset(asetid, asetname,asettipe,asetjenis,asetkondisi,asetsubunit,asetkode,nomorsap,fotoaset1,fotoaset2,
                     fotoaset3,fotoaset4,fotoaset5,geotag1,geotag2,geotag3,geotag4,geotag5,asetluas,tglinput,tgloleh,nilairesidu,nilaioleh,nomorbast,
                     masasusut,keterangan,fotoqr,noinv,fotoasetqr,statusposisi,unitid,afdelingid,userinputid,createdat,updatedat,
                     jumlahpohon,persenkondisi,statusreject,ketreject,asetfotoqrstatus,hgu,beritaAcara,fileBAST,alat_pengangkutan,satuan_luas,
-                    pop_total_ini,pop_total_std,pop_hektar_ini,pop_hektar_std);
+                    pop_total_ini,pop_total_std,pop_hektar_ini,pop_hektar_std,tahun_tanam);
         }
         return asetList;
     }

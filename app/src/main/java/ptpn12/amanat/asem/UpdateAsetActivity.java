@@ -1063,7 +1063,7 @@ public class UpdateAsetActivity extends AppCompatActivity {
                     inpPopTotalPohonSaatIni.setText(String.valueOf(aset.getPopPohonSaatIni()));
                     inpPopTotalStdMaster.setText(String.valueOf(aset.getPopStandar()));
                     inpPopPerHA.setText(String.valueOf(aset.getPopPerHa()));
-                    inpPresentasePopPerHA.setText(String.valueOf(aset.getPrentasePopPerHa()));
+                    inpPresentasePopPerHA.setText(String.valueOf(aset.getPresentasePopPerHa()));
 
                     String ket_reject = aset.getKetReject();
                     if (ket_reject != null){

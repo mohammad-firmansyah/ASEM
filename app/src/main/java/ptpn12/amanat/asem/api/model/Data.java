@@ -161,9 +161,9 @@ public class Data {
     @Expose
     private Double popPerHa;
 
-    @SerializedName("prentase_pop_per_ha")
+    @SerializedName("presentase_pop_per_ha")
     @Expose
-    private Double prentasePopPerHa;
+    private Double presentasePopPerHa;
 
     @SerializedName("hgu")
     @Expose
@@ -219,12 +219,12 @@ public class Data {
         this.popPerHa = popPerHa;
     }
 
-    public Double getPrentasePopPerHa() {
-        return prentasePopPerHa;
+    public Double getPresentasePopPerHa() {
+        return presentasePopPerHa;
     }
 
-    public void setPrentasePopPerHa(Double prentasePopPerHa) {
-        this.prentasePopPerHa = prentasePopPerHa;
+    public void setPresentasePopPerHa(Double presentasePopPerHa) {
+        this.presentasePopPerHa = presentasePopPerHa;
     }
 
     public String getSatuan_luas() {

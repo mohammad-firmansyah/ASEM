@@ -184,10 +184,10 @@ public class UpdateFotoQrAsetActivity extends AppCompatActivity {
     EditText inpUmrEkonomis;
     EditText inpPersenKondisi;
     EditText inpKetReject;
-    EditText inpPopTotalSaatIni;
-    EditText inpPopTotalStandar;
-    EditText inpPopHektarSaatIni;
-    EditText inpPopHektarStandar;
+    EditText inpPopTotalPohonSaatIni;
+    EditText inpPopTotalStdMaster;
+    EditText inpPopPerHA;
+    EditText inpPresentasePopPerHA;
     TextView tvPopTotalSaatIni;
     TextView tvPopTotalStandar;
     TextView tvPopHektarSaatIni;
@@ -497,10 +497,10 @@ public class UpdateFotoQrAsetActivity extends AppCompatActivity {
         inpHGU = findViewById(R.id.inpHGU);
         inpKetReject = findViewById(R.id.inpKetReject);
         tvKetReject = findViewById(R.id.tvKetReject);
-        inpPopTotalSaatIni = findViewById(R.id.inpPopTotalIni);
-        inpPopTotalStandar = findViewById(R.id.inpPopTotalStd);
-        inpPopHektarSaatIni = findViewById(R.id.inpPopHektarIni);
-        inpPopHektarStandar = findViewById(R.id.inpPopHektarStd);
+        inpPopTotalPohonSaatIni = findViewById(R.id.inpPopTotalIni);
+        inpPopTotalStdMaster = findViewById(R.id.inpPopTotalStd);
+        inpPopPerHA = findViewById(R.id.inpPopHektarIni);
+        inpPresentasePopPerHA = findViewById(R.id.inpPopHektarStd);
         tvPopTotalSaatIni = findViewById(R.id.popTotalIni);
         tvPopTotalStandar = findViewById(R.id.popTotalStd);
         tvPopHektarSaatIni = findViewById(R.id.popHektarIni);
@@ -1145,10 +1145,10 @@ public class UpdateFotoQrAsetActivity extends AppCompatActivity {
                              inpPersenKondisi.setText(String.valueOf(aset.getPersenKondisi()));
                              inpJumlahPohon.setText(String.valueOf(aset.getJumlahPohon()));
                              inpHGU.setText(String.valueOf(aset.getHgu()));
-                             inpPopTotalSaatIni.setText(String.valueOf(aset.getPopTotalIni()));
-                             inpPopTotalStandar.setText(String.valueOf(aset.getPopTotalStd()));
-                             inpPopHektarSaatIni.setText(String.valueOf(aset.getPopHektarIni()));
-                             inpPopHektarStandar.setText(String.valueOf(aset.getPopHektarStd()));
+                             inpPopTotalPohonSaatIni.setText(String.valueOf(aset.getPopPohonSaatIni()));
+                             inpPopTotalStdMaster.setText(String.valueOf(aset.getPopStandar()));
+                             inpPopPerHA.setText(String.valueOf(aset.getPopPerHa()));
+                             inpPresentasePopPerHA.setText(String.valueOf(aset.getPresentasePopPerHa()));
                              String ket_reject = aset.getKetReject();
                              if (ket_reject != null){
                                  inpKetReject.setVisibility(View.VISIBLE);
@@ -1684,10 +1684,10 @@ public class UpdateFotoQrAsetActivity extends AppCompatActivity {
             tvPopTotalStandar.setVisibility(View.VISIBLE);
             tvPopHektarSaatIni.setVisibility(View.VISIBLE);
             tvPopHektarStandar.setVisibility(View.VISIBLE);
-            inpPopTotalSaatIni.setVisibility(View.VISIBLE);
-            inpPopTotalStandar.setVisibility(View.VISIBLE);
-            inpPopHektarSaatIni.setVisibility(View.VISIBLE);
-            inpPopHektarStandar.setVisibility(View.VISIBLE);
+            inpPopTotalPohonSaatIni.setVisibility(View.VISIBLE);
+            inpPopTotalStdMaster.setVisibility(View.VISIBLE);
+            inpPopPerHA.setVisibility(View.VISIBLE);
+            inpPresentasePopPerHA.setVisibility(View.VISIBLE);
 
         }
 
@@ -1726,10 +1726,10 @@ public class UpdateFotoQrAsetActivity extends AppCompatActivity {
             tvPopTotalStandar.setVisibility(View.VISIBLE);
             tvPopHektarSaatIni.setVisibility(View.VISIBLE);
             tvPopHektarStandar.setVisibility(View.VISIBLE);
-            inpPopTotalSaatIni.setVisibility(View.VISIBLE);
-            inpPopTotalStandar.setVisibility(View.VISIBLE);
-            inpPopHektarSaatIni.setVisibility(View.VISIBLE);
-            inpPopHektarStandar.setVisibility(View.VISIBLE);
+            inpPopTotalPohonSaatIni.setVisibility(View.VISIBLE);
+            inpPopTotalStdMaster.setVisibility(View.VISIBLE);
+            inpPopPerHA.setVisibility(View.VISIBLE);
+            inpPresentasePopPerHA.setVisibility(View.VISIBLE);
 
         }
 
@@ -1768,10 +1768,10 @@ public class UpdateFotoQrAsetActivity extends AppCompatActivity {
             tvPopTotalStandar.setVisibility(View.VISIBLE);
             tvPopHektarSaatIni.setVisibility(View.VISIBLE);
             tvPopHektarStandar.setVisibility(View.VISIBLE);
-            inpPopTotalSaatIni.setVisibility(View.VISIBLE);
-            inpPopTotalStandar.setVisibility(View.VISIBLE);
-            inpPopHektarSaatIni.setVisibility(View.VISIBLE);
-            inpPopHektarStandar.setVisibility(View.VISIBLE);
+            inpPopTotalPohonSaatIni.setVisibility(View.VISIBLE);
+            inpPopTotalStdMaster.setVisibility(View.VISIBLE);
+            inpPopPerHA.setVisibility(View.VISIBLE);
+            inpPresentasePopPerHA.setVisibility(View.VISIBLE);
         }
 
         else if ("kayu".equals(String.valueOf(spinnerJenisAset.getSelectedItem()))  && "normal".equals(String.valueOf(spinnerAsetKondisi.getSelectedItem())) ) {
@@ -1811,10 +1811,10 @@ public class UpdateFotoQrAsetActivity extends AppCompatActivity {
             tvPopTotalStandar.setVisibility(View.GONE);
             tvPopHektarSaatIni.setVisibility(View.GONE);
             tvPopHektarStandar.setVisibility(View.GONE);
-            inpPopTotalSaatIni.setVisibility(View.GONE);
-            inpPopTotalStandar.setVisibility(View.GONE);
-            inpPopHektarSaatIni.setVisibility(View.GONE);
-            inpPopHektarStandar.setVisibility(View.GONE);
+            inpPopTotalPohonSaatIni.setVisibility(View.GONE);
+            inpPopTotalStdMaster.setVisibility(View.GONE);
+            inpPopPerHA.setVisibility(View.GONE);
+            inpPresentasePopPerHA.setVisibility(View.GONE);
 
         }
 
@@ -1853,10 +1853,10 @@ public class UpdateFotoQrAsetActivity extends AppCompatActivity {
             tvPopTotalStandar.setVisibility(View.GONE);
             tvPopHektarSaatIni.setVisibility(View.GONE);
             tvPopHektarStandar.setVisibility(View.GONE);
-            inpPopTotalSaatIni.setVisibility(View.GONE);
-            inpPopTotalStandar.setVisibility(View.GONE);
-            inpPopHektarSaatIni.setVisibility(View.GONE);
-            inpPopHektarStandar.setVisibility(View.GONE);
+            inpPopTotalPohonSaatIni.setVisibility(View.GONE);
+            inpPopTotalStdMaster.setVisibility(View.GONE);
+            inpPopPerHA.setVisibility(View.GONE);
+            inpPresentasePopPerHA.setVisibility(View.GONE);
 
         }
 
@@ -1894,10 +1894,10 @@ public class UpdateFotoQrAsetActivity extends AppCompatActivity {
             tvPopTotalStandar.setVisibility(View.GONE);
             tvPopHektarSaatIni.setVisibility(View.GONE);
             tvPopHektarStandar.setVisibility(View.GONE);
-            inpPopTotalSaatIni.setVisibility(View.GONE);
-            inpPopTotalStandar.setVisibility(View.GONE);
-            inpPopHektarSaatIni.setVisibility(View.GONE);
-            inpPopHektarStandar.setVisibility(View.GONE);
+            inpPopTotalPohonSaatIni.setVisibility(View.GONE);
+            inpPopTotalStdMaster.setVisibility(View.GONE);
+            inpPopPerHA.setVisibility(View.GONE);
+            inpPresentasePopPerHA.setVisibility(View.GONE);
 
         }
 
@@ -1938,10 +1938,10 @@ public class UpdateFotoQrAsetActivity extends AppCompatActivity {
             tvPopTotalStandar.setVisibility(View.GONE);
             tvPopHektarSaatIni.setVisibility(View.GONE);
             tvPopHektarStandar.setVisibility(View.GONE);
-            inpPopTotalSaatIni.setVisibility(View.GONE);
-            inpPopTotalStandar.setVisibility(View.GONE);
-            inpPopHektarSaatIni.setVisibility(View.GONE);
-            inpPopHektarStandar.setVisibility(View.GONE);
+            inpPopTotalPohonSaatIni.setVisibility(View.GONE);
+            inpPopTotalStdMaster.setVisibility(View.GONE);
+            inpPopPerHA.setVisibility(View.GONE);
+            inpPresentasePopPerHA.setVisibility(View.GONE);
         }
 
         else if ("non tanaman".equals(String.valueOf(spinnerJenisAset.getSelectedItem())) &&"rusak".equals(String.valueOf(spinnerAsetKondisi.getSelectedItem()))) {
@@ -1975,10 +1975,10 @@ public class UpdateFotoQrAsetActivity extends AppCompatActivity {
             tvPopTotalStandar.setVisibility(View.GONE);
             tvPopHektarSaatIni.setVisibility(View.GONE);
             tvPopHektarStandar.setVisibility(View.GONE);
-            inpPopTotalSaatIni.setVisibility(View.GONE);
-            inpPopTotalStandar.setVisibility(View.GONE);
-            inpPopHektarSaatIni.setVisibility(View.GONE);
-            inpPopHektarStandar.setVisibility(View.GONE);
+            inpPopTotalPohonSaatIni.setVisibility(View.GONE);
+            inpPopTotalStdMaster.setVisibility(View.GONE);
+            inpPopPerHA.setVisibility(View.GONE);
+            inpPresentasePopPerHA.setVisibility(View.GONE);
 
         }
 
@@ -2015,10 +2015,10 @@ public class UpdateFotoQrAsetActivity extends AppCompatActivity {
             tvPopTotalStandar.setVisibility(View.GONE);
             tvPopHektarSaatIni.setVisibility(View.GONE);
             tvPopHektarStandar.setVisibility(View.GONE);
-            inpPopTotalSaatIni.setVisibility(View.GONE);
-            inpPopTotalStandar.setVisibility(View.GONE);
-            inpPopHektarSaatIni.setVisibility(View.GONE);
-            inpPopHektarStandar.setVisibility(View.GONE);
+            inpPopTotalPohonSaatIni.setVisibility(View.GONE);
+            inpPopTotalStdMaster.setVisibility(View.GONE);
+            inpPopPerHA.setVisibility(View.GONE);
+            inpPresentasePopPerHA.setVisibility(View.GONE);
 
         } else {
             listBtnMap.setVisibility(View.GONE);
@@ -2050,10 +2050,10 @@ public class UpdateFotoQrAsetActivity extends AppCompatActivity {
             tvPopTotalStandar.setVisibility(View.GONE);
             tvPopHektarSaatIni.setVisibility(View.GONE);
             tvPopHektarStandar.setVisibility(View.GONE);
-            inpPopTotalSaatIni.setVisibility(View.GONE);
-            inpPopTotalStandar.setVisibility(View.GONE);
-            inpPopHektarSaatIni.setVisibility(View.GONE);
-            inpPopHektarStandar.setVisibility(View.GONE);
+            inpPopTotalPohonSaatIni.setVisibility(View.GONE);
+            inpPopTotalStdMaster.setVisibility(View.GONE);
+            inpPopPerHA.setVisibility(View.GONE);
+            inpPresentasePopPerHA.setVisibility(View.GONE);
         }
     }
     public void editAset(){
@@ -2153,17 +2153,17 @@ public class UpdateFotoQrAsetActivity extends AppCompatActivity {
             builder.addPart(MultipartBody.Part.createFormData("hgu",null,requestHGU));
 
 
-            if (spinnerJenisAset.getSelectedItemId() == 0) {
-                RequestBody requestPopulasiTotalSaatIni = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(Double.parseDouble(inpPopTotalSaatIni.getText().toString().trim())));
-            RequestBody requestPopulasiTotalStandar = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(Double.parseDouble(inpPopTotalStandar.getText().toString().trim())));
-            RequestBody requestPopulasiHektarSaatIni = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(Double.parseDouble(inpPopHektarSaatIni.getText().toString().trim())));
-            RequestBody requestPopulasiHektarStandar = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(Double.parseDouble(inpPopHektarStandar.getText().toString().trim())));
-
-            builder.addPart(MultipartBody.Part.createFormData("pop_total_ini", null, requestPopulasiTotalSaatIni));
-            builder.addPart(MultipartBody.Part.createFormData("pop_total_std", null, requestPopulasiTotalStandar));
-            builder.addPart(MultipartBody.Part.createFormData("pop_hektar_ini", null, requestPopulasiHektarSaatIni));
-            builder.addPart(MultipartBody.Part.createFormData("pop_hektar_std", null, requestPopulasiHektarStandar));
+            if (spinnerJenisAset.getSelectedItemId() == 1 ) {
+                RequestBody requestPopulasiTotalSaatIni = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(Double.parseDouble(inpPopTotalPohonSaatIni.getText().toString().trim())));
+                RequestBody requestPopulasiTotalStandar = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(Double.parseDouble(inpPopTotalStdMaster.getText().toString().trim())));
+                RequestBody requestPopulasiHektarSaatIni = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(Double.parseDouble(inpPopPerHA.getText().toString().trim())));
+                RequestBody requestPopulasiHektarStandar = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(Double.parseDouble(inpPresentasePopPerHA.getText().toString().trim())));
+                builder.addPart(MultipartBody.Part.createFormData("pop_pohon_saat_ini", null, requestPopulasiTotalSaatIni));
+                builder.addPart(MultipartBody.Part.createFormData("pop_standar", null, requestPopulasiTotalStandar));
+                builder.addPart(MultipartBody.Part.createFormData("pop_per_ha", null, requestPopulasiHektarSaatIni));
+                builder.addPart(MultipartBody.Part.createFormData("presentase_pop_per_ha", null, requestPopulasiHektarStandar));
             }
+            
             if (bafile_file != null){
                 RequestBody requestBaFile = RequestBody.create(MediaType.parse("multipart/form-file"), bafile_file);
                 partBaFile = MultipartBody.Part.createFormData("ba_file", bafile_file.getName(), requestBaFile);

@@ -51,10 +51,11 @@ public class DatabaseContractAset {
         public static String FILEBAST = "file_bast";
         public static String ALATPENGANGKUTAN = "alat_pengangkutan";
         public static String SATUANLUAS = "satuan_luas";
-        public static String POPTOTALINI = "pop_total_ini";
-        public static String POPTOTALSTD = "pop_total_std";
-        public static String POPHEKTARINI = "pop_hektar_ini";
-        public static String POPHEKTARSTD = "pop_hektar_std";
+        public static String POPTOTALINI = "pop_pohon_saat_ini";
+        public static String POPTOTALSTD = "pop_standar";
+        public static String POPHEKTARINI = "pop_per_ha";
+        public static String POPHEKTARSTD = "presentase_pop_per_ha";
+        public static String TAHUNTANAM = "tahun_tanam";
 
 
     }

@@ -126,9 +126,9 @@ public class Aset implements Parcelable {
     @Expose
     private Integer jumlahPohon;
 
-    public void setJumlahPohon(Integer jumlahPohon) {
-        this.jumlahPohon = jumlahPohon;
-    }
+    @SerializedName("tahun_tanam")
+    @Expose
+    private Integer tahun_tanam;
 
     @SerializedName("umur_ekonomis_in_month")
     @Expose
@@ -163,18 +163,30 @@ public class Aset implements Parcelable {
     @SerializedName("satuan_luas")
     @Expose
     private String satuan_luas;
-    @SerializedName("pop_total_ini")
+    @SerializedName("pop_pohon_saat_ini")
     @Expose
     private String pop_total_ini;
-    @SerializedName("pop_total_std")
+    @SerializedName("pop_master")
     @Expose
     private String pop_total_std;
-    @SerializedName("pop_hektar_ini")
+    @SerializedName("pop_per_ha")
     @Expose
     private String pop_hektar_ini;
-    @SerializedName("pop_hektar_std")
+    @SerializedName("presentase_pop_per_ha")
     @Expose
     private String pop_hektar_std;
+
+    public void setJumlahPohon(Integer jumlahPohon) {
+        this.jumlahPohon = jumlahPohon;
+    }
+
+    public Integer getTahun_tanam() {
+        return tahun_tanam;
+    }
+
+    public void setTahun_tanam(Integer tahun_tanam) {
+        this.tahun_tanam = tahun_tanam;
+    }
 
     public String getAlat_pengangkutan() {
         return alat_pengangkutan;
@@ -582,7 +594,7 @@ public class Aset implements Parcelable {
         this.umurEkonomisInMonth = umurEkonomisInMonth;
     }
 
-    public Aset(Integer asetId, String asetName, String asetTipe, String asetJenis, String asetKondisi, String asetSubUnit, String asetKode, String nomorSap, String fotoAset1, String fotoAset2, String fotoAset3, String fotoAset4,String fotoAset5, String geoTag1, String geoTag2, String geoTag3, String geoTag4, String geoTag5, Double asetLuas, String tglInput, String tglOleh, Long nilaiResidu, Long nilaiOleh, String nomorBast, String masaSusut, String keterangan, String fotoQr, String noInv, String fotoAsetQr, String statusPosisi, String unitId, String afdelingId, String userInputId, String createdAt, String updatedAt, Integer jumlahPohon, double persenKondisi, String statusReject, String ketReject, String asetFotoQrStatus,String hgu,String berita_acara,String fileBAST,String alat_pengangkutan,String satuan_luas, String popTotalIni,String popTotalStd, String popHektarIni,String popHektarStd) {
+    public Aset(Integer asetId, String asetName, String asetTipe, String asetJenis, String asetKondisi, String asetSubUnit, String asetKode, String nomorSap, String fotoAset1, String fotoAset2, String fotoAset3, String fotoAset4,String fotoAset5, String geoTag1, String geoTag2, String geoTag3, String geoTag4, String geoTag5, Double asetLuas, String tglInput, String tglOleh, Long nilaiResidu, Long nilaiOleh, String nomorBast, String masaSusut, String keterangan, String fotoQr, String noInv, String fotoAsetQr, String statusPosisi, String unitId, String afdelingId, String userInputId, String createdAt, String updatedAt, Integer jumlahPohon, double persenKondisi, String statusReject, String ketReject, String asetFotoQrStatus,String hgu,String berita_acara,String fileBAST,String alat_pengangkutan,String satuan_luas, String popTotalIni,String popTotalStd, String popHektarIni,String popHektarStd, Integer tahun_tanam) {
         this.asetId = asetId;
         this.asetName = asetName;
         this.asetTipe = asetTipe;
@@ -634,6 +646,7 @@ public class Aset implements Parcelable {
         this.pop_hektar_ini = popHektarIni ;
         this.pop_hektar_std = popHektarStd ;
         this.fileBAST = fileBAST;
+        this.tahun_tanam = tahun_tanam;
     }
 
     @Override
@@ -673,6 +686,7 @@ public class Aset implements Parcelable {
         dest.writeString(this.nomorBast);
         dest.writeLong(this.nilaiResidu);
         dest.writeString(this.keterangan);
+        dest.writeString(String.valueOf(this.tahun_tanam));
     }
     public Aset() {
     }
