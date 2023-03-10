@@ -38,6 +38,18 @@ public class DataAllSpinner {
     @Expose
     private List<AlatAngkut> alatAngkut = null;
 
+    @SerializedName("sistem_tanam")
+    @Expose
+    private List<SistemTanam> sistemTanam = null;
+
+    public List<SistemTanam> getSistemTanam() {
+        return sistemTanam;
+    }
+
+    public void setSistemTanam(List<SistemTanam> sistemTanam) {
+        this.sistemTanam = sistemTanam;
+    }
+
     public List<AlatAngkut> getAlatAngkut() {
         return alatAngkut;
     }
