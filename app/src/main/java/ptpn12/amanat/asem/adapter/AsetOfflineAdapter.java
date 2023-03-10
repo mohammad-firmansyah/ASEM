@@ -336,10 +336,10 @@ public class AsetOfflineAdapter extends RecyclerView.Adapter<AsetOfflineAdapter.
             RequestBody requestPopulasiTotalStandar = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(Double.parseDouble(aset.getPop_total_std())));
             RequestBody requestPopulasiHektarSaatIni = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(Double.parseDouble(aset.getPop_hektar_ini())));
             RequestBody requestPopulasiHektarStandar = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(Double.parseDouble(aset.getPop_hektar_std())));
-            builder.addPart(MultipartBody.Part.createFormData("pop_total_ini", null, requestPopulasiTotalSaatIni));
-            builder.addPart(MultipartBody.Part.createFormData("pop_total_std", null, requestPopulasiTotalStandar));
-            builder.addPart(MultipartBody.Part.createFormData("pop_hektar_ini", null, requestPopulasiHektarSaatIni));
-            builder.addPart(MultipartBody.Part.createFormData("pop_hektar_std", null, requestPopulasiHektarStandar));
+            builder.addPart(MultipartBody.Part.createFormData("pop_pohon_saat_ini", null, requestPopulasiTotalSaatIni));
+            builder.addPart(MultipartBody.Part.createFormData("pop_standar", null, requestPopulasiTotalStandar));
+            builder.addPart(MultipartBody.Part.createFormData("pop_per_ha", null, requestPopulasiHektarSaatIni));
+            builder.addPart(MultipartBody.Part.createFormData("presentase_pop_per_ha", null, requestPopulasiHektarStandar));
 
         }
 

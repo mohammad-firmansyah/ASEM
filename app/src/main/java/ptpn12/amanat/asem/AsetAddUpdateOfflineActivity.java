@@ -747,7 +747,7 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity {
                 setAdapterAsetKode();
                 if (isEdit) {
                     setAdapterAsetKodeEdit();
-                    setValueInput();
+//                    setValueInput();
                 }
             }
 
@@ -1220,6 +1220,7 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity {
         }
         return 0;
     }
+
 
     private void setValueInput() {
         asetHelper.open();

@@ -1083,6 +1083,7 @@ public class DetailAsetActivity extends AppCompatActivity {
         TextView tvPersenKondisi = findViewById(R.id.tvPersenKondisi);
         TextView tvFileBAST = findViewById(R.id.tvUploadFileBAST);
         TextView tvUploadBAST = findViewById(R.id.tvUploadBAST);
+        TextView tvTahunTanam = findViewById(R.id.tvTahunTanam);
 
         HorizontalScrollView scrollPartition = findViewById(R.id.scrollPartition);
 //        Toast.makeText(getApplicationContext(),String.valueOf(spinnerSubUnit.getSelectedItemId()),Toast.LENGTH_LONG).show();
@@ -1117,6 +1118,15 @@ public class DetailAsetActivity extends AppCompatActivity {
             inpAfdeling.setVisibility(View.GONE);
             tvAfdeling.setVisibility(View.GONE);
         }
+
+        if (spinnerJenisAset.getSelectedItem().equals("non tanaman")) {
+            tvTahunTanam.setVisibility(View.GONE);
+            inpTahunTanam.setVisibility(View.GONE);
+        } else {
+            tvTahunTanam.setVisibility(View.VISIBLE);
+            inpTahunTanam.setVisibility(View.VISIBLE);
+        }
+
 
         if ("tanaman".equals(String.valueOf(spinnerJenisAset.getSelectedItem())) && "normal".equals(String.valueOf(spinnerAsetKondisi.getSelectedItem()))) {
             listBtnMap.setVisibility(View.VISIBLE);
