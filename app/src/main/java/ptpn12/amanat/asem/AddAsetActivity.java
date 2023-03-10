@@ -67,6 +67,7 @@ import ptpn12.amanat.asem.api.model.AsetModel2;
 import ptpn12.amanat.asem.api.model.AsetTipe;
 import ptpn12.amanat.asem.api.model.DataAllSpinner;
 import ptpn12.amanat.asem.api.model.Sap;
+import ptpn12.amanat.asem.api.model.SistemTanam;
 import ptpn12.amanat.asem.api.model.SubUnit;
 import ptpn12.amanat.asem.api.model.Unit;
 import ptpn12.amanat.asem.utils.GpsConverter;
@@ -159,6 +160,7 @@ public class AddAsetActivity extends AppCompatActivity {
     Spinner spinnerKomoditi;
     Spinner spinnerAlatAngkut;
     Spinner spinnerLuasSatuan;
+    Spinner spinnerSistemTanam;
 
     EditText inpNamaAset;
     EditText inpHGU;
@@ -229,6 +231,7 @@ public class AddAsetActivity extends AppCompatActivity {
     String spinnerIdJenisAset;
     String spinnerIdAsetKondisi;
     String spinnerIdKodeAset;
+    String spinnerIdSistemTanam;
     String spinnerIdAfdeling;
     String spinnerIdSubUnit;
     String spinnerIdUnit;
@@ -551,6 +554,7 @@ public class AddAsetActivity extends AppCompatActivity {
         spinnerSubUnit.setEnabled(false);
         spinnerUnit = findViewById(R.id.inpUnit);
         spinnerUnit.setEnabled(false);
+        spinnerSistemTanam = findViewById(R.id.inpSistemTanam);
         inpNamaAset = findViewById(R.id.inpNamaAset);
         inpNoSAP = findViewById(R.id.inpNmrSAP);
         inpLuasAset = findViewById(R.id.inpLuasAset);
@@ -584,6 +588,15 @@ public class AddAsetActivity extends AppCompatActivity {
         listSpinnerSatuan.add("Item");
         ArrayAdapter<String> adapterLuasSatuan =new ArrayAdapter<>(AddAsetActivity.this, android.R.layout.simple_list_item_1,listSpinnerSatuan);
         spinnerLuasSatuan.setAdapter(adapterLuasSatuan);
+
+//        spinnerSistemTanam = findViewById(R.id.inpSistemTanam);
+//        List<String> listSpinnerSistemTanam = new ArrayList<>();
+//        listSpinnerSistemTanam.add("Pilih Sistem Tanam");
+//        listSpinnerSistemTanam.add("Mono");
+//        listSpinnerSistemTanam.add("TPJ");
+//        listSpinnerSistemTanam.add("Sela");
+//        ArrayAdapter<String> adapterSistemTanam =new ArrayAdapter<>(AddAsetActivity.this, android.R.layout.simple_list_item_1,listSpinnerSistemTanam);
+//        spinnerSistemTanam.setAdapter(adapterSistemTanam);
 
 //        spinnerKomoditi = findViewById(R.id.inpKomoditi);
 
@@ -711,7 +724,7 @@ public class AddAsetActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 spinnerIdKodeAset = String.valueOf(position);
-//                editVisibilityDynamic();
+                editVisibilityDynamic();
                 if (spinnerKodeAset.getSelectedItem().equals("ZA08/Alat Pengangkutan")){
                     spinnerAlatAngkut.setVisibility(View.VISIBLE);
                     tvAlatAngkut.setVisibility(View.VISIBLE);
@@ -732,6 +745,19 @@ public class AddAsetActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 spinnerIdAsetKondisi = String.valueOf(position);
+                editVisibilityDynamic();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> arg0) {
+
+            }
+        });
+
+        spinnerSistemTanam.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                spinnerIdSistemTanam = String.valueOf(position);
                 editVisibilityDynamic();
             }
 
@@ -1378,6 +1404,7 @@ public class AddAsetActivity extends AppCompatActivity {
         TextView tvFileBAST = findViewById(R.id.tvUploadFileBAST);
         TextView tvUploadBAST = findViewById(R.id.tvUploadBAST);
         TextView tvTahunTanam = findViewById(R.id.tvTahunTanam);
+        TextView tvSistemTanam = findViewById(R.id.tvSistemTanam);
 
         HorizontalScrollView scrollPartition = findViewById(R.id.scrollPartition);
 
@@ -1389,13 +1416,167 @@ public class AddAsetActivity extends AppCompatActivity {
             inpNomorBAST.setVisibility(View.GONE);
             tvBast.setVisibility(View.GONE);
         }
+        Log.d("jenis", String.valueOf("kayu".equals(String.valueOf(spinnerKodeAset.getSelectedItem()))));
 
-        if (spinnerJenisAset.getSelectedItem().equals("non tanaman")) {
-            tvTahunTanam.setVisibility(View.GONE);
-            inpTahunTanam.setVisibility(View.GONE);
-        } else {
+        if ("tanaman".equals(String.valueOf(spinnerJenisAset.getSelectedItem()))) {
+
             tvTahunTanam.setVisibility(View.VISIBLE);
             inpTahunTanam.setVisibility(View.VISIBLE);
+            tvSistemTanam.setVisibility(View.VISIBLE);
+            spinnerSistemTanam.setVisibility(View.VISIBLE);
+
+            tvPopTotalPohonSaatIni.setVisibility(View.VISIBLE);
+            tvPopTotalStdMaster.setVisibility(View.VISIBLE);
+            tvPopPerHA.setVisibility(View.VISIBLE);
+            tvPresentasePopPerHA.setVisibility(View.VISIBLE);
+            inpPopTotalPohonSaatIni.setVisibility(View.VISIBLE);
+            inpPopTotalStdMaster.setVisibility(View.VISIBLE);
+            inpPopPerHA.setVisibility(View.VISIBLE);
+            inpPresentasePopPerHA.setVisibility(View.VISIBLE);
+
+            tvLuasTanaman.setVisibility(View.GONE);
+            inpLuasAset.setVisibility(View.GONE);
+
+            Log.d("tanam", String.valueOf(spinnerSistemTanam.getSelectedItem()));
+
+            if("Mono".equals(String.valueOf(spinnerSistemTanam.getSelectedItem()))){
+                tvTahunTanam.setVisibility(View.VISIBLE);
+                inpTahunTanam.setVisibility(View.VISIBLE);
+                tvSistemTanam.setVisibility(View.VISIBLE);
+                spinnerSistemTanam.setVisibility(View.VISIBLE);
+
+                tvPopTotalPohonSaatIni.setVisibility(View.VISIBLE);
+                tvPopTotalStdMaster.setVisibility(View.VISIBLE);
+                tvPopPerHA.setVisibility(View.VISIBLE);
+                tvPresentasePopPerHA.setVisibility(View.VISIBLE);
+                inpPopTotalPohonSaatIni.setVisibility(View.VISIBLE);
+                inpPopTotalStdMaster.setVisibility(View.VISIBLE);
+                inpPopPerHA.setVisibility(View.VISIBLE);
+                inpPresentasePopPerHA.setVisibility(View.VISIBLE);
+
+                tvLuasTanaman.setVisibility(View.VISIBLE);
+                inpLuasAset.setVisibility(View.VISIBLE);
+            }
+            else{
+//                tvTahunTanam.setVisibility(View.GONE);
+//                inpTahunTanam.setVisibility(View.GONE);
+//                tvSistemTanam.setVisibility(View.GONE);
+//                spinnerSistemTanam.setVisibility(View.GONE);
+
+                tvPopTotalPohonSaatIni.setVisibility(View.GONE);
+                tvPopTotalStdMaster.setVisibility(View.GONE);
+                tvPopPerHA.setVisibility(View.GONE);
+                tvPresentasePopPerHA.setVisibility(View.GONE);
+                inpPopTotalPohonSaatIni.setVisibility(View.GONE);
+                inpPopTotalStdMaster.setVisibility(View.GONE);
+                inpPopPerHA.setVisibility(View.GONE);
+                inpPresentasePopPerHA.setVisibility(View.GONE);
+
+//                tvLuasTanaman.setVisibility(View.GONE);
+//                inpLuasAset.setVisibility(View.GONE);
+
+            }
+
+            if("ZC06/S001/Tebu".equals(String.valueOf(spinnerKodeAset.getSelectedItem()))
+                    && "Mono".equals(String.valueOf(spinnerSistemTanam.getSelectedItem()))){
+                tvTahunTanam.setVisibility(View.VISIBLE);
+                inpTahunTanam.setVisibility(View.VISIBLE);
+                tvSistemTanam.setVisibility(View.VISIBLE);
+                spinnerSistemTanam.setVisibility(View.VISIBLE);
+
+                tvPopTotalPohonSaatIni.setVisibility(View.GONE);
+                tvPopTotalStdMaster.setVisibility(View.GONE);
+                tvPopPerHA.setVisibility(View.GONE);
+                tvPresentasePopPerHA.setVisibility(View.GONE);
+                inpPopTotalPohonSaatIni.setVisibility(View.GONE);
+                inpPopTotalStdMaster.setVisibility(View.GONE);
+                inpPopPerHA.setVisibility(View.GONE);
+                inpPresentasePopPerHA.setVisibility(View.GONE);
+
+                tvLuasTanaman.setVisibility(View.VISIBLE);
+                inpLuasAset.setVisibility(View.VISIBLE);
+
+                spinnerSistemTanam.setEnabled(false);
+
+            }
+            else{
+//                tvTahunTanam.setVisibility(View.GONE);
+//                inpTahunTanam.setVisibility(View.GONE);
+//                tvSistemTanam.setVisibility(View.GONE);
+//                spinnerSistemTanam.setVisibility(View.GONE);
+
+                tvPopTotalPohonSaatIni.setVisibility(View.VISIBLE);
+                tvPopTotalStdMaster.setVisibility(View.VISIBLE);
+                tvPopPerHA.setVisibility(View.VISIBLE);
+                tvPresentasePopPerHA.setVisibility(View.VISIBLE);
+                inpPopTotalPohonSaatIni.setVisibility(View.VISIBLE);
+                inpPopTotalStdMaster.setVisibility(View.VISIBLE);
+                inpPopPerHA.setVisibility(View.VISIBLE);
+                inpPresentasePopPerHA.setVisibility(View.VISIBLE);
+
+//                tvLuasTanaman.setVisibility(View.GONE);
+//                inpLuasAset.setVisibility(View.GONE);
+
+                spinnerSistemTanam.setEnabled(true);
+            }
+        }
+        else if ("kayu".equals(String.valueOf(spinnerJenisAset.getSelectedItem()))) {
+
+            tvTahunTanam.setVisibility(View.VISIBLE);
+            inpTahunTanam.setVisibility(View.VISIBLE);
+            tvSistemTanam.setVisibility(View.VISIBLE);
+            spinnerSistemTanam.setVisibility(View.VISIBLE);
+
+            tvPopTotalPohonSaatIni.setVisibility(View.VISIBLE);
+            tvPopTotalStdMaster.setVisibility(View.VISIBLE);
+            tvPopPerHA.setVisibility(View.VISIBLE);
+            tvPresentasePopPerHA.setVisibility(View.VISIBLE);
+            inpPopTotalPohonSaatIni.setVisibility(View.VISIBLE);
+            inpPopTotalStdMaster.setVisibility(View.VISIBLE);
+            inpPopPerHA.setVisibility(View.VISIBLE);
+            inpPresentasePopPerHA.setVisibility(View.VISIBLE);
+
+            tvLuasTanaman.setVisibility(View.VISIBLE);
+            inpLuasAset.setVisibility(View.VISIBLE);
+
+            if(!"Mono".equals(String.valueOf(spinnerSistemTanam.getSelectedItem()))){
+                tvTahunTanam.setVisibility(View.VISIBLE);
+                inpTahunTanam.setVisibility(View.VISIBLE);
+                tvSistemTanam.setVisibility(View.VISIBLE);
+                spinnerSistemTanam.setVisibility(View.VISIBLE);
+
+                tvPopTotalPohonSaatIni.setVisibility(View.VISIBLE);
+                tvPopTotalStdMaster.setVisibility(View.VISIBLE);
+                tvPopPerHA.setVisibility(View.VISIBLE);
+                tvPresentasePopPerHA.setVisibility(View.VISIBLE);
+                inpPopTotalPohonSaatIni.setVisibility(View.VISIBLE);
+                inpPopTotalStdMaster.setVisibility(View.VISIBLE);
+                inpPopPerHA.setVisibility(View.VISIBLE);
+                inpPresentasePopPerHA.setVisibility(View.VISIBLE);
+
+                tvLuasTanaman.setVisibility(View.GONE);
+                inpLuasAset.setVisibility(View.GONE);
+            }
+
+        }
+        else {
+
+            tvTahunTanam.setVisibility(View.GONE);
+            inpTahunTanam.setVisibility(View.GONE);
+            tvSistemTanam.setVisibility(View.GONE);
+            spinnerSistemTanam.setVisibility(View.GONE);
+
+            tvPopTotalPohonSaatIni.setVisibility(View.GONE);
+            tvPopTotalStdMaster.setVisibility(View.GONE);
+            tvPopPerHA.setVisibility(View.GONE);
+            tvPresentasePopPerHA.setVisibility(View.GONE);
+            inpPopTotalPohonSaatIni.setVisibility(View.GONE);
+            inpPopTotalStdMaster.setVisibility(View.GONE);
+            inpPopPerHA.setVisibility(View.GONE);
+            inpPresentasePopPerHA.setVisibility(View.GONE);
+
+            tvLuasTanaman.setVisibility(View.GONE);
+//            inpLuasAset.setVisibility(View.VISIBLE);
         }
 
 //        if (spinnerTipeAset.getSelectedItemId() == 1 ) {
@@ -1445,23 +1626,23 @@ public class AddAsetActivity extends AppCompatActivity {
             tvFoto.setVisibility(View.VISIBLE);
             scrollPartition.setVisibility(View.VISIBLE);
 
-            tvLuasTanaman.setVisibility(View.VISIBLE);
+//            tvLuasTanaman.setVisibility(View.VISIBLE);
             tvLuasNonTanaman.setVisibility(View.GONE);
-            inpLuasAset.setVisibility(View.VISIBLE);
+//            inpLuasAset.setVisibility(View.VISIBLE);
 
             inpPersenKondisi.setVisibility(View.GONE);
             tvPersenKondisi.setVisibility(View.GONE);
 
             foto5rl.setVisibility(View.VISIBLE);
 
-            tvPopTotalPohonSaatIni.setVisibility(View.VISIBLE);
-            tvPopTotalStdMaster.setVisibility(View.VISIBLE);
-            tvPopPerHA.setVisibility(View.VISIBLE);
-            tvPresentasePopPerHA.setVisibility(View.VISIBLE);
-            inpPopTotalPohonSaatIni.setVisibility(View.VISIBLE);
-            inpPopTotalStdMaster.setVisibility(View.VISIBLE);
-            inpPopPerHA.setVisibility(View.VISIBLE);
-            inpPresentasePopPerHA.setVisibility(View.VISIBLE);
+//            tvPopTotalPohonSaatIni.setVisibility(View.VISIBLE);
+//            tvPopTotalStdMaster.setVisibility(View.VISIBLE);
+//            tvPopPerHA.setVisibility(View.VISIBLE);
+//            tvPresentasePopPerHA.setVisibility(View.VISIBLE);
+//            inpPopTotalPohonSaatIni.setVisibility(View.VISIBLE);
+//            inpPopTotalStdMaster.setVisibility(View.VISIBLE);
+//            inpPopPerHA.setVisibility(View.VISIBLE);
+//            inpPresentasePopPerHA.setVisibility(View.VISIBLE);
 
         }
 
@@ -1487,23 +1668,23 @@ public class AddAsetActivity extends AppCompatActivity {
             tvFoto.setVisibility(View.VISIBLE);
             scrollPartition.setVisibility(View.VISIBLE);
 
-            tvLuasTanaman.setVisibility(View.VISIBLE);
+//            tvLuasTanaman.setVisibility(View.VISIBLE);
             tvLuasNonTanaman.setVisibility(View.GONE);
-            inpLuasAset.setVisibility(View.VISIBLE);
+//            inpLuasAset.setVisibility(View.VISIBLE);
 
             inpPersenKondisi.setVisibility(View.GONE);
             tvPersenKondisi.setVisibility(View.GONE);
 
             foto5rl.setVisibility(View.VISIBLE);
 
-            tvPopTotalPohonSaatIni.setVisibility(View.VISIBLE);
-            tvPopTotalStdMaster.setVisibility(View.VISIBLE);
-            tvPopPerHA.setVisibility(View.VISIBLE);
-            tvPresentasePopPerHA.setVisibility(View.VISIBLE);
-            inpPopTotalPohonSaatIni.setVisibility(View.VISIBLE);
-            inpPopTotalStdMaster.setVisibility(View.VISIBLE);
-            inpPopPerHA.setVisibility(View.VISIBLE);
-            inpPresentasePopPerHA.setVisibility(View.VISIBLE);
+//            tvPopTotalPohonSaatIni.setVisibility(View.VISIBLE);
+//            tvPopTotalStdMaster.setVisibility(View.VISIBLE);
+//            tvPopPerHA.setVisibility(View.VISIBLE);
+//            tvPresentasePopPerHA.setVisibility(View.VISIBLE);
+//            inpPopTotalPohonSaatIni.setVisibility(View.VISIBLE);
+//            inpPopTotalStdMaster.setVisibility(View.VISIBLE);
+//            inpPopPerHA.setVisibility(View.VISIBLE);
+//            inpPresentasePopPerHA.setVisibility(View.VISIBLE);
         }
 
 
@@ -1526,23 +1707,23 @@ public class AddAsetActivity extends AppCompatActivity {
             tvFoto.setVisibility(View.GONE);
             scrollPartition.setVisibility(View.GONE);
 
-            tvLuasTanaman.setVisibility(View.VISIBLE);
+//            tvLuasTanaman.setVisibility(View.VISIBLE);
             tvLuasNonTanaman.setVisibility(View.GONE);
-            inpLuasAset.setVisibility(View.VISIBLE);
+//            inpLuasAset.setVisibility(View.VISIBLE);
 
             inpPersenKondisi.setVisibility(View.GONE);
             tvPersenKondisi.setVisibility(View.GONE);
 
             foto5rl.setVisibility(View.VISIBLE);
 
-            tvPopTotalPohonSaatIni.setVisibility(View.VISIBLE);
-            tvPopTotalStdMaster.setVisibility(View.VISIBLE);
-            tvPopPerHA.setVisibility(View.VISIBLE);
-            tvPresentasePopPerHA.setVisibility(View.VISIBLE);
-            inpPopTotalPohonSaatIni.setVisibility(View.VISIBLE);
-            inpPopTotalStdMaster.setVisibility(View.VISIBLE);
-            inpPopPerHA.setVisibility(View.VISIBLE);
-            inpPresentasePopPerHA.setVisibility(View.VISIBLE);
+//            tvPopTotalPohonSaatIni.setVisibility(View.VISIBLE);
+//            tvPopTotalStdMaster.setVisibility(View.VISIBLE);
+//            tvPopPerHA.setVisibility(View.VISIBLE);
+//            tvPresentasePopPerHA.setVisibility(View.VISIBLE);
+//            inpPopTotalPohonSaatIni.setVisibility(View.VISIBLE);
+//            inpPopTotalStdMaster.setVisibility(View.VISIBLE);
+//            inpPopPerHA.setVisibility(View.VISIBLE);
+//            inpPresentasePopPerHA.setVisibility(View.VISIBLE);
         }
 
         else if ("kayu".equals(String.valueOf(spinnerJenisAset.getSelectedItem()))  && "normal".equals(String.valueOf(spinnerAsetKondisi.getSelectedItem())) ) {
@@ -1569,23 +1750,23 @@ public class AddAsetActivity extends AppCompatActivity {
             tvFoto.setVisibility(View.VISIBLE);
             scrollPartition.setVisibility(View.VISIBLE);
 
-            tvLuasTanaman.setVisibility(View.VISIBLE);
+//            tvLuasTanaman.setVisibility(View.VISIBLE);
             tvLuasNonTanaman.setVisibility(View.GONE);
-            inpLuasAset.setVisibility(View.VISIBLE);
+//            inpLuasAset.setVisibility(View.VISIBLE);
 
             inpPersenKondisi.setVisibility(View.GONE);
             tvPersenKondisi.setVisibility(View.GONE);
 
             foto5rl.setVisibility(View.GONE);
 
-            tvPopTotalPohonSaatIni.setVisibility(View.GONE);
-            tvPopTotalStdMaster.setVisibility(View.GONE);
-            tvPopPerHA.setVisibility(View.GONE);
-            tvPresentasePopPerHA.setVisibility(View.GONE);
-            inpPopTotalPohonSaatIni.setVisibility(View.GONE);
-            inpPopTotalStdMaster.setVisibility(View.GONE);
-            inpPopPerHA.setVisibility(View.GONE);
-            inpPresentasePopPerHA.setVisibility(View.GONE);
+//            tvPopTotalPohonSaatIni.setVisibility(View.GONE);
+//            tvPopTotalStdMaster.setVisibility(View.GONE);
+//            tvPopPerHA.setVisibility(View.GONE);
+//            tvPresentasePopPerHA.setVisibility(View.GONE);
+//            inpPopTotalPohonSaatIni.setVisibility(View.GONE);
+//            inpPopTotalStdMaster.setVisibility(View.GONE);
+//            inpPopPerHA.setVisibility(View.GONE);
+//            inpPresentasePopPerHA.setVisibility(View.GONE);
 
         }
 
@@ -1611,23 +1792,23 @@ public class AddAsetActivity extends AppCompatActivity {
             tvFoto.setVisibility(View.VISIBLE);
             scrollPartition.setVisibility(View.VISIBLE);
 
-            tvLuasTanaman.setVisibility(View.VISIBLE);
+//            tvLuasTanaman.setVisibility(View.VISIBLE);
             tvLuasNonTanaman.setVisibility(View.GONE);
-            inpLuasAset.setVisibility(View.VISIBLE);
+//            inpLuasAset.setVisibility(View.VISIBLE);
 
             inpPersenKondisi.setVisibility(View.GONE);
             tvPersenKondisi.setVisibility(View.GONE);
 
             foto5rl.setVisibility(View.GONE);
 
-            tvPopTotalPohonSaatIni.setVisibility(View.GONE);
-            tvPopTotalStdMaster.setVisibility(View.GONE);
-            tvPopPerHA.setVisibility(View.GONE);
-            tvPresentasePopPerHA.setVisibility(View.GONE);
-            inpPopTotalPohonSaatIni.setVisibility(View.GONE);
-            inpPopTotalStdMaster.setVisibility(View.GONE);
-            inpPopPerHA.setVisibility(View.GONE);
-            inpPresentasePopPerHA.setVisibility(View.GONE);
+//            tvPopTotalPohonSaatIni.setVisibility(View.GONE);
+//            tvPopTotalStdMaster.setVisibility(View.GONE);
+//            tvPopPerHA.setVisibility(View.GONE);
+//            tvPresentasePopPerHA.setVisibility(View.GONE);
+//            inpPopTotalPohonSaatIni.setVisibility(View.GONE);
+//            inpPopTotalStdMaster.setVisibility(View.GONE);
+//            inpPopPerHA.setVisibility(View.GONE);
+//            inpPresentasePopPerHA.setVisibility(View.GONE);
 
         }
 
@@ -1652,23 +1833,23 @@ public class AddAsetActivity extends AppCompatActivity {
             tvFoto.setVisibility(View.GONE);
             scrollPartition.setVisibility(View.GONE);
 
-            tvLuasTanaman.setVisibility(View.VISIBLE);
+//            tvLuasTanaman.setVisibility(View.VISIBLE);
             tvLuasNonTanaman.setVisibility(View.GONE);
-            inpLuasAset.setVisibility(View.VISIBLE);
+//            inpLuasAset.setVisibility(View.VISIBLE);
 
             inpPersenKondisi.setVisibility(View.GONE);
             tvPersenKondisi.setVisibility(View.GONE);
 
             foto5rl.setVisibility(View.GONE);
 
-            tvPopTotalPohonSaatIni.setVisibility(View.GONE);
-            tvPopTotalStdMaster.setVisibility(View.GONE);
-            tvPopPerHA.setVisibility(View.GONE);
-            tvPresentasePopPerHA.setVisibility(View.GONE);
-            inpPopTotalPohonSaatIni.setVisibility(View.GONE);
-            inpPopTotalStdMaster.setVisibility(View.GONE);
-            inpPopPerHA.setVisibility(View.GONE);
-            inpPresentasePopPerHA.setVisibility(View.GONE);
+//            tvPopTotalPohonSaatIni.setVisibility(View.GONE);
+//            tvPopTotalStdMaster.setVisibility(View.GONE);
+//            tvPopPerHA.setVisibility(View.GONE);
+//            tvPresentasePopPerHA.setVisibility(View.GONE);
+//            inpPopTotalPohonSaatIni.setVisibility(View.GONE);
+//            inpPopTotalStdMaster.setVisibility(View.GONE);
+//            inpPopPerHA.setVisibility(View.GONE);
+//            inpPresentasePopPerHA.setVisibility(View.GONE);
 
         }
 
@@ -1708,14 +1889,14 @@ public class AddAsetActivity extends AppCompatActivity {
 
             foto5rl.setVisibility(View.GONE);
 
-            tvPopTotalPohonSaatIni.setVisibility(View.GONE);
-            tvPopTotalStdMaster.setVisibility(View.GONE);
-            tvPopPerHA.setVisibility(View.GONE);
-            tvPresentasePopPerHA.setVisibility(View.GONE);
-            inpPopTotalPohonSaatIni.setVisibility(View.GONE);
-            inpPopTotalStdMaster.setVisibility(View.GONE);
-            inpPopPerHA.setVisibility(View.GONE);
-            inpPresentasePopPerHA.setVisibility(View.GONE);
+//            tvPopTotalPohonSaatIni.setVisibility(View.GONE);
+//            tvPopTotalStdMaster.setVisibility(View.GONE);
+//            tvPopPerHA.setVisibility(View.GONE);
+//            tvPresentasePopPerHA.setVisibility(View.GONE);
+//            inpPopTotalPohonSaatIni.setVisibility(View.GONE);
+//            inpPopTotalStdMaster.setVisibility(View.GONE);
+//            inpPopPerHA.setVisibility(View.GONE);
+//            inpPresentasePopPerHA.setVisibility(View.GONE);
         }
 
         else if ("non tanaman".equals(String.valueOf(spinnerJenisAset.getSelectedItem())) &&"rusak".equals(String.valueOf(spinnerAsetKondisi.getSelectedItem()))) {
@@ -1744,14 +1925,14 @@ public class AddAsetActivity extends AppCompatActivity {
 
             foto5rl.setVisibility(View.GONE);
 
-            tvPopTotalPohonSaatIni.setVisibility(View.GONE);
-            tvPopTotalStdMaster.setVisibility(View.GONE);
-            tvPopPerHA.setVisibility(View.GONE);
-            tvPresentasePopPerHA.setVisibility(View.GONE);
-            inpPopTotalPohonSaatIni.setVisibility(View.GONE);
-            inpPopTotalStdMaster.setVisibility(View.GONE);
-            inpPopPerHA.setVisibility(View.GONE);
-            inpPresentasePopPerHA.setVisibility(View.GONE);
+//            tvPopTotalPohonSaatIni.setVisibility(View.GONE);
+//            tvPopTotalStdMaster.setVisibility(View.GONE);
+//            tvPopPerHA.setVisibility(View.GONE);
+//            tvPresentasePopPerHA.setVisibility(View.GONE);
+//            inpPopTotalPohonSaatIni.setVisibility(View.GONE);
+//            inpPopTotalStdMaster.setVisibility(View.GONE);
+//            inpPopPerHA.setVisibility(View.GONE);
+//            inpPresentasePopPerHA.setVisibility(View.GONE);
 
         }
 
@@ -1784,14 +1965,14 @@ public class AddAsetActivity extends AppCompatActivity {
 
             foto5rl.setVisibility(View.GONE);
 
-            tvPopTotalPohonSaatIni.setVisibility(View.GONE);
-            tvPopTotalStdMaster.setVisibility(View.GONE);
-            tvPopPerHA.setVisibility(View.GONE);
-            tvPresentasePopPerHA.setVisibility(View.GONE);
-            inpPopTotalPohonSaatIni.setVisibility(View.GONE);
-            inpPopTotalStdMaster.setVisibility(View.GONE);
-            inpPopPerHA.setVisibility(View.GONE);
-            inpPresentasePopPerHA.setVisibility(View.GONE);
+//            tvPopTotalPohonSaatIni.setVisibility(View.GONE);
+//            tvPopTotalStdMaster.setVisibility(View.GONE);
+//            tvPopPerHA.setVisibility(View.GONE);
+//            tvPresentasePopPerHA.setVisibility(View.GONE);
+//            inpPopTotalPohonSaatIni.setVisibility(View.GONE);
+//            inpPopTotalStdMaster.setVisibility(View.GONE);
+//            inpPopPerHA.setVisibility(View.GONE);
+//            inpPresentasePopPerHA.setVisibility(View.GONE);
 
         } else {
 //            listBtnMap.setVisibility(View.GONE);
@@ -1819,17 +2000,19 @@ public class AddAsetActivity extends AppCompatActivity {
 
             foto5rl.setVisibility(View.GONE);
 
-            tvPopTotalPohonSaatIni.setVisibility(View.GONE);
-            tvPopTotalStdMaster.setVisibility(View.GONE);
-            tvPopPerHA.setVisibility(View.GONE);
-            tvPresentasePopPerHA.setVisibility(View.GONE);
-            inpPopTotalPohonSaatIni.setVisibility(View.GONE);
-            inpPopTotalStdMaster.setVisibility(View.GONE);
-            inpPopPerHA.setVisibility(View.GONE);
-            inpPresentasePopPerHA.setVisibility(View.GONE);
+            tvPopTotalPohonSaatIni.setVisibility(View.VISIBLE);
+            tvPopTotalStdMaster.setVisibility(View.VISIBLE);
+            tvPopPerHA.setVisibility(View.VISIBLE);
+            tvPresentasePopPerHA.setVisibility(View.VISIBLE);
+            inpPopTotalPohonSaatIni.setVisibility(View.VISIBLE);
+            inpPopTotalStdMaster.setVisibility(View.VISIBLE);
+            inpPopPerHA.setVisibility(View.VISIBLE);
+            inpPresentasePopPerHA.setVisibility(View.VISIBLE);
 
             tvTahunTanam.setVisibility(View.GONE);
             inpTahunTanam.setVisibility(View.GONE);
+            tvSistemTanam.setVisibility(View.GONE);
+            spinnerSistemTanam.setVisibility(View.GONE);
         }
     }
     public void addAset(){
@@ -2152,6 +2335,7 @@ public class AddAsetActivity extends AppCompatActivity {
                     List<String> listSpinnerSubUnit = new ArrayList<>();
                     List<String> listSpinnerAfdeling = new ArrayList<>();
                     List<String> listSpinnerAlatAngkut = new ArrayList<>();
+                    List<String> listSpinnerSistemTanam = new ArrayList<>();
 
                     listSpinnerTipe.add("Pilih Tipe Aset");
                     listSpinnerJenis.add("Pilih Jenis Aset");
@@ -2160,6 +2344,7 @@ public class AddAsetActivity extends AppCompatActivity {
                     listSpinnerSubUnit.add("Pilih Sub Unit ");
                     listSpinnerAfdeling.add("Pilih Afdeling Aset");
                     listSpinnerAlatAngkut.add("Pilih Alat Pengangkutan");
+                    listSpinnerSistemTanam.add("Pilih Sistem Tanam");
 
                     // get data tipe aset
                     for (AsetTipe at : dataAllSpinner.getAsetTipe()){
@@ -2188,6 +2373,11 @@ public class AddAsetActivity extends AppCompatActivity {
                     // get alat angkut
                     for (AlatAngkut at : dataAllSpinner.getAlatAngkut()){
                         listSpinnerAlatAngkut.add(at.getAp_desc());
+                    }
+
+                    // get sistem tanam
+                    for (SistemTanam at : dataAllSpinner.getSistemTanam()){
+                        listSpinnerSistemTanam.add(at.getSt_desc());
                     }
 
                     // get sub unit
@@ -2246,6 +2436,12 @@ public class AddAsetActivity extends AppCompatActivity {
                     adapterAlatAngkut.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                     spinnerAlatAngkut.setAdapter(adapterAlatAngkut);
 
+                    // set adapter alat angkut
+                    ArrayAdapter<String> adapterSistemTanam = new ArrayAdapter<String>(getApplicationContext(),
+                            android.R.layout.simple_spinner_item, listSpinnerSistemTanam);
+                    adapterSistemTanam.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    spinnerSistemTanam.setAdapter(adapterSistemTanam);
+
                     // set adapter sap aset
                     try{
 
@@ -2255,10 +2451,6 @@ public class AddAsetActivity extends AppCompatActivity {
                                     android.R.layout.simple_spinner_item, listSpinnerSap);
                             adapterSap.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                             listView.setAdapter(adapterSap);
-
-
-
-
 
                         }
                     } catch(Exception e){
