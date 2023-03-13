@@ -177,7 +177,9 @@
                 android:layout_height="41dp"
                 android:layout_marginBottom="10dp"
                 android:background="@drawable/edit_text_spiner"
-                android:spinnerMode="dropdown" />
+                android:spinnerMode="dropdown"
+                android:inputType="numberPassword"
+                android:maxLength="4"/>
 
             <TextView
                 android:id="@+id/tvAlatAngkut"
@@ -645,7 +647,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginVertical="10dp"
-                android:text="POPULASI STANDAR (master) :"
+                android:text="POPULASI STANDAR :"
                 android:textColor="@color/main_grey"
                 android:textSize="14sp"
                 android:textStyle="bold"/>
