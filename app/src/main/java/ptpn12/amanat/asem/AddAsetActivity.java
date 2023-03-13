@@ -647,12 +647,12 @@ public class AddAsetActivity extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                if (!inpPopTotalPohonSaatIni.getText().equals("") && !inpLuasAset.getText().equals("")){
+                if (!inpPopTotalPohonSaatIni.getText().toString().equals("") && !inpLuasAset.getText().toString().equals("")){
 
                     try{
 
-                        Double popPerHa =  Double.parseDouble(String.valueOf(inpPopTotalPohonSaatIni.getText()))/Double.parseDouble(String.valueOf(inpLuasAset.getText()));
-                        Log.d("amanat19", String.valueOf(popPerHa));
+                        Log.d("amanat19",inpPopTotalPohonSaatIni.getText().toString());
+                        Double popPerHa =  Double.parseDouble((inpPopTotalPohonSaatIni.getText().toString() != null || !inpPopTotalPohonSaatIni.getText().toString() .equals("") ) ? String.valueOf(inpPopTotalPohonSaatIni.getText().toString()) : "0" ) / Double.parseDouble((inpLuasAset.getText().toString() != null || !inpLuasAset.getText().toString() .equals("") ) ? String.valueOf(inpLuasAset.getText().toString()) : "0");
                         inpPopPerHA.setText(String.valueOf(popPerHa));
                     } catch (Exception e){
                         e.printStackTrace();
@@ -677,11 +677,12 @@ public class AddAsetActivity extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                if (!inpPopTotalStdMaster.equals("")){
+                if (!inpPopTotalStdMaster.getText().toString().equals("")){
                     try {
 
-                        Double popPerHa =  Double.parseDouble(String.valueOf(inpPopTotalPohonSaatIni.getText()))/Double.parseDouble(String.valueOf(inpLuasAset.getText()));
-                        Double presentase = popPerHa / Double.parseDouble(String.valueOf(inpPopTotalStdMaster.getText())) * 100;
+//                        Log.d("amanat19", ));
+                        Double popPerHa =  Double.parseDouble((inpPopTotalPohonSaatIni.getText().toString() != null || !inpPopTotalPohonSaatIni.getText().toString().equals("") ) ? String.valueOf(inpPopTotalPohonSaatIni.getText().toString()) : "0" ) / Double.parseDouble((inpLuasAset.getText().toString().trim().equals("")) ? "0" : inpLuasAset.getText().toString().trim());
+                        Double presentase = popPerHa / Double.parseDouble((inpPopTotalStdMaster.getText().toString() != null || inpPopTotalStdMaster.getText().toString().equals("") ) ? String.valueOf(inpPopTotalStdMaster.getText().toString()) : "0"  ) * 100;
                         inpPresentasePopPerHA.setText(String.valueOf(presentase));
                     } catch (Exception e){
                         e.printStackTrace();
@@ -2110,6 +2111,7 @@ public class AddAsetActivity extends AppCompatActivity {
 
         if (spinnerKodeAset.getSelectedItemId() == 0 || spinnerTipeAset.getSelectedItemId() == 0
                 || spinnerJenisAset.getSelectedItemId() == 0 || spinnerAsetKondisi.getSelectedItemId() == 0 ) {
+            Toast.makeText(getApplicationContext(), "error ada yang belum disisi", Toast.LENGTH_SHORT).show();
             return;
         }
 
@@ -2129,7 +2131,7 @@ public class AddAsetActivity extends AppCompatActivity {
 
                 String nama_aset = inpNamaAset.getText().toString().trim();
                 String nomor_aset_sap = inpNoSAP.getText().toString().trim();
-                String luas_aset = String.valueOf(Double.parseDouble(inpLuasAset.getText().toString().trim()));
+                String luas_aset = String.valueOf(Double.parseDouble((inpLuasAset.getText().toString().trim().equals("")) ? "0" : inpLuasAset.getText().toString().trim() ));
                 String nilai_aset = String.valueOf(CurrencyToNumber(inpNilaiAsetSAP.getText().toString().trim()));
                 String tgl_oleh = inpTglOleh.getText().toString().trim() + " 00:00:00";
                 String masa_susut = inpMasaPenyusutan.getText().toString().trim();
@@ -2196,12 +2198,16 @@ public class AddAsetActivity extends AppCompatActivity {
                 if (spinnerJenisAset.getSelectedItemId() == 1 || spinnerJenisAset.getSelectedItemId() == 3) {
                     RequestBody requestPopulasiPohonSaatIni = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(Double.parseDouble(inpPopTotalPohonSaatIni.getText().toString().trim())));
                     RequestBody requestPopulasiStandar = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(Double.parseDouble(inpPopTotalStdMaster.getText().toString().trim())));
-                    RequestBody requestPopulasiPerHA = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(Double.parseDouble(inpPopPerHA.getText().toString().trim())));
-                    RequestBody requestPresentasePopulasiPerHA = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(Double.parseDouble(inpPresentasePopPerHA.getText().toString().trim())));
                     builder.addPart(MultipartBody.Part.createFormData("pop_pohon_saat_ini", null, requestPopulasiPohonSaatIni));
                     builder.addPart(MultipartBody.Part.createFormData("pop_standar", null, requestPopulasiStandar));
-                    builder.addPart(MultipartBody.Part.createFormData("pop_per_ha", null, requestPopulasiPerHA));
-                    builder.addPart(MultipartBody.Part.createFormData("presentase_pop_per_ha", null, requestPresentasePopulasiPerHA));
+
+                    if (!inpPopPerHA.getText().toString().equals("")) {
+                        RequestBody requestPopulasiPerHA = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(Double.parseDouble(inpPopPerHA.getText().toString().trim())));
+                        RequestBody requestPresentasePopulasiPerHA = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(Double.parseDouble(inpPresentasePopPerHA.getText().toString().trim())));
+                        builder.addPart(MultipartBody.Part.createFormData("pop_per_ha", null, requestPopulasiPerHA));
+                        builder.addPart(MultipartBody.Part.createFormData("presentase_pop_per_ha", null, requestPresentasePopulasiPerHA));
+                    }
+
                 }
 
                 if(spinnerKodeAset.getSelectedItem().equals("ZC06/S001/Tebu")){
