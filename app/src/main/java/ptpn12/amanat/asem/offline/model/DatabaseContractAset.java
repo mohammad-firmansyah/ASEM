@@ -56,6 +56,7 @@ public class DatabaseContractAset {
         public static String POPHEKTARINI = "pop_per_ha";
         public static String POPHEKTARSTD = "presentase_pop_per_ha";
         public static String TAHUNTANAM = "tahun_tanam";
+        public static String SISTEMTANAM = "sistem_tanam";
 
 
     }

@@ -176,6 +176,18 @@ public class Aset implements Parcelable {
     @Expose
     private String pop_hektar_std;
 
+    @SerializedName("sistem_tanam")
+    @Expose
+    private String sistem_tanam;
+
+    public String getSistem_tanam() {
+        return sistem_tanam;
+    }
+
+    public void setSistem_tanam(String sistem_tanam) {
+        this.sistem_tanam = sistem_tanam;
+    }
+
     public void setJumlahPohon(Integer jumlahPohon) {
         this.jumlahPohon = jumlahPohon;
     }
@@ -594,7 +606,7 @@ public class Aset implements Parcelable {
         this.umurEkonomisInMonth = umurEkonomisInMonth;
     }
 
-    public Aset(Integer asetId, String asetName, String asetTipe, String asetJenis, String asetKondisi, String asetSubUnit, String asetKode, String nomorSap, String fotoAset1, String fotoAset2, String fotoAset3, String fotoAset4,String fotoAset5, String geoTag1, String geoTag2, String geoTag3, String geoTag4, String geoTag5, Double asetLuas, String tglInput, String tglOleh, Long nilaiResidu, Long nilaiOleh, String nomorBast, String masaSusut, String keterangan, String fotoQr, String noInv, String fotoAsetQr, String statusPosisi, String unitId, String afdelingId, String userInputId, String createdAt, String updatedAt, Integer jumlahPohon, double persenKondisi, String statusReject, String ketReject, String asetFotoQrStatus,String hgu,String berita_acara,String fileBAST,String alat_pengangkutan,String satuan_luas, String popTotalIni,String popTotalStd, String popHektarIni,String popHektarStd, Integer tahun_tanam) {
+    public Aset(Integer asetId, String asetName, String asetTipe, String asetJenis, String asetKondisi, String asetSubUnit, String asetKode, String nomorSap, String fotoAset1, String fotoAset2, String fotoAset3, String fotoAset4,String fotoAset5, String geoTag1, String geoTag2, String geoTag3, String geoTag4, String geoTag5, Double asetLuas, String tglInput, String tglOleh, Long nilaiResidu, Long nilaiOleh, String nomorBast, String masaSusut, String keterangan, String fotoQr, String noInv, String fotoAsetQr, String statusPosisi, String unitId, String afdelingId, String userInputId, String createdAt, String updatedAt, Integer jumlahPohon, double persenKondisi, String statusReject, String ketReject, String asetFotoQrStatus,String hgu,String berita_acara,String fileBAST,String alat_pengangkutan,String satuan_luas, String popTotalIni,String popTotalStd, String popHektarIni,String popHektarStd, Integer tahun_tanam, String sistem_tanam) {
         this.asetId = asetId;
         this.asetName = asetName;
         this.asetTipe = asetTipe;
@@ -647,6 +659,7 @@ public class Aset implements Parcelable {
         this.pop_hektar_std = popHektarStd ;
         this.fileBAST = fileBAST;
         this.tahun_tanam = tahun_tanam;
+        this.sistem_tanam = sistem_tanam;
     }
 
     @Override

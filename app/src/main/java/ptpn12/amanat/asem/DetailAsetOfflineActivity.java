@@ -1426,7 +1426,8 @@ public class DetailAsetOfflineActivity extends AppCompatActivity {
         Cursor afdeling = asetHelper.getAllAfdeling();
         Cursor sap = asetHelper.getAllSap();
         Cursor alatAngkut = asetHelper.getAllAlatAngkut();
-        ptpn12.amanat.asem.offline.model.DataAllSpinner dataAllSpinner = MappingHelper.mapCursorToArrayListSpinner(asetTipe,asetJenis,asetKondisi,asetKode,unit,subUnit,afdeling,sap,alatAngkut);
+        Cursor sistemTanam = asetHelper.getAllSistemTanam();
+        ptpn12.amanat.asem.offline.model.DataAllSpinner dataAllSpinner = MappingHelper.mapCursorToArrayListSpinner(asetTipe,asetJenis,asetKondisi,asetKode,unit,subUnit,afdeling,sap,alatAngkut,sistemTanam);
 
         List<String> listSpinnerTipe = new ArrayList<>();
 

@@ -9,6 +9,7 @@ import ptpn12.amanat.asem.api.model.AsetKode2;
 import ptpn12.amanat.asem.api.model.AsetKondisi;
 import ptpn12.amanat.asem.api.model.AsetTipe;
 import ptpn12.amanat.asem.api.model.Sap;
+import ptpn12.amanat.asem.api.model.SistemTanam;
 import ptpn12.amanat.asem.api.model.SubUnit;
 import ptpn12.amanat.asem.api.model.Unit;
 import ptpn12.amanat.asem.offline.model.Aset;
@@ -21,6 +22,7 @@ import ptpn12.amanat.asem.offline.model.DatabaseContractAsetKode;
 import ptpn12.amanat.asem.offline.model.DatabaseContractAsetKondisi;
 import ptpn12.amanat.asem.offline.model.DatabaseContractAsetTipe;
 import ptpn12.amanat.asem.offline.model.DatabaseContractSap;
+import ptpn12.amanat.asem.offline.model.DatabaseContractSistemTanam;
 import ptpn12.amanat.asem.offline.model.DatabaseContractSubUnit;
 import ptpn12.amanat.asem.offline.model.DatabaseContractUnit;
 
@@ -82,16 +84,17 @@ public class MappingHelper {
             String pop_hektar_ini = asetCursor.getString(asetCursor.getColumnIndexOrThrow(DatabaseContractAset.AsetColumns.POPHEKTARINI));
             String pop_hektar_std = asetCursor.getString(asetCursor.getColumnIndexOrThrow(DatabaseContractAset.AsetColumns.POPHEKTARSTD));
             Integer tahun_tanam = asetCursor.getInt(asetCursor.getColumnIndexOrThrow(DatabaseContractAset.AsetColumns.TAHUNTANAM));
+            String sistem_tanam = asetCursor.getString(asetCursor.getColumnIndexOrThrow(DatabaseContractAset.AsetColumns.SISTEMTANAM));
             asetList.add(new Aset(asetid, asetname,asettipe,asetjenis,asetkondisi,asetsubunit,asetkode,nomorsap,fotoaset1,fotoaset2,
                     fotoaset3,fotoaset4,fotoaset5,geotag1,geotag2,geotag3,geotag4,geotag5,asetluas,tglinput,tgloleh,nilairesidu,nilaioleh,nomorbast,
                     masasusut,keterangan,fotoqr,noinv,fotoasetqr,statusposisi,unitid,afdelingid,userinputid,createdat,updatedat,
                     jumlahpohon,persenkondisi,statusreject,ketreject,asetfotoqrstatus,hgu,beritaAcara,fileBAST,alat_pengangkutan,satuan_luas,
-                    pop_total_ini,pop_total_std,pop_hektar_ini,pop_hektar_std,tahun_tanam));
+                    pop_total_ini,pop_total_std,pop_hektar_ini,pop_hektar_std,tahun_tanam,sistem_tanam));
         }
         return asetList;
     }
 
-    public static DataAllSpinner mapCursorToArrayListSpinner(Cursor asetTipe, Cursor asetJenis, Cursor asetKondisi, Cursor asetKode, Cursor unit, Cursor subUnit, Cursor afdeling, Cursor sap, Cursor alatAngkut) {
+    public static DataAllSpinner mapCursorToArrayListSpinner(Cursor asetTipe, Cursor asetJenis, Cursor asetKondisi, Cursor asetKode, Cursor unit, Cursor subUnit, Cursor afdeling, Cursor sap, Cursor alatAngkut,Cursor sistemTanam) {
         DataAllSpinner dataAllSpinner = new DataAllSpinner();
         ArrayList<AsetTipe> listAsetTipe = new ArrayList<>();
         ArrayList<AsetJenis> listAsetJenis = new ArrayList<>();
@@ -102,6 +105,7 @@ public class MappingHelper {
         ArrayList<Afdelling> listAfdeling = new ArrayList<>();
         ArrayList<Sap> listSap = new ArrayList<>();
         ArrayList<AlatAngkut> listAlatAngkut = new ArrayList<>();
+        ArrayList<SistemTanam> listSistemTanam = new ArrayList<>();
 
         while (asetTipe.moveToNext()) {
             Integer asetTipeId = asetTipe.getInt(asetTipe.getColumnIndexOrThrow(DatabaseContractAsetTipe.AsetTipeColumns.ASETTIPEID));
@@ -162,6 +166,12 @@ public class MappingHelper {
             listAlatAngkut.add(new AlatAngkut(apId,apDesc));
         }
 
+        while (sistemTanam.moveToNext()) {
+            Integer stId = sistemTanam.getInt(sistemTanam.getColumnIndexOrThrow(DatabaseContractSistemTanam.SistemTanamColumns.SISTEMTANAMID));
+            String stDesc = sistemTanam.getString(sistemTanam.getColumnIndexOrThrow(DatabaseContractSistemTanam.SistemTanamColumns.SISTEMTANAMDESC));
+            listSistemTanam.add(new SistemTanam(stId,stDesc));
+        }
+
 
 
         dataAllSpinner.setAsetTipe(listAsetTipe);
@@ -173,6 +183,7 @@ public class MappingHelper {
         dataAllSpinner.setAfdeling(listAfdeling);
         dataAllSpinner.setSap(listSap);
         dataAllSpinner.setAlatAngkut(listAlatAngkut);
+        dataAllSpinner.setSistemTanam(listSistemTanam);
 
         return dataAllSpinner;
     }
@@ -231,12 +242,13 @@ public class MappingHelper {
             String pop_hektar_ini = asetCursor.getString(asetCursor.getColumnIndexOrThrow(DatabaseContractAset.AsetColumns.POPHEKTARINI));
             String pop_hektar_std = asetCursor.getString(asetCursor.getColumnIndexOrThrow(DatabaseContractAset.AsetColumns.POPHEKTARSTD));
             Integer tahun_tanam = asetCursor.getInt(asetCursor.getColumnIndexOrThrow(DatabaseContractAset.AsetColumns.TAHUNTANAM));
+            String sistem_tanam = asetCursor.getString(asetCursor.getColumnIndexOrThrow(DatabaseContractAset.AsetColumns.SISTEMTANAM));
 
             asetList = new Aset(asetid, asetname,asettipe,asetjenis,asetkondisi,asetsubunit,asetkode,nomorsap,fotoaset1,fotoaset2,
                     fotoaset3,fotoaset4,fotoaset5,geotag1,geotag2,geotag3,geotag4,geotag5,asetluas,tglinput,tgloleh,nilairesidu,nilaioleh,nomorbast,
                     masasusut,keterangan,fotoqr,noinv,fotoasetqr,statusposisi,unitid,afdelingid,userinputid,createdat,updatedat,
                     jumlahpohon,persenkondisi,statusreject,ketreject,asetfotoqrstatus,hgu,beritaAcara,fileBAST,alat_pengangkutan,satuan_luas,
-                    pop_total_ini,pop_total_std,pop_hektar_ini,pop_hektar_std,tahun_tanam);
+                    pop_total_ini,pop_total_std,pop_hektar_ini,pop_hektar_std,tahun_tanam,sistem_tanam);
         }
         return asetList;
     }

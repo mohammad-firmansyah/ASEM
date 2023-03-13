@@ -7,6 +7,7 @@ import ptpn12.amanat.asem.api.model.AsetKode2;
 import ptpn12.amanat.asem.api.model.AsetKondisi;
 import ptpn12.amanat.asem.api.model.AsetTipe;
 import ptpn12.amanat.asem.api.model.Sap;
+import ptpn12.amanat.asem.api.model.SistemTanam;
 import ptpn12.amanat.asem.api.model.SubUnit;
 import ptpn12.amanat.asem.api.model.Unit;
 import com.google.gson.annotations.Expose;
@@ -45,6 +46,18 @@ public class DataAllSpinner {
     @SerializedName("alat_pengangkutan")
     @Expose
     private List<AlatAngkut> alatAngkut = null;
+
+    @SerializedName("sistem_tanam")
+    @Expose
+    private List<SistemTanam> sistemTanam = null;
+
+    public List<SistemTanam> getSistemTanam() {
+        return sistemTanam;
+    }
+
+    public void setSistemTanam(List<SistemTanam> sistemTanam) {
+        this.sistemTanam = sistemTanam;
+    }
 
     public List<AlatAngkut> getAlatAngkut() {
         return alatAngkut;

@@ -94,6 +94,17 @@ public class AsetHelper {
                 null);
     }
 
+    public Cursor getAllSistemTanam() {
+        return database.query(
+                "sistem_tanam",
+                null,
+                null,
+                null,
+                null,
+                null,
+                null);
+    }
+
     public Cursor getAllAsetJenis() {
         return database.query(
                 "aset_jenis",
