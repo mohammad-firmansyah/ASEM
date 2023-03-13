@@ -177,7 +177,7 @@
                 android:textStyle="bold"
                 />
 
-            <Spinner
+            <EditText
                 android:id="@+id/inpSistemTanam"
                 android:layout_width="match_parent"
                 android:layout_height="41dp"
@@ -716,7 +716,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginVertical="10dp"
-                android:text="POPULASI STANDAR (master) :"
+                android:text="POPULASI STANDAR :"
                 android:textColor="@color/main_grey"
                 android:textSize="14sp"
                 android:textStyle="bold"/>

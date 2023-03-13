@@ -198,52 +198,76 @@ public class Data2 {
         this.alat_pengangkutan = alat_pengangkutan;
     }
 
-    @SerializedName("pop_total_ini")
+    @SerializedName("pop_pohon_saat_ini")
     @Expose
-    private Double popTotalIni;
+    private Double popPohonSaatIni;
 
-    @SerializedName("pop_total_std")
+    @SerializedName("pop_standar")
     @Expose
-    private Double popTotalStd;
+    private Double popStandar;
 
-    @SerializedName("pop_hektar_ini")
+    @SerializedName("pop_per_ha")
     @Expose
-    private Double popHektarIni;
+    private Double popPerHA;
 
-    @SerializedName("pop_hektar_std")
+    @SerializedName("presentase_pop_per_ha")
     @Expose
-    private Double popHektarStd;
+    private Double popPersentasePerHA;
 
-    public Double getPopTotalIni() {
-        return popTotalIni;
+    @SerializedName("tahun_tanam")
+    @Expose
+    private String tahunTanam;
+
+    @SerializedName("sistem_tanam")
+    @Expose
+    private String sistemTanam;
+
+    public String getSistemTanam() {
+        return sistemTanam;
     }
 
-    public void setPopTotalIni(Double popTotalIni) {
-        this.popTotalIni = popTotalIni;
+    public void setSistemTanam(String sistemTanam) {
+        this.sistemTanam = sistemTanam;
     }
 
-    public Double getPopTotalStd() {
-        return popTotalStd;
+    public String getTahunTanam() {
+        return tahunTanam;
     }
 
-    public void setPopTotalStd(Double popTotalStd) {
-        this.popTotalStd = popTotalStd;
+    public void setTahunTanam(String tahunTanam) {
+        this.tahunTanam = tahunTanam;
     }
 
-    public Double getPopHektarIni() {
-        return popHektarIni;
+    public Double getPopPohonSaatIni() {
+        return popPohonSaatIni;
     }
 
-    public void setPopHektarIni(Double popHektarIni) {
-        this.popHektarIni = popHektarIni;
+    public void setPopPohonSaatIni(Double popPohonSaatIni) {
+        this.popPohonSaatIni = popPohonSaatIni;
     }
 
-    public Double getPopHektarStd() {
-        return popHektarStd;
+    public Double getPopStandar() {
+        return popStandar;
     }
 
-    public void setPopHektarStd(Double popHektarStd) {
-        this.popHektarStd = popHektarStd;
+    public void setPopStandar(Double popStandar) {
+        this.popStandar = popStandar;
+    }
+
+    public Double getPopPerHA() {
+        return popPerHA;
+    }
+
+    public void setPopPerHA(Double popPerHA) {
+        this.popPerHA = popPerHA;
+    }
+
+    public Double getPopPersentasePerHA() {
+        return popPersentasePerHA;
+    }
+
+    public void setPopPersentasePerHA(Double popPersentasePerHA) {
+        this.popPersentasePerHA = popPersentasePerHA;
     }
 
     public String getHgu() {

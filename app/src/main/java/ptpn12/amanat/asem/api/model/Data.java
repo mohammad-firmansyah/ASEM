@@ -186,6 +186,17 @@ public class Data {
     @Expose
     private String tahunTanam;
 
+    @SerializedName("sistem_tanam")
+    @Expose
+    private String sistemTanam;
+
+    public String getSistemTanam() {
+        return sistemTanam;
+    }
+
+    public void setSistemTanam(String sistemTanam) {
+        this.sistemTanam = sistemTanam;
+    }
 
     public String getTahunTanam() {
         return tahunTanam;
