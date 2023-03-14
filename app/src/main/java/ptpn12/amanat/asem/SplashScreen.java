@@ -55,30 +55,32 @@ public class SplashScreen extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(),"Error " + String.valueOf(response.code()),Toast.LENGTH_LONG).show();
                     return;
                 } else {
-                    android.app.AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(SplashScreen.this);
-                    if (!response.body().getData()) {
-
-                        // set title dialog
-                        alertDialogBuilder.setTitle("Update Versi Terbaru");
-
-                        // set pesan dari dialog
-                        alertDialogBuilder
-                                .setMessage("Update versi aplikasi anda yang terbaru")
-                                .setCancelable(false)
-                                .setPositiveButton("Ok",new DialogInterface.OnClickListener() {
-                                    public void onClick(DialogInterface dialog,int id) {
-                                        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=ptpn12.amanat.asem"));
-                                        startActivity(browserIntent);
-
-                                    }
-                                });
-                        alertDialogBuilder.show();
+//                    android.app.AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(SplashScreen.this);
+//                    if (!response.body().getData()) {
+//
+//                        // set title dialog
+//                        alertDialogBuilder.setTitle("Update Versi Terbaru");
+//
+//                        // set pesan dari dialog
+//                        alertDialogBuilder
+//                                .setMessage("Update versi aplikasi anda yang terbaru")
+//                                .setCancelable(false)
+//                                .setPositiveButton("Ok",new DialogInterface.OnClickListener() {
+//                                    public void onClick(DialogInterface dialog,int id) {
+//                                        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=ptpn12.amanat.asem"));
+//                                        startActivity(browserIntent);
+//                                        finish();
+//
+//                                    }
+//                                });
+//                        alertDialogBuilder.show();
+////                        new Handler().postDelayed(this::checkLogin, 2000);
+//                        return;
+//                    } else {
 //                        new Handler().postDelayed(this::checkLogin, 2000);
-                        return;
-                    } else {
-                        new Handler().postDelayed(this::checkLogin, 2000);
-//                        Toast.makeText(getApplicationContext(),"masuk",Toast.LENGTH_LONG).show();
-                    }
+////                        Toast.makeText(getApplicationContext(),"masuk",Toast.LENGTH_LONG).show();
+//                    }
+                    new Handler().postDelayed(this::checkLogin, 2000);
                 }
             }
 
