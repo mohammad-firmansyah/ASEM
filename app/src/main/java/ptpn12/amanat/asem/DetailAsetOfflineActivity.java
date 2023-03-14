@@ -877,7 +877,7 @@ public class DetailAsetOfflineActivity extends AppCompatActivity {
 
             inpPopTotalPohonSaatIni.setText(String.valueOf(aset.getPop_total_ini()));
             inpPopTotalStdMaster.setText(String.valueOf(aset.getPop_total_std()));
-            inpPopPerHA.setText(showPopulasi(String.valueOf(aset.getPop_hektar_ini())));
+            inpPopPerHA.setText(showPopulasiWithoutPercentage(String.valueOf(aset.getPop_hektar_ini())));
             inpPresentasePopPerHA.setText(showPopulasi(String.valueOf(aset.getPop_hektar_std())));
             inpTahunTanam.setText(String.valueOf(aset.getTahun_tanam()));
             inpSistemTanam.setText(getSistemTanamFromId(aset.getSistem_tanam()));
@@ -910,6 +910,21 @@ public class DetailAsetOfflineActivity extends AppCompatActivity {
         String comma  = second.substring(0,3);
 
         String result = first[0] + "." +comma +" %";
+
+        return result;
+    }
+    private String showPopulasiWithoutPercentage(String pop) {
+        String[] first  = pop.split("[.]");
+
+        Log.d("amanat20", String.valueOf(first[0]));
+        if (first.length <= 1 ) {
+            return pop;
+        }
+        String second = first[first.length - 1];
+
+        String comma  = second.substring(0,3);
+
+        String result = first[0] + "." +comma;
 
         return result;
     }

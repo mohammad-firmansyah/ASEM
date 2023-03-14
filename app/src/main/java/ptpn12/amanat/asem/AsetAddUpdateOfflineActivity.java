@@ -708,7 +708,7 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity {
 
                         Double popPerHa =  Double.parseDouble(String.valueOf(inpPopTotalPohonSaatIni.getText()))/Double.parseDouble(String.valueOf(inpLuasAset.getText()));
                         Double presentase = popPerHa / Double.parseDouble(String.valueOf(inpPopTotalStdMaster.getText())) * 100;
-                        inpPresentasePopPerHA.setText(showPopulasi(String.valueOf(presentase)));
+                        inpPresentasePopPerHA.setText(showPopulasiWithoutPercentage(String.valueOf(presentase)));
                     } catch (Exception e){
                         e.printStackTrace();
                     }
@@ -1601,6 +1601,22 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity {
         String comma  = second.substring(0,3);
 
         String result = first[0] + "." +comma +" %";
+
+        return result;
+    }
+
+    private String showPopulasiWithoutPercentage(String pop) {
+        String[] first  = pop.split("[.]");
+
+        Log.d("amanat20", String.valueOf(first[0]));
+        if (first.length <= 1 ) {
+            return pop;
+        }
+        String second = first[first.length - 1];
+
+        String comma  = second.substring(0,3);
+
+        String result = first[0] + "." +comma;
 
         return result;
     }
