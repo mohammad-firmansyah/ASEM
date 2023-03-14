@@ -835,6 +835,37 @@ public class DetailAsetActivity extends AppCompatActivity {
         });
     }
 
+    private String showPopulasi(String pop) {
+        String[] first  = pop.split("[.]");
+
+        Log.d("amanat20", String.valueOf(first[0]));
+        if (first.length <= 1 ) {
+            return pop;
+        }
+        String second = first[first.length - 1];
+
+        String comma  = second.substring(0,3);
+
+        String result = first[0] + "." +comma +" %";
+
+        return result;
+    }
+    private String showPopulasiWithoutPercentage(String pop) {
+        String[] first  = pop.split("[.]");
+
+        Log.d("amanat20", String.valueOf(first[0]));
+        if (first.length <= 1 ) {
+            return pop;
+        }
+        String second = first[first.length - 1];
+
+        String comma  = second.substring(0,3);
+
+        String result = first[0] + "." +comma;
+
+        return result;
+    }
+
 
 
     @SuppressLint("SetTextI18n")
@@ -875,8 +906,8 @@ public class DetailAsetActivity extends AppCompatActivity {
             inpPersenKondisi.setText(String.valueOf(aset.getPersenKondisi()));
 //            inpJumlahPohon.setText(String.valueOf(aset.getJumlahPohon()));
             inpHGU.setText(String.valueOf(aset.getHgu()));
-            inpPopTotalPohonSaatIni.setText(String.valueOf(aset.getPopPohonSaatIni()));
-            inpPopTotalStdMaster.setText(String.valueOf(aset.getPopStandar()));
+            inpPopTotalPohonSaatIni.setText(showPopulasi(String.valueOf(aset.getPopPohonSaatIni())));
+            inpPopTotalStdMaster.setText(showPopulasiWithoutPercentage(String.valueOf(aset.getPopStandar())));
             inpPopPerHA.setText(String.valueOf(aset.getPopPerHa()));
             inpPresentasePopPerHA.setText(String.valueOf(aset.getPresentasePopPerHa()));
             inpTahunTanam.setText(String.valueOf(aset.getTahunTanam()));
