@@ -752,7 +752,7 @@
                 android:cursorVisible="false"
                 android:focusable="false"
                 android:focusableInTouchMode="false"
-                android:background="@drawable/pickdate_background"
+                android:background="@drawable/tgl_spinner"
                 android:hint="Tanggal Perolehan"
                 android:paddingVertical="10dp" />
 
@@ -774,7 +774,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="41dp"
                 android:layout_marginBottom="10dp"
-                android:background="@drawable/tahun_background"
+                android:background="@drawable/tahun_background_disabled"
                 android:inputType="numberDecimal"
                 android:lines="1"
                 android:paddingVertical="10dp" />

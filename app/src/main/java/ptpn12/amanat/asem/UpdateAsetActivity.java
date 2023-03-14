@@ -470,6 +470,7 @@ public class UpdateAsetActivity extends AppCompatActivity {
         id = getIntent().getIntExtra("id",0);
         listBtnMap = findViewById(R.id.listMapButton);
         inpTglOleh = findViewById(R.id.inpTglMasukAset);
+        inpTglOleh.setEnabled(false);
         tvUploudBA = findViewById(R.id.tvUploudBA);
         tvUploadBAST = findViewById(R.id.tvUploadFileBAST);
         spinnerTipeAset = findViewById(R.id.inpTipeAset);
@@ -493,6 +494,7 @@ public class UpdateAsetActivity extends AppCompatActivity {
         inpNilaiAsetSAP = findViewById(R.id.inpNilaiAsetSAP);
         inpNilaiAsetSAP.setEnabled(false);
         inpMasaPenyusutan = findViewById(R.id.inpMasaPenyusutan);
+        inpMasaPenyusutan.setEnabled(false);
         inpNomorBAST = findViewById(R.id.inpNmrBAST);
         inpNilaiResidu = findViewById(R.id.inpNmrResidu);
         inpNilaiResidu.setEnabled(false);
@@ -610,7 +612,7 @@ public class UpdateAsetActivity extends AppCompatActivity {
                         // when item selected from list
                         // set selected item on textView
                         inpNoSAP.setText(adapterSap.getItem(position));
-                        setNilaiAsetSAP(adapterSap.getItem(position));
+                        setValueSap(adapterSap.getItem(position));
 
                         // Dismiss dialog
                         spinnerNoSap.dismiss();
@@ -2481,7 +2483,18 @@ public class UpdateAsetActivity extends AppCompatActivity {
             }
         }
     }
+    private void setValueSap(String sap) {
 
+        for (Sap it : sapAll) {
+
+            if (it.getSap_desc().equals(sap)){
+                inpNilaiAsetSAP.setText(formatrupiah(Double.valueOf(it.getNilai_oleh())));
+                inpNilaiResidu.setText(formatrupiah(Double.valueOf(it.getNilai_residu())));
+                inpMasaPenyusutan.setText(String.valueOf(it.getMasa_susut()));
+                inpTglOleh.setText(it.getTgl_oleh());
+            }
+        }
+    }
 
 
 }
