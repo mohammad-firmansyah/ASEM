@@ -9,6 +9,7 @@ import ptpn12.amanat.asem.api.model.AsetKondisi;
 import ptpn12.amanat.asem.api.model.AsetModel;
 import ptpn12.amanat.asem.api.model.AsetModel2;
 import ptpn12.amanat.asem.api.model.AsetTipe;
+import ptpn12.amanat.asem.api.model.CheckVersionModel;
 import ptpn12.amanat.asem.api.model.Data2;
 import ptpn12.amanat.asem.api.model.DeleteModel;
 import ptpn12.amanat.asem.api.model.LoginModel;
@@ -39,6 +40,9 @@ public interface AsetInterface {
 
     @GET("aset-jenis/")
     Call<AsetJenisModel> getAsetJenis();
+
+    @GET("check-version/{v}")
+    Call<CheckVersionModel> checkVersion(@Path("v") Integer v);
 
     @GET("aset-kode/")
     Call<AsetKodeModel2> getAsetKode();
