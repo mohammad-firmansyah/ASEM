@@ -2194,6 +2194,7 @@ public class AddAsetActivity extends AppCompatActivity {
                     builder.addPart(MultipartBody.Part.createFormData("jumlah_pohon", null, requestJumlahPohon));
                 }
 
+                //multipart pohon
                 if (spinnerJenisAset.getSelectedItemId() == 1 || spinnerJenisAset.getSelectedItemId() == 3) {
                     RequestBody requestPopulasiPohonSaatIni = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(Double.parseDouble(inpPopTotalPohonSaatIni.getText().toString().trim())));
                     RequestBody requestPopulasiStandar = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(Double.parseDouble(inpPopTotalStdMaster.getText().toString().trim())));
