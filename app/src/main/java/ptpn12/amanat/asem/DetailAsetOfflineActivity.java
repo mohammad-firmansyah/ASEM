@@ -44,6 +44,7 @@ import ptpn12.amanat.asem.api.model.AsetModel;
 import ptpn12.amanat.asem.api.model.AsetTipe;
 import ptpn12.amanat.asem.api.model.DataAllSpinner;
 import ptpn12.amanat.asem.api.model.Sap;
+import ptpn12.amanat.asem.api.model.SistemTanam;
 import ptpn12.amanat.asem.api.model.SubUnit;
 import ptpn12.amanat.asem.api.model.Unit;
 import ptpn12.amanat.asem.offline.AsetHelper;
@@ -78,6 +79,7 @@ public class DetailAsetOfflineActivity extends AppCompatActivity {
     String url5 = "";
     String urlBa;
     String urlBast;
+    List<SistemTanam> listSistemTanam = new ArrayList<SistemTanam>();
     Button downloadBa;
     Button downloadBAST;
     Map<Integer, Integer> mapAfdelingSpinner = new HashMap<Integer, Integer>();
@@ -875,10 +877,10 @@ public class DetailAsetOfflineActivity extends AppCompatActivity {
 
             inpPopTotalPohonSaatIni.setText(String.valueOf(aset.getPop_total_ini()));
             inpPopTotalStdMaster.setText(String.valueOf(aset.getPop_total_std()));
-            inpPopPerHA.setText(String.valueOf(aset.getPop_hektar_ini()));
-            inpPresentasePopPerHA.setText(String.valueOf(aset.getPop_hektar_std()));
+            inpPopPerHA.setText(showPopulasi(String.valueOf(aset.getPop_hektar_ini())));
+            inpPresentasePopPerHA.setText(showPopulasi(String.valueOf(aset.getPop_hektar_std())));
             inpTahunTanam.setText(String.valueOf(aset.getTahun_tanam()));
-            inpSistemTanam.setText(String.valueOf(aset.getSistem_tanam()));
+            inpSistemTanam.setText(getSistemTanamFromId(aset.getSistem_tanam()));
         }
         catch (Exception e){
             e.printStackTrace();
@@ -886,9 +888,31 @@ public class DetailAsetOfflineActivity extends AppCompatActivity {
 
     }
 
+    private String getSistemTanamFromId(String sistem_tanam) {
+        for(SistemTanam it : listSistemTanam) {
+            if (Integer.parseInt(sistem_tanam) == it.getSt_id()){
+                return it.getSt_desc();
+            }
+        }
+        return "Tidak Ada sistem tanam";
+    }
 
 
+    private String showPopulasi(String pop) {
+        String[] first  = pop.split("[.]");
 
+        Log.d("amanat20", String.valueOf(first[0]));
+        if (first.length <= 1 ) {
+            return pop;
+        }
+        String second = first[first.length - 1];
+
+        String comma  = second.substring(0,3);
+
+        String result = first[0] + "." +comma +" %";
+
+        return result;
+    }
     public void editVisibilityDynamic(){
         TextView tvBa = findViewById(R.id.tvBa);
         TextView tvPohon = findViewById(R.id.tvPohon);
@@ -1542,6 +1566,9 @@ public class DetailAsetOfflineActivity extends AppCompatActivity {
         List<String> listSpinnerSubUnit = new ArrayList<>();
 
         List<String> listSpinnerAfdeling = new ArrayList<>();
+
+        listSistemTanam = dataAllSpinner.getSistemTanam();
+
 
 
 

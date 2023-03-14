@@ -32,7 +32,6 @@ import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
-import android.os.Handler;
 import android.os.Looper;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
@@ -40,6 +39,7 @@ import android.provider.OpenableColumns;
 import android.provider.Settings;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.text.method.HideReturnsTransformationMethod;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -55,9 +55,6 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import okhttp3.MediaType;
-import okhttp3.MultipartBody;
-import okhttp3.RequestBody;
 import ptpn12.amanat.asem.adapter.AsetOfflineAdapter;
 import ptpn12.amanat.asem.api.AsetInterface;
 import ptpn12.amanat.asem.api.model.Afdelling;
@@ -90,7 +87,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.lang.ref.WeakReference;
 import java.net.URL;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
@@ -103,8 +99,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 public class AsetAddUpdateOfflineActivity extends AppCompatActivity {
     private boolean isEdit = false;
@@ -627,6 +621,7 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity {
         inpPresentasePopPerHA.setEnabled(false);
 
         inpTahunTanam = findViewById(R.id.inpTahunTanam);
+        inpTahunTanam.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
 
         List<String> listSpinnerSatuan = new ArrayList<>();
 
@@ -679,8 +674,7 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity {
                     try{
 
                         Double popPerHa =  Double.parseDouble(String.valueOf(inpPopTotalPohonSaatIni.getText()))/Double.parseDouble(String.valueOf(inpLuasAset.getText()));
-                        Log.d("amanat19", String.valueOf(popPerHa));
-                        inpPopPerHA.setText(String.valueOf(popPerHa));
+                        inpPopPerHA.setText(showPopulasi(String.valueOf(popPerHa)));
                     } catch (Exception e){
                         e.printStackTrace();
                     }
@@ -688,6 +682,8 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity {
 //                    inpPresentasePopPerHA.setText(String.valueOf(presentase));
                 }
             }
+
+
 
             @Override
             public void afterTextChanged(Editable editable) {
@@ -704,12 +700,12 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                if (!inpPopTotalStdMaster.equals("")){
+                if (!inpPopTotalStdMaster.getText().equals("")){
                     try {
 
                         Double popPerHa =  Double.parseDouble(String.valueOf(inpPopTotalPohonSaatIni.getText()))/Double.parseDouble(String.valueOf(inpLuasAset.getText()));
                         Double presentase = popPerHa / Double.parseDouble(String.valueOf(inpPopTotalStdMaster.getText())) * 100;
-                        inpPresentasePopPerHA.setText(String.valueOf(presentase));
+                        inpPresentasePopPerHA.setText(showPopulasi(String.valueOf(presentase)));
                     } catch (Exception e){
                         e.printStackTrace();
                     }
@@ -1251,7 +1247,7 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity {
         inpPopTotalStdMaster.setText(String.valueOf(aset.getPop_total_std()));
         inpPopPerHA.setText(String.valueOf(aset.getPop_hektar_ini()));
         inpPresentasePopPerHA.setText(String.valueOf(aset.getPop_hektar_std()));
-
+        spinnerSistemTanam.setSelection(Integer.parseInt(aset.getSistem_tanam()));
         inpTahunTanam.setText(String.valueOf(aset.getTahun_tanam()));
 
         if (aset.getBeritaAcara() != null) {
@@ -1585,6 +1581,21 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity {
             Toast.makeText(this, "Error when set Exif Location", Toast.LENGTH_LONG).show();
             e.printStackTrace();
         }
+    }
+    private String showPopulasi(String pop) {
+        String[] first  = pop.split("[.]");
+
+        Log.d("amanat20", String.valueOf(first[0]));
+        if (first.length <= 1 ) {
+            return pop;
+        }
+        String second = first[first.length - 1];
+
+        String comma  = second.substring(0,3);
+
+        String result = first[0] + "." +comma +" %";
+
+        return result;
     }
 
     public void editVisibilityDynamic() {
@@ -2802,6 +2813,9 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity {
             values.put("hgu", inpHGU.getText().toString().trim());
             values.put("nilai_oleh", utils.CurrencyToNumber(inpNilaiAsetSAP.getText().toString().trim()));
             values.put("tgl_oleh", inpTglOleh.getText().toString().trim() + " 00:00:00");
+
+
+
             if (spinnerAlatAngkut.getSelectedItem() != null) {
 
                 values.put("alat_pengangkutan", spinnerAlatAngkut.getSelectedItem().toString().trim());
@@ -2813,8 +2827,14 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity {
                 values.put("pop_standar", inpPopTotalStdMaster.getText().toString().trim());
                 values.put("pop_per_ha", inpPopPerHA.getText().toString().trim());
                 values.put("presentase_pop_per_ha", inpPresentasePopPerHA.getText().toString().trim());
-                values.put("sistem_tanam", spinnerSistemTanam.getSelectedItem().toString().trim());
                 values.put("tahun_tanam", inpTahunTanam.getText().toString().trim());
+
+                if (!"ZC06/S001/Tebu".equals(spinnerKodeAset.getSelectedItem())){
+                    values.put("sistem_tanam", String.valueOf(spinnerSistemTanam.getSelectedItemId()));
+                } else {
+                    values.put("sistem_tanam", "1");
+                }
+
             }
 
             LocalDateTime currentTime = null;
