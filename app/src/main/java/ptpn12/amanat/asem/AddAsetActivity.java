@@ -2225,10 +2225,13 @@ public class AddAsetActivity extends AppCompatActivity {
 
                 }
 
-                if (spinnerJenisAset.getSelectedItemId() == 1 || spinnerJenisAset.getSelectedItemId() == 3){
+                if ((spinnerJenisAset.getSelectedItemId() == 1 && !spinnerKodeAset.getSelectedItem().equals("ZC06/S001/Tebu")) || spinnerJenisAset.getSelectedItemId() == 3 ){
                     RequestBody requestSistemTanam = RequestBody.create(MediaType.parse("text/plain"), spinnerSistemTanam.getSelectedItem().toString().trim());
                     builder.addPart(MultipartBody.Part.createFormData("sistem_tanam", null, requestSistemTanam));
 
+                }else if (spinnerKodeAset.getSelectedItem().equals("ZC06/S001/Tebu")){
+                    RequestBody requestTanamMono = RequestBody.create(MediaType.parse("text/plain"), "Mono");
+                    builder.addPart(MultipartBody.Part.createFormData("sistem_tanam",null,requestTanamMono));
                 }
 
 

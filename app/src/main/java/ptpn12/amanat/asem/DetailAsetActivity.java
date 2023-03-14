@@ -1186,9 +1186,7 @@ public class DetailAsetActivity extends AppCompatActivity {
 //
 //            }
 
-            if("ZC06/S001/Tebu".equals(String.valueOf(spinnerKodeAset.getSelectedItem()))
-//                    && "Mono".equals(String.valueOf(spinnerSistemTanam.getSelectedItem()))
-            ){
+            if("ZC06/Tebu".equals(String.valueOf(spinnerKodeAset.getSelectedItem()))) {
                 tvTahunTanam.setVisibility(View.VISIBLE);
                 inpTahunTanam.setVisibility(View.VISIBLE);
                 tvSistemTanam.setVisibility(View.GONE);
@@ -1614,9 +1612,9 @@ public class DetailAsetActivity extends AppCompatActivity {
             tvFoto.setVisibility(View.VISIBLE);
             scrollPartition.setVisibility(View.VISIBLE);
 
-//            tvLuasTanaman.setVisibility(View.GONE);
+            tvLuasTanaman.setVisibility(View.GONE);
             tvLuasNonTanaman.setVisibility(View.VISIBLE);
-//            inpLuasAset.setVisibility(View.VISIBLE);
+            inpLuasAset.setVisibility(View.VISIBLE);
 
             inpPersenKondisi.setVisibility(View.VISIBLE);
             tvPersenKondisi.setVisibility(View.VISIBLE);
@@ -1652,9 +1650,9 @@ public class DetailAsetActivity extends AppCompatActivity {
             downloadBAST.setVisibility(View.GONE);
 
             listBtnMap.setVisibility(View.GONE);
-//            tvLuasTanaman.setVisibility(View.GONE);
+            tvLuasTanaman.setVisibility(View.GONE);
             tvLuasNonTanaman.setVisibility(View.VISIBLE);
-//            inpLuasAset.setVisibility(View.VISIBLE);
+            inpLuasAset.setVisibility(View.VISIBLE);
 
             inpPersenKondisi.setVisibility(View.VISIBLE);
             tvPersenKondisi.setVisibility(View.VISIBLE);
@@ -1694,9 +1692,9 @@ public class DetailAsetActivity extends AppCompatActivity {
             tvFoto.setVisibility(View.GONE);
             scrollPartition.setVisibility(View.GONE);
 
-//            tvLuasTanaman.setVisibility(View.GONE);
+            tvLuasTanaman.setVisibility(View.GONE);
             tvLuasNonTanaman.setVisibility(View.VISIBLE);
-//            inpLuasAset.setVisibility(View.VISIBLE);
+            inpLuasAset.setVisibility(View.VISIBLE);
 
             inpPersenKondisi.setVisibility(View.VISIBLE);
             tvPersenKondisi.setVisibility(View.VISIBLE);
