@@ -579,6 +579,8 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity {
         listBtnMap = findViewById(R.id.listMapButton);
         inpBtnMap = findViewById(R.id.inpBtnMap);
         inpTglOleh = findViewById(R.id.inpTglMasukAset);
+        inpTglOleh.setEnabled(false);
+
         inpTglInput = findViewById(R.id.inpTglInput);
         tvUploudBA = findViewById(R.id.tvUploudBA);
         tvUploadFileBAST = findViewById(R.id.tvUploadFileBAST);
@@ -597,6 +599,7 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity {
         inpLuasAset = findViewById(R.id.inpLuasAset);
         inpNilaiAsetSAP = findViewById(R.id.inpNilaiAsetSAP);
         inpMasaPenyusutan = findViewById(R.id.inpMasaPenyusutan);
+        inpMasaPenyusutan.setEnabled(false);
         inpNomorBAST = findViewById(R.id.inpNmrBAST);
         inpNilaiResidu = findViewById(R.id.inpNmrResidu);
         inpKeterangan = findViewById(R.id.inpKeterangan);
@@ -896,7 +899,7 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity {
                         // when item selected from list
                         // set selected item on textView
                         inpNoSAP.setText(adapterSap.getItem(position));
-                        setNilaiSAP(adapterSap.getItem(position));
+                        setValueSap(adapterSap.getItem(position));
 
                         // Dismiss dialog
                         spinnerNoSap.dismiss();
@@ -1286,7 +1289,11 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity {
         inpNamaAset.setText(aset.getAsetName());
         inpLuasAset.setText(String.valueOf(aset.getAsetLuas()));
         inpNilaiAsetSAP.setText(String.valueOf(aset.getNilaiOleh()));
+
         inpMasaPenyusutan.setText(String.valueOf(aset.getMasaSusut()));
+        inpMasaPenyusutan.setEnabled(false);
+
+
         inpNomorBAST.setText(String.valueOf(aset.getNomorBast()));
         inpNilaiResidu.setText(formatrupiah(Double.parseDouble(String.valueOf(aset.getNilaiResidu()))));
         inpKeterangan.setText(aset.getKeterangan());
@@ -3188,14 +3195,17 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity {
         return 0;
     }
 
-    private void setNilaiSAP(String sap) {
+    private void setValueSap(String sap) {
 
         for (Sap it : sapAll) {
 
             if (it.getSap_desc().equals(sap)){
                 inpNilaiAsetSAP.setText(formatrupiah(Double.valueOf(it.getNilai_oleh())));
                 inpNilaiResidu.setText(formatrupiah(Double.valueOf(it.getNilai_residu())));
+                inpMasaPenyusutan.setText(String.valueOf(it.getMasa_susut()));
+                inpTglOleh.setText(it.getTgl_oleh());
             }
         }
     }
+
 }

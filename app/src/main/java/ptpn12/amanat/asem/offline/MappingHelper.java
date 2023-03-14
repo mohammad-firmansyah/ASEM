@@ -157,7 +157,9 @@ public class MappingHelper {
             Integer unitId = sap.getInt(sap.getColumnIndexOrThrow(DatabaseContractSap.SapColumns.UNITID));
             Long nilaiOleh = sap.getLong(sap.getColumnIndexOrThrow(DatabaseContractSap.SapColumns.NILAIOLEH));
             Long nilaiResidu = sap.getLong(sap.getColumnIndexOrThrow(DatabaseContractSap.SapColumns.NILAIRESIDU));
-            listSap.add(new Sap(sapId,sapDesc,sapName,unitId,nilaiOleh,nilaiResidu));
+            Integer masaSusut = sap.getInt(sap.getColumnIndexOrThrow(DatabaseContractSap.SapColumns.MASASUSUT));
+            String tglOleh = sap.getString(sap.getColumnIndexOrThrow(DatabaseContractSap.SapColumns.TGLOLEH));
+            listSap.add(new Sap(sapId,sapDesc,sapName,unitId,nilaiOleh,nilaiResidu,masaSusut,tglOleh));
         }
 
         while (alatAngkut.moveToNext()) {

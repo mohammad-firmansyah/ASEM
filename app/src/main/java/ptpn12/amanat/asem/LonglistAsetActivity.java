@@ -54,6 +54,7 @@ import ptpn12.amanat.asem.api.model.Data2;
 import ptpn12.amanat.asem.api.model.DataAllSpinner;
 import ptpn12.amanat.asem.api.model.Sap;
 import ptpn12.amanat.asem.api.model.Search;
+import ptpn12.amanat.asem.api.model.SistemTanam;
 import ptpn12.amanat.asem.api.model.SubUnit;
 import ptpn12.amanat.asem.api.model.Unit;
 import ptpn12.amanat.asem.offline.AsetHelper;
@@ -980,6 +981,13 @@ public void getAllSpinnerData(){
                 asetHelper.insertAsetKondisi(values);
             }
 
+            // get sistem tanam
+            for (SistemTanam at : dataAllSpinner.getSistemTanam()){
+                ContentValues values = new ContentValues();
+                values.put("aset_kondisi_desc",at.getSt_desc());
+                asetHelper.insertSistemTanam(values);
+            }
+
             // get kode aset
             for (AsetKode2 at : dataAllSpinner.getAsetKode()){
 //                asetHelper.deleteAsetKode();
@@ -1029,6 +1037,8 @@ public void getAllSpinnerData(){
                 values.put("unit_id",at.getUnit_id());
                 values.put("nilai_oleh",at.getNilai_oleh());
                 values.put("nilai_residu",at.getNilai_residu());
+                values.put("tgl_oleh",at.getTgl_oleh());
+                values.put("masa_susut",at.getMasa_susut());
                 asetHelper.insertSap(values);
             }
 
