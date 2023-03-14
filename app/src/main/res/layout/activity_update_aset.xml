@@ -840,7 +840,7 @@
                 android:cursorVisible="false"
                 android:focusable="false"
                 android:focusableInTouchMode="false"
-                android:background= "@drawable/pickdate_background"
+                android:background= "@drawable/tgl_spinner"
                 android:hint="tanggal perolehan"
                 android:layout_height="41dp"
                 android:paddingVertical="10dp"/>
@@ -867,7 +867,7 @@
                 android:paddingVertical="10dp"
                 android:lines="1"
                 android:inputType="numberDecimal"
-                android:background="@drawable/tahun_background"
+                android:background="@drawable/tahun_background_disabled"
                 />
 
 
