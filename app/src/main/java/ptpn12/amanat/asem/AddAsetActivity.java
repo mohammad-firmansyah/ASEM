@@ -1536,23 +1536,6 @@ public class AddAsetActivity extends AppCompatActivity {
         }
         else if ("kayu".equals(String.valueOf(spinnerJenisAset.getSelectedItem()))) {
 
-//            tvTahunTanam.setVisibility(View.VISIBLE);
-//            inpTahunTanam.setVisibility(View.VISIBLE);
-//            tvSistemTanam.setVisibility(View.VISIBLE);
-//            spinnerSistemTanam.setVisibility(View.VISIBLE);
-//
-//            tvPopTotalPohonSaatIni.setVisibility(View.VISIBLE);
-//            tvPopTotalStdMaster.setVisibility(View.VISIBLE);
-//            tvPopPerHA.setVisibility(View.VISIBLE);
-//            tvPresentasePopPerHA.setVisibility(View.VISIBLE);
-//            inpPopTotalPohonSaatIni.setVisibility(View.VISIBLE);
-//            inpPopTotalStdMaster.setVisibility(View.VISIBLE);
-//            inpPopPerHA.setVisibility(View.VISIBLE);
-//            inpPresentasePopPerHA.setVisibility(View.VISIBLE);
-//
-//            tvLuasTanaman.setVisibility(View.VISIBLE);
-//            inpLuasAset.setVisibility(View.VISIBLE);
-
             tvTahunTanam.setVisibility(View.VISIBLE);
             inpTahunTanam.setVisibility(View.VISIBLE);
             tvSistemTanam.setVisibility(View.VISIBLE);
@@ -1560,34 +1543,17 @@ public class AddAsetActivity extends AppCompatActivity {
 
             tvPopTotalPohonSaatIni.setVisibility(View.VISIBLE);
             tvPopTotalStdMaster.setVisibility(View.VISIBLE);
-            tvPopPerHA.setVisibility(View.GONE);
-            tvPresentasePopPerHA.setVisibility(View.GONE);
+            tvPopPerHA.setVisibility(View.VISIBLE);
+            tvPresentasePopPerHA.setVisibility(View.VISIBLE);
             inpPopTotalPohonSaatIni.setVisibility(View.VISIBLE);
             inpPopTotalStdMaster.setVisibility(View.VISIBLE);
-            inpPopPerHA.setVisibility(View.GONE);
-            inpPresentasePopPerHA.setVisibility(View.GONE);
+            inpPopPerHA.setVisibility(View.VISIBLE);
+            inpPresentasePopPerHA.setVisibility(View.VISIBLE);
 
-            tvLuasTanaman.setVisibility(View.GONE);
-            inpLuasAset.setVisibility(View.GONE);
+            tvLuasTanaman.setVisibility(View.VISIBLE);
+            inpLuasAset.setVisibility(View.VISIBLE);
 
-            if("Mono".equals(String.valueOf(spinnerSistemTanam.getSelectedItem()))){
-//                tvTahunTanam.setVisibility(View.VISIBLE);
-//                inpTahunTanam.setVisibility(View.VISIBLE);
-//                tvSistemTanam.setVisibility(View.VISIBLE);
-//                spinnerSistemTanam.setVisibility(View.VISIBLE);
-//
-//                tvPopTotalPohonSaatIni.setVisibility(View.VISIBLE);
-//                tvPopTotalStdMaster.setVisibility(View.VISIBLE);
-//                tvPopPerHA.setVisibility(View.GONE);
-//                tvPresentasePopPerHA.setVisibility(View.GONE);
-//                inpPopTotalPohonSaatIni.setVisibility(View.VISIBLE);
-//                inpPopTotalStdMaster.setVisibility(View.VISIBLE);
-//                inpPopPerHA.setVisibility(View.GONE);
-//                inpPresentasePopPerHA.setVisibility(View.GONE);
-//
-//                tvLuasTanaman.setVisibility(View.GONE);
-//                inpLuasAset.setVisibility(View.GONE);
-
+            if(!"Mono".equals(String.valueOf(spinnerSistemTanam.getSelectedItem()))){
                 tvTahunTanam.setVisibility(View.VISIBLE);
                 inpTahunTanam.setVisibility(View.VISIBLE);
                 tvSistemTanam.setVisibility(View.VISIBLE);
@@ -1595,15 +1561,15 @@ public class AddAsetActivity extends AppCompatActivity {
 
                 tvPopTotalPohonSaatIni.setVisibility(View.VISIBLE);
                 tvPopTotalStdMaster.setVisibility(View.VISIBLE);
-                tvPopPerHA.setVisibility(View.VISIBLE);
-                tvPresentasePopPerHA.setVisibility(View.VISIBLE);
+                tvPopPerHA.setVisibility(View.GONE);
+                tvPresentasePopPerHA.setVisibility(View.GONE);
                 inpPopTotalPohonSaatIni.setVisibility(View.VISIBLE);
                 inpPopTotalStdMaster.setVisibility(View.VISIBLE);
-                inpPopPerHA.setVisibility(View.VISIBLE);
-                inpPresentasePopPerHA.setVisibility(View.VISIBLE);
+                inpPopPerHA.setVisibility(View.GONE);
+                inpPresentasePopPerHA.setVisibility(View.GONE);
 
-                tvLuasTanaman.setVisibility(View.VISIBLE);
-                inpLuasAset.setVisibility(View.VISIBLE);
+                tvLuasTanaman.setVisibility(View.GONE);
+                inpLuasAset.setVisibility(View.GONE);
             }
 
         }
@@ -1781,7 +1747,7 @@ public class AddAsetActivity extends AppCompatActivity {
 //            inpKomoditi.setVisibility(View.VISIBLE);
             inpNomorBAST.setVisibility(View.VISIBLE);
             tvBast.setVisibility(View.VISIBLE);
-            tvPohon.setVisibility(View.GONE);
+            tvPohon.setVisibility(View.VISIBLE);
 
             tvUploudBA.setVisibility(View.GONE);
 //            inpBtnMap.setVisibility(View.GONE);
@@ -2069,7 +2035,7 @@ public class AddAsetActivity extends AppCompatActivity {
         if (inpNamaAset.getText().toString().equals("")) {
             customDialogAddAset.dismiss();
             dialog.dismiss();
-            inpNamaAset.setError("Nama Harus Diisi");
+            inpNamaAset.setError("nama harus diisi");
             inpNamaAset.requestFocus();
             return;
         }
@@ -2078,7 +2044,7 @@ public class AddAsetActivity extends AppCompatActivity {
         if (inpNoSAP.getText().toString().equals("Pilih Nomor SAP")) {
             dialog.dismiss();
             customDialogAddAset.dismiss();
-            inpNoSAP.setError("Nilai SAP Harus Diisi");
+            inpNoSAP.setError("Nilai Sap Harus Diisi");
             inpNoSAP.requestFocus();
             return;
         }
@@ -2110,15 +2076,15 @@ public class AddAsetActivity extends AppCompatActivity {
         }
 
 
-//        if (spinnerJenisAset.getSelectedItemId() == 3){
-//            if (inpJumlahPohon.getText().toString().equals("")) {
-//                customDialogAddAset.dismiss();
-//                dialog.dismiss();
-//                inpJumlahPohon.setError("Jumlah Pohon harus diisi");
-//                inpJumlahPohon.requestFocus();
-//                return;
-//            }
-//        }
+        if (spinnerJenisAset.getSelectedItemId() == 3){
+            if (inpJumlahPohon.getText().toString().equals("")) {
+                customDialogAddAset.dismiss();
+                dialog.dismiss();
+                inpJumlahPohon.setError("Jumlah Pohon harus diisi");
+                inpJumlahPohon.requestFocus();
+                return;
+            }
+        }
 
         if ("non tanaman".equals(String.valueOf(spinnerJenisAset.getSelectedItem()))){
             if ("normal".equals(String.valueOf(spinnerAsetKondisi.getSelectedItem()))){
@@ -2164,7 +2130,7 @@ public class AddAsetActivity extends AppCompatActivity {
 
                 String nama_aset = inpNamaAset.getText().toString().trim();
                 String nomor_aset_sap = inpNoSAP.getText().toString().trim();
-                String luas_aset = String.valueOf(Double.parseDouble((inpLuasAset.getText().toString().trim().equals("")) ? "0" : inpLuasAset.getText().toString().trim()));
+                String luas_aset = String.valueOf(Double.parseDouble((inpLuasAset.getText().toString().trim().equals("")) ? "0" : inpLuasAset.getText().toString().trim() ));
                 String nilai_aset = String.valueOf(CurrencyToNumber(inpNilaiAsetSAP.getText().toString().trim()));
                 String tgl_oleh = inpTglOleh.getText().toString().trim() + " 00:00:00";
                 String masa_susut = inpMasaPenyusutan.getText().toString().trim();
@@ -2223,13 +2189,12 @@ public class AddAsetActivity extends AppCompatActivity {
                     builder.addPart(MultipartBody.Part.createFormData("afdeling_id", null, requestAfdeling));
                 }
 
-//                if (spinnerJenisAset.getSelectedItemId() == 3) {
-//                    RequestBody requestJumlahPohon = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(inpJumlahPohon.getText().toString()));
-//                    builder.addPart(MultipartBody.Part.createFormData("jumlah_pohon", null, requestJumlahPohon));
-//                }
+                if (spinnerJenisAset.getSelectedItemId() == 3) {
+                    RequestBody requestJumlahPohon = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(inpJumlahPohon.getText().toString()));
+                    builder.addPart(MultipartBody.Part.createFormData("jumlah_pohon", null, requestJumlahPohon));
+                }
 
-                Log.d("tebu", String.valueOf(spinnerKodeAset.getSelectedItem().equals("ZC06/S001/Tebu")));
-                if ((spinnerJenisAset.getSelectedItemId() == 1 && !spinnerKodeAset.getSelectedItem().equals("ZC06/S001/Tebu")) || spinnerJenisAset.getSelectedItemId() == 3 ) {
+                if (spinnerJenisAset.getSelectedItemId() == 1 || spinnerJenisAset.getSelectedItemId() == 3) {
                     RequestBody requestPopulasiPohonSaatIni = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(Double.parseDouble(inpPopTotalPohonSaatIni.getText().toString().trim())));
                     RequestBody requestPopulasiStandar = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(Double.parseDouble(inpPopTotalStdMaster.getText().toString().trim())));
                     builder.addPart(MultipartBody.Part.createFormData("pop_pohon_saat_ini", null, requestPopulasiPohonSaatIni));
@@ -2245,8 +2210,8 @@ public class AddAsetActivity extends AppCompatActivity {
                 }
 
                 if(spinnerKodeAset.getSelectedItem().equals("ZC06/S001/Tebu")){
-                    RequestBody requestTanamMono = RequestBody.create(MediaType.parse("text/plain"), "Mono");
-                    builder.addPart(MultipartBody.Part.createFormData("sistem_tanam",null,requestTanamMono));
+                    RequestBody requestTanamMono = RequestBody.create(MediaType.parse("text/plain"), "1");
+                    builder.addPart(MultipartBody.Part.createFormData("aset_kode",null,requestTanamMono));
                 }
 
                 if (spinnerJenisAset.getSelectedItemId() == 2) {

@@ -32,7 +32,6 @@ import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
-import android.os.Handler;
 import android.os.Looper;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
@@ -40,6 +39,7 @@ import android.provider.OpenableColumns;
 import android.provider.Settings;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.text.method.HideReturnsTransformationMethod;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -55,9 +55,6 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import okhttp3.MediaType;
-import okhttp3.MultipartBody;
-import okhttp3.RequestBody;
 import ptpn12.amanat.asem.adapter.AsetOfflineAdapter;
 import ptpn12.amanat.asem.api.AsetInterface;
 import ptpn12.amanat.asem.api.model.Afdelling;
@@ -90,7 +87,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.lang.ref.WeakReference;
 import java.net.URL;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
@@ -103,8 +99,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 public class AsetAddUpdateOfflineActivity extends AppCompatActivity {
     private boolean isEdit = false;
@@ -585,6 +579,8 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity {
         listBtnMap = findViewById(R.id.listMapButton);
         inpBtnMap = findViewById(R.id.inpBtnMap);
         inpTglOleh = findViewById(R.id.inpTglMasukAset);
+        inpTglOleh.setEnabled(false);
+
         inpTglInput = findViewById(R.id.inpTglInput);
         tvUploudBA = findViewById(R.id.tvUploudBA);
         tvUploadFileBAST = findViewById(R.id.tvUploadFileBAST);
@@ -603,6 +599,7 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity {
         inpLuasAset = findViewById(R.id.inpLuasAset);
         inpNilaiAsetSAP = findViewById(R.id.inpNilaiAsetSAP);
         inpMasaPenyusutan = findViewById(R.id.inpMasaPenyusutan);
+        inpMasaPenyusutan.setEnabled(false);
         inpNomorBAST = findViewById(R.id.inpNmrBAST);
         inpNilaiResidu = findViewById(R.id.inpNmrResidu);
         inpKeterangan = findViewById(R.id.inpKeterangan);
@@ -627,6 +624,7 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity {
         inpPresentasePopPerHA.setEnabled(false);
 
         inpTahunTanam = findViewById(R.id.inpTahunTanam);
+        inpTahunTanam.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
 
         List<String> listSpinnerSatuan = new ArrayList<>();
 
@@ -665,17 +663,7 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity {
 
 //        handler
 
-        spinnerSistemTanam.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                editVisibilityDynamic();
-            }
 
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-
-            }
-        });
         inpPopTotalPohonSaatIni.addTextChangedListener( new TextWatcher(){
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -689,8 +677,7 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity {
                     try{
 
                         Double popPerHa =  Double.parseDouble(String.valueOf(inpPopTotalPohonSaatIni.getText()))/Double.parseDouble(String.valueOf(inpLuasAset.getText()));
-                        Log.d("amanat19", String.valueOf(popPerHa));
-                        inpPopPerHA.setText(String.valueOf(popPerHa));
+                        inpPopPerHA.setText(showPopulasi(String.valueOf(popPerHa)));
                     } catch (Exception e){
                         e.printStackTrace();
                     }
@@ -698,6 +685,8 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity {
 //                    inpPresentasePopPerHA.setText(String.valueOf(presentase));
                 }
             }
+
+
 
             @Override
             public void afterTextChanged(Editable editable) {
@@ -714,12 +703,12 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                if (!inpPopTotalStdMaster.equals("")){
+                if (!inpPopTotalStdMaster.getText().equals("")){
                     try {
 
                         Double popPerHa =  Double.parseDouble(String.valueOf(inpPopTotalPohonSaatIni.getText()))/Double.parseDouble(String.valueOf(inpLuasAset.getText()));
                         Double presentase = popPerHa / Double.parseDouble(String.valueOf(inpPopTotalStdMaster.getText())) * 100;
-                        inpPresentasePopPerHA.setText(String.valueOf(presentase));
+                        inpPresentasePopPerHA.setText(showPopulasi(String.valueOf(presentase)));
                     } catch (Exception e){
                         e.printStackTrace();
                     }
@@ -856,6 +845,18 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity {
             }
         });
 
+        spinnerSistemTanam.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                editVisibilityDynamic();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
         inpNoSAP.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -898,7 +899,7 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity {
                         // when item selected from list
                         // set selected item on textView
                         inpNoSAP.setText(adapterSap.getItem(position));
-                        setNilaiSAP(adapterSap.getItem(position));
+                        setValueSap(adapterSap.getItem(position));
 
                         // Dismiss dialog
                         spinnerNoSap.dismiss();
@@ -1249,7 +1250,7 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity {
         inpPopTotalStdMaster.setText(String.valueOf(aset.getPop_total_std()));
         inpPopPerHA.setText(String.valueOf(aset.getPop_hektar_ini()));
         inpPresentasePopPerHA.setText(String.valueOf(aset.getPop_hektar_std()));
-
+        spinnerSistemTanam.setSelection(Integer.parseInt(aset.getSistem_tanam()));
         inpTahunTanam.setText(String.valueOf(aset.getTahun_tanam()));
 
         if (aset.getBeritaAcara() != null) {
@@ -1288,7 +1289,11 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity {
         inpNamaAset.setText(aset.getAsetName());
         inpLuasAset.setText(String.valueOf(aset.getAsetLuas()));
         inpNilaiAsetSAP.setText(String.valueOf(aset.getNilaiOleh()));
+
         inpMasaPenyusutan.setText(String.valueOf(aset.getMasaSusut()));
+        inpMasaPenyusutan.setEnabled(false);
+
+
         inpNomorBAST.setText(String.valueOf(aset.getNomorBast()));
         inpNilaiResidu.setText(formatrupiah(Double.parseDouble(String.valueOf(aset.getNilaiResidu()))));
         inpKeterangan.setText(aset.getKeterangan());
@@ -1584,6 +1589,21 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity {
             e.printStackTrace();
         }
     }
+    private String showPopulasi(String pop) {
+        String[] first  = pop.split("[.]");
+
+        Log.d("amanat20", String.valueOf(first[0]));
+        if (first.length <= 1 ) {
+            return pop;
+        }
+        String second = first[first.length - 1];
+
+        String comma  = second.substring(0,3);
+
+        String result = first[0] + "." +comma +" %";
+
+        return result;
+    }
 
     public void editVisibilityDynamic() {
         TextView tvBa = findViewById(R.id.tvBa);
@@ -1720,17 +1740,17 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity {
 
             tvPopTotalPohonSaatIni.setVisibility(View.VISIBLE);
             tvPopTotalStdMaster.setVisibility(View.VISIBLE);
-            tvPopPerHA.setVisibility(View.VISIBLE);
-            tvPresentasePopPerHA.setVisibility(View.VISIBLE);
+            tvPopPerHA.setVisibility(View.GONE);
+            tvPresentasePopPerHA.setVisibility(View.GONE);
             inpPopTotalPohonSaatIni.setVisibility(View.VISIBLE);
             inpPopTotalStdMaster.setVisibility(View.VISIBLE);
-            inpPopPerHA.setVisibility(View.VISIBLE);
-            inpPresentasePopPerHA.setVisibility(View.VISIBLE);
+            inpPopPerHA.setVisibility(View.GONE);
+            inpPresentasePopPerHA.setVisibility(View.GONE);
 
-            tvLuasTanaman.setVisibility(View.VISIBLE);
-            inpLuasAset.setVisibility(View.VISIBLE);
+            tvLuasTanaman.setVisibility(View.GONE);
+            inpLuasAset.setVisibility(View.GONE);
 
-            if(!"Mono".equals(String.valueOf(spinnerSistemTanam.getSelectedItem()))){
+            if("Mono".equals(String.valueOf(spinnerSistemTanam.getSelectedItem()))){
                 tvTahunTanam.setVisibility(View.VISIBLE);
                 inpTahunTanam.setVisibility(View.VISIBLE);
                 tvSistemTanam.setVisibility(View.VISIBLE);
@@ -1738,15 +1758,15 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity {
 
                 tvPopTotalPohonSaatIni.setVisibility(View.VISIBLE);
                 tvPopTotalStdMaster.setVisibility(View.VISIBLE);
-                tvPopPerHA.setVisibility(View.GONE);
-                tvPresentasePopPerHA.setVisibility(View.GONE);
+                tvPopPerHA.setVisibility(View.VISIBLE);
+                tvPresentasePopPerHA.setVisibility(View.VISIBLE);
                 inpPopTotalPohonSaatIni.setVisibility(View.VISIBLE);
                 inpPopTotalStdMaster.setVisibility(View.VISIBLE);
-                inpPopPerHA.setVisibility(View.GONE);
-                inpPresentasePopPerHA.setVisibility(View.GONE);
+                inpPopPerHA.setVisibility(View.VISIBLE);
+                inpPresentasePopPerHA.setVisibility(View.VISIBLE);
 
-                tvLuasTanaman.setVisibility(View.GONE);
-                inpLuasAset.setVisibility(View.GONE);
+                tvLuasTanaman.setVisibility(View.VISIBLE);
+                inpLuasAset.setVisibility(View.VISIBLE);
             }
 
         }
@@ -1769,7 +1789,7 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity {
             tvLuasTanaman.setVisibility(View.GONE);
 //            inpLuasAset.setVisibility(View.VISIBLE);
         }
-        
+
         
         if (spinnerJenisAset.getSelectedItem().equals("non tanaman")) {
             tvTahunTanam.setVisibility(View.GONE);
@@ -1841,14 +1861,7 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity {
 
             foto5rl.setVisibility(View.VISIBLE);
 
-            tvPopTotalPohonSaatIni.setVisibility(View.VISIBLE);
-            tvPopTotalStdMaster.setVisibility(View.VISIBLE);
-            tvPresentasePopPerHA.setVisibility(View.VISIBLE);
-            tvPopPerHA.setVisibility(View.VISIBLE);
-            inpPopTotalPohonSaatIni.setVisibility(View.VISIBLE);
-            inpPopTotalStdMaster.setVisibility(View.VISIBLE);
-            inpPopPerHA.setVisibility(View.VISIBLE);
-            inpPresentasePopPerHA.setVisibility(View.VISIBLE);
+
 
         } else if ("tanaman".equals(String.valueOf(spinnerJenisAset.getSelectedItem())) && "rusak".equals(String.valueOf(spinnerAsetKondisi.getSelectedItem()))) {
             listBtnMap.setVisibility(View.GONE);
@@ -1880,14 +1893,6 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity {
 
             foto5rl.setVisibility(View.VISIBLE);
 
-            tvPopTotalPohonSaatIni.setVisibility(View.VISIBLE);
-            tvPopTotalStdMaster.setVisibility(View.VISIBLE);
-            tvPresentasePopPerHA.setVisibility(View.VISIBLE);
-            tvPopPerHA.setVisibility(View.VISIBLE);
-            inpPopTotalPohonSaatIni.setVisibility(View.VISIBLE);
-            inpPopTotalStdMaster.setVisibility(View.VISIBLE);
-            inpPopPerHA.setVisibility(View.VISIBLE);
-            inpPresentasePopPerHA.setVisibility(View.VISIBLE);
 
         } else if ("tanaman".equals(String.valueOf(spinnerJenisAset.getSelectedItem())) && "hilang".equals(String.valueOf(spinnerAsetKondisi.getSelectedItem()))) {
             tvUploudBA.setVisibility(View.VISIBLE);
@@ -1919,14 +1924,7 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity {
 
             foto5rl.setVisibility(View.VISIBLE);
 
-            tvPopTotalPohonSaatIni.setVisibility(View.VISIBLE);
-            tvPopTotalStdMaster.setVisibility(View.VISIBLE);
-            tvPresentasePopPerHA.setVisibility(View.VISIBLE);
-            tvPopPerHA.setVisibility(View.VISIBLE);
-            inpPopTotalPohonSaatIni.setVisibility(View.VISIBLE);
-            inpPopTotalStdMaster.setVisibility(View.VISIBLE);
-            inpPopPerHA.setVisibility(View.VISIBLE);
-            inpPresentasePopPerHA.setVisibility(View.VISIBLE);
+
         } else if ("kayu".equals(String.valueOf(spinnerJenisAset.getSelectedItem())) && "normal".equals(String.valueOf(spinnerAsetKondisi.getSelectedItem()))) {
             listBtnMap.setVisibility(View.GONE);
             inpJumlahPohon.setVisibility(View.VISIBLE);
@@ -1961,14 +1959,7 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity {
 
             foto5rl.setVisibility(View.GONE);
 
-            tvPopTotalPohonSaatIni.setVisibility(View.GONE);
-            tvPopTotalStdMaster.setVisibility(View.GONE);
-            tvPresentasePopPerHA.setVisibility(View.GONE);
-            tvPopPerHA.setVisibility(View.GONE);
-            inpPopTotalPohonSaatIni.setVisibility(View.GONE);
-            inpPopTotalStdMaster.setVisibility(View.GONE);
-            inpPopPerHA.setVisibility(View.GONE);
-            inpPresentasePopPerHA.setVisibility(View.GONE);
+
         } else if ("kayu".equals(String.valueOf(spinnerJenisAset.getSelectedItem())) && "rusak".equals(String.valueOf(spinnerAsetKondisi.getSelectedItem()))) {
             listBtnMap.setVisibility(View.GONE);
             tvPohon.setVisibility(View.VISIBLE);
@@ -2000,14 +1991,7 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity {
 
             foto5rl.setVisibility(View.GONE);
 
-            tvPopTotalPohonSaatIni.setVisibility(View.GONE);
-            tvPopTotalStdMaster.setVisibility(View.GONE);
-            tvPresentasePopPerHA.setVisibility(View.GONE);
-            tvPopPerHA.setVisibility(View.GONE);
-            inpPopTotalPohonSaatIni.setVisibility(View.GONE);
-            inpPopTotalStdMaster.setVisibility(View.GONE);
-            inpPopPerHA.setVisibility(View.GONE);
-            inpPresentasePopPerHA.setVisibility(View.GONE);
+
 
         } else if ("kayu".equals(String.valueOf(spinnerJenisAset.getSelectedItem())) && "hilang".equals(String.valueOf(spinnerAsetKondisi.getSelectedItem()))) {
             tvBa.setVisibility(View.VISIBLE);
@@ -2039,14 +2023,7 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity {
 
             foto5rl.setVisibility(View.GONE);
 
-            tvPopTotalPohonSaatIni.setVisibility(View.GONE);
-            tvPopTotalStdMaster.setVisibility(View.GONE);
-            tvPresentasePopPerHA.setVisibility(View.GONE);
-            tvPopPerHA.setVisibility(View.GONE);
-            inpPopTotalPohonSaatIni.setVisibility(View.GONE);
-            inpPopTotalStdMaster.setVisibility(View.GONE);
-            inpPopPerHA.setVisibility(View.GONE);
-            inpPresentasePopPerHA.setVisibility(View.GONE);
+
 
         } else if ("non tanaman".equals(String.valueOf(spinnerJenisAset.getSelectedItem())) && "normal".equals(String.valueOf(spinnerAsetKondisi.getSelectedItem()))) {
             inpBtnMap.setVisibility(View.VISIBLE);
@@ -2081,14 +2058,6 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity {
 
             foto5rl.setVisibility(View.GONE);
 
-            tvPopTotalPohonSaatIni.setVisibility(View.GONE);
-            tvPopTotalStdMaster.setVisibility(View.GONE);
-            tvPresentasePopPerHA.setVisibility(View.GONE);
-            tvPopPerHA.setVisibility(View.GONE);
-            inpPopTotalPohonSaatIni.setVisibility(View.GONE);
-            inpPopTotalStdMaster.setVisibility(View.GONE);
-            inpPopPerHA.setVisibility(View.GONE);
-            inpPresentasePopPerHA.setVisibility(View.GONE);
         } else if ("non tanaman".equals(String.valueOf(spinnerJenisAset.getSelectedItem())) && "rusak".equals(String.valueOf(spinnerAsetKondisi.getSelectedItem()))) {
             tvBa.setVisibility(View.VISIBLE);
             btnFile.setVisibility(View.VISIBLE);
@@ -2115,14 +2084,6 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity {
 
             foto5rl.setVisibility(View.GONE);
 
-            tvPopTotalPohonSaatIni.setVisibility(View.GONE);
-            tvPopTotalStdMaster.setVisibility(View.GONE);
-            tvPresentasePopPerHA.setVisibility(View.GONE);
-            tvPopPerHA.setVisibility(View.GONE);
-            inpPopTotalPohonSaatIni.setVisibility(View.GONE);
-            inpPopTotalStdMaster.setVisibility(View.GONE);
-            inpPopPerHA.setVisibility(View.GONE);
-            inpPresentasePopPerHA.setVisibility(View.GONE);
 
         } else if ("non tanaman".equals(String.valueOf(spinnerJenisAset.getSelectedItem())) && "hilang".equals(String.valueOf(spinnerAsetKondisi.getSelectedItem()))) {
             tvBa.setVisibility(View.VISIBLE);
@@ -2153,14 +2114,6 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity {
 
             foto5rl.setVisibility(View.GONE);
 
-            tvPopTotalPohonSaatIni.setVisibility(View.GONE);
-            tvPopTotalStdMaster.setVisibility(View.GONE);
-            tvPresentasePopPerHA.setVisibility(View.GONE);
-            tvPopPerHA.setVisibility(View.GONE);
-            inpPopTotalPohonSaatIni.setVisibility(View.GONE);
-            inpPopTotalStdMaster.setVisibility(View.GONE);
-            inpPopPerHA.setVisibility(View.GONE);
-            inpPresentasePopPerHA.setVisibility(View.GONE);
 
         } else {
             spinnerLuasSatuan.setVisibility(View.GONE);
@@ -2678,7 +2631,7 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity {
             values.put("aset_sub_unit", String.valueOf(spinnerSubUnit.getSelectedItemId()));
             values.put("afdeling_id", String.valueOf(afdeling_id));
             values.put("aset_name", inpNamaAset.getText().toString().trim());
-            values.put("tahun_tanam", inpTahunTanam.getText().toString().trim());
+
 
             // Get the internal files directory
             String namaAsetWithoutSpace = inpNamaAset.getText().toString().trim();
@@ -2867,18 +2820,28 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity {
             values.put("hgu", inpHGU.getText().toString().trim());
             values.put("nilai_oleh", utils.CurrencyToNumber(inpNilaiAsetSAP.getText().toString().trim()));
             values.put("tgl_oleh", inpTglOleh.getText().toString().trim() + " 00:00:00");
+
+
+
             if (spinnerAlatAngkut.getSelectedItem() != null) {
 
                 values.put("alat_pengangkutan", spinnerAlatAngkut.getSelectedItem().toString().trim());
                 values.put("satuan_luas", spinnerLuasSatuan.getSelectedItem().toString().trim());
             }
 
-            if (spinnerJenisAset.getSelectedItem().equals("tanaman")) {
+            if (spinnerJenisAset.getSelectedItem().equals("tanaman") || spinnerJenisAset.getSelectedItem().equals("kayu") ) {
                 values.put("pop_pohon_saat_ini", inpPopTotalPohonSaatIni.getText().toString().trim());
                 values.put("pop_standar", inpPopTotalStdMaster.getText().toString().trim());
                 values.put("pop_per_ha", inpPopPerHA.getText().toString().trim());
                 values.put("presentase_pop_per_ha", inpPresentasePopPerHA.getText().toString().trim());
-                values.put("sistem_tanam", spinnerSistemTanam.getSelectedItem().toString().trim());
+                values.put("tahun_tanam", inpTahunTanam.getText().toString().trim());
+
+                if (!"ZC06/S001/Tebu".equals(spinnerKodeAset.getSelectedItem())){
+                    values.put("sistem_tanam", String.valueOf(spinnerSistemTanam.getSelectedItemId()));
+                } else {
+                    values.put("sistem_tanam", "1");
+                }
+
             }
 
             LocalDateTime currentTime = null;
@@ -3149,7 +3112,6 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity {
             values.put("hgu", inpHGU.getText().toString().trim());
             values.put("nilai_oleh", utils.CurrencyToNumber(inpNilaiAsetSAP.getText().toString().trim()));
             values.put("tgl_oleh", inpTglOleh.getText().toString().trim());
-            values.put("tahun_tanam", inpTahunTanam.getText().toString().trim());
             LocalDateTime currentTime = null;
             DateTimeFormatter formatter = null;
             String formattedDateTime = null;
@@ -3172,6 +3134,7 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity {
                 values.put("pop_standar", inpPopTotalStdMaster.getText().toString().trim());
                 values.put("pop_per_ha", inpPopPerHA.getText().toString().trim());
                 values.put("presentase_pop_per_ha", inpPresentasePopPerHA.getText().toString().trim());
+                values.put("tahun_tanam", inpTahunTanam.getText().toString().trim());
             }
 
 
@@ -3232,14 +3195,17 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity {
         return 0;
     }
 
-    private void setNilaiSAP(String sap) {
+    private void setValueSap(String sap) {
 
         for (Sap it : sapAll) {
 
             if (it.getSap_desc().equals(sap)){
                 inpNilaiAsetSAP.setText(formatrupiah(Double.valueOf(it.getNilai_oleh())));
                 inpNilaiResidu.setText(formatrupiah(Double.valueOf(it.getNilai_residu())));
+                inpMasaPenyusutan.setText(String.valueOf(it.getMasa_susut()));
+                inpTglOleh.setText(it.getTgl_oleh());
             }
         }
     }
+
 }

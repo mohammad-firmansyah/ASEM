@@ -7,14 +7,34 @@ public class Sap {
     private Integer unit_id;
     private Long nilai_oleh;
     private Long nilai_residu;
+    private Integer masa_susut;
+    private String tgl_oleh;
 
-    public Sap(Integer sap_id, String sap_desc, String sap_name, Integer unit_id, Long nilai_oleh, Long nilai_residu) {
+    public Sap(Integer sap_id, String sap_desc, String sap_name, Integer unit_id, Long nilai_oleh, Long nilai_residu, Integer masa_susut, String tgl_oleh) {
         this.sap_id = sap_id;
         this.sap_desc = sap_desc;
         this.sap_name = sap_name;
         this.unit_id = unit_id;
         this.nilai_oleh = nilai_oleh;
         this.nilai_residu = nilai_residu;
+        this.masa_susut = masa_susut;
+        this.tgl_oleh = tgl_oleh;
+    }
+
+    public Integer getMasa_susut() {
+        return masa_susut;
+    }
+
+    public void setMasa_susut(Integer masa_susut) {
+        this.masa_susut = masa_susut;
+    }
+
+    public String getTgl_oleh() {
+        return tgl_oleh;
+    }
+
+    public void setTgl_oleh(String tgl_oleh) {
+        this.tgl_oleh = tgl_oleh;
     }
 
     public Long getNilai_oleh() {

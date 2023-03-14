@@ -11,5 +11,7 @@ public class DatabaseContractSap {
         public static String UNITID = "unit_id";
         public static String NILAIOLEH = "nilai_oleh";
         public static String NILAIRESIDU = "nilai_residu";
+        public static String MASASUSUT = "masa_susut";
+        public static String TGLOLEH = "tgl_oleh";
     }
 }

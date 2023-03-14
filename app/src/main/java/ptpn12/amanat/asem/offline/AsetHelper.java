@@ -8,6 +8,7 @@ import static ptpn12.amanat.asem.offline.DatabaseHelper.SQL_CREATE_TABLE_ASET_KO
 import static ptpn12.amanat.asem.offline.DatabaseHelper.SQL_CREATE_TABLE_ASET_TIPE;
 import static ptpn12.amanat.asem.offline.DatabaseHelper.SQL_CREATE_TABLE_HAK_AKSES;
 import static ptpn12.amanat.asem.offline.DatabaseHelper.SQL_CREATE_TABLE_SAP;
+import static ptpn12.amanat.asem.offline.DatabaseHelper.SQL_CREATE_TABLE_SISTEM_TANAM;
 import static ptpn12.amanat.asem.offline.DatabaseHelper.SQL_CREATE_TABLE_STATUS_POSISI;
 import static ptpn12.amanat.asem.offline.DatabaseHelper.SQL_CREATE_TABLE_SUB_UNIT;
 import static ptpn12.amanat.asem.offline.DatabaseHelper.SQL_CREATE_TABLE_UNIT;
@@ -28,6 +29,7 @@ import ptpn12.amanat.asem.offline.model.DatabaseContractAsetKode;
 import ptpn12.amanat.asem.offline.model.DatabaseContractAsetKondisi;
 import ptpn12.amanat.asem.offline.model.DatabaseContractAsetTipe;
 import ptpn12.amanat.asem.offline.model.DatabaseContractSap;
+import ptpn12.amanat.asem.offline.model.DatabaseContractSistemTanam;
 import ptpn12.amanat.asem.offline.model.DatabaseContractSubUnit;
 import ptpn12.amanat.asem.offline.model.DatabaseContractUnit;
 
@@ -300,6 +302,12 @@ public class AsetHelper {
         database.insert(DatabaseContractAsetKondisi.TABLE_NAME, null, values);
     }
 
+    public void insertSistemTanam(ContentValues values) {
+
+        database.insert(DatabaseContractSistemTanam.TABLE_NAME, null, values);
+    }
+
+
     public void deleteAsetKondisi() {
 
         database.delete(DatabaseContractAsetKondisi.TABLE_NAME,null,null);
@@ -357,6 +365,8 @@ public class AsetHelper {
         database.execSQL(SQL_CREATE_TABLE_SAP);
 
         database.execSQL(SQL_CREATE_TABLE_HAK_AKSES);
+
+//        database.execSQL(SQL_CREATE_TABLE_SISTEM_TANAM);
 
 //        DatabaseHelper.DATABASE_VERSION += 1;
         return 1;
