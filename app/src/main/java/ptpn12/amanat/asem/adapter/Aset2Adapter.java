@@ -354,6 +354,12 @@ public class Aset2Adapter  extends RecyclerView.Adapter<Aset2Adapter.ViewHolder>
                 holder.btnQR.setVisibility(View.GONE);
                 holder.btnQRijo.setVisibility(View.GONE);
             }
+        } else {
+            holder.btnEdit.setVisibility(View.GONE);
+            holder.btnKirim.setVisibility(View.GONE);
+            holder.btnDetail.setVisibility(View.VISIBLE);
+            holder.btnQR.setVisibility(View.GONE);
+            holder.btnQRijo.setVisibility(View.GONE);
         }
 
     }
