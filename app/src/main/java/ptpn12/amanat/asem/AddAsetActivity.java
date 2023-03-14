@@ -2178,25 +2178,27 @@ public class AddAsetActivity extends AppCompatActivity {
                 }
 
                 //multipart pohon tanaman
-                if (spinnerJenisAset.getSelectedItemId() == 1 || spinnerJenisAset.getSelectedItemId() == 3) {
+                if ((spinnerJenisAset.getSelectedItemId() == 1 && !spinnerKodeAset.getSelectedItem().equals("ZC06/S001/Tebu")) || spinnerJenisAset.getSelectedItemId() == 3) {
                     RequestBody requestPopulasiPohonSaatIni = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(Double.parseDouble(inpPopTotalPohonSaatIni.getText().toString().trim())));
                     RequestBody requestPopulasiStandar = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(Double.parseDouble(inpPopTotalStdMaster.getText().toString().trim())));
                     builder.addPart(MultipartBody.Part.createFormData("pop_pohon_saat_ini", null, requestPopulasiPohonSaatIni));
                     builder.addPart(MultipartBody.Part.createFormData("pop_standar", null, requestPopulasiStandar));
 
                     if (!inpPopPerHA.getText().toString().equals("")) {
-                        RequestBody requestPopulasiPerHA = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(Double.parseDouble(inpPopPerHA.getText().toString().trim())));
-                        RequestBody requestPresentasePopulasiPerHA = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(Double.parseDouble(inpPresentasePopPerHA.getText().toString().trim())));
+                        Double popPerHa =  Double.parseDouble((inpPopTotalPohonSaatIni.getText().toString() != null || !inpPopTotalPohonSaatIni.getText().toString() .equals("") ) ? String.valueOf(inpPopTotalPohonSaatIni.getText().toString()) : "0" ) / Double.parseDouble((inpLuasAset.getText().toString() != null || !inpLuasAset.getText().toString() .equals("") ) ? String.valueOf(inpLuasAset.getText().toString()) : "0");
+                        Double presentase = popPerHa / Double.parseDouble((inpPopTotalStdMaster.getText().toString() != null || inpPopTotalStdMaster.getText().toString().equals("") ) ? String.valueOf(inpPopTotalStdMaster.getText().toString()) : "0"  ) * 100;
+                        RequestBody requestPopulasiPerHA = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(popPerHa));
+                        RequestBody requestPresentasePopulasiPerHA = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(presentase));
                         builder.addPart(MultipartBody.Part.createFormData("pop_per_ha", null, requestPopulasiPerHA));
                         builder.addPart(MultipartBody.Part.createFormData("presentase_pop_per_ha", null, requestPresentasePopulasiPerHA));
                     }
 
                 }
 
-                if(spinnerKodeAset.getSelectedItem().equals("ZC06/S001/Tebu")){
-                    RequestBody requestTanamMono = RequestBody.create(MediaType.parse("text/plain"), "1");
-                    builder.addPart(MultipartBody.Part.createFormData("aset_kode",null,requestTanamMono));
-                }
+//                if(spinnerKodeAset.getSelectedItem().equals("ZC06/S001/Tebu")){
+//                    RequestBody requestTanamMono = RequestBody.create(MediaType.parse("text/plain"), "1");
+//                    builder.addPart(MultipartBody.Part.createFormData("aset_kode",null,requestTanamMono));
+//                }
 
                 if (spinnerJenisAset.getSelectedItemId() == 2) {
                     RequestBody requestPersenKondisi = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(inpPersenKondisi.getText().toString()));

@@ -36,6 +36,7 @@ import android.provider.OpenableColumns;
 import android.provider.Settings;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.text.method.HideReturnsTransformationMethod;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -478,6 +479,7 @@ public class UpdateAsetActivity extends AppCompatActivity {
         spinnerAsetKondisi = findViewById(R.id.inpKndsAset);
         spinnerKodeAset = findViewById(R.id.inpKodeAset);
         inpTahunTanam = findViewById(R.id.inpTahunTanam);
+        inpTahunTanam.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
         spinnerUnit = findViewById(R.id.inpUnit);
         spinnerUnit.setEnabled(false);
         spinnerSubUnit = findViewById(R.id.inpSubUnit);
@@ -2069,8 +2071,6 @@ public class UpdateAsetActivity extends AppCompatActivity {
             inpPresentasePopPerHA.setVisibility(View.GONE);
 
         } else {
-            tvTahunTanam.setVisibility(View.GONE);
-            inpTahunTanam.setVisibility(View.GONE);
             listBtnMap.setVisibility(View.GONE);
             inpJumlahPohon.setVisibility(View.GONE);
             tvFoto.setVisibility(View.GONE);
@@ -2200,8 +2200,10 @@ public class UpdateAsetActivity extends AppCompatActivity {
                 builder.addPart(MultipartBody.Part.createFormData("pop_standar", null, requestPopulasiStandar));
 
                 if (!inpPopPerHA.getText().toString().equals("")) {
-                    RequestBody requestPopulasiPerHA = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(Double.parseDouble(inpPopPerHA.getText().toString().trim())));
-                    RequestBody requestPresentasePopulasiPerHA = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(Double.parseDouble(inpPresentasePopPerHA.getText().toString().trim())));
+                    Double popPerHa =  Double.parseDouble((inpPopTotalPohonSaatIni.getText().toString() != null || !inpPopTotalPohonSaatIni.getText().toString() .equals("") ) ? String.valueOf(inpPopTotalPohonSaatIni.getText().toString()) : "0" ) / Double.parseDouble((inpLuasAset.getText().toString() != null || !inpLuasAset.getText().toString() .equals("") ) ? String.valueOf(inpLuasAset.getText().toString()) : "0");
+                    Double presentase = popPerHa / Double.parseDouble((inpPopTotalStdMaster.getText().toString() != null || inpPopTotalStdMaster.getText().toString().equals("") ) ? String.valueOf(inpPopTotalStdMaster.getText().toString()) : "0"  ) * 100;
+                    RequestBody requestPopulasiPerHA = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(popPerHa));
+                    RequestBody requestPresentasePopulasiPerHA = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(presentase));
                     builder.addPart(MultipartBody.Part.createFormData("pop_per_ha", null, requestPopulasiPerHA));
                     builder.addPart(MultipartBody.Part.createFormData("presentase_pop_per_ha", null, requestPresentasePopulasiPerHA));
                 }
@@ -2214,6 +2216,11 @@ public class UpdateAsetActivity extends AppCompatActivity {
             }else if (spinnerKodeAset.getSelectedItem().equals("ZC06/S001/Tebu")){
                 RequestBody requestTanamMono = RequestBody.create(MediaType.parse("text/plain"), "Mono");
                 builder.addPart(MultipartBody.Part.createFormData("sistem_tanam",null,requestTanamMono));
+            }
+
+            if (spinnerJenisAset.getSelectedItemId() == 1 || spinnerJenisAset.getSelectedItemId() == 3){
+                RequestBody requestTahunTanam = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(inpTahunTanam.getText().toString()));
+                builder.addPart(MultipartBody.Part.createFormData("tahun_tanam", null, requestTahunTanam));
             }
 
             if (bafile_file != null){

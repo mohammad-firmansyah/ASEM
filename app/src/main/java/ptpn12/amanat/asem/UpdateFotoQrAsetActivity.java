@@ -2461,8 +2461,10 @@ public class UpdateFotoQrAsetActivity extends AppCompatActivity {
                 builder.addPart(MultipartBody.Part.createFormData("pop_standar", null, requestPopulasiStandar));
 
                 if (!inpPopPerHA.getText().toString().equals("")) {
-                    RequestBody requestPopulasiPerHA = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(Double.parseDouble(inpPopPerHA.getText().toString().trim())));
-                    RequestBody requestPresentasePopulasiPerHA = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(Double.parseDouble(inpPresentasePopPerHA.getText().toString().trim())));
+                    Double popPerHa =  Double.parseDouble((inpPopTotalPohonSaatIni.getText().toString() != null || !inpPopTotalPohonSaatIni.getText().toString() .equals("") ) ? String.valueOf(inpPopTotalPohonSaatIni.getText().toString()) : "0" ) / Double.parseDouble((inpLuasAset.getText().toString() != null || !inpLuasAset.getText().toString() .equals("") ) ? String.valueOf(inpLuasAset.getText().toString()) : "0");
+                    Double presentase = popPerHa / Double.parseDouble((inpPopTotalStdMaster.getText().toString() != null || inpPopTotalStdMaster.getText().toString().equals("") ) ? String.valueOf(inpPopTotalStdMaster.getText().toString()) : "0"  ) * 100;
+                    RequestBody requestPopulasiPerHA = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(popPerHa));
+                    RequestBody requestPresentasePopulasiPerHA = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(presentase));
                     builder.addPart(MultipartBody.Part.createFormData("pop_per_ha", null, requestPopulasiPerHA));
                     builder.addPart(MultipartBody.Part.createFormData("presentase_pop_per_ha", null, requestPresentasePopulasiPerHA));
                 }
