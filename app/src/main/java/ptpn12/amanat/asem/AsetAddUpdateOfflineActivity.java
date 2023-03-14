@@ -621,16 +621,20 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity {
         inpPopTotalStdMaster = findViewById(R.id.inpPopTotalStd);
 
         inpPopPerHA = findViewById(R.id.inpPopHektarIni);
-        inpPresentasePopPerHA = findViewById(R.id.inpPopHektarStd);
         inpPopPerHA.setEnabled(false);
+
+        inpPresentasePopPerHA = findViewById(R.id.inpPopHektarStd);
         inpPresentasePopPerHA.setEnabled(false);
+
         inpTahunTanam = findViewById(R.id.inpTahunTanam);
 
         List<String> listSpinnerSatuan = new ArrayList<>();
+
         listSpinnerSatuan.add("Ha");
         listSpinnerSatuan.add("m2");
         listSpinnerSatuan.add("Item");
         ArrayAdapter<String> adapterLuasSatuan = new ArrayAdapter<>(AsetAddUpdateOfflineActivity.this, android.R.layout.simple_list_item_1, listSpinnerSatuan);
+
         spinnerLuasSatuan.setAdapter(adapterLuasSatuan);
         spinnerAlatAngkut = findViewById(R.id.inpAlatAngkut);
         tvAlatAngkut = findViewById(R.id.tvAlatAngkut);
@@ -661,6 +665,17 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity {
 
 //        handler
 
+        spinnerSistemTanam.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                editVisibilityDynamic();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
         inpPopTotalPohonSaatIni.addTextChangedListener( new TextWatcher(){
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -764,7 +779,7 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 spinnerIdKodeAset = String.valueOf(position);
-//                setValueInput();
+                editVisibilityDynamic();
                 if (spinnerKodeAset.getSelectedItem().equals("ZA08/Alat Pengangkutan")) {
                     spinnerAlatAngkut.setVisibility(View.VISIBLE);
                     tvAlatAngkut.setVisibility(View.VISIBLE);
@@ -1587,6 +1602,7 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity {
 
         HorizontalScrollView scrollPartition = findViewById(R.id.scrollPartition);
 
+
         if ("tanaman".equals(String.valueOf(spinnerJenisAset.getSelectedItem()))) {
 
             tvTahunTanam.setVisibility(View.VISIBLE);
@@ -1609,7 +1625,6 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity {
 //            spinnerSistemTanam.setEnabled(true);
 //            spinnerSistemTanam.setBackground(AppCompatResources.getDrawable(getApplicationContext(), R.drawable.rounded_spinner));
 
-            Log.d("tanam", String.valueOf(spinnerSistemTanam.getSelectedItem()));
 
             if("Mono".equals(String.valueOf(spinnerSistemTanam.getSelectedItem()))){
                 tvTahunTanam.setVisibility(View.VISIBLE);
@@ -2863,6 +2878,7 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity {
                 values.put("pop_standar", inpPopTotalStdMaster.getText().toString().trim());
                 values.put("pop_per_ha", inpPopPerHA.getText().toString().trim());
                 values.put("presentase_pop_per_ha", inpPresentasePopPerHA.getText().toString().trim());
+                values.put("sistem_tanam", spinnerSistemTanam.getSelectedItem().toString().trim());
             }
 
             LocalDateTime currentTime = null;
