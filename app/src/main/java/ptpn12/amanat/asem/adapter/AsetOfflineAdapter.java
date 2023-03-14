@@ -331,16 +331,48 @@ public class AsetOfflineAdapter extends RecyclerView.Adapter<AsetOfflineAdapter.
         builder.addPart(MultipartBody.Part.createFormData("unit_id", null, requestUnit));
         builder.addPart(MultipartBody.Part.createFormData("nomor_bast", null, requestNomorBAST));
 
-        if (aset.getAsetJenis().equals("1")){
-            RequestBody requestPopulasiTotalSaatIni = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(Double.parseDouble(aset.getPop_total_ini())));
-            RequestBody requestPopulasiTotalStandar = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(Double.parseDouble(aset.getPop_total_std())));
-            RequestBody requestPopulasiHektarSaatIni = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(Double.parseDouble(aset.getPop_hektar_ini())));
-            RequestBody requestPopulasiHektarStandar = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(Double.parseDouble(aset.getPop_hektar_std())));
-            builder.addPart(MultipartBody.Part.createFormData("pop_pohon_saat_ini", null, requestPopulasiTotalSaatIni));
-            builder.addPart(MultipartBody.Part.createFormData("pop_standar", null, requestPopulasiTotalStandar));
-            builder.addPart(MultipartBody.Part.createFormData("pop_per_ha", null, requestPopulasiHektarSaatIni));
-            builder.addPart(MultipartBody.Part.createFormData("presentase_pop_per_ha", null, requestPopulasiHektarStandar));
+//        if (aset.getAsetJenis().equals("1")){
+//            RequestBody requestPopulasiTotalSaatIni = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(Double.parseDouble(aset.getPop_total_ini())));
+//            RequestBody requestPopulasiTotalStandar = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(Double.parseDouble(aset.getPop_total_std())));
+//            RequestBody requestPopulasiHektarSaatIni = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(Double.parseDouble(aset.getPop_hektar_ini())));
+//            RequestBody requestPopulasiHektarStandar = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(Double.parseDouble(aset.getPop_hektar_std())));
+//            builder.addPart(MultipartBody.Part.createFormData("pop_pohon_saat_ini", null, requestPopulasiTotalSaatIni));
+//            builder.addPart(MultipartBody.Part.createFormData("pop_standar", null, requestPopulasiTotalStandar));
+//            builder.addPart(MultipartBody.Part.createFormData("pop_per_ha", null, requestPopulasiHektarSaatIni));
+//            builder.addPart(MultipartBody.Part.createFormData("presentase_pop_per_ha", null, requestPopulasiHektarStandar));
+//
+//        }
+        //multipart pohon tanaman
+        if ((aset.getAsetJenis().equals("1") && !aset.getAsetKode().equals("ZC06/S001/Tebu")) || aset.getAsetJenis().equals("3")) {
+            RequestBody requestPopulasiPohonSaatIni = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(Double.parseDouble(aset.getPop_total_ini())));
+            RequestBody requestPopulasiStandar = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(Double.parseDouble(aset.getPop_total_std())));
+            builder.addPart(MultipartBody.Part.createFormData("pop_pohon_saat_ini", null, requestPopulasiPohonSaatIni));
+            builder.addPart(MultipartBody.Part.createFormData("pop_standar", null, requestPopulasiStandar));
 
+            if (!aset.getPop_hektar_ini().equals("")) {
+                Double popPerHa =  Double.parseDouble((aset.getPop_total_ini() != null || !aset.getPop_total_ini().equals("") ) ? String.valueOf(aset.getPop_total_ini()) : "0" ) / Double.parseDouble((aset.getAsetLuas() != null || !aset.getAsetLuas().equals("") ) ? String.valueOf(aset.getAsetLuas()) : "0");
+                Double presentase = popPerHa / Double.parseDouble((aset.getPop_total_std() != null || aset.getPop_total_std().equals("") ) ? String.valueOf(aset.getPop_total_std()) : "0"  ) * 100;
+                RequestBody requestPopulasiPerHA = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(popPerHa));
+                RequestBody requestPresentasePopulasiPerHA = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(presentase));
+                builder.addPart(MultipartBody.Part.createFormData("pop_per_ha", null, requestPopulasiPerHA));
+                builder.addPart(MultipartBody.Part.createFormData("presentase_pop_per_ha", null, requestPresentasePopulasiPerHA));
+            }
+
+        }
+
+        if (aset.getAsetJenis().equals("1") || aset.getAsetJenis().equals("3")){
+            RequestBody requestTahunTanam = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(aset.getTahun_tanam()));
+            builder.addPart(MultipartBody.Part.createFormData("tahun_tanam", null, requestTahunTanam));
+
+        }
+
+        if ((aset.getAsetJenis().equals("1") && !aset.getAsetKode().equals("ZC06/S001/Tebu")) || aset.getAsetJenis().equals("3") ){
+            RequestBody requestSistemTanam = RequestBody.create(MediaType.parse("text/plain"), aset.getSistem_tanam());
+            builder.addPart(MultipartBody.Part.createFormData("sistem_tanam", null, requestSistemTanam));
+
+        }else if (aset.getAsetKode().equals("ZC06/S001/Tebu")){
+            RequestBody requestTanamMono = RequestBody.create(MediaType.parse("text/plain"), "Mono");
+            builder.addPart(MultipartBody.Part.createFormData("sistem_tanam",null,requestTanamMono));
         }
 
         if (aset.getAsetJenis().equals("2")) {

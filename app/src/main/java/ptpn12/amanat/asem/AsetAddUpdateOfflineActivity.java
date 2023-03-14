@@ -2835,7 +2835,7 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity {
             values.put("persen_kondisi", inpPersenKondisi.getText().toString().trim());
             values.put("hgu", inpHGU.getText().toString().trim());
             values.put("nilai_oleh", utils.CurrencyToNumber(inpNilaiAsetSAP.getText().toString().trim()));
-            values.put("tgl_oleh", inpTglOleh.getText().toString().trim() + " 00:00:00");
+            values.put("tgl_oleh", inpTglOleh.getText().toString().trim() );
 
 
 
@@ -2853,9 +2853,9 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity {
                 values.put("tahun_tanam", inpTahunTanam.getText().toString().trim());
 
                 if (!"ZC06/S001/Tebu".equals(spinnerKodeAset.getSelectedItem())){
-                    values.put("sistem_tanam", String.valueOf(spinnerSistemTanam.getSelectedItemId()));
+                    values.put("sistem_tanam", String.valueOf(spinnerSistemTanam.getSelectedItem()));
                 } else {
-                    values.put("sistem_tanam", "1");
+                    values.put("sistem_tanam", "Mono");
                 }
 
             }
