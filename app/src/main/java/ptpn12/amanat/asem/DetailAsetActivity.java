@@ -873,7 +873,7 @@ public class DetailAsetActivity extends AppCompatActivity {
             inpUmrEkonomis.setText(utils.MonthToYear(aset.getUmurEkonomisInMonth()));
             inpNilaiAsetSAP.setText(formatrupiah(Double.valueOf((aset.getNilaiOleh() != null) ? aset.getNilaiOleh() : 0 )));
             inpPersenKondisi.setText(String.valueOf(aset.getPersenKondisi()));
-            inpJumlahPohon.setText(String.valueOf(aset.getJumlahPohon()));
+//            inpJumlahPohon.setText(String.valueOf(aset.getJumlahPohon()));
             inpHGU.setText(String.valueOf(aset.getHgu()));
             inpPopTotalPohonSaatIni.setText(String.valueOf(aset.getPopPohonSaatIni()));
             inpPopTotalStdMaster.setText(String.valueOf(aset.getPopStandar()));
@@ -1140,6 +1140,7 @@ public class DetailAsetActivity extends AppCompatActivity {
 
             tvLuasTanaman.setVisibility(View.GONE);
             inpLuasAset.setVisibility(View.GONE);
+            spinnerLuasSatuan.setVisibility(View.GONE);
 
 //            spinnerSistemTanam.setEnabled(true);
 //            spinnerSistemTanam.setBackground(AppCompatResources.getDrawable(getApplicationContext(), R.drawable.rounded_spinner));
@@ -1163,6 +1164,7 @@ public class DetailAsetActivity extends AppCompatActivity {
 
                 tvLuasTanaman.setVisibility(View.VISIBLE);
                 inpLuasAset.setVisibility(View.VISIBLE);
+                spinnerLuasSatuan.setVisibility(View.VISIBLE);
             }
 //            else{
 ////                tvTahunTanam.setVisibility(View.GONE);
@@ -1184,9 +1186,7 @@ public class DetailAsetActivity extends AppCompatActivity {
 //
 //            }
 
-            if("ZC06/S001/Tebu".equals(String.valueOf(spinnerKodeAset.getSelectedItem()))
-//                    && "Mono".equals(String.valueOf(spinnerSistemTanam.getSelectedItem()))
-            ){
+            if("ZC06/Tebu".equals(String.valueOf(spinnerKodeAset.getSelectedItem()))) {
                 tvTahunTanam.setVisibility(View.VISIBLE);
                 inpTahunTanam.setVisibility(View.VISIBLE);
                 tvSistemTanam.setVisibility(View.GONE);
@@ -1203,6 +1203,7 @@ public class DetailAsetActivity extends AppCompatActivity {
 
                 tvLuasTanaman.setVisibility(View.VISIBLE);
                 inpLuasAset.setVisibility(View.VISIBLE);
+                spinnerLuasSatuan.setVisibility(View.VISIBLE);
 
 //                spinnerSistemTanam.setEnabled(false);
 //                spinnerSistemTanam.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.bg_not_clickable_spinner));
@@ -1249,6 +1250,7 @@ public class DetailAsetActivity extends AppCompatActivity {
 
             tvLuasTanaman.setVisibility(View.VISIBLE);
             inpLuasAset.setVisibility(View.VISIBLE);
+            spinnerLuasSatuan.setVisibility(View.VISIBLE);
 
             if(!"Mono".equals(String.valueOf(spinnerSistemTanam.getText()))){
                 tvTahunTanam.setVisibility(View.VISIBLE);
@@ -1267,6 +1269,7 @@ public class DetailAsetActivity extends AppCompatActivity {
 
                 tvLuasTanaman.setVisibility(View.GONE);
                 inpLuasAset.setVisibility(View.GONE);
+                spinnerLuasSatuan.setVisibility(View.GONE);
             }
 
         }
@@ -1456,11 +1459,11 @@ public class DetailAsetActivity extends AppCompatActivity {
 
         else if ("kayu".equals(String.valueOf(spinnerJenisAset.getSelectedItem()))  && "normal".equals(String.valueOf(spinnerAsetKondisi.getSelectedItem())) ) {
             listBtnMap.setVisibility(View.VISIBLE);
-            inpJumlahPohon.setVisibility(View.VISIBLE);
+            inpJumlahPohon.setVisibility(View.GONE);
 //            inpKomoditi.setVisibility(View.VISIBLE);
             inpNomorBAST.setVisibility(View.VISIBLE);
             tvBast.setVisibility(View.VISIBLE);
-            tvPohon.setVisibility(View.VISIBLE);
+            tvPohon.setVisibility(View.GONE);
             downloadBa.setVisibility(View.GONE);
             tvBa.setVisibility(View.GONE);
             tvUploudBA.setVisibility(View.GONE);
@@ -1502,8 +1505,8 @@ public class DetailAsetActivity extends AppCompatActivity {
 
         else if ("kayu".equals(String.valueOf(spinnerJenisAset.getSelectedItem()))  && "rusak".equals(String.valueOf(spinnerAsetKondisi.getSelectedItem())) ) {
             listBtnMap.setVisibility(View.VISIBLE);
-            tvPohon.setVisibility(View.VISIBLE);
-            inpJumlahPohon.setVisibility(View.VISIBLE);
+            tvPohon.setVisibility(View.GONE);
+            inpJumlahPohon.setVisibility(View.GONE);
             tvBa.setVisibility(View.VISIBLE);
             tvUploudBA.setVisibility(View.VISIBLE);
             btnFile.setVisibility(View.GONE);
@@ -1609,9 +1612,9 @@ public class DetailAsetActivity extends AppCompatActivity {
             tvFoto.setVisibility(View.VISIBLE);
             scrollPartition.setVisibility(View.VISIBLE);
 
-//            tvLuasTanaman.setVisibility(View.GONE);
+            tvLuasTanaman.setVisibility(View.GONE);
             tvLuasNonTanaman.setVisibility(View.VISIBLE);
-//            inpLuasAset.setVisibility(View.VISIBLE);
+            inpLuasAset.setVisibility(View.VISIBLE);
 
             inpPersenKondisi.setVisibility(View.VISIBLE);
             tvPersenKondisi.setVisibility(View.VISIBLE);
@@ -1647,9 +1650,9 @@ public class DetailAsetActivity extends AppCompatActivity {
             downloadBAST.setVisibility(View.GONE);
 
             listBtnMap.setVisibility(View.GONE);
-//            tvLuasTanaman.setVisibility(View.GONE);
+            tvLuasTanaman.setVisibility(View.GONE);
             tvLuasNonTanaman.setVisibility(View.VISIBLE);
-//            inpLuasAset.setVisibility(View.VISIBLE);
+            inpLuasAset.setVisibility(View.VISIBLE);
 
             inpPersenKondisi.setVisibility(View.VISIBLE);
             tvPersenKondisi.setVisibility(View.VISIBLE);
@@ -1689,9 +1692,9 @@ public class DetailAsetActivity extends AppCompatActivity {
             tvFoto.setVisibility(View.GONE);
             scrollPartition.setVisibility(View.GONE);
 
-//            tvLuasTanaman.setVisibility(View.GONE);
+            tvLuasTanaman.setVisibility(View.GONE);
             tvLuasNonTanaman.setVisibility(View.VISIBLE);
-//            inpLuasAset.setVisibility(View.VISIBLE);
+            inpLuasAset.setVisibility(View.VISIBLE);
 
             inpPersenKondisi.setVisibility(View.VISIBLE);
             tvPersenKondisi.setVisibility(View.VISIBLE);
@@ -1748,6 +1751,7 @@ public class DetailAsetActivity extends AppCompatActivity {
             inpTahunTanam.setVisibility(View.GONE);
             tvSistemTanam.setVisibility(View.GONE);
             spinnerSistemTanam.setVisibility(View.GONE);
+            spinnerLuasSatuan.setVisibility(View.GONE);
         }
     }
 

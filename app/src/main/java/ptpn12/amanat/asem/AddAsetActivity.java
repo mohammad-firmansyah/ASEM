@@ -647,12 +647,12 @@ public class AddAsetActivity extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                if (!inpPopTotalPohonSaatIni.getText().equals("") && !inpLuasAset.getText().equals("")){
+                if (!inpPopTotalPohonSaatIni.getText().toString().equals("") && !inpLuasAset.getText().toString().equals("")){
 
                     try{
 
-                        Double popPerHa =  Double.parseDouble(String.valueOf(inpPopTotalPohonSaatIni.getText()))/Double.parseDouble(String.valueOf(inpLuasAset.getText()));
-                        Log.d("amanat19", String.valueOf(popPerHa));
+                        Log.d("amanat19",inpPopTotalPohonSaatIni.getText().toString());
+                        Double popPerHa =  Double.parseDouble((inpPopTotalPohonSaatIni.getText().toString() != null || !inpPopTotalPohonSaatIni.getText().toString() .equals("") ) ? String.valueOf(inpPopTotalPohonSaatIni.getText().toString()) : "0" ) / Double.parseDouble((inpLuasAset.getText().toString() != null || !inpLuasAset.getText().toString() .equals("") ) ? String.valueOf(inpLuasAset.getText().toString()) : "0");
                         inpPopPerHA.setText(String.valueOf(popPerHa));
                     } catch (Exception e){
                         e.printStackTrace();
@@ -1787,13 +1787,12 @@ public class AddAsetActivity extends AppCompatActivity {
         else if ("kayu".equals(String.valueOf(spinnerJenisAset.getSelectedItem()))  && "rusak".equals(String.valueOf(spinnerAsetKondisi.getSelectedItem())) ) {
 //            listBtnMap.setVisibility(View.VISIBLE);
             spinnerLuasSatuan.setVisibility(View.GONE);
-            tvPohon.setVisibility(View.VISIBLE);
-            inpJumlahPohon.setVisibility(View.VISIBLE);
+            inpJumlahPohon.setVisibility(View.GONE);
             tvBa.setVisibility(View.VISIBLE);
             tvUploudBA.setVisibility(View.VISIBLE);
             btnFile.setVisibility(View.VISIBLE);
 //            inpKomoditi.setVisibility(View.VISIBLE);
-            tvPohon.setVisibility(View.VISIBLE);
+            tvPohon.setVisibility(View.GONE);
 
 
             inpNomorBAST.setVisibility(View.VISIBLE);
@@ -2014,14 +2013,14 @@ public class AddAsetActivity extends AppCompatActivity {
 
             foto5rl.setVisibility(View.GONE);
 
-            tvPopTotalPohonSaatIni.setVisibility(View.VISIBLE);
-            tvPopTotalStdMaster.setVisibility(View.VISIBLE);
-            tvPopPerHA.setVisibility(View.VISIBLE);
-            tvPresentasePopPerHA.setVisibility(View.VISIBLE);
-            inpPopTotalPohonSaatIni.setVisibility(View.VISIBLE);
-            inpPopTotalStdMaster.setVisibility(View.VISIBLE);
-            inpPopPerHA.setVisibility(View.VISIBLE);
-            inpPresentasePopPerHA.setVisibility(View.VISIBLE);
+            tvPopTotalPohonSaatIni.setVisibility(View.GONE);
+            tvPopTotalStdMaster.setVisibility(View.GONE);
+            tvPopPerHA.setVisibility(View.GONE);
+            tvPresentasePopPerHA.setVisibility(View.GONE);
+            inpPopTotalPohonSaatIni.setVisibility(View.GONE);
+            inpPopTotalStdMaster.setVisibility(View.GONE);
+            inpPopPerHA.setVisibility(View.GONE);
+            inpPresentasePopPerHA.setVisibility(View.GONE);
 
             tvTahunTanam.setVisibility(View.GONE);
             inpTahunTanam.setVisibility(View.GONE);
@@ -2195,6 +2194,7 @@ public class AddAsetActivity extends AppCompatActivity {
                     builder.addPart(MultipartBody.Part.createFormData("jumlah_pohon", null, requestJumlahPohon));
                 }
 
+                //multipart pohon tanaman
                 if (spinnerJenisAset.getSelectedItemId() == 1 || spinnerJenisAset.getSelectedItemId() == 3) {
                     RequestBody requestPopulasiPohonSaatIni = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(Double.parseDouble(inpPopTotalPohonSaatIni.getText().toString().trim())));
                     RequestBody requestPopulasiStandar = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(Double.parseDouble(inpPopTotalStdMaster.getText().toString().trim())));
@@ -2226,10 +2226,13 @@ public class AddAsetActivity extends AppCompatActivity {
 
                 }
 
-                if (spinnerJenisAset.getSelectedItemId() == 1 || spinnerJenisAset.getSelectedItemId() == 3){
+                if ((spinnerJenisAset.getSelectedItemId() == 1 && !spinnerKodeAset.getSelectedItem().equals("ZC06/S001/Tebu")) || spinnerJenisAset.getSelectedItemId() == 3 ){
                     RequestBody requestSistemTanam = RequestBody.create(MediaType.parse("text/plain"), spinnerSistemTanam.getSelectedItem().toString().trim());
                     builder.addPart(MultipartBody.Part.createFormData("sistem_tanam", null, requestSistemTanam));
 
+                }else if (spinnerKodeAset.getSelectedItem().equals("ZC06/S001/Tebu")){
+                    RequestBody requestTanamMono = RequestBody.create(MediaType.parse("text/plain"), "Mono");
+                    builder.addPart(MultipartBody.Part.createFormData("sistem_tanam",null,requestTanamMono));
                 }
 
 

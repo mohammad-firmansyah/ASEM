@@ -189,6 +189,25 @@
                 android:spinnerMode="dropdown" />
 
             <TextView
+                android:id="@+id/tvSistemTanam"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:text="SISTEM TANAM :"
+                android:textColor="@color/main_grey"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                />
+
+            <Spinner
+                android:id="@+id/inpSistemTanam"
+                android:layout_width="match_parent"
+                android:layout_height="41dp"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/rounded_spinner"
+                android:spinnerMode="dropdown" />
+
+            <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="ALAT PENGANGKUTAN :"
