@@ -35,6 +35,7 @@ import android.provider.MediaStore;
 import android.provider.Settings;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.text.method.HideReturnsTransformationMethod;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -157,7 +158,7 @@ public class UpdateFotoQrAsetActivity extends AppCompatActivity {
 
     final Calendar myCalendar= Calendar.getInstance();
     EditText editText;
-    EditText inpJumlahPohon;
+//    EditText inpJumlahPohon;
     TextView tvUploudBA;
     TextView tvUploadBAST;
     TextView tvKetReject;
@@ -487,6 +488,7 @@ public class UpdateFotoQrAsetActivity extends AppCompatActivity {
         spinnerAsetKondisi = findViewById(R.id.inpKndsAset);
         spinnerKodeAset = findViewById(R.id.inpKodeAset);
         inpTahunTanam = findViewById(R.id.inpTahunTanam);
+        inpTahunTanam.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
         spinnerUnit = findViewById(R.id.inpUnit);
         spinnerUnit.setEnabled(false);
         spinnerSubUnit = findViewById(R.id.inpSubUnit);
@@ -508,7 +510,7 @@ public class UpdateFotoQrAsetActivity extends AppCompatActivity {
         inpNilaiResidu = findViewById(R.id.inpNmrResidu);
         inpNilaiResidu.setEnabled(false);
         inpKeterangan = findViewById(R.id.inpKeterangan);
-        inpJumlahPohon = findViewById(R.id.inpJmlhPohon);
+//        inpJumlahPohon = findViewById(R.id.inpJmlhPohon);
         inpPersenKondisi = findViewById(R.id.inpPersenKondisi);
         inpHGU = findViewById(R.id.inpHGU);
         inpKetReject = findViewById(R.id.inpKetReject);
@@ -1214,6 +1216,10 @@ public class UpdateFotoQrAsetActivity extends AppCompatActivity {
                                  spinnerSistemTanam.setSelection(getSistemTanam(aset.getSistemTanam()));
                              }
 
+                             if(aset.getTahunTanam() != null){
+                                 inpTahunTanam.setText(aset.getTahunTanam());
+                             }
+
                              if (aset.getSatuan_luas() != null) {
 
                                  if (aset.getSatuan_luas().equals("Ha")) {
@@ -1239,7 +1245,7 @@ public class UpdateFotoQrAsetActivity extends AppCompatActivity {
                              inpUmrEkonomis.setText(utils.MonthToYear(aset.getUmurEkonomisInMonth()));
 //                inpNilaiAsetSAP.setText(formatrupiah(Double.parseDouble(String.valueOf(aset.getUmurEkonomisInMonth()))));
                              inpPersenKondisi.setText(String.valueOf(aset.getPersenKondisi()));
-                             inpJumlahPohon.setText(String.valueOf(aset.getJumlahPohon()));
+//                             inpJumlahPohon.setText(String.valueOf(aset.getJumlahPohon()));
                              inpHGU.setText(String.valueOf(aset.getHgu()));
                              inpPopTotalPohonSaatIni.setText(String.valueOf(aset.getPopPohonSaatIni()));
                              inpPopTotalStdMaster.setText(String.valueOf(aset.getPopStandar()));
@@ -1698,7 +1704,7 @@ public class UpdateFotoQrAsetActivity extends AppCompatActivity {
 
     public void editVisibilityDynamic(){
         TextView tvBa = findViewById(R.id.tvBa);
-        TextView tvPohon = findViewById(R.id.tvPohon);
+//        TextView tvPohon = findViewById(R.id.tvPohon);
         TextView tvBast = findViewById(R.id.tvBast);
         TextView tvFoto = findViewById(R.id.tvFoto);
         TextView tvAfdeling = findViewById(R.id.tvAfdeling);
@@ -1921,8 +1927,8 @@ public class UpdateFotoQrAsetActivity extends AppCompatActivity {
 
         if ("tanaman".equals(String.valueOf(spinnerJenisAset.getSelectedItem())) && "normal".equals(String.valueOf(spinnerAsetKondisi.getSelectedItem()))) {
             listBtnMap.setVisibility(View.VISIBLE);
-            inpJumlahPohon.setVisibility(View.GONE);
-            tvPohon.setVisibility(View.GONE);
+//            inpJumlahPohon.setVisibility(View.GONE);
+//            tvPohon.setVisibility(View.GONE);
 //            inpKomoditi.setVisibility(View.VISIBLE);
 
             downloadBa.setVisibility(View.GONE);
@@ -1969,8 +1975,8 @@ public class UpdateFotoQrAsetActivity extends AppCompatActivity {
 
         else if ("tanaman".equals(String.valueOf(spinnerJenisAset.getSelectedItem()))  && "rusak".equals(String.valueOf(spinnerAsetKondisi.getSelectedItem())) ) {
             listBtnMap.setVisibility(View.VISIBLE);
-            inpJumlahPohon.setVisibility(View.GONE);
-            tvPohon.setVisibility(View.GONE);
+//            inpJumlahPohon.setVisibility(View.GONE);
+//            tvPohon.setVisibility(View.GONE);
             downloadBa.setVisibility(View.VISIBLE);
             spinnerLuasSatuan.setVisibility(View.GONE);
 //            inpKomoditi.setVisibility(View.VISIBLE);
@@ -2017,14 +2023,14 @@ public class UpdateFotoQrAsetActivity extends AppCompatActivity {
             tvUploudBA.setVisibility(View.VISIBLE);
             btnFile.setVisibility(View.VISIBLE);
             downloadBa.setVisibility(View.VISIBLE);
-            inpJumlahPohon.setVisibility(View.GONE);
+//            inpJumlahPohon.setVisibility(View.GONE);
 //            inpKomoditi.setVisibility(View.VISIBLE);
             spinnerLuasSatuan.setVisibility(View.GONE);
             inpNomorBAST.setVisibility(View.VISIBLE);
             tvBast.setVisibility(View.VISIBLE);
-            tvPohon.setVisibility(View.GONE);
+//            tvPohon.setVisibility(View.GONE);
             listBtnMap.setVisibility(View.GONE);
-            inpJumlahPohon.setVisibility(View.GONE);
+//            inpJumlahPohon.setVisibility(View.GONE);
             inpBtnMap.setVisibility(View.GONE);
             btnFileBAST.setVisibility(View.GONE);
             tvFileBAST.setVisibility(View.GONE);
@@ -2056,11 +2062,11 @@ public class UpdateFotoQrAsetActivity extends AppCompatActivity {
 
         else if ("kayu".equals(String.valueOf(spinnerJenisAset.getSelectedItem()))  && "normal".equals(String.valueOf(spinnerAsetKondisi.getSelectedItem())) ) {
             listBtnMap.setVisibility(View.VISIBLE);
-            inpJumlahPohon.setVisibility(View.VISIBLE);
+//            inpJumlahPohon.setVisibility(View.VISIBLE);
 //            inpKomoditi.setVisibility(View.VISIBLE);
             inpNomorBAST.setVisibility(View.VISIBLE);
             tvBast.setVisibility(View.VISIBLE);
-            tvPohon.setVisibility(View.VISIBLE);
+//            tvPohon.setVisibility(View.VISIBLE);
             spinnerLuasSatuan.setVisibility(View.GONE);
             inpBtnMap.setVisibility(View.GONE);
             downloadBa.setVisibility(View.GONE);
@@ -2102,14 +2108,14 @@ public class UpdateFotoQrAsetActivity extends AppCompatActivity {
 
         else if ("kayu".equals(String.valueOf(spinnerJenisAset.getSelectedItem()))  && "rusak".equals(String.valueOf(spinnerAsetKondisi.getSelectedItem())) ) {
             listBtnMap.setVisibility(View.VISIBLE);
-            tvPohon.setVisibility(View.VISIBLE);
-            inpJumlahPohon.setVisibility(View.VISIBLE);
+//            tvPohon.setVisibility(View.VISIBLE);
+//            inpJumlahPohon.setVisibility(View.VISIBLE);
             downloadBa.setVisibility(View.VISIBLE);
             tvBa.setVisibility(View.VISIBLE);
             tvUploudBA.setVisibility(View.VISIBLE);
             btnFile.setVisibility(View.VISIBLE);
 
-            tvPohon.setVisibility(View.VISIBLE);
+//            tvPohon.setVisibility(View.VISIBLE);
 
             spinnerLuasSatuan.setVisibility(View.GONE);
             inpNomorBAST.setVisibility(View.VISIBLE);
@@ -2153,10 +2159,10 @@ public class UpdateFotoQrAsetActivity extends AppCompatActivity {
             spinnerLuasSatuan.setVisibility(View.GONE);
             inpNomorBAST.setVisibility(View.VISIBLE);
             tvBast.setVisibility(View.VISIBLE);
-            tvPohon.setVisibility(View.GONE);
-            inpJumlahPohon.setVisibility(View.GONE);
+//            tvPohon.setVisibility(View.GONE);
+//            inpJumlahPohon.setVisibility(View.GONE);
             listBtnMap.setVisibility(View.GONE);
-            inpJumlahPohon.setVisibility(View.GONE);
+//            inpJumlahPohon.setVisibility(View.GONE);
             inpBtnMap.setVisibility(View.GONE);
             btnFileBAST.setVisibility(View.GONE);
             tvFileBAST.setVisibility(View.GONE);
@@ -2194,8 +2200,8 @@ public class UpdateFotoQrAsetActivity extends AppCompatActivity {
             spinnerLuasSatuan.setVisibility(View.VISIBLE);
             downloadBa.setVisibility(View.GONE);
             listBtnMap.setVisibility(View.GONE);
-            inpJumlahPohon.setVisibility(View.GONE);
-            tvPohon.setVisibility(View.GONE);
+//            inpJumlahPohon.setVisibility(View.GONE);
+//            tvPohon.setVisibility(View.GONE);
 
             tvBa.setVisibility(View.GONE);
             tvUploudBA.setVisibility(View.GONE);
@@ -2237,8 +2243,8 @@ public class UpdateFotoQrAsetActivity extends AppCompatActivity {
             btnFile.setVisibility(View.VISIBLE);
             tvUploudBA.setVisibility(View.VISIBLE);
             downloadBa.setVisibility(View.VISIBLE);
-            tvPohon.setVisibility(View.GONE);
-            inpJumlahPohon.setVisibility(View.GONE);
+//            tvPohon.setVisibility(View.GONE);
+//            inpJumlahPohon.setVisibility(View.GONE);
             inpBtnMap.setVisibility(View.VISIBLE);
             inpNomorBAST.setVisibility(View.VISIBLE);
             tvBast.setVisibility(View.VISIBLE);
@@ -2278,10 +2284,10 @@ public class UpdateFotoQrAsetActivity extends AppCompatActivity {
             tvUploudBA.setVisibility(View.VISIBLE);
             downloadBa.setVisibility(View.VISIBLE);
             spinnerLuasSatuan.setVisibility(View.VISIBLE);
-            tvPohon.setVisibility(View.GONE);
-            inpJumlahPohon.setVisibility(View.GONE);
+//            tvPohon.setVisibility(View.GONE);
+//            inpJumlahPohon.setVisibility(View.GONE);
             listBtnMap.setVisibility(View.GONE);
-            inpJumlahPohon.setVisibility(View.GONE);
+//            inpJumlahPohon.setVisibility(View.GONE);
             inpBtnMap.setVisibility(View.GONE);
             inpNomorBAST.setVisibility(View.VISIBLE);
             tvBast.setVisibility(View.VISIBLE);
@@ -2314,10 +2320,10 @@ public class UpdateFotoQrAsetActivity extends AppCompatActivity {
 
         } else {
             listBtnMap.setVisibility(View.GONE);
-            inpJumlahPohon.setVisibility(View.GONE);
+//            inpJumlahPohon.setVisibility(View.GONE);
             tvFoto.setVisibility(View.GONE);
             scrollPartition.setVisibility(View.GONE);
-            tvPohon.setVisibility(View.GONE);
+//            tvPohon.setVisibility(View.GONE);
             tvBa.setVisibility(View.GONE);
             tvUploudBA.setVisibility(View.GONE);
             inpBtnMap.setVisibility(View.GONE);

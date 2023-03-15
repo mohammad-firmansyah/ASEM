@@ -343,7 +343,7 @@ public class AsetOfflineAdapter extends RecyclerView.Adapter<AsetOfflineAdapter.
 //
 //        }
         //multipart pohon tanaman
-        if ((aset.getAsetJenis().equals("1") && !aset.getAsetKode().equals("ZC06/S001/Tebu")) || aset.getAsetJenis().equals("3")) {
+        if ((aset.getAsetJenis().equals("1") && !aset.getAsetKode().equals("22")) || aset.getAsetJenis().equals("3")) {
             RequestBody requestPopulasiPohonSaatIni = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(Double.parseDouble(aset.getPop_total_ini())));
             RequestBody requestPopulasiStandar = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(Double.parseDouble(aset.getPop_total_std())));
             builder.addPart(MultipartBody.Part.createFormData("pop_pohon_saat_ini", null, requestPopulasiPohonSaatIni));
@@ -380,10 +380,10 @@ public class AsetOfflineAdapter extends RecyclerView.Adapter<AsetOfflineAdapter.
             builder.addPart(MultipartBody.Part.createFormData("persen_kondisi", null, requestPersenKondisi));
         }
 
-        if (aset.getAsetJenis().equals("3")) {
-            RequestBody requestJumlahPohon = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(aset.getJumlahPohon()));
-            builder.addPart(MultipartBody.Part.createFormData("jumlah_pohon", null, requestJumlahPohon));
-        }
+//        if (aset.getAsetJenis().equals("3")) {
+//            RequestBody requestJumlahPohon = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(aset.getJumlahPohon()));
+//            builder.addPart(MultipartBody.Part.createFormData("jumlah_pohon", null, requestJumlahPohon));
+//        }
 
         if (subUnit == 2) {
             builder.addPart(MultipartBody.Part.createFormData("afdeling_id", null, requestAfdeling));
@@ -392,6 +392,11 @@ public class AsetOfflineAdapter extends RecyclerView.Adapter<AsetOfflineAdapter.
         if (aset.getAsetJenis().equals("2")) {
             RequestBody requestPersenKondisi = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(aset.getPersenKondisi()));
             builder.addPart(MultipartBody.Part.createFormData("persen_kondisi", null, requestPersenKondisi));
+
+            if (aset.getAlat_pengangkutan() != null){
+                RequestBody requestAlatAngkut = RequestBody.create(MediaType.parse("text/plain"), aset.getAlat_pengangkutan());
+                builder.addPart(MultipartBody.Part.createFormData("alat_angkut", null, requestAlatAngkut));
+            }
         }
 
         if (aset.getFotoAset1() != null) {
@@ -434,10 +439,6 @@ public class AsetOfflineAdapter extends RecyclerView.Adapter<AsetOfflineAdapter.
         }
 
 
-        if (aset.getAlat_pengangkutan() != null){
-            RequestBody requestAlatAngkut = RequestBody.create(MediaType.parse("text/plain"), aset.getAlat_pengangkutan());
-            builder.addPart(MultipartBody.Part.createFormData("alat_angkut", null, requestAlatAngkut));
-        }
 
         if (aset.getSatuan_luas() != null) {
             RequestBody requestSatuan = RequestBody.create(MediaType.parse("text/plain"), aset.getSatuan_luas());

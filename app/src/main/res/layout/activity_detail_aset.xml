@@ -990,30 +990,30 @@
                 android:background="@drawable/tgl_spinner"
                 />
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="JUMLAH POHON :"
-                android:textSize="14sp"
-                android:id="@+id/tvPohon"
-                android:textStyle="bold"
-                android:textColor="@color/main_grey"
-                android:layout_marginVertical="10dp"
+<!--            <TextView-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="JUMLAH POHON :"-->
+<!--                android:textSize="14sp"-->
+<!--                android:id="@+id/tvPohon"-->
+<!--                android:textStyle="bold"-->
+<!--                android:textColor="@color/main_grey"-->
+<!--                android:layout_marginVertical="10dp"-->
 
-                />
+<!--                />-->
 
 
-            <EditText
-                android:layout_width="match_parent"
-                android:id="@+id/inpJmlhPohon"
-                android:layout_marginBottom="10dp"
-                android:layout_height="41dp"
-                android:paddingVertical="10dp"
-                android:lines="1"
-                android:hint="jumlah pohon"
-                android:inputType="numberDecimal"
-                android:background="@drawable/tgl_spinner"
-                />
+<!--            <EditText-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:id="@+id/inpJmlhPohon"-->
+<!--                android:layout_marginBottom="10dp"-->
+<!--                android:layout_height="41dp"-->
+<!--                android:paddingVertical="10dp"-->
+<!--                android:lines="1"-->
+<!--                android:hint="jumlah pohon"-->
+<!--                android:inputType="numberDecimal"-->
+<!--                android:background="@drawable/tgl_spinner"-->
+<!--                />-->
 
 
 

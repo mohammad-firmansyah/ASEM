@@ -339,19 +339,18 @@
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/tvBa"
-
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
                 android:text="UPLOAD BA :"
                 android:textColor="@color/main_grey"
                 android:textSize="14sp"
+                android:id="@+id/tvBa"
                 android:textStyle="bold" />
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
+
                 >
 
 
@@ -373,12 +372,28 @@
                     android:layout_height="41dp"
                     android:layout_weight="0.3"
                     android:layout_marginBottom="10dp"
-                    android:background="@drawable/rounded_spinner"
+                    android:background="@drawable/edit_text_spiner"
                     android:spinnerMode="dropdown"
                     android:text="UPLOAD"
                     android:onClick="uploadImage"
                     android:layout_marginStart="5dp"
                     android:textSize="10sp"
+                    android:layout_toEndOf="@+id/tvUploudBA"
+                    />
+                <Button
+
+                    android:id="@+id/inpDownloadBa"
+                    android:layout_width="0dp"
+                    android:layout_height="41dp"
+                    android:layout_weight="0.3"
+                    android:layout_marginBottom="10dp"
+                    android:background="@drawable/edit_text_spiner"
+                    android:spinnerMode="dropdown"
+                    android:text="DOWNLOAD"
+                    android:onClick="downloadBaFunc"
+                    android:layout_marginStart="5dp"
+                    android:textSize="9sp"
+                    android:visibility="gone"
                     android:layout_toEndOf="@+id/tvUploudBA"
                     />
             </LinearLayout>
@@ -989,30 +1004,30 @@
                 android:background="@drawable/edit_text_spiner"
                 />
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="JUMLAH POHON :"
-                android:textSize="14sp"
-                android:id="@+id/tvPohon"
-                android:textStyle="bold"
-                android:textColor="@color/main_grey"
-                android:layout_marginVertical="10dp"
+<!--            <TextView-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="JUMLAH POHON :"-->
+<!--                android:textSize="14sp"-->
+<!--                android:id="@+id/tvPohon"-->
+<!--                android:textStyle="bold"-->
+<!--                android:textColor="@color/main_grey"-->
+<!--                android:layout_marginVertical="10dp"-->
 
-                />
+<!--                />-->
 
 
-            <EditText
-                android:layout_width="match_parent"
-                android:id="@+id/inpJmlhPohon"
-                android:layout_marginBottom="10dp"
-                android:layout_height="41dp"
-                android:paddingVertical="10dp"
-                android:lines="1"
-                android:hint="jumlah pohon"
-                android:inputType="numberDecimal"
-                android:background="@drawable/edit_text_spiner"
-                />
+<!--            <EditText-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:id="@+id/inpJmlhPohon"-->
+<!--                android:layout_marginBottom="10dp"-->
+<!--                android:layout_height="41dp"-->
+<!--                android:paddingVertical="10dp"-->
+<!--                android:lines="1"-->
+<!--                android:hint="jumlah pohon"-->
+<!--                android:inputType="numberDecimal"-->
+<!--                android:background="@drawable/edit_text_spiner"-->
+<!--                />-->
 
 
 

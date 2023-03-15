@@ -130,7 +130,7 @@ public class DetailAsetOfflineActivity extends AppCompatActivity {
 
     final Calendar myCalendar= Calendar.getInstance();
     EditText editText;
-    EditText inpJumlahPohon;
+//    EditText inpJumlahPohon;
     TextView tvUploudBA;
     TextView tvUploudBast;
     TextView tvUploadFileBAST;
@@ -307,8 +307,8 @@ public class DetailAsetOfflineActivity extends AppCompatActivity {
         inpNilaiResidu.setEnabled(false);
         inpKeterangan = findViewById(R.id.inpKeterangan);
         inpKeterangan.setEnabled(false);
-        inpJumlahPohon = findViewById(R.id.inpJmlhPohon);
-        inpJumlahPohon.setEnabled(false);
+//        inpJumlahPohon = findViewById(R.id.inpJmlhPohon);
+//        inpJumlahPohon.setEnabled(false);
         inpPersenKondisi = findViewById(R.id.inpPersenKondisi);
         inpPersenKondisi.setEnabled(false);
         inpHGU = findViewById(R.id.inpHGU);
@@ -749,7 +749,7 @@ public class DetailAsetOfflineActivity extends AppCompatActivity {
                 Log.d("month-3",utils.MonthToYear(utils.masaSusutToMonth(Integer.valueOf(aset.getMasaSusut()),aset.getTglOleh())));
                 inpNilaiAsetSAP.setText(formatrupiah(Double.parseDouble(String.valueOf(aset.getNilaiOleh()))));
                 inpPersenKondisi.setText(String.valueOf(aset.getPersenKondisi()));
-                inpJumlahPohon.setText(String.valueOf(aset.getJumlahPohon()));
+//                inpJumlahPohon.setText(String.valueOf(aset.getJumlahPohon()));
                 inpHGU.setText(String.valueOf(aset.getHgu()));
                 String ket_reject = aset.getKetReject();
                 if (ket_reject != null){
@@ -934,7 +934,7 @@ public class DetailAsetOfflineActivity extends AppCompatActivity {
     }
     public void editVisibilityDynamic(){
         TextView tvBa = findViewById(R.id.tvBa);
-        TextView tvPohon = findViewById(R.id.tvPohon);
+//        TextView tvPohon = findViewById(R.id.tvPohon);
         TextView tvBast = findViewById(R.id.tvBast);
         TextView tvFoto = findViewById(R.id.tvFoto);
         TextView tvAfdeling = findViewById(R.id.tvAfdeling);
@@ -1156,8 +1156,8 @@ public class DetailAsetOfflineActivity extends AppCompatActivity {
 
         if ("tanaman".equals(String.valueOf(spinnerJenisAset.getSelectedItem())) && "normal".equals(String.valueOf(spinnerAsetKondisi.getSelectedItem()))) {
             listBtnMap.setVisibility(View.VISIBLE);
-            inpJumlahPohon.setVisibility(View.VISIBLE);
-            tvPohon.setVisibility(View.VISIBLE);
+//            inpJumlahPohon.setVisibility(View.VISIBLE);
+//            tvPohon.setVisibility(View.VISIBLE);
 //            inpKomoditi.setVisibility(View.VISIBLE);
             downloadBa.setVisibility(View.GONE);
             inpNomorBAST.setVisibility(View.VISIBLE);
@@ -1193,9 +1193,9 @@ public class DetailAsetOfflineActivity extends AppCompatActivity {
 
         else if ("tanaman".equals(String.valueOf(spinnerJenisAset.getSelectedItem()))  && "rusak".equals(String.valueOf(spinnerAsetKondisi.getSelectedItem())) ) {
             listBtnMap.setVisibility(View.VISIBLE);
-            inpJumlahPohon.setVisibility(View.VISIBLE);
+//            inpJumlahPohon.setVisibility(View.VISIBLE);
             tvBa.setVisibility(View.VISIBLE);
-            tvPohon.setVisibility(View.VISIBLE);
+//            tvPohon.setVisibility(View.VISIBLE);
 
             downloadBa.setVisibility(View.VISIBLE);
 //            inpKomoditi.setVisibility(View.VISIBLE);
@@ -1231,14 +1231,14 @@ public class DetailAsetOfflineActivity extends AppCompatActivity {
             tvUploudBA.setVisibility(View.VISIBLE);
 //            btnFile.setVisibility(View.VISIBLE);
             tvBa.setVisibility(View.VISIBLE);
-            inpJumlahPohon.setVisibility(View.VISIBLE);
+//            inpJumlahPohon.setVisibility(View.VISIBLE);
 //            inpKomoditi.setVisibility(View.VISIBLE);
             downloadBa.setVisibility(View.VISIBLE);
             inpNomorBAST.setVisibility(View.VISIBLE);
             tvBast.setVisibility(View.VISIBLE);
-            tvPohon.setVisibility(View.GONE);
+//            tvPohon.setVisibility(View.GONE);
             listBtnMap.setVisibility(View.GONE);
-            inpJumlahPohon.setVisibility(View.GONE);
+//            inpJumlahPohon.setVisibility(View.GONE);
             inpBtnMap.setVisibility(View.GONE);
             tvFileBAST.setVisibility(View.GONE);
             tvUploadBAST.setVisibility(View.GONE);
@@ -1264,11 +1264,11 @@ public class DetailAsetOfflineActivity extends AppCompatActivity {
 
         else if ("kayu".equals(String.valueOf(spinnerJenisAset.getSelectedItem()))  && "normal".equals(String.valueOf(spinnerAsetKondisi.getSelectedItem())) ) {
             listBtnMap.setVisibility(View.VISIBLE);
-            inpJumlahPohon.setVisibility(View.VISIBLE);
+//            inpJumlahPohon.setVisibility(View.VISIBLE);
 //            inpKomoditi.setVisibility(View.VISIBLE);
             inpNomorBAST.setVisibility(View.VISIBLE);
             tvBast.setVisibility(View.VISIBLE);
-            tvPohon.setVisibility(View.VISIBLE);
+//            tvPohon.setVisibility(View.VISIBLE);
             downloadBa.setVisibility(View.GONE);
             tvBa.setVisibility(View.GONE);
             tvUploudBA.setVisibility(View.GONE);
@@ -1302,14 +1302,14 @@ public class DetailAsetOfflineActivity extends AppCompatActivity {
 
         else if ("kayu".equals(String.valueOf(spinnerJenisAset.getSelectedItem()))  && "rusak".equals(String.valueOf(spinnerAsetKondisi.getSelectedItem())) ) {
             listBtnMap.setVisibility(View.VISIBLE);
-            tvPohon.setVisibility(View.VISIBLE);
-            inpJumlahPohon.setVisibility(View.VISIBLE);
+//            tvPohon.setVisibility(View.VISIBLE);
+//            inpJumlahPohon.setVisibility(View.VISIBLE);
             tvBa.setVisibility(View.VISIBLE);
             tvUploudBA.setVisibility(View.VISIBLE);
 //            btnFile.setVisibility(View.VISIBLE);
             downloadBa.setVisibility(View.VISIBLE);
 //            inpKomoditi.setVisibility(View.VISIBLE);
-            tvPohon.setVisibility(View.VISIBLE);
+//            tvPohon.setVisibility(View.VISIBLE);
 
 
             inpNomorBAST.setVisibility(View.VISIBLE);
@@ -1346,10 +1346,10 @@ public class DetailAsetOfflineActivity extends AppCompatActivity {
 
             inpNomorBAST.setVisibility(View.VISIBLE);
             tvBast.setVisibility(View.VISIBLE);
-            tvPohon.setVisibility(View.GONE);
-            inpJumlahPohon.setVisibility(View.GONE);
+//            tvPohon.setVisibility(View.GONE);
+//            inpJumlahPohon.setVisibility(View.GONE);
             listBtnMap.setVisibility(View.GONE);
-            inpJumlahPohon.setVisibility(View.GONE);
+//            inpJumlahPohon.setVisibility(View.GONE);
             inpBtnMap.setVisibility(View.GONE);
             tvFileBAST.setVisibility(View.GONE);
             tvUploadBAST.setVisibility(View.GONE);
@@ -1379,9 +1379,9 @@ public class DetailAsetOfflineActivity extends AppCompatActivity {
 //            inpKomoditi.setVisibility(View.GONE);
             tvUploudBA.setVisibility(View.GONE);
             listBtnMap.setVisibility(View.GONE);
-            inpJumlahPohon.setVisibility(View.GONE);
+//            inpJumlahPohon.setVisibility(View.GONE);
             tvBa.setVisibility(View.GONE);
-            tvPohon.setVisibility(View.GONE);
+//            tvPohon.setVisibility(View.GONE);
 //            btnFile.setVisibility(View.GONE);
             if ("baru".equals(String.valueOf(spinnerTipeAset.getSelectedItem())) ) {
                 //input PDF ba bast
@@ -1411,8 +1411,8 @@ public class DetailAsetOfflineActivity extends AppCompatActivity {
             tvBa.setVisibility(View.VISIBLE);
 //            btnFile.setVisibility(View.VISIBLE);
             tvUploudBA.setVisibility(View.VISIBLE);
-            tvPohon.setVisibility(View.GONE);
-            inpJumlahPohon.setVisibility(View.GONE);
+//            tvPohon.setVisibility(View.GONE);
+//            inpJumlahPohon.setVisibility(View.GONE);
             inpBtnMap.setVisibility(View.VISIBLE);
             inpNomorBAST.setVisibility(View.VISIBLE);
             tvBast.setVisibility(View.VISIBLE);
@@ -1442,10 +1442,10 @@ public class DetailAsetOfflineActivity extends AppCompatActivity {
             tvUploudBA.setVisibility(View.VISIBLE);
             downloadBa.setVisibility(View.VISIBLE);
 //            inpKomoditi.setVisibility(View.GONE);
-            tvPohon.setVisibility(View.GONE);
-            inpJumlahPohon.setVisibility(View.GONE);
+//            tvPohon.setVisibility(View.GONE);
+//            inpJumlahPohon.setVisibility(View.GONE);
             listBtnMap.setVisibility(View.GONE);
-            inpJumlahPohon.setVisibility(View.GONE);
+//            inpJumlahPohon.setVisibility(View.GONE);
             inpBtnMap.setVisibility(View.GONE);
             inpNomorBAST.setVisibility(View.VISIBLE);
             tvBast.setVisibility(View.VISIBLE);
@@ -1470,10 +1470,10 @@ public class DetailAsetOfflineActivity extends AppCompatActivity {
 
         } else {
             listBtnMap.setVisibility(View.GONE);
-            inpJumlahPohon.setVisibility(View.GONE);
+//            inpJumlahPohon.setVisibility(View.GONE);
             tvFoto.setVisibility(View.GONE);
             scrollPartition.setVisibility(View.GONE);
-            tvPohon.setVisibility(View.GONE);
+//            tvPohon.setVisibility(View.GONE);
             tvBa.setVisibility(View.GONE);
             tvUploudBA.setVisibility(View.GONE);
             inpBtnMap.setVisibility(View.GONE);
@@ -1527,9 +1527,9 @@ public class DetailAsetOfflineActivity extends AppCompatActivity {
         for (AsetKode2 a : asetKode2) {
             if (a.getAsetJenis() == spinnerJenisAset.getSelectedItemId()) {
 
-                if ((a.getAsetJenis()) == 1 ) {
+                if ((a.getAsetJenis()) == 2 ) {
                     aset_kode_temp = a.getAsetClass() + "/" + a.getAsetDesc();
-                } else if ((a.getAsetJenis()) == 2) {
+                } else if ((a.getAsetJenis()) == 1) {
                     aset_kode_temp = a.getAsetClass() + "/" + a.getAsetGroup() + "/" + a.getAsetDesc();
                 } else {
                     aset_kode_temp = a.getAsetClass() + "/" + a.getAsetGroup() + "/" + a.getAsetDesc();
