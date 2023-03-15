@@ -28,6 +28,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.location.Location;
 import android.location.LocationManager;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Looper;
@@ -106,6 +107,8 @@ import com.google.android.gms.location.LocationRequest;
 
 public class UpdateAsetActivity extends AppCompatActivity {
     Data aset;
+    private static final int REQUEST_CODE_PERMISSION = 1;
+    String mPermission = Manifest.permission.ACCESS_FINE_LOCATION;
     String url1 = "";
     String url2 = "";
     String url3 = "";
@@ -452,6 +455,21 @@ public class UpdateAsetActivity extends AppCompatActivity {
         asetInterface = AsemApp.getApiClient().create(AsetInterface.class);
 
         spinnerNoSap = new Dialog(UpdateAsetActivity.this);
+
+        if(Build.VERSION.SDK_INT>= 23) {
+
+            if (checkSelfPermission(mPermission) != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(UpdateAsetActivity.this,
+                        new String[]{mPermission,
+                        },
+                        REQUEST_CODE_PERMISSION);
+                return;
+            }
+
+            else
+            {
+            }
+        }
 
         dialog = new Dialog(UpdateAsetActivity.this,R.style.MyAlertDialogTheme);
         dialog.setContentView(R.layout.loading);
