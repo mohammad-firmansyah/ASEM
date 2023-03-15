@@ -79,6 +79,7 @@ public class ReportActivity extends AppCompatActivity {
     private static final int LOCATION_PERMISSION_AND_STORAGE = 33;
 
     Integer unit_id = 0;
+    Integer user_id = 0;
     ListView listView;
     DataAllSpinner allSpinner;
     Map<Integer, Integer> mapAfdelingSpinner = new HashMap<Integer, Integer>();
@@ -132,6 +133,7 @@ public class ReportActivity extends AppCompatActivity {
         asetInterface = AsemApp.getApiClient().create(AsetInterface.class);
 
         unit_id = Integer.valueOf(sharedPreferences.getString("unit_id", "0"));
+        user_id = Integer.valueOf(sharedPreferences.getString("user_id", "0"));
         Log.d("amanat19", String.valueOf(unit_id));
         dialog = new Dialog(ReportActivity.this,R.style.MyAlertDialogTheme);
         dialog.setContentView(R.layout.loading);
@@ -744,8 +746,10 @@ public class ReportActivity extends AppCompatActivity {
 
 
 
+
             RequestBody requestUnit = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(unit_id));
             RequestBody requestUnitKasi = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(spinnerUnit.getSelectedItemId()));
+            RequestBody requestUserId = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(user_id));
             RequestBody requestHGU = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(inpHGU.getText().toString().trim()));
 
 
@@ -759,6 +763,7 @@ public class ReportActivity extends AppCompatActivity {
             builder.addPart(MultipartBody.Part.createFormData("tgl_input1",null,requestTglInput1));
             builder.addPart(MultipartBody.Part.createFormData("tgl_input2",null,requestTglInput2));
             builder.addPart(MultipartBody.Part.createFormData("unit_id",null,requestUnit));
+            builder.addPart(MultipartBody.Part.createFormData("user_id",null,requestUserId));
             builder.addPart(MultipartBody.Part.createFormData("unit_id_kasi",null,requestUnitKasi));
 //            builder.addPart(MultipartBody.Part.createFormData("hgu",null,requestHGU));
 
@@ -788,7 +793,7 @@ public class ReportActivity extends AppCompatActivity {
                 public void onResponse(Call<ReportModel> call, Response<ReportModel> response) {
                     if (response.isSuccessful() && response.body() != null){
                         dialog.dismiss();
-                        downloadReport(AsemApp.BASE_URL_ASSET+"/"+response.body().getData());
+                        downloadReport(AsemApp.BASE_URL_ASSET +"/"+"storage/app/public/laporan.xlsx");
                         return;
                     }
 
