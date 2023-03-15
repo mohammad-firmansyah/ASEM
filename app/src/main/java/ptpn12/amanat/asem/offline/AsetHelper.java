@@ -13,6 +13,7 @@ import static ptpn12.amanat.asem.offline.DatabaseHelper.SQL_CREATE_TABLE_STATUS_
 import static ptpn12.amanat.asem.offline.DatabaseHelper.SQL_CREATE_TABLE_SUB_UNIT;
 import static ptpn12.amanat.asem.offline.DatabaseHelper.SQL_CREATE_TABLE_UNIT;
 import static ptpn12.amanat.asem.offline.DatabaseHelper.SQL_CREATE_TABLE_USERS;
+import static ptpn12.amanat.asem.offline.DatabaseHelper.SQL_INSERT_TABLE_SISTEM_TANAM;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -340,9 +341,11 @@ public class AsetHelper {
         database.execSQL("DROP TABLE if exists users");
         database.execSQL("DROP TABLE  if exists sap");
         database.execSQL("DROP TABLE  if exists alat_pengangkutan");
+        database.execSQL("DROP TABLE  if exists sistem_tanam");
 
 //
         database.execSQL(SQL_CREATE_TABLE_AFDELING);
+        database.execSQL(SQL_CREATE_TABLE_SISTEM_TANAM);
 
         database.execSQL(SQL_CREATE_TABLE_ALAT_PENGANGKUTAN);
 

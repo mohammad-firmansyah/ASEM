@@ -1019,17 +1019,21 @@ public void getAllSpinnerData(){
 
 
 
+            Integer unit_id = Integer.parseInt(sharedPreferences.getString("unit_id","0"));
             // get afdeling
             for (Afdelling at : dataAllSpinner.getAfdeling()){
 //                asetHelper.deleteAfdeling();
-                ContentValues values = new ContentValues();
-                values.put("afdeling_desc",at.getAfdelling_desc());
-                values.put("unit_id",at.getUnit_id());
-                asetHelper.insertAfdeling(values);
+                if (at.getUnit_id() == unit_id) {
+                    Log.d("amanat99", at.getAfdelling_desc());
+                    ContentValues values = new ContentValues();
+                    values.put("afdeling_desc", at.getAfdelling_desc());
+                    values.put("afdeling_id", at.getAfdelling_id());
+                    values.put("unit_id", at.getUnit_id());
+                    asetHelper.insertAfdeling(values);
+                }
             }
 
             // get sap
-            Integer unit_id = Integer.parseInt(sharedPreferences.getString("unit_id","0"));
             for (Sap at : dataAllSpinner.getSap()){
 //                asetHelper.deleteSap();
 
