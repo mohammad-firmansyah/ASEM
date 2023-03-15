@@ -774,6 +774,7 @@ public class DetailAsetOfflineActivity extends AppCompatActivity {
                 url2 = "file://" + aset.getFotoAset2();
                 url3 = "file://" + aset.getFotoAset3();
                 url4 = "file://" + aset.getFotoAset4();
+                url5 = "file://" + aset.getFotoAset5();
 
                 if (aset.getFotoAset1() == null ){
                     map1.setEnabled(false);
@@ -867,7 +868,7 @@ public class DetailAsetOfflineActivity extends AppCompatActivity {
 
                     if (aset.getAfdelingId() != null) {
 
-                        spinnerAfdeling.setSelection(mapAfdelingSpinner.get(Integer.parseInt(aset.getAfdelingId())-2));
+                        spinnerAfdeling.setSelection(mapAfdelingSpinner.get(Integer.parseInt(aset.getAfdelingId())));
                     }
 
 
@@ -901,7 +902,6 @@ public class DetailAsetOfflineActivity extends AppCompatActivity {
         return "Tidak Ada sistem tanam";
     }
 
-
     private String showPopulasi(String pop) {
         String[] first  = pop.split("[.]");
 
@@ -911,24 +911,42 @@ public class DetailAsetOfflineActivity extends AppCompatActivity {
         }
         String second = first[first.length - 1];
 
-        String comma  = second.substring(0,3);
+
+        String comma = "";
+        if (second.length() < 3) {
+            comma  = second;
+
+        } else {
+            comma  = second.substring(0,3);
+
+        }
+
 
         String result = first[0] + "." +comma +" %";
 
         return result;
     }
+
     private String showPopulasiWithoutPercentage(String pop) {
         String[] first  = pop.split("[.]");
 
-        Log.d("amanat20", String.valueOf(first[0]));
         if (first.length <= 1 ) {
             return pop;
         }
         String second = first[first.length - 1];
 
-        String comma  = second.substring(0,3);
+        Log.d("amanat29", String.valueOf(second));
 
-        String result = first[0] + "." +comma;
+        String comma = "";
+        if (second.length() < 3) {
+            comma  = second;
+
+        } else {
+            comma  = second.substring(0,3);
+
+        }
+
+        String result = first[0] + "." + comma;
 
         return result;
     }

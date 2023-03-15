@@ -2625,7 +2625,16 @@ public class UpdateAsetActivity extends AppCompatActivity {
         }
         String second = first[first.length - 1];
 
-        String comma  = second.substring(0,3);
+
+        String comma = "";
+        if (second.length() < 3) {
+            comma  = second;
+
+        } else {
+            comma  = second.substring(0,3);
+
+        }
+
 
         String result = first[0] + "." +comma +" %";
 
@@ -2635,15 +2644,23 @@ public class UpdateAsetActivity extends AppCompatActivity {
     private String showPopulasiWithoutPercentage(String pop) {
         String[] first  = pop.split("[.]");
 
-        Log.d("amanat20", String.valueOf(first[0]));
         if (first.length <= 1 ) {
             return pop;
         }
         String second = first[first.length - 1];
 
-        String comma  = second.substring(0,3);
+        Log.d("amanat29", String.valueOf(second));
 
-        String result = first[0] + "." +comma;
+        String comma = "";
+        if (second.length() < 3) {
+            comma  = second;
+
+        } else {
+            comma  = second.substring(0,3);
+
+        }
+
+        String result = first[0] + "." + comma;
 
         return result;
     }
