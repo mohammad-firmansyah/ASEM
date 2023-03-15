@@ -793,7 +793,7 @@ public class ReportActivity extends AppCompatActivity {
                 public void onResponse(Call<ReportModel> call, Response<ReportModel> response) {
                     if (response.isSuccessful() && response.body() != null){
                         dialog.dismiss();
-                        downloadReport(AsemApp.BASE_URL_ASSET +"/"+"storage/app/public/laporan.xlsx");
+                        downloadReport(AsemApp.BASE_URL_ASSET +"/"+response.body().getData());
                         return;
                     }
 
