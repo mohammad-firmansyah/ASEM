@@ -1314,6 +1314,9 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity {
             if (aset.getAfdelingId() != null) {
 
 //                mapAfdelingSpinner.put(185,1);
+                Log.d("amanat23", String.valueOf(mapAfdelingSpinner.get(afdeling_id)));
+                Log.d("amanat23", String.valueOf(afdeling_id));
+
                 spinnerAfdeling.setSelection(mapAfdelingSpinner.get(afdeling_id));
 
             }
@@ -2234,9 +2237,7 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity {
 
 
         for (SistemTanam at : dataAllSpinner.getSistemTanam()) {
-
             listSpinnerSistemTanam.add(at.getSt_desc());
-
         }
 
         // get data jenis
@@ -2316,13 +2317,12 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity {
         Integer i = 1;
         afdeling2 = dataAllSpinner.getAfdeling();
         for (Afdelling at : dataAllSpinner.getAfdeling()) {
-            if (at.getUnit_id() == (spinnerUnit.getSelectedItemId() + 1)) {
                 mapSpinnerAfdeling.put(i, at.getAfdelling_id());
                 mapAfdelingSpinner.put(at.getAfdelling_id(), i);
+                Log.d("amanat98", String.valueOf(at.getAfdelling_desc()));
                 mapAfdeling.put(i, at.getAfdelling_desc());
                 listSpinnerAfdeling.add(at.getAfdelling_desc());
                 i++;
-            }
         }
 
 
@@ -2408,9 +2408,10 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity {
         } catch (Exception e) {
         }
 
+        Log.d("amanat23", String.valueOf(mapAfdelingSpinner.get(afdeling_id-2)));
+        Log.d("amanat23", String.valueOf(afdeling_id));
+
         spinnerAfdeling.setSelection(mapAfdelingSpinner.get(afdeling_id));
-        Log.d("amanat22", String.valueOf(mapAfdelingSpinner.get(afdeling_id)));
-        Log.d("amanat22", String.valueOf(afdeling_id));
         asetHelper.close();
 
     }
