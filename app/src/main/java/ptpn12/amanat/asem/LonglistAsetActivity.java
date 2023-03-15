@@ -984,7 +984,7 @@ public void getAllSpinnerData(){
             // get sistem tanam
             for (SistemTanam at : dataAllSpinner.getSistemTanam()){
                 ContentValues values = new ContentValues();
-                values.put("aset_kondisi_desc",at.getSt_desc());
+                values.put("st_desc",at.getSt_desc());
                 asetHelper.insertSistemTanam(values);
             }
 
