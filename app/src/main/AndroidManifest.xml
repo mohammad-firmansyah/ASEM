@@ -34,7 +34,8 @@
         </activity>
         <activity
             android:name=".AsetAddUpdateOfflineActivity"
-            android:exported="false">
+            android:exported="false"
+            android:configChanges="orientation|keyboardHidden|screenSize">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
@@ -48,7 +49,8 @@
         </activity>
         <activity
             android:name=".UpdateFotoQrAsetActivity"
-            android:exported="false">
+            android:exported="false"
+            android:configChanges="orientation|keyboardHidden|screenSize">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
@@ -76,14 +78,16 @@
         </activity>
         <activity
             android:name=".AddAsetActivity"
-            android:exported="false">
+            android:exported="false"
+            android:configChanges="orientation|keyboardHidden|screenSize">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
             android:name=".UpdateAsetActivity"
-            android:exported="false">
+            android:exported="false"
+            android:configChanges="orientation|keyboardHidden|screenSize">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />

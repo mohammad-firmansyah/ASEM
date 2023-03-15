@@ -663,7 +663,7 @@ public class UpdateFotoQrAsetActivity extends AppCompatActivity {
 
                     try{
 
-                        Double popPerHa =  Double.parseDouble(String.valueOf(inpPopTotalPohonSaatIni.getText()))/Double.parseDouble(String.valueOf(inpLuasAset.getText()));
+                        Double popPerHa =  Double.parseDouble((inpPopTotalPohonSaatIni.getText().toString() != null || !inpPopTotalPohonSaatIni.getText().toString().equals("") ) ? String.valueOf(inpPopTotalPohonSaatIni.getText().toString()) : "0" ) / Double.parseDouble((inpLuasAset.getText().toString().trim().equals("")) ? "0" : inpLuasAset.getText().toString().trim());
                         inpPopPerHA.setText(showPopulasiWithoutPercentage(String.valueOf(popPerHa)));
                     } catch (Exception e){
                         e.printStackTrace();
@@ -693,8 +693,8 @@ public class UpdateFotoQrAsetActivity extends AppCompatActivity {
                 if (!inpPopTotalStdMaster.getText().equals("")){
                     try {
 
-                        Double popPerHa =  Double.parseDouble(String.valueOf(inpPopTotalPohonSaatIni.getText()))/Double.parseDouble(String.valueOf(inpLuasAset.getText()));
-                        Double presentase = popPerHa / Double.parseDouble(String.valueOf(inpPopTotalStdMaster.getText())) * 100;
+                        Double popPerHa =  Double.parseDouble((inpPopTotalPohonSaatIni.getText().toString() != null || !inpPopTotalPohonSaatIni.getText().toString().equals("") ) ? String.valueOf(inpPopTotalPohonSaatIni.getText().toString()) : "0" ) / Double.parseDouble((inpLuasAset.getText().toString().trim().equals("")) ? "0" : inpLuasAset.getText().toString().trim());
+                        Double presentase = popPerHa / Double.parseDouble((inpPopTotalStdMaster.getText().toString() != null || inpPopTotalStdMaster.getText().toString().equals("") ) ? String.valueOf(inpPopTotalStdMaster.getText().toString()) : "0"  ) * 100;
                         inpPresentasePopPerHA.setText(showPopulasi(String.valueOf(presentase)));
                     } catch (Exception e){
                         e.printStackTrace();
@@ -1247,10 +1247,23 @@ public class UpdateFotoQrAsetActivity extends AppCompatActivity {
                              inpPersenKondisi.setText(String.valueOf(aset.getPersenKondisi()));
 //                             inpJumlahPohon.setText(String.valueOf(aset.getJumlahPohon()));
                              inpHGU.setText(String.valueOf(aset.getHgu()));
-                             inpPopTotalPohonSaatIni.setText(String.valueOf(aset.getPopPohonSaatIni()));
-                             inpPopTotalStdMaster.setText(String.valueOf(aset.getPopStandar()));
-                             inpPopPerHA.setText(String.valueOf(aset.getPopPerHa()));
-                             inpPresentasePopPerHA.setText(String.valueOf(aset.getPresentasePopPerHa()));
+//                             inpPopTotalPohonSaatIni.setText(String.valueOf(aset.getPopPohonSaatIni()));
+//                             inpPopTotalStdMaster.setText(String.valueOf(aset.getPopStandar()));
+//                             inpPopPerHA.setText(String.valueOf(aset.getPopPerHa()));
+//                             inpPresentasePopPerHA.setText(String.valueOf(aset.getPresentasePopPerHa()));
+
+
+                             if(aset.getPopPohonSaatIni() != null && aset.getPopStandar() != null){
+                                 inpPopTotalPohonSaatIni.setText(String.valueOf(aset.getPopPohonSaatIni()));
+                                 inpPopTotalStdMaster.setText(String.valueOf(aset.getPopStandar()));
+                             }
+
+                             if(aset.getPopPerHa() != null && aset.getPresentasePopPerHa() != null){
+                                 inpPopPerHA.setText(String.valueOf(aset.getPopPerHa()));
+                                 inpPresentasePopPerHA.setText(String.valueOf(aset.getPresentasePopPerHa()));
+                             }
+
+
                              String ket_reject = aset.getKetReject();
                              if (ket_reject != null){
                                  inpKetReject.setVisibility(View.VISIBLE);
@@ -2393,7 +2406,7 @@ public class UpdateFotoQrAsetActivity extends AppCompatActivity {
             String nomor_aset_sap = inpNoSAP.getText().toString().trim();
             String luas_aset = String.valueOf(Double.parseDouble((inpLuasAset.getText().toString().trim().equals("")) ? "0" : inpLuasAset.getText().toString().trim()));
             String nilai_aset = String.valueOf(CurrencyToNumber(inpNilaiAsetSAP.getText().toString().trim()));
-            String tgl_oleh = inpTglOleh.getText().toString().trim() + " 00:00:00";
+            String tgl_oleh = inpTglOleh.getText().toString().trim();
             String masa_susut = inpMasaPenyusutan.getText().toString().trim();
             String nomor_bast = inpNomorBAST.getText().toString().trim();
             String nilai_residu = String.valueOf(CurrencyToNumber(inpNilaiResidu.getText().toString().trim()));
@@ -2461,8 +2474,8 @@ public class UpdateFotoQrAsetActivity extends AppCompatActivity {
 
             Log.d("tebu", String.valueOf(spinnerKodeAset.getSelectedItem().equals("ZC06/S001/Tebu")));
             if ((spinnerJenisAset.getSelectedItemId() == 1 && !spinnerKodeAset.getSelectedItem().equals("ZC06/S001/Tebu")) || spinnerJenisAset.getSelectedItemId() == 3 ) {
-                RequestBody requestPopulasiPohonSaatIni = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(Double.parseDouble(inpPopTotalPohonSaatIni.getText().toString().trim())));
-                RequestBody requestPopulasiStandar = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(Double.parseDouble(inpPopTotalStdMaster.getText().toString().trim())));
+                RequestBody requestPopulasiPohonSaatIni = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(Double.parseDouble(inpPopTotalPohonSaatIni.getText().toString().trim().equals("") ? "0" : inpPopTotalPohonSaatIni.getText().toString().trim() )));
+                RequestBody requestPopulasiStandar = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(Double.parseDouble(inpPopTotalStdMaster.getText().toString().trim().equals("") ? "0" : inpPopTotalStdMaster.getText().toString().trim())));
                 builder.addPart(MultipartBody.Part.createFormData("pop_pohon_saat_ini", null, requestPopulasiPohonSaatIni));
                 builder.addPart(MultipartBody.Part.createFormData("pop_standar", null, requestPopulasiStandar));
 
@@ -2584,6 +2597,7 @@ public class UpdateFotoQrAsetActivity extends AppCompatActivity {
             });
         }
         catch (Exception e ){
+            dialog.dismiss();
             Toast.makeText(getApplicationContext(),"gagal edit aset "+e.getMessage(),Toast.LENGTH_LONG).show();
             Log.d("error-amant18",e.getMessage());
             e.printStackTrace();
