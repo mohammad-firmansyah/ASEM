@@ -1029,17 +1029,22 @@ public void getAllSpinnerData(){
             }
 
             // get sap
+            Integer unit_id = Integer.parseInt(sharedPreferences.getString("unit_id","0"));
             for (Sap at : dataAllSpinner.getSap()){
 //                asetHelper.deleteSap();
-                ContentValues values = new ContentValues();
-                values.put("sap_desc",at.getSap_desc());
-                values.put("sap_name",at.getSap_name());
-                values.put("unit_id",at.getUnit_id());
-                values.put("nilai_oleh",at.getNilai_oleh());
-                values.put("nilai_residu",at.getNilai_residu());
-                values.put("tgl_oleh",at.getTgl_oleh());
-                values.put("masa_susut",at.getMasa_susut());
-                asetHelper.insertSap(values);
+
+                if (at.getUnit_id() == unit_id) {
+                    ContentValues values = new ContentValues();
+                    values.put("sap_desc",at.getSap_desc());
+                    values.put("sap_name",at.getSap_name());
+                    values.put("unit_id",at.getUnit_id());
+                    values.put("nilai_oleh",at.getNilai_oleh());
+                    values.put("nilai_residu",at.getNilai_residu());
+                    values.put("tgl_oleh",at.getTgl_oleh());
+                    values.put("masa_susut",at.getMasa_susut());
+                    asetHelper.insertSap(values);
+                }
+
             }
 
             // get alat pengangkutan

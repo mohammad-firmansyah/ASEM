@@ -1314,7 +1314,7 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity {
             if (aset.getAfdelingId() != null) {
 
 //                mapAfdelingSpinner.put(185,1);
-                spinnerAfdeling.setSelection(mapAfdelingSpinner.get(afdeling_id - 2));
+                spinnerAfdeling.setSelection(mapAfdelingSpinner.get(afdeling_id));
 
             }
 
@@ -1324,6 +1324,7 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity {
             if (mapKodeSpinner.size() != 0) {
 
                 Integer idspinner = getSpinnerKodeAset(Integer.parseInt(aset.getAsetJenis()), Integer.parseInt(aset.getAsetKode()));
+                Log.d("amanat22", String.valueOf(idspinner));
                 spinnerKodeAset.setSelection(idspinner);
             }
         } catch (Exception e) {
@@ -2168,12 +2169,19 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity {
             tvTahunTanam.setVisibility(View.GONE);
             inpTahunTanam.setVisibility(View.GONE);
         }
+
+        if (!isEdit){
+            inpBtnMap.setVisibility(View.GONE);
+        } else {
+            inpBtnMap.setVisibility(View.VISIBLE);
+        }
     }
 
 
     public void getAllSpinnerData() {
 
         asetHelper.open();
+        sharedPreferences = AsetAddUpdateOfflineActivity.this.getSharedPreferences(PREF_LOGIN, MODE_PRIVATE);
         Cursor asetTipe = asetHelper.getAllAsetTipe();
         Cursor asetJenis = asetHelper.getAllAsetJenis();
         Cursor asetKondisi = asetHelper.getAllAsetKondisi();
@@ -2223,6 +2231,7 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity {
         // get data sistem tanam
 
         listSistemTanam = dataAllSpinner.getSistemTanam();
+
 
         for (SistemTanam at : dataAllSpinner.getSistemTanam()) {
 
@@ -2280,10 +2289,14 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity {
         }
 
         // get sap
+
+        Integer unit_id = Integer.parseInt(sharedPreferences.getString("unit_id","0"));
         for (Sap at : dataAllSpinner.getSap()) {
-            mapSap.put(Long.parseLong(at.getSap_desc()), at.getSap_id());
-            listSpinnerSap.add(at.getSap_desc());
-            sapAll.add(at);
+            if (at.getUnit_id() == unit_id) {
+                mapSap.put(Long.parseLong(at.getSap_desc()), at.getSap_id());
+                listSpinnerSap.add(at.getSap_desc());
+                sapAll.add(at);
+            }
         }
 
         // set adapter unit
@@ -2291,10 +2304,10 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity {
                 android.R.layout.simple_spinner_item, listSpinnerUnit);
         adapterUnit.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerUnit.setAdapter(adapterUnit);
-        sharedPreferences = AsetAddUpdateOfflineActivity.this.getSharedPreferences(PREF_LOGIN, MODE_PRIVATE);
+
         try {
 
-            Integer unit_id = Integer.valueOf(sharedPreferences.getString("unit_id", "0"));
+            unit_id = Integer.valueOf(sharedPreferences.getString("unit_id", "0"));
             spinnerUnit.setSelection(unit_id - 1);
         } catch (Exception e) {
         }
@@ -2395,8 +2408,9 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity {
         } catch (Exception e) {
         }
 
-        spinnerAfdeling.setSelection(mapAfdelingSpinner.get(afdeling_id - 2));
-
+        spinnerAfdeling.setSelection(mapAfdelingSpinner.get(afdeling_id));
+        Log.d("amanat22", String.valueOf(mapAfdelingSpinner.get(afdeling_id)));
+        Log.d("amanat22", String.valueOf(afdeling_id));
         asetHelper.close();
 
     }
