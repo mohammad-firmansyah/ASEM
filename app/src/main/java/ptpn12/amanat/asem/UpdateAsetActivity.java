@@ -2438,12 +2438,15 @@ public class UpdateAsetActivity extends AppCompatActivity {
                     listSpinnerSubUnit.add(at.getSub_unit_desc());
                 }
 
-                // get sap
+
+                Integer unit_id = Integer.valueOf(sharedPreferences.getString("unit_id", "0"));
                 for (Sap at : dataAllSpinner.getSap()){
-                    mapSap.put(Long.parseLong(at.getSap_desc()),at.getSap_id());
-                    mapSpinnerSap.put(at.getSap_id(),Long.parseLong(at.getSap_desc()));
-                    listSpinnerSap.add(at.getSap_desc());
-                    sapAll.add(at);
+                    if (at.getUnit_id() == unit_id){
+                        mapSap.put(Long.parseLong(at.getSap_desc()),at.getSap_id());
+                        sapAll.add(at);
+                        mapSpinnerSap.put(at.getSap_id(),Long.parseLong(at.getSap_desc()));
+                        listSpinnerSap.add(at.getSap_desc());
+                    }
                 }
 
                 // get afdeling
@@ -2484,7 +2487,7 @@ public class UpdateAsetActivity extends AppCompatActivity {
                         android.R.layout.simple_spinner_item, listSpinnerUnit);
                 adapterUnit.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 spinnerUnit.setAdapter(adapterUnit);
-                Integer unit_id = Integer.valueOf(sharedPreferences.getString("unit_id", "0"));
+                unit_id = Integer.valueOf(sharedPreferences.getString("unit_id", "0"));
                 spinnerUnit.setSelection(aset.getUnitId()-1);
 
                 // set adapter alat angkut

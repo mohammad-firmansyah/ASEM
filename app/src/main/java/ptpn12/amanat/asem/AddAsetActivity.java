@@ -2418,10 +2418,13 @@ public class AddAsetActivity extends AppCompatActivity {
                     }
 
                     // get sap
+                        Integer unit_id = Integer.valueOf(sharedPreferences.getString("unit_id", "0"));
                     for (Sap at : dataAllSpinner.getSap()){
-                        mapSap.put(Long.parseLong(at.getSap_desc()),at.getSap_id());
-                        sapAll.add(at);
-                        listSpinnerSap.add(at.getSap_desc());
+                        if (at.getUnit_id() == unit_id){
+                            mapSap.put(Long.parseLong(at.getSap_desc()),at.getSap_id());
+                            sapAll.add(at);
+                            listSpinnerSap.add(at.getSap_desc());
+                        }
                     }
 
                     // get afdeling
@@ -2501,7 +2504,7 @@ public class AddAsetActivity extends AppCompatActivity {
                     sharedPreferences = AddAsetActivity.this.getSharedPreferences(PREF_LOGIN, MODE_PRIVATE);
                     try {
 
-                        Integer unit_id = Integer.valueOf(sharedPreferences.getString("unit_id", "0"));
+                        unit_id = Integer.valueOf(sharedPreferences.getString("unit_id", "0"));
                         spinnerUnit.setSelection(unit_id-1);
                     } catch(Exception e){}
 
