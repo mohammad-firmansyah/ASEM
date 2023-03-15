@@ -744,6 +744,9 @@ public class DetailAsetOfflineActivity extends AppCompatActivity {
                 inpNilaiResidu.setText(formatrupiah(Double.parseDouble(String.valueOf(aset.getNilaiResidu()))));
                 inpKeterangan.setText(aset.getKeterangan());
                 inpUmrEkonomis.setText(utils.MonthToYear(utils.masaSusutToMonth(Integer.valueOf(aset.getMasaSusut()),aset.getTglOleh())));
+                Log.d("month-1", String.valueOf(utils.masaSusutToMonth(Integer.valueOf(aset.getMasaSusut()),aset.getTglOleh())));
+                Log.d("month-2",aset.getMasaSusut());
+                Log.d("month-3",utils.MonthToYear(utils.masaSusutToMonth(Integer.valueOf(aset.getMasaSusut()),aset.getTglOleh())));
                 inpNilaiAsetSAP.setText(formatrupiah(Double.parseDouble(String.valueOf(aset.getNilaiOleh()))));
                 inpPersenKondisi.setText(String.valueOf(aset.getPersenKondisi()));
                 inpJumlahPohon.setText(String.valueOf(aset.getJumlahPohon()));
@@ -880,7 +883,8 @@ public class DetailAsetOfflineActivity extends AppCompatActivity {
             inpPopPerHA.setText(showPopulasiWithoutPercentage(String.valueOf(aset.getPop_hektar_ini())));
             inpPresentasePopPerHA.setText(showPopulasi(String.valueOf(aset.getPop_hektar_std())));
             inpTahunTanam.setText(String.valueOf(aset.getTahun_tanam()));
-            inpSistemTanam.setText(getSistemTanamFromId(aset.getSistem_tanam()));
+            inpSistemTanam.setText(String.valueOf(aset.getSistem_tanam()));
+
         }
         catch (Exception e){
             e.printStackTrace();

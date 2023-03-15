@@ -685,7 +685,7 @@ public class AddAsetActivity extends AppCompatActivity {
 //                        Log.d("amanat19", ));
                         Double popPerHa =  Double.parseDouble((inpPopTotalPohonSaatIni.getText().toString() != null || !inpPopTotalPohonSaatIni.getText().toString().equals("") ) ? String.valueOf(inpPopTotalPohonSaatIni.getText().toString()) : "0" ) / Double.parseDouble((inpLuasAset.getText().toString().trim().equals("")) ? "0" : inpLuasAset.getText().toString().trim());
                         Double presentase = popPerHa / Double.parseDouble((inpPopTotalStdMaster.getText().toString() != null || inpPopTotalStdMaster.getText().toString().equals("") ) ? String.valueOf(inpPopTotalStdMaster.getText().toString()) : "0"  ) * 100;
-                        inpPresentasePopPerHA.setText(showPopulasi(String.valueOf(presentase)));
+                        inpPresentasePopPerHA.setText(String.valueOf(presentase));
                     } catch (Exception e){
                         e.printStackTrace();
                     }
@@ -2078,6 +2078,15 @@ public class AddAsetActivity extends AppCompatActivity {
         }
 
 
+        if (spinnerJenisAset.getSelectedItemId() == 3){
+            if (inpJumlahPohon.getText().toString().equals("")) {
+                customDialogAddAset.dismiss();
+                dialog.dismiss();
+                inpJumlahPohon.setError("Jumlah Pohon harus diisi");
+                inpJumlahPohon.requestFocus();
+                return;
+            }
+        }
 
         if ("non tanaman".equals(String.valueOf(spinnerJenisAset.getSelectedItem()))){
             if ("normal".equals(String.valueOf(spinnerAsetKondisi.getSelectedItem()))){

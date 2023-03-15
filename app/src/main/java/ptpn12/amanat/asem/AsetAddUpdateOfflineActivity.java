@@ -106,6 +106,7 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity {
     ViewGroup vwBast;
     Aset aset;
     List<Sap> sapAll = new ArrayList<>();
+    List<SistemTanam> listSistemTanam = new ArrayList<>();
     private AsetHelper asetHelper;
     private AsetOfflineAdapter adapter;
     Integer afdeling_id = 0;
@@ -664,63 +665,65 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity {
 //        handler
 
 
-        inpPopTotalPohonSaatIni.addTextChangedListener( new TextWatcher(){
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
-            }
+            inpPopTotalPohonSaatIni.addTextChangedListener( new TextWatcher(){
+                @Override
+                public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                if (!inpPopTotalPohonSaatIni.getText().equals("") && !inpLuasAset.getText().equals("")){
+                }
 
-                    try{
+                @Override
+                public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                    if (!inpPopTotalPohonSaatIni.getText().equals("") && !inpLuasAset.getText().equals("")){
 
-                        Double popPerHa =  Double.parseDouble(String.valueOf(inpPopTotalPohonSaatIni.getText()))/Double.parseDouble(String.valueOf(inpLuasAset.getText()));
-                        inpPopPerHA.setText(showPopulasiWithoutPercentage(String.valueOf(popPerHa)));
-                    } catch (Exception e){
-                        e.printStackTrace();
-                    }
+                        try{
+
+                            Double popPerHa =  Double.parseDouble(String.valueOf(inpPopTotalPohonSaatIni.getText()))/Double.parseDouble(String.valueOf(inpLuasAset.getText()));
+                            inpPopPerHA.setText(showPopulasiWithoutPercentage(String.valueOf(popPerHa)));
+                        } catch (Exception e){
+                            e.printStackTrace();
+                        }
 //                    Double presentase = popPerHa / Double.parseDouble(String.valueOf(inpPopTotalStdMaster.getText())) * 100;
 //                    inpPresentasePopPerHA.setText(String.valueOf(presentase));
-                }
-            }
-
-
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-
-            }
-
-        });
-
-        inpPopTotalStdMaster.addTextChangedListener( new TextWatcher(){
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                if (!inpPopTotalStdMaster.getText().equals("")){
-                    try {
-
-                        Double popPerHa =  Double.parseDouble(String.valueOf(inpPopTotalPohonSaatIni.getText()))/Double.parseDouble(String.valueOf(inpLuasAset.getText()));
-                        Double presentase = popPerHa / Double.parseDouble(String.valueOf(inpPopTotalStdMaster.getText())) * 100;
-                        inpPresentasePopPerHA.setText(showPopulasi(String.valueOf(presentase)));
-                    } catch (Exception e){
-                        e.printStackTrace();
                     }
                 }
-            }
 
-            @Override
-            public void afterTextChanged(Editable editable) {
 
-            }
 
-        });
+                @Override
+                public void afterTextChanged(Editable editable) {
+
+                }
+
+            });
+
+            inpPopTotalStdMaster.addTextChangedListener( new TextWatcher(){
+                @Override
+                public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+                }
+
+                @Override
+                public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                    if (!inpPopTotalStdMaster.getText().equals("")){
+                        try {
+
+                            Double popPerHa =  Double.parseDouble(String.valueOf(inpPopTotalPohonSaatIni.getText()))/Double.parseDouble(String.valueOf(inpLuasAset.getText()));
+                            Double presentase = popPerHa / Double.parseDouble(String.valueOf(inpPopTotalStdMaster.getText())) * 100;
+                            inpPresentasePopPerHA.setText(showPopulasi(String.valueOf(presentase)));
+                        } catch (Exception e){
+                            e.printStackTrace();
+                        }
+                    }
+                }
+
+                @Override
+                public void afterTextChanged(Editable editable) {
+
+                }
+
+            });
+
 
         btnSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -1246,12 +1249,7 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity {
         Cursor data = asetHelper.queryById(String.valueOf(id));
         aset = MappingHelper.mapCursorToArrayAset(data);
 
-        inpPopTotalPohonSaatIni.setText(String.valueOf(aset.getPop_hektar_ini()));
-        inpPopTotalStdMaster.setText(String.valueOf(aset.getPop_total_std()));
-        inpPopPerHA.setText(String.valueOf(aset.getPop_hektar_ini()));
-        inpPresentasePopPerHA.setText(String.valueOf(aset.getPop_hektar_std()));
-        spinnerSistemTanam.setSelection(Integer.parseInt(aset.getSistem_tanam()));
-        inpTahunTanam.setText(String.valueOf(aset.getTahun_tanam()));
+
 
         if (aset.getBeritaAcara() != null) {
             tvUploudBA.setText(aset.getBeritaAcara());
@@ -1275,11 +1273,13 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity {
             }
         }
 
-        if (aset.getAsetJenis().equals("1")) {
-            inpPopTotalPohonSaatIni.setText(aset.getPop_total_ini());
-            inpPopTotalStdMaster.setText(aset.getPop_total_std());
-            inpPopPerHA.setText(aset.getPop_hektar_ini());
-            inpPresentasePopPerHA.setText(aset.getPop_hektar_std());
+        if (aset.getAsetJenis().equals("1") || aset.getAsetJenis().equals("3") ) {
+            inpPopTotalPohonSaatIni.setText(String.valueOf(aset.getPop_hektar_ini()));
+            inpPopTotalStdMaster.setText(String.valueOf(aset.getPop_total_std()));
+            inpPopPerHA.setText(String.valueOf(aset.getPop_hektar_ini()));
+            inpPresentasePopPerHA.setText(showPopulasi(String.valueOf(aset.getPop_hektar_std())));
+            spinnerSistemTanam.setSelection(getSistemTanamByName(aset.getSistem_tanam()));
+            inpTahunTanam.setText(String.valueOf(aset.getTahun_tanam()));
         }
 
 
@@ -2222,6 +2222,8 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity {
 
         // get data sistem tanam
 
+        listSistemTanam = dataAllSpinner.getSistemTanam();
+
         for (SistemTanam at : dataAllSpinner.getSistemTanam()) {
 
             listSpinnerSistemTanam.add(at.getSt_desc());
@@ -2835,7 +2837,7 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity {
             values.put("persen_kondisi", inpPersenKondisi.getText().toString().trim());
             values.put("hgu", inpHGU.getText().toString().trim());
             values.put("nilai_oleh", utils.CurrencyToNumber(inpNilaiAsetSAP.getText().toString().trim()));
-            values.put("tgl_oleh", inpTglOleh.getText().toString().trim() );
+            values.put("tgl_oleh", inpTglOleh.getText().toString().trim() + " 00:00:00");
 
 
 
@@ -2849,7 +2851,11 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity {
                 values.put("pop_pohon_saat_ini", inpPopTotalPohonSaatIni.getText().toString().trim());
                 values.put("pop_standar", inpPopTotalStdMaster.getText().toString().trim());
                 values.put("pop_per_ha", inpPopPerHA.getText().toString().trim());
-                values.put("presentase_pop_per_ha", inpPresentasePopPerHA.getText().toString().trim());
+
+                Double popPerHa =  Double.parseDouble(String.valueOf(inpPopTotalPohonSaatIni.getText()))/Double.parseDouble(String.valueOf(inpLuasAset.getText()));
+                Double presentase = popPerHa / Double.parseDouble(String.valueOf(inpPopTotalStdMaster.getText())) * 100;
+
+                values.put("presentase_pop_per_ha", presentase);
                 values.put("tahun_tanam", inpTahunTanam.getText().toString().trim());
 
                 if (!"ZC06/S001/Tebu".equals(spinnerKodeAset.getSelectedItem())){
@@ -3222,6 +3228,15 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity {
                 inpTglOleh.setText(it.getTgl_oleh());
             }
         }
+    }
+
+    private Integer getSistemTanamByName(String sistem_tanam) {
+        for(SistemTanam it : listSistemTanam) {
+            if (sistem_tanam.equals(it.getSt_desc())){
+                return it.getSt_id();
+            }
+        }
+        return 0;
     }
 
 }
