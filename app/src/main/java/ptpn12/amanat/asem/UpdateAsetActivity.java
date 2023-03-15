@@ -1195,8 +1195,8 @@ public class UpdateAsetActivity extends AppCompatActivity {
                     }
 
                     if(aset.getPopPerHa() != null && aset.getPresentasePopPerHa() != null){
-                        inpPopPerHA.setText(String.valueOf(aset.getPopPerHa()));
-                        inpPresentasePopPerHA.setText(String.valueOf(aset.getPresentasePopPerHa()));
+                        inpPopPerHA.setText(showPopulasiWithoutPercentage(String.valueOf(aset.getPopPerHa())));
+                        inpPresentasePopPerHA.setText(showPopulasi(String.valueOf(aset.getPresentasePopPerHa())));
                     }
 
                     String ket_reject = aset.getKetReject();
