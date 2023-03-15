@@ -806,7 +806,8 @@ public class ReportActivity extends AppCompatActivity {
                 public void onFailure(Call<ReportModel> call, Throwable t) {
 
                     dialog.dismiss();
-                    Toast.makeText(getApplicationContext(),"error " + t.getMessage(),Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(),"error " + t.getMessage(),Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(),"Data SAP Tidak Ditemukan.\n" ,Toast.LENGTH_SHORT).show();
                 }
             });
 //        Call<ReportModel> ApiDownloadReport = asetInterface.downloadReport()

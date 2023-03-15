@@ -24,6 +24,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Color;
@@ -537,6 +538,8 @@ public class AddAsetActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_aset);
 
+        this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+
         sharedPreferences = AddAsetActivity.this.getSharedPreferences(PREF_LOGIN, MODE_PRIVATE);
         
         asetInterface = AsemApp.getApiClient().create(AsetInterface.class);
@@ -560,7 +563,7 @@ public class AddAsetActivity extends AppCompatActivity {
         dialog.setContentView(R.layout.loading);
         dialog.setCanceledOnTouchOutside(false);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(0));
-        dialog.show();
+//        dialog.show();
 
         spinnerNoSap = new Dialog(AddAsetActivity.this);
 
@@ -705,7 +708,7 @@ public class AddAsetActivity extends AppCompatActivity {
 //                        Log.d("amanat19", ));
                         Double popPerHa =  Double.parseDouble((inpPopTotalPohonSaatIni.getText().toString() != null || !inpPopTotalPohonSaatIni.getText().toString().equals("") ) ? String.valueOf(inpPopTotalPohonSaatIni.getText().toString()) : "0" ) / Double.parseDouble((inpLuasAset.getText().toString().trim().equals("")) ? "0" : inpLuasAset.getText().toString().trim());
                         Double presentase = popPerHa / Double.parseDouble((inpPopTotalStdMaster.getText().toString() != null || inpPopTotalStdMaster.getText().toString().equals("") ) ? String.valueOf(inpPopTotalStdMaster.getText().toString()) : "0"  ) * 100;
-                        inpPresentasePopPerHA.setText(String.valueOf(presentase));
+                        inpPresentasePopPerHA.setText(showPopulasi(String.valueOf(presentase)));
                     } catch (Exception e){
                         e.printStackTrace();
                     }
