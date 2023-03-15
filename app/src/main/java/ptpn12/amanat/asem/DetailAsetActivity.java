@@ -835,6 +835,37 @@ public class DetailAsetActivity extends AppCompatActivity {
         });
     }
 
+    private String showPopulasi(String pop) {
+        String[] first  = pop.split("[.]");
+
+        Log.d("amanat20", String.valueOf(first[0]));
+        if (first.length <= 1 ) {
+            return pop;
+        }
+        String second = first[first.length - 1];
+
+        String comma  = second.substring(0,3);
+
+        String result = first[0] + "." +comma +" %";
+
+        return result;
+    }
+    private String showPopulasiWithoutPercentage(String pop) {
+        String[] first  = pop.split("[.]");
+
+        Log.d("amanat20", String.valueOf(first[0]));
+        if (first.length <= 1 ) {
+            return pop;
+        }
+        String second = first[first.length - 1];
+
+        String comma  = second.substring(0,3);
+
+        String result = first[0] + "." +comma;
+
+        return result;
+    }
+
 
 
     @SuppressLint("SetTextI18n")
@@ -877,8 +908,8 @@ public class DetailAsetActivity extends AppCompatActivity {
             inpHGU.setText(String.valueOf(aset.getHgu()));
             inpPopTotalPohonSaatIni.setText(String.valueOf(aset.getPopPohonSaatIni()));
             inpPopTotalStdMaster.setText(String.valueOf(aset.getPopStandar()));
-            inpPopPerHA.setText(String.valueOf(aset.getPopPerHa()));
-            inpPresentasePopPerHA.setText(String.valueOf(aset.getPresentasePopPerHa()));
+            inpPopPerHA.setText(showPopulasiWithoutPercentage(String.valueOf(aset.getPopPerHa())));
+            inpPresentasePopPerHA.setText(showPopulasi(String.valueOf(aset.getPresentasePopPerHa())));
             inpTahunTanam.setText(String.valueOf(aset.getTahunTanam()));
 
             String ket_reject = aset.getKetReject();
@@ -1332,6 +1363,7 @@ public class DetailAsetActivity extends AppCompatActivity {
             tvPohon.setVisibility(View.GONE);
             downloadBa.setVisibility(View.GONE);
 //            inpKomoditi.setVisibility(View.VISIBLE);
+            spinnerLuasSatuan.setVisibility(View.GONE);
 
             inpNomorBAST.setVisibility(View.VISIBLE);
             tvBast.setVisibility(View.VISIBLE);
@@ -1381,6 +1413,7 @@ public class DetailAsetActivity extends AppCompatActivity {
             tvUploudBA.setVisibility(View.VISIBLE);
             btnFile.setVisibility(View.GONE);
             tvBa.setVisibility(View.VISIBLE);
+            spinnerLuasSatuan.setVisibility(View.GONE);
 
 //            inpKomoditi.setVisibility(View.VISIBLE);
             inpNomorBAST.setVisibility(View.VISIBLE);
@@ -1433,6 +1466,7 @@ public class DetailAsetActivity extends AppCompatActivity {
             tvFileBAST.setVisibility(View.GONE);
             tvUploadBAST.setVisibility(View.GONE);
             downloadBAST.setVisibility(View.GONE);
+            spinnerLuasSatuan.setVisibility(View.GONE);
 
             tvFoto.setVisibility(View.GONE);
             scrollPartition.setVisibility(View.GONE);
@@ -1469,6 +1503,7 @@ public class DetailAsetActivity extends AppCompatActivity {
             tvUploudBA.setVisibility(View.GONE);
             inpBtnMap.setVisibility(View.GONE);
             btnFile.setVisibility(View.GONE);
+            spinnerLuasSatuan.setVisibility(View.GONE);
 
             if ("baru".equals(String.valueOf(spinnerTipeAset.getSelectedItem())) ) {
                 //input PDF ba bast
@@ -1512,6 +1547,7 @@ public class DetailAsetActivity extends AppCompatActivity {
             btnFile.setVisibility(View.GONE);
 //            inpKomoditi.setVisibility(View.VISIBLE);
             tvPohon.setVisibility(View.VISIBLE);
+            spinnerLuasSatuan.setVisibility(View.GONE);
 
             downloadBa.setVisibility(View.VISIBLE);
             inpNomorBAST.setVisibility(View.VISIBLE);
@@ -1563,6 +1599,7 @@ public class DetailAsetActivity extends AppCompatActivity {
             tvFileBAST.setVisibility(View.GONE);
             tvUploadBAST.setVisibility(View.GONE);
             downloadBAST.setVisibility(View.GONE);
+            spinnerLuasSatuan.setVisibility(View.GONE);
 
             tvFoto.setVisibility(View.GONE);
             scrollPartition.setVisibility(View.GONE);
@@ -1600,6 +1637,8 @@ public class DetailAsetActivity extends AppCompatActivity {
             tvBa.setVisibility(View.GONE);
             tvPohon.setVisibility(View.GONE);
             btnFile.setVisibility(View.GONE);
+
+            spinnerLuasSatuan.setVisibility(View.VISIBLE);
 
             if ("baru".equals(String.valueOf(spinnerTipeAset.getSelectedItem())) ) {
                 //input PDF ba bast
@@ -1648,6 +1687,7 @@ public class DetailAsetActivity extends AppCompatActivity {
             tvFileBAST.setVisibility(View.GONE);
             tvUploadBAST.setVisibility(View.GONE);
             downloadBAST.setVisibility(View.GONE);
+            spinnerLuasSatuan.setVisibility(View.VISIBLE);
 
             listBtnMap.setVisibility(View.GONE);
             tvLuasTanaman.setVisibility(View.GONE);
@@ -1676,6 +1716,7 @@ public class DetailAsetActivity extends AppCompatActivity {
             btnFile.setVisibility(View.GONE);
             tvUploudBA.setVisibility(View.VISIBLE);
             downloadBa.setVisibility(View.VISIBLE);
+            spinnerLuasSatuan.setVisibility(View.VISIBLE);
 //            inpKomoditi.setVisibility(View.GONE);
             tvPohon.setVisibility(View.GONE);
             inpJumlahPohon.setVisibility(View.GONE);
@@ -1712,6 +1753,7 @@ public class DetailAsetActivity extends AppCompatActivity {
 //            inpPresentasePopPerHA.setVisibility(View.GONE);
 
         } else {
+            spinnerLuasSatuan.setVisibility(View.GONE);
             listBtnMap.setVisibility(View.GONE);
             inpJumlahPohon.setVisibility(View.GONE);
             tvFoto.setVisibility(View.GONE);

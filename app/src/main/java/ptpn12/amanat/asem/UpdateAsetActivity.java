@@ -36,6 +36,7 @@ import android.provider.OpenableColumns;
 import android.provider.Settings;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.text.method.HideReturnsTransformationMethod;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -478,6 +479,7 @@ public class UpdateAsetActivity extends AppCompatActivity {
         spinnerAsetKondisi = findViewById(R.id.inpKndsAset);
         spinnerKodeAset = findViewById(R.id.inpKodeAset);
         inpTahunTanam = findViewById(R.id.inpTahunTanam);
+        inpTahunTanam.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
         spinnerUnit = findViewById(R.id.inpUnit);
         spinnerUnit.setEnabled(false);
         spinnerSubUnit = findViewById(R.id.inpSubUnit);
@@ -618,21 +620,101 @@ public class UpdateAsetActivity extends AppCompatActivity {
                         spinnerNoSap.dismiss();
                     }
                 });
-
-
 //                }
-
-
-
-
-
-
-
-
-
 
             }
         });
+
+//        inpLuasAset.addTextChangedListener( new TextWatcher(){
+//            @Override
+//            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+//
+//            }
+//
+//            @Override
+//            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+//                if (!inpPopTotalPohonSaatIni.getText().equals("") && !inpLuasAset.getText().equals("")){
+//
+//                    try{
+//
+//                        Double popPerHa =  Double.parseDouble(String.valueOf(inpPopTotalPohonSaatIni.getText()))/Double.parseDouble(String.valueOf(inpLuasAset.getText()));
+//                        Double presentase = popPerHa / Double.parseDouble(String.valueOf(inpPopTotalStdMaster.getText())) * 100;
+//                        inpPresentasePopPerHA.setText(showPopulasi(String.valueOf(presentase)));
+//                    } catch (Exception e){
+//                        e.printStackTrace();
+//                    }
+////                    Double presentase = popPerHa / Double.parseDouble(String.valueOf(inpPopTotalStdMaster.getText())) * 100;
+////                    inpPresentasePopPerHA.setText(String.valueOf(presentase));
+//                }
+//            }
+//
+//
+//
+//            @Override
+//            public void afterTextChanged(Editable editable) {
+//
+//            }
+//
+//        });
+
+        inpPopTotalPohonSaatIni.addTextChangedListener( new TextWatcher(){
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                if (!inpPopTotalPohonSaatIni.getText().equals("") && !inpLuasAset.getText().equals("")){
+
+                    try{
+
+                        Double popPerHa =  Double.parseDouble(String.valueOf(inpPopTotalPohonSaatIni.getText()))/Double.parseDouble(String.valueOf(inpLuasAset.getText()));
+                        inpPopPerHA.setText(showPopulasiWithoutPercentage(String.valueOf(popPerHa)));
+                    } catch (Exception e){
+                        e.printStackTrace();
+                    }
+//                    Double presentase = popPerHa / Double.parseDouble(String.valueOf(inpPopTotalStdMaster.getText())) * 100;
+//                    inpPresentasePopPerHA.setText(String.valueOf(presentase));
+                }
+            }
+
+
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+
+        });
+
+        inpPopTotalStdMaster.addTextChangedListener( new TextWatcher(){
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                if (!inpPopTotalStdMaster.getText().equals("")){
+                    try {
+
+                        Double popPerHa =  Double.parseDouble(String.valueOf(inpPopTotalPohonSaatIni.getText()))/Double.parseDouble(String.valueOf(inpLuasAset.getText()));
+                        Double presentase = popPerHa / Double.parseDouble(String.valueOf(inpPopTotalStdMaster.getText())) * 100;
+                        inpPresentasePopPerHA.setText(showPopulasi(String.valueOf(presentase)));
+                    } catch (Exception e){
+                        e.printStackTrace();
+                    }
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+
+        });
+
 //        btnSubmit.setOnClickListener(v -> editAset());
         btnSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -1731,11 +1813,11 @@ public class UpdateAsetActivity extends AppCompatActivity {
 
         else if ("kayu".equals(String.valueOf(spinnerJenisAset.getSelectedItem()))  && "normal".equals(String.valueOf(spinnerAsetKondisi.getSelectedItem())) ) {
             listBtnMap.setVisibility(View.VISIBLE);
-            inpJumlahPohon.setVisibility(View.VISIBLE);
+            inpJumlahPohon.setVisibility(View.GONE);
 //            inpKomoditi.setVisibility(View.VISIBLE);
             inpNomorBAST.setVisibility(View.VISIBLE);
             tvBast.setVisibility(View.VISIBLE);
-            tvPohon.setVisibility(View.VISIBLE);
+            tvPohon.setVisibility(View.GONE);
             spinnerLuasSatuan.setVisibility(View.GONE);
             inpBtnMap.setVisibility(View.GONE);
             downloadBa.setVisibility(View.GONE);
@@ -1777,14 +1859,14 @@ public class UpdateAsetActivity extends AppCompatActivity {
 
         else if ("kayu".equals(String.valueOf(spinnerJenisAset.getSelectedItem()))  && "rusak".equals(String.valueOf(spinnerAsetKondisi.getSelectedItem())) ) {
             listBtnMap.setVisibility(View.VISIBLE);
-            tvPohon.setVisibility(View.VISIBLE);
-            inpJumlahPohon.setVisibility(View.VISIBLE);
+            tvPohon.setVisibility(View.GONE);
+            inpJumlahPohon.setVisibility(View.GONE);
             downloadBa.setVisibility(View.VISIBLE);
             tvBa.setVisibility(View.VISIBLE);
             tvUploudBA.setVisibility(View.VISIBLE);
             btnFile.setVisibility(View.VISIBLE);
 
-            tvPohon.setVisibility(View.VISIBLE);
+            tvPohon.setVisibility(View.GONE);
 
             spinnerLuasSatuan.setVisibility(View.GONE);
             inpNomorBAST.setVisibility(View.VISIBLE);
@@ -1989,8 +2071,6 @@ public class UpdateAsetActivity extends AppCompatActivity {
             inpPresentasePopPerHA.setVisibility(View.GONE);
 
         } else {
-            tvTahunTanam.setVisibility(View.GONE);
-            inpTahunTanam.setVisibility(View.GONE);
             listBtnMap.setVisibility(View.GONE);
             inpJumlahPohon.setVisibility(View.GONE);
             tvFoto.setVisibility(View.GONE);
@@ -2120,8 +2200,10 @@ public class UpdateAsetActivity extends AppCompatActivity {
                 builder.addPart(MultipartBody.Part.createFormData("pop_standar", null, requestPopulasiStandar));
 
                 if (!inpPopPerHA.getText().toString().equals("")) {
-                    RequestBody requestPopulasiPerHA = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(Double.parseDouble(inpPopPerHA.getText().toString().trim())));
-                    RequestBody requestPresentasePopulasiPerHA = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(Double.parseDouble(inpPresentasePopPerHA.getText().toString().trim())));
+                    Double popPerHa =  Double.parseDouble((inpPopTotalPohonSaatIni.getText().toString() != null || !inpPopTotalPohonSaatIni.getText().toString() .equals("") ) ? String.valueOf(inpPopTotalPohonSaatIni.getText().toString()) : "0" ) / Double.parseDouble((inpLuasAset.getText().toString() != null || !inpLuasAset.getText().toString() .equals("") ) ? String.valueOf(inpLuasAset.getText().toString()) : "0");
+                    Double presentase = popPerHa / Double.parseDouble((inpPopTotalStdMaster.getText().toString() != null || inpPopTotalStdMaster.getText().toString().equals("") ) ? String.valueOf(inpPopTotalStdMaster.getText().toString()) : "0"  ) * 100;
+                    RequestBody requestPopulasiPerHA = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(popPerHa));
+                    RequestBody requestPresentasePopulasiPerHA = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(presentase));
                     builder.addPart(MultipartBody.Part.createFormData("pop_per_ha", null, requestPopulasiPerHA));
                     builder.addPart(MultipartBody.Part.createFormData("presentase_pop_per_ha", null, requestPresentasePopulasiPerHA));
                 }
@@ -2134,6 +2216,11 @@ public class UpdateAsetActivity extends AppCompatActivity {
             }else if (spinnerKodeAset.getSelectedItem().equals("ZC06/S001/Tebu")){
                 RequestBody requestTanamMono = RequestBody.create(MediaType.parse("text/plain"), "Mono");
                 builder.addPart(MultipartBody.Part.createFormData("sistem_tanam",null,requestTanamMono));
+            }
+
+            if (spinnerJenisAset.getSelectedItemId() == 1 || spinnerJenisAset.getSelectedItemId() == 3){
+                RequestBody requestTahunTanam = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(inpTahunTanam.getText().toString()));
+                builder.addPart(MultipartBody.Part.createFormData("tahun_tanam", null, requestTahunTanam));
             }
 
             if (bafile_file != null){
@@ -2494,6 +2581,39 @@ public class UpdateAsetActivity extends AppCompatActivity {
                 inpTglOleh.setText(it.getTgl_oleh());
             }
         }
+    }
+
+
+    private String showPopulasi(String pop) {
+        String[] first  = pop.split("[.]");
+
+        Log.d("amanat20", String.valueOf(first[0]));
+        if (first.length <= 1 ) {
+            return pop;
+        }
+        String second = first[first.length - 1];
+
+        String comma  = second.substring(0,3);
+
+        String result = first[0] + "." +comma +" %";
+
+        return result;
+    }
+
+    private String showPopulasiWithoutPercentage(String pop) {
+        String[] first  = pop.split("[.]");
+
+        Log.d("amanat20", String.valueOf(first[0]));
+        if (first.length <= 1 ) {
+            return pop;
+        }
+        String second = first[first.length - 1];
+
+        String comma  = second.substring(0,3);
+
+        String result = first[0] + "." +comma;
+
+        return result;
     }
 
 

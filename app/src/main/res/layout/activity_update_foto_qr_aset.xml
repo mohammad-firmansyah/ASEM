@@ -165,6 +165,49 @@
                 android:layout_height="41dp"
                 android:background="@drawable/rounded_spinner"
                 android:spinnerMode="dropdown" />
+            <TextView
+                android:id="@+id/tvTahunTanam"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:text="TAHUN TANAM :"
+                android:textColor="@color/main_grey"
+                android:textSize="14sp"
+                android:textStyle="bold"
+
+
+                />
+
+            <EditText
+
+                android:id="@+id/inpTahunTanam"
+                android:layout_width="match_parent"
+                android:layout_height="41dp"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/edit_text_spiner"
+                android:spinnerMode="dropdown"
+                android:inputType="numberPassword"
+                android:maxLength="4"/>
+
+            <TextView
+                android:id="@+id/tvSistemTanam"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:text="SISTEM TANAM :"
+                android:textColor="@color/main_grey"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                />
+
+            <Spinner
+                android:id="@+id/inpSistemTanam"
+                android:layout_width="match_parent"
+                android:layout_height="41dp"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/rounded_spinner"
+                android:spinnerMode="dropdown" />
+
 
             <TextView
                 android:layout_width="match_parent"
@@ -650,7 +693,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginVertical="10dp"
-                android:text="POPULASI POHON SAAT INI :"
+                android:text="POPULASI TOTAL SAAT INI :"
                 android:textColor="@color/main_grey"
                 android:textSize="14sp"
                 android:textStyle="bold"/>
@@ -663,6 +706,7 @@
                 android:layout_marginBottom="10dp"
                 android:background="@drawable/edit_text_spiner"
                 android:inputType="numberDecimal"
+                android:spinnerMode="dropdown"
 
                 />
 
@@ -671,7 +715,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginVertical="10dp"
-                android:text="POPULASI STANDAR POHON:"
+                android:text="POPULASI TOTAL STANDAR :"
                 android:textColor="@color/main_grey"
                 android:textSize="14sp"
                 android:textStyle="bold"/>
@@ -693,7 +737,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginVertical="10dp"
-                android:text="POPULASI PER HA  :"
+                android:text="POPULASI PER HA :"
                 android:textColor="@color/main_grey"
                 android:textSize="14sp"
                 android:textStyle="bold" />
@@ -706,7 +750,6 @@
                 android:layout_marginBottom="10dp"
                 android:background="@drawable/tgl_spinner"
                 android:inputType="numberDecimal"
-                android:spinnerMode="dropdown"
 
                 />
 
@@ -715,7 +758,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginVertical="10dp"
-                android:text="POPULASI HEKTAR STANDAR :"
+                android:text="PRESENTASE POP PER HA :"
                 android:textColor="@color/main_grey"
                 android:textSize="14sp"
                 android:textStyle="bold" />
@@ -731,6 +774,7 @@
                 android:spinnerMode="dropdown"
 
                 />
+
 
 
 

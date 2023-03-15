@@ -677,7 +677,7 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity {
                     try{
 
                         Double popPerHa =  Double.parseDouble(String.valueOf(inpPopTotalPohonSaatIni.getText()))/Double.parseDouble(String.valueOf(inpLuasAset.getText()));
-                        inpPopPerHA.setText(showPopulasi(String.valueOf(popPerHa)));
+                        inpPopPerHA.setText(showPopulasiWithoutPercentage(String.valueOf(popPerHa)));
                     } catch (Exception e){
                         e.printStackTrace();
                     }
@@ -708,7 +708,7 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity {
 
                         Double popPerHa =  Double.parseDouble(String.valueOf(inpPopTotalPohonSaatIni.getText()))/Double.parseDouble(String.valueOf(inpLuasAset.getText()));
                         Double presentase = popPerHa / Double.parseDouble(String.valueOf(inpPopTotalStdMaster.getText())) * 100;
-                        inpPresentasePopPerHA.setText(showPopulasiWithoutPercentage(String.valueOf(presentase)));
+                        inpPresentasePopPerHA.setText(showPopulasi(String.valueOf(presentase)));
                     } catch (Exception e){
                         e.printStackTrace();
                     }
@@ -2835,7 +2835,7 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity {
             values.put("persen_kondisi", inpPersenKondisi.getText().toString().trim());
             values.put("hgu", inpHGU.getText().toString().trim());
             values.put("nilai_oleh", utils.CurrencyToNumber(inpNilaiAsetSAP.getText().toString().trim()));
-            values.put("tgl_oleh", inpTglOleh.getText().toString().trim() + " 00:00:00");
+            values.put("tgl_oleh", inpTglOleh.getText().toString().trim() );
 
 
 
@@ -2853,9 +2853,9 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity {
                 values.put("tahun_tanam", inpTahunTanam.getText().toString().trim());
 
                 if (!"ZC06/S001/Tebu".equals(spinnerKodeAset.getSelectedItem())){
-                    values.put("sistem_tanam", String.valueOf(spinnerSistemTanam.getSelectedItemId()));
+                    values.put("sistem_tanam", String.valueOf(spinnerSistemTanam.getSelectedItem()));
                 } else {
-                    values.put("sistem_tanam", "1");
+                    values.put("sistem_tanam", "Mono");
                 }
 
             }
