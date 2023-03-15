@@ -43,18 +43,18 @@ public class SplashScreen extends AppCompatActivity {
         versionName = BuildConfig.VERSION_NAME;
         versionCode = BuildConfig.VERSION_CODE;
 
-        AsetInterface asetInterface;
-        asetInterface = AsemApp.getApiClient().create(AsetInterface.class);
-        Call<CheckVersionModel> call = asetInterface.checkVersion(versionCode);
-
-
-        call.enqueue(new Callback<CheckVersionModel>() {
-            @Override
-            public void onResponse(Call<CheckVersionModel> call, Response<CheckVersionModel> response) {
-                if (!response.isSuccessful() && response.body() == null) {
-                    Toast.makeText(getApplicationContext(),"Error " + String.valueOf(response.code()),Toast.LENGTH_LONG).show();
-                    return;
-                } else {
+//        AsetInterface asetInterface;
+//        asetInterface = AsemApp.getApiClient().create(AsetInterface.class);
+//        Call<CheckVersionModel> call = asetInterface.checkVersion(versionCode);
+//
+//
+//        call.enqueue(new Callback<CheckVersionModel>() {
+//            @Override
+//            public void onResponse(Call<CheckVersionModel> call, Response<CheckVersionModel> response) {
+//                if (!response.isSuccessful() && response.body() == null) {
+//                    Toast.makeText(getApplicationContext(),"Error " + String.valueOf(response.code()),Toast.LENGTH_LONG).show();
+//                    return;
+//                } else {
 //                    android.app.AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(SplashScreen.this);
 //                    if (!response.body().getData()) {
 //
@@ -80,8 +80,8 @@ public class SplashScreen extends AppCompatActivity {
 //                        new Handler().postDelayed(this::checkLogin, 2000);
 ////                        Toast.makeText(getApplicationContext(),"masuk",Toast.LENGTH_LONG).show();
 //                    }
-                    new Handler().postDelayed(this::checkLogin, 2000);
-                }
+//                }
+                new Handler().postDelayed(this::checkLogin, 2000);
             }
 
             private void checkLogin() {
@@ -101,11 +101,11 @@ public class SplashScreen extends AppCompatActivity {
                 }
             }
 
-            @Override
-            public void onFailure(Call<CheckVersionModel> call, Throwable t) {
-
-            }
-        });
-    }
+//            @Override
+//            public void onFailure(Call<CheckVersionModel> call, Throwable t) {
+//
+//            }
+//        });
+//    }
 
 }
