@@ -31,6 +31,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.location.Location;
 import android.location.LocationManager;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Looper;
@@ -108,6 +109,10 @@ import retrofit2.Response;
 
 public class AddAsetActivity extends AppCompatActivity {
     Button inpBtnMap;
+
+    private static final int REQUEST_CODE_PERMISSION = 1;
+    String mPermission = Manifest.permission.ACCESS_FINE_LOCATION;
+
     Button btnFile;
     List<Sap> sapAll = new ArrayList<>();
     Button btnFileBAST;
@@ -535,6 +540,21 @@ public class AddAsetActivity extends AppCompatActivity {
         sharedPreferences = AddAsetActivity.this.getSharedPreferences(PREF_LOGIN, MODE_PRIVATE);
         
         asetInterface = AsemApp.getApiClient().create(AsetInterface.class);
+
+        if(Build.VERSION.SDK_INT>= 23) {
+
+            if (checkSelfPermission(mPermission) != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(AddAsetActivity.this,
+                        new String[]{mPermission,
+                        },
+                        REQUEST_CODE_PERMISSION);
+                return;
+            }
+
+            else
+            {
+            }
+        }
 
         dialog = new Dialog(AddAsetActivity.this,R.style.MyAlertDialogTheme);
         dialog.setContentView(R.layout.loading);

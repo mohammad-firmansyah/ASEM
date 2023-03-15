@@ -110,7 +110,7 @@ public class MainActivity extends AppCompatActivity {
                             editor.putString("user_pass", user_pass);
                             editor.putString("user_nip", String.valueOf(login.getUserNip()));
                             editor.putString("user_id", String.valueOf(login.getUserId()));
-                            //editor.putString("user_id", user_id);
+//                            editor.putString("user_id", user_id);
                             editor.putString("user_email", String.valueOf(login.getUserEmail()));
                             editor.putString("nama", String.valueOf(login.getUserFullname()));
                             editor.putString("user_jabatan", String.valueOf(login.getUserJabatan()));
