@@ -2101,15 +2101,15 @@ public class AddAsetActivity extends AppCompatActivity {
         }
 
 
-        if (spinnerJenisAset.getSelectedItemId() == 3){
-            if (inpJumlahPohon.getText().toString().equals("")) {
-                customDialogAddAset.dismiss();
-                dialog.dismiss();
-                inpJumlahPohon.setError("Jumlah Pohon harus diisi");
-                inpJumlahPohon.requestFocus();
-                return;
-            }
-        }
+//        if (spinnerJenisAset.getSelectedItemId() == 3){
+//            if (inpJumlahPohon.getText().toString().equals("")) {
+//                customDialogAddAset.dismiss();
+//                dialog.dismiss();
+//                inpJumlahPohon.setError("Jumlah Pohon harus diisi");
+//                inpJumlahPohon.requestFocus();
+//                return;
+//            }
+//        }
 
         if ("non tanaman".equals(String.valueOf(spinnerJenisAset.getSelectedItem()))){
             if ("normal".equals(String.valueOf(spinnerAsetKondisi.getSelectedItem()))){
@@ -2204,10 +2204,10 @@ public class AddAsetActivity extends AppCompatActivity {
                     builder.addPart(MultipartBody.Part.createFormData("afdeling_id", null, requestAfdeling));
                 }
 
-                if (spinnerJenisAset.getSelectedItemId() == 3) {
-                    RequestBody requestJumlahPohon = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(inpJumlahPohon.getText().toString()));
-                    builder.addPart(MultipartBody.Part.createFormData("jumlah_pohon", null, requestJumlahPohon));
-                }
+//                if (spinnerJenisAset.getSelectedItemId() == 3) {
+//                    RequestBody requestJumlahPohon = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(inpJumlahPohon.getText().toString()));
+//                    builder.addPart(MultipartBody.Part.createFormData("jumlah_pohon", null, requestJumlahPohon));
+//                }
 
                 //multipart pohon tanaman
                 if ((spinnerJenisAset.getSelectedItemId() == 1 && !spinnerKodeAset.getSelectedItem().equals("ZC06/S001/Tebu")) || spinnerJenisAset.getSelectedItemId() == 3) {
