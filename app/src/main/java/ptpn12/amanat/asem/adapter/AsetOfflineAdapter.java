@@ -56,6 +56,7 @@ public class AsetOfflineAdapter extends RecyclerView.Adapter<AsetOfflineAdapter.
     ArrayList<Aset> listAset;
     DatabaseHelper dbAset;
     AsetInterface asetInterface;
+    Dialog customDialogFotoBelumLengkap;
 
 
     public AsetOfflineAdapter(Context context, ArrayList<Aset> listAset) {
@@ -91,7 +92,9 @@ public class AsetOfflineAdapter extends RecyclerView.Adapter<AsetOfflineAdapter.
         public void onBindViewHolder(@NonNull AsetViewHolder holder, int position) {
 
             sharedPreferences = context.getSharedPreferences(PREF_LOGIN, MODE_PRIVATE);
-            Aset aset = listAset.get(position);
+            asetInterface = AsemApp.getApiClient().create(AsetInterface.class);
+            final Aset aset = listAset.get(position);
+
             holder.tvTglInput.setText(aset.getTglInput().split(" ")[0]);
             holder.tvNoSAP.setText(String.valueOf(aset.getNomorSap()));
             holder.tvAsetJenis.setText(String.valueOf(aset.getAsetJenis()));
@@ -181,11 +184,17 @@ public class AsetOfflineAdapter extends RecyclerView.Adapter<AsetOfflineAdapter.
                 }
             });
 
-            asetInterface = AsemApp.getApiClient().create(AsetInterface.class);
             holder.btnKirim.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    if ((aset.getAsetJenis().equals("1") || aset.getAsetJenis().equals("3"))
+                            && (aset.getFotoAset1() == null ||
+                            aset.getFotoAset2() == null || aset.getFotoAset3() == null ||
+                            aset.getFotoAset4() == null || aset.getFotoAset5() == null)){
+                        initDialogFotoBelomLengkap();
+                    } else{
                     showDialogKirim(aset);
+                    }
                 }
             });
     }
@@ -265,7 +274,19 @@ public class AsetOfflineAdapter extends RecyclerView.Adapter<AsetOfflineAdapter.
 
     }
 
+    void initDialogFotoBelomLengkap(){
+        customDialogFotoBelumLengkap = new Dialog(context, R.style.MyAlertDialogTheme);
+        customDialogFotoBelumLengkap.setContentView(R.layout.dialog_foto);
+        customDialogFotoBelumLengkap.setCanceledOnTouchOutside(false);
+        customDialogFotoBelumLengkap.getWindow().setBackgroundDrawable(new ColorDrawable(0));
+        customDialogFotoBelumLengkap.show();
 
+        Button btnTutup = customDialogFotoBelumLengkap.findViewById(R.id.btnTutup);
+        btnTutup.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) { customDialogFotoBelumLengkap.dismiss();}
+        });
+    }
     void showDialogKirim(Aset aset) {
         asetInterface = AsemApp.getApiClient().create(AsetInterface.class);
 
