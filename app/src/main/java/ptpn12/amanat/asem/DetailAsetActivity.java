@@ -2155,7 +2155,7 @@ public class DetailAsetActivity extends AppCompatActivity {
                         return;
                     }
                 });
-
+                customDialogApprove.dismiss();
             }
         });
     }
