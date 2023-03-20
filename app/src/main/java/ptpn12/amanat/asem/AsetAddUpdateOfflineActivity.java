@@ -2310,7 +2310,7 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity {
 
         Integer unit_id = Integer.parseInt(sharedPreferences.getString("unit_id","0"));
         for (Sap at : dataAllSpinner.getSap()) {
-            if (at.getUnit_id() == unit_id) {
+            if (at.getUnit_id().equals(unit_id)) {
                 mapSap.put(Long.parseLong(at.getSap_desc()), at.getSap_id());
                 listSpinnerSap.add(at.getSap_desc());
                 sapAll.add(at);
@@ -2352,7 +2352,7 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity {
         // set adapter sistem tanam
         ArrayAdapter<String> adapterSistemTanam = new ArrayAdapter<String>(getApplicationContext(),
                 android.R.layout.simple_spinner_item, listSpinnerSistemTanam);
-        adapterTipe.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        adapterSistemTanam.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerSistemTanam.setAdapter(adapterSistemTanam);
 
         // set adapter jenis

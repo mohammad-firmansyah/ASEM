@@ -483,7 +483,7 @@ public class AsetOfflineAdapter extends RecyclerView.Adapter<AsetOfflineAdapter.
                 dialog.dismiss();
                 if (!response.isSuccessful() && response.body() == null) {
                     if (response.code() >= 400 && response.code() < 500) {
-                        Toast.makeText(context,"data sap sudah digunkan tolong diubah",Toast.LENGTH_LONG).show();
+                        Toast.makeText(context,"Data SAP sudah digunakan\nSilakan diubah!",Toast.LENGTH_LONG).show();
                         return;
                     }
 
