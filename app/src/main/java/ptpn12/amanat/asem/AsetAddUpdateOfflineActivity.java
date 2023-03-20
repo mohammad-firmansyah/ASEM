@@ -102,19 +102,16 @@ import java.util.Objects;
 
 public class AsetAddUpdateOfflineActivity extends AppCompatActivity {
     private boolean isEdit = false;
-    private int position;
     ViewGroup vwBast;
     Aset aset;
     List<Sap> sapAll = new ArrayList<>();
     List<SistemTanam> listSistemTanam = new ArrayList<>();
     private AsetHelper asetHelper;
-    private AsetOfflineAdapter adapter;
     Integer afdeling_id = 0;
     private static final String PREF_LOGIN = "LOGIN_PREF";
     Integer id = 0;
     SharedPreferences sharedPreferences;
     List<String> listSpinnerAlatAngkut = new ArrayList<>();
-    DataAllSpinner allSpinner;
     Button inpBtnMap;
     Button btnFile;
     Button btnFileBAST;
@@ -131,8 +128,6 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity {
     List<String> listSpinnerSap = new ArrayList<>();
     List<AsetKode2> asetKode2 = new ArrayList<>();
     List<Afdelling> afdeling2 = new ArrayList<>();
-    List<Unit> unit = new ArrayList<>();
-    List<SubUnit> subUnit = new ArrayList<>();
 
 
     double longitudeValue = 0;
@@ -149,13 +144,8 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity {
     private static final int LOCATION_PERMISSION_AND_STORAGE = 33;
 
     final Calendar myCalendar = Calendar.getInstance();
-    EditText editText;
-//    EditText inpJumlahPohon;
     TextView tvUploudBA;
     TextView tvUploadFileBAST;
-    AsetModel asetModel;
-    File source;
-    private AsetInterface asetInterface;
     Spinner spinnerTipeAset;
     Spinner spinnerJenisAset;
     Spinner spinnerAsetKondisi;
@@ -187,9 +177,7 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity {
     EditText inpNomorBAST;
     EditText inpNilaiResidu;
     EditText inpKeterangan;
-    EditText inpUmrEkonomis;
     EditText inpPersenKondisi;
-    EditText inpAfdelingET;
     EditText inpPopTotalPohonSaatIni;
     EditText inpPopTotalStdMaster;
     EditText inpPopPerHA;
@@ -208,8 +196,8 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity {
     ImageView fotoimg4;
     ImageView fotoimg5;
 
-    Map<Integer, Integer> mapAfdelingSpinner = new HashMap<Integer, Integer>();
-    Map<Integer, Integer> mapSpinnerAfdeling = new HashMap<Integer, Integer>();
+    Map<Integer, Integer> mapAfdelingSpinner = new HashMap<>();
+    Map<Integer, Integer> mapSpinnerAfdeling = new HashMap<>();
     Map<Integer, String> mapAfdeling = new HashMap();
     Map<Long, Integer> mapSap = new HashMap();
 
@@ -520,7 +508,7 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity {
                                 );
                                 fotoimg5.getLayoutParams().width = 200;
                                 fotoimg5.getLayoutParams().height = 200;
-                                setExifLocation(img5, 4);
+                                setExifLocation(img5, 5);
                             } else if (resultCode == Activity.RESULT_CANCELED) {
                                 android.widget.Toast.makeText(AsetAddUpdateOfflineActivity.this, "Cancelled", Toast.LENGTH_SHORT).show();
                             }
@@ -1644,7 +1632,6 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity {
 
     public void editVisibilityDynamic() {
         TextView tvBa = findViewById(R.id.tvBa);
-//        TextView tvPohon = findViewById(R.id.tvPohon);
         TextView tvBast = findViewById(R.id.tvBast);
         TextView tvFoto = findViewById(R.id.tvFoto);
         TextView tvAfdeling = findViewById(R.id.tvAfdeling);
@@ -2063,7 +2050,7 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity {
 
 
         } else if ("non tanaman".equals(String.valueOf(spinnerJenisAset.getSelectedItem())) && "normal".equals(String.valueOf(spinnerAsetKondisi.getSelectedItem()))) {
-            inpBtnMap.setVisibility(View.VISIBLE);
+            inpBtnMap.setVisibility(View.GONE);
             inpNomorBAST.setVisibility(View.VISIBLE);
             tvBast.setVisibility(View.VISIBLE);
 
@@ -2101,7 +2088,7 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity {
             tvUploudBA.setVisibility(View.VISIBLE);
 //            tvPohon.setVisibility(View.GONE);
 //            inpJumlahPohon.setVisibility(View.GONE);
-            inpBtnMap.setVisibility(View.VISIBLE);
+            inpBtnMap.setVisibility(View.GONE);
             inpNomorBAST.setVisibility(View.VISIBLE);
             tvBast.setVisibility(View.VISIBLE);
             spinnerLuasSatuan.setVisibility(View.VISIBLE);
@@ -2193,7 +2180,7 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity {
         if (!isEdit){
             inpBtnMap.setVisibility(View.GONE);
         } else {
-            inpBtnMap.setVisibility(View.VISIBLE);
+            inpBtnMap.setVisibility(View.GONE);
         }
     }
 
