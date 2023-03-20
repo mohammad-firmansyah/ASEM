@@ -548,6 +548,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:text="Map"
+                    android:textSize="11sp"
                     android:background="@drawable/button_background"
                     android:layout_weight="0.3"
                     />
@@ -559,6 +560,7 @@
                     android:layout_marginStart="5dp"
                     android:layout_marginTop="10dp"
                     android:layout_weight="0.3"
+                    android:textSize="11sp"
                     android:background="@drawable/button_background"
                     android:text="Map" />
 
@@ -568,6 +570,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:text="Map"
+                    android:textSize="11sp"
                     android:background="@drawable/button_background"
                     android:layout_weight="0.3"
                     android:layout_marginStart="5dp"
@@ -579,6 +582,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:text="Map"
+                    android:textSize="11sp"
                     android:background="@drawable/button_background"
                     android:layout_weight="0.3"
                     android:layout_marginStart="5dp"
@@ -590,6 +594,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:text="Map"
+                    android:textSize="11sp"
                     android:background="@drawable/button_background"
                     android:layout_weight="0.3"
                     android:layout_marginStart="5dp"

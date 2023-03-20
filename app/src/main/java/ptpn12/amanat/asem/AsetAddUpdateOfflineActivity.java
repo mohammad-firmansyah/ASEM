@@ -652,6 +652,33 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity {
 
 //        handler
 
+        inpLuasAset.addTextChangedListener( new TextWatcher(){
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                if (!inpPopTotalStdMaster.getText().toString().equals("")){
+                    try {
+
+                        Double popPerHa =  Double.parseDouble((inpPopTotalPohonSaatIni.getText().toString() != null || !inpPopTotalPohonSaatIni.getText().toString().equals("") ) ? String.valueOf(inpPopTotalPohonSaatIni.getText().toString()) : "0" ) / Double.parseDouble((inpLuasAset.getText().toString().trim().equals("")) ? "0" : inpLuasAset.getText().toString().trim());
+                        Double presentase = popPerHa / Double.parseDouble((inpPopTotalStdMaster.getText().toString() != null || inpPopTotalStdMaster.getText().toString().equals("") ) ? String.valueOf(inpPopTotalStdMaster.getText().toString()) : "0"  ) * 100;
+                        inpPresentasePopPerHA.setText(showPopulasi(String.valueOf(presentase)));
+                        inpPopPerHA.setText(showPopulasiWithoutPercentage(String.valueOf(popPerHa)));
+                    } catch (Exception e){
+                        e.printStackTrace();
+                    }
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+
+        });
 
 
             inpPopTotalPohonSaatIni.addTextChangedListener( new TextWatcher(){
