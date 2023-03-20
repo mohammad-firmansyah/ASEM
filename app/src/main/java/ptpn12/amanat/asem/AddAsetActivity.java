@@ -620,6 +620,7 @@ public class AddAsetActivity extends AppCompatActivity {
         ArrayAdapter<String> adapterLuasSatuan =new ArrayAdapter<>(AddAsetActivity.this, android.R.layout.simple_list_item_1,listSpinnerSatuan);
         spinnerLuasSatuan.setAdapter(adapterLuasSatuan);
 
+
 //        spinnerSistemTanam = findViewById(R.id.inpSistemTanam);
 //        List<String> listSpinnerSistemTanam = new ArrayList<>();
 //        listSpinnerSistemTanam.add("Pilih Sistem Tanam");
