@@ -250,6 +250,7 @@ public class UpdateAsetActivity extends AppCompatActivity {
     String spinnerIdAsetKondisi;
     String spinnerIdKodeAset;
     String spinnerIdSubUnit;
+    String spinnerIdSistemTanam;
     String spinnerIdUnit;
     String spinnerIdAfdeling;
 
@@ -625,18 +626,6 @@ public class UpdateAsetActivity extends AppCompatActivity {
 
                     }
                 });
-
-                spinnerSistemTanam.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                    @Override
-                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                        editVisibilityDynamic();
-                    }
-
-                    @Override
-                    public void onNothingSelected(AdapterView<?> arg0) {
-
-                    }
-                });
                 listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -653,6 +642,20 @@ public class UpdateAsetActivity extends AppCompatActivity {
 
             }
         });
+
+        spinnerSistemTanam.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                spinnerIdSistemTanam = String.valueOf(position);
+                editVisibilityDynamic();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> arg0) {
+
+            }
+        });
+
         inpLuasAset.addTextChangedListener( new TextWatcher(){
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
