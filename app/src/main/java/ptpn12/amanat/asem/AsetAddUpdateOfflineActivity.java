@@ -1335,7 +1335,7 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity {
 
             if (aset.getFotoAset1() == null) {
                 map1.setEnabled(false);
-                foto1rl.setEnabled(false);
+//                foto1rl.setEnabled(false);
             } else {
                 URL url = new URL(url1);
                 Bitmap bmp = BitmapFactory.decodeStream(url.openConnection().getInputStream());
@@ -1347,7 +1347,7 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity {
 
             if (aset.getFotoAset2() == null) {
                 map2.setEnabled(false);
-                foto2rl.setEnabled(false);
+//                foto2rl.setEnabled(false);
             } else {
                 URL url = new URL(url2);
                 Bitmap bmp = BitmapFactory.decodeStream(url.openConnection().getInputStream());
@@ -1359,7 +1359,7 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity {
 
             if (aset.getFotoAset3() == null) {
                 map3.setEnabled(false);
-                foto3rl.setEnabled(false);
+//                foto3rl.setEnabled(false);
             } else {
                 URL url = new URL(url3);
                 Bitmap bmp = BitmapFactory.decodeStream(url.openConnection().getInputStream());
@@ -1371,7 +1371,7 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity {
 
             if (aset.getFotoAset4() == null) {
                 map4.setEnabled(false);
-                foto4rl.setEnabled(false);
+//                foto4rl.setEnabled(false);
             } else {
                 URL url = new URL(url4);
                 Bitmap bmp = BitmapFactory.decodeStream(url.openConnection().getInputStream());
@@ -1383,7 +1383,7 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity {
 
             if (aset.getFotoAset5() == null) {
                 map5.setEnabled(false);
-                foto5rl.setEnabled(false);
+//                foto5rl.setEnabled(false);
             } else {
                 URL url = new URL(url5);
                 Bitmap bmp = BitmapFactory.decodeStream(url.openConnection().getInputStream());
