@@ -1092,7 +1092,7 @@ public class DetailAsetActivity extends AppCompatActivity {
 
             try {
 
-                if (aset.getAfdelingId() != null) {
+                if (aset.getAfdelingId() != 0) {
                         Log.d("afdelingg", String.valueOf(aset.getAfdelingId())+'\n'+mapAfdelingSpinner.get(aset.getAfdelingId()));
 
                     spinnerAfdeling.setSelection(mapAfdelingSpinner.get(aset.getAfdelingId()));

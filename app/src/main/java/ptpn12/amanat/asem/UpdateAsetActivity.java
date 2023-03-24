@@ -1324,7 +1324,7 @@ public class UpdateAsetActivity extends AppCompatActivity {
 
 
 
-                    if (aset.getAfdelingId() != null) {
+                    if (aset.getAfdelingId() != 0) {
 
                         spinnerAfdeling.setSelection(mapAfdelingSpinner.get(aset.getAfdelingId()));
 
