@@ -887,22 +887,15 @@ public class DetailAsetActivity extends AppCompatActivity {
     private void setValueInput(){
 
         try {
-
-
-
-            inpTglInput.setText(aset.getTglInput().split(" ")[0]);
-            inpTglOleh.setText(aset.getTglOleh().split(" ")[0]);
             inpNoSAP.setText(aset.getNomorSap());
             inpNamaAset.setText(aset.getAsetName());
             inpLuasAset.setText(String.valueOf(aset.getAsetLuas()));
             inpMasaPenyusutan.setText(String.valueOf(aset.getMasaSusut()));
             inpNomorBAST.setText(String.valueOf(aset.getNomorBast()));
-            inpNilaiResidu.setText(formatrupiah(Double.valueOf((aset.getNilaiResidu() != null) ? aset.getNilaiResidu() : 0 )));
+
             inpKeterangan.setText(aset.getKeterangan());
             inpUmrEkonomis.setText(utils.MonthToYear(aset.getUmurEkonomisInMonth()));
-            inpNilaiAsetSAP.setText(formatrupiah(Double.valueOf((aset.getNilaiOleh() != null) ? aset.getNilaiOleh() : 0 )));
             inpPersenKondisi.setText(String.valueOf(aset.getPersenKondisi()));
-//            inpJumlahPohon.setText(String.valueOf(aset.getJumlahPohon()));
             inpHGU.setText(String.valueOf(aset.getHgu()));
             inpPopTotalPohonSaatIni.setText(String.valueOf(aset.getPopPohonSaatIni()));
             inpPopTotalStdMaster.setText(String.valueOf(aset.getPopStandar()));
@@ -1089,6 +1082,11 @@ public class DetailAsetActivity extends AppCompatActivity {
 //
 //            spinnerSistemTanam.setSelection(aset.getSistemTanam()-1);
 
+
+            inpTglInput.setText(aset.getTglInput().split(" ")[0]);
+            inpTglOleh.setText(aset.getTglOleh().split(" ")[0]);
+            inpNilaiAsetSAP.setText(formatrupiah(Double.valueOf((aset.getNilaiOleh() != null) ? aset.getNilaiOleh() : 0 )));
+            inpNilaiResidu.setText(formatrupiah(Double.valueOf((aset.getNilaiResidu() != null) ? aset.getNilaiResidu() : 0 )));
 
             try {
 

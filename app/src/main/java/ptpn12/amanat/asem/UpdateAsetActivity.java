@@ -1179,7 +1179,6 @@ public class UpdateAsetActivity extends AppCompatActivity {
     }
     private void setValueInput(){
 
-
                 try {
 
                     if (aset.getSatuan_luas() != null) {
@@ -2223,17 +2222,19 @@ public class UpdateAsetActivity extends AppCompatActivity {
             RequestBody requestNomorBAST = RequestBody.create(MediaType.parse("text/plain"), nomor_bast);
             RequestBody requestNilaiResidu = RequestBody.create(MediaType.parse("text/plain"), nilai_residu);
             RequestBody requestKeterangan = RequestBody.create(MediaType.parse("text/plain"), keterangan);
-            RequestBody requestSubUnit = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(spinnerIdSubUnit));
+            RequestBody requestSubUnit = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(aset.getAsetSubUnit()));
 
-
-            int afdelingId = (int) spinnerAfdeling.getSelectedItemId();
             RequestBody requestAfdeling = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(0));
-            if (afdelingId != 0){
-                requestAfdeling = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(mapSpinnerAfdeling.get(afdelingId)));
-            } else {
-                requestAfdeling = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(0));
 
+            if (aset.getAsetSubUnit() == 2) {
+                int afdelingId = (int) aset.getAfdelingId();
+                if (afdelingId != 0){
+                    requestAfdeling = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(mapSpinnerAfdeling.get(afdelingId)));
+                } else {
+                    requestAfdeling = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(0));
+                }
             }
+
             RequestBody requestUnit = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(Integer.parseInt(String.valueOf(spinnerUnit.getSelectedItemId())) +1));
             RequestBody requestHGU = RequestBody.create(MediaType.parse("text/plain"), inpHGU.getText().toString().trim());
 //            RequestBody requestJumlahPohon = RequestBody.create(MediaType.parse("text/plain"), jumlahPohon);

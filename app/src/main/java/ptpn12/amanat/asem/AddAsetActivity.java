@@ -2231,6 +2231,10 @@ public class AddAsetActivity extends AppCompatActivity {
 
                 if (spinnerSubUnit.getSelectedItemId() == 2) {
                     builder.addPart(MultipartBody.Part.createFormData("afdeling_id", null, requestAfdeling));
+                } else {
+                    requestAfdeling = RequestBody.create(MediaType.parse("text/plain"), String.valueOf((0)));
+                    builder.addPart(MultipartBody.Part.createFormData("afdeling_id", null, requestAfdeling));
+
                 }
 
 //                if (spinnerJenisAset.getSelectedItemId() == 3) {
