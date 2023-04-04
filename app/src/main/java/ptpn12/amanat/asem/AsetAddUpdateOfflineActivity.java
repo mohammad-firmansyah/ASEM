@@ -1326,11 +1326,7 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity {
         spinnerSubUnit.setSelection(Integer.parseInt(aset.getAsetSubUnit()));
 
         try {
-            if (aset.getAfdelingId() != null) {
-
-//                mapAfdelingSpinner.put(185,1);
-                Log.d("amanat23", String.valueOf(mapAfdelingSpinner.get(afdeling_id)));
-                Log.d("amanat23", String.valueOf(afdeling_id));
+            if (aset.getAfdelingId().equals("0")) {
 
                 spinnerAfdeling.setSelection(mapAfdelingSpinner.get(afdeling_id));
 
@@ -2433,16 +2429,16 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity {
         adapterAfdeling.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerAfdeling.setAdapter(adapterAfdeling);
 
+        Integer sub_unit_id = Integer.valueOf(sharedPreferences.getString("sub_unit_id", "0"));
         try {
-            Integer sub_unit_id = Integer.valueOf(sharedPreferences.getString("sub_unit_id", "0"));
             spinnerSubUnit.setSelection(sub_unit_id);
         } catch (Exception e) {
         }
 
-        Log.d("amanat23", String.valueOf(mapAfdelingSpinner.get(afdeling_id-2)));
-        Log.d("amanat23", String.valueOf(afdeling_id));
+        if (sub_unit_id == 2) {
+            spinnerAfdeling.setSelection(mapAfdelingSpinner.get(afdeling_id));
+        }
 
-        spinnerAfdeling.setSelection(mapAfdelingSpinner.get(afdeling_id));
         asetHelper.close();
 
     }
