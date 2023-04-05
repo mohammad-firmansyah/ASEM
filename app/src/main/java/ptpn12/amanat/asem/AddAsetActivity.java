@@ -2527,7 +2527,7 @@ public class AddAsetActivity extends AppCompatActivity {
                     adapterAlatAngkut.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                     spinnerAlatAngkut.setAdapter(adapterAlatAngkut);
 
-                    // set adapter alat angkut
+                    // set adapter sistem tanam
                     ArrayAdapter<String> adapterSistemTanam = new ArrayAdapter<String>(getApplicationContext(),
                             android.R.layout.simple_spinner_item, listSpinnerSistemTanam);
                     adapterSistemTanam.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);

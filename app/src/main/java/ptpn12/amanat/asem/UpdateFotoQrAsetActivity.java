@@ -1399,7 +1399,7 @@ public class UpdateFotoQrAsetActivity extends AppCompatActivity {
 
                              try {
 
-                                 if (aset.getAfdelingId() != null) {
+                                 if (aset.getAfdelingId() != 0) {
 
                                      spinnerAfdeling.setSelection(mapAfdelingSpinner.get(aset.getAfdelingId()));
 
@@ -2481,14 +2481,17 @@ public class UpdateFotoQrAsetActivity extends AppCompatActivity {
             RequestBody requestKeterangan = RequestBody.create(MediaType.parse("text/plain"), keterangan);
             RequestBody requestSubUnit = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(spinnerIdSubUnit));
 
-            int afdelingId = (int) spinnerAfdeling.getSelectedItemId();
             RequestBody requestAfdeling = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(0));
-            if (afdelingId != 0){
-                requestAfdeling = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(mapSpinnerAfdeling.get(afdelingId)));
-            } else {
-                requestAfdeling = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(0));
 
+            if (aset.getAsetSubUnit() == 2) {
+                int afdelingId = (int) aset.getAfdelingId();
+                if (afdelingId != 0){
+                    requestAfdeling = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(mapSpinnerAfdeling.get(afdelingId)));
+                } else {
+                    requestAfdeling = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(0));
+                }
             }
+
             RequestBody requestUnit = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(Integer.parseInt(String.valueOf(spinnerUnit.getSelectedItemId())) +1));
             RequestBody requestHGU = RequestBody.create(MediaType.parse("text/plain"), inpHGU.getText().toString().trim());
 
