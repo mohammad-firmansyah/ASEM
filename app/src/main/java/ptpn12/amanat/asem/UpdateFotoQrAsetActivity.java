@@ -22,6 +22,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.location.Location;
@@ -32,6 +35,7 @@ import android.os.Environment;
 import android.os.Handler;
 import android.os.Looper;
 import android.provider.MediaStore;
+import android.provider.OpenableColumns;
 import android.provider.Settings;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -52,7 +56,6 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import ptpn12.amanat.asem.R;
 
 import ptpn12.amanat.asem.api.AsetInterface;
 import ptpn12.amanat.asem.api.model.Afdelling;
@@ -77,12 +80,18 @@ import ptpn12.amanat.asem.api.model.Unit;
 import ptpn12.amanat.asem.api.model.UnitModel;
 import ptpn12.amanat.asem.utils.GpsConverter;
 import ptpn12.amanat.asem.utils.utils;
+
 import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
 import com.squareup.picasso.Picasso;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -93,7 +102,6 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 
-//import butterknife.BindView;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
@@ -249,54 +257,152 @@ public class UpdateFotoQrAsetActivity extends AppCompatActivity {
     String spinnerIdKodeAset;
     String spinnerIdSubUnit;
     String spinnerIdSistemTanam;
-    String spinnerIdUnit;
-    String spinnerIdAfdeling;
 
     Dialog customDialogEditAset;
 
 
     Integer id;
+
+
+
     public void onActivityResult(int requestCode,int resultCode,@Nullable Intent data){
         super.onActivityResult(requestCode,resultCode,data);
-
-//        if (resultCode == RESULT_OK && data != null ) {
-//            ArrayList<MediaFile> mediaFiles = data.getParcelableArrayListExtra(
-//                    FilePickerActivity.MEDIA_FILES
-//            );
-//            String path =  mediaFiles.get(0).getPath();
-//            bafile_file = new File(path);
-//
-//            switch (requestCode) {
-//                case 102:
-//                    Toast.makeText(getApplicationContext(),"success uploud berita acara",Toast.LENGTH_LONG).show();
-//                    tvUploudBA.setText(bafile_file.getName());
-//                    break;
-//
-//            }
-//        }
 
         if (requestCode == 1 && resultCode == RESULT_OK && data != null ) {
 
             Uri uri = data.getData();
             String path =  uri.getPath();
             bafile_file = new File(path);
-            file_bast= new File(path);
-            Toast.makeText(getApplicationContext(),"sukses unggah berita acara",Toast.LENGTH_LONG).show();
             tvUploudBA.setText(bafile_file.getName());
-            tvUploadBAST.setText(file_bast.getName());
+            Toast.makeText(getApplicationContext(),"sukses unggah berita acara",Toast.LENGTH_LONG).show();
+        } else if (requestCode == 2 && resultCode == RESULT_OK && data != null) {
+            Uri uri = data.getData();
+            try {
+                fotoAsetQrFile = getFile(this,uri);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+
+            try {
+                Bitmap bitmapImage = MediaStore.Images.Media.getBitmap(this.getContentResolver(), uri);
+                fotoasetqr.getLayoutParams().height = 350;
+                fotoasetqr.getLayoutParams().width = 400;
+                fotoasetqr.setImageBitmap(bitmapImage);
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            Toast.makeText(getApplicationContext(),"sukses unggah foto 1",Toast.LENGTH_LONG).show();
+        }  else if (requestCode == 3 && resultCode == RESULT_OK && data != null) {
+            Uri uri = data.getData();
+            try {
+                fotoAsetQrFile2 = getFile(this,uri);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+
+            try {
+                Bitmap bitmapImage = MediaStore.Images.Media.getBitmap(this.getContentResolver(), uri);
+                fotoasetqr2.getLayoutParams().height = 350;
+                fotoasetqr2.getLayoutParams().width = 400;
+                fotoasetqr2.setImageBitmap(bitmapImage);
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            Toast.makeText(getApplicationContext(),"sukses unggah foto 2",Toast.LENGTH_LONG).show();
         }
-//        else {
-//            Toast.makeText(UpdateFotoQrAsetActivity.this,"gagal unggah file",Toast.LENGTH_LONG).show();
-//            return;
-//        }
+        else if (requestCode == 4 && resultCode == Activity.RESULT_OK && data != null){
+            Uri uri = data.getData();
+            try {
+                file_bast = getFile(this, uri);
+                tvUploadBAST.setText(file_bast.getName());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
+
+
 
     public void openfilechoser(){
         Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-        intent.setType(".pdf -> application/pdf");
+        intent.setType("application/pdf");
         intent.addCategory(Intent.CATEGORY_OPENABLE);
         startActivityForResult(intent,1);
     }
+
+    public void openfilechoserBAST(){
+        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+        intent.setType("application/pdf");
+        intent.addCategory(Intent.CATEGORY_OPENABLE);
+        startActivityForResult(intent,4);
+    }
+
+
+    public void openfilechoserImg(){
+        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+        intent.setType("image/*");
+        intent.addCategory(Intent.CATEGORY_OPENABLE);
+        startActivityForResult(
+                Intent.createChooser(intent, "Select a File to Upload"),
+                2);
+    }
+
+    public void openfilechoserImg2(){
+        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+        intent.setType("image/*");
+        intent.addCategory(Intent.CATEGORY_OPENABLE);
+        startActivityForResult(
+                Intent.createChooser(intent, "Select a File to Upload"),
+                3);
+    }
+
+    public File getFile(Context context, Uri uri) throws IOException {
+        // save file to directory Documents di package aplikasi
+        File destinationFilename = new File(context.getExternalFilesDir(Environment.DIRECTORY_PICTURES).getPath() + File.separatorChar + queryName(context, uri));
+        try (InputStream ins = context.getContentResolver().openInputStream(uri)) {
+            createFileFromStream(ins, destinationFilename);
+        } catch (Exception ex) {
+            Toast.makeText(UpdateFotoQrAsetActivity.this, "File tidak dapat dimuat", Toast.LENGTH_LONG).show();
+            Log.e("Save File", ex.getMessage());
+            ex.printStackTrace();
+        }
+        return destinationFilename;
+    }
+
+    private String queryName(Context context, Uri uri) {
+        Cursor returnCursor =
+                context.getContentResolver().query(uri, null, null, null, null);
+        assert returnCursor != null;
+        int nameIndex = returnCursor.getColumnIndex(OpenableColumns.DISPLAY_NAME);
+        returnCursor.moveToFirst();
+        String name = returnCursor.getString(nameIndex);
+        returnCursor.close();
+        return name;
+    }
+
+    public void createFileFromStream(InputStream ins, File destination) {
+        try (OutputStream os = new FileOutputStream(destination)) {
+            byte[] buffer = new byte[4096];
+            int length;
+            while ((length = ins.read(buffer)) > 0) {
+                os.write(buffer, 0, length);
+            }
+            os.flush();
+        } catch (Exception ex) {
+            Log.e("Save File", ex.getMessage());
+            ex.printStackTrace();
+        }
+    }
+
+
 
 
     ActivityResultLauncher<Intent> activityCaptureFoto1 =
@@ -409,6 +515,7 @@ public class UpdateFotoQrAsetActivity extends AppCompatActivity {
                     }
             );
 
+    // foto aset + qr
     ActivityResultLauncher<Intent> activityCaptureFotoAsetQr =
             registerForActivityResult(
                     new ActivityResultContracts.StartActivityForResult(),
@@ -421,7 +528,7 @@ public class UpdateFotoQrAsetActivity extends AppCompatActivity {
                                         UpdateFotoQrAsetActivity.this, "fotoasetqr.png", fotoasetqr, true
                                 );
                             } else if (resultCode == Activity.RESULT_CANCELED){
-                                android.widget.Toast.makeText(UpdateFotoQrAsetActivity.this, "Cancelled", Toast.LENGTH_SHORT).show();
+                                android.widget.Toast.makeText(UpdateFotoQrAsetActivity.this, "input foto aset batal ", Toast.LENGTH_SHORT).show();
                             }
 
                         }
@@ -588,13 +695,16 @@ public class UpdateFotoQrAsetActivity extends AppCompatActivity {
         addNewFotoAsetAndQr.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                captureFotoQcLoses("fotoasetqr.png",activityCaptureFotoAsetQr);
+//                captureFotoQcLoses("fotoasetqr.png",activityCaptureFotoAsetQr);
+                openfilechoserImg();
+
             }
         });
         addNewFotoAsetAndQr2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                captureFotoQcLoses("fotoasetqr2.png",activityCaptureFotoAsetQr2);
+//                captureFotoQcLoses("fotoasetqr2.png",activityCaptureFotoAsetQr2);
+                openfilechoserImg2();
             }
         });
         inpNoSAP.setOnClickListener(new View.OnClickListener() {
@@ -1041,7 +1151,7 @@ public class UpdateFotoQrAsetActivity extends AppCompatActivity {
         btnFile.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
-                openfilechoser();
+                openfilechoserBAST();
             }
 
 
@@ -1279,20 +1389,13 @@ public class UpdateFotoQrAsetActivity extends AppCompatActivity {
                              inpNamaAset.setText(aset.getAsetName());
                              inpLuasAset.setText(String.valueOf(Double.parseDouble(String.valueOf(aset.getAsetLuas()))));
                              inpNilaiAsetSAP.setText(formatrupiah(Double.valueOf((aset.getNilaiOleh() != null) ? aset.getNilaiOleh() : 0 )));
-//                             Log.d("asetapix",formatrupiah(Double.parseDouble(String.valueOf(aset.getNilaiOleh()))) );
                              inpMasaPenyusutan.setText(String.valueOf(aset.getMasaSusut()));
                              inpNomorBAST.setText(String.valueOf(aset.getNomorBast()));
                              inpNilaiResidu.setText(formatrupiah(Double.valueOf((aset.getNilaiResidu() != null) ? aset.getNilaiResidu() : 0 )));
                              inpKeterangan.setText(aset.getKeterangan());
                              inpUmrEkonomis.setText(utils.MonthToYear(aset.getUmurEkonomisInMonth()));
-//                inpNilaiAsetSAP.setText(formatrupiah(Double.parseDouble(String.valueOf(aset.getUmurEkonomisInMonth()))));
                              inpPersenKondisi.setText(String.valueOf(aset.getPersenKondisi()));
-//                             inpJumlahPohon.setText(String.valueOf(aset.getJumlahPohon()));
                              inpHGU.setText(String.valueOf(aset.getHgu()));
-//                             inpPopTotalPohonSaatIni.setText(String.valueOf(aset.getPopPohonSaatIni()));
-//                             inpPopTotalStdMaster.setText(String.valueOf(aset.getPopStandar()));
-//                             inpPopPerHA.setText(String.valueOf(aset.getPopPerHa()));
-//                             inpPresentasePopPerHA.setText(String.valueOf(aset.getPresentasePopPerHa()));
 
 
                              if(aset.getPopPohonSaatIni() != null && aset.getPopStandar() != null){
@@ -2573,6 +2676,7 @@ public class UpdateFotoQrAsetActivity extends AppCompatActivity {
                 builder.addPart(MultipartBody.Part.createFormData("foto_aset1", img1.getName(), RequestBody.create(MediaType.parse("image/*"), img1)));
                 builder.addPart(MultipartBody.Part.createFormData("geo_tag1",null,requestGeoTag1));
             }
+
             if (fotoAsetQrFile != null) {
                 builder.addPart(MultipartBody.Part.createFormData("foto_aset_qr", fotoAsetQrFile.getName(), RequestBody.create(MediaType.parse("image/*"), fotoAsetQrFile)));
             }

@@ -311,7 +311,6 @@ public class UpdateAsetActivity extends AppCompatActivity {
             Uri uri = data.getData();
             try {
                 file_bast = getFile(this, uri);
-//                Toast.makeText(getApplicationContext(),"sukses unggah berita acara",Toast.LENGTH_LONG).show();
                 tvUploadBAST.setText(file_bast.getName());
             } catch (IOException e) {
                 e.printStackTrace();
@@ -321,7 +320,7 @@ public class UpdateAsetActivity extends AppCompatActivity {
 
     public void openfilechoser(){
         Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-        intent.setType(".pdf -> application/pdf");
+        intent.setType("application/pdf");
         intent.addCategory(Intent.CATEGORY_OPENABLE);
         startActivityForResult(intent,1);
     }
@@ -2229,7 +2228,7 @@ public class UpdateAsetActivity extends AppCompatActivity {
             if (aset.getAsetSubUnit() == 2) {
                 int afdelingId = (int) aset.getAfdelingId();
                 if (afdelingId != 0){
-                    requestAfdeling = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(mapSpinnerAfdeling.get(afdelingId)));
+                    requestAfdeling = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(afdelingId));
                 } else {
                     requestAfdeling = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(0));
                 }
