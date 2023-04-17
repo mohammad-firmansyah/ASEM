@@ -652,7 +652,8 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity {
 
 //        handler
 
-        inpLuasAset.addTextChangedListener( new TextWatcher(){
+
+        inpPopTotalPohonSaatIni.addTextChangedListener( new TextWatcher(){
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
@@ -660,12 +661,24 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                if (!inpPopTotalStdMaster.getText().toString().equals("")){
-                    try {
+                if (!inpPopTotalPohonSaatIni.getText().toString().equals("") && !inpLuasAset.getText().toString().equals("")){
+
+                    try{
+
 
                         Double popPerHa =  Double.parseDouble((inpPopTotalPohonSaatIni.getText().toString() != null || !inpPopTotalPohonSaatIni.getText().toString().equals("") ) ? String.valueOf(inpPopTotalPohonSaatIni.getText().toString()) : "0" ) / Double.parseDouble((inpLuasAset.getText().toString().trim().equals("")) ? "0" : inpLuasAset.getText().toString().trim());
-                        Double presentase = popPerHa / Double.parseDouble((inpPopTotalStdMaster.getText().toString() != null || inpPopTotalStdMaster.getText().toString().equals("") ) ? String.valueOf(inpPopTotalStdMaster.getText().toString()) : "0"  ) * 100;
-                        inpPresentasePopPerHA.setText(showPopulasi(String.valueOf(presentase)));
+
+                        if (Double.isNaN(popPerHa)) {
+                            popPerHa = 0.0;
+                        }
+
+                        if (Double.isInfinite(popPerHa)) {
+                            popPerHa = 0.0;
+
+                        }
+
+
+
                         inpPopPerHA.setText(showPopulasiWithoutPercentage(String.valueOf(popPerHa)));
                     } catch (Exception e){
                         e.printStackTrace();
@@ -680,65 +693,89 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity {
 
         });
 
+        inpPopTotalStdMaster.addTextChangedListener( new TextWatcher(){
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
-            inpPopTotalPohonSaatIni.addTextChangedListener( new TextWatcher(){
-                @Override
-                public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            }
 
-                }
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                if (!inpPopTotalStdMaster.getText().toString().equals("")){
+                    try {
 
-                @Override
-                public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                    if (!inpPopTotalPohonSaatIni.getText().equals("") && !inpLuasAset.getText().equals("")){
 
-                        try{
+                        Double popPerHa =  Double.parseDouble((inpPopTotalPohonSaatIni.getText().toString() != null || !inpPopTotalPohonSaatIni.getText().toString().equals("") ) ? String.valueOf(inpPopTotalPohonSaatIni.getText().toString()) : "0" ) / Double.parseDouble((inpLuasAset.getText().toString().trim().equals("")) ? "0" : inpLuasAset.getText().toString().trim());
+                        Double presentase = popPerHa / Double.parseDouble((inpPopTotalStdMaster.getText().toString() != null || inpPopTotalStdMaster.getText().toString().equals("") ) ? String.valueOf(inpPopTotalStdMaster.getText().toString()) : "0"  ) * 100;
 
-                            Double popPerHa =  Double.parseDouble(String.valueOf(inpPopTotalPohonSaatIni.getText()))/Double.parseDouble(String.valueOf(inpLuasAset.getText()));
-                            inpPopPerHA.setText(showPopulasiWithoutPercentage(String.valueOf(popPerHa)));
-                        } catch (Exception e){
-                            e.printStackTrace();
+                        if (Double.isNaN(presentase)) {
+                            presentase = 0.0;
                         }
-//                    Double presentase = popPerHa / Double.parseDouble(String.valueOf(inpPopTotalStdMaster.getText())) * 100;
-//                    inpPresentasePopPerHA.setText(String.valueOf(presentase));
+
+                        if (Double.isInfinite(presentase)){
+                            presentase = 0.0;
+                        }
+
+
+                        inpPresentasePopPerHA.setText(showPopulasi(String.valueOf(presentase)));
+                    } catch (Exception e){
+                        e.printStackTrace();
                     }
                 }
+            }
 
+            @Override
+            public void afterTextChanged(Editable editable) {
 
+            }
 
-                @Override
-                public void afterTextChanged(Editable editable) {
+        });
 
-                }
+        inpLuasAset.addTextChangedListener( new TextWatcher(){
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
-            });
+            }
 
-            inpPopTotalStdMaster.addTextChangedListener( new TextWatcher(){
-                @Override
-                public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                if (!inpPopTotalStdMaster.getText().toString().equals("")){
+                    try {
 
-                }
+                        Double popPerHa =  Double.parseDouble((inpPopTotalPohonSaatIni.getText().toString() != null || !inpPopTotalPohonSaatIni.getText().toString().equals("") ) ? String.valueOf(inpPopTotalPohonSaatIni.getText().toString()) : "0" ) / Double.parseDouble((inpLuasAset.getText().toString().trim().equals("")) ? "0" : inpLuasAset.getText().toString().trim());
+                        Double presentase = popPerHa / Double.parseDouble((inpPopTotalStdMaster.getText().toString() != null || inpPopTotalStdMaster.getText().toString().equals("") ) ? String.valueOf(inpPopTotalStdMaster.getText().toString()) : "0"  ) * 100;
 
-                @Override
-                public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                    if (!inpPopTotalStdMaster.getText().equals("")){
-                        try {
-
-                            Double popPerHa =  Double.parseDouble(String.valueOf(inpPopTotalPohonSaatIni.getText()))/Double.parseDouble(String.valueOf(inpLuasAset.getText()));
-                            Double presentase = popPerHa / Double.parseDouble(String.valueOf(inpPopTotalStdMaster.getText())) * 100;
-                            inpPresentasePopPerHA.setText(showPopulasi(String.valueOf(presentase)));
-                        } catch (Exception e){
-                            e.printStackTrace();
+                        if (Double.isNaN(presentase)) {
+                            presentase = 0.0;
                         }
+
+                        if (Double.isInfinite(presentase)){
+                            presentase = 0.0;
+                        }
+
+                        if (Double.isNaN(popPerHa)) {
+                            popPerHa = 0.0;
+                        }
+
+                        if (Double.isInfinite(popPerHa)) {
+                            popPerHa = 0.0;
+
+                        }
+
+                        inpPresentasePopPerHA.setText(showPopulasi(String.valueOf(presentase)));
+                        inpPopPerHA.setText(showPopulasiWithoutPercentage(String.valueOf(popPerHa)));
+                    } catch (Exception e){
+                        e.printStackTrace();
                     }
                 }
+            }
 
-                @Override
-                public void afterTextChanged(Editable editable) {
+            @Override
+            public void afterTextChanged(Editable editable) {
 
-                }
+            }
 
-            });
-
+        });
 
         btnSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
