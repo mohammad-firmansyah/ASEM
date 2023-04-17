@@ -73,7 +73,7 @@ public class SearchAsetAdapter extends RecyclerView.Adapter<SearchAsetAdapter.Vi
         asetInterface = AsemApp.getApiClient().create(AsetInterface.class);
         final Search mySearchData = dataSearch.get(position);
 
-        holder.tvTglInput.setText(mySearchData.getTglInput());
+        holder.tvTglInput.setText(mySearchData.getTglInput().split(" ")[0]);
         holder.tvNoSAP.setText(String.valueOf(String.valueOf(mySearchData.getNomorSap())));
         holder.tvAsetJenis.setText(String.valueOf(mySearchData.getAsetJenis()));
         holder.tvAfdeling.setText(String.valueOf(mySearchData.getAfdelingId()));

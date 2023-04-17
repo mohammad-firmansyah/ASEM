@@ -2121,7 +2121,7 @@ public class AddAsetActivity extends AppCompatActivity {
 
         if (spinnerKodeAset.getSelectedItemId() == 0 || spinnerTipeAset.getSelectedItemId() == 0
                 || spinnerJenisAset.getSelectedItemId() == 0 || spinnerAsetKondisi.getSelectedItemId() == 0 ) {
-            Toast.makeText(getApplicationContext(), "error ada yang belum disisi", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "error ada yang belum diisi", Toast.LENGTH_SHORT).show();
             return;
         }
 
@@ -2330,7 +2330,7 @@ public class AddAsetActivity extends AppCompatActivity {
                     public void onFailure(Call<AsetModel2> call, Throwable t) {
                         dialog.dismiss();
                         Toast.makeText(getApplicationContext(), "error " + t.getMessage(), Toast.LENGTH_SHORT).show();
-                        Toast.makeText(getApplicationContext(), "Periksa kembali kolom isian dengan benar!" , Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), "Periksa kembali koneksi internet!" , Toast.LENGTH_SHORT).show();
                     }
                 });
             } catch (Exception e) {
