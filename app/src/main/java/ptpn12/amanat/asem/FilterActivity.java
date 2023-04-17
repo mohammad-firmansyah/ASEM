@@ -1,6 +1,8 @@
 package ptpn12.amanat.asem;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;
@@ -30,6 +32,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import ptpn12.amanat.asem.adapter.SearchAsetAdapter;
 import ptpn12.amanat.asem.api.AsetInterface;
 import ptpn12.amanat.asem.api.model.Afdelling;
 import ptpn12.amanat.asem.api.model.AsetJenisModel;
@@ -89,6 +92,9 @@ public class FilterActivity extends AppCompatActivity {
     EditText inpHGU;
     private Dialog dialog;
 
+    RecyclerView rcAset2; // untuk search dan filter
+    LonglistAsetActivity longlistAsetActivity;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -107,6 +113,10 @@ public class FilterActivity extends AppCompatActivity {
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(0));
 //        dialog.show();
 
+        rcAset2 = findViewById(R.id.recView2);
+        rcAset2.setHasFixedSize(true);
+        rcAset2.setLayoutManager(new LinearLayoutManager(this));
+
         tvUnit = findViewById(R.id.tvUnit);
         spinnerUnit = findViewById(R.id.spinnerUnit);
         spinnerJenisReport = findViewById(R.id.spinnerReport);
@@ -124,13 +134,10 @@ public class FilterActivity extends AppCompatActivity {
         inpTglInput2 = findViewById(R.id.inpTglInput2);
         inpHGU = findViewById(R.id.inpHGU);
 
-
         // globally
         TextView tvTitle = findViewById(R.id.tvTitle);
         //in your OnCreate() method
         tvTitle.setText("FILTER DATA");
-
-
 
         imgBack.setVisibility(View.GONE);
 
@@ -141,7 +148,10 @@ public class FilterActivity extends AppCompatActivity {
         initCalender();
         initCalender2();
 
-        btnSubmit.setOnClickListener(v -> Toast.makeText(this, "halo!", Toast.LENGTH_SHORT).show()
+        btnSubmit.setOnClickListener(v ->
+//                getDataFilter();
+
+                Toast.makeText(this, "Fitur Belum Tersedia", Toast.LENGTH_SHORT).show()
 //                apiDownloadReport()
         );
 
@@ -215,17 +225,17 @@ public class FilterActivity extends AppCompatActivity {
 //        });
 
 
-//        spinnerUnit.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-//            @Override
-//            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-//
-//            }
-//
-//            @Override
-//            public void onNothingSelected(AdapterView<?> adapterView) {
-//
-//            }
-//        });
+        spinnerUnit.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
 
 
 //        inpTglInput2.setOnClickListener(new View.OnClickListener() {
@@ -239,6 +249,29 @@ public class FilterActivity extends AppCompatActivity {
 
 //        editVisibilityDynamic();
     }
+
+//    private void getDataFilter(Call<List<Filter>> call) {
+//        call.enqueue(new Callback<List<Filter>>() {
+//            @Override
+//            public void onResponse(Call<List<Filter>> call, Response<List<Filter>> response) {
+//                dialog.dismiss();
+//                if(!response.isSuccessful() && response.body() == null){
+//                    Toast.makeText(getApplicationContext(), "Data Tidak Ditemukan!", Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(getApplicationContext(), "Ulangi Isian Filter!", Toast.LENGTH_SHORT).show();
+//                    return;
+//                }
+//                List<Filter> dataS = response.body();
+//                SearchAsetAdapter adapter = new SearchAsetAdapter(dataS, );
+//                rcAset2.setAdapter(adapter);
+//            }
+//
+//            @Override
+//            public void onFailure(Call<List<Filter>> call, Throwable t) {
+//
+//            }
+//        });
+//
+//    }
 
     private void getTipeAset(){
         Call<List<AsetTipe>> call = asetInterface.getAsetTipe();
@@ -435,39 +468,39 @@ public class FilterActivity extends AppCompatActivity {
         });
     }
 
-//    private void getUnit(){
-//        Call<UnitModel> call = asetInterface.getUnit();
-//        call.enqueue(new Callback<UnitModel>() {
-//            @Override
-//            public void onResponse(Call<UnitModel> call, Response<UnitModel> response) {
-//                if (!response.isSuccessful()){
-//                    Toast.makeText(getApplicationContext(),String.valueOf(response.code()),Toast.LENGTH_LONG).show();
-//                    return;
-//                }
-//
-//                List<Unit> unit = response.body().getData();
-//                List<String> listSpinner = new ArrayList<>();
-//                listSpinner.add("Semua");
-//
-//
-//                for ( Unit a : unit ){
-//
-//                    listSpinner.add(a.getUnit_desc());
-//                }
-//
-//                ArrayAdapter<String> adapter = new ArrayAdapter<String>(getApplicationContext(),
-//                        android.R.layout.simple_spinner_item, listSpinner);
-//                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-//                spinnerUnit.setAdapter(adapter);
-//            }
-//
-//            @Override
-//            public void onFailure(Call<UnitModel> call, Throwable t) {
-//                Toast.makeText(getApplicationContext(),t.getMessage(),Toast.LENGTH_LONG).show();
-//                return;
-//            }
-//        });
-//    }
+    private void getUnit(){
+        Call<UnitModel> call = asetInterface.getUnit();
+        call.enqueue(new Callback<UnitModel>() {
+            @Override
+            public void onResponse(Call<UnitModel> call, Response<UnitModel> response) {
+                if (!response.isSuccessful()){
+                    Toast.makeText(getApplicationContext(),String.valueOf(response.code()),Toast.LENGTH_LONG).show();
+                    return;
+                }
+
+                List<Unit> unit = response.body().getData();
+                List<String> listSpinner = new ArrayList<>();
+                listSpinner.add("Semua");
+
+
+                for ( Unit a : unit ){
+
+                    listSpinner.add(a.getUnit_desc());
+                }
+
+                ArrayAdapter<String> adapter = new ArrayAdapter<String>(getApplicationContext(),
+                        android.R.layout.simple_spinner_item, listSpinner);
+                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                spinnerUnit.setAdapter(adapter);
+            }
+
+            @Override
+            public void onFailure(Call<UnitModel> call, Throwable t) {
+                Toast.makeText(getApplicationContext(),t.getMessage(),Toast.LENGTH_LONG).show();
+                return;
+            }
+        });
+    }
 
 
 
@@ -477,7 +510,7 @@ public class FilterActivity extends AppCompatActivity {
         getKodeAset();
         getTipeAset();
         getAsetJenis();
-//        getUnit();
+        getUnit();
 
 
         dialog.dismiss();
@@ -488,15 +521,15 @@ public class FilterActivity extends AppCompatActivity {
 
 //        TextView tvHgu = findViewById(R.id.tvHGU);
 //        tvHgu.setVisibility(View.GONE);
-//
-//
-//        if (unit_id == 20) {
-//            spinnerUnit.setVisibility(View.VISIBLE);
-//            tvUnit.setVisibility(View.VISIBLE);
-//        } else {
-//            spinnerUnit.setVisibility(View.GONE);
-//            tvUnit.setVisibility(View.GONE);
-//        }
+
+
+        if (unit_id == 20) {
+            spinnerUnit.setVisibility(View.VISIBLE);
+            tvUnit.setVisibility(View.VISIBLE);
+        } else {
+            spinnerUnit.setVisibility(View.GONE);
+            tvUnit.setVisibility(View.GONE);
+        }
 
     }
 }

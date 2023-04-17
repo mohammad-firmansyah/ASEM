@@ -2556,7 +2556,7 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity {
             // menampilkan alert dialog
             alertDialog.show();
             dialog.dismiss();
-//            customDialogAddAset.dismiss();
+            customDialogAddAset.dismiss();
             return;
         }
         if (spinnerSubUnit.getSelectedItemId() == 0) {
