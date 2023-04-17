@@ -12,6 +12,7 @@ import ptpn12.amanat.asem.api.model.AsetTipe;
 import ptpn12.amanat.asem.api.model.CheckVersionModel;
 import ptpn12.amanat.asem.api.model.Data2;
 import ptpn12.amanat.asem.api.model.DeleteModel;
+import ptpn12.amanat.asem.api.model.Filter;
 import ptpn12.amanat.asem.api.model.LoginModel;
 import ptpn12.amanat.asem.api.model.ReportModel;
 import ptpn12.amanat.asem.api.model.Search;
@@ -125,6 +126,13 @@ public interface AsetInterface {
             @Field("userId") int userID
     );
 
+    @FormUrlEncoded
+    @POST("filter")
+    Call<List<Filter>> filterAset(
+
+            @Field("userId") int userID
+    );
+
     // ---------- Update Versi Aplikasi ---------- //
 
     @FormUrlEncoded
@@ -133,5 +141,7 @@ public interface AsetInterface {
             @Field("versionCode") Integer versionCode,
             @Field("versionName") String versionName
     );
+
+
 
 }
