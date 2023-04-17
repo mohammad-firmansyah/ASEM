@@ -511,7 +511,7 @@ public class DetailAsetActivity extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 spinnerIdKodeAset = String.valueOf(position+1);
                 editVisibilityDynamic();
-                if (spinnerKodeAset.getSelectedItem().equals("ZA08/-/Alat Pengangkutan")){
+                if (spinnerKodeAset.getSelectedItem().equals("ZA08/Alat Pengangkutan")){
                     inpAlatAngkut.setVisibility(View.VISIBLE);
                     tvAlatAngkut.setVisibility(View.VISIBLE);
                 } else {
@@ -1241,7 +1241,7 @@ public class DetailAsetActivity extends AppCompatActivity {
 //
 //            }
 
-            if("ZC06/Tebu".equals(String.valueOf(spinnerKodeAset.getSelectedItem()))) {
+            if("ZC06/S001/Tebu".equals(String.valueOf(spinnerKodeAset.getSelectedItem()))) {
                 tvTahunTanam.setVisibility(View.VISIBLE);
                 inpTahunTanam.setVisibility(View.VISIBLE);
                 tvSistemTanam.setVisibility(View.GONE);
@@ -1828,9 +1828,9 @@ public class DetailAsetActivity extends AppCompatActivity {
         for (AsetKode2 a : asetKode2) {
             if (a.getAsetJenis()-1 == spinnerJenisAset.getSelectedItemId()) {
 
-                if ((a.getAsetJenis()) == 1 ) {
+                if ((a.getAsetJenis()) == 2 ) {
                     aset_kode_temp = a.getAsetClass() + "/" + a.getAsetDesc();
-                } else if ((a.getAsetJenis()) == 2) {
+                } else if ((a.getAsetJenis()) == 1) {
                     aset_kode_temp = a.getAsetClass() + "/" + a.getAsetGroup() + "/" + a.getAsetDesc();
                 } else {
                     aset_kode_temp = a.getAsetClass() + "/" + a.getAsetGroup() + "/" + a.getAsetDesc();

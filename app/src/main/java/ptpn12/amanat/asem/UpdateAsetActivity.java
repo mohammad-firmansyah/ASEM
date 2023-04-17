@@ -15,10 +15,12 @@ import androidx.exifinterface.media.ExifInterface;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.DownloadManager;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
@@ -903,7 +905,6 @@ public class UpdateAsetActivity extends AppCompatActivity {
                 spinnerIdJenisAset = String.valueOf(position+1);
                 editVisibilityDynamic();
                 setAdapterAsetKode();
-                setValueInput();
             }
 
             @Override
@@ -2187,9 +2188,9 @@ public class UpdateAsetActivity extends AppCompatActivity {
             spinnerLuasSatuan.setVisibility(View.GONE);
         }
     }
+
     public void editAset(){
         dialog.show();
-
         try{
 
             String nama_aset = inpNamaAset.getText().toString().trim();

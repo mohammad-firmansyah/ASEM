@@ -1276,9 +1276,11 @@ public class AddAsetActivity extends AppCompatActivity {
     }
 
 
-    public void spinnerValidation(){
+    public Boolean spinnerValidation() {
 
-        if (spinnerTipeAset.getSelectedItemId()== 0) {
+        customDialogAddAset = new Dialog(AddAsetActivity.this, R.style.MyAlertDialogTheme);
+
+        if (spinnerTipeAset.getSelectedItemId() == 0) {
             AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
                     this);
 
@@ -1289,8 +1291,8 @@ public class AddAsetActivity extends AppCompatActivity {
             alertDialogBuilder
                     .setMessage("Tipet Aset Harus Dipilih")
                     .setCancelable(false)
-                    .setPositiveButton("Ok",new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog,int id) {
+                    .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
                             // jika tombol diklik, maka akan menutup activity ini
                             dialog.cancel();
                         }
@@ -1303,11 +1305,12 @@ public class AddAsetActivity extends AppCompatActivity {
             // menampilkan alert dialog
             alertDialog.show();
             dialog.dismiss();
-            return;
+            customDialogAddAset.dismiss();
+            return false;
         }
 
 
-        if (spinnerJenisAset.getSelectedItemId()== 0) {
+        if (spinnerJenisAset.getSelectedItemId() == 0) {
             AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
                     this);
 
@@ -1318,8 +1321,8 @@ public class AddAsetActivity extends AppCompatActivity {
             alertDialogBuilder
                     .setMessage("Jenis Aset Harus Dipilih")
                     .setCancelable(false)
-                    .setPositiveButton("Ok",new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog,int id) {
+                    .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
                             // jika tombol diklik, maka akan menutup activity ini
                             dialog.cancel();
                         }
@@ -1332,9 +1335,10 @@ public class AddAsetActivity extends AppCompatActivity {
             // menampilkan alert dialog
             alertDialog.show();
             dialog.dismiss();
-            return;
+            customDialogAddAset.dismiss();
+            return false;
         }
-        if (spinnerAsetKondisi.getSelectedItemId()== 0) {
+        if (spinnerAsetKondisi.getSelectedItemId() == 0) {
             AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
                     this);
 
@@ -1345,8 +1349,8 @@ public class AddAsetActivity extends AppCompatActivity {
             alertDialogBuilder
                     .setMessage("Kondisi Aset Harus Dipilih")
                     .setCancelable(false)
-                    .setPositiveButton("Ok",new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog,int id) {
+                    .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
                             // jika tombol diklik, maka akan menutup activity ini
                             dialog.cancel();
                         }
@@ -1359,9 +1363,10 @@ public class AddAsetActivity extends AppCompatActivity {
             // menampilkan alert dialog
             alertDialog.show();
             dialog.dismiss();
-            return;
+            customDialogAddAset.dismiss();
+            return false;
         }
-        if (spinnerKodeAset.getSelectedItemId()== 0) {
+        if (spinnerKodeAset.getSelectedItemId() == 0) {
             AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
                     this);
 
@@ -1372,8 +1377,8 @@ public class AddAsetActivity extends AppCompatActivity {
             alertDialogBuilder
                     .setMessage("Kode Aset Harus Dipilih")
                     .setCancelable(false)
-                    .setPositiveButton("Ok",new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog,int id) {
+                    .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
                             // jika tombol diklik, maka akan menutup activity ini
                             dialog.cancel();
                         }
@@ -1382,13 +1387,12 @@ public class AddAsetActivity extends AppCompatActivity {
 
             // membuat alert dialog dari builder
             AlertDialog alertDialog = alertDialogBuilder.create();
-
-            // menampilkan alert dialog
             alertDialog.show();
             dialog.dismiss();
-            return;
+            customDialogAddAset.dismiss();
+            return false;
         }
-        if (spinnerSubUnit.getSelectedItemId()== 0) {
+        if (spinnerSubUnit.getSelectedItemId() == 0) {
             AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
                     this);
 
@@ -1399,8 +1403,8 @@ public class AddAsetActivity extends AppCompatActivity {
             alertDialogBuilder
                     .setMessage("Sub Unit Harus Dipilih")
                     .setCancelable(false)
-                    .setPositiveButton("Ok",new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog,int id) {
+                    .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
                             // jika tombol diklik, maka akan menutup activity ini
                             dialog.cancel();
                         }
@@ -1413,10 +1417,72 @@ public class AddAsetActivity extends AppCompatActivity {
             // menampilkan alert dialog
             alertDialog.show();
             dialog.dismiss();
-            return;
+            customDialogAddAset.dismiss();
+            return false;
+        }
+        if (spinnerJenisAset.getSelectedItemId() != 2) {
+            if (spinnerSistemTanam.getSelectedItemId() == 0) {
+                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
+                        this);
+
+                // set title dialog
+                alertDialogBuilder.setTitle("Error!");
+
+                // set pesan dari dialog
+                alertDialogBuilder
+                        .setMessage("Sistem Tanam Harus Dipilih")
+                        .setCancelable(false)
+                        .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                // jika tombol diklik, maka akan menutup activity ini
+                                dialog.cancel();
+                            }
+                        });
+
+
+                // membuat alert dialog dari builder
+                AlertDialog alertDialog = alertDialogBuilder.create();
+                alertDialog.show();
+                dialog.dismiss();
+                customDialogAddAset.dismiss();
+                return false;
+            }
+        }else {
+
+            if (spinnerKodeAset.getSelectedItem().equals("ZA08/Alat Pengangkutan")) {
+                if (spinnerAlatAngkut.getSelectedItemId() == 0) {
+                    AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
+                            this);
+
+                    // set title dialog
+                    alertDialogBuilder.setTitle("Error!");
+
+                    // set pesan dari dialog
+                    alertDialogBuilder
+                            .setMessage("Alat Angkut Harus Dipilih")
+                            .setCancelable(false)
+                            .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    // jika tombol diklik, maka akan menutup activity ini
+                                    dialog.cancel();
+                                }
+                            });
+
+
+                    // membuat alert dialog dari builder
+                    AlertDialog alertDialog = alertDialogBuilder.create();
+                    alertDialog.show();
+                    dialog.dismiss();
+                    customDialogAddAset.dismiss();
+                    return false;
+                }
+            }
+
         }
 
 
+
+        return true;
     }
 
     public void editVisibilityDynamic(){
@@ -2051,7 +2117,12 @@ public class AddAsetActivity extends AppCompatActivity {
     }
     public void addAset(){
         dialog.show();
-        spinnerValidation();
+        Boolean spinnerValidaton = spinnerValidation();
+
+        if (!spinnerValidaton) {
+            return;
+        }
+
         if (inpNamaAset.getText().toString().equals("")) {
             customDialogAddAset.dismiss();
             dialog.dismiss();
@@ -2189,17 +2260,38 @@ public class AddAsetActivity extends AppCompatActivity {
                     builder.addPart(MultipartBody.Part.createFormData("afdeling_id", null, requestAfdeling));
 
                 }
+                Double popPerHa =  Double.parseDouble((inpPopTotalPohonSaatIni.getText().toString() != null || !inpPopTotalPohonSaatIni.getText().toString().equals("") ) ? String.valueOf(inpPopTotalPohonSaatIni.getText().toString()) : "0" ) / Double.parseDouble((inpLuasAset.getText().toString().trim().equals("")) ? "0" : inpLuasAset.getText().toString().trim());
+                Double presentase = popPerHa / Double.parseDouble((inpPopTotalStdMaster.getText().toString() != null || inpPopTotalStdMaster.getText().toString().equals("") ) ? String.valueOf(inpPopTotalStdMaster.getText().toString()) : "0"  ) * 100;
+
+                if (Double.isNaN(presentase)) {
+                    presentase = 0.0;
+                }
+
+                if (Double.isInfinite(presentase)){
+                    presentase = 0.0;
+                }
+
+                if (Double.isNaN(popPerHa)) {
+                    popPerHa = 0.0;
+                }
+
+                if (Double.isInfinite(popPerHa)) {
+                    popPerHa = 0.0;
+
+                }
 
                 //multipart pohon tanaman
                 if ((spinnerJenisAset.getSelectedItemId() == 1 && !spinnerKodeAset.getSelectedItem().equals("ZC06/S001/Tebu")) || spinnerJenisAset.getSelectedItemId() == 3) {
-                    RequestBody requestPopulasiPohonSaatIni = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(Double.parseDouble(inpPopTotalPohonSaatIni.getText().toString().trim())));
-                    RequestBody requestPopulasiStandar = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(Double.parseDouble(inpPopTotalStdMaster.getText().toString().trim())));
+
+                    RequestBody requestPopulasiPohonSaatIni = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(popPerHa));
+                    RequestBody requestPopulasiStandar = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(presentase));
+
                     builder.addPart(MultipartBody.Part.createFormData("pop_pohon_saat_ini", null, requestPopulasiPohonSaatIni));
                     builder.addPart(MultipartBody.Part.createFormData("pop_standar", null, requestPopulasiStandar));
 
                     if (!inpPopPerHA.getText().toString().equals("")) {
-                        RequestBody requestPopulasiPerHA = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(inpPopPerHA.getText()));
-                        RequestBody requestPresentasePopulasiPerHA = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(inpPresentasePopPerHA.getText()));
+                        RequestBody requestPopulasiPerHA = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(popPerHa));
+                        RequestBody requestPresentasePopulasiPerHA = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(presentase));
 
                         builder.addPart(MultipartBody.Part.createFormData("pop_per_ha", null, requestPopulasiPerHA));
                         builder.addPart(MultipartBody.Part.createFormData("presentase_pop_per_ha", null, requestPresentasePopulasiPerHA));

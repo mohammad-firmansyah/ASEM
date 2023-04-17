@@ -171,10 +171,10 @@ public class Aset implements Parcelable {
     private String pop_total_std;
     @SerializedName("pop_per_ha")
     @Expose
-    private String pop_hektar_ini;
+    private String pop_per_ha;
     @SerializedName("presentase_pop_per_ha")
     @Expose
-    private String pop_hektar_std;
+    private String presentase_pop_per_ha;
 
     @SerializedName("sistem_tanam")
     @Expose
@@ -182,6 +182,22 @@ public class Aset implements Parcelable {
 
     public String getSistem_tanam() {
         return sistem_tanam;
+    }
+
+    public String getPop_per_ha() {
+        return pop_per_ha;
+    }
+
+    public void setPop_per_ha(String pop_per_ha) {
+        this.pop_per_ha = pop_per_ha;
+    }
+
+    public String getPresentase_pop_per_ha() {
+        return presentase_pop_per_ha;
+    }
+
+    public void setPresentase_pop_per_ha(String presentase_pop_per_ha) {
+        this.presentase_pop_per_ha = presentase_pop_per_ha;
     }
 
     public void setSistem_tanam(String sistem_tanam) {
@@ -232,21 +248,6 @@ public class Aset implements Parcelable {
         this.pop_total_std = pop_total_std;
     }
 
-    public String getPop_hektar_ini() {
-        return pop_hektar_ini;
-    }
-
-    public void setPop_hektar_ini(String pop_hektar_ini) {
-        this.pop_hektar_ini = pop_hektar_ini;
-    }
-
-    public String getPop_hektar_std() {
-        return pop_hektar_std;
-    }
-
-    public void setPop_hektar_std(String pop_hektar_std) {
-        this.pop_hektar_std = pop_hektar_std;
-    }
 
     public String getBeritaAcara() {
         return beritaAcara;
@@ -655,8 +656,8 @@ public class Aset implements Parcelable {
         this.satuan_luas = satuan_luas ;
         this.pop_total_ini = popTotalIni ;
         this.pop_total_std = popTotalStd ;
-        this.pop_hektar_ini = popHektarIni ;
-        this.pop_hektar_std = popHektarStd ;
+        this.pop_per_ha = popHektarIni ;
+        this.presentase_pop_per_ha = popHektarStd ;
         this.fileBAST = fileBAST;
         this.tahun_tanam = tahun_tanam;
         this.sistem_tanam = sistem_tanam;

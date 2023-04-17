@@ -370,11 +370,10 @@ public class AsetOfflineAdapter extends RecyclerView.Adapter<AsetOfflineAdapter.
             builder.addPart(MultipartBody.Part.createFormData("pop_pohon_saat_ini", null, requestPopulasiPohonSaatIni));
             builder.addPart(MultipartBody.Part.createFormData("pop_standar", null, requestPopulasiStandar));
 
-            if (!aset.getPop_hektar_ini().equals("")) {
-                Double popPerHa =  Double.parseDouble((aset.getPop_total_ini() != null || !aset.getPop_total_ini().equals("") ) ? String.valueOf(aset.getPop_total_ini()) : "0" ) / Double.parseDouble((aset.getAsetLuas() != null || !aset.getAsetLuas().equals("") ) ? String.valueOf(aset.getAsetLuas()) : "0");
-                Double presentase = popPerHa / Double.parseDouble((aset.getPop_total_std() != null || aset.getPop_total_std().equals("") ) ? String.valueOf(aset.getPop_total_std()) : "0"  ) * 100;
-                RequestBody requestPopulasiPerHA = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(popPerHa));
-                RequestBody requestPresentasePopulasiPerHA = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(presentase));
+            if (!aset.getPop_per_ha().equals("")) {
+
+                RequestBody requestPopulasiPerHA = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(aset.getPop_per_ha()));
+                RequestBody requestPresentasePopulasiPerHA = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(aset.getPresentase_pop_per_ha()));
                 builder.addPart(MultipartBody.Part.createFormData("pop_per_ha", null, requestPopulasiPerHA));
                 builder.addPart(MultipartBody.Part.createFormData("presentase_pop_per_ha", null, requestPresentasePopulasiPerHA));
             }

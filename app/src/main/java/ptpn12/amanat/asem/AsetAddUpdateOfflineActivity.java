@@ -1328,8 +1328,8 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity {
         if (aset.getAsetJenis().equals("1") || aset.getAsetJenis().equals("3") ) {
             inpPopTotalPohonSaatIni.setText(String.valueOf(aset.getPop_total_ini()));
             inpPopTotalStdMaster.setText(String.valueOf(aset.getPop_total_std()));
-            inpPopPerHA.setText(String.valueOf(aset.getPop_hektar_ini()));
-            inpPresentasePopPerHA.setText(showPopulasi(String.valueOf(aset.getPop_hektar_std())));
+            inpPopPerHA.setText(String.valueOf(aset.getPop_per_ha()));
+            inpPresentasePopPerHA.setText(showPopulasi(String.valueOf(aset.getPresentase_pop_per_ha())));
             spinnerSistemTanam.setSelection(getSistemTanamByName(aset.getSistem_tanam()));
             inpTahunTanam.setText(String.valueOf(aset.getTahun_tanam()));
         }
@@ -1363,19 +1363,10 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity {
         spinnerSubUnit.setSelection(Integer.parseInt(aset.getAsetSubUnit()));
 
         try {
-            if (aset.getAfdelingId().equals("0")) {
 
-                spinnerAfdeling.setSelection(mapAfdelingSpinner.get(afdeling_id));
-
-            }
-
-//                Log.d("asetkode1", String.valueOf(aset.getAsetKode()));
-//                Log.d("asetkode2", String.valueOf(mapKodeSpinner.get(Integer.parseInt(aset.getAsetKode()))));
-//                Log.d("asetkode3", String.valueOf(mapKodeSpinner.size()));
             if (mapKodeSpinner.size() != 0) {
 
                 Integer idspinner = getSpinnerKodeAset(Integer.parseInt(aset.getAsetJenis()), Integer.parseInt(aset.getAsetKode()));
-                Log.d("amanat22", String.valueOf(idspinner));
                 spinnerKodeAset.setSelection(idspinner);
             }
         } catch (Exception e) {
@@ -2480,7 +2471,9 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity {
 
     }
 
-    public void spinnerValidation() {
+    public Boolean spinnerValidation() {
+
+        customDialogAddAset = new Dialog(AsetAddUpdateOfflineActivity.this, R.style.MyAlertDialogTheme);
 
         if (spinnerTipeAset.getSelectedItemId() == 0) {
             AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
@@ -2508,7 +2501,7 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity {
             alertDialog.show();
             dialog.dismiss();
             customDialogAddAset.dismiss();
-            return;
+            return false;
         }
 
 
@@ -2538,7 +2531,7 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity {
             alertDialog.show();
             dialog.dismiss();
             customDialogAddAset.dismiss();
-            return;
+            return false;
         }
         if (spinnerAsetKondisi.getSelectedItemId() == 0) {
             AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
@@ -2566,7 +2559,7 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity {
             alertDialog.show();
             dialog.dismiss();
             customDialogAddAset.dismiss();
-            return;
+            return false;
         }
         if (spinnerKodeAset.getSelectedItemId() == 0) {
             AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
@@ -2589,12 +2582,10 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity {
 
             // membuat alert dialog dari builder
             AlertDialog alertDialog = alertDialogBuilder.create();
-
-            // menampilkan alert dialog
             alertDialog.show();
             dialog.dismiss();
             customDialogAddAset.dismiss();
-            return;
+            return false;
         }
         if (spinnerSubUnit.getSelectedItemId() == 0) {
             AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
@@ -2622,15 +2613,81 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity {
             alertDialog.show();
             dialog.dismiss();
             customDialogAddAset.dismiss();
-            return;
+            return false;
+        }
+        if (spinnerJenisAset.getSelectedItemId() != 2) {
+            if (spinnerSistemTanam.getSelectedItemId() == 0) {
+                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
+                        this);
+
+                // set title dialog
+                alertDialogBuilder.setTitle("Error!");
+
+                // set pesan dari dialog
+                alertDialogBuilder
+                        .setMessage("Sistem Tanam Harus Dipilih")
+                        .setCancelable(false)
+                        .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                // jika tombol diklik, maka akan menutup activity ini
+                                dialog.cancel();
+                            }
+                        });
+
+
+                // membuat alert dialog dari builder
+                AlertDialog alertDialog = alertDialogBuilder.create();
+                alertDialog.show();
+                dialog.dismiss();
+                customDialogAddAset.dismiss();
+                return false;
+            }
+        }else {
+
+            if (spinnerKodeAset.getSelectedItem().equals("ZA08/Alat Pengangkutan")) {
+                if (spinnerAlatAngkut.getSelectedItemId() == 0) {
+                    AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
+                            this);
+
+                    // set title dialog
+                    alertDialogBuilder.setTitle("Error!");
+
+                    // set pesan dari dialog
+                    alertDialogBuilder
+                            .setMessage("Alat Angkut Harus Dipilih")
+                            .setCancelable(false)
+                            .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    // jika tombol diklik, maka akan menutup activity ini
+                                    dialog.cancel();
+                                }
+                            });
+
+
+                    // membuat alert dialog dari builder
+                    AlertDialog alertDialog = alertDialogBuilder.create();
+                    alertDialog.show();
+                    dialog.dismiss();
+                    customDialogAddAset.dismiss();
+                    return false;
+                }
+            }
+
         }
 
 
+
+        return true;
     }
 
     public void addAset() {
         dialog.show();
-        spinnerValidation();
+        Boolean spinnerValidaton = spinnerValidation();
+
+        if (!spinnerValidaton) {
+            return;
+        }
+
         if (inpNamaAset.getText().toString().equals("")) {
             dialog.dismiss();
             customDialogAddAset.dismiss();
@@ -2647,6 +2704,14 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity {
                 inpPersenKondisi.setError("Isian Persen Kondisi Wajib Minimal 0 Maksimal 100");
                 inpPersenKondisi.requestFocus();
 
+                return;
+            }
+        } else if (spinnerJenisAset.getSelectedItemId() == 1) {
+            if (inpTahunTanam.getText().toString().equals("")) {
+                dialog.dismiss();
+                customDialogAddAset.dismiss();
+                inpTahunTanam.setError("Tahun Tanam harus diisi");
+                inpTahunTanam.requestFocus();
                 return;
             }
         }
@@ -2676,6 +2741,8 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity {
             inpMasaPenyusutan.requestFocus();
             return;
         }
+
+
 
         if (inpNilaiResidu.getText().toString().equals("")) {
             dialog.dismiss();
@@ -2921,8 +2988,10 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity {
 
 
             if (spinnerAlatAngkut.getSelectedItem() != null) {
-
                 values.put("alat_pengangkutan", spinnerAlatAngkut.getSelectedItem().toString().trim());
+            }
+
+            if (spinnerLuasSatuan.getSelectedItem() != null) {
                 values.put("satuan_luas", spinnerLuasSatuan.getSelectedItem().toString().trim());
             }
 
@@ -2934,12 +3003,29 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity {
                 if (!"ZC06/S001/Tebu".equals(spinnerKodeAset.getSelectedItem())){
                     values.put("sistem_tanam", String.valueOf(spinnerSistemTanam.getSelectedItem()));
 
-                    Double popPerHa =  Double.parseDouble(String.valueOf(inpPopTotalPohonSaatIni.getText()))/Double.parseDouble(String.valueOf(inpLuasAset.getText()));
-                    Double presentase = popPerHa / Double.parseDouble(String.valueOf(inpPopTotalStdMaster.getText())) * 100;
+                    Double popPerHa =  Double.parseDouble((inpPopTotalPohonSaatIni.getText().toString() != null || !inpPopTotalPohonSaatIni.getText().toString().equals("") ) ? String.valueOf(inpPopTotalPohonSaatIni.getText().toString()) : "0" ) / Double.parseDouble((inpLuasAset.getText().toString().trim().equals("")) ? "0" : inpLuasAset.getText().toString().trim());
+                    Double presentase = popPerHa / Double.parseDouble((inpPopTotalStdMaster.getText().toString() != null || inpPopTotalStdMaster.getText().toString().equals("") ) ? String.valueOf(inpPopTotalStdMaster.getText().toString()) : "0"  ) * 100;
+
+                    if (Double.isNaN(presentase)) {
+                        presentase = 0.0;
+                    }
+
+                    if (Double.isInfinite(presentase)){
+                        presentase = 0.0;
+                    }
+
+                    if (Double.isNaN(popPerHa)) {
+                        popPerHa = 0.0;
+                    }
+
+                    if (Double.isInfinite(popPerHa)) {
+                        popPerHa = 0.0;
+
+                    }
 
                     values.put("pop_pohon_saat_ini", inpPopTotalPohonSaatIni.getText().toString().trim());
                     values.put("pop_standar", inpPopTotalStdMaster.getText().toString().trim());
-                    values.put("pop_per_ha", inpPopPerHA.getText().toString().trim());
+                    values.put("pop_per_ha", popPerHa);
                     values.put("presentase_pop_per_ha", presentase);
 
                 } else {
@@ -2967,10 +3053,6 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity {
             values.put("nomor_bast", inpNomorBAST.getText().toString().trim());
             values.put("keterangan", inpKeterangan.getText().toString().trim());
 
-//            if (spinnerJenisAset.getSelectedItem().equals("kayu")) {
-//                values.put("jumlah_pohon", inpJumlahPohon.getText().toString().trim());
-//            }
-
             asetHelper.open();
             asetHelper.insert(values);
             asetHelper.close();
@@ -2993,28 +3075,12 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity {
 
     public void editAset() {
         dialog.show();
-        spinnerValidation();
-//        if ("non tanaman".equals(String.valueOf(spinnerJenisAset.getSelectedItem()))){
-//            if ("normal".equals(String.valueOf(spinnerAsetKondisi.getSelectedItem()))){
-//                if (img1 == null || img2 == null || img3 == null || img4 == null){
-//                    Toast.makeText(getApplicationContext(), "Foto Wajib Diisi Lengkap!", Toast.LENGTH_SHORT).show();
-//
-//                    dialog.dismiss();
-//                    return;
-//                }
-//            }
-//        }
 
-//        if ("non tanaman".equals(String.valueOf(spinnerJenisAset.getSelectedItem()))){
-//            if ( "rusak".equals (String.valueOf(spinnerAsetKondisi.getSelectedItem()))){
-//                if (img1 == null || img2 == null || img3 == null || img4 == null){
-//                    Toast.makeText(getApplicationContext(), "Foto Wajib Diisi Lengkap!", Toast.LENGTH_SHORT).show();
-//
-//                    dialog.dismiss();
-//                    return;
-//                }
-//            }
-//        }
+        Boolean spinnerValidaton = spinnerValidation();
+
+        if (!spinnerValidaton) {
+            return;
+        }
 
         try {
             ContentValues values = new ContentValues();
@@ -3030,6 +3096,7 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity {
             values.put("afdeling_id", String.valueOf(afdeling_id));
 
             values.put("aset_name", inpNamaAset.getText().toString().trim());
+
 
             // Get the internal files directory
 
@@ -3232,16 +3299,44 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity {
             values.put("masa_susut", inpMasaPenyusutan.getText().toString().trim());
             values.put("nilai_residu", utils.CurrencyToNumber(inpNilaiResidu.getText().toString().trim()));
             values.put("nomor_bast", inpNomorBAST.getText().toString().trim());
-//            values.put("jumlah_pohon", inpJumlahPohon.getText().toString().trim());
             values.put("keterangan", inpKeterangan.getText().toString().trim());
 
             if (spinnerJenisAset.getSelectedItem().equals("tanaman")) {
+                Double popPerHa =  Double.parseDouble((inpPopTotalPohonSaatIni.getText().toString() != null || !inpPopTotalPohonSaatIni.getText().toString().equals("") ) ? String.valueOf(inpPopTotalPohonSaatIni.getText().toString()) : "0" ) / Double.parseDouble((inpLuasAset.getText().toString().trim().equals("")) ? "0" : inpLuasAset.getText().toString().trim());
+                Double presentase = popPerHa / Double.parseDouble((inpPopTotalStdMaster.getText().toString() != null || inpPopTotalStdMaster.getText().toString().equals("") ) ? String.valueOf(inpPopTotalStdMaster.getText().toString()) : "0"  ) * 100;
+
+                if (Double.isNaN(presentase)) {
+                    presentase = 0.0;
+                }
+
+                if (Double.isInfinite(presentase)){
+                    presentase = 0.0;
+                }
+
+                if (Double.isNaN(popPerHa)) {
+                    popPerHa = 0.0;
+                }
+
+                if (Double.isInfinite(popPerHa)) {
+                    popPerHa = 0.0;
+
+                }
                 values.put("pop_pohon_saat_ini", inpPopTotalPohonSaatIni.getText().toString().trim());
                 values.put("pop_standar", inpPopTotalStdMaster.getText().toString().trim());
-                values.put("pop_per_ha", inpPopPerHA.getText().toString().trim());
-                values.put("presentase_pop_per_ha", inpPresentasePopPerHA.getText().toString().trim());
+                values.put("pop_per_ha", popPerHa);
+                values.put("presentase_pop_per_ha", presentase);
                 values.put("tahun_tanam", inpTahunTanam.getText().toString().trim());
             }
+
+            if (spinnerAlatAngkut.getSelectedItem() != null) {
+                values.put("alat_pengangkutan", spinnerAlatAngkut.getSelectedItem().toString().trim());
+
+            }
+
+            if (spinnerLuasSatuan.getSelectedItem() != null) {
+                values.put("satuan_luas", spinnerLuasSatuan.getSelectedItem().toString().trim());
+            }
+
 
 
             asetHelper.open();

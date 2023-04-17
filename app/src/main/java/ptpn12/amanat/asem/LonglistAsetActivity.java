@@ -176,12 +176,8 @@ public class LonglistAsetActivity extends AppCompatActivity  { //implements Bott
         btnReport = findViewById(R.id.btnReport);
         btnFilter = findViewById(R.id.btnFilter);
 
-//        manager = new LinearLayoutManager(this);
         rcAset = findViewById(R.id.asetAll);
         rcAset.setHasFixedSize(true);
-//        onlineAdapter = new Aset2Adapter(asetList, this);
-//        rcAset.setAdapter(onlineAdapter);
-//        rcAset.setLayoutManager(manager);
         rcAset2 = findViewById(R.id.recView2);
         rcAset2.setHasFixedSize(true);
         rcAset2.setLayoutManager(new LinearLayoutManager(this));
@@ -196,8 +192,6 @@ public class LonglistAsetActivity extends AppCompatActivity  { //implements Bott
         wifiOFF = findViewById(R.id.imgWifiOFF);
         wifiON = findViewById(R.id.imgWifiON);
         btnSync = findViewById(R.id.btnSync);
-//        inpTglInput1 = findViewById(R.id.inpTglInput);
-//        inpTglInput2 = findViewById(R.id.inpTglInput2);
 
         // globally
         TextView tvTitle = (TextView)findViewById(R.id.tvTitle);
