@@ -8,9 +8,7 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.content.res.AppCompatResources;
 import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 import androidx.core.content.FileProvider;
 import androidx.exifinterface.media.ExifInterface;
 
@@ -41,10 +39,8 @@ import android.provider.MediaStore;
 import android.provider.OpenableColumns;
 import android.provider.Settings;
 import android.text.Editable;
-import android.text.InputType;
 import android.text.TextWatcher;
 import android.text.method.HideReturnsTransformationMethod;
-import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -60,8 +56,6 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import ptpn12.amanat.asem.R;
-
 import ptpn12.amanat.asem.api.AsetInterface;
 import ptpn12.amanat.asem.api.model.Afdelling;
 import ptpn12.amanat.asem.api.model.AlatAngkut;
@@ -69,7 +63,6 @@ import ptpn12.amanat.asem.api.model.AllSpinner;
 import ptpn12.amanat.asem.api.model.AsetJenis;
 import ptpn12.amanat.asem.api.model.AsetKode2;
 import ptpn12.amanat.asem.api.model.AsetKondisi;
-import ptpn12.amanat.asem.api.model.AsetModel;
 import ptpn12.amanat.asem.api.model.AsetModel2;
 import ptpn12.amanat.asem.api.model.AsetTipe;
 import ptpn12.amanat.asem.api.model.DataAllSpinner;
@@ -109,7 +102,6 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class AddAsetActivity extends AppCompatActivity {
-    Button inpBtnMap;
 
     private static final int REQUEST_CODE_PERMISSION = 1;
     String mPermission = Manifest.permission.ACCESS_FINE_LOCATION;
@@ -118,15 +110,10 @@ public class AddAsetActivity extends AppCompatActivity {
     List<Sap> sapAll = new ArrayList<>();
     Button btnFileBAST;
     Button btnSubmit;
-    Button map1;
-    Button map2;
-    Button map3;
-    Button map4;
     Button btnYaKirim;
     Button btnTidakKirim;
 
     DataAllSpinner allSpinner;
-    Context context;
     SharedPreferences sharedPreferences;
     private static final String PREF_LOGIN = "LOGIN_PREF";
     Uri docUri;
@@ -148,18 +135,11 @@ public class AddAsetActivity extends AppCompatActivity {
     };
     private static final int LOCATION_PERMISSION_AND_STORAGE = 33;
 
-//    public static String baseUrl = "https://amanat/.ptpn12.com/api/";
-//public static String baseUrl = "http://202.148.9.226:7710/mnj_aset_production/public/api/";
-//    public String baseUrlImg = "http://202.148.9.226:7710/mnj_aset_production/public";
-//    public String baseUrlImg = "https://amanat.ptpn12.com";
     final Calendar myCalendar= Calendar.getInstance();
-    EditText editText;
     EditText inpJumlahPohon;
     TextView tvUploudBA;
     TextView tvUploadBAST;
     TextView tvAlatAngkut;
-    AsetModel asetModel;
-    File source;
     private AsetInterface asetInterface;
     Spinner spinnerTipeAset;
     Spinner spinnerJenisAset;
@@ -168,7 +148,6 @@ public class AddAsetActivity extends AppCompatActivity {
     Spinner spinnerAfdeling;
     Spinner spinnerSubUnit;
     Spinner spinnerUnit;
-    Spinner spinnerKomoditi;
     Spinner spinnerAlatAngkut;
     Spinner spinnerLuasSatuan;
     Spinner spinnerSistemTanam;
@@ -184,9 +163,7 @@ public class AddAsetActivity extends AppCompatActivity {
     EditText inpNomorBAST;
     EditText inpNilaiResidu;
     EditText inpKeterangan;
-    EditText inpUmrEkonomis;
     EditText inpPersenKondisi;
-    EditText inpAfdelingET;
     EditText inpPopTotalPohonSaatIni;
     EditText inpPopTotalStdMaster;
     EditText inpPopPerHA;
@@ -201,7 +178,6 @@ public class AddAsetActivity extends AppCompatActivity {
     ViewGroup foto3rl;
     ViewGroup foto4rl;
     ViewGroup foto5rl;
-    ViewGroup listBtnMap;
 
     ImageView fotoimg1;
     ImageView fotoimg2;
@@ -209,9 +185,8 @@ public class AddAsetActivity extends AppCompatActivity {
     ImageView fotoimg4;
     ImageView fotoimg5;
 
-    Map<Integer, Integer> mapAfdelingSpinner = new HashMap<Integer, Integer>();
-    Map<Integer, Integer> mapSpinnerAfdeling = new HashMap<Integer, Integer>();
-    Map<Integer, String> mapAfdeling = new HashMap();
+    Map<Integer, Integer> mapAfdelingSpinner = new HashMap<>();
+    Map<Integer, Integer> mapSpinnerAfdeling = new HashMap<>();
     Map<Long, Integer> mapSap = new HashMap();
 
     Map<Integer,Integer> mapKodeSpinner = new HashMap();
@@ -221,8 +196,6 @@ public class AddAsetActivity extends AppCompatActivity {
     String photoname3 = "foto3.png";
     String photoname4 = "foto4.png";
     String photoname5 = "foto5.png";
-
-
 
     String geotag1;
     String geotag2;
@@ -245,19 +218,10 @@ public class AddAsetActivity extends AppCompatActivity {
     String spinnerIdSistemTanam;
     String spinnerIdAfdeling;
     String spinnerIdSubUnit;
-    String spinnerIdUnit;
 
     Dialog customDialogAddAset;
 
 
-    /**
-     * Kode diambil dari jawaban irshad sheikh di stackoverflow
-     * https://stackoverflow.com/a/65447195/18983047
-     * @param context contect activity
-     * @param uri uri file yang di pilih
-     * @return file pada directory aplikasi yang bisa dipakai
-     * @throws IOException ketika tidak dapat memuat file
-     */
     public File getFile(Context context, Uri uri) throws IOException {
         // save file to directory Documents di package aplikasi
         File destinationFilename = new File(context.getExternalFilesDir(Environment.DIRECTORY_PICTURES).getPath() + File.separatorChar + queryName(context, uri));
@@ -304,23 +268,15 @@ public class AddAsetActivity extends AppCompatActivity {
                 Uri urifile = data.getData();
                 try {
                     bafile_file = getFile(this, urifile);
-                    String docPath = bafile_file.getAbsolutePath();
-                    Log.d("asetapix", "onActivityResult: path doc : "+docPath);
-                    Log.d("asetapix", "onActivityResult: masterpath : "+data.getData().getPath());
-//                ExifInterface ei = new ExifInterface(bafile_file.getAbsolutePath());
                     tvUploudBA.setText(bafile_file.getAbsolutePath());
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-                Log.d("asetapix", "onActivityResult: "+ data.getData());
         } else if (requestCode == 2 && resultCode == Activity.RESULT_OK){
         assert data !=null;
         Uri urifile = data.getData();
         try{
             file_bast = getFile(this, urifile);
-            String docPathBAST = file_bast.getAbsolutePath();
-            Log.d("asetapix", "onActivityResult: path doc BAST : "+docPathBAST);
-            Log.d("asetapix", "onActivityResult: masterpath BAST : "+data.getData().getPath());
             tvUploadBAST.setText(file_bast.getAbsolutePath());
         }catch(IOException e){
             e.printStackTrace();
@@ -335,15 +291,8 @@ public class AddAsetActivity extends AppCompatActivity {
                     if (result.getResultCode() == Activity.RESULT_OK) {
                         Intent data = result.getData();
                         Uri uri = data.getData();
-                        try {
-                            InputStream inputStream = getContentResolver().openInputStream(uri);
-                        } catch (FileNotFoundException e) {
-                            e.printStackTrace();
-                        }
-
                         String path =  uri.getPath();
                         bafile_file = new File(Environment.getExternalStorageDirectory().getPath() + path);
-                        Log.d("asetapix",Environment.getExternalStorageDirectory().getPath() + path);
                         tvUploudBA.setText(bafile_file.getAbsolutePath());
                     }
                 }
@@ -621,25 +570,6 @@ public class AddAsetActivity extends AppCompatActivity {
         spinnerLuasSatuan.setAdapter(adapterLuasSatuan);
 
 
-//        spinnerSistemTanam = findViewById(R.id.inpSistemTanam);
-//        List<String> listSpinnerSistemTanam = new ArrayList<>();
-//        listSpinnerSistemTanam.add("Pilih Sistem Tanam");
-//        listSpinnerSistemTanam.add("Mono");
-//        listSpinnerSistemTanam.add("TPJ");
-//        listSpinnerSistemTanam.add("Sela");
-//        ArrayAdapter<String> adapterSistemTanam =new ArrayAdapter<>(AddAsetActivity.this, android.R.layout.simple_list_item_1,listSpinnerSistemTanam);
-//        spinnerSistemTanam.setAdapter(adapterSistemTanam);
-
-//        spinnerKomoditi = findViewById(R.id.inpKomoditi);
-
-//        List<String> listSpinner = new ArrayList<>();
-//        listSpinner.add("excel");
-//        listSpinner.add("pdf");
-//        // Set hasil result json ke dalam adapter spinner
-//        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getApplicationContext(),
-//                android.R.layout.simple_spinner_item, listSpinner);
-//        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-//        spinnerKomoditi.setAdapter(adapter);
 
         foto1rl = findViewById(R.id.foto1);
         foto2rl = findViewById(R.id.foto2);
@@ -652,7 +582,6 @@ public class AddAsetActivity extends AppCompatActivity {
         fotoimg3 = findViewById(R.id.fotoimg3);
         fotoimg4 = findViewById(R.id.fotoimg4);
         fotoimg5 = findViewById(R.id.fotoimg5);
-//        inpBtnMap = findViewById(R.id.inpBtnMap);
         btnSubmit = findViewById(R.id.btnSubmit);
         btnFile = findViewById(R.id.inpUploudBA);
         btnFileBAST = findViewById(R.id.inpUploadBAST);
@@ -677,14 +606,24 @@ public class AddAsetActivity extends AppCompatActivity {
 
                     try{
 
-                        Log.d("amanat19",inpPopTotalPohonSaatIni.getText().toString());
-                        Double popPerHa =  Double.parseDouble((inpPopTotalPohonSaatIni.getText().toString() != null || !inpPopTotalPohonSaatIni.getText().toString() .equals("") ) ? String.valueOf(inpPopTotalPohonSaatIni.getText().toString()) : "0" ) / Double.parseDouble((inpLuasAset.getText().toString() != null || !inpLuasAset.getText().toString() .equals("") ) ? String.valueOf(inpLuasAset.getText().toString()) : "0");
+
+                        Double popPerHa =  Double.parseDouble((inpPopTotalPohonSaatIni.getText().toString() != null || !inpPopTotalPohonSaatIni.getText().toString().equals("") ) ? String.valueOf(inpPopTotalPohonSaatIni.getText().toString()) : "0" ) / Double.parseDouble((inpLuasAset.getText().toString().trim().equals("")) ? "0" : inpLuasAset.getText().toString().trim());
+
+                        if (Double.isNaN(popPerHa)) {
+                            popPerHa = 0.0;
+                        }
+
+                        if (Double.isInfinite(popPerHa)) {
+                            popPerHa = 0.0;
+
+                        }
+
+
+
                         inpPopPerHA.setText(showPopulasiWithoutPercentage(String.valueOf(popPerHa)));
                     } catch (Exception e){
                         e.printStackTrace();
                     }
-//                    Double presentase = popPerHa / Double.parseDouble(String.valueOf(inpPopTotalStdMaster.getText())) * 100;
-//                    inpPresentasePopPerHA.setText(String.valueOf(presentase));
                 }
             }
 
@@ -706,9 +645,19 @@ public class AddAsetActivity extends AppCompatActivity {
                 if (!inpPopTotalStdMaster.getText().toString().equals("")){
                     try {
 
-//                        Log.d("amanat19", ));
+
                         Double popPerHa =  Double.parseDouble((inpPopTotalPohonSaatIni.getText().toString() != null || !inpPopTotalPohonSaatIni.getText().toString().equals("") ) ? String.valueOf(inpPopTotalPohonSaatIni.getText().toString()) : "0" ) / Double.parseDouble((inpLuasAset.getText().toString().trim().equals("")) ? "0" : inpLuasAset.getText().toString().trim());
                         Double presentase = popPerHa / Double.parseDouble((inpPopTotalStdMaster.getText().toString() != null || inpPopTotalStdMaster.getText().toString().equals("") ) ? String.valueOf(inpPopTotalStdMaster.getText().toString()) : "0"  ) * 100;
+
+                        if (Double.isNaN(presentase)) {
+                            presentase = 0.0;
+                        }
+
+                        if (Double.isInfinite(presentase)){
+                            presentase = 0.0;
+                        }
+
+
                         inpPresentasePopPerHA.setText(showPopulasi(String.valueOf(presentase)));
                     } catch (Exception e){
                         e.printStackTrace();
@@ -736,6 +685,24 @@ public class AddAsetActivity extends AppCompatActivity {
 
                         Double popPerHa =  Double.parseDouble((inpPopTotalPohonSaatIni.getText().toString() != null || !inpPopTotalPohonSaatIni.getText().toString().equals("") ) ? String.valueOf(inpPopTotalPohonSaatIni.getText().toString()) : "0" ) / Double.parseDouble((inpLuasAset.getText().toString().trim().equals("")) ? "0" : inpLuasAset.getText().toString().trim());
                         Double presentase = popPerHa / Double.parseDouble((inpPopTotalStdMaster.getText().toString() != null || inpPopTotalStdMaster.getText().toString().equals("") ) ? String.valueOf(inpPopTotalStdMaster.getText().toString()) : "0"  ) * 100;
+
+                        if (Double.isNaN(presentase)) {
+                            presentase = 0.0;
+                        }
+
+                        if (Double.isInfinite(presentase)){
+                            presentase = 0.0;
+                        }
+
+                        if (Double.isNaN(popPerHa)) {
+                            popPerHa = 0.0;
+                        }
+
+                        if (Double.isInfinite(popPerHa)) {
+                            popPerHa = 0.0;
+
+                        }
+
                         inpPresentasePopPerHA.setText(showPopulasi(String.valueOf(presentase)));
                         inpPopPerHA.setText(showPopulasiWithoutPercentage(String.valueOf(popPerHa)));
                     } catch (Exception e){
@@ -2085,7 +2052,6 @@ public class AddAsetActivity extends AppCompatActivity {
     public void addAset(){
         dialog.show();
         spinnerValidation();
-//        Toast.makeText(getApplicationContext(), "hello im clicked", Toast.LENGTH_SHORT).show();
         if (inpNamaAset.getText().toString().equals("")) {
             customDialogAddAset.dismiss();
             dialog.dismiss();
@@ -2130,15 +2096,6 @@ public class AddAsetActivity extends AppCompatActivity {
         }
 
 
-//        if (spinnerJenisAset.getSelectedItemId() == 3){
-//            if (inpJumlahPohon.getText().toString().equals("")) {
-//                customDialogAddAset.dismiss();
-//                dialog.dismiss();
-//                inpJumlahPohon.setError("Jumlah Pohon harus diisi");
-//                inpJumlahPohon.requestFocus();
-//                return;
-//            }
-//        }
 
         if ("non tanaman".equals(String.valueOf(spinnerJenisAset.getSelectedItem()))){
             if ("normal".equals(String.valueOf(spinnerAsetKondisi.getSelectedItem()))){
@@ -2190,12 +2147,8 @@ public class AddAsetActivity extends AppCompatActivity {
                 RequestBody requestJenisAset = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(spinnerIdJenisAset));
                 RequestBody requestKondisiAset = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(spinnerIdAsetKondisi));
                 RequestBody requestKodeAset = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(mapSpinnerkode.get(Integer.parseInt(String.valueOf(spinnerKodeAset.getSelectedItemId())))));
-                RequestBody requestNamaAset = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(nama_aset));
-                RequestBody requestNomorAsetSAP = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(nomor_aset_sap));
-//                Integer kode = Math.toIntExact(spinnerKodeAset.getSelectedItemId());
-////                Log.d("amanat14", String.valueOf(spinnerKodeAset.getSelectedItemId()));
-////                Log.d("amanat14", String.valueOf(kode));
-////                Log.d("amanat14", String.valueOf(mapSpinnerkode.get(Integer.parseInt(String.valueOf(spinnerKodeAset.getSelectedItemId() + 1)))));
+                RequestBody requestNamaAset = RequestBody.create(MediaType.parse("text/plain"), nama_aset);
+                RequestBody requestNomorAsetSAP = RequestBody.create(MediaType.parse("text/plain"), nomor_aset_sap);
 
                 RequestBody requestLuasAset = RequestBody.create(MediaType.parse("text/plain"), luas_aset);
                 RequestBody requestNilaiAsetSAP = RequestBody.create(MediaType.parse("text/plain"), nilai_aset);
@@ -2237,11 +2190,6 @@ public class AddAsetActivity extends AppCompatActivity {
 
                 }
 
-//                if (spinnerJenisAset.getSelectedItemId() == 3) {
-//                    RequestBody requestJumlahPohon = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(inpJumlahPohon.getText().toString()));
-//                    builder.addPart(MultipartBody.Part.createFormData("jumlah_pohon", null, requestJumlahPohon));
-//                }
-
                 //multipart pohon tanaman
                 if ((spinnerJenisAset.getSelectedItemId() == 1 && !spinnerKodeAset.getSelectedItem().equals("ZC06/S001/Tebu")) || spinnerJenisAset.getSelectedItemId() == 3) {
                     RequestBody requestPopulasiPohonSaatIni = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(Double.parseDouble(inpPopTotalPohonSaatIni.getText().toString().trim())));
@@ -2250,10 +2198,9 @@ public class AddAsetActivity extends AppCompatActivity {
                     builder.addPart(MultipartBody.Part.createFormData("pop_standar", null, requestPopulasiStandar));
 
                     if (!inpPopPerHA.getText().toString().equals("")) {
-                        Double popPerHa =  Double.parseDouble((inpPopTotalPohonSaatIni.getText().toString() != null || !inpPopTotalPohonSaatIni.getText().toString() .equals("") ) ? String.valueOf(inpPopTotalPohonSaatIni.getText().toString()) : "0" ) / Double.parseDouble((inpLuasAset.getText().toString() != null || !inpLuasAset.getText().toString() .equals("") ) ? String.valueOf(inpLuasAset.getText().toString()) : "0");
-                        Double presentase = popPerHa / Double.parseDouble((inpPopTotalStdMaster.getText().toString() != null || inpPopTotalStdMaster.getText().toString().equals("") ) ? String.valueOf(inpPopTotalStdMaster.getText().toString()) : "0"  ) * 100;
-                        RequestBody requestPopulasiPerHA = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(popPerHa));
-                        RequestBody requestPresentasePopulasiPerHA = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(presentase));
+                        RequestBody requestPopulasiPerHA = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(inpPopPerHA.getText()));
+                        RequestBody requestPresentasePopulasiPerHA = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(inpPresentasePopPerHA.getText()));
+
                         builder.addPart(MultipartBody.Part.createFormData("pop_per_ha", null, requestPopulasiPerHA));
                         builder.addPart(MultipartBody.Part.createFormData("presentase_pop_per_ha", null, requestPresentasePopulasiPerHA));
                     }
@@ -2747,7 +2694,6 @@ public class AddAsetActivity extends AppCompatActivity {
         }
         String second = first[first.length - 1];
 
-        Log.d("amanat29", String.valueOf(second));
 
         String comma = "";
         if (second.length() < 3) {
