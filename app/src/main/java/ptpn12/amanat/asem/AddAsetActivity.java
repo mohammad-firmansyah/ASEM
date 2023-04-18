@@ -2260,28 +2260,30 @@ public class AddAsetActivity extends AppCompatActivity {
                     builder.addPart(MultipartBody.Part.createFormData("afdeling_id", null, requestAfdeling));
 
                 }
-                Double popPerHa =  Double.parseDouble((inpPopTotalPohonSaatIni.getText().toString() != null || !inpPopTotalPohonSaatIni.getText().toString().equals("") ) ? String.valueOf(inpPopTotalPohonSaatIni.getText().toString()) : "0" ) / Double.parseDouble((inpLuasAset.getText().toString().trim().equals("")) ? "0" : inpLuasAset.getText().toString().trim());
-                Double presentase = popPerHa / Double.parseDouble((inpPopTotalStdMaster.getText().toString() != null || inpPopTotalStdMaster.getText().toString().equals("") ) ? String.valueOf(inpPopTotalStdMaster.getText().toString()) : "0"  ) * 100;
 
-                if (Double.isNaN(presentase)) {
-                    presentase = 0.0;
-                }
-
-                if (Double.isInfinite(presentase)){
-                    presentase = 0.0;
-                }
-
-                if (Double.isNaN(popPerHa)) {
-                    popPerHa = 0.0;
-                }
-
-                if (Double.isInfinite(popPerHa)) {
-                    popPerHa = 0.0;
-
-                }
 
                 //multipart pohon tanaman
                 if ((spinnerJenisAset.getSelectedItemId() == 1 && !spinnerKodeAset.getSelectedItem().equals("ZC06/S001/Tebu")) || spinnerJenisAset.getSelectedItemId() == 3) {
+
+                    Double popPerHa =  Double.parseDouble((inpPopTotalPohonSaatIni.getText().toString() != null || !inpPopTotalPohonSaatIni.getText().toString().equals("") ) ? String.valueOf(inpPopTotalPohonSaatIni.getText().toString()) : "0" ) / Double.parseDouble((inpLuasAset.getText().toString().trim().equals("")) ? "0" : inpLuasAset.getText().toString().trim());
+                    Double presentase = popPerHa / Double.parseDouble((inpPopTotalStdMaster.getText().toString() != null || inpPopTotalStdMaster.getText().toString().equals("") ) ? String.valueOf(inpPopTotalStdMaster.getText().toString()) : "0"  ) * 100;
+
+                    if (Double.isNaN(presentase)) {
+                        presentase = 0.0;
+                    }
+
+                    if (Double.isInfinite(presentase)){
+                        presentase = 0.0;
+                    }
+
+                    if (Double.isNaN(popPerHa)) {
+                        popPerHa = 0.0;
+                    }
+
+                    if (Double.isInfinite(popPerHa)) {
+                        popPerHa = 0.0;
+
+                    }
 
                     RequestBody requestPopulasiPohonSaatIni = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(popPerHa));
                     RequestBody requestPopulasiStandar = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(presentase));
@@ -2713,11 +2715,11 @@ public class AddAsetActivity extends AppCompatActivity {
 
         try {
 
-            if (afdelings.size() != 0) {
-
-                spinnerAfdeling.setSelection(mapAfdelingSpinner.get((afdeling_id-1)));
-
-            }
+//            if (afdelings.size() != 0) {
+//
+//                spinnerAfdeling.setSelection(mapAfdelingSpinner.get((afdeling_id-1)));
+//
+//            }
         } catch (Exception e){
             e.printStackTrace();
         }
