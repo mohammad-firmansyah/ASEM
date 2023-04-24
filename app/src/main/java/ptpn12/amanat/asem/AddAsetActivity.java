@@ -1278,7 +1278,6 @@ public class AddAsetActivity extends AppCompatActivity {
 
     public Boolean spinnerValidation() {
 
-        customDialogAddAset = new Dialog(AddAsetActivity.this, R.style.MyAlertDialogTheme);
 
         if (spinnerTipeAset.getSelectedItemId() == 0) {
             AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
