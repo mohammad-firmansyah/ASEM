@@ -2688,6 +2688,22 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity {
             return;
         }
 
+        if(inpPersenKondisi.getText().toString().equals("")){
+            customDialogAddAset.dismiss();
+            dialog.dismiss();
+            inpPersenKondisi.setError("Persen kondisi wajib diisi");
+            inpPersenKondisi.requestFocus();
+            return;
+        }
+
+        if(inpLuasAset.getText().toString().equals("")){
+            customDialogAddAset.dismiss();
+            dialog.dismiss();
+            inpLuasAset.setError("Luas Aset wajib diisi");
+            inpLuasAset.requestFocus();
+            return;
+        }
+
         if (inpNamaAset.getText().toString().equals("")) {
             dialog.dismiss();
             customDialogAddAset.dismiss();

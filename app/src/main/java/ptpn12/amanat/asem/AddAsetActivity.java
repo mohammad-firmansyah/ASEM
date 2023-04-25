@@ -2122,6 +2122,22 @@ public class AddAsetActivity extends AppCompatActivity {
             return;
         }
 
+        if(inpPersenKondisi.getText().toString().equals("")){
+            customDialogAddAset.dismiss();
+            dialog.dismiss();
+            inpPersenKondisi.setError("Persen kondisi wajib diisi");
+            inpPersenKondisi.requestFocus();
+            return;
+        }
+
+        if(inpLuasAset.getText().toString().equals("")){
+            customDialogAddAset.dismiss();
+            dialog.dismiss();
+            inpLuasAset.setError("Luas Aset wajib diisi");
+            inpLuasAset.requestFocus();
+            return;
+        }
+
         if (inpNamaAset.getText().toString().equals("")) {
             customDialogAddAset.dismiss();
             dialog.dismiss();
@@ -2415,22 +2431,23 @@ public class AddAsetActivity extends AppCompatActivity {
                         dialog.dismiss();
                         Toast.makeText(getApplicationContext(), "success", Toast.LENGTH_LONG).show();
                         startActivity(new Intent(AddAsetActivity.this, LonglistAsetActivity.class));
-                        return;
 
                     }
 
                     @Override
                     public void onFailure(Call<AsetModel2> call, Throwable t) {
                         dialog.dismiss();
-                        Toast.makeText(getApplicationContext(), "error " + t.getMessage(), Toast.LENGTH_SHORT).show();
-                        Toast.makeText(getApplicationContext(), "Periksa kembali koneksi internet!" , Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), "error :" + t.getMessage(), Toast.LENGTH_SHORT).show();
+                        return;
+
                     }
                 });
             } catch (Exception e) {
                 dialog.dismiss();
-                Toast.makeText(getApplicationContext(), "error " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "error :" + e.getMessage(), Toast.LENGTH_SHORT).show();
                 Toast.makeText(getApplicationContext(), "Periksa kembali kolom isian dengan benar!" , Toast.LENGTH_SHORT).show();
                 e.printStackTrace();
+                return;
             }
 
         }
