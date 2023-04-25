@@ -1,3 +1,3 @@
-# ASEM (Aplikasi Aset Manajemen)
+# AMANAT12
 
-aplikasi aset manajemen adalah aplikasi berbasis Java yang dibuat untuk mengatur keluar masuk aset 
+aplikasi aset manajemen adalah aplikasi berbasis java yang dibuat untuk mengatur keluar masuk aset menggunakan fitur geofencing 
