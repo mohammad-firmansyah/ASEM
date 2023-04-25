@@ -1419,8 +1419,8 @@ public class AddAsetActivity extends AppCompatActivity {
             customDialogAddAset.dismiss();
             return false;
         }
-        if (spinnerJenisAset.getSelectedItemId() != 2) {
-            if (spinnerSistemTanam.getSelectedItemId() == 0) {
+        if (spinnerJenisAset.getSelectedItemId() == 1) {
+            if (spinnerSistemTanam.getSelectedItemId() == 0 && !spinnerKodeAset.getSelectedItem().equals("ZC06/S001/Tebu")) {
                 AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
                         this);
 
@@ -2122,22 +2122,6 @@ public class AddAsetActivity extends AppCompatActivity {
             return;
         }
 
-        if(inpPersenKondisi.getText().toString().equals("")){
-            customDialogAddAset.dismiss();
-            dialog.dismiss();
-            inpPersenKondisi.setError("Persen kondisi wajib diisi");
-            inpPersenKondisi.requestFocus();
-            return;
-        }
-
-        if(inpLuasAset.getText().toString().equals("")){
-            customDialogAddAset.dismiss();
-            dialog.dismiss();
-            inpLuasAset.setError("Luas Aset wajib diisi");
-            inpLuasAset.requestFocus();
-            return;
-        }
-
         if (inpNamaAset.getText().toString().equals("")) {
             customDialogAddAset.dismiss();
             dialog.dismiss();
@@ -2156,12 +2140,65 @@ public class AddAsetActivity extends AppCompatActivity {
         }
 
         if (spinnerJenisAset.getSelectedItemId() == 2) {
+            if ("normal".equals(String.valueOf(spinnerAsetKondisi.getSelectedItem()))){
+                if (img1 == null || img2 == null || img3 == null || img4 == null){
+                    customDialogAddAset.dismiss();
+                    dialog.dismiss();
+                    Toast.makeText(getApplicationContext(), "Foto Wajib Diisi Lengkap!", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+            }
+
+            if ( "rusak".equals (String.valueOf(spinnerAsetKondisi.getSelectedItem()))){
+                if (img1 == null || img2 == null || img3 == null || img4 == null){
+                    dialog.dismiss();
+                    customDialogAddAset.dismiss();
+                    Toast.makeText(getApplicationContext(), "Foto Wajib Diisi Lengkap!", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+            }
+
+
+            if(inpPersenKondisi.getText().toString().equals("")){
+                customDialogAddAset.dismiss();
+                dialog.dismiss();
+                inpPersenKondisi.setError("Persen kondisi wajib diisi");
+                inpPersenKondisi.requestFocus();
+                return;
+            }
+
+            if(inpLuasAset.getText().toString().equals("")){
+                customDialogAddAset.dismiss();
+                dialog.dismiss();
+                inpLuasAset.setError("Luas Aset wajib diisi");
+                inpLuasAset.requestFocus();
+                return;
+            }
+
             if (Integer.parseInt(inpPersenKondisi.getText().toString()) > 100 || Integer.parseInt(inpPersenKondisi.getText().toString()) < 0) {
                 customDialogAddAset.dismiss();
                 dialog.dismiss();
                 inpPersenKondisi.setError("Isian Persen Kondisi Wajib Minimal 0 Maksimal 100");
                 inpPersenKondisi.requestFocus();
                 return;
+            }
+        } else if (spinnerJenisAset.getSelectedItemId() == 1){
+            if (inpTahunTanam.getText().toString().equals("")) {
+                dialog.dismiss();
+                customDialogAddAset.dismiss();
+                inpTahunTanam.setError("Tahun Tanam harus diisi");
+                inpTahunTanam.requestFocus();
+                return;
+            }
+
+            if (spinnerSistemTanam.getSelectedItemId() == 1 || spinnerKodeAset.getSelectedItem().equals("ZC06/S001/Tebu")) {
+                if(inpLuasAset.getText().toString().equals("")){
+                    customDialogAddAset.dismiss();
+                    dialog.dismiss();
+                    inpLuasAset.setError("Luas Aset wajib diisi");
+                    inpLuasAset.requestFocus();
+                    return;
+                }
             }
         }
 
@@ -2180,37 +2217,6 @@ public class AddAsetActivity extends AppCompatActivity {
             inpMasaPenyusutan.requestFocus();
             return;
         }
-
-
-
-        if ("non tanaman".equals(String.valueOf(spinnerJenisAset.getSelectedItem()))){
-            if ("normal".equals(String.valueOf(spinnerAsetKondisi.getSelectedItem()))){
-                if (img1 == null || img2 == null || img3 == null || img4 == null){
-                    customDialogAddAset.dismiss();
-                    dialog.dismiss();
-                    Toast.makeText(getApplicationContext(), "Foto Wajib Diisi Lengkap!", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-            }
-        }
-
-        if ("non tanaman".equals(String.valueOf(spinnerJenisAset.getSelectedItem()))){
-            if ( "rusak".equals (String.valueOf(spinnerAsetKondisi.getSelectedItem()))){
-                if (img1 == null || img2 == null || img3 == null || img4 == null){
-                    dialog.dismiss();
-                    customDialogAddAset.dismiss();
-                    Toast.makeText(getApplicationContext(), "Foto Wajib Diisi Lengkap!", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-            }
-        }
-
-        if (spinnerKodeAset.getSelectedItemId() == 0 || spinnerTipeAset.getSelectedItemId() == 0
-                || spinnerJenisAset.getSelectedItemId() == 0 || spinnerAsetKondisi.getSelectedItemId() == 0 ) {
-            Toast.makeText(getApplicationContext(), "error ada yang belum diisi", Toast.LENGTH_SHORT).show();
-            return;
-        }
-
 
             try {
 
