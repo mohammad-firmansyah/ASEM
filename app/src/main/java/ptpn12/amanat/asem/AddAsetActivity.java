@@ -1501,7 +1501,6 @@ public class AddAsetActivity extends AppCompatActivity {
 
         HorizontalScrollView scrollPartition = findViewById(R.id.scrollPartition);
 
-//        Toast.makeText(getApplicationContext(),String.valueOf(spinnerSubUnit.getSelectedItemId()),Toast.LENGTH_LONG).show();
         if (spinnerTipeAset.getSelectedItemId() != 0) {
             inpNomorBAST.setVisibility(View.VISIBLE);
             tvBast.setVisibility(View.VISIBLE);
@@ -1533,7 +1532,6 @@ public class AddAsetActivity extends AppCompatActivity {
 //            spinnerSistemTanam.setEnabled(true);
 //            spinnerSistemTanam.setBackground(AppCompatResources.getDrawable(getApplicationContext(), R.drawable.rounded_spinner));
 
-            Log.d("tanam", String.valueOf(spinnerSistemTanam.getSelectedItem()));
 
             if("Mono".equals(String.valueOf(spinnerSistemTanam.getSelectedItem()))){
                 tvTahunTanam.setVisibility(View.VISIBLE);
@@ -1598,27 +1596,22 @@ public class AddAsetActivity extends AppCompatActivity {
 //                spinnerSistemTanam.setBackground(AppCompatResources.getDrawable(getApplicationContext(), R.drawable.bg_not_clickable_spinner));
 
             }
-//            else{
-////                tvTahunTanam.setVisibility(View.GONE);
-////                inpTahunTanam.setVisibility(View.GONE);
-////                tvSistemTanam.setVisibility(View.GONE);
-////                spinnerSistemTanam.setVisibility(View.GONE);
-//
-//                tvPopTotalPohonSaatIni.setVisibility(View.VISIBLE);
-//                tvPopTotalStdMaster.setVisibility(View.VISIBLE);
-//                tvPopPerHA.setVisibility(View.VISIBLE);
-//                tvPresentasePopPerHA.setVisibility(View.VISIBLE);
-//                inpPopTotalPohonSaatIni.setVisibility(View.VISIBLE);
-//                inpPopTotalStdMaster.setVisibility(View.VISIBLE);
-//                inpPopPerHA.setVisibility(View.VISIBLE);
-//                inpPresentasePopPerHA.setVisibility(View.VISIBLE);
-//
-////                tvLuasTanaman.setVisibility(View.GONE);
-////                inpLuasAset.setVisibility(View.GONE);
-//
+            else{
+                tvPopTotalPohonSaatIni.setVisibility(View.VISIBLE);
+                tvPopTotalStdMaster.setVisibility(View.VISIBLE);
+                tvPopPerHA.setVisibility(View.VISIBLE);
+                tvPresentasePopPerHA.setVisibility(View.VISIBLE);
+                inpPopTotalPohonSaatIni.setVisibility(View.VISIBLE);
+                inpPopTotalStdMaster.setVisibility(View.VISIBLE);
+                inpPopPerHA.setVisibility(View.VISIBLE);
+                inpPresentasePopPerHA.setVisibility(View.VISIBLE);
+
+                tvLuasTanaman.setVisibility(View.GONE);
+                inpLuasAset.setVisibility(View.GONE);
+
 //                spinnerSistemTanam.setEnabled(true);
-////                spinnerSistemTanam.setBackground(AppCompatResources.getDrawable(getApplicationContext(), R.drawable.rounded_spinner));
-//            }
+//                spinnerSistemTanam.setBackground(AppCompatResources.getDrawable(getApplicationContext(), R.drawable.rounded_spinner));
+            }
         }
         else if ("kayu".equals(String.valueOf(spinnerJenisAset.getSelectedItem()))) {
 
@@ -2136,6 +2129,7 @@ public class AddAsetActivity extends AppCompatActivity {
             customDialogAddAset.dismiss();
             inpNoSAP.setError("Nilai Sap Harus Diisi");
             inpNoSAP.requestFocus();
+            Toast.makeText(getApplicationContext(), "Nomor SAP Wajib diisi!", Toast.LENGTH_SHORT).show();
             return;
         }
 
@@ -2183,6 +2177,22 @@ public class AddAsetActivity extends AppCompatActivity {
                 return;
             }
         } else if (spinnerJenisAset.getSelectedItemId() == 1){
+            if(inpPopTotalPohonSaatIni.getText().toString().equals("")){
+                dialog.dismiss();
+                customDialogAddAset.dismiss();
+                inpPopTotalPohonSaatIni.setError("Populasi harus diisi");
+                inpPopTotalPohonSaatIni.requestFocus();
+                return;
+            }
+
+            if(inpPopTotalStdMaster.getText().toString().equals("")){
+                dialog.dismiss();
+                customDialogAddAset.dismiss();
+                inpPopTotalStdMaster.setError("Populasi harus diisi");
+                inpPopTotalStdMaster.requestFocus();
+                return;
+            }
+
             if (inpTahunTanam.getText().toString().equals("")) {
                 dialog.dismiss();
                 customDialogAddAset.dismiss();
@@ -2203,20 +2213,7 @@ public class AddAsetActivity extends AppCompatActivity {
         }
 
 
-        if (inpTglOleh.getText().toString().equals("")) {
-            inpTglOleh.setError("Tanggal Perolehan harus diisi");
-            inpTglOleh.requestFocus();
-            dialog.dismiss();
-            return;
-        }
 
-        if (inpMasaPenyusutan.getText().toString().equals("")) {
-            customDialogAddAset.dismiss();
-            dialog.dismiss();
-            inpMasaPenyusutan.setError("Masa Penyusutan harus diisi");
-            inpMasaPenyusutan.requestFocus();
-            return;
-        }
 
             try {
 
@@ -2306,8 +2303,8 @@ public class AddAsetActivity extends AppCompatActivity {
 
                     }
 
-                    RequestBody requestPopulasiPohonSaatIni = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(popPerHa));
-                    RequestBody requestPopulasiStandar = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(presentase));
+                    RequestBody requestPopulasiPohonSaatIni = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(inpPopTotalPohonSaatIni.getText()));
+                    RequestBody requestPopulasiStandar = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(inpPopTotalStdMaster.getText()));
 
                     builder.addPart(MultipartBody.Part.createFormData("pop_pohon_saat_ini", null, requestPopulasiPohonSaatIni));
                     builder.addPart(MultipartBody.Part.createFormData("pop_standar", null, requestPopulasiStandar));
