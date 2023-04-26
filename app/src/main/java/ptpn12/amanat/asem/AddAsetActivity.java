@@ -1508,7 +1508,6 @@ public class AddAsetActivity extends AppCompatActivity {
             inpNomorBAST.setVisibility(View.GONE);
             tvBast.setVisibility(View.GONE);
         }
-        Log.d("jenis", String.valueOf("kayu".equals(String.valueOf(spinnerKodeAset.getSelectedItem()))));
 
         if ("tanaman".equals(String.valueOf(spinnerJenisAset.getSelectedItem()))) {
 
@@ -1529,9 +1528,6 @@ public class AddAsetActivity extends AppCompatActivity {
             tvLuasTanaman.setVisibility(View.GONE);
             inpLuasAset.setVisibility(View.GONE);
 
-//            spinnerSistemTanam.setEnabled(true);
-//            spinnerSistemTanam.setBackground(AppCompatResources.getDrawable(getApplicationContext(), R.drawable.rounded_spinner));
-
 
             if("Mono".equals(String.valueOf(spinnerSistemTanam.getSelectedItem()))){
                 tvTahunTanam.setVisibility(View.VISIBLE);
@@ -1551,28 +1547,8 @@ public class AddAsetActivity extends AppCompatActivity {
                 tvLuasTanaman.setVisibility(View.VISIBLE);
                 inpLuasAset.setVisibility(View.VISIBLE);
             }
-//            else{
-////                tvTahunTanam.setVisibility(View.GONE);
-////                inpTahunTanam.setVisibility(View.GONE);
-////                tvSistemTanam.setVisibility(View.GONE);
-////                spinnerSistemTanam.setVisibility(View.GONE);
-//
-//                tvPopTotalPohonSaatIni.setVisibility(View.GONE);
-//                tvPopTotalStdMaster.setVisibility(View.GONE);
-//                tvPopPerHA.setVisibility(View.GONE);
-//                tvPresentasePopPerHA.setVisibility(View.GONE);
-//                inpPopTotalPohonSaatIni.setVisibility(View.GONE);
-//                inpPopTotalStdMaster.setVisibility(View.GONE);
-//                inpPopPerHA.setVisibility(View.GONE);
-//                inpPresentasePopPerHA.setVisibility(View.GONE);
-//
-////                tvLuasTanaman.setVisibility(View.GONE);
-////                inpLuasAset.setVisibility(View.GONE);
-//
-//            }
 
             if("ZC06/S001/Tebu".equals(String.valueOf(spinnerKodeAset.getSelectedItem()))
-//                    && "Mono".equals(String.valueOf(spinnerSistemTanam.getSelectedItem()))
             ){
                 tvTahunTanam.setVisibility(View.VISIBLE);
                 inpTahunTanam.setVisibility(View.VISIBLE);
@@ -1591,10 +1567,6 @@ public class AddAsetActivity extends AppCompatActivity {
                 tvLuasTanaman.setVisibility(View.VISIBLE);
                 inpLuasAset.setVisibility(View.VISIBLE);
 
-//                spinnerSistemTanam.setEnabled(false);
-//                spinnerSistemTanam.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.bg_not_clickable_spinner));
-//                spinnerSistemTanam.setBackground(AppCompatResources.getDrawable(getApplicationContext(), R.drawable.bg_not_clickable_spinner));
-
             }
             else{
                 tvPopTotalPohonSaatIni.setVisibility(View.VISIBLE);
@@ -1608,9 +1580,6 @@ public class AddAsetActivity extends AppCompatActivity {
 
                 tvLuasTanaman.setVisibility(View.GONE);
                 inpLuasAset.setVisibility(View.GONE);
-
-//                spinnerSistemTanam.setEnabled(true);
-//                spinnerSistemTanam.setBackground(AppCompatResources.getDrawable(getApplicationContext(), R.drawable.rounded_spinner));
             }
         }
         else if ("kayu".equals(String.valueOf(spinnerJenisAset.getSelectedItem()))) {
@@ -1672,7 +1641,6 @@ public class AddAsetActivity extends AppCompatActivity {
 //            inpLuasAset.setVisibility(View.VISIBLE);
         }
 
-//        if (spinnerTipeAset.getSelectedItemId() == 1 ) {
         if ("baru".equals(String.valueOf(spinnerTipeAset.getSelectedItem())) ) {
             //input PDF ba bast
             btnFileBAST.setVisibility(View.VISIBLE);
@@ -1695,336 +1663,205 @@ public class AddAsetActivity extends AppCompatActivity {
         }
 
         if ("tanaman".equals(String.valueOf(spinnerJenisAset.getSelectedItem())) && "normal".equals(String.valueOf(spinnerAsetKondisi.getSelectedItem()))) {
-//            listBtnMap.setVisibility(View.VISIBLE);
-            inpJumlahPohon.setVisibility(View.GONE);
-            tvPohon.setVisibility(View.GONE);
-//            inpKomoditi.setVisibility(View.VISIBLE);
-
-            spinnerLuasSatuan.setVisibility(View.GONE);
-            inpNomorBAST.setVisibility(View.VISIBLE);
             tvBast.setVisibility(View.VISIBLE);
-
             tvUploudBA.setVisibility(View.GONE);
-//            inpBtnMap.setVisibility(View.GONE);
-            btnFile.setVisibility(View.GONE);
             tvBa.setVisibility(View.GONE);
-
-            if ("baru".equals(String.valueOf(spinnerTipeAset.getSelectedItem())) ) {
-                //input PDF ba bast
-                btnFileBAST.setVisibility(View.VISIBLE);
-                tvFileBAST.setVisibility(View.VISIBLE);
-                tvUploadBAST.setVisibility(View.VISIBLE);
-            }
-
             tvFoto.setVisibility(View.VISIBLE);
-            scrollPartition.setVisibility(View.VISIBLE);
-
-//            tvLuasTanaman.setVisibility(View.VISIBLE);
             tvLuasNonTanaman.setVisibility(View.GONE);
-//            inpLuasAset.setVisibility(View.VISIBLE);
-
-            inpPersenKondisi.setVisibility(View.GONE);
             tvPersenKondisi.setVisibility(View.GONE);
 
-            foto5rl.setVisibility(View.VISIBLE);
+            inpNomorBAST.setVisibility(View.VISIBLE);
+            inpPersenKondisi.setVisibility(View.GONE);
 
-//            tvPopTotalPohonSaatIni.setVisibility(View.VISIBLE);
-//            tvPopTotalStdMaster.setVisibility(View.VISIBLE);
-//            tvPopPerHA.setVisibility(View.VISIBLE);
-//            tvPresentasePopPerHA.setVisibility(View.VISIBLE);
-//            inpPopTotalPohonSaatIni.setVisibility(View.VISIBLE);
-//            inpPopTotalStdMaster.setVisibility(View.VISIBLE);
-//            inpPopPerHA.setVisibility(View.VISIBLE);
-//            inpPresentasePopPerHA.setVisibility(View.VISIBLE);
+            spinnerLuasSatuan.setVisibility(View.GONE);
+            btnFile.setVisibility(View.GONE);
+            scrollPartition.setVisibility(View.VISIBLE);
+
+            foto5rl.setVisibility(View.VISIBLE);
 
         }
 
         else if ("tanaman".equals(String.valueOf(spinnerJenisAset.getSelectedItem()))  && "rusak".equals(String.valueOf(spinnerAsetKondisi.getSelectedItem())) ) {
-//            listBtnMap.setVisibility(View.VISIBLE);
             tvBa.setVisibility(View.VISIBLE);
-            inpJumlahPohon.setVisibility(View.GONE);
             tvPohon.setVisibility(View.GONE);
-            spinnerLuasSatuan.setVisibility(View.GONE);
-//            inpKomoditi.setVisibility(View.VISIBLE);
-            inpNomorBAST.setVisibility(View.VISIBLE);
             tvBast.setVisibility(View.VISIBLE);
-
             tvBa.setVisibility(View.VISIBLE);
             tvUploudBA.setVisibility(View.VISIBLE);
-            btnFile.setVisibility(View.VISIBLE);
-            btnFileBAST.setVisibility(View.GONE);
             tvFileBAST.setVisibility(View.GONE);
             tvUploadBAST.setVisibility(View.GONE);
-
-//            inpBtnMap.setVisibility(View.GONE);
-
             tvFoto.setVisibility(View.VISIBLE);
-            scrollPartition.setVisibility(View.VISIBLE);
-
-//            tvLuasTanaman.setVisibility(View.VISIBLE);
             tvLuasNonTanaman.setVisibility(View.GONE);
-//            inpLuasAset.setVisibility(View.VISIBLE);
-
-            inpPersenKondisi.setVisibility(View.GONE);
             tvPersenKondisi.setVisibility(View.GONE);
 
-            foto5rl.setVisibility(View.VISIBLE);
+            inpJumlahPohon.setVisibility(View.GONE);
+            inpNomorBAST.setVisibility(View.VISIBLE);
+            inpPersenKondisi.setVisibility(View.GONE);
 
-//            tvPopTotalPohonSaatIni.setVisibility(View.VISIBLE);
-//            tvPopTotalStdMaster.setVisibility(View.VISIBLE);
-//            tvPopPerHA.setVisibility(View.VISIBLE);
-//            tvPresentasePopPerHA.setVisibility(View.VISIBLE);
-//            inpPopTotalPohonSaatIni.setVisibility(View.VISIBLE);
-//            inpPopTotalStdMaster.setVisibility(View.VISIBLE);
-//            inpPopPerHA.setVisibility(View.VISIBLE);
-//            inpPresentasePopPerHA.setVisibility(View.VISIBLE);
+            spinnerLuasSatuan.setVisibility(View.GONE);
+
+            scrollPartition.setVisibility(View.VISIBLE);
+
+            btnFile.setVisibility(View.VISIBLE);
+            btnFileBAST.setVisibility(View.GONE);
+
+            foto5rl.setVisibility(View.VISIBLE);
         }
 
 
         else if ("tanaman".equals(String.valueOf(spinnerJenisAset.getSelectedItem()))  && "hilang".equals(String.valueOf(spinnerAsetKondisi.getSelectedItem()))) {
             tvUploudBA.setVisibility(View.VISIBLE);
-            btnFile.setVisibility(View.VISIBLE);
             tvBa.setVisibility(View.VISIBLE);
-            inpJumlahPohon.setVisibility(View.GONE);
             tvPohon.setVisibility(View.GONE);
-//            inpKomoditi.setVisibility(View.VISIBLE);
-            spinnerLuasSatuan.setVisibility(View.GONE);
-            inpNomorBAST.setVisibility(View.VISIBLE);
             tvBast.setVisibility(View.VISIBLE);
-            btnFileBAST.setVisibility(View.GONE);
             tvFileBAST.setVisibility(View.GONE);
             tvUploadBAST.setVisibility(View.GONE);
-//            listBtnMap.setVisibility(View.GONE);
-//            inpBtnMap.setVisibility(View.GONE);
-
             tvFoto.setVisibility(View.GONE);
-            scrollPartition.setVisibility(View.GONE);
-
-//            tvLuasTanaman.setVisibility(View.VISIBLE);
-            tvLuasNonTanaman.setVisibility(View.GONE);
-//            inpLuasAset.setVisibility(View.VISIBLE);
-
-            inpPersenKondisi.setVisibility(View.GONE);
             tvPersenKondisi.setVisibility(View.GONE);
+            tvLuasNonTanaman.setVisibility(View.GONE);
+
+            inpJumlahPohon.setVisibility(View.GONE);
+            inpNomorBAST.setVisibility(View.VISIBLE);
+            inpPersenKondisi.setVisibility(View.GONE);
+
+            btnFile.setVisibility(View.VISIBLE);
+            btnFileBAST.setVisibility(View.GONE);
+
+            spinnerLuasSatuan.setVisibility(View.GONE);
+
+            scrollPartition.setVisibility(View.GONE);
 
             foto5rl.setVisibility(View.VISIBLE);
 
-//            tvPopTotalPohonSaatIni.setVisibility(View.VISIBLE);
-//            tvPopTotalStdMaster.setVisibility(View.VISIBLE);
-//            tvPopPerHA.setVisibility(View.VISIBLE);
-//            tvPresentasePopPerHA.setVisibility(View.VISIBLE);
-//            inpPopTotalPohonSaatIni.setVisibility(View.VISIBLE);
-//            inpPopTotalStdMaster.setVisibility(View.VISIBLE);
-//            inpPopPerHA.setVisibility(View.VISIBLE);
-//            inpPresentasePopPerHA.setVisibility(View.VISIBLE);
         }
 
         else if ("kayu".equals(String.valueOf(spinnerJenisAset.getSelectedItem()))  && "normal".equals(String.valueOf(spinnerAsetKondisi.getSelectedItem())) ) {
-//            listBtnMap.setVisibility(View.VISIBLE);
-            spinnerLuasSatuan.setVisibility(View.GONE);
-            inpJumlahPohon.setVisibility(View.GONE);
-//            inpKomoditi.setVisibility(View.VISIBLE);
-            inpNomorBAST.setVisibility(View.VISIBLE);
             tvBast.setVisibility(View.VISIBLE);
             tvPohon.setVisibility(View.GONE);
-
             tvUploudBA.setVisibility(View.GONE);
-//            inpBtnMap.setVisibility(View.GONE);
-            btnFile.setVisibility(View.GONE);
             tvBa.setVisibility(View.GONE);
-
-            if ("baru".equals(String.valueOf(spinnerTipeAset.getSelectedItem())) ) {
-                //input PDF ba bast
-                btnFileBAST.setVisibility(View.VISIBLE);
-                tvFileBAST.setVisibility(View.VISIBLE);
-                tvUploadBAST.setVisibility(View.VISIBLE);
-            }
-
             tvFoto.setVisibility(View.VISIBLE);
-            scrollPartition.setVisibility(View.VISIBLE);
-
-//            tvLuasTanaman.setVisibility(View.VISIBLE);
             tvLuasNonTanaman.setVisibility(View.GONE);
-//            inpLuasAset.setVisibility(View.VISIBLE);
-
-            inpPersenKondisi.setVisibility(View.GONE);
             tvPersenKondisi.setVisibility(View.GONE);
 
-            foto5rl.setVisibility(View.GONE);
+            spinnerLuasSatuan.setVisibility(View.GONE);
 
-//            tvPopTotalPohonSaatIni.setVisibility(View.GONE);
-//            tvPopTotalStdMaster.setVisibility(View.GONE);
-//            tvPopPerHA.setVisibility(View.GONE);
-//            tvPresentasePopPerHA.setVisibility(View.GONE);
-//            inpPopTotalPohonSaatIni.setVisibility(View.GONE);
-//            inpPopTotalStdMaster.setVisibility(View.GONE);
-//            inpPopPerHA.setVisibility(View.GONE);
-//            inpPresentasePopPerHA.setVisibility(View.GONE);
+            inpJumlahPohon.setVisibility(View.GONE);
+            inpNomorBAST.setVisibility(View.VISIBLE);
+            inpPersenKondisi.setVisibility(View.GONE);
+
+            btnFile.setVisibility(View.GONE);
+
+            scrollPartition.setVisibility(View.VISIBLE);
+
+            foto5rl.setVisibility(View.GONE);
 
         }
 
         else if ("kayu".equals(String.valueOf(spinnerJenisAset.getSelectedItem()))  && "rusak".equals(String.valueOf(spinnerAsetKondisi.getSelectedItem())) ) {
-//            listBtnMap.setVisibility(View.VISIBLE);
-            spinnerLuasSatuan.setVisibility(View.GONE);
-            inpJumlahPohon.setVisibility(View.GONE);
             tvBa.setVisibility(View.VISIBLE);
             tvUploudBA.setVisibility(View.VISIBLE);
-            btnFile.setVisibility(View.VISIBLE);
-//            inpKomoditi.setVisibility(View.VISIBLE);
             tvPohon.setVisibility(View.GONE);
-
-
-            inpNomorBAST.setVisibility(View.VISIBLE);
             tvBast.setVisibility(View.VISIBLE);
-            btnFileBAST.setVisibility(View.GONE);
             tvFileBAST.setVisibility(View.GONE);
             tvUploadBAST.setVisibility(View.GONE);
-//            inpBtnMap.setVisibility(View.GONE);
-
             tvFoto.setVisibility(View.VISIBLE);
-            scrollPartition.setVisibility(View.VISIBLE);
-
-//            tvLuasTanaman.setVisibility(View.VISIBLE);
             tvLuasNonTanaman.setVisibility(View.GONE);
-//            inpLuasAset.setVisibility(View.VISIBLE);
-
-            inpPersenKondisi.setVisibility(View.GONE);
             tvPersenKondisi.setVisibility(View.GONE);
 
-            foto5rl.setVisibility(View.GONE);
+            inpJumlahPohon.setVisibility(View.GONE);
+            inpNomorBAST.setVisibility(View.VISIBLE);
+            inpPersenKondisi.setVisibility(View.GONE);
 
-//            tvPopTotalPohonSaatIni.setVisibility(View.GONE);
-//            tvPopTotalStdMaster.setVisibility(View.GONE);
-//            tvPopPerHA.setVisibility(View.GONE);
-//            tvPresentasePopPerHA.setVisibility(View.GONE);
-//            inpPopTotalPohonSaatIni.setVisibility(View.GONE);
-//            inpPopTotalStdMaster.setVisibility(View.GONE);
-//            inpPopPerHA.setVisibility(View.GONE);
-//            inpPresentasePopPerHA.setVisibility(View.GONE);
+            spinnerLuasSatuan.setVisibility(View.GONE);
+
+            btnFile.setVisibility(View.VISIBLE);
+            btnFileBAST.setVisibility(View.GONE);
+
+            scrollPartition.setVisibility(View.VISIBLE);
+
+            foto5rl.setVisibility(View.GONE);
 
         }
 
         else if ("kayu".equals(String.valueOf(spinnerJenisAset.getSelectedItem())) && "hilang".equals(String.valueOf(spinnerAsetKondisi.getSelectedItem()))) {
             tvBa.setVisibility(View.VISIBLE);
-            btnFile.setVisibility(View.VISIBLE);
             tvUploudBA.setVisibility(View.VISIBLE);
-//            inpKomoditi.setVisibility(View.VISIBLE);
-            spinnerLuasSatuan.setVisibility(View.GONE);
-
-            inpNomorBAST.setVisibility(View.VISIBLE);
             tvBast.setVisibility(View.VISIBLE);
             tvPohon.setVisibility(View.GONE);
-            inpJumlahPohon.setVisibility(View.GONE);
-//            listBtnMap.setVisibility(View.GONE);
-            inpJumlahPohon.setVisibility(View.GONE);
-//            inpBtnMap.setVisibility(View.GONE);
-            btnFileBAST.setVisibility(View.GONE);
             tvFileBAST.setVisibility(View.GONE);
             tvUploadBAST.setVisibility(View.GONE);
-
             tvFoto.setVisibility(View.GONE);
-            scrollPartition.setVisibility(View.GONE);
-
-//            tvLuasTanaman.setVisibility(View.VISIBLE);
             tvLuasNonTanaman.setVisibility(View.GONE);
-//            inpLuasAset.setVisibility(View.VISIBLE);
-
-            inpPersenKondisi.setVisibility(View.GONE);
             tvPersenKondisi.setVisibility(View.GONE);
 
-            foto5rl.setVisibility(View.GONE);
+            inpNomorBAST.setVisibility(View.VISIBLE);
 
-//            tvPopTotalPohonSaatIni.setVisibility(View.GONE);
-//            tvPopTotalStdMaster.setVisibility(View.GONE);
-//            tvPopPerHA.setVisibility(View.GONE);
-//            tvPresentasePopPerHA.setVisibility(View.GONE);
-//            inpPopTotalPohonSaatIni.setVisibility(View.GONE);
-//            inpPopTotalStdMaster.setVisibility(View.GONE);
-//            inpPopPerHA.setVisibility(View.GONE);
-//            inpPresentasePopPerHA.setVisibility(View.GONE);
+            btnFile.setVisibility(View.VISIBLE);
+            btnFileBAST.setVisibility(View.GONE);
+
+            spinnerLuasSatuan.setVisibility(View.GONE);
+
+            inpPersenKondisi.setVisibility(View.GONE);
+            inpJumlahPohon.setVisibility(View.GONE);
+            inpJumlahPohon.setVisibility(View.GONE);
+
+            scrollPartition.setVisibility(View.GONE);
+
+
+            foto5rl.setVisibility(View.GONE);
 
         }
 
         else if ("non tanaman".equals(String.valueOf(spinnerJenisAset.getSelectedItem())) && "normal".equals(String.valueOf(spinnerAsetKondisi.getSelectedItem()))) {
-//            inpBtnMap.setVisibility(View.VISIBLE);
-            inpNomorBAST.setVisibility(View.VISIBLE);
             tvBast.setVisibility(View.VISIBLE);
+            tvPohon.setVisibility(View.GONE);
+            tvUploudBA.setVisibility(View.GONE);
+            tvBa.setVisibility(View.GONE);
+            tvFoto.setVisibility(View.VISIBLE);
+            tvLuasTanaman.setVisibility(View.GONE);
+            tvLuasNonTanaman.setVisibility(View.VISIBLE);
+            tvPersenKondisi.setVisibility(View.VISIBLE);
+
+            inpNomorBAST.setVisibility(View.VISIBLE);
+            inpJumlahPohon.setVisibility(View.GONE);
+
+            btnFile.setVisibility(View.GONE);
 
             spinnerLuasSatuan.setVisibility(View.VISIBLE);
 
-//            inpKomoditi.setVisibility(View.GONE);
-//            listBtnMap.setVisibility(View.GONE);
-            inpJumlahPohon.setVisibility(View.GONE);
-            tvPohon.setVisibility(View.GONE);
-
-            tvUploudBA.setVisibility(View.GONE);
-//            inpBtnMap.setVisibility(View.GONE);
-            btnFile.setVisibility(View.GONE);
-            tvBa.setVisibility(View.GONE);
-
-            if ("baru".equals(String.valueOf(spinnerTipeAset.getSelectedItem())) ) {
-                //input PDF ba bast
-                btnFileBAST.setVisibility(View.VISIBLE);
-                tvFileBAST.setVisibility(View.VISIBLE);
-                tvUploadBAST.setVisibility(View.VISIBLE);
-            }
-
-            tvFoto.setVisibility(View.VISIBLE);
             scrollPartition.setVisibility(View.VISIBLE);
 
-            tvLuasTanaman.setVisibility(View.GONE);
-            tvLuasNonTanaman.setVisibility(View.VISIBLE);
             inpLuasAset.setVisibility(View.VISIBLE);
-
             inpPersenKondisi.setVisibility(View.VISIBLE);
-            tvPersenKondisi.setVisibility(View.VISIBLE);
 
             foto5rl.setVisibility(View.GONE);
-
-//            tvPopTotalPohonSaatIni.setVisibility(View.GONE);
-//            tvPopTotalStdMaster.setVisibility(View.GONE);
-//            tvPopPerHA.setVisibility(View.GONE);
-//            tvPresentasePopPerHA.setVisibility(View.GONE);
-//            inpPopTotalPohonSaatIni.setVisibility(View.GONE);
-//            inpPopTotalStdMaster.setVisibility(View.GONE);
-//            inpPopPerHA.setVisibility(View.GONE);
-//            inpPresentasePopPerHA.setVisibility(View.GONE);
         }
 
         else if ("non tanaman".equals(String.valueOf(spinnerJenisAset.getSelectedItem())) &&"rusak".equals(String.valueOf(spinnerAsetKondisi.getSelectedItem()))) {
             tvBa.setVisibility(View.VISIBLE);
-            btnFile.setVisibility(View.VISIBLE);
             tvUploudBA.setVisibility(View.VISIBLE);
             tvPohon.setVisibility(View.GONE);
-            inpJumlahPohon.setVisibility(View.GONE);
-//            inpBtnMap.setVisibility(View.VISIBLE);
-            inpNomorBAST.setVisibility(View.VISIBLE);
             tvBast.setVisibility(View.VISIBLE);
-            spinnerLuasSatuan.setVisibility(View.VISIBLE);
             tvFoto.setVisibility(View.VISIBLE);
-            scrollPartition.setVisibility(View.VISIBLE);
-            btnFileBAST.setVisibility(View.GONE);
             tvFileBAST.setVisibility(View.GONE);
             tvUploadBAST.setVisibility(View.GONE);
-
-//            listBtnMap.setVisibility(View.GONE);
             tvLuasTanaman.setVisibility(View.GONE);
             tvLuasNonTanaman.setVisibility(View.VISIBLE);
-            inpLuasAset.setVisibility(View.VISIBLE);
-
-            inpPersenKondisi.setVisibility(View.VISIBLE);
             tvPersenKondisi.setVisibility(View.VISIBLE);
 
-            foto5rl.setVisibility(View.GONE);
+            btnFile.setVisibility(View.VISIBLE);
+            btnFileBAST.setVisibility(View.GONE);
 
-//            tvPopTotalPohonSaatIni.setVisibility(View.GONE);
-//            tvPopTotalStdMaster.setVisibility(View.GONE);
-//            tvPopPerHA.setVisibility(View.GONE);
-//            tvPresentasePopPerHA.setVisibility(View.GONE);
-//            inpPopTotalPohonSaatIni.setVisibility(View.GONE);
-//            inpPopTotalStdMaster.setVisibility(View.GONE);
-//            inpPopPerHA.setVisibility(View.GONE);
-//            inpPresentasePopPerHA.setVisibility(View.GONE);
+            spinnerLuasSatuan.setVisibility(View.VISIBLE);
+            scrollPartition.setVisibility(View.VISIBLE);
+
+            inpLuasAset.setVisibility(View.VISIBLE);
+            inpPersenKondisi.setVisibility(View.VISIBLE);
+            inpJumlahPohon.setVisibility(View.GONE);
+            inpNomorBAST.setVisibility(View.VISIBLE);
+
+
+            foto5rl.setVisibility(View.GONE);
 
         }
 
@@ -2067,44 +1904,44 @@ public class AddAsetActivity extends AppCompatActivity {
 //            inpPresentasePopPerHA.setVisibility(View.GONE);
 
         } else {
-//            listBtnMap.setVisibility(View.GONE);
-            spinnerLuasSatuan.setVisibility(View.GONE);
-            inpJumlahPohon.setVisibility(View.GONE);
             tvFoto.setVisibility(View.GONE);
-            scrollPartition.setVisibility(View.GONE);
             tvPohon.setVisibility(View.GONE);
             tvBa.setVisibility(View.GONE);
             tvUploudBA.setVisibility(View.GONE);
-//            inpBtnMap.setVisibility(View.GONE);
-            btnFile.setVisibility(View.GONE);
-            btnFileBAST.setVisibility(View.GONE);
             tvFileBAST.setVisibility(View.GONE);
             tvUploadBAST.setVisibility(View.GONE);
-            inpNomorBAST.setVisibility(View.GONE);
             tvBast.setVisibility(View.GONE);
-
             tvLuasTanaman.setVisibility(View.GONE);
             tvLuasNonTanaman.setVisibility(View.GONE);
-            inpLuasAset.setVisibility(View.GONE);
-
-            inpPersenKondisi.setVisibility(View.GONE);
             tvPersenKondisi.setVisibility(View.GONE);
-
-            foto5rl.setVisibility(View.GONE);
-
             tvPopTotalPohonSaatIni.setVisibility(View.GONE);
             tvPopTotalStdMaster.setVisibility(View.GONE);
             tvPopPerHA.setVisibility(View.GONE);
             tvPresentasePopPerHA.setVisibility(View.GONE);
+            tvTahunTanam.setVisibility(View.GONE);
+            tvSistemTanam.setVisibility(View.GONE);
+
+            inpJumlahPohon.setVisibility(View.GONE);
+
+            spinnerLuasSatuan.setVisibility(View.GONE);
+            spinnerSistemTanam.setVisibility(View.GONE);
+            scrollPartition.setVisibility(View.GONE);
+
+            btnFile.setVisibility(View.GONE);
+            btnFileBAST.setVisibility(View.GONE);
+
+            inpNomorBAST.setVisibility(View.GONE);
+            inpLuasAset.setVisibility(View.GONE);
+            inpPersenKondisi.setVisibility(View.GONE);
             inpPopTotalPohonSaatIni.setVisibility(View.GONE);
             inpPopTotalStdMaster.setVisibility(View.GONE);
             inpPopPerHA.setVisibility(View.GONE);
             inpPresentasePopPerHA.setVisibility(View.GONE);
-
-            tvTahunTanam.setVisibility(View.GONE);
             inpTahunTanam.setVisibility(View.GONE);
-            tvSistemTanam.setVisibility(View.GONE);
-            spinnerSistemTanam.setVisibility(View.GONE);
+
+            foto5rl.setVisibility(View.GONE);
+
+
         }
     }
     public void addAset(){
