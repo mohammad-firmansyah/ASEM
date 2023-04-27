@@ -55,14 +55,11 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import ptpn12.amanat.asem.adapter.AsetOfflineAdapter;
-import ptpn12.amanat.asem.api.AsetInterface;
 import ptpn12.amanat.asem.api.model.Afdelling;
 import ptpn12.amanat.asem.api.model.AlatAngkut;
 import ptpn12.amanat.asem.api.model.AsetJenis;
 import ptpn12.amanat.asem.api.model.AsetKode2;
 import ptpn12.amanat.asem.api.model.AsetKondisi;
-import ptpn12.amanat.asem.api.model.AsetModel;
 import ptpn12.amanat.asem.api.model.AsetTipe;
 import ptpn12.amanat.asem.api.model.SistemTanam;
 import ptpn12.amanat.asem.offline.model.DataAllSpinner;
@@ -563,6 +560,8 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity {
         spinnerNoSap = new Dialog(AsetAddUpdateOfflineActivity.this);
 
         getLastLocation(AsetAddUpdateOfflineActivity.this, getApplicationContext());
+
+
 
         vwBast = findViewById(R.id.vwBast);
         listBtnMap = findViewById(R.id.listMapButton);
@@ -2963,11 +2962,7 @@ public class AsetAddUpdateOfflineActivity extends AppCompatActivity {
     public void editAset() {
         dialog.show();
 
-        Boolean spinnerValidaton = spinnerValidation();
 
-        if (!spinnerValidaton) {
-            return;
-        }
 
         try {
             ContentValues values = new ContentValues();
