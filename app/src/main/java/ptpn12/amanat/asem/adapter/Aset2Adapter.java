@@ -163,6 +163,7 @@ public class Aset2Adapter  extends RecyclerView.Adapter<Aset2Adapter.ViewHolder>
                 sharedPreferences = context.getSharedPreferences(PREF_LOGIN, MODE_PRIVATE);
                 Integer hak_akses_id = Integer.valueOf(sharedPreferences.getString("hak_akses_id", "0"));
 
+                Log.d("fotoqr", String.valueOf(myPostData2.getFotoQr()));
                 if (myPostData2.getFotoQr() != null) {
                     Intent intent = new Intent(context, UpdateFotoQrAsetActivity.class);
                     intent.putExtra("id",(myPostData2.getAsetId()));
